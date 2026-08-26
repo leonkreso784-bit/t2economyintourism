@@ -404,11 +404,11 @@
     if (_busy) return;
     const row = _rows.find(function (r) { return r.id === id; });
     if (!row || row.kind !== 'study') return;
-    if (!window.SokratStudio || typeof SokratStudio.openNode !== 'function') {
-      toast(mt('materials.errNoEditor', 'The editor is not available here yet.'));
-      return;
-    }
-    SokratStudio.openNode(id, row.name);
+    // ⚠️ T6: provjere „postoji li Studio" više nema jer Studio u OVOM dokumentu i ne postoji —
+    // 244 KiB editorskog koda otišlo je na `editor.html` da ga posjetitelj bez računa ne
+    // preuzima. Ime se NE prosljeđuje adresom nego ga odredište dohvaća iz baze: URL je
+    // ulaz izvana, a ono što stranica o tuđem materijalu tvrdi mora doći iz RLS-a, ne iz linka.
+    location.href = 'editor.html?node=' + encodeURIComponent(id);
   }
 
   // ───────────────────────────────────────────────────────────────────────────

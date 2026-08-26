@@ -7,15 +7,12 @@
 // („Uredi lekciju" povlači payload iz BAZE — staging mora biti seedan: `node scripts/seed-staging.js te2`).
 // Editori spremaju U DRAFT (bez mreže) → smijemo i spremiti pa ODBACITI (ništa ne ode u bazu).
 const { test, expect } = require('@playwright/test');
+// T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
+const { otvoriAdminPreglednik } = require('./helpers/studio-entry');
 
 /** Otvori admin stranicu → odaberi te2 + prvu lekciju → uđi u draft-mod (edit-gumbi vidljivi). */
 async function openLessonInDraftMode(page) {
-  await page.goto('/');
-  await page.waitForFunction(
-    () => !!window.SokratAdmin && !!window.SokratContent && typeof window.navigateTo === 'function'
-  );
-  await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
-  await page.evaluate(() => navigateTo('admin'));
+  await otvoriAdminPreglednik(page);
   await page.waitForSelector('#admin-page.active #adminSubjectSel');
 
   // te2 (seedan na staging), inače prvi predmet.
@@ -58,12 +55,7 @@ test('admin sesija: SokratAdmin.isAdmin() = true + body.sokrat-is-admin', async 
 });
 
 test('U3 — admin: „Uredi lekciju" ulazi u draft-mod; edit-gumbi vidljivi TEK u draftu', async ({ page }) => {
-  await page.goto('/');
-  await page.waitForFunction(
-    () => !!window.SokratAdmin && !!window.SokratContent && typeof window.navigateTo === 'function'
-  );
-  await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
-  await page.evaluate(() => navigateTo('admin'));
+  await otvoriAdminPreglednik(page);
   await page.waitForSelector('#admin-page.active #adminSubjectSel');
 
   await page.evaluate(() => {

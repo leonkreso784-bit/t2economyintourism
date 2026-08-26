@@ -76,7 +76,20 @@ for (const tema of TEME) {
         && document.querySelectorAll('#subjectsList .subject-item-icon').length > 0
     );
 
-    provjeri(await ocitajPlocice(page, '#landingSubjects .landing-subject-icon'), 'landing', tema);
+    // ⚠️ ＋ PLOČICA („Tvoj predmet", od 2026-08-16) SE IZUZIMA, i to nije izvlačenje.
+    // Ovaj gate provjerava JEDNO pravilo: da se tinta glifa bira IZRAČUNOM iz boje
+    // predmeta (`inkForTint()` → `data-ink`). ＋ pločica nema boju predmeta — ploha
+    // joj je `--color-surface-2`, a glif `--color-ink-2`, oboje TOKENI. Taj par već
+    // mjeri `check:contrast` kroz svih 5 tema (`--color-ink-2` je u `AS_TEXT`,
+    // `--color-surface-2` u `SURFACES`), pa bi traženje `data-ink` na njoj značilo
+    // tražiti izračun ondje gdje nema što računati.
+    //
+    // POVOD: kad je ＋ pločica dodana, naslijedila je klasu `landing-subject-icon` i
+    // ovaj ju je selektor pokupio → svih 16 tema-testova palo je s „nema data-ink".
+    // Zapisano jer je pouka šira: SELEKTOR PO IZGLEDU (klasa) HVATA I ONO ŠTO NIJE
+    // ISTE VRSTE. Da je selektor od početka gađao `[data-ink]`, pada ne bi bilo — ali
+    // ni gatea, jer bi element bez atributa tiho ispao iz mjerenja. Ovako je glasno.
+    provjeri(await ocitajPlocice(page, '#landingSubjects .landing-subject-icon:not(.landing-subject-icon--make)'), 'landing', tema);
     provjeri(await ocitajPlocice(page, '#subjectsList .subject-item-icon'), 'bočna traka', tema);
   });
 }

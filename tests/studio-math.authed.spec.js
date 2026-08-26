@@ -10,6 +10,8 @@
 //   Za OSOBNO GRADIVO je to teže nego za katalog: čvor se gleda ISKLJUČIVO u Studiju, pa se
 //   formula tamo ne tipografira NIKAD — ni u pregledu, ni nakon objave.
 const { test, expect } = require('@playwright/test');
+// T6: editor je vlastiti dokument — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
+const { otvoriStudio, otvoriAplikaciju } = require('./helpers/studio-entry');
 
 const TEX = '\\sqrt{55}\\pm\\frac{154}{85}';
 
@@ -19,8 +21,8 @@ async function openMaterials(page) {
   });
   await page.goto('/');
   await page.waitForFunction(() =>
-    !!window.SokratMaterials && !!window.SokratAdmin && !!window.SokratDraft
-    && !!window.SokratStudio && typeof window.navigateTo === 'function');
+    !!window.SokratMaterials && !!window.SokratAdmin
+    && typeof window.navigateTo === 'function');
   // KaTeX auto-render stiže s CDN-a (`defer`) — bez njega je renderMath TIHI no-op i test bi
   // lažno pao na infrastrukturi umjesto na regresiji.
   await page.waitForFunction(() => typeof window.renderMathInElement === 'function', null, { timeout: 20000 });
@@ -32,8 +34,13 @@ async function openMaterials(page) {
 
 const mkNode = (page, p, k, n) =>
   page.evaluate(([a, b, c]) => window.SokratMaterials.createNode(a, b, c), [p, k, n]);
-const rmNode = (page, id) =>
-  page.evaluate((i) => window.SokratMaterials.deleteNode(i).catch(() => {}), id);
+// ⚠️ T6: čišćenje traži APLIKACIJU — `SokratMaterials` ne postoji na stranici editora,
+// a test ondje često i završi; bez povratka kući `finally` bi rušio umjesto da čisti.
+const rmNode = async (page, id) => {
+  await otvoriAplikaciju(page);
+  await page.waitForFunction(() => !!window.SokratMaterials, null, { timeout: 20000 });
+  await page.evaluate((i) => window.SokratMaterials.deleteNode(i).catch(() => {}), id);
+};
 
 /** Objavi sekciju s formula-blokom kroz isti put kao gumb „Objavi". */
 const publishFormula = (page, id, name, tex) => page.evaluate(async ([nodeId, nm, t]) => {
@@ -59,6 +66,8 @@ test.describe('Studio — KaTeX u canvasu', () => {
     await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'Studio Math');
     try {
+      // T6: bridge i Studio žive na stranici editora, ne u aplikaciji.
+      await otvoriStudio(page);
       await publishFormula(page, id, 'Studio Math', TEX);
 
       await page.evaluate((nodeId) => window.SokratStudio.openNode(nodeId, 'Studio Math'), id);
@@ -90,6 +99,8 @@ test.describe('Studio — KaTeX u canvasu', () => {
     await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'Studio Math Edit');
     try {
+      // T6: bridge i Studio žive na stranici editora, ne u aplikaciji.
+      await otvoriStudio(page);
       await publishFormula(page, id, 'Studio Math Edit', TEX);
       await page.evaluate((nodeId) => window.SokratStudio.openNode(nodeId, 'Studio Math Edit'), id);
       await page.waitForSelector('#editor-page.active', { timeout: 15000 });
@@ -119,6 +130,8 @@ test.describe('Studio — KaTeX u canvasu', () => {
     await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'Inline Math');
     try {
+      // T6: bridge i Studio žive na stranici editora, ne u aplikaciji.
+      await otvoriStudio(page);
       // Sekcija s običnim odlomkom — dalje sve ide kroz PRAVI editor, ne kroz opove.
       await page.evaluate(async ([nodeId]) => {
         const b = window.SokratAdmin.studioBridge;

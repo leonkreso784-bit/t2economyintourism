@@ -46,7 +46,14 @@ declare global {
     refreshAuthNav?: () => void;
     renderSubjectsSidebar?: () => void;
     renderLandingSubjects?: () => void;
+    // Gumbi filtra kataloga nose ime programa i riječ „Svi" → i oni se precrtavaju
+    // na promjenu jezika, inače traka ostane na starom jeziku dok se mreža prevede.
+    renderCatalogPrograms?: () => void;
     renderBrowse?: () => void;
     renderProfilePage?: () => void;
+    // K2b: mrvicu crta JS u `textContent` (nikad `innerHTML`), pa je `[data-i18n]` ne
+    // dohvaća — i18n je mora precrtati kao i ostale liste građene iz kataloga.
+    renderPathbar?: () => void;
+    initTopbar?: () => void;
   }
 }

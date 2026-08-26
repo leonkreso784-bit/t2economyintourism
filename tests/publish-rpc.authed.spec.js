@@ -8,18 +8,15 @@
 // Test 2 = konflikt: tuđa izmjena (out-of-band write bumpa version) između ulaska u draft
 //          i objave → RPC odbija, NIŠTA nije upisano, draft (rad korisnika) preživi.
 const { test, expect } = require('@playwright/test');
+// T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
+const { otvoriAdminPreglednik } = require('./helpers/studio-entry');
 
 const MARKER = 'U4-E2E-MARKER pitanje (publish-RPC, smije se obrisati)';
 const KONFLIKT = 'U4-KONFLIKT tekst (ne smije nikad završiti u bazi)';
 
 /** Otvori admin → te2 + prva lekcija → uđi u draft-mod (kopija helpera iz admin-detect speca). */
 async function openLessonInDraftMode(page) {
-  await page.goto('/');
-  await page.waitForFunction(
-    () => !!window.SokratAdmin && !!window.SokratContent && typeof window.navigateTo === 'function'
-  );
-  await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
-  await page.evaluate(() => navigateTo('admin'));
+  await otvoriAdminPreglednik(page);
   await page.waitForSelector('#admin-page.active #adminSubjectSel');
   await page.evaluate(() => {
     const sel = document.getElementById('adminSubjectSel');

@@ -30,6 +30,18 @@ test('authenticate as admin', async ({ page }) => {
     console.log('[auth.setup] STAGING mode → ' + cfg.url);
   }
 
+  // ⚠️ PRISTANAK NA KOLAČIĆE SE UPISUJE PRIJE PRVOG UČITAVANJA, i to nije zaobilaženje
+  // gatea nego vjernija simulacija. Prijavljen admin je tu odluku donio davno; svježa
+  // sesija bez nje drži banner na dnu ekrana TRAJNO, a on je `position:fixed` sa
+  // `z-index: 2147483000` — dakle presreće pokazivač nad svime što padne u donjih ~70 px.
+  // U K2b je to oborilo TRI Studio-testa čim je editor spušten za visinu globalne trake:
+  // izbornik blokova i zona ispuštanja pri povlačenju sekcije počeli su padati U banner.
+  // Sama kolizija je popravljena u kodu (`--bottom-inset`, v. js/consent.js), ali test
+  // koji je vozi kao pozadinski šum mjeri banner, a ne ono što tvrdi.
+  await page.addInitScript(() => {
+    try { localStorage.setItem('sokrat-cookie-consent', 'granted'); } catch (e) { /* privatni način */ }
+  });
+
   await page.goto('/');
 
   // supabase-js CDN se učita async nakon DOMContentLoaded → pričekaj klijent.
@@ -43,10 +55,32 @@ test('authenticate as admin', async ({ page }) => {
     const c = SokratAuth.getClient();
     const signIn = await c.auth.signInWithPassword({ email, password });
     if (signIn.error) return { ok: false, error: signIn.error.message };
-    const rpc = await c.rpc('is_admin');
+
+    // ⚠️ `is_admin` SE PONAVLJA, I TO NIJE MASKIRANJE KVARA NEGO ČEKANJE STANJA.
+    // Zatečeno: puna suita je 2026-08-24 dvaput (od sedam prolaza) pala već ovdje, uz
+    // `is_admin() = false` i PRAZAN `rpcError` — dakle poziv je uspio, samo je odgovor bio
+    // „ne". Izolirano se ne reproducira (5/5 prolaza), pa nije stvar konfiguracije nego
+    // UTRKE: RPC se zove u istoj milisekundi u kojoj je token izdan, a ako ga PostgREST još
+    // ne prihvaća, kontekst je ANONIMAN i `is_admin()` uredno vrati `false`. Ista obitelj
+    // kao zapisani `JWT issued at future`, samo bez greške — zato je i bilo teže vidjeti.
+    //
+    // Cijena propuštanja je nesrazmjerna: ovaj setup je preduvjet cijelog `authenticated`
+    // projekta, pa jedan promašaj obori **92 testa** koja nikad ne krenu. Čeka se STANJE
+    // (da tvrdnja postane istinita), ne fiksno vrijeme — isto pravilo koje je T0 već platio.
+    // Ako korisnik STVARNO nije admin, svih šest pokušaja vrati `false` i tvrdnja i dalje
+    // padne, samo ~1,5 s kasnije i s brojem pokušaja u poruci.
+    let rpc = null;
+    let pokusaja = 0;
+    for (let i = 0; i < 6; i++) {
+      pokusaja = i + 1;
+      rpc = await c.rpc('is_admin');
+      if (rpc && rpc.data === true) break;
+      await new Promise((r) => setTimeout(r, 250));
+    }
     return {
       ok: true,
       isAdmin: !!(rpc && rpc.data === true),
+      pokusaja: pokusaja,
       rpcError: rpc && rpc.error ? rpc.error.message : null,
       // ⚠️ Dijagnostika se SKUPLJALA i bacala. Bez nje poruka „nije admin" tjera na
       // pogađanje: ne razlikuje krivi PROJEKT (override nije primljen → app gleda prod)
@@ -64,7 +98,8 @@ test('authenticate as admin', async ({ page }) => {
     'is_admin() = false\n'
       + '   projekt : ' + result.url + '\n'
       + '   prijavljen: ' + result.signedInAs + '  (uid ' + result.uid + ')\n'
-      + '   rpcError : ' + (result.rpcError || '(nema)') + '\n'
+      + '   rpcError : ' + (result.rpcError || '(nema)') + '\n'
+      + '   pokusaja : ' + result.pokusaja + ' (ponavlja se zbog utrke s izdavanjem tokena)\n'
       + '   → ako je projekt PROD, override nije primljen; ako je STAGING, provjeri profiles.role'
   ).toBeTruthy();
 

@@ -37,10 +37,12 @@ async function isSubjectOpenable(subjectId) {
 
 async function restoreLastPosition() {
     try {
-        // IZRIČITA RUTA U ADRESI POBJEĐUJE SPREMLJENU POZICIJU (C0). Obnova je asinkrona
-        // (`isSubjectOpenable` čeka mrežu), pa bi inače dvije sekunde nakon otvaranja dijeljenog
-        // linka korisnika odbacila na prošli predmet — a on je tražio točno određenu stranicu.
-        if (location.hash === MATERIALS_ROUTE) return;
+        // IZRIČITA RUTA U ADRESI POBJEĐUJE SPREMLJENU POZICIJU (C0, prošireno u K1). Obnova je
+        // asinkrona (`isSubjectOpenable` čeka mrežu), pa bi inače dvije sekunde nakon otvaranja
+        // dijeljenog linka korisnika odbacila na prošli predmet — a on je tražio točno određenu
+        // stranicu. Do K1 je ovo vrijedilo samo za `#/materials`; sad za svaku rutu.
+        const route = parseRoute(location.hash);
+        if (route) { if (await applyRoute(route)) return; }
 
         const saved = localStorage.getItem('sokrat-last-position');
         if (saved) {
@@ -75,26 +77,48 @@ async function restoreLastPosition() {
 }
 
 // ========== PAGE NAVIGATION ==========
-let profileReturnPage = null; // kamo vodi "back" s Profile stranice
-let materialsReturnPage = null; // kamo vodi "back" sa stranice vlastitog materijala (C0)
+//
+// K2a — JEDAN MODEL VRAĆANJA. Do K2a su ovdje živjela TRI paralelna: tvrdo ožičen
+// roditelj u svakom gumbu (`backToLessons` → uvijek `lessons`), ručna jednodubinska
+// povijest (`profileReturnPage`/`materialsReturnPage`) i — od K1 — prava povijest
+// preglednika. Tri modela su se neizbježno razišla, i to na dva mjesta koja je Leon
+// našao na živom ekranu:
+//
+//   ① Osobni materijal se uči kao sintetički predmet `node:<uuid>`, ali su gumbi natrag
+//      poznavali SAMO katalošku hijerarhiju (browse → lessons → study). Vraćanje iz
+//      vlastitog materijala vodilo je na lekcijsku stranicu ČVORA (koja crta prazninu,
+//      „Matematika / undefined"), pa odande na izbor fakulteta.
+//   ② `materialsReturnPage` je pamtio dolazak IZ EDITORA, pa je „natrag" s police vraćao
+//      natrag u editor — petlja materijali ⇄ Studio. Isti izuzetak POSTOJAO je za profil
+//      (komentar se izričito poziva na BUG-019 i petlju profil ⇄ admin) i nikad nije bio
+//      prenesen na materijale.
+//
+// Sada je model jedan: `goBack()` koristi POVIJEST kad iza nas stoji naš unos, a inače
+// pada na SEMANTIČKOG RODITELJA koji zna obje hijerarhije (`roditeljOd`). Ručna jednodubinska
+// povijest je obrisana — dva zapisa o istoj stvari su i bila uzrok.
+
+/**
+ * Koliko smo unosa gurnuli u povijest U OVOJ SESIJI STRANICE.
+ * Nula znači da iza nas nema NAŠEG unosa (hladan dolazak na dijeljeni link), pa bi
+ * `history.back()` izašao sa stranice — tada ide semantički roditelj.
+ * ⚠️ Broji se kroz `history.state`, ne brojačem: brojač bi `popstate` dekrementirao i pri
+ * koraku NAPRIJED, pa bi dubina lagala čim korisnik krene naprijed-natrag.
+ */
+let dubinaPovijesti = 0;
 
 function navigateTo(page, data = {}) {
-    // Profile se NE sprema kao "last position": render ovisi o auth sesiji koja na
-    // reloadu još nije spremna (CDN se tek učitava), pa bi restore završio prazan.
-    // Dolazak IZ ADMINA ne prepisuje cilj: admin je pod-stranica profila (ulaz i back idu
-    // kroz profil), pa bi "back = admin" stvorio petlju profil ⇄ admin (BUG-019).
-    if (page === 'profile' && AppState.nav.page !== 'profile' && AppState.nav.page !== 'admin' && AppState.nav.page !== 'editor') {
-        profileReturnPage = { page: AppState.nav.page, data: { subject: AppState.nav.subject, lesson: AppState.nav.lesson } };
-    }
-    // Isti razlog kao za profil: „back" mora vratiti odakle si došao, a ne uvijek na landing.
-    // Dolazak iz samog sebe ne prepisuje cilj (inače bi back vodio na materijale = petlja).
-    if (page === 'materials' && AppState.nav.page !== 'materials') {
-        materialsReturnPage = { page: AppState.nav.page, data: { subject: AppState.nav.subject, lesson: AppState.nav.lesson } };
+    // K2a — ČUVAR DVIJU HIJERARHIJA. Osobni materijal nema lekcijsku stranicu: ima točno
+    // jednu lekciju i živi u polici, ne u katalogu. Čuvar stoji OVDJE, a ne u gumbu natrag,
+    // jer je ruta od K1 dijeljiva — `#/subject/node%3A<uuid>` se da poslati i utipkati.
+    if (page === 'lessons' && data.subject && String(data.subject).indexOf('node:') === 0) {
+        page = 'materials';
+        data = {};
     }
     AppState.nav.page = page;
     // Profile/Admin/Editor/Materials se NE spremaju kao "last position" (ovise o auth sesiji / admin
     // statusu koji na reloadu još nisu spremni — obnova bi otvorila prazan ekran; usp. BUG-023).
-    if (page !== 'profile' && page !== 'admin' && page !== 'editor' && page !== 'materials') saveCurrentPosition(page, data);
+    // T6: editor i admin-preglednik više nisu stranice ove aplikacije (v. `editor.html`).
+    if (page !== 'profile' && page !== 'materials') saveCurrentPosition(page, data);
 
     document.querySelectorAll('.landing-page, .browse-page, .lessons-page, .study-page, .about-page, .materials-page, .profile-page, .admin-page, .studio-page').forEach(p => {
         p.classList.remove('active');
@@ -143,40 +167,487 @@ function navigateTo(page, data = {}) {
             if (typeof renderProfilePage === 'function') renderProfilePage();
             document.getElementById('profile-page').classList.add('active');
             break;
-        case 'admin':
-            // F4.3b: read-only content viewer. Ulaz je admin-only (skriveni gumb); write (F4.3c) je RLS-zaštićen.
-            if (typeof renderAdminPage === 'function') renderAdminPage();
-            document.getElementById('admin-page').classList.add('active');
-            closeSidebar();
-            break;
-        case 'editor':
-            // U8: novi vizualni editor „Studio" (#editor-page). Admin-only ulaz; koegzistira sa #admin-page.
-            if (typeof renderStudioPage === 'function') renderStudioPage();
-            document.getElementById('editor-page').classList.add('active');
-            closeSidebar();
-            break;
     }
 
-    // Adresa prati stranicu (zasad postoji jedna ruta). `replaceState` namjerno: ne trpa u povijest
-    // i ne okida `hashchange`. Bez čišćenja pri odlasku ruta bi ostala u adresi, pa bi reload s
-    // landinga vratio korisnika na materijale.
-    if (history && history.replaceState) {
-        if (page === 'materials') {
-            if (location.hash !== MATERIALS_ROUTE) history.replaceState(null, '', MATERIALS_ROUTE);
-        } else if (location.hash === MATERIALS_ROUTE) {
-            history.replaceState(null, '', location.pathname + location.search);
-        }
-    }
+    // K1: adresa prati stranicu. Do K1 je ovdje stajao `replaceState` za JEDNU rutu
+    // (`#/materials`), uz obrazloženje „ne trpa u povijest". To je bilo točno dok je ruta
+    // bila jedna; sad je upravo povijest ono što se gradi — bez nje „natrag" izlazi sa
+    // stranice (BUG-019/BUG-020 traže pravi nav-model, v. §8 specifikacije).
+    syncRoute(page, data);
+    // Jednokratna zastavica NIKAD ne smije preziviti navigaciju: syncRoute ima rane izlaze
+    // (ista adresa, golo sidro) u kojima se ne upisuje nista, pa bi inace procurila u sljedecu.
+    zamijeniSljedeciUnos = false;
+
+    // K2b: drugi red se crta NAKON što je stanje postavljeno — nazivi predmeta, lekcije i
+    // materijala dolaze iz istog stanja koje `navigateTo` gore tek upisuje.
+    renderPathbar();
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ========== VLASTITO GRADIVO — ulazi i ruta (C0 / ADR-029) ==========
+// ========== RUTER (K1, faza „KOSTUR" — spec §8) ==========
+//
+// Do K1 je aplikacija imala DEVET stranica i JEDNU adresu (`#/materials`). Posljedice su
+// se plaćale svaki dan: „natrag" je odvodio sa stranice, nijedan predmet ni lekcija nisu
+// se dali podijeliti, tražilice su vidjele jednu stranicu, a dijeljenje materijala —
+// faza odmah iza MCP-a (ADR-030) — nije imalo na što objesiti token.
+//
+// ⚠️ OVO NIJE NOVA ARHITEKTURA. `saveCurrentPosition()` odozgo VEĆ serijalizira
+// `{page, subject, lesson, section, category}` — potpun opis rute — samo ga piše u
+// `localStorage` umjesto u adresu. K1 je preusmjeravanje istog opisa, ne novi model.
+// Zato `saveCurrentPosition` i dalje živi: on je pamćenje („gdje sam stao", 24 h),
+// adresa je identitet („što gledam"). Kad se razilaze, ADRESA POBJEĐUJE.
+//
+// ⚠️ SVE RUTE SU `#/`-PREFIKSIRANE. Landing koristi gole sidrene linkove (`#top`,
+// `#subjects`), pa bi goli `#subjects` bio u istom prostoru imena i ruter bi otimao
+// obično skrolanje po landingu. Sve što ne počinje s `#/` ruter NE dira.
 
-// Ruta je namjerno `#/`-prefiksirana: landing već koristi gole sidrene linkove
-// (`#subjects`, `#how`, `#modes`, `#top`), pa bi goli `#materials` bio u istom
-// prostoru imena i sudario bi se s njima.
-const MATERIALS_ROUTE = '#/materials';
+const MATERIALS_ROUTE = '#/materials';   // C0 · zadržana doslovno — vanjski linkovi već postoje
+
+/**
+ * ⚠️ `profile`, `admin` i `editor` NAMJERNO NEMAJU RUTU.
+ *
+ * Njihov prikaz ovisi o auth-sesiji i admin-statusu koji na hladnom startu još nisu
+ * spremni — to je isti razlog zbog kojeg ih `saveCurrentPosition` gore ne sprema, i
+ * točno razred kvara iz BUG-023 (obnova je gađala subjekt koji još nije registriran i
+ * otvarala praznu stranicu koja puca pri svakom spremanju). Deep-link na `#/admin`
+ * pokazao bi prazan admin bilo kome tko zna adresu.
+ *
+ * Za te tri stranice adresa se ČISTI, ali kroz `pushState` — v. upozorenje u `syncRoute`.
+ * Time „natrag" iz Studija vraća na materijale, odakle se i ušlo.
+ */
+const UNROUTED_PAGES = ['profile'];
+
+/** Stanje aplikacije → adresa. `null` = stranica nema rutu (v. `UNROUTED_PAGES`). */
+function routeFor(page, data) {
+    const d = data || {};
+    const subject = d.subject || AppState.nav.subject;
+    const lesson = d.lesson || AppState.nav.lesson;
+    const enc = encodeURIComponent;
+
+    switch (page) {
+        case 'landing':   return '#/';
+        case 'browse':    return '#/subjects';
+        case 'about':     return '#/about';
+        case 'materials': return MATERIALS_ROUTE;
+        case 'lessons':   return subject ? '#/subject/' + enc(subject) : null;
+        case 'study': {
+            if (!subject || !lesson) return null;
+            const base = '#/subject/' + enc(subject) + '/' + enc(lesson);
+            const sec = d.section || AppState.nav.section;
+            // `home` je zadano stanje i ne piše se — inače bi svaka lekcija imala dvije
+            // adrese za isti prikaz, a dijeljeni link bi ovisio o tome je li netko dirao tabove.
+            return (sec && sec !== 'home') ? base + '/' + enc(sec) : base;
+        }
+        default:          return null;
+    }
+}
+
+/** Adresa → stanje. `null` = nije naša ruta (golo sidro, prazno, smeće). */
+function parseRoute(hash) {
+    if (!hash || hash.indexOf('#/') !== 0) return null;
+    const parts = hash.slice(2).split('/').filter(Boolean).map(function (s) {
+        try { return decodeURIComponent(s); } catch (e) { return s; }
+    });
+
+    if (parts.length === 0) return { page: 'landing', data: {} };
+    if (parts[0] === 'subjects' && parts.length === 1) return { page: 'browse', data: {} };
+    if (parts[0] === 'about' && parts.length === 1) return { page: 'about', data: {} };
+    if (parts[0] === 'materials' && parts.length === 1) return { page: 'materials', data: {} };
+
+    if (parts[0] === 'subject' && parts[1]) {
+        if (parts.length === 2) return { page: 'lessons', data: { subject: parts[1] } };
+        if (parts.length === 3 || parts.length === 4) {
+            return { page: 'study', data: { subject: parts[1], lesson: parts[2], section: parts[3] || 'home' } };
+        }
+    }
+    return null;
+}
+
+/**
+ * Upisuje adresu nakon što je `navigateTo` već prikazao stranicu.
+ *
+ * ⚠️ `pushState` NE OKIDA `hashchange` — zato ruter ne reagira na vlastiti upis i nije
+ * potrebna zastavica koja se može zaglaviti. Jedini čuvar je usporedba s trenutnom
+ * adresom, dakle idempotencija umjesto stanja.
+ */
+function syncRoute(page, data) {
+    if (!history || !history.pushState) return;
+    const want = routeFor(page, data);
+    const sad = location.hash;
+
+    if (want === null) {
+        // ⚠️ ČISTI SE `pushState`-om, NE `replaceState`-om. Prva verzija je ovdje imala
+        // `replaceState` uz obrazloženje „ne diraj povijest" — a `replaceState` **pojede
+        // unos na kojem stojiš**, dakle baš onaj s kojeg si došao. Posljedica: „natrag" iz
+        // Studija preskakao je materijale i završavao na landingu. Oborio ga je test, ne
+        // čitanje koda; komentar je tvrdio suprotno od onoga što je kod radio.
+        if (sad) gurniUnos(location.pathname + location.search);
+        return;
+    }
+    if (sad === want) return;
+
+    if (want === '#/') {
+        // Prazan hash JE landing — normalizacija u `#/` samo bi potrošila jedan „natrag".
+        if (!sad) return;
+        // ⚠️ GOLO SIDRO NA LANDINGU JE PRECIZNIJA POZICIJA OD `#/` — ne gazi se.
+        // Bez ovoga `restoreLastPosition()` na hladnom startu završi u `navigateTo('landing')`
+        // i prepiše `#subjects` u `#/`, pa preglednik nema kamo skrolati: podijeljeni link na
+        // sekciju landinga tiho prestane raditi. I ovo je našla proba, ne čitanje koda.
+        if (sad.indexOf('#/') !== 0) return;
+    }
+
+    gurniUnos(want);
+}
+
+/**
+ * Promjena moda unutar lekcije mijenja adresu, ali NE gura u povijest.
+ * Inače bi „natrag" prolazio kroz svaki klik na tab umjesto da napusti lekciju.
+ */
+function syncSectionRoute() {
+    if (!history || !history.replaceState) return;
+    if (AppState.nav.page !== 'study') return;
+    const want = routeFor('study', {});
+    if (want && location.hash !== want) history.replaceState(null, '', want);
+}
+
+/**
+ * Jednokratno: sljedeći upis u adresu ZAMJENJUJE trenutni unos umjesto da gura novi.
+ * Postavlja ga samo kretanje GORE (`goBack` bez povijesti) — v. obrazloženje u `gurniUnos`.
+ */
+let zamijeniSljedeciUnos = false;
+
+/**
+ * Jedini put kojim unos ulazi u povijest — da dubina i povijest ne mogu razići.
+ *
+ * ⚠️ KRETANJE GORE ZAMJENJUJE, NE GURA. Prva verzija K2a je i za roditelja gurala unos, pa
+ * je hladan dolazak na dijeljenu lekciju davao petlju: „natrag" je vodio na predmet, a
+ * sljedeći „natrag" NAZAD U LEKCIJU — jer je odlazak gore sam sebi stvorio povratni unos.
+ * Popravak je stvarao petlju koju je trebao ukloniti; našla ga je proba u pregledniku.
+ * Zamjenom se dijete odbacuje, pa uzastopni „natrag" penje hijerarhiju do landinga, a
+ * preglednikov „natrag" uredno izlazi onamo odakle je korisnik i došao.
+ */
+function gurniUnos(url) {
+    if (zamijeniSljedeciUnos) {
+        zamijeniSljedeciUnos = false;
+        history.replaceState({ sokratDubina: dubinaPovijesti }, '', url);
+        return;
+    }
+    dubinaPovijesti += 1;
+    history.pushState({ sokratDubina: dubinaPovijesti }, '', url);
+}
+
+/**
+ * Semantički roditelj stranice — REZERVNI put, za slučaj kad iza nas nema našeg unosa
+ * (hladan dolazak na dijeljeni link). Zna OBJE hijerarhije, i to je cijela poanta:
+ * katalog ide `browse → lessons → study`, a vlastito gradivo `polica → study`, bez
+ * lekcijskog međukoraka — jer ga čvor nema.
+ */
+function roditeljOd(page, nav) {
+    const subjekt = (nav && nav.subject) ? String(nav.subject) : '';
+    const cvor = subjekt.indexOf('node:') === 0;
+
+    switch (page) {
+        case 'study':   return cvor ? { page: 'materials', data: {} } : { page: 'lessons', data: { subject: subjekt } };
+        case 'lessons': return cvor ? { page: 'materials', data: {} } : { page: 'browse', data: {} };
+        // ⚠️ T6: editor i admin-preglednik VIŠE NISU STRANICE OVE APLIKACIJE — od tada žive
+        // na `editor.html`, pa im ovdje nema ni roditelja ni imena. Povratak iz editora nije
+        // izgubljen nego je postao ono što i jest: povijest preglednika između dva dokumenta
+        // (v. `goBack` u `js/editor-page.js`). K2b-ov nalog — hijerarhija na JEDNOM mjestu —
+        // stoji i dalje; ova je funkcija i dalje to jedno mjesto, samo za sedam stranica.
+        default:        return { page: 'landing', data: {} };
+    }
+}
+
+/**
+ * „Natrag" za SVE gumbe u aplikaciji. Jedan ulaz umjesto sedam tvrdo ožičenih odredišta.
+ *
+ * @param {string} [rezervni] Stranica na koju se pada kad povijesti nema. Prosljeđuju je
+ *   samo pozivatelji koji o kontekstu znaju više od `AppState`-a — Studio zna je li otvorio
+ *   osobni čvor ili katalog, a `AppState.nav.subject` mu to ne kaže.
+ */
+function goBack(rezervni) {
+    // K2b — DUBINA UNUTAR STRANICE IDE PRIJE DUBINE MEĐU STRANICAMA. Browse ima vlastiti
+    // drill-down (fakultet → smjer → godina → predmeti) koji NE stvara unose u povijesti,
+    // jer se ne mijenja stranica nego samo njezin sadržaj. Da globalni „natrag" to ne zna,
+    // s razine „predmeti" izletio bi ravno s browsea i preskočio tri razine kroz koje je
+    // korisnik upravo prošao. `browseBack()` na vrhunskoj razini vraća poziv ovamo, pa
+    // rekurzija staje.
+    if (!rezervni && AppState.nav.page === 'browse' && typeof browseState !== 'undefined'
+        && browseState.level && browseState.level !== 'faculties') {
+        browseBack();
+        return;
+    }
+    // Iza nas stoji NAŠ unos → koristi pravu povijest. Time „natrag" u aplikaciji i
+    // sistemska gesta natrag konačno govore isto; do K2a su se razilazili.
+    if (dubinaPovijesti > 0 && history && typeof history.back === 'function') {
+        history.back();
+        return;
+    }
+    // Bez povijesti idemo GORE. Kretanje gore zamjenjuje unos (v. gurniUnos) -- inace
+    // bi si samo stvorilo povratni unos i sljedeci natrag bi pao natrag u dijete.
+    zamijeniSljedeciUnos = true;
+    if (rezervni) { navigateTo(rezervni, {}); return; }
+    const r = roditeljOd(AppState.nav.page, AppState.nav);
+    navigateTo(r.page, r.data);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   K2b — JEDNA GORNJA TRAKA (spec §8)
+
+   Mrvica se NE gradi iz vlastite tablice nego se PENJE kroz `roditeljOd()` —
+   istu funkciju koja pogoni „natrag". To nije ušteda koda nego jedina brana
+   protiv razilaženja: put koji mrvica pokazuje i put kojim gumb vodi ne mogu
+   se raziĆi ako su isti izraz. (Do K2b su tri paralelna modela vraćanja i
+   proizvela BUG-026 i BUG-027 — dva zapisa o istoj stvari.)
+
+   ⚠️ NIŠTA OVDJE NE IDE KROZ `innerHTML`. Nazivi materijala su KORISNIČKI
+   tekst, a mrvica je nova površina koja ga prikazuje. Umjesto da se oslanjamo
+   na escape (granica #3, BUG-025), gradimo čvorove i pišemo u `textContent` —
+   tekst tad ne može biti markup, pa nema što ni pobjeći.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/** Prijevod s rezervnim tekstom; `t()` vraća KLJUČ kad prijevoda nema. */
+function _pt(key, fb) {
+    if (typeof window.t === 'function') { const s = window.t(key); if (s && s !== key) return s; }
+    return fb;
+}
+
+/** Naziv predmeta iz karte koja pokriva OBA izvora — katalog i `node:` materijale. */
+function _nazivPredmeta(id) {
+    if (typeof subjectDataMap === 'undefined' || !id) return '';
+    const s = subjectDataMap[id];
+    return (s && s.name) ? s.name : '';
+}
+
+function _nazivLekcije(subjectId, lessonId) {
+    if (typeof subjectDataMap === 'undefined' || !subjectId || !lessonId) return '';
+    const s = subjectDataMap[subjectId];
+    if (!s || !Array.isArray(s.lessons)) return '';
+    const l = s.lessons.find((x) => x && x.id === lessonId);
+    return (l && l.name) ? l.name : '';
+}
+
+/** Kako se stranica ZOVE u mrvici. Prazan naziv znači „preskoči" (nema što pokazati). */
+function nazivStranice(page, nav) {
+    switch (page) {
+        case 'browse':    return _pt('topbar.subjects', 'Subjects');
+        case 'materials': return _pt('materials.title', 'My materials');
+        case 'profile':   return _pt('profile.title', 'My Profile');
+        case 'about':     return _pt('topbar.about', 'About');
+        case 'lessons':   return _nazivPredmeta(nav && nav.subject) || _pt('topbar.subject', 'Subject');
+        case 'study':     return _nazivLekcije(nav && nav.subject, nav && nav.lesson)
+                              || _nazivPredmeta(nav && nav.subject)
+                              || _pt('topbar.study', 'Study');
+        default:          return '';
+    }
+}
+
+/**
+ * Lanac predaka od korijena do TRENUTNE stranice. Penje se `roditeljOd()`-om i staje na
+ * landingu — landing je znak u traci, ne mrvica. Ograničeno na 8 koraka: hijerarhija je
+ * duboka najviše 3, pa je sve preko toga ciklus, a ciklus ovdje ne smije zamrznuti stranicu.
+ */
+function lanacMrvica(page, nav) {
+    const lanac = [];
+    let p = page;
+    let straza = 0;
+    while (p && p !== 'landing' && straza < 8) {
+        lanac.unshift(p);
+        const r = roditeljOd(p, nav);
+        p = r ? r.page : 'landing';
+        straza += 1;
+    }
+    return lanac;
+}
+
+/** Kamo vodi klik na mrvicu — isti opis rute koji `navigateTo` očekuje. */
+function _odredisteMrvice(page, nav) {
+    if (page === 'lessons') return { page: 'lessons', data: { subject: (nav && nav.subject) || '' } };
+    return { page: page, data: {} };
+}
+
+/**
+ * T2 — DUBINA KATALOGA U MRVICI. Do T2 je katalog u traci imao jednu jedinu mrvicu
+ * („Predmeti"), dok je pravi položaj (fakultet › smjer › godina) živio u zaglavlju
+ * stranice. Bila su to **dva prikaza istog puta na istom ekranu**, u različitoj mjeri
+ * detalja — a zaglavlje je za to trošilo 140 px, odnosno 54 % iPhonea SE zajedno s
+ * trakom i putanjom. Sada put postoji **jednom**, i to ondje gdje mu je mjesto.
+ *
+ * Vraća stavke `{ naziv, razina }`; posljednja je uvijek trenutna razina.
+ */
+function _mrviceKataloga() {
+    const korijen = { naziv: _pt('topbar.subjects', 'Subjects'), razina: 'faculties' };
+    if (typeof SokratCatalog === 'undefined' || typeof browseState === 'undefined' || !browseState) return [korijen];
+
+    const stavke = [korijen];
+    const razina = browseState.level;
+    if (razina === 'faculties') return stavke;
+
+    // ⚠️ `shortName` prije `name`: puni pravni naziv fakulteta ima 65 znakova i u mrvicu
+    // ne stane ni na jednom telefonu. Kartica fakulteta i dalje pokazuje pun naziv.
+    const f = SokratCatalog.faculties().find((x) => x.id === browseState.facultyId);
+    stavke.push({ naziv: (f && (f.shortName || f.name)) || _pt('browse.trail.faculty', 'Faculty'), razina: 'programs' });
+    if (razina === 'programs') return stavke;
+
+    const p = SokratCatalog.getProgram(browseState.programId);
+    stavke.push({ naziv: (p && p.name) || _pt('browse.trail.program', 'Program'), razina: 'years' });
+    if (razina === 'years') return stavke;
+
+    stavke.push({
+        naziv: _hr() ? (browseState.year + '. godina') : ('Year ' + browseState.year),
+        razina: 'subjects'
+    });
+    return stavke;
+}
+
+/**
+ * Nacrtaj drugi red. Zove se iz `navigateTo` NAKON što je stanje postavljeno, jer nazivi
+ * (predmet, lekcija, materijal) dolaze iz stanja koje `navigateTo` tek upisuje.
+ */
+function renderPathbar() {
+    const traka = document.getElementById('pathbar');
+    const spremnik = document.getElementById('crumbs');
+    if (!traka || !spremnik) return;
+
+    const nav = (typeof AppState !== 'undefined' && AppState.nav) ? AppState.nav : {};
+    const page = nav.page || 'landing';
+
+    // Landing nema položaj — nema kamo „gore". Klasa gasi i visinu (`--pathbar-h: 0`),
+    // pa sekcije ne oduzimaju prostor koji se ne crta.
+    document.body.classList.toggle('no-pathbar', page === 'landing');
+    document.body.classList.toggle('on-landing', page === 'landing');
+    if (page === 'landing') { spremnik.textContent = ''; return; }
+
+    // T2 — od lanca STRANICA do lanca STAVKI. Katalog se razmotava u svoje razine, ali
+    // **samo dok smo NA njemu**: kad korisnik ode na lekciju ili u učenje, međurazine
+    // (fakultet › smjer › godina) više nisu njegov položaj nego povijest putovanja, a
+    // „Predmeti" ga i dalje vraćaju točno onamo gdje je stao (`browseState` se pamti).
+    // Bez tog reza lanac bi na učenju imao ŠEST mrvica, koje se na 320 px svedu na niz
+    // kvačica — a gate koji prijavljuje šum se isključi, kao i mrvica koju nitko ne čita.
+    const stavke = [];
+    lanacMrvica(page, nav).forEach((p) => {
+        if (p === 'browse' && page === 'browse') {
+            _mrviceKataloga().forEach((k) => {
+                stavke.push({
+                    naziv: k.naziv,
+                    klik: () => { browseNaRazinu(k.razina); }
+                });
+            });
+            return;
+        }
+        const naziv = nazivStranice(p, nav);
+        if (!naziv) return;
+        const cilj = _odredisteMrvice(p, nav);
+        stavke.push({ naziv: naziv, klik: () => { navigateTo(cilj.page, cilj.data); } });
+    });
+
+    spremnik.textContent = '';
+
+    stavke.forEach((s, i) => {
+        const zadnji = i === stavke.length - 1;
+        const naziv = s.naziv;
+        if (!naziv) return;
+
+        if (i > 0) {
+            const sep = document.createElement('span');
+            sep.className = 'crumb-sep';
+            sep.setAttribute('aria-hidden', 'true');
+            sep.textContent = '›';
+            spremnik.appendChild(sep);
+        }
+
+        if (zadnji) {
+            // Gdje JESMO — nije gumb, jer nema kamo voditi.
+            const ovdje = document.createElement('span');
+            ovdje.className = 'crumb crumb-current';
+            ovdje.setAttribute('aria-current', 'page');
+            ovdje.textContent = naziv;
+            spremnik.appendChild(ovdje);
+            return;
+        }
+
+        const gumb = document.createElement('button');
+        gumb.type = 'button';
+        gumb.className = 'crumb';
+        gumb.textContent = naziv;
+        gumb.addEventListener('click', s.klik);
+        spremnik.appendChild(gumb);
+    });
+
+    // ⚠️ Mrvica se skrola vodoravno, a novi sadržaj dolazi ZDESNA — bez ovoga bi na uskom
+    // ekranu ostala prikazana lijeva strana lanca (preci), dok je trenutna razina, jedina
+    // koja odgovara na pitanje „gdje sam?", ostala izvan ekrana. Preci se doduše i stišću
+    // (v. `.crumb` u topbar.css), ali ovo je druga brana za slučaj da ni to ne dostaje.
+    spremnik.scrollLeft = spremnik.scrollWidth;
+
+    // T2: označavanje odredišta u traci je OBRISANO jer traka više nema nijedno odredište
+    // („Predmeti" su otišli 2026-08-19, „Moji materijali" u T2). `aria-current` je bio
+    // vezan uz gumbe kojih nema; položaj sada nosi isključivo mrvica, koja `aria-current`
+    // stavlja na svoju zadnju stavku.
+}
+
+/** Ožiči traku. Znak je jedini ulaz koji nema postojeću kuku. */
+function initTopbar() {
+    const dom = document.getElementById('topbarHome');
+    if (dom) dom.addEventListener('click', (e) => { e.preventDefault(); navigateTo('landing'); });
+
+    const natrag = document.getElementById('pathbarBack');
+    if (natrag) natrag.addEventListener('click', () => { goBack(); });
+}
+
+/**
+ * Primjenjuje adresu na aplikaciju. `async` jer subjekt iz URL-a treba provjeriti.
+ *
+ * ⚠️ URL JE NEPOVJERLJIVIJI ULAZ OD `localStorage`-a, ne manje. Spremljena pozicija je
+ * bar nekad bila valjana na ovom uređaju; adresa može imenovati **tuđi ili obrisan**
+ * čvor jer ju je netko utipkao ili poslao. Zato ide kroz `isSubjectOpenable()` — isti
+ * čuvar koji je zatvorio BUG-023.
+ */
+async function applyRoute(route) {
+    if (!route) return false;
+    const d = route.data || {};
+
+    if (d.subject && !(await isSubjectOpenable(d.subject))) {
+        // Nepoznat subjekt: ostani gdje jesi i očisti adresu, umjesto prazne stranice
+        // koja izgleda kao da je gradivo nestalo (BUG-023).
+        if (history && history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+        return false;
+    }
+    // Sekcija se provjerava po TIPKI KOJA POSTOJI, ne po prepisanom popisu — popis bi se
+    // razišao sa sučeljem čim neki mod dođe ili ode (ADR-027).
+    // ⚠️ Usporedbom preko `dataset`, NE sastavljanjem selektora: `d.section` dolazi iz
+    // adrese, pa bi ulazio u niz selektora — isti razred kao tekst iz podataka u `innerHTML`.
+    if (route.page === 'study' && d.section && d.section !== 'home') {
+        const modovi = Array.prototype.slice.call(document.querySelectorAll('.study-nav-btn'));
+        if (!modovi.some(function (b) { return b.dataset.section === d.section; })) d.section = 'home';
+    }
+    navigateTo(route.page, d);
+    return true;
+}
+
+/** Vezuje „natrag"/„naprijed" i ručnu izmjenu adrese. */
+function initRouter() {
+    // `popstate` = sistemska gesta natrag/naprijed (uklj. Androidov gumb).
+    window.addEventListener('popstate', function (e) {
+        // ⚠️ Dubina se ČITA iz unosa, ne dekrementira brojačem: `popstate` okida i pri koraku
+        // NAPRIJED, pa bi brojač nakon naprijed-natrag lagao i „natrag" bi počeo izlaziti
+        // sa stranice. Unos bez naše oznake = tuđi/početni → dubina 0.
+        dubinaPovijesti = (e && e.state && typeof e.state.sokratDubina === 'number') ? e.state.sokratDubina : 0;
+        const route = parseRoute(location.hash);
+        // Golo sidro ili prazan hash u povijesti znači „bili smo na landingu".
+        applyRoute(route || { page: 'landing', data: {} });
+    });
+
+    // `hashchange` = netko je adresu izmijenio rukom ili došao izvana. Vlastiti upisi
+    // idu kroz `pushState`/`replaceState`, koji ovo NE okidaju.
+    window.addEventListener('hashchange', function () {
+        const route = parseRoute(location.hash);
+        if (route) applyRoute(route);
+    });
+}
+
+// ========== VLASTITO GRADIVO — ulazi (C0 / ADR-029) ==========
 
 /**
  * Sve ulaze u vlastiti materijal veže JEDAN delegirani listener, jer se dio njih (gumb na profilu)
@@ -192,11 +663,9 @@ function initMaterialsEntries() {
 
     const back = document.getElementById('backFromMaterials');
     if (back) {
-        back.addEventListener('click', function () {
-            const ret = materialsReturnPage;
-            if (ret && ret.page && ret.page !== 'materials') navigateTo(ret.page, ret.data || {});
-            else navigateTo('landing');
-        });
+        // K2a: ovdje je živjela petlja koju je Leon našao. `materialsReturnPage` je pamtio
+        // dolazak IZ EDITORA, pa je „natrag" s police vraćao u editor iz kojeg si upravo izašao.
+        back.addEventListener('click', function () { goBack(); });
     }
 
     const signIn = document.getElementById('materialsSignInBtn');
@@ -206,11 +675,9 @@ function initMaterialsEntries() {
         });
     }
 
-    // Stranica se mora moći otvoriti izravnim linkom.
-    if (location.hash === MATERIALS_ROUTE) navigateTo('materials');
-    window.addEventListener('hashchange', function () {
-        if (location.hash === MATERIALS_ROUTE && AppState.nav.page !== 'materials') navigateTo('materials');
-    });
+    // Otvaranje izravnim linkom i `hashchange` više NISU ovdje: od K1 to radi ruter za
+    // sve stranice odjednom (`initRouter` + `restoreLastPosition`). Dvije kopije istog
+    // posla razišle bi se čim ruta dobije segment.
 
     // Prijava/odjava dok je stranica otvorena mora prebaciti plohu (stablo ⇄ poziv na prijavu),
     // inače odjavljen korisnik gleda tuđe stablo do sljedeće navigacije.
@@ -349,26 +816,43 @@ function enterBrowse() {
     navigateTo('browse');
 }
 
+/**
+ * T2 — JEDAN ulaz za promjenu razine kataloga: stanje, prikaz i MRVICA idu zajedno.
+ *
+ * ⚠️ Postoji jer je od T2 dubina drill-downa vidljiva u gornjoj traci. Do tada je svaka
+ * promjena razine zvala samo `renderBrowse()`, pa bi mrvica ostala na zatečenoj razini —
+ * i opet bismo imali dva prikaza istog puta koji se razilaze, što je K2b već jednom
+ * platio (dva modela vraćanja → BUG-026 i BUG-027). Ovdje su spojeni u izraz, ne u
+ * dogovor: tko mijenja razinu, mijenja je kroz ovu funkciju.
+ */
+function browseNaRazinu(razina, podaci) {
+    const p = podaci || {};
+    const s = browseState;
+    if (razina === 'faculties') {
+        browseState = { level: 'faculties', facultyId: null, programId: null, year: null };
+    } else if (razina === 'programs') {
+        browseState = { level: 'programs', facultyId: (p.facultyId != null ? p.facultyId : s.facultyId), programId: null, year: null };
+    } else if (razina === 'years') {
+        browseState = { level: 'years', facultyId: s.facultyId, programId: (p.programId != null ? p.programId : s.programId), year: null };
+    } else if (razina === 'subjects') {
+        browseState = { level: 'subjects', facultyId: s.facultyId, programId: s.programId, year: (p.year != null ? Number(p.year) : s.year) };
+    } else {
+        return;
+    }
+    renderBrowse();
+    if (typeof renderPathbar === 'function') renderPathbar();
+}
+
 // Back gumb na browse stranici: korak unatrag kroz hijerarhiju.
 function browseBack() {
     switch (browseState.level) {
-        case 'subjects':
-            browseState.level = 'years';
-            browseState.year = null;
-            renderBrowse();
-            break;
-        case 'years':
-            browseState.level = 'programs';
-            browseState.programId = null;
-            renderBrowse();
-            break;
-        case 'programs':
-            browseState.level = 'faculties';
-            browseState.facultyId = null;
-            renderBrowse();
-            break;
+        case 'subjects': browseNaRazinu('years'); break;
+        case 'years':    browseNaRazinu('programs'); break;
+        case 'programs': browseNaRazinu('faculties'); break;
         default:
-            navigateTo('landing');
+            // Vrhunska razina browsea nema svoj roditelj u drill-downu -> izlazi kroz
+            // zajednicki model (povijest, pa landing).
+            goBack();
     }
 }
 
@@ -484,41 +968,35 @@ function renderBrowse() {
     if (typeof SokratCatalog === 'undefined') return;
     const grid = document.getElementById('browseGrid');
     const heading = document.getElementById('browseHeading');
-    const crumb = document.getElementById('browseBreadcrumb');
     const intro = document.getElementById('browseIntro');
     if (!grid) return;
 
-    let html = '', title = '', trail = _t('browse.trail.browse', 'Browse'), introText = '';
-    const yearLabel = (y) => _hr() ? `${y}. godina` : `Year ${y}`;
+    // T2: `trail` se više ne ispisuje na stranici — položaj nosi mrvica u traci
+    // (`_mrviceKataloga`). Varijabla je obrisana zajedno s `#browseBreadcrumb`; ostao je
+    // samo `title`, koji je UPUTA („Odaberi smjer"), i seli u sadržaj gdje se smije
+    // odskrolati.
+    let html = '', title = '', introText = '';
 
     if (browseState.level === 'programs') {
-        const f = SokratCatalog.faculties().find(x => x.id === browseState.facultyId);
         title = _t('browse.h.program', 'Choose your program');
-        trail = f ? f.name : _t('browse.trail.faculty', 'Faculty');
         introText = _t('browse.i.program', 'Select your study program.');
         html = renderProgramCards(browseState.facultyId);
     } else if (browseState.level === 'years') {
-        const p = SokratCatalog.getProgram(browseState.programId);
         title = _t('browse.h.year', 'Choose your year');
-        trail = p ? p.name : _t('browse.trail.program', 'Program');
         introText = _t('browse.i.year', 'Pick the study year you want to review.');
         html = renderYearCards(browseState.programId);
     } else if (browseState.level === 'subjects') {
-        const p = SokratCatalog.getProgram(browseState.programId);
         title = _hr() ? `Predmeti ${browseState.year}. godine` : `Year ${browseState.year} subjects`;
-        trail = p ? `${p.name} · ${yearLabel(browseState.year)}` : yearLabel(browseState.year);
         introText = '';
         html = renderSubjectCards(browseState.programId, browseState.year);
     } else {
         // 'faculties' (default / entry)
         title = _t('browse.h.faculty', 'Choose your faculty');
-        trail = _t('browse.trail.browse', 'Browse');
         introText = _t('browse.i.faculty', 'Select your faculty to find your subjects.');
         html = renderFacultyCards();
     }
 
     if (heading) heading.textContent = title;
-    if (crumb) crumb.textContent = trail;
     if (intro) intro.textContent = introText;
     grid.innerHTML = html;
 }
@@ -534,17 +1012,11 @@ function initBrowse() {
         const kind = card.dataset.browse;
         const id = card.dataset.id;
         if (kind === 'faculty') {
-            browseState.facultyId = id;
-            browseState.level = 'programs';
-            renderBrowse();
+            browseNaRazinu('programs', { facultyId: id });
         } else if (kind === 'program') {
-            browseState.programId = id;
-            browseState.level = 'years';
-            renderBrowse();
+            browseNaRazinu('years', { programId: id });
         } else if (kind === 'year') {
-            browseState.year = Number(id);
-            browseState.level = 'subjects';
-            renderBrowse();
+            browseNaRazinu('subjects', { year: Number(id) });
         } else if (kind === 'subject') {
             navigateTo('lessons', { subject: id });
             return;
@@ -607,37 +1079,185 @@ function inkForTint(boja) {
 // i padne ako se raziđu. Promijeniš li tokene, gate ti kaže novu vrijednost.
 const TINT_INK_CROSSOVER = 0.1967;
 
+// Stanje filtra vitrine. Živi ovdje, a ne u `AppState`, jer ne preživljava odlazak s
+// landinga: vrati li se posjetitelj, katalog počinje otvoren — to je namjerno.
+const landingFilter = { q: '', program: '' };   // '' = svi programi
+
+function _pretraziv(s, q) {
+    const polja = [s.name, s.shortName, s.description].filter(Boolean).join(' ').toLowerCase();
+    return polja.includes(q);
+}
+
+/** Predmeti koje vitrina trenutno pokazuje, po filtru i tražilici (ravan popis). */
+function filteredLandingSubjects() {
+    const q = landingFilter.q.trim().toLowerCase();
+    const base = landingFilter.program
+        ? ((typeof SokratCatalog !== 'undefined') ? SokratCatalog.subjectsOf(landingFilter.program) : [])
+        : allReachableSubjects();
+    return q ? base.filter((s) => _pretraziv(s, q)) : base;
+}
+
+/**
+ * Isti popis, ali GRUPIRAN PO PROGRAMU — samo kad nije odabran nijedan program.
+ *
+ * ⚠️ POVOD JE NALAZ KOJI SE VIDIO TEK NA RENDERIRANOJ STRANICI, ne u brojkama.
+ * HR program je po ADR-012 KLON EN-a, pa ravna mreža od 24 stavlja „Management" i
+ * „Menadžment", „Tourism Economics" i „Ekonomika turizma" jedno do drugoga — SEDAM
+ * takvih parova. Posjetitelj tad ne vidi 24 predmeta nego 17 i sedam ponavljanja:
+ * točno po brojci, krivo po dojmu. Naslov programa parovima daje razlog.
+ *
+ * Predmet ide u PRVI program koji ga sadrži (vezni predmeti 1. godine stoje u više
+ * programa, ADR-022) — inače bi grupiranje vratilo duplikate koje dedup baš uklanja.
+ */
+function groupedLandingSubjects() {
+    const q = landingFilter.q.trim().toLowerCase();
+    if (landingFilter.program || typeof SokratCatalog === 'undefined') return null;
+
+    const uzet = Object.create(null);
+    const grupe = [];
+    (SOKRAT_CATALOG.faculties || []).forEach((f) => (f.programs || []).forEach((p) => {
+        const svoji = SokratCatalog.subjectsOf(p.id).filter((s) => {
+            if (!s || !s.id || uzet[s.id]) return false;
+            uzet[s.id] = true;
+            return true;
+        }).filter((s) => !q || _pretraziv(s, q));
+        if (svoji.length) grupe.push({ id: p.id, name: p.name, subjects: svoji });
+    }));
+    // Jedan program = nema što grupirati; naslov bi bio šum.
+    return grupe.length > 1 ? grupe : null;
+}
+
+/**
+ * Gumbi filtra po programu — CRTANI IZ KATALOGA, nikad iz zakucanog popisa.
+ *
+ * Isti razlog zbog kojeg se broj predmeta ne piše rukom: doda li se treći program,
+ * ova traka ga dobije sama. Do 2026-08-16 je HR postojao u katalogu i bio nedohvatljiv
+ * s landinga, pa su vrata pisala 24 a mreža nudila 17.
+ */
+function renderCatalogPrograms() {
+    const wrap = document.getElementById('catalogPrograms');
+    if (!wrap || typeof SOKRAT_CATALOG === 'undefined') return;
+    const programi = [];
+    (SOKRAT_CATALOG.faculties || []).forEach((f) => (f.programs || []).forEach((p) => {
+        const n = (typeof SokratCatalog !== 'undefined') ? SokratCatalog.subjectsOf(p.id).length : 0;
+        if (n > 0) programi.push({ id: p.id, name: p.name, n: n });
+    }));
+    // Gumb „svi" nosi ukupan broj kroz sve programe — istu brojku koju piše i hero.
+    const svi = allReachableSubjects().length;
+    const tipke = [{ id: '', name: _t('cat.all', 'All'), n: svi }].concat(programi);
+    wrap.innerHTML = tipke.map((p) => `
+        <button type="button" class="cat-program" data-program="${browseEsc(p.id)}"
+                aria-pressed="${p.id === landingFilter.program ? 'true' : 'false'}">
+            <span class="cat-program-name">${browseEsc(p.name)}</span>
+            <span class="cat-program-n">${browseEsc(p.n)}</span>
+        </button>`).join('');
+}
+
+/** Jedna pločica predmeta. Boja i ikona dolaze iz podatka → sve kroz `browseEsc`. */
+function landingSubjectCard(s) {
+    const grad = (Array.isArray(s.iconGradient) && s.iconGradient.length === 2)
+        ? s.iconGradient : [s.color, s.color];
+    const lessonCount = (s.lessons || []).length;
+    return `
+        <button type="button" class="landing-subject-card" data-landing-subject="${browseEsc(s.id)}" style="--card-accent:${browseEsc(grad[0])}">
+            <div class="landing-subject-icon" data-ink="${inkForTint(grad[0])}" style="background:linear-gradient(135deg, ${browseEsc(grad[0])}, ${browseEsc(grad[1])});">
+                <i class="fas ${browseEsc(s.icon)}"></i>
+            </div>
+            <div class="landing-subject-info">
+                <h3>${browseEsc(s.name)}</h3>
+                <p>${_hr() ? `${browseEsc(s.year)}. godina` : `Year ${browseEsc(s.year)}`} &middot; ${_unit(lessonCount, 'lesson')}</p>
+            </div>
+            <i class="fas fa-arrow-right landing-subject-arrow" aria-hidden="true"></i>
+        </button>`;
+}
+
+// ➕ POSLJEDNJA PLOČICA (§7.13). Puna mreža čita kao ZATVOREN POPIS — ta jedna
+// isprekidana pločica jedina kaže da platforma nije popis, i to bez ijedne riječi
+// marketinga. Ide IZA POSLJEDNJEG predmeta, nikad na fiksnu poziciju.
+function landingMakeCard() {
+    return `
+        <button type="button" class="landing-subject-card landing-subject-card--make" data-goto-materials>
+            <div class="landing-subject-icon landing-subject-icon--make" aria-hidden="true">
+                <i class="fas fa-plus"></i>
+            </div>
+            <div class="landing-subject-info">
+                <h3>${browseEsc(_t('cat.make.t', 'Your subject'))}</h3>
+                <p>${browseEsc(_t('cat.make.d', 'Not on the list? Write it yourself.'))}</p>
+            </div>
+            <i class="fas fa-arrow-right landing-subject-arrow" aria-hidden="true"></i>
+        </button>`;
+}
+
 function renderLandingSubjects() {
     const wrap = document.getElementById('landingSubjects');
     if (!wrap || typeof SOKRAT_CATALOG === 'undefined' || !Array.isArray(SOKRAT_CATALOG.subjects)) return;
-    wrap.innerHTML = primarySubjects().map((s) => {
-        const grad = (Array.isArray(s.iconGradient) && s.iconGradient.length === 2)
-            ? s.iconGradient : [s.color, s.color];
-        const lessonCount = (s.lessons || []).length;
-        return `
-            <button type="button" class="landing-subject-card" data-landing-subject="${browseEsc(s.id)}" style="--card-accent:${browseEsc(grad[0])}">
-                <div class="landing-subject-icon" data-ink="${inkForTint(grad[0])}" style="background:linear-gradient(135deg, ${browseEsc(grad[0])}, ${browseEsc(grad[1])});">
-                    <i class="fas ${browseEsc(s.icon)}"></i>
-                </div>
-                <div class="landing-subject-info">
-                    <h3>${browseEsc(s.name)}</h3>
-                    <p>${_hr() ? `${browseEsc(s.year)}. godina` : `Year ${browseEsc(s.year)}`} &middot; ${_unit(lessonCount, 'lesson')}</p>
-                </div>
-                <i class="fas fa-arrow-right landing-subject-arrow" aria-hidden="true"></i>
-            </button>`;
-    }).join('');
+    const lista = filteredLandingSubjects();
+    const grupe = groupedLandingSubjects();
+    // ＋ pločica se ne prikazuje dok tražilica filtrira: „nema rezultata za X" pa ponuda
+    // da napraviš svoj predmet je odgovor na pitanje koje nitko nije postavio.
+    const pokaziPlus = !landingFilter.q.trim();
+
+    if (grupe) {
+        wrap.innerHTML = grupe.map((g, i) => `
+            <h3 class="cat-group">${browseEsc(g.name)}</h3>
+            <div class="landing-subjects-grid">
+                ${g.subjects.map(landingSubjectCard).join('')}
+                ${(pokaziPlus && i === grupe.length - 1) ? landingMakeCard() : ''}
+            </div>`).join('');
+    } else {
+        wrap.innerHTML = `<div class="landing-subjects-grid">${
+            lista.map(landingSubjectCard).join('') + (pokaziPlus ? landingMakeCard() : '')
+        }</div>`;
+    }
+
+    const brojac = document.getElementById('catalogCount');
+    if (brojac) {
+        brojac.textContent = lista.length
+            ? (landingFilter.q.trim() ? _unit(lista.length, 'subject') : '')
+            : _t('cat.none', 'No subject matches that.');
+    }
+    // ⚠️ OVDJE SE NE SMIJE ZVATI `applyTranslations()`. Ona na kraju sama zove
+    // `renderCatalogPrograms()` i `renderLandingSubjects()` (jer liste crtane preko
+    // innerHTML ne hvataju `[data-i18n]`) → poziv odavde je IZRAVNA MEĐUSOBNA REKURZIJA
+    // i ruši stranicu s „Maximum call stack size exceeded" pri svakom tipkanju u
+    // tražilicu. Zato sav tekst ovdje ide kroz `_t()` inline, kao i ostale kartice.
 }
 
 // Delegirani click za showcase kartice (veže se jednom) → otvori lekcije predmeta.
 function initLandingSubjects() {
     const wrap = document.getElementById('landingSubjects');
-    if (!wrap || wrap.dataset.bound === '1') return;
-    wrap.dataset.bound = '1';
-    wrap.addEventListener('click', (e) => {
-        const card = e.target.closest('[data-landing-subject]');
-        if (!card) return;
-        navigateTo('lessons', { subject: card.dataset.landingSubject });
-    });
+    if (wrap && wrap.dataset.bound !== '1') {
+        wrap.dataset.bound = '1';
+        wrap.addEventListener('click', (e) => {
+            // ＋ pločica ide u vlastito gradivo; `data-goto-materials` hvata globalni
+            // rukovatelj, pa je ovdje samo propuštamo dalje.
+            if (e.target.closest('[data-goto-materials]')) return;
+            const card = e.target.closest('[data-landing-subject]');
+            if (!card) return;
+            navigateTo('lessons', { subject: card.dataset.landingSubject });
+        });
+    }
+
+    const trazilica = document.getElementById('catalogSearch');
+    if (trazilica && trazilica.dataset.bound !== '1') {
+        trazilica.dataset.bound = '1';
+        trazilica.addEventListener('input', () => {
+            landingFilter.q = trazilica.value || '';
+            renderLandingSubjects();
+        });
+    }
+
+    const programi = document.getElementById('catalogPrograms');
+    if (programi && programi.dataset.bound !== '1') {
+        programi.dataset.bound = '1';
+        programi.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-program]');
+            if (!btn) return;
+            landingFilter.program = btn.dataset.program || '';
+            renderCatalogPrograms();
+            renderLandingSubjects();
+        });
+    }
 }
 
 // ========== HERO: ŽIVI PRIKAZ (C2) ==========
@@ -664,29 +1284,66 @@ function renderLessonsPage(subjectId) {
     grid.innerHTML = '';
 
     subject.lessons.forEach((lesson, index) => {
-        const card = document.createElement('div');
-        card.className = 'lesson-card';
         // Data-driven: lekcija bez mapiranja u catalog.content.resolve = coming soon.
         const isComingSoon = (typeof SokratCatalog !== 'undefined')
             ? SokratCatalog.isLessonComingSoon(subjectId, lesson.id)
             : (lesson.id === 'second-midterm');
-        card.innerHTML = `
-            <div class="lesson-number">${index + 1}</div>
-            <div class="lesson-info">
-                <h3>${lesson.name}</h3>
-                <p>${lesson.description}</p>
-            </div>
-            <i class="fas fa-chevron-right lesson-arrow"></i>
-        `;
+
+        // ── BUG-032 ───────────────────────────────────────────────────────────────────
+        // Kartica je do 2026-08-24 bila `<div>` sa slušačem klika: tipkovnica je nije mogla
+        // fokusirati, čitač ekrana ju je čitao kao običan tekst, a ovo je JEDINI put u svaku
+        // lekciju kataloga. Nijedna brana to nije vidjela jer sve traže KONTROLU — a kvar je
+        // bio u tome što kontrole nema (phone-brana je zato `lessons` prijavljivala kao ekran
+        // bez ijedne dohvatljive kontrole, tvrdnja ④).
+        //
+        // ELEMENT SLIJEDI POSLJEDICU, ne izgled: lekcija koja se DA otvoriti je `<a>` s pravom
+        // adresom (K1 joj ju je već dao, pa je i dijeljiva i otvoriva u novoj kartici), a ona
+        // koja se ne da nije poveznica nego `<button>` — ne vodi nikamo, nego objašnjava zašto.
+        // Klik se presreće, kao kod loga u traci: `navigateTo` mora ostati jedini upisivač
+        // povijesti, inače `dubinaPovijesti` (K2a) prestane vrijediti.
+        const card = document.createElement(isComingSoon ? 'button' : 'a');
+        card.className = 'lesson-card' + (isComingSoon ? ' lesson-card--soon' : '');
+        if (isComingSoon) card.type = 'button';
+        else card.href = routeFor('study', { subject: subjectId, lesson: lesson.id, section: 'home' });
+
+        // ⚠️ Tekst iz podataka ide kroz `textContent`, ne kroz `innerHTML`. Escape (BUG-025)
+        // ovdje time ne treba jer se opasnost NE MOŽE pojaviti — to je jača obrana od ispravnog
+        // escapea, koji vrijedi dok ga se netko sjeti pozvati.
+        const num = document.createElement('div');
+        num.className = 'lesson-number';
+        num.textContent = String(index + 1);
+
+        const info = document.createElement('div');
+        info.className = 'lesson-info';
+        const naslov = document.createElement('h3');
+        naslov.textContent = lesson.name || '';
+        const opis = document.createElement('p');
+        opis.textContent = lesson.description || '';
+        info.appendChild(naslov);
+        info.appendChild(opis);
+
+        // Strelica/sat su UKRAS — ime kontrole ih ne smije sadržavati.
+        const strelica = document.createElement('i');
+        strelica.className = (isComingSoon ? 'fas fa-clock' : 'fas fa-chevron-right') + ' lesson-arrow';
+        strelica.setAttribute('aria-hidden', 'true');
+
+        card.appendChild(num);
+        card.appendChild(info);
+        card.appendChild(strelica);
+
         if (isComingSoon) {
-            card.style.opacity = '0.65';
-            card.style.cursor = 'not-allowed';
-            card.querySelector('.lesson-arrow').className = 'fas fa-clock lesson-arrow';
+            // Stanje mora ući u IME kontrole: toast objašnjava tek POSLIJE klika, a odluka
+            // „vrijedi li mi ovo otvoriti" pada prije njega. Vidljivo je ionako (sat + prigušenje).
+            const oznaka = document.createElement('span');
+            oznaka.className = 'visually-hidden';
+            oznaka.textContent = ' (' + (window.t ? t('lesson.comingSoonBadge') : 'coming soon') + ')';
+            card.appendChild(oznaka);
             card.addEventListener('click', () => {
                 showToast(window.t ? t('toast.comingSoon') : 'Second Midterm is coming soon.');
             });
         } else {
-            card.addEventListener('click', () => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
                 navigateTo('study', { subject: subjectId, lesson: lesson.id });
             });
         }
@@ -775,8 +1432,9 @@ async function initStudyPage(subjectId, lessonId, targetSection) {
         AppState.nav.data = fullData;
     }
 
-    const lessonsWord = window.t ? t('breadcrumb.lessons') : 'Lessons';
-    document.getElementById('studyBreadcrumb').textContent = `${subject.shortName} > ${lessonsWord}`;
+    // K2b: `#studyBreadcrumb` je obrisan — pisao je „Predmet > Lekcije" dok je globalni
+    // drugi red već crtao `Predmeti › Predmet › Lekcija`, i to kao NAVIGACIJU, a ovaj je
+    // bio samo tekst. Naslov lekcije ostaje: to je naslov STRANICE, ne putanja.
     document.getElementById('currentLessonTitle').textContent = subject.lessons.find(l => l.id === lessonId)?.name || (window.t ? t('lesson.fallback') : 'Lesson');
 
     loadProgress();
@@ -862,6 +1520,7 @@ function switchSection(section) {
     });
 
     saveCurrentPosition(AppState.nav.page, { subject: AppState.nav.subject, lesson: AppState.nav.lesson });
+    syncSectionRoute();   // K1: mod je dio adrese → dijeljen link vodi točno u taj mod
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (section === 'flashcards') {
@@ -910,7 +1569,12 @@ window.renderSubjectsSidebar = renderSubjectsSidebar;
 window.renderBrowse = renderBrowse;
 window.enterBrowse = enterBrowse;
 window.browseBack = browseBack;
+window.goBack = goBack;   // K2a — jedini „natrag“ u aplikaciji
+window.initTopbar = initTopbar;       // K2b
+window.renderPathbar = renderPathbar; // K2b — i18n ga zove pri promjeni jezika (mrvica je prevedena)
+window.roditeljOd = roditeljOd;       // K2b — brana dohvatljivosti (K3) mjeri hijerarhiju, ne gumbe
 window.initBrowse = initBrowse;
 window.renderLandingMeta = renderLandingMeta;
 window.renderLandingSubjects = renderLandingSubjects;
+window.renderCatalogPrograms = renderCatalogPrograms;
 window.initLandingSubjects = initLandingSubjects;

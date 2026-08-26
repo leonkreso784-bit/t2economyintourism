@@ -12,6 +12,8 @@
 // tim putem do kraja i provjerava da stavke prežive objavu. Kriterij 1 iz
 // `docs/product/UGC_SPEC.md` traži oboje.
 const { test, expect } = require('@playwright/test');
+// T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
+const { otvoriAplikaciju } = require('./helpers/studio-entry');
 
 const MODES = ['learn', 'cards', 'quiz', 'fill'];
 
@@ -21,7 +23,7 @@ async function openMaterials(page) {
   });
   await page.goto('/');
   await page.waitForFunction(() =>
-    !!window.SokratMaterials && !!window.SokratAdmin && !!window.SokratDraft
+    !!window.SokratMaterials && !!window.SokratAdmin
     && typeof window.navigateTo === 'function');
   await page.waitForFunction(() => window.SokratMaterials.isAvailable(), null, { timeout: 20000 });
   await page.evaluate(() => navigateTo('materials'));
@@ -32,8 +34,14 @@ async function openMaterials(page) {
 
 const mkNode = (page, p, k, n) =>
   page.evaluate(([a, b, c]) => window.SokratMaterials.createNode(a, b, c), [p, k, n]);
-const rmNode = (page, id) =>
-  page.evaluate((i) => window.SokratMaterials.deleteNode(i).catch(() => {}), id);
+// ⚠️ T6: otvaranje materijala vodi na `editor.html`, gdje `SokratMaterials` ne postoji —
+// čišćenje zato UVIJEK prvo vrati stranicu u aplikaciju. Bez toga četiri testa padnu na
+// vlastitom pospremanju, dakle na krivom mjestu: tvrdnje su prije toga već prošle.
+const rmNode = async (page, id) => {
+  await otvoriAplikaciju(page);
+  await page.waitForFunction(() => !!window.SokratMaterials, null, { timeout: 20000 });
+  await page.evaluate((i) => window.SokratMaterials.deleteNode(i).catch(() => {}), id);
+};
 const readContent = (page, id) => page.evaluate(async (nodeId) => {
   const c = SokratAuth.getClient();
   const r = await c.from('node_content').select('payload,version').eq('node_id', nodeId).single();

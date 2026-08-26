@@ -1,0 +1,30 @@
+{
+  "_zasto": "Poznati kvarovi telefona koje T1-T5 tek trebaju pojesti. Brana pada samo na NOVOM kvaru; spusti se s PHONE_BASELINE_UPDATE=1. Vidi tests/helpers/phone-gate.js i spec 9.7.",
+  "javno": {
+    "bocno": [],
+    "dno": [],
+    "kromo": [],
+    "namjestaj": [],
+    "otok": [],
+    "prviEkran": [
+      "320px about · kromo 159 px + banner 129 px (23 %) od 568 px",
+      "393px about · kromo 167 px + banner 129 px (15 %) od 852 px",
+      "430px about · kromo 167 px + banner 129 px (14 %) od 932 px",
+      "852px about · kromo 56 px + banner 73 px (19 %) od 393 px"
+    ],
+    "spremnik": [],
+    "sukob": [],
+    "zaglavlje": []
+  },
+  "prijavljeno": {
+    "bocno": [],
+    "dno": [],
+    "kromo": [],
+    "namjestaj": [],
+    "otok": [],
+    "prviEkran": [],
+    "spremnik": [],
+    "sukob": [],
+    "zaglavlje": []
+  }
+}

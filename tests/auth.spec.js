@@ -87,7 +87,7 @@ test('profile page shows sign-in prompt when signed out and navigates back', asy
   await expect(page.locator('#profile-page')).toBeVisible();
   await expect(page.locator('#profileSignInBtn')).toBeVisible();
 
-  await page.click('#backFromProfile');
+  await page.click('#pathbarBack');   // K2b: jedan gumb natrag za cijelu aplikaciju
   await expect(page.locator('#landing-page')).toHaveClass(/active/);
 
   // Profile se NE sprema kao last-position (restore ovisi o auth sesiji)

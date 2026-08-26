@@ -13,11 +13,43 @@
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 0;
+    /* ⚠️ T4 · TRAKA SE POVLAČI PRED TRAJNIM DONJIM NAMJEŠTAJEM, i to nije uljudnost nego
+       ispravak mjerenog kvara. `.study-mobile-nav` (promjena načina učenja) je `fixed;
+       bottom:0; z-index:9999`, a ova traka je na `z-index:2147483000` — dakle na prvom
+       posjetu je pokrivala SVIH ŠEST gumba i na 320 px nije ostajala **nijedna** dohvatljiva
+       kontrola bez skrola. Izmjereno: samo stiskanje trake (217 → 127 px) to NE popravlja
+       (vrh padne na 441, a navigacija počinje na 475) — popravlja tek podizanje. Vrijednost
+       objavljuje `js/consent.js` mjerenjem, jer visina navigacije nastaje iz nekoliko
+       pravila i svaka ovdje prepisana konstanta bila bi drugi izvor iste istine. */
+    bottom: var(--bottom-furniture-h, 0px);
     z-index: 2147483000; /* above app modals/toasts */
     box-sizing: border-box;
     width: 100%;
-    padding: 16px;
+    padding: 12px;
+    /* T1 · sigurna zona. Traka je `position: fixed; bottom: 0`, dakle JEDINI namještaj
+       koji sjedi točno na home-indikatoru — a nijedan spremnik je ne može uvući, jer
+       fiksni element ne zna za padding svojih predaka. Izmjereno prije popravka: oba
+       gumba su na iPhoneu 16 ulazila **20 px** pod indikator, na SVAKOJ stranici, i to
+       trajno (traka se ne skrola). U landscapeu je „Prihvaćam" ulazio i **43 px** pod
+       bočni izrez. ⚠️ Longhand MORA doći poslije kratice `padding:` — obrnutim redom
+       ga kratica tiho briše, što je isti kvar koji je `.browse-content` platio u
+       medijskom upitu. */
+    /* ⚠️ `max()`, a NE zbrajanje — i to je izmjereno, ne stil. Sa `calc(16px + rub)` je
+       traka narasla za punih 34 px i time gurnula JOŠ JEDAN ekran (393 px, kartice) u
+       stanje „bez skrola se ne da ništa" — popravak sigurne zone pogoršao bi tvrdnju ④.
+       Sa `max()` sigurni rub POJEDE razmak umjesto da mu se doda: sadržaj sjeda točno na
+       granicu sigurne zone, a ispod indikatora i dalje nema ničega. Rast je onda samo
+       razlika do ruba — **18 px** ovdje (16 → 34) i **20 px** u uskoj inačici niže
+       (14 → 34); izmjereno na 320 px: banner **197 → 217 px**. Kad je rub 0 (desktop),
+       `max(16px, 0)` = 16 → nijedan piksel razlike. */
+    /* ⚠️ T4 · SIGURNI RUB SE ODUZIMA ZA ONO ŠTO JE VEĆ ISPOD TRAKE. Kad traka sjedne iznad
+       donje navigacije, ispod nje **nema** izreza — njega je već pojela navigacija. Bez
+       oduzimanja bi traka nosila 34 px prazne visine usred ekrana, i to baš na profilu na
+       kojem se svaki piksel broji. Kad namještaja nema (`0px`), izraz se svede na staro
+       ponašanje: `max(12px, 34px)` = 34. Isti rez kao T1: `max()`, nikad zbrajanje. */
+    padding-bottom: max(12px, calc(var(--safe-bottom) - var(--bottom-furniture-h)));
+    padding-left: max(12px, var(--safe-left));
+    padding-right: max(12px, var(--safe-right));
     display: flex;
     justify-content: center;
     background: var(--color-surface-1);
@@ -45,7 +77,7 @@
     max-width: 980px;
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 12px;
     flex-wrap: wrap;
 }
 
@@ -53,13 +85,14 @@
     flex: 1 1 320px;
     min-width: 0; /* allow text to shrink instead of forcing overflow */
     margin: 0;
-    font-size: 0.9rem;
-    line-height: 1.5;
+    font-size: 0.85rem;
+    line-height: 1.45;
     color: var(--color-ink-2);
 }
 
-.cookie-banner__text strong { color: var(--color-ink-0); }
-
+/* `.cookie-banner__text strong` je obrisan u T4: tekst sada dolazi iz i18n-rjecnika kroz
+   `textContent`, pa u traci nema nijednog elementa osim `<span>` i `<a>` — pravilo vise ne
+   moze pogoditi nista. */
 .cookie-banner__text a {
     color: var(--color-brand-500);
     text-decoration: underline;
@@ -67,7 +100,7 @@
 
 .cookie-banner__actions {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex: 0 0 auto;
     flex-wrap: wrap;
 }
@@ -77,8 +110,11 @@
     cursor: pointer;
     border: none;
     border-radius: var(--radius-md);
-    padding: 10px 18px;
-    font-size: 0.9rem;
+    /* ⚠️ 9px × 2 + 0.85rem retka = 36 px visine. NE ide niže: 36 px je najmanja meta koju
+       Appleove smjernice još drže dodirljivom, a ovo je gumb za pristanak — mjesto na kojem
+       se ne štedi. Visina trake se rezala na tekstu i razmacima, ne na metama. */
+    padding: 9px 16px;
+    font-size: 0.85rem;
     font-weight: 600;
     font-family: inherit;
     transition: transform 0.12s ease, filter 0.12s ease, background 0.12s ease;
@@ -104,7 +140,16 @@
 
 /* On narrow screens stack text over full-width buttons */
 @media (max-width: 560px) {
-    .cookie-banner { padding: 14px; }
+    .cookie-banner {
+        padding: 10px;
+        /* Kratica iznad ponovno briše sigurnu zonu — zato je ovdje ponovno ispisana. */
+        padding-bottom: max(10px, calc(var(--safe-bottom) - var(--bottom-furniture-h)));
+        padding-left: max(10px, var(--safe-left));
+        padding-right: max(10px, var(--safe-right));
+    }
+    .cookie-banner__inner { gap: 10px; }
+    /* Na telefonu tekst nosi cijeli redak, pa mu manji korak štedi cijelu liniju visine. */
+    .cookie-banner__text { font-size: 0.8rem; line-height: 1.4; }
     .cookie-banner__actions { width: 100%; }
     .cookie-btn { flex: 1 1 0; text-align: center; }
 }

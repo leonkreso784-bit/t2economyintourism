@@ -18,6 +18,8 @@
 //
 // STAGING-only. Ništa se ne objavljuje: Studio se otvara u read-only pregledu.
 const { test, expect } = require('@playwright/test');
+// T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
+const { otvoriStudio } = require('./helpers/studio-entry');
 
 const SIRINE = [320, 360, 374, 375, 390, 414, 480, 639, 640, 641, 679, 680, 681,
                 767, 768, 900, 1019, 1020, 1021, 1024, 1280];
@@ -121,12 +123,7 @@ test.describe('layout (prijavljen) — bez vodoravnog scrolla i bez elementa koj
   });
 
   test('Studio — stablo + otvorena lekcija, kroz sve pragove uklj. 320px', async ({ page }) => {
-    await page.goto('/');
-    await page.waitForFunction(
-      () => !!window.SokratStudio && !!window.SokratAdmin && typeof window.navigateTo === 'function'
-    );
-    await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
-    await page.evaluate(() => navigateTo('editor'));
+    await otvoriStudio(page);
     await page.waitForSelector('#editor-page.active #stTree .st-row', { timeout: 20000 });
 
     const kvarovi = await prodjiSirine(page, 'STUDIO/stablo');

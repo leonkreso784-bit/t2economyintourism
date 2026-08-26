@@ -449,7 +449,14 @@
     let left = Math.round(r.left + ((r.right - r.left) - mw) / 2);   // centriran ispod sidra
     left = Math.max(8, Math.min(left, window.innerWidth - mw - 8));
     let top = r.bottom + 4;
-    if (top + mh > window.innerHeight - 8) top = Math.max(8, r.top - mh - 4);  // ne stane dolje → iznad
+    // ⚠️ Donji rub NIJE `window.innerHeight`. Trajni namještaj (cookie-banner, `position:fixed`,
+    // `z-index: 2147483000`) zauzima dno i PRESRETNE pokazivač — izbornik koji padne u njega
+    // je vidljiv, a neklikabilan. `--bottom-inset` objavljuje `js/consent.js`.
+    // Povod: dok je Studio počinjao na vrhu ekrana, izbornik je slučajno padao IZNAD bannera;
+    // čim ga je K2b spustio za visinu trake, počeo je padati U njega i tri testa su stala.
+    // *„Stane li u ekran" nije isto što i „vidi li se".*
+    const donjiNamjestaj = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bottom-inset')) || 0;
+    if (top + mh > window.innerHeight - donjiNamjestaj - 8) top = Math.max(8, r.top - mh - 4);  // ne stane dolje → iznad
     menu.style.left = left + 'px';
     menu.style.top = top + 'px';
   }
