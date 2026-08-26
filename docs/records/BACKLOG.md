@@ -266,6 +266,10 @@ STRANICA nikad nije bio mjerena površina** — zato faza počinje mjeračem (T0
 > dijeljivih adresa, „natrag" ima jedan model, gornja traka je jedna, Studio je upotrebljiv na
 > telefonu. **Petlja opisana ispod više ne postoji.** Ostaje **N2 („ono što učim")**, a ono se
 > **utapa u P2** faze POLICA — ne planirati ga zasebno.
+>
+> **✅ DOPUNA 2026-08-26: P2 je isporučen** (grana `feat/polica`, **nije deployano**), pa je i
+> **K4 potrošen** — polica ima dva izvora. ⚠️ Time je i rečenica „N2 ulazi tek kad K1–K4 stoje“
+> ispod **ispunjena, ne otkazana**: uvjet je bio točan i dogodio se tim redom.
 
 > **📐 RAZRAĐENO U FAZU 2026-08-18 — radna specifikacija je
 > [`FRONTEND_REDIZAJN.md` §8](../plan/FRONTEND_REDIZAJN.md) („KOSTUR": K1 rute · K2 traka ·
@@ -307,9 +311,15 @@ Devet stranica, nula zajedničkih traka. Zato se svaki ekran čita kao zaseban p
   dohvatljiva bar jedna druga odredišna stranica u jednom kliku. Bez toga se petlja
   može vratiti neopaženo — kao što je i nastala.
 
-### N2 · Osobna početna — „predmeti koje učim" → **RAZRAĐENO 2026-08-20 kao faza „POLICA"**
-Katalog-predmeti s napretkom **i** vlastiti materijali na jednom mjestu. **Danas takva
-stranica ne postoji.** Ovo je mogućnost, ne kvar.
+### N2 · Osobna početna — „predmeti koje učim" → **✅ ISPORUČENO 2026-08-26 (cigla P2)**
+Katalog-predmeti s napretkom **i** vlastiti materijali na jednom mjestu.
+
+> **✅ Stranica postoji od cigle P2** (grana `feat/polica`, **nije deployano**):
+> `#materials-page` nosi **dva izvora** — skinute predmete iz kataloga (pločica s imenom,
+> veličinom, stanjem učenja i pravom adresom) i vlastito gradivo ispod. Tekst ispod ostaje jer
+> objašnjava **odakle je N2 dobio sadržaj**, a ne kakvo je stanje.
+> ⚠️ **Napredak se prikazuje kao „Zadnje učenje …" / „Još nedirnuto", NE kao postotak** — nema
+> iskrenog nazivnika (koliko kartica predmet „ima" ovisi o lekciji i modu).
 
 > **Dobila je sadržaj koji joj je nedostajao.** Leon je 2026-08-20 tražio da korisnik **bira
 > što će skinuti** za učenje offline — a to je točno ono što N2 prikazuje. Polica time ima
@@ -318,7 +328,11 @@ stranica ne postoji.** Ovo je mogućnost, ne kvar.
 > [`FRONTEND_REDIZAJN.md` §9.4](../plan/FRONTEND_REDIZAJN.md); **K4 se u P2 utapa** (ista
 > pločica, isti ekran — odvojeno bi se pisalo dvaput).
 
-### N3 · Moji materijali u prikazu kvalitete kataloga
+### N3 · Moji materijali u prikazu kvalitete kataloga — **➖ RIJEŠENO SAMO ZA SKINUTO**
+
+> **P2 je pokrio jednu polovicu:** skinuti **katalog**-predmeti imaju pločicu s ikonom, imenom i
+> stanjem učenja. **Vlastito gradivo je i dalje stablo** (`mm-*`) i N3 za njega stoji otvoren.
+> Ne voditi ovo kao ispunjeno.
 Danas je polica **stablo**, a katalog **vitrina s bojom i ikonom**. Leon traži da vlastito
 gradivo izgleda jednako dobro kao FMTU gradivo.
 
@@ -760,7 +774,13 @@ na **~171 px** — cigla bi kvar **pogoršala**. Brana: `tests/studio-chrome.aut
 **⛔ OSTAJE OTVOREN drugi, neovisan nalaz iz istog odjeljka:** `.st-tree` je i dalje `display:flex`
 na telefonu (**354 px** nakon K2b) jer medijski upit ne dodaje specifičnost. Ne popravljati mehanički
 — Studio nema mobilni izbornik za stablo, pa bi „ispravno“ ponašanje ostavilo telefon bez ijednog
-načina da se odabere lekcija. Traži **odluku o dizajnu → K4**.
+načina da se odabere lekcija. Traži **odluku o dizajnu**.
+
+> ⚠️ **ISPRAVAK 2026-08-26 — ovdje je pisalo „→ K4“, a taj pokazivač je od P2 prazan.** K4 je
+> **potrošen** (utopio se u P2: ista pločica, isti ekran), ali P2 je dirao **policu**, ne
+> **Studio** — ovaj nalaz stoji netaknut. *Zastarjeli pokazivač je gori od zastarjele činjenice:
+> upućuje sljedeću sesiju da je nešto riješeno.* Odluka o Studiju na telefonu je **neraspoređena**
+> i ne pripada nijednoj otvorenoj cigli.
 
 ---
 
