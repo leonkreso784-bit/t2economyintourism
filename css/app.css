@@ -103,6 +103,8 @@
 @import "./auth.css";
 @import "./profile.css";
 @import "./my-materials.css";
+/* P1: kontrola skidanja na stranici lekcija (faza POLICA). */
+@import "./offline.css";
 @import "./math.css";
 
 /* ═══ 3. TAILWIND UTILITYJI ═══ NEUSLOJENI i ZADNJI (obrazloženje u zaglavlju).

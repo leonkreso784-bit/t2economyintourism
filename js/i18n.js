@@ -636,6 +636,15 @@
     'lesson.fallback': { en: 'Lesson', hr: 'Lekcija' },
     'toast.comingSoon': { en: 'Second Midterm is coming soon.', hr: 'Drugi kolokvij uskoro.' },
     'lesson.comingSoonBadge': { en: 'coming soon', hr: 'uskoro' },
+    // P1 (POLICA) — skidanje predmeta na uređaj. Gumb nosi RADNJU, `offline.ready`
+    // je stanje uz njega; zato „Ukloni s uređaja" i „Dostupno offline" nisu isti ključ.
+    'offline.download': { en: 'Download for offline', hr: 'Skini za offline' },
+    'offline.working': { en: 'Downloading…', hr: 'Skidam…' },
+    'offline.ready': { en: 'Available offline', hr: 'Dostupno offline' },
+    'offline.remove': { en: 'Remove from device', hr: 'Ukloni s uređaja' },
+    'offline.done': { en: 'Saved to device', hr: 'Spremljeno na uređaj' },
+    'offline.removed': { en: 'Removed from device', hr: 'Uklonjeno s uređaja' },
+    'offline.failed': { en: 'Download failed — nothing was saved', hr: 'Skidanje nije uspjelo — ništa nije spremljeno' },
     'toast.loadError': { en: 'Could not load this subject. Please try again.', hr: 'Učitavanje predmeta nije uspjelo. Pokušaj ponovno.' },
 
     // Razno

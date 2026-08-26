@@ -5,6 +5,55 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-26 — faza POLICA otvorena · cigla P1 („što se skida")
+
+**Odluka:** Leon je presudio redoslijed — **POLICA (P1–P4) prije C4**. Zapis je do tada
+proturječio sam sebi (`CLAUDE.md` „nije presuđeno" vs spec §9.16 „odlučeno"); ispravljeno.
+
+**Zašto POLICA — mjereno, ne procijenjeno** (puni zapis: spec §9.17):
+- `index.html:460` obećava „Radi offline". `sw.js` `activate` briše svaki keš koji nije
+  `sokrat-cache-<SW_VERSION>`, a token se bumpa svakim deployom — uz to i URL gradiva nosi
+  `?v=CONTENT_VERSION`. Keširano gradivo promašuje **dvaput**, na svaki deploy.
+- Pala pretpostavka: P2 **ne** čeka C4. `my-materials.js` ima **nula** pojava
+  `subject-card`/`subject-btn` — polica i katalog su već odvojeni sustavi.
+- Skidanje je jeftino: `data/json` = 6,5 MB za 24 predmeta, najveći 532 KB.
+
+**Isporučeno (P1):** `js/offline-store.js` (`window.SokratOffline`) + kontrola na stranici
+lekcija + `css/offline.css` + 7 i18n ključeva. Skinuto ide u keš **`sokrat-offline`** — **bez
+verzije u imenu**, jer `activate` briše po prefiksu `sokrat-cache-`, pa neverzionirano ime
+preživi deploy bez ijedne izmjene u `sw.js`. Uz svaki predmet pamti se `CONTENT_VERSION` —
+P3 na temelju toga odlučuje o zastarjelosti.
+
+**Dva nalaza koja su promijenila kod:**
+1. **Veličina je bila 0 u pregledniku, a logika je bila točna.** Probni poslužitelj
+   (`scripts/static-server.js`) nije slao `Content-Length` → Node odgovara u komadima.
+   Produkcija ga šalje (provjereno `HEAD`-om na www.sokratstudy.com). Popravljeno **oboje**:
+   aplikacija mjeri tijelo kad zaglavlja nema, poslužitelj šalje zaglavlje kao i produkcija.
+   *Razlika između probne i prave okoline je gora od oba pojedinačna propusta.*
+2. **Sve-ili-ništa.** Polovično skinut predmet je gori od neskinutog: obeća offline pa padne
+   na datoteci koja fali (predmet s vježbama nosi i `codeScripts` + lib, BUG-012). Promašaj
+   bilo koje datoteke poništava cijelo skidanje; manifest se piše tek kad su sve na uređaju.
+
+**Treći nalaz — iz samopregleda, ne iz testa:** `remove()` je brisao po planu, a plan ovisi o
+`CONTENT_VERSION`-u; poslije deploya bi obrisao zapis i ostavio bajtove nedosežne na uređaju.
+Manifest sada pamti **stvarno upisane** adrese. *Plan je namjera, manifest je činjenica — briše se
+po činjenici.* Test to hvata tako što između skidanja i uklanjanja **promijeni token**, i najprije
+tvrdi da se planovi razlikuju (inače test ne bi mjerio ništa).
+
+**Brane:** `tests/unit/offline-store.test.js` (15 tvrdnji, u `test:unit`) +
+`tests/offline-download.spec.js` (4, pravi preglednik). **Obje obrnuto provjerene mutacijom:**
+uklonjen rollback → pao rollback-test; sakriven jedan JSON s diska → pala provjera koja tvrdi
+da svaka planirana datoteka postoji. Test „za svaki predmet u katalogu" hvata razred greške
+koji se na ekranu ne vidi: predmet čiji `resolve` pokazuje na nepostojeći JSON skinuo bi se
+„uspješno", a offline ne bi radio.
+
+**Usput:** stranica **lekcija** ušla u a11y-branu (dotad neskenirana — bila je popis poveznica, pa
+se nije vidjelo). Skenira se u oba stanja kontrole. Uz to je dodana tvrdnja koju lažni uređaj ne može
+dati: da `res.clone().blob()` pa opet `res.clone()` u **pravom** pregledniku ne baca.
+
+**Cijena:** `check:budget` zaliha 31,6 → **26,8 KiB**. `preflight` zelen, phone-brana **0**,
+puna suita **480 prošlo / 0 palo / 105 preskočeno**.
+
 ## 2026-08-25 (OPUS, kod) — **D2: više praznina po rečenici**
 
 Nastavak D1 i druga polovica iste Leonove primjedbe. Cigla dira **studentski vrući put**, pa je

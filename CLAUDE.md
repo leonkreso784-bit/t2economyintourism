@@ -166,8 +166,9 @@ tada traži **nulu**; trenutnu brojku zna `tests/phone-baseline.json`, ne ova pr
 ⚠️ **Iz D2 ostaje živo pravilo:** `answer` je obavezan i drži **prvi** odgovor i kad postoji
 `answers` — zbog **keširane stare skripte**, ne zbog urednosti sheme.
 
-**🔵 SLJEDEĆE NIJE PRESUĐENO.** Spec nudi **POLICU (P1–P4)** (T6 joj je bio preduvjet, ispunjen),
-iza nje **C4 → C5a → C5b → C6 → C7**.
+**🟢 TEKUĆA FAZA = POLICA (P1–P4)** (Leon presudio 2026-08-26; grana `feat/polica`), iza nje
+**C4 → C5a → C5b → C6 → C7**. Zašto POLICA prije C4 — tri mjere u specu §9.17; najkraća: landing
+već obećava **„Radi offline"**, a `sw.js` u `activate` briše keš na **svaki** deploy.
 ⚠️ Prije C4 stoji dug u alatu: **`css:diff` je slijep za cigle koje sele vrijednost iz markupa u
 CSS** (presreće samo stylesheet, HTML uzima iz radnog stabla) — a C4–C7 rade točno to; T5 je to
 platio i dokaz izveo pravim A/B-om iz zasebnog `git worktree`-a.

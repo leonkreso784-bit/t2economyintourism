@@ -3244,3 +3244,53 @@ K5 čeka i ne blokira.
 **Nije odlučeno i ne planira se prešutno:** birač tema, OAuth (A0+A1), self-host Supabase,
 prave adrese umjesto hash-ruta, SEM. Popis s izmjerenim brojkama je u `CLAUDE.md` §Otvoreno
 i u `BACKLOG.md`.
+
+### 9.17 ✅ FAZA „POLICA" JE OTVORENA — mjerenje joj je promijenilo prvu ciglu (2026-08-26)
+
+Leon je presudio redoslijed: **POLICA (P1–P4) prije C4**. Do te riječi je zapis proturječio
+sam sebi — §9.16 je tvrdio da je redoslijed odlučen, `CLAUDE.md` da nije. Rečenica u
+`CLAUDE.md`-u bila je zastarjela i ispravljena je.
+
+#### Zašto POLICA, a ne C4 — tri mjere
+
+**① Na landingu već stoji obećanje koje ne isporučujemo.** [`index.html:460`](../../index.html#L460)
+piše *„Radi offline"*. Izmjereno u `sw.js`:
+
+- `activate` briše **svaki** keš čije se ime ne poklapa s trenutnim `sokrat-cache-<SW_VERSION>`;
+- `SW_VERSION` se mijenja na **svaki** `npm run bump`, dakle svaki deploy;
+- URL gradiva nosi `?v=CONTENT_VERSION`, koji se bumpa **istim potezom**.
+
+Keširano gradivo time promašuje **dvaput** — obrisan keš *i* drugi ključ — i to na svaki
+deploy. Precache je točno **4** datoteke (`/`, `index.html`, bundle, manifest), pa ostane
+ljuska bez gradiva. *Offline danas radi za predmet koji si već otvorio, i to do sljedećeg
+deploya.* To nije rupa u planu nego točno ono što P3 opisuje — sad ima mjeru.
+
+**② POLICA ne ovisi o C4.** Provjerena je (i pala) pretpostavka da bi P2 „ista pločica"
+morala čekati katalog: `js/my-materials.js` koristi `mm-*` imena i ima **nula** pojava
+`subject-card`/`subject-btn`. Polica i katalog su **već odvojeni sustavi**, pa se P2 gradi
+na već migriranoj polici. *Ovisnost koja se ne izmjeri postane izgovor za redoslijed.*
+
+**③ Skidanje je jeftino.** Cijeli `data/json` = **6,5 MB** za svih 24 predmeta; najveći
+pojedinačni (`accounting`) = **532 KB**. `check:budget` ima **31,6 KiB** zalihe za modul.
+
+#### Što je mjerenje reklo o SADRŽAJU skidanja
+
+Svih **24** predmeta ima `dataFormat: 'json'`, a u `data/json/**` je **nula** vanjskih
+(`http`) slika. Skinuti predmet je time **samodostatan**: JSON-ovi study-sadržaja + sve iz
+`content.codeScripts` (vježbe i lib).
+⚠️ **Za osobni materijal to NE vrijedi** — njegove slike žive u Storage bucketu `node-images`
+i cross-origin su, pa ih SW uopće ne presreće (`url.origin !== self.location.origin` → izlaz).
+Kad P2 spoji dva izvora, to je razlika koja se mora izreći korisniku, ne prešutjeti.
+
+#### Odluka o mjestu keša — i cijena koja ide s njom
+
+Skinuto ide u **`sokrat-offline`**, keš **bez verzije u imenu**. Nije stilski izbor:
+`activate` briše po prefiksu `sokrat-cache-`, pa neverzionirano ime **preživi deploy samo po
+sebi**, bez ijedne izmjene u brisaču — dakle bez dodirivanja SW-a u P1.
+
+Cijena je obrnuta i mora biti izrečena: takav keš **ne zastarijeva sam**. Zato P1 uz svaki
+predmet pamti `CONTENT_VERSION` s kojim je skinut, a **P3 odlučuje što s neslaganjem**
+(osvježiti tiho ili ponuditi). Bez tog zapisa bi P3 morao pogađati.
+
+⚠️ **P3 dira Service Worker i vozi se ZADNJI.** Loš SW zna zaključati stranicu u polju;
+kill-switch je `__swKill()`. **P1 i P2 ne diraju `sw.js` ni jednim retkom.**

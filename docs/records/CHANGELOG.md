@@ -5,6 +5,44 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-26 (OPUS) — **P1: predmet se skida na uređaj** (faza POLICA otvorena)
+
+Leon je presudio redoslijed: **POLICA (P1–P4) prije C4**. Povod je mjera, ne plan — landing
+obećava **„Radi offline"**, a `sw.js` u `activate` briše svaki keš koji nije
+`sokrat-cache-<SW_VERSION>`; token se bumpa svakim deployom, i URL gradiva nosi `?v=` iz istog
+bumpa. Keširano gradivo dosad je promašivalo **dvaput**, na svaki deploy.
+
+**Novo:** na stranici predmeta stoji **„Skini za offline"** s procjenom veličine **prije** klika;
+skinuto pokazuje veličinu i datum i uklanja se istim gumbom. Skida se **cijeli** predmet —
+study-JSON-ovi **i** `codeScripts` (vježbe + lib), jer predmet s vježbama bez njih offline ne radi
+cijel (BUG-012).
+
+**Keš se zove `sokrat-offline` — bez verzije u imenu.** Brisač u `activate` gađa prefiks
+`sokrat-cache-`, pa neverzionirano ime **preživi deploy samo po sebi**: P1 ne dira `sw.js` ni
+jednim retkom. Cijena je izrečena — takav keš ne zastarijeva sam, pa se uz svaki predmet pamti
+`CONTENT_VERSION` s kojim je skinut (**P3** odlučuje što s neslaganjem).
+
+**Sve-ili-ništa:** promašaj bilo koje datoteke poništava cijelo skidanje, a manifest se piše tek
+kad su sve na uređaju. *Polovično skinut predmet je gori od neskinutog — obeća offline pa padne.*
+
+**Popravljena razlika između probne i prave okoline:** `scripts/static-server.js` nije slao
+`Content-Length` (Node tad odgovara u komadima), pa je predmet u pregledniku dobivao veličinu **0**
+dok je logika bila točna. Produkcija zaglavlje šalje (provjereno `HEAD`-om). Popravljeno oboje:
+aplikacija mjeri tijelo kad zaglavlja nema, poslužitelj šalje zaglavlje.
+
+**Nalaz iz samopregleda, ne iz testa:** `remove()` je brisao po **svježem planu**, a plan ovisi o
+`CONTENT_VERSION`-u. Poslije deploya bi token bio drugi → uklanjanje bi obrisalo **zapis**, a bajtove
+ostavilo na uređaju **zauvijek nedosežne**. Manifest sada pamti adrese koje su **stvarno upisane**;
+briše se po činjenici, ne po namjeri. Isti popravak sprječava i drugi smjer — ponovno skidanje
+poslije deploya više ne ostavlja stari komplet pored novoga.
+
+**Usput zatvorena starija rupa:** stranica **lekcija** nije bila u a11y-brani, iako kroz nju vodi
+jedini put u svaku lekciju kataloga. Dotad je bila popis poveznica, pa se propust nije vidio; P1 joj
+daje prvu pravu kontrolu i s njom ulazi u `tests/a11y.spec.js` — skenira se **oboje** stanje.
+
+**Brane:** `tests/unit/offline-store.test.js` (15, u `test:unit`) + `tests/offline-download.spec.js`
+(5, pravi preglednik) + a11y na stranici lekcija. Obrnuto provjerene mutacijom kôda i diska.
+
 ## 2026-08-25 (OPUS) — **D2: rečenica smije imati VIŠE praznina** (učenje + editor + shema)
 
 Druga polovica Leonove primjedbe na dopune (*„i neka ih se može staviti više"*). Od **dvije**

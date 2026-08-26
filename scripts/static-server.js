@@ -21,7 +21,14 @@ http.createServer((req, res) => {
   if (!filePath.startsWith(ROOT)) { res.writeHead(403); return res.end('forbidden'); }
   fs.readFile(filePath, (err, data) => {
     if (err) { res.writeHead(404); return res.end('not found'); }
-    res.writeHead(200, { 'Content-Type': MIME[path.extname(filePath).toLowerCase()] || 'application/octet-stream' });
+    // `Content-Length` NIJE kozmetika: bez njega Node odgovara u komadima (chunked), a
+    // kod koji pita „koliko ovo zauzima" (P1, `js/offline-store.js`) dobiva prazno
+    // zaglavlje. Produkcija (Vercel) ga šalje — provjereno HEAD-om — pa bi ga izostavljanje
+    // ovdje pretvorilo u razliku između probne i prave okoline, a to je najgora vrsta rupe.
+    res.writeHead(200, {
+      'Content-Type': MIME[path.extname(filePath).toLowerCase()] || 'application/octet-stream',
+      'Content-Length': Buffer.byteLength(data)
+    });
     res.end(data);
   });
 }).listen(PORT, () => console.log('static server on http://localhost:' + PORT));

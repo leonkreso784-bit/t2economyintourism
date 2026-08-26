@@ -63,6 +63,34 @@ test.describe('a11y — no serious/critical axe violations', () => {
     expect(all).toEqual([]);
   });
 
+  // Stranica LEKCIJA do 2026-08-26 nije bila skenirana — a jedini put u svaku lekciju
+  // kataloga vodi kroz nju. Ušla je u branu s ciglom P1, koja joj je dodala prvu pravu
+  // kontrolu („skini za offline"); dotad je bila popis poveznica, pa se propust nije vidio.
+  // Skenira se OBOJE stanje kontrole: neskinuto i skinuto (drugo mijenja boju ikone).
+  test('lekcije predmeta — uklj. kontrolu „skini za offline" (P1)', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'iPhone-SE-375', 'a11y se skenira na jednom viewportu');
+    await page.goto('/#/subject/marketing');
+    await page.waitForSelector('#lessonsGrid .lesson-card', { state: 'attached', timeout: 15000 });
+    await page.waitForSelector('#offlineControl .offline-btn', { timeout: 15000 });
+
+    const prvo = gateViolations(await new AxeBuilder({ page }).analyze());
+    if (prvo.length) console.log('LEKCIJE (neskinuto):', JSON.stringify(prvo, null, 2));
+
+    await page.locator('#offlineControl .offline-btn').click();
+    await page.waitForSelector('#offlineControl [data-offline-state="ready"]', { timeout: 30000 });
+    await page.evaluate(() => document.getAnimations().forEach((a) => { try { a.finish(); } catch (e) { /* beskonačne */ } }));
+    const drugo = gateViolations(await new AxeBuilder({ page }).analyze());
+    if (drugo.length) console.log('LEKCIJE (skinuto):', JSON.stringify(drugo, null, 2));
+
+    // Počisti za sobom: iduci test u istom kontekstu ne smije naslijediti skinut predmet.
+    await page.evaluate(async () => {
+      window.localStorage.removeItem('sokrat-offline-v1');
+      if (window.caches) await window.caches.delete('sokrat-offline');
+    });
+
+    expect(prvo.concat(drugo)).toEqual([]);
+  });
+
   test('profile (signed out)', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'iPhone-SE-375', 'a11y se skenira na jednom viewportu');
     await page.goto('/');

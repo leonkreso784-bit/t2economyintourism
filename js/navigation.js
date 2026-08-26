@@ -1280,6 +1280,11 @@ function renderLessonsPage(subjectId) {
     document.getElementById('currentSubjectTitle').textContent = subject.name;
     document.getElementById('subjectDescription').textContent = subject.description;
 
+    // P1 (POLICA): „skini ovaj predmet na uređaj". Montira se pri SVAKOM renderu jer
+    // stanje ovisi o UREĐAJU, ne o predmetu — isti predmet je na jednom telefonu skinut,
+    // na drugom nije. Modul se tiho ne montira ako preglednik nema Cache Storage.
+    if (window.SokratOffline) window.SokratOffline.mount(document.getElementById('offlineControl'), subjectId);
+
     const grid = document.getElementById('lessonsGrid');
     grid.innerHTML = '';
 

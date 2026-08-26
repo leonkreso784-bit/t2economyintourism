@@ -1,0 +1,59 @@
+/* =====================================================================
+   offline.css — kontrola „skini predmet na uređaj"  ·  cigla P1 (POLICA)
+   =====================================================================
+   Zasebna datoteka, a ne dopuna `pages.css`: `pages.css` je meta cigle C4 i
+   nosi svoj dug, pa bi C4 morala razmrsiti tuđi novi kod iz starog. Ovako C4
+   prepisuje samo ono što je oduvijek njeno.
+
+   Sve boje idu kroz tokene — `check:palette` i `check:contrast` mjere po temi,
+   a zadana tema je SVIJETLA (`academic`). Zakucana bijela na ispuni marke je
+   tvrda zabrana, ne preporuka.
+   ===================================================================== */
+
+.offline-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    margin-top: 1rem;
+}
+
+.offline-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: var(--touch-target);
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.offline-btn:hover:not(:disabled) { border-color: var(--primary); }
+.offline-btn:disabled { opacity: 0.6; cursor: default; }
+
+.offline-icon { font-size: 0.85em; color: var(--primary); }
+
+/* Stanje „skinuto" nosi boju uspjeha na IKONI, ne na plohi: ploha u punoj tinti
+   tražila bi zakucan tekst na sebi, a to je točno ono što `check:palette` brani. */
+[data-offline-state="ready"] .offline-icon { color: var(--success); }
+
+.offline-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Vrtnja se gasi kad korisnik traži manje pokreta — ostaje statična strelica,
+   a tekst („Skidam…") ionako nosi cijelu informaciju. */
+.offline-icon--busy { animation: sokratSpin 1s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+    .offline-icon--busy { animation: none; }
+}

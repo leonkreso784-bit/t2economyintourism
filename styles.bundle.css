@@ -10542,6 +10542,56 @@ body.mm-dragging {
     animation: none;
   }
 }
+.offline-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  margin-top: 1rem;
+}
+.offline-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: var(--touch-target);
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.offline-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+}
+.offline-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.offline-icon {
+  font-size: 0.85em;
+  color: var(--primary);
+}
+[data-offline-state="ready"] .offline-icon {
+  color: var(--success);
+}
+.offline-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.offline-icon--busy {
+  animation: sokratSpin 1s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .offline-icon--busy {
+    animation: none;
+  }
+}
 .katex {
   font-size: 1.05em;
 }
