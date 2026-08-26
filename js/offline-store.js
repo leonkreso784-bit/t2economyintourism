@@ -322,6 +322,123 @@
     crtaj();
   }
 
+  // ── NAPREDAK SKINUTOG PREDMETA ──────────────────────────────────────
+  // Cita se ISTI zapis koji pise `js/storage.js` (`storageKey` iz kataloga), a ne
+  // vlastita kopija — inace bi polica pokazivala jedan broj, a stranica ucenja drugi.
+  // Namjerno se NE racuna postotak: nema iskrenog nazivnika (koliko kartica predmet
+  // „ima" ovisi o lekciji i modu), a izmisljen postotak je gori od nijednog.
+  function progressOf(subjectId) {
+    const subject = (typeof SokratCatalog !== 'undefined') ? SokratCatalog.getSubject(String(subjectId)) : null;
+    const kljuc = subject && subject.storageKey;
+    if (!kljuc) return null;
+    let zapis = null;
+    try { zapis = JSON.parse(window.localStorage.getItem(kljuc) || 'null'); } catch (e) { zapis = null; }
+    if (!zapis || typeof zapis !== 'object') return null;
+    const broj = (v) => (typeof v === 'number' && isFinite(v) && v > 0 ? v : 0);
+    const ukupno = broj(zapis.cardsStudied) + broj(zapis.quizzesTaken) + broj(zapis.fillSolved);
+    if (!ukupno && !zapis.lastStudy) return null;   // skinut, ali jos nedirnut
+    return { ukupno: ukupno, lastStudy: zapis.lastStudy || null };
+  }
+
+  // Ikona dolazi iz NASEG kataloga, ali kroz `innerHTML`-ov susjedstvo ipak ne prolazi
+  // gola: propusta se samo oblik `fa-<ime>`. Granica se postavlja na ULAZU, ne na
+  // pretpostavci o izvoru — BUG-025 se dogodio tocno ondje gdje je izvor izgledao pitomo.
+  function sigurnaIkona(ime) {
+    return /^fa-[a-z0-9-]+$/.test(String(ime || '')) ? String(ime) : 'fa-book';
+  }
+
+  // ── POLICA: skinuti predmeti kao plocice ────────────────────────────
+  // Drugi izvor iste police (prvi je vlastito gradivo). Radi i BEZ prijave: skinuto je
+  // stvar UREDAJA, ne racuna — pa polica ne smije biti iza „prijavi se ili nista".
+  function mountShelf(host) {
+    if (!host) return;
+    host.textContent = '';
+    const zapisi = supported ? list() : [];
+
+    if (!zapisi.length) {
+      const prazno = doc.createElement('p');
+      prazno.className = 'profile-meta shelf-empty';
+      prazno.textContent = tr('shelf.empty', 'Nothing downloaded yet. Open a subject and choose “Download for offline”.');
+      host.appendChild(prazno);
+      return;
+    }
+
+    // Najsvjeze skinuto prvo — polica se cita odozgo, a zadnje skinuto je ono koje
+    // korisnik trazi. Stabilno i bez datuma (stari zapisi): `at` fali → na dno.
+    zapisi.slice().sort((a, b) => String(b.at || '').localeCompare(String(a.at || '')))
+      .forEach((zapis) => host.appendChild(shelfTile(zapis)));
+  }
+
+  function shelfTile(zapis) {
+    const id = String(zapis.id);
+    const subject = (typeof SokratCatalog !== 'undefined') ? SokratCatalog.getSubject(id) : null;
+
+    const tile = doc.createElement('div');
+    tile.className = 'shelf-tile';
+    tile.setAttribute('data-shelf-id', id);
+
+    const ikona = doc.createElement('i');
+    ikona.className = 'fas ' + sigurnaIkona(subject && subject.icon) + ' shelf-tile__icon';
+    ikona.setAttribute('aria-hidden', 'true');
+
+    const tijelo = doc.createElement('div');
+    tijelo.className = 'shelf-tile__body';
+
+    // Otvaranje je POVEZNICA s pravom adresom (K1) — dijeljiva i otvoriva u novoj kartici.
+    const veza = doc.createElement('a');
+    veza.className = 'shelf-tile__name';
+    veza.href = '#/subject/' + encodeURIComponent(id);
+    veza.textContent = (subject && subject.name) || id;
+
+    const meta = doc.createElement('p');
+    meta.className = 'shelf-tile__meta';
+    const dijelovi = [];
+    if (zapis.bytes) dijelovi.push(human(zapis.bytes));
+    const nap = progressOf(id);
+    if (nap && nap.lastStudy) {
+      dijelovi.push(tr('shelf.lastStudy', 'Last studied') + ' ' + datum(nap.lastStudy));
+    } else {
+      dijelovi.push(tr('shelf.notStarted', 'Not started yet'));
+    }
+    meta.textContent = dijelovi.join(' · ');
+
+    tijelo.appendChild(veza);
+    tijelo.appendChild(meta);
+
+    const ukloni = doc.createElement('button');
+    ukloni.type = 'button';
+    ukloni.className = 'shelf-tile__remove';
+    ukloni.setAttribute('data-shelf-remove', id);
+    // Ime kontrole mora nositi NA CEMU djeluje: pet „Ukloni" gumba u popisu je za
+    // citac ekrana pet istih kontrola.
+    ukloni.setAttribute('aria-label', tr('offline.remove', 'Remove from device') + ' — ' + ((subject && subject.name) || id));
+    const x = doc.createElement('i');
+    x.className = 'fas fa-trash-can';
+    x.setAttribute('aria-hidden', 'true');
+    ukloni.appendChild(x);
+
+    tile.appendChild(ikona);
+    tile.appendChild(tijelo);
+    tile.appendChild(ukloni);
+    return tile;
+  }
+
+  // Jedan delegirani slusac za cijelu policu: redci se re-crtaju, pa slusac po gumbu
+  // umire sa svojim retkom.
+  if (doc && typeof doc.addEventListener === 'function') {
+    doc.addEventListener('click', (e) => {
+      const t = e.target && e.target.closest ? e.target.closest('[data-shelf-remove]') : null;
+      if (!t) return;
+      const id = t.getAttribute('data-shelf-remove');
+      const host = t.closest('#shelfList');
+      t.disabled = true;
+      remove(id).then(() => {
+        mountShelf(host);
+        toast(tr('offline.removed', 'Removed from device'));
+      }).catch(() => { t.disabled = false; });
+    });
+  }
+
   window.SokratOffline = {
     supported: supported,
     plan: plan,
@@ -332,6 +449,8 @@
     list: list,
     human: human,
     mount: mount,
+    mountShelf: mountShelf,
+    progressOf: progressOf,
     CACHE: CACHE
   };
 })(window);

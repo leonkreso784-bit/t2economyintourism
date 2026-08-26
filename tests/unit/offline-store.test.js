@@ -165,6 +165,32 @@ test('human() — ista pravila u testu i na ekranu', function () {
   assert.strictEqual(O.human(1536 * 1024), '1.5 MB');
 });
 
+// ── P2: napredak se CITA iz istog zapisa koji pise js/storage.js ───────
+test('progressOf: nedirnut predmet nema napredak (ne izmislja nulu)', function () {
+  const O = noviWindow().SokratOffline;
+  assert.strictEqual(O.progressOf('statistics'), null);
+  assert.strictEqual(O.progressOf('ovoga-nema'), null, 'nepoznat predmet ne smije baciti');
+});
+
+test('progressOf cita ISTI kljuc koji pise storage.js (storageKey iz kataloga)', function () {
+  const win = noviWindow();
+  const kljuc = SokratCatalog.getSubject('statistics').storageKey;
+  assert.ok(kljuc, 'katalog mora imati storageKey — inace napredak nema gdje zivjeti');
+  win.localStorage.setItem(kljuc, JSON.stringify({
+    cardsStudied: 12, quizzesTaken: 3, fillSolved: 5, lastStudy: '2026-08-26T10:00:00.000Z'
+  }));
+  const nap = win.SokratOffline.progressOf('statistics');
+  assert.strictEqual(nap.ukupno, 20, '12 + 3 + 5');
+  assert.strictEqual(nap.lastStudy, '2026-08-26T10:00:00.000Z');
+});
+
+test('progressOf podnosi pokvaren zapis (ne rusi policu)', function () {
+  const win = noviWindow();
+  const kljuc = SokratCatalog.getSubject('statistics').storageKey;
+  win.localStorage.setItem(kljuc, 'ovo nije JSON');
+  assert.strictEqual(win.SokratOffline.progressOf('statistics'), null);
+});
+
 // ── asinkroni dio ──────────────────────────────────────────────────────
 Promise.resolve()
   .then(() => testAsync('estimate() zbraja content-length i mjeri HEAD-om (ne skida)', function () {

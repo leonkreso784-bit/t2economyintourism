@@ -3294,3 +3294,42 @@ predmet pamti `CONTENT_VERSION` s kojim je skinut, a **P3 odlučuje što s nesla
 
 ⚠️ **P3 dira Service Worker i vozi se ZADNJI.** Loš SW zna zaključati stranicu u polju;
 kill-switch je `__swKill()`. **P1 i P2 ne diraju `sw.js` ni jednim retkom.**
+
+### 9.18 ✅ P1 + P2 SU ISPUNJENI — polica ima dva izvora (2026-08-26)
+
+**P1 — što se skida.** `js/offline-store.js` (`window.SokratOffline`) + kontrola na stranici
+predmeta. Skida se **cijeli** predmet: study-JSON-ovi **i** `content.codeScripts` (vježbe + lib),
+jer predmet s vježbama bez njih offline ne radi cijel (BUG-012).
+
+**P2 — gdje živi.** `#materials-page` dobiva **drugi izvor**: pločice skinutih predmeta, ime iz
+kataloga, veličina, stanje učenja, poveznica na **pravu adresu** (`#/subject/<id>`) i uklanjanje.
+**Ovime je K4 potrošen** — „materijali u kvaliteti kataloga" i „jedna polica, dva izvora" su isti
+ekran, i sad ga ima.
+
+#### ⚠️ Odluka koju je P2 morao donijeti, a spec ju nije predvidio
+
+Do P2 je `#materials-page` **odjavljenom pokazivala isključivo poziv na prijavu**
+([`my-materials.js:801`](../../js/my-materials.js#L801)) — što je za vlastito gradivo ispravno
+(ono živi u bazi, iza RLS-a). **Ali skinuto je stvar UREĐAJA, ne računa.** Polica koja bi ga
+sakrila iza prijave lagala bi o tome čije je.
+
+Zato od P2 stranica nosi **dvije plohe s različitim uvjetom**: polica se crta **uvijek**, poziv na
+prijavu i dalje stoji uz **vlastito gradivo**. To je najvažnija tvrdnja u `tests/shelf.spec.js` —
+ostale mjere izgled, ova mjeri **čije je što**.
+
+#### Tri odluke o izvedbi, s razlogom
+
+- **Kôd P2 je u `offline-store.js`, ne u novoj datoteci.** `check:budget` mjeri posjetiteljev put,
+  a zaliha je bila 26,8 KiB; nova skripta plaća se zahtjevom, ne samo bajtovima.
+- **Pločica ne posuđuje ni `mm-*` ni `subject-card`.** Prvo je stablo s vlastitim ponašanjem,
+  drugo je meta cigle C4 s **47 `!important`**. *Posuditi bilo koje značilo bi vezati novu površinu
+  za tuđi dug — a §3 traži da površina bude cijela nova ili cijela stara.*
+- **Napredak se NE prikazuje kao postotak.** Čita se isti zapis koji piše `js/storage.js`
+  (`storageKey` iz kataloga), ali nazivnika nema — koliko kartica predmet „ima" ovisi o lekciji i
+  modu. Pločica zato kaže **„Zadnje učenje …"** ili **„Još nedirnuto"**.
+  *Izmišljen postotak je gori od nijednog.*
+
+#### Što P2 NIJE dirao
+
+`sw.js` — ni jednim retkom. Kriterij faze („otvori skinuti predmet u zrakoplovnom načinu") pripada
+**P3**, koja je jedina cigla s pravom na Service Worker i zato ide **zadnja**.

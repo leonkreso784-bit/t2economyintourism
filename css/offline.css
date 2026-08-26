@@ -57,3 +57,77 @@
 @media (prefers-reduced-motion: reduce) {
     .offline-icon--busy { animation: none; }
 }
+
+/* =====================================================================
+   P2 (POLICA) — skinuti predmeti kao pločice na `#materials-page`
+   =====================================================================
+   Drugi izvor iste police. Namjerno NE posuđuje `mm-*` (vlastito gradivo) ni
+   `subject-card` (katalog): prvo je stablo s vlastitim ponašanjem, drugo je meta
+   cigle C4 i nosi 47 `!important`. Posuditi bilo koje značilo bi vezati novu
+   površinu za tuđi dug.
+   ===================================================================== */
+
+.shelf {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.shelf-empty { margin: 0; }
+
+.shelf-tile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--bg-secondary);
+}
+
+.shelf-tile__icon {
+    flex-shrink: 0;
+    width: 2.25rem;
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--primary);
+}
+
+/* `min-width: 0` je ono što dopušta rezanje dugog naziva unutar flexa — bez njega
+   pločica gura policu u vodoravni skrol na 320 px. */
+.shelf-tile__body { flex: 1; min-width: 0; }
+
+.shelf-tile__name {
+    display: block;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.shelf-tile__name:hover { color: var(--primary); }
+
+.shelf-tile__meta {
+    margin: 0.15rem 0 0;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.shelf-tile__remove {
+    flex-shrink: 0;
+    min-width: var(--touch-target);
+    min-height: var(--touch-target);
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    background: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.shelf-tile__remove:hover:not(:disabled) {
+    border-color: var(--danger);
+    color: var(--danger-text);
+}
+
+.shelf-tile__remove:disabled { opacity: 0.5; cursor: default; }

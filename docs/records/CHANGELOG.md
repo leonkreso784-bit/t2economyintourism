@@ -5,6 +5,24 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-26 (OPUS) — **P2: polica ima dva izvora** (skinuto + vlastito gradivo)
+
+„Moji materijali" prestaju biti mapa s tuđim imenom i postaju **ono što učim**: skinuti predmeti
+dobivaju pločicu s imenom iz kataloga, veličinom, stanjem učenja i pravom adresom
+(`#/subject/<id>`), a uklanjaju se odande kao i sa stranice predmeta. **K4 je time potrošen** —
+„materijali u kvaliteti kataloga" i „jedna polica, dva izvora" su isti ekran.
+
+**Odluka koju spec nije predvidio:** stranica je odjavljenom dotad pokazivala **isključivo** poziv
+na prijavu. To je za vlastito gradivo ispravno (živi u bazi, iza RLS-a), ali **skinuto je stvar
+uređaja, ne računa**. Od P2 polica se crta **uvijek**, a poziv na prijavu ostaje uz vlastito
+gradivo. To je i najvažnija tvrdnja u `tests/shelf.spec.js`.
+
+**Napredak nije postotak** nego „Zadnje učenje …" / „Još nedirnuto": čita se isti zapis koji piše
+`js/storage.js`, ali iskrenog nazivnika nema. *Izmišljen postotak je gori od nijednog.*
+
+**Brane:** `tests/shelf.spec.js` (4) + 3 nove tvrdnje u `offline-store.test.js` (ukupno **18**).
+`sw.js` nije dirnut — to je P3.
+
 ## 2026-08-26 (OPUS) — **P1: predmet se skida na uređaj** (faza POLICA otvorena)
 
 Leon je presudio redoslijed: **POLICA (P1–P4) prije C4**. Povod je mjera, ne plan — landing

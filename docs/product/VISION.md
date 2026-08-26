@@ -90,7 +90,13 @@ Svaka je otvorena; rješavamo ih jednu po jednu i tad upisujemo ADR.
 ## 6. Predloženi redoslijed (visoka razina — NE radimo sve sad)
 1. ~~Lazy-loading sadržaja (A4)~~ ✅ · ~~Blok B: Supabase + Auth + read-path~~ ✅ (auth+sync LIVE, sadržaj iz baze ADR-011)
 2. ~~dovršiti sadržaj 1. god~~ ✅ · ~~admin CRUD (B9/B10)~~ ✅ **isporučen** (Studio editor, publish-RPC).
-3. **F6 AI tutor „tvoj ključ"** — najjeftiniji MVP AI vrijednosti. ← *sljedeći „pravi" korak prema viziji*
+3. **F6 AI tutor „tvoj ključ"** — najjeftiniji MVP AI vrijednosti.
+   > ⚠️ **NIJE VIŠE SLJEDEĆI KORAK.** Ovdje je stajalo *„← sljedeći pravi korak prema viziji"*;
+   > [ADR-030](../records/DECISIONS.md) je na to mjesto promaknuo **MCP**, i to kao **glavni put
+   > stvaranja gradiva**, ne kao pomoć. Važeća sekvenca
+   > živi u [ROADMAP.md](../plan/ROADMAP.md): **frontend redizajn → MCP → objava/dijeljenje.**
+   > Datoteka je već upozoravala da joj je `F3` opis drugog proizvoda; ovaj redak je bio ista
+   > vrsta zastarjelosti, samo neoznačena.
 4. **F2 profili** → **F3 UGC upload→AI** (privatno) → **F4 dijeljenje** → **F5 ljestvice**.
 5. **F1 plaćeni AI tutor + plaćanje** — tek kad je trošak izmjeren i odluka o MoR/PDV donesena.
 

@@ -5,6 +5,24 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-26 — cigla P2 („gdje živi") · polica s dva izvora
+
+**Isporučeno:** pločice skinutih predmeta na `#materials-page` (ime iz kataloga, veličina, stanje
+učenja, poveznica na pravu adresu, uklanjanje), `shelf.*` i18n, `.shelf-*` u `css/offline.css`.
+**K4 je potrošen** — isti ekran.
+
+**Nalaz koji je promijenio opseg:** stranica je odjavljenom pokazivala **isključivo** poziv na
+prijavu. Za vlastito gradivo je to točno (baza + RLS), ali **skinuto je stvar uređaja**. Polica se
+zato crta uvijek, a prijava ostaje uz vlastito gradivo. *Uvjet vidljivosti mora slijediti to ČIJE
+je nešto, ne to gdje je nacrtano.*
+
+**Tri odluke:** kôd u `offline-store.js` (ne nova skripta — `check:budget`) · pločica ne posuđuje
+ni `mm-*` ni `subject-card` (47 `!important` u C4) · napredak **nije postotak** jer nema iskrenog
+nazivnika.
+
+**Brane:** `tests/shelf.spec.js` (4) + 3 tvrdnje u `offline-store.test.js` (**18**). Phone **0**,
+a11y zeleno, `preflight` EXIT 0. `check:budget` zaliha **24,3 KiB**.
+
 ## 2026-08-26 — faza POLICA otvorena · cigla P1 („što se skida")
 
 **Odluka:** Leon je presudio redoslijed — **POLICA (P1–P4) prije C4**. Zapis je do tada

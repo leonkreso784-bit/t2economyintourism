@@ -160,6 +160,9 @@ function navigateTo(page, data = {}) {
             // C0 / ADR-029: vlastiti materijal je ravnopravno odredište. Stranica se smije otvoriti i
             // BEZ prijave — renderPage() tada pokaže poziv na prijavu umjesto stabla.
             if (window.SokratMaterials) SokratMaterials.renderPage();
+            // P2: drugi izvor police. NE ovisi o prijavi — crta se uvijek, i prazan popis
+            // ima svoje stanje (inače korisnik ne bi imao odakle saznati da skidanje postoji).
+            if (window.SokratOffline) window.SokratOffline.mountShelf(document.getElementById('shelfList'));
             document.getElementById('materials-page').classList.add('active');
             closeSidebar();
             break;
