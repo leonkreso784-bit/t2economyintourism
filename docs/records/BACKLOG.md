@@ -1305,3 +1305,28 @@ gotov; služi kao materijal za prijedlog dekanu i kandidat za diplomski.
 - ✅ **Analitika posjeta — GOTOVO (2026-06-13):** Google Analytics GA4 (`G-ME0V58NJ1Z`) uz GDPR cookie-consent
   (Consent Mode v2, učita se tek na pristanak); vidi `js/consent.js`. Time je i **priprema za Google Ads** korak dalje.
 - 💤 i18n (hrvatski/engleski prebacivanje).
+
+## 🔑 Auth — sirova poruka o lozinci (nalaz 2026-08-28, poslije uključivanja zaštite)
+
+**Gotovo kad:** korisnik koji upiše procurjelu lozinku dobije objašnjenje **na svom jeziku**, i
+zna što učiniti — a ne englesku rečenicu iz Supabaseova SDK-a.
+
+[`js/auth.js:372`](../../js/auth.js) radi `setStatus(error.message, true)` — dakle **prosljeđuje
+sirovu poruku** iz Supabasea ravno u sučelje. Dok je `auth_leaked_password_protection` bila
+isključena, taj put se praktički nije aktivirao: obrazac već ima `minlength="8"` i „min. 8
+characters", pa je preglednik zaustavljao prekratke lozinke **prije** slanja.
+
+**Uključivanjem zaštite (2026-08-28) put je postao stvaran.** Lozinka može biti duga 14 znakova i
+svejedno biti odbijena jer je u HaveIBeenPwned popisu — **to nijedna provjera u pregledniku ne može
+predvidjeti.** Dakle jedini put do korisnika je poruka sa servera, a ona ide neprevedena.
+
+⚠️ **Zašto ovo nije samo kozmetika:** korisnik koji ne razumije zašto mu je lozinka odbijena
+najčešće **odustane od registracije**, a ne pokuša drugu. Registriranih korisnika je pet.
+
+**Opseg (mala cigla):** mapiranje poznatih Supabase auth-grešaka na i18n ključeve (`weak_password`
+/ leaked · `over_email_send_rate_limit` · `invalid_credentials`), s **engleskim fallbackom na
+sirovu poruku** — nikad prazan ekran ako Supabase uvede novi kod. Uzor postoji: `humanError` u
+admin-sloju već radi točno to i ima unit-testove.
+
+⚠️ **Ovisi o Pro planu.** Poslije seobe na self-host provjeri je li zaštita uopće dostupna; ako
+nije, ostaje HIBP u kodu (~30 redaka, k-anonimnost) i **ista poruka treba i tada.**

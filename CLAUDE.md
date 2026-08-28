@@ -282,19 +282,16 @@ Leon je postavio tri pitanja i na moje preporuke **nije odgovorio**. Brojke su i
 - **HR-ekspanzija:** HR 1. god × 3 smjera FMTU dijele vezne predmete (ADR-022). Kad HR program
   bude potpun → **HR u Supabase** (Leon/Claude `migrate-content.js`, ne Saša). [[hrv-program]]
 - **PAUZIRANO za nas:** 3. godina · novi EN sadržaj (ADR-018: student uploada PODATKE, nikad KOD).
-- **⏳ ČEKA LEONOVU RUKU (2; sve istraženo i opremljeno gateom — ostala je samo radnja, detalji u
-  `BACKLOG.md`):** ① obrisati `bright-function` + `quick-api` (Dashboard → Edge Functions) —
-  **`npm run check:functions` je CRVEN**; `bright-function` ima sha256 **identičan**
-  `delete-account`-u = drugi, nezapisani endpoint koji briše račun. Odgoda do C6 je Leonova
-  odluka i **izmjerena**: rizik je isključivo divergencija, a nijedna cigla frontenda ne dira
-  Edge Functione; **uvjet koji odgodu poništava: dirne li itko `supabase/functions/delete-account/`,
-  briše se odmah.** · ② podići **Minimum password length 6 → 8** (Auth → Sign In / Providers);
-  polje „Password Requirements" **ne dirati**, i prije toga popraviti `WeakPasswordError` u
-  `js/auth.js`.
-  ③ **uključiti `auth_leaked_password_protection`** — do 2026-08-27 je stajalo da to NIJE stavka
-  za ruku jer je Pro značajka, a org je `free`. **Org je od tada `pro`** (izmjereno), pa je to sad
-  jedan prekidač na istom ekranu kao ②. ⚠️ **Pro je uzet na MJESEC DANA** → napravi dok traje;
-  poslije seobe na self-host provjeri iznova (HIBP u kodu ostaje rezerva, ~30 redaka).
+- **✅ SVE TRI „ZA LEONOVU RUKU" STAVKE SU ODRAĐENE (2026-08-28), provjereno mjerenjem:**
+  `bright-function` i `quick-api` **obrisani** → `npm run check:functions` je **ZELEN** prvi put
+  („produkcija ima točno ono što repozitorij opisuje"); **min. lozinka 6 → 8**; **leaked password
+  protection UKLJUČENA** → advisori **16 → 15 WARN**. ⚠️ Zadnje dvoje ovisi o **Pro planu, koji
+  traje ~mjesec** — poslije seobe na self-host provjeri iznova.
+  ⚠️ **NOVI RUB koji je time otvoren:** [`js/auth.js:372`](js/auth.js) šalje **sirovu** poruku
+  (`setStatus(error.message, true)`). Dok je zaštita bila isključena taj se put praktički nije
+  aktivirao (sučelje već traži `minlength="8"`), a sad se aktivira za **dugu ali procurjelu**
+  lozinku — čega sučelje ne može znati unaprijed. Posljedica: **HR korisnik dobije englesku
+  poruku**, mimo i18n-a. Detalji i opseg: `BACKLOG.md` §Auth.
 - **Sitni dug (ne blokira):** siročad u Storageu · advisor-WARN `snapshot_content_version` /
   `handle_new_user` · staging poravnati s `supabase/f1-nodes.sql`. ⚠️ **`is_admin()` se NE smije
   revokeati `authenticated`-u** — zovu ga RLS politike kao pozivatelj. Advisori PROD: **0 ERROR,
