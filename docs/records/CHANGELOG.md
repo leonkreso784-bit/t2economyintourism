@@ -5,6 +5,32 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-29 (OPUS) — **ALAT-1: `css:diff` prestaje lagati o seobi markup → CSS**
+
+Dug koji je stajao pred C4. Alat je premotavao **samo** `styles.bundle.css`, a HTML i JS uzimao iz
+radnog stabla. Dok se mijenja isključivo CSS, to je točno — ali C4–C7 rade **obrnuto**: sele
+vrijednost **iz markupa u CSS**. Tada referentna strana postane himera koja nikad nije postojala
+(stari CSS + novi markup) i alat prijavi rijeku razlika kojih nema. *Alat koji laže gori je od
+alata kojeg nema: nauči te da ga ignoriraš.*
+
+**Popravak nije krpanje presretača nego promjena mjere:** referenca se vadi u **`git worktree`** i
+poslužuje **istim** serverom na drugom portu (`SERVE_ROOT`). Time se premota **cijelo stablo** —
+HTML, JS, JSON, slike. ⚠️ Da je popravak bio popis datoteka, morao bi se održavati; stablo se
+održava samo. *I markup gradi JS, pa presretanje po datotekama ionako ne bi bilo dovoljno.*
+
+**Izmjereno na sintetičkoj seobi** (ista vrijednost seli iz `style=""` u pravilo): stari način
+**18 lažnih razlika**, novi **0**. Obrnuta provjera: prava promjena (5px → 9px) se **i dalje
+hvata**, s točnim svojstvom i obje vrijednosti.
+
+**Usput uklonjena nestabilnost:** cookie-banner je davao **1 lažnu razliku na ~4 prolaza**. Uzrok
+nije CSS nego to da **završen prijelaz nestane iz `getAnimations()`** — jedna strana ga uhvati na
+početku, druga na kraju. Prijelazi se sada **dovršavaju** umjesto da se zamrznu na t=0: dovršeno
+stanje je ono što korisnik vidi i isto je bez obzira na to kad smo pogledali. **6/6 čistih
+prolaza** poslije.
+
+Server je dobio `SERVE_ROOT`, a obje strane vrte **istu** skriptu — server je alat, ne predmet
+mjerenja, pa bi izmjena u njemu inače postala lažna razlika.
+
 ## 2026-08-28 (OPUS) — **P4: napredak preživi povratak mreže** · faza POLICA ZATVORENA
 
 P4 ne gradi nego dokazuje. Sinkronizacija je offline-first od F-faze, ali obećanje faze („uči bez

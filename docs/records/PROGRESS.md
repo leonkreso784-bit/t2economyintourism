@@ -5,6 +5,34 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-29 — ALAT-1: `css:diff` premota cijelo stablo (dug plaćen PRIJE C4)
+
+**Odluka je Leonova** (ponuđeno A: ručni A/B po cigli, B: popraviti alat → **B**), obrazloženje:
+pred nama je **pet** cigli koje rade istu vrstu seobe, pa se popravak plaća jednom a koristi pet puta.
+
+**Isporučeno:** `scripts/css-diff.js` vadi referencu u `git worktree` i poslužuje ju istim serverom
+na drugom portu; `scripts/static-server.js` dobio `SERVE_ROOT`. Stari način ostaje kao
+`--css-only <file>` i **sam ispisuje da laže** za ovu vrstu cigle.
+
+**Dokaz je sintetički A/B, ne tvrdnja:** vrijednost preseljena iz `style=""` u CSS pravilo →
+stari način **18 lažnih razlika**, novi **0**; obrnuto, prava promjena se i dalje hvata.
+
+**Nalaz usput:** prvi pokušaj dokaza (`letter-spacing`) pokazao je **pravu regresiju** — inline stil
+ima veću specifičnost od `tracking-tighter`, pa je premještanjem u CSS Tailwind utility preuzeo
+(3px → −3.6px). To je **točno razred kvara koji C4 proizvodi**, i alat ga je uhvatio.
+
+**Nestabilnost uklonjena:** 1 lažna razlika na ~4 prolaza (cookie-banner). Uzrok: **završen prijelaz
+nestane iz `getAnimations()`**. Prijelazi se sada dovršavaju. 6/6 čistih prolaza.
+
+⚠️ **Vlastiti propust, zapisan jer je zamalo skupo prošao:** usred dokaza sam pokrenuo
+`git reset --hard` dok su izmjene alata bile **nezapisane** i pobrisao ih. Spasio ih je probni
+commit koji ih je slučajno pokupio (`-am`). Otad: kopija u scratchpad prije svake git-radnje koja
+briše, i **nijedan `reset --hard` nad nepospremljenim radom**.
+
+**Slijedi:** **C4** (browse + lekcije, 1477 redaka, 47 od 49 `!important` u `subject-selector.css`).
+
+---
+
 ## 2026-08-28 — cigla P4 („bez gubitka") · FAZA POLICA ZATVORENA
 
 **Isporučeno:** `tests/unit/cloud-sync.test.js` (10 tvrdnji) + 7. test u `offline-study.spec.js`

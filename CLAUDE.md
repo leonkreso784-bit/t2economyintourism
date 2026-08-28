@@ -91,7 +91,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 
 | naredba | što radi | zašto nije u preflightu |
 |---|---|---|
-| `npm run css:diff` | izračunati stilovi u pravom Chromiumu, radno stablo vs `HEAD`, 3 širine | preglednik + port. ⚠️ **slijep za seobu vrijednosti iz markupa u CSS** — tada A/B iz `git worktree`-a |
+| `npm run css:diff` | izračunati stilovi u pravom Chromiumu, radno stablo vs git-referencu, 3 širine. Referencu vadi u **`git worktree`** → premota **cijelo stablo**, pa vidi i seobu vrijednosti iz markupa u CSS. (`--css-only` = stari način, sam upozorava da za to laže) | preglednik + port |
 | `npm run build:og` | crta `og-cover.png` **1200×630** (boje iz tokena, tekst iz i18n) | preglednik; PNG se **commita**, dimenzije mjeri `check:seo` |
 | `npm run css:debt` | što je ostalo za C4–C7: po cigli datoteke, redci, `!important` izvan komentara | read-only, **nije gate** — plan je do 2026-08-25 te brojke nosio **ručno** i obje su ostarile |
 | `npm run palette:breakdown` | razloži ostatak palete po **POSLJEDICI** (nevidljiv tekst · blijede plohe · stara paleta) | read-only, **nije gate** |
@@ -171,9 +171,8 @@ PRAZNA** — brana traži **nulu**; brojku zna `tests/phone-baseline.json`, ne o
 Kriterij je **mjeren, ne tvrđen**: skinut predmet se otvara bez mreže, **preživi deploy**, a
 napredak stečen offline se po povratku mreže **spoji bez gubitka**.
 **🟢 TEKUĆA FAZA = C4** → C5a → C5b → C6 → C7.
-⚠️ Prije C4 stoji dug u alatu: **`css:diff` je slijep za cigle koje sele vrijednost iz markupa u
-CSS** (presreće samo stylesheet, HTML uzima iz radnog stabla) — a C4–C7 rade točno to; T5 je to
-platio i dokaz izveo pravim A/B-om iz zasebnog `git worktree`-a.
+✅ **Dug u alatu pred C4 je PLAĆEN (ALAT-1):** `css:diff` više nije slijep za seobu vrijednosti iz
+markupa u CSS. Mjere i obrnuta provjera: `CHANGELOG.md`; zašto: zaglavlje `scripts/css-diff.js`.
 **K4 se NE radi zasebno** — utapa se u **P2** (ista pločica, isti ekran). **K5** (editor
 dvojezično) čeka i ne blokira ništa: 28 od 48 `studio.*` ključeva nedostaje, a `block-editor.js`
 i `admin-editors.js` imaju **nula** `t()` poziva.

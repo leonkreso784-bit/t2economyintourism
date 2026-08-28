@@ -4,7 +4,10 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const ROOT = path.join(__dirname, '..');
+// `SERVE_ROOT` posluzuje DRUGO stablo istim serverom -- treba ga `css-diff.js`, koji
+// referentnu verziju vadi u `git worktree`. Vazno je da obje strane vrti ISTI server:
+// server je alat, ne predmet mjerenja, pa bi izmjena u njemu inace postala lazna razlika.
+const ROOT = path.resolve(process.env.SERVE_ROOT || path.join(__dirname, '..'));
 const PORT = process.env.PORT || 5050;
 const MIME = {
   '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css',
