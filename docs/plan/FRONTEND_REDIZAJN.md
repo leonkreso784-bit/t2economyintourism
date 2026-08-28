@@ -3333,3 +3333,71 @@ ostale mjere izgled, ova mjeri **čije je što**.
 
 `sw.js` — ni jednim retkom. Kriterij faze („otvori skinuti predmet u zrakoplovnom načinu") pripada
 **P3**, koja je jedina cigla s pravom na Service Worker i zato ide **zadnja**.
+
+### 9.19 📋 P3 — SPECIFIKACIJA PRIJE GRADNJE (pripremljeno 2026-08-28)
+
+P3 je **jedina cigla faze koja dira `sw.js`**, a to je datoteka koja jedina može **zaključati
+stranicu u polju**. Zato joj odluke stoje ovdje **prije** nego se napiše ijedan redak — da se u
+sesiji gradi, a ne odlučuje.
+
+#### Zatečeno (izmjereno, ne pretpostavljeno)
+
+- `sw.js` `fetch`: navigacija → network-first; **sve ostalo same-origin GET → stale-while-revalidate**
+  preko `caches.match(req)`. Taj poziv pretražuje **SVE keševe**, pa se skinuta datoteka
+  **već danas** posluži offline — ali **samo ako se `?v=` točno poklopi**.
+- `activate` briše svaki keš osim `sokrat-cache-<SW_VERSION>`; **`sokrat-offline` preživi**
+  (P1, namjerno).
+- `SW_VERSION` i `CONTENT_VERSION` postavlja **isti** `npm run bump` → u `sw.js` je token kojim
+  stranica traži sadržaj **dostupan bez ikakvog dodatnog knjigovodstva**.
+- Oprema za dokaz **već postoji**: `tests/sw.spec.js` ima `test.use({ serviceWorkers: 'allow' })`,
+  čekanje na `navigator.serviceWorker.controller` i `context.setOffline(true)`.
+  *P3 se nakalemljuje na dokazan obrazac, ne gradi harness.*
+
+#### ⚠️ Jedina otvorena odluka — i njezino razrješenje
+
+Poslije deploya stranica traži `…json?v=<novi>`, a u kešu leži `…json?v=<stari>`. Bez odgovora na
+to, skinut predmet postane **nevidljiv** — točno kvar zbog kojeg P1 postoji.
+
+**Odluka: dvorazinsko poklapanje u kešu `sokrat-offline`, prije općeg puta.**
+
+| slučaj | ponašanje | zašto |
+|---|---|---|
+| **točno poklapanje** (`?v=` isti) | **cache-first**, bez mreže | skinuto je aktualno — instant, bez podatkovnog troška |
+| **poklapanje samo uz `ignoreSearch`** (drugi `?v=`) | **network-first, pa pad na tu kopiju** | online dobiješ ispravno, offline dobiješ **staro umjesto ničega** |
+| **nema poklapanja** | zatečeni stale-while-revalidate | ništa se ne mijenja |
+
+Druga vrsta je cijela poanta: **staro gradivo je bolje od praznog ekrana, ali samo kad mreže
+nema.** Odbačena je varijanta „uvijek posluži iz keša": tiho bi servirala zastarjelo gradivo
+korisniku koji ima mrežu, i to bez ijednog znaka.
+
+⚠️ **Cijena koja mora na ekran, ne samo u kôd:** zapis svakog predmeta nosi `v` (P1). Kad se
+razlikuje od tekućeg, **polica to mora reći** („zastarjelo · osvježi"), inače korisnik ne zna da
+uči staru verziju. **To je dio P3, ne dodatak.**
+
+⚠️ **Skriveni rizik koji treba imenovati:** `codeScripts` (vježbe + lib) su **kôd**. Zastarjeli
+pack + osvježeni engine = drift koji se ne vidi kao greška nego kao **kriv rezultat**. Zato
+`?v=`-neslaganje kod njih ide network-first jednako kao i kod JSON-a — nikad tiho staro.
+
+#### Tvrde granice
+
+1. **`activate` se NE dira.** Brisač po prefiksu `sokrat-cache-` je ono što `sokrat-offline` drži
+   živim. Jedna promjena ondje briše svima sve skinuto.
+2. **Navigacijski put se NE dira** — ostaje network-first + offline shell.
+3. **`/sw.js` mora ostati `max-age=0, must-revalidate`** (`vercel.json`). Bez toga se novi SW ne
+   može isporučiti, pa ni ova cigla ni bilo koja buduća. *Ovo je i razlog zašto seoba na
+   Hostinger traži header-ugovor prije, ne poslije.*
+
+#### Kako se dokazuje
+
+- **Postojeći test ne smije puknuti:** `tests/sw.spec.js` (registracija · app-shell offline ·
+  update-flow s toastom).
+- **Novi test, isti obrazac:** skini predmet → `context.setOffline(true)` → otvori ga → gradivo se
+  učita i sva četiri načina rade. **To je kriterij cijele faze POLICA**, i P3 ga jedini može ispuniti.
+- **Obrnuta provjera (obavezna):** predmet koji **nije** skinut mora offline **pasti**. Bez toga
+  test ne mjeri policu nego opći keš.
+- **Mreža za spašavanje:** `__swKill()` postoji. Prije mergea provjeriti da radi **s novim SW-om**.
+
+#### Što P3 NIJE
+
+Ne dira policu kao prikaz (to je P2), ne dira napredak (P4), i **ne uvodi automatsko osvježavanje
+skinutog** — to bi trošilo tuđi podatkovni promet bez pitanja. Osvježava se **na dodir**.

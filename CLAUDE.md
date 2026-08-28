@@ -159,14 +159,15 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 **landing C+D** · prije toga C0–C3 i sve starije. Točan SHA/token/Vercel-ref se **namjerno ne
 prepisuje** ovamo (ADR-027) — zna ih zadnji **🚀** redak CHANGELOG-a.
 
-**✅ GOTOVO, NIJE DEPLOYANO** — grana `feat/about`: cigle **`about`** (spec §9.14),
-**PREDSTAVLJANJE + SEO-temelji** (§9.15) te **D1 + D2** (dopune: praznina se ubacuje **gumbom**,
-rečenica smije imati **više praznina**). Time je **phone-osnovica PRVI PUT PRAZNA** — brana od
-tada traži **nulu**; trenutnu brojku zna `tests/phone-baseline.json`, ne ova proza.
+**✅ GOTOVO, NIJE DEPLOYANO** — dvije grane. `feat/about`: **`about`** (§9.14),
+**PREDSTAVLJANJE + SEO** (§9.15), **D1 + D2** (dopune). `feat/polica` (grana se od nje):
+**P1 + P2** (§9.17–9.18) — predmet se skida na uređaj, polica ima dva izvora; **K4 potrošen**,
+**N2 pola** (polica pokazuje skinuto, ne sve što učiš). Time je i **phone-osnovica PRVI PUT
+PRAZNA** — brana traži **nulu**; brojku zna `tests/phone-baseline.json`, ne ova proza.
 ⚠️ **Iz D2 ostaje živo pravilo:** `answer` je obavezan i drži **prvi** odgovor i kad postoji
 `answers` — zbog **keširane stare skripte**, ne zbog urednosti sheme.
 
-**🟢 TEKUĆA FAZA = POLICA (P1–P4)** (Leon presudio 2026-08-26; grana `feat/polica`), iza nje
+**🟢 TEKUĆA FAZA = POLICA** — **P1 ✅ · P2 ✅ · P3 slijedi · P4**; iza nje
 **C4 → C5a → C5b → C6 → C7**. Zašto POLICA prije C4 — tri mjere u specu §9.17; najkraća: landing
 već obećava **„Radi offline"**, a `sw.js` u `activate` briše keš na **svaki** deploy.
 ⚠️ Prije C4 stoji dug u alatu: **`css:diff` je slijep za cigle koje sele vrijednost iz markupa u
@@ -178,6 +179,19 @@ i `admin-editors.js` imaju **nula** `t()` poziva.
 **A1 + A0: REDOSLIJED NIJE PRESUĐEN** (Leon, 2026-08-19: *„ne znam još, to ćemo se dogovorit"*).
 Kad dođe, idu **zajedno**: `#authModal` je građen za jedan put, a OAuth-gumbi su primarni i idu
 IZNAD e-maila, pa se inače prepravlja dvaput.
+
+### 🚚 SEOBA JE ODLUČENA (Leon, 2026-08-27) — **s Vercela na Hostinger + self-host Supabase**
+
+Vrijeme nije presuđeno („vrlo uskoro"), a zapisana odluka je bila *poslije frontenda* — napetost
+je izrečena, nije razriješena. **Tri stvari koje moraju biti riješene PRIJE, ne poslije** (puni
+zapis: `BACKLOG.md` §Seoba):
+① **`vercel.json` je ugovor koji umire s Vercelom** — u njemu je iznimka `/sw.js` →
+`max-age=0, must-revalidate` ispod pravila `/(.*).js` → `immutable`. Napiše li novi host „sve
+`.js` godinu dana", **`sw.js` je `.js`** → korisnik zaključan na starom SW-u **godinu dana**,
+izlaz samo `__swKill()`. To je jedini scenarij u kojem se stranica zaključa u polju.
+② **„push na `main` = produkcija" prestaje vrijediti** (pravilo #2, pre-push hook, preview-grane)
+→ zamjenski deploy-put mora postojati prije seobe, inače prvi deploy bude ručan.
+③ **Self-host traži DVIJE instance** (prod + staging), inače write-testovi gađaju produkciju.
 
 ### 🎯 Tekuća faza = FRONTEND REDIZAJN NA TAILWIND (spec: `docs/plan/FRONTEND_REDIZAJN.md`, ADR-028)
 
@@ -235,15 +249,13 @@ Leon je postavio tri pitanja i na moje preporuke **nije odgovorio**. Brojke su i
   **dvoje**, uz e-mail+lozinku kao jedini put. Google je besplatan i ne čeka redizajn; **Apple
   ~99 $/god** i nema smisla bez iOS aplikacije; „Sign in with ChatGPT" je **NEPOTVRĐEN** — ne
   obećavati.
-- **Self-host Supabase prije OAuth-a** (Leonov prijedlog; sama seoba je **odlučena, ali TEK
-  POSLIJE frontenda**). Podupire ga to što su sve tri čekajuće auth-stavke **Supabase-
-  konfiguracija** → poslije seobe bi se radile dvaput (seoba mijenja URL, dakle i redirect URI).
-  ⚠️ **Backlog ne spominje staging:** write-testovi gađaju zaseban HOSTANI projekt → seoba traži
-  **dvije instance**. ⚠️ **NEODGOVORENO PITANJE koje Leonu dugujem:** smije li staging biti na
-  drugom laptopu, a produkcija na VPS-u. Kratko: da za razvoj, ali CI ne može do laptopa iza
-  kućnog rutera bez tunela, a brana koja ovisi o tome je li laptop upaljen prestaje biti brana.
-- **Migracija računa je jeftinija nego zapisano:** nepovratan je samo sadržaj **dva Storage
-  bucketa** (`node-images`, `lesson-images`) — njih nema u gitu.
+- **Self-host vs OAuth — redoslijed.** Seoba je od 2026-08-27 **odlučena** (v. §Seoba gore); sve
+  tri čekajuće auth-stavke su **Supabase-konfiguracija**, pa bi se prije seobe radile dvaput
+  (mijenja se URL, dakle i redirect URI). ⚠️ **Dugujem ti odgovor:** smije li staging biti na
+  drugom laptopu — da za razvoj, ali CI ne može do laptopa iza kućnog rutera bez tunela, a brana
+  koja ovisi o tome je li laptop upaljen prestaje biti brana.
+  ➕ Migracija je **jeftinija nego zapisano**: nepovratan je samo sadržaj dvaju Storage bucketa
+  (`node-images`, `lesson-images`) — njih nema u gitu.
 
 ### Stalno — vrijedi neovisno o fazi
 
@@ -279,15 +291,16 @@ Leon je postavio tri pitanja i na moje preporuke **nije odgovorio**. Brojke su i
   briše se odmah.** · ② podići **Minimum password length 6 → 8** (Auth → Sign In / Providers);
   polje „Password Requirements" **ne dirati**, i prije toga popraviti `WeakPasswordError` u
   `js/auth.js`.
-  ⚠️ **`auth_leaked_password_protection` NIJE stavka za ruku — to je Pro značajka** (org je
-  `free`). **Rješava se BESPLATNO u našem kodu**: HIBP javni API bez ključa (k-anonimnost —
-  lozinka ne napušta preglednik), ~30 redaka.
+  ③ **uključiti `auth_leaked_password_protection`** — do 2026-08-27 je stajalo da to NIJE stavka
+  za ruku jer je Pro značajka, a org je `free`. **Org je od tada `pro`** (izmjereno), pa je to sad
+  jedan prekidač na istom ekranu kao ②. ⚠️ **Pro je uzet na MJESEC DANA** → napravi dok traje;
+  poslije seobe na self-host provjeri iznova (HIBP u kodu ostaje rezerva, ~30 redaka).
 - **Sitni dug (ne blokira):** siročad u Storageu · advisor-WARN `snapshot_content_version` /
   `handle_new_user` · staging poravnati s `supabase/f1-nodes.sql`. ⚠️ **`is_admin()` se NE smije
   revokeati `authenticated`-u** — zovu ga RLS politike kao pozivatelj. Advisori PROD: **0 ERROR,
   16 WARN.**
-- **Napomene:** Supabase free-tier **spava ~7 dana** neaktivnosti (app tad fallbacka na datoteke,
-  login/sync ne rade) · `content_versions`/`node_content_versions` = **append-only audit**,
+- **Napomene:** ⚠️ **Supabase org je `pro` — ali samo ~mjesec dana** (Leon, 2026-08-27), pa
+  free-tier spavanje nakon ~7 dana neaktivnosti **trenutno ne vrijedi** i vratit će se s planom · `content_versions`/`node_content_versions` = **append-only audit**,
   brisanje **samo uz izričit OK** · PWA drži staru ikonu do reinstalacije (nije bug) ·
   `mcp-admin/` = untracked read-only spike [[mcp-admin-spike]].
 
