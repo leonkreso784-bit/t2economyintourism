@@ -5,6 +5,32 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-28 — AUTH-1: sirova poruka o lozinci → i18n (prije P3)
+
+**Isporučeno:** `authError()` u `js/auth.js` + 6 i18n ključeva (EN/HR) +
+`tests/unit/auth-error.test.js` (26). Preflight **EXIT 0**.
+
+**Nalaz koji je promijenio posao:** zadatak je glasio *„popravi `auth.js:343`"* — i taj kvar
+**ne postoji**. Umjesto popravljanja po zapisu izvučen je stvarni kôd zakucanog
+`supabase-js@2.110.8`: `signInWithPassword` slabu lozinku vraća kao `data.weakPassword` uz
+`error: null`, a `AuthWeakPasswordError` baca se samo kad HTTP odgovor **nije ok** — dakle pri
+**registraciji i promjeni lozinke**, gdje sesije ni nema. Zapis je opisivao stariji SDK.
+*Treći put u dva dana ista pouka: tvrdnja o tuđem sustavu ostari bez ijedne naše izmjene — ovaj
+put je zamalo proizvela izmišljen posao.*
+
+**Pravi je nalaz bio širi:** sirova engleska poruka išla je na **četiri** mjesta, a najvažnije je
+`handleRecovery` (nova lozinka nakon reseta) — put na kojem korisnik ne može odustati i vratiti se
+na staro.
+
+**Metoda:** test je pisan tako da **čita popis ključeva iz koda**, ne da ga prepisuje — prepisan
+popis ostari. Nakon zelenog testa napravljene su **tri mutacije** (maknut `hr` · vraćen sirovi
+`error.message` · procurjela dobiva savjet o duljini); svaku je uhvatio **točno jedan** test, pa
+tvrdnje nisu preširoke.
+
+**Slijedi:** P3 po specu §9.19 (jedina cigla faze koja dira `sw.js`), pa P4.
+
+---
+
 ## 2026-08-26 — cigla P2 („gdje živi") · polica s dva izvora
 
 **Isporučeno:** pločice skinutih predmeta na `#materials-page` (ime iz kataloga, veličina, stanje

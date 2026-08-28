@@ -168,6 +168,61 @@ const SokratAuth = (function () {
         return (v === key) ? fb : v;
     }
 
+    /**
+     * Supabase auth-greska -> poruka na korisnikovom jeziku.
+     *
+     * Zasto postoji: `signUp`/`updateUser` odbijaju lozinku i kad je DUGA --
+     * ako je u HaveIBeenPwned popisu. To `minlength` u obrascu ne moze
+     * predvidjeti, pa je poruka sa servera JEDINI put do korisnika, a isla je
+     * neprevedena. Korisnik koji ne razumije zasto je lozinka odbijena
+     * najcesce odustane, a ne pokusa drugu.
+     *
+     * Primarno se gleda `code` (GoTrue ga salje od 2024-01-01), a regex nad
+     * porukom je mreza za starije/rubne odgovore. **Zadnji fallback je SIROVA
+     * poruka** -- radije engleska recenica nego prazan crveni okvir ako
+     * Supabase uvede kod koji jos ne poznajemo.
+     *
+     * @param {{code?:string, message?:string, reasons?:string[]}|null} err
+     * @returns {string}
+     */
+    function authError(err) {
+        const raw = String((err && err.message) || '');
+        const code = String((err && err.code) || '');
+        const reasons = (err && Array.isArray(err.reasons)) ? err.reasons : [];
+
+        // Slaba lozinka: "procurjela" i "prekratka" su RAZLICITI savjeti.
+        // Uputa "uzmi duzu" je kriva za lozinku odbijenu zbog krade podataka.
+        if (code === 'weak_password' || /weak.?password/i.test(raw)) {
+            const pwned = reasons.indexOf('pwned') !== -1
+                || /pwned|breach|leaked|compromis/i.test(raw);
+            return pwned
+                ? at('auth.st.weakPwned', 'This password has appeared in a known data breach — please pick a different one.')
+                : at('auth.st.weakShort', 'Password is too weak — use at least 8 characters.');
+        }
+        if (code === 'invalid_credentials' || /invalid login credentials/i.test(raw)) {
+            return at('auth.st.wrongCreds', 'Wrong email or password.');
+        }
+        if (code === 'email_not_confirmed' || /email not confirmed/i.test(raw)) {
+            return at('auth.st.confirmFirst', 'Please confirm your email first — check your inbox for the confirmation link.');
+        }
+        if (code === 'user_already_exists' || code === 'email_exists'
+            || /already registered|already exists/i.test(raw)) {
+            return at('auth.st.exists', 'An account with this email already exists — switch to Sign in.');
+        }
+        if (code === 'over_email_send_rate_limit' || code === 'over_request_rate_limit'
+            || /rate limit|too many requests/i.test(raw)) {
+            return at('auth.st.rateLimit', 'Too many attempts — please wait a minute and try again.');
+        }
+        if (code === 'email_address_invalid' || /invalid.*email|email.*invalid/i.test(raw)) {
+            return at('auth.st.badEmail', 'That email address does not look valid.');
+        }
+        if (code === 'same_password' || /should be different from the old/i.test(raw)) {
+            return at('auth.st.samePass', 'The new password must be different from the current one.');
+        }
+        // Nepoznato: radije sirova engleska recenica nego prazan crveni okvir.
+        return raw || at('auth.st.genericErr', 'Something went wrong. Please try again.');
+    }
+
     function injectModal() {
         if (document.getElementById('authModal')) return;
         // F2 2D.2c: modal je sada Web Component <sokrat-modal> (S4 primitiv) — komponenta vodi
@@ -341,14 +396,7 @@ const SokratAuth = (function () {
         if (!email || !password) return;
         setStatus(at('auth.st.signingIn', 'Signing in…'));
         const { error } = await client.auth.signInWithPassword({ email: email, password: password });
-        if (error) {
-            const msg = /invalid login credentials/i.test(error.message)
-                ? at('auth.st.wrongCreds', 'Wrong email or password.')
-                : /email not confirmed/i.test(error.message)
-                    ? at('auth.st.confirmFirst', 'Please confirm your email first — check your inbox for the confirmation link.')
-                    : error.message;
-            setStatus(msg, true);
-        }
+        if (error) setStatus(authError(error), true);
         // Uspjeh: onAuthStateChange zatvara modal i javlja toast.
     }
 
@@ -369,7 +417,7 @@ const SokratAuth = (function () {
             }
         });
         if (error) {
-            setStatus(error.message, true);
+            setStatus(authError(error), true);
             return;
         }
         // Uz uključenu potvrdu emaila Supabase za već registriran email vrati
@@ -392,7 +440,7 @@ const SokratAuth = (function () {
             redirectTo: window.location.origin + window.location.pathname
         });
         if (error) {
-            setStatus(error.message, true);
+            setStatus(authError(error), true);
         } else {
             setStatus(at('auth.st.resetSent', 'If an account exists for that email, a reset link is on its way — check your inbox.'));
         }
@@ -411,7 +459,7 @@ const SokratAuth = (function () {
         setRecoveryStatus(at('msg.saving', 'Saving…'));
         const { error } = await client.auth.updateUser({ password: password });
         if (error) {
-            setRecoveryStatus(error.message, true);
+            setRecoveryStatus(authError(error), true);
             return;
         }
         recoveryMode = false;
@@ -437,6 +485,7 @@ const SokratAuth = (function () {
         getUser: function () { return currentUser; },
         getDisplayName: getDisplayName,
         onChange: function (fn) { changeListeners.push(fn); },
+        authError: authError,
         openModal: openModal,
         signOut: signOut,
         setSyncInfo: function (text) {

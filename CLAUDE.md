@@ -287,11 +287,13 @@ Leon je postavio tri pitanja i na moje preporuke **nije odgovorio**. Brojke su i
   („produkcija ima točno ono što repozitorij opisuje"); **min. lozinka 6 → 8**; **leaked password
   protection UKLJUČENA** → advisori **16 → 15 WARN**. ⚠️ Zadnje dvoje ovisi o **Pro planu, koji
   traje ~mjesec** — poslije seobe na self-host provjeri iznova.
-  ⚠️ **NOVI RUB koji je time otvoren:** [`js/auth.js:372`](js/auth.js) šalje **sirovu** poruku
-  (`setStatus(error.message, true)`). Dok je zaštita bila isključena taj se put praktički nije
-  aktivirao (sučelje već traži `minlength="8"`), a sad se aktivira za **dugu ali procurjelu**
-  lozinku — čega sučelje ne može znati unaprijed. Posljedica: **HR korisnik dobije englesku
-  poruku**, mimo i18n-a. Detalji i opseg: `BACKLOG.md` §Auth.
+  ✅ **Rub koji je time bio otvoren je ZATVOREN (AUTH-1, 2026-08-28):** `authError()` mapira
+  Supabase auth-greške na i18n, sa **sirovom porukom kao zadnjim fallbackom** (nikad prazan crveni
+  okvir). Išlo je na **četiri** mjesta, ne na jedno; najvažnije je bilo **postavljanje nove lozinke
+  nakon reseta**. Dokaz: `tests/unit/auth-error.test.js` (26 tvrdnji, mutacijski provjeren).
+  ⚠️ **Istom prilikom oborena je tvrdnja da `js/auth.js:343` krivo tretira `WeakPasswordError`** —
+  u zakucanom `supabase-js@2.110.8` prijava slabu lozinku vraća kao `data.weakPassword` uz
+  **`error: null`**, pa crvene poruke nema. Zapis je opisivao stariji SDK. Puni trag: `BACKLOG.md`.
 - **Sitni dug (ne blokira):** siročad u Storageu · advisor-WARN `snapshot_content_version` /
   `handle_new_user` · staging poravnati s `supabase/f1-nodes.sql`. ⚠️ **`is_admin()` se NE smije
   revokeati `authenticated`-u** — zovu ga RLS politike kao pozivatelj. Advisori PROD: **0 ERROR,

@@ -491,6 +491,14 @@
     'auth.st.created': { en: 'Account created! Check your inbox and click the confirmation link, then sign in.', hr: 'Račun otvoren! Provjeri inbox i klikni link za potvrdu, zatim se prijavi.' },
     'auth.st.sending': { en: 'Sending…', hr: 'Slanje…' },
     'auth.st.resetSent': { en: 'If an account exists for that email, a reset link is on its way — check your inbox.', hr: 'Ako račun za taj e-mail postoji, link za promjenu stiže — provjeri inbox.' },
+    // Poruke sa SERVERA (Supabase). Prije su isle sirove i na engleskom; procurjelu
+    // lozinku obrazac ne moze uhvatiti unaprijed, pa je ovo jedini put do korisnika.
+    'auth.st.weakPwned': { en: 'This password has appeared in a known data breach — please pick a different one.', hr: 'Ova se lozinka pojavila u poznatoj krađi podataka — odaberi drugu.' },
+    'auth.st.weakShort': { en: 'Password is too weak — use at least 8 characters.', hr: 'Lozinka je preslaba — koristi barem 8 znakova.' },
+    'auth.st.rateLimit': { en: 'Too many attempts — please wait a minute and try again.', hr: 'Previše pokušaja — pričekaj minutu pa pokušaj ponovno.' },
+    'auth.st.badEmail': { en: 'That email address does not look valid.', hr: 'Taj e-mail ne izgleda ispravno.' },
+    'auth.st.samePass': { en: 'The new password must be different from the current one.', hr: 'Nova lozinka mora biti različita od trenutne.' },
+    'auth.st.genericErr': { en: 'Something went wrong. Please try again.', hr: 'Nešto je pošlo po zlu. Pokušaj ponovno.' },
 
     // ===== Profil (#profile-page; renderProfilePage u profile.js) =====
     'profile.title': { en: 'My Profile', hr: 'Moj profil' },

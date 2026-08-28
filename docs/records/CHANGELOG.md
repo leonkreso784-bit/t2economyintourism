@@ -5,6 +5,32 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-28 (OPUS) — **AUTH-1: poruka o lozinci govori korisnikov jezik**
+
+Uključivanjem `auth_leaked_password_protection` server je počeo odbijati lozinke koje su **duge ali
+procurjele**. To `minlength="8"` u obrascu **ne može predvidjeti**, pa je poruka sa servera postala
+jedini put do korisnika — a išla je sirova i na engleskom. `authError()` ju mapira na i18n preko
+`code`-a (uz regex-mrežu za starije odgovore), a **zadnji fallback je sirova poruka**: radije
+engleska rečenica nego prazan crveni okvir za kôd koji još ne poznajemo.
+
+**Opseg je bio veći nego što je zapis mislio:** sirova poruka išla je na **četiri** mjesta, ne na
+jedno. Najvažnije nije registracija nego **postavljanje nove lozinke nakon reseta** — tko je
+zaboravio lozinku najlakše naleti na odbijanje, i to je jedini put s kojeg se ne može vratiti na
+staro.
+
+**Dvije razlike koje korisnik osjeti, pa su ušle u kôd:** „procurjela" i „prekratka" **nisu isti
+savjet** (uputa *„uzmi dužu"* je kriva kad duljina nije problem) · **nikad prazan crveni okvir**.
+
+**Oboreno mjerenjem:** zapis je tvrdio da `js/auth.js:343` krivo tretira `WeakPasswordError` i da
+se to *„mora popraviti prije dizanja minimuma"* — pa je danas izgledao kao obistinjeno upozorenje.
+Izvučen je kôd zakucane verzije: `supabase-js@2.110.8` slabu lozinku pri **prijavi** vraća kao
+`data.weakPassword` uz **`error: null`**. Crvene poruke nema i nije je bilo; zapis je opisivao
+stariji SDK. *Da se poslušao, popravljao bi se nepostojeći kvar.*
+
+**Brane:** `tests/unit/auth-error.test.js` — **26 tvrdnji**, uklj. **obrnutu provjeru** (popis
+ključeva se čita **iz koda**, svaki mora imati `hr`, inače HR korisnik tiho dobije engleski).
+Tri kritične tvrdnje **mutacijski provjerene**, svaku uhvatio **točno jedan** test.
+
 ## 2026-08-26 (OPUS) — **P2: polica ima dva izvora** (skinuto + vlastito gradivo)
 
 „Moji materijali" prestaju biti mapa s tuđim imenom i postaju **ono što učim**: skinuti predmeti

@@ -426,20 +426,27 @@ provedba **ne može** dobiti bez proxyja — to nije propust izvedbe nego svojst
    ⚠️ **Polje „Password Requirements" NE dirati** — traženje velikih slova/brojki/simbola server bi
    provodio, a **naša forma to nigdje ne piše**; bila bi to ista greška okrenuta naopako (server
    stroži od sučelja). *Mijenja se isključivo ono što UI već obećava.*
-2. **`WeakPasswordError` se u `js/auth.js:343` krivo tretira.** Postojeći korisnik s prekratkom
-   lozinkom se **uspješno prijavi**, ali Supabase uz sesiju vrati i `error` → naš `if (error)`
-   pokaže **crvenu poruku** iako je prijava prošla. Nije zaključavanje, jest zbunjivanje.
-   **Mora se popraviti PRIJE nego se serverski minimum digne** (ili barem u istoj isporuci).
-   > ⛔ **UPOZORENJE SE OBISTINILO 2026-08-28: minimum je dignut, popravak nije napravljen.**
-   > Stanje je točno ono na koje je ovaj redak upozoravao. **I ne da se popraviti kodom danas:**
-   > serverska postavka je **živa na produkciji**, a svaka izmjena `js/auth.js`-a sjedi
-   > **nedeployana** na grani — dakle popravak čeka deploy, koji čeka Leonov OK.
-   > **Ozbiljnost, pošteno:** pogađa samo **postojećeg** korisnika s lozinkom < 8 znakova; on se
-   > **prijavi**, ali uz crvenu poruku. Nije zaključavanje. Koliko ih je i dalje **nemjerljivo**.
-   > **Prva stavka za sljedeću sesiju** (mala): `handleSignIn` mora uzeti i `data`, pa kad postoji
-   > sesija **greška nije greška** nego najviše upozorenje.
-   Koliko je pogođenih: **nemjerljivo** — duljina lozinke se ne pohranjuje, samo hash. Vjerojatno
-   nula (forma traži 8 od početka), ali „vjerojatno nula" nije mjera i tako se i vodi.
+2. ❌ ~~**`WeakPasswordError` se u `js/auth.js:343` krivo tretira**~~ — **TVRDNJA JE OBORENA
+   MJERENJEM 2026-08-28.** Zapis je tvrdio da Supabase pri prijavi vrati **sesiju i `error`
+   zajedno**, pa da naš `if (error)` pokaže crvenu poruku iako je prijava prošla. Uz to je stajalo
+   i upozorenje *„mora se popraviti PRIJE nego se serverski minimum digne"* — minimum je dignut,
+   pa je zapis danas izgledao kao **obistinjeno upozorenje**.
+
+   **Nije bio.** Izvučen je stvarni kôd zakucane verzije (`supabase-js@2.110.8`, CDN):
+   > `signInWithPassword` slabu lozinku **ne vraća kao grešku**. `xform` je `Wr`, koja server-polje
+   > `weak_password` pretvori u **`data.weakPassword`**, a povratak je
+   > `{ data:{user,session,weakPassword}, error: r }` — gdje je `r` na tom putu **nužno `null`**
+   > (provjereno je ranijim `if (r) return …`). `AuthWeakPasswordError` baca **samo** `Vr`, kad
+   > HTTP odgovor **nije ok** — a to su **registracija i promjena lozinke**, gdje sesije ni nema.
+
+   Dakle crvene poruke pri prijavi **nema i nije je bilo** u ovoj verziji; zapis je opisivao
+   ponašanje **starijeg** supabase-js-a. Da se poslušao, „popravljao" bi se nepostojeći kvar.
+   🧭 **Treći put u dva dana ista pouka:** *tvrdnja o TUĐEM sustavu ostari bez ijedne naše izmjene.*
+   Ovaj put je zamalo proizvela **izmišljen posao**, a ne samo zastarjelu bilješku.
+
+   ➕ **Ostatak koji JEST stvaran nije nestao nego se preselio:** `data.weakPassword` se i dalje
+   **potpuno ignorira**, pa korisnik sa slabom lozinkom pri prijavi ne dobije **nikakav** znak.
+   To nije kvar nego propuštena prilika; vodi se dolje u §Auth kao neobavezno.
 
 ---
 
@@ -1342,10 +1349,33 @@ predvidjeti.** Dakle jedini put do korisnika je poruka sa servera, a ona ide nep
 ⚠️ **Zašto ovo nije samo kozmetika:** korisnik koji ne razumije zašto mu je lozinka odbijena
 najčešće **odustane od registracije**, a ne pokuša drugu. Registriranih korisnika je pet.
 
-**Opseg (mala cigla):** mapiranje poznatih Supabase auth-grešaka na i18n ključeve (`weak_password`
-/ leaked · `over_email_send_rate_limit` · `invalid_credentials`), s **engleskim fallbackom na
-sirovu poruku** — nikad prazan ekran ako Supabase uvede novi kod. Uzor postoji: `humanError` u
-admin-sloju već radi točno to i ima unit-testove.
+**✅ ISPORUČENO 2026-08-28 (AUTH-1).** `authError()` u `js/auth.js` mapira `code` (GoTrue ga šalje
+od 2024-01-01) uz regex-mrežu za starije odgovore, i **zadnji fallback je sirova poruka** — radije
+engleska rečenica nego prazan crveni okvir za kôd koji još ne poznajemo. 6 novih i18n ključeva,
+EN + HR.
+
+⚠️ **Opseg je bio VEĆI nego što je ova stavka mislila: sirova poruka išla je na ČETIRI mjesta**
+(prijava · registracija · zaboravljena lozinka · **postavljanje nove lozinke nakon reseta**), a ne
+samo na `auth.js:372`. Zadnje je zapravo **najvažnije** — tko je zaboravio lozinku i postavlja novu
+najlakše naleti na odbijanje zbog procurjelosti, i to je jedini put na kojem ne može odustati i
+vratiti se na staro.
+
+Dvije tvrdnje koje su ušle u kôd jer su **razlike koje korisnik osjeti**:
+- **„procurjela" i „prekratka" nisu isti savjet.** Uputa *„uzmi dužu"* je **kriva** za lozinku
+  odbijenu zbog krađe podataka — duljina ondje nije problem. Razlikuje se preko `reasons`
+  (`pwned`), uz regex-mrežu kad `reasons` nema.
+- **Nikad prazan crveni okvir.** Nepoznat kôd → sirova poruka; nema ni nje → generički ključ.
+
+**Dokaz:** `tests/unit/auth-error.test.js`, **26 tvrdnji**, u `test:unit` i preflightu. Uključuje
+**obrnutu provjeru**: popis ključeva se **čita iz koda** (`authError` tijelo) i svaki mora postojati
+u `js/i18n.js` **s `hr`** — jer bi inače `at()` tiho vratio engleski fallback i **ništa ne bi puklo**.
+Sve tri kritične tvrdnje su **mutacijski provjerene** (maknut `hr` · vraćen sirovi `error.message` ·
+procurjela dobiva savjet o duljini) i svaku je uhvatio **točno jedan** test.
+
+➖ **Svjesno NIJE napravljeno:** `data.weakPassword` pri **prijavi** se i dalje ignorira, pa korisnik
+sa slabom lozinkom ne dobije nježnu uputu da ju promijeni. Nije kvar (prijava prolazi, poruke nema),
+nego neobavezna dopuna — a modal se pri prijavi **zatvara**, pa bi joj vozilo bio toast, ne
+`setStatus`.
 
 ⚠️ **Ovisi o Pro planu.** Poslije seobe na self-host provjeri je li zaštita uopće dostupna; ako
 nije, ostaje HIBP u kodu (~30 redaka, k-anonimnost) i **ista poruka treba i tada.**
