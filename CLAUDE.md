@@ -167,9 +167,10 @@ PRAZNA** — brana traži **nulu**; brojku zna `tests/phone-baseline.json`, ne o
 ⚠️ **Iz D2 ostaje živo pravilo:** `answer` je obavezan i drži **prvi** odgovor i kad postoji
 `answers` — zbog **keširane stare skripte**, ne zbog urednosti sheme.
 
-**🟢 TEKUĆA FAZA = POLICA** — **P1 ✅ · P2 ✅ · P3 ✅ · P4 slijedi** (samo dokaz, ne novi kôd); iza nje
-**C4 → C5a → C5b → C6 → C7**. Zašto POLICA prije C4 — tri mjere u specu §9.17; najkraća: landing
-već obećava **„Radi offline"**, a `sw.js` u `activate` briše keš na **svaki** deploy.
+**✅ FAZA POLICA JE ZATVORENA** — **P1 · P2 · P3 · P4 svi ispunjeni** (spec §9.17–9.21).
+Kriterij je **mjeren, ne tvrđen**: skinut predmet se otvara bez mreže, **preživi deploy**, a
+napredak stečen offline se po povratku mreže **spoji bez gubitka**.
+**🟢 TEKUĆA FAZA = C4** → C5a → C5b → C6 → C7.
 ⚠️ Prije C4 stoji dug u alatu: **`css:diff` je slijep za cigle koje sele vrijednost iz markupa u
 CSS** (presreće samo stylesheet, HTML uzima iz radnog stabla) — a C4–C7 rade točno to; T5 je to
 platio i dokaz izveo pravim A/B-om iz zasebnog `git worktree`-a.

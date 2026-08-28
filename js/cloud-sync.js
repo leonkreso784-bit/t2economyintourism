@@ -212,7 +212,11 @@ const CloudSync = (function () {
         // M2: izloženo da se može DOKAZATI da napredak osobnog materijala (`node:<uuid>`) ulazi
         // u sinkronizaciju — kriterij 3 traži „istu sinkronizaciju kao katalog", a to se ne vidi
         // iz ponašanja bez čekanja intervala.
-        watchedKeys: watchedKeys
+        watchedKeys: watchedKeys,
+        // P4: izlozeno po ISTOM razlogu kao `watchedKeys` gore — tvrdnja „napredak se
+        // spoji bez gubitka" je jedina koja stiti ucenje offline, a iz ponasanja se ne
+        // vidi bez racuna, mreze i cekanja intervala. Cista funkcija, bez stanja.
+        mergeValues: mergeValues
     };
 })();
 

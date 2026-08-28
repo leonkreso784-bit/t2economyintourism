@@ -43,7 +43,7 @@ function prvaLekcija(page, id) {
   }, id);
 }
 
-test.describe('P3 · skinut predmet radi bez mreže', () => {
+test.describe('POLICA · P3 (pravilo u SW-u) + P4 (napredak bez mreže)', () => {
   test('⛔ KRITERIJ FAZE: skinut predmet se offline OTVORI i sva četiri načina rade', async ({ page, context }) => {
     await page.goto('/index.html');
     await podKontrolomSW(page);
@@ -261,6 +261,75 @@ test.describe('P3 · skinut predmet radi bez mreže', () => {
     const plocica = page.locator('#shelfList .shelf-tile[data-shelf-id="' + PREDMET + '"]');
     await expect(plocica).toHaveAttribute('data-shelf-stale', '1');
     await expect(plocica.locator('[data-shelf-refresh]')).toBeVisible();
+  });
+
+  // P4 zatvara petlju: sinkronizacija je vec offline-first (dokazano u
+  // tests/unit/cloud-sync.test.js), ali to nista ne vrijedi ako se offline uopce
+  // NEMA sto spremiti. Ovo je jedina karika koju jedinicni test ne moze vidjeti.
+  test('⛔ P4: napredak steceni BEZ MREZE stvarno zavrsi na uredjaju', async ({ page, context }) => {
+    // Isti razlog kao u `sw.spec.js`: fiksni cookie-banner presrece dodir. Ovo je jedini
+    // test u specu koji stvarno KLIKCE duboko u stranici, pa jedini to treba.
+    await page.addInitScript(() => {
+      try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
+    });
+    await page.goto('/index.html');
+    await podKontrolomSW(page);
+
+    await page.goto('/#/subject/' + PREDMET);
+    await page.waitForFunction(() => !!window.SokratOffline);
+    await cistUredaj(page);
+    await page.reload();
+    await page.waitForFunction(() => !!window.SokratOffline);
+
+    await page.locator('#offlineControl .offline-btn').click();
+    await expect(page.locator('#offlineControl .offline-row'))
+      .toHaveAttribute('data-offline-state', 'ready', { timeout: 45000 });
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(1500);
+
+    const kljuc = await page.evaluate((s) => {
+      const x = SokratCatalog.getSubject(s);
+      return x ? x.storageKey : null;
+    }, PREDMET);
+    expect(kljuc, 'predmet mora imati storageKey').toBeTruthy();
+
+    // Zateceno stanje se pamti, ne pretpostavlja: uredjaj je mozda vec ucio.
+    const prije = await page.evaluate((k) => window.localStorage.getItem(k), kljuc);
+
+    const lekcija = await prvaLekcija(page, PREDMET);
+    await context.setOffline(true);
+    try {
+      await page.goto('/#/subject/' + PREDMET + '/' + lekcija);
+      await page.waitForFunction(() => window.AppState && AppState.nav.page === 'study', null, { timeout: 25000 });
+
+      await page.evaluate(() => {
+        const b = document.querySelector('.study-nav-btn[data-section="flashcards"]');
+        if (b) b.click();
+      });
+      await page.waitForFunction(() => {
+        const el = document.getElementById('flashcards');
+        return !!el && el.classList.contains('active') && el.getBoundingClientRect().height > 0;
+      }, null, { timeout: 20000 });
+
+      // Jedna kartica oznacena kao naucena — najmanja radnja koja proizvodi napredak.
+      //
+      // ⚠️ Klik ide kroz `evaluate`, a ne kao pravi dodir, i to je namjerno: na telefonskom
+      // profilu je bocni izbornik s predmetima DIO RASPOREDA i prekriva studijski stupac,
+      // pa Playwrightova provjera izvedivosti nikad ne prodje. DOHVATLJIVOST kontrola na
+      // telefonu mjeri phone-gate (osnovica je prazna) — ovdje bi bila druga kopija iste
+      // cinjenice. Ovaj test tvrdi TRAJNOST napretka bez mreze, ne pogodak prsta.
+      await page.evaluate(() => {
+        const b = document.getElementById('btnCorrect');
+        if (b) b.click();
+      });
+      await page.waitForTimeout(300);
+
+      const poslije = await page.evaluate((k) => window.localStorage.getItem(k), kljuc);
+      expect(poslije, 'bez mreze se napredak MORA zapisati na uredjaj').toBeTruthy();
+      expect(poslije).not.toBe(prije);
+    } finally {
+      await context.setOffline(false);
+    }
   });
 
   test('skinuto se poslužuje IZ KEŠA, bez ijednog mrežnog poziva (② ne troši tuđi promet)', async ({ page }) => {

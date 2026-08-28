@@ -5,6 +5,29 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-28 — cigla P4 („bez gubitka") · FAZA POLICA ZATVORENA
+
+**Isporučeno:** `tests/unit/cloud-sync.test.js` (10 tvrdnji) + 7. test u `offline-study.spec.js`
+(napredak stečen bez mreže stvarno završi na uređaju). Jedina izmjena koda: `mergeValues` je
+izložen — po **istom razlogu** kao `watchedKeys` prije njega, i to je u kodu zapisano.
+
+**Zašto je test bio potreban iako kôd radi:** dva načina gubitka napretka su **tiha** — spajanje
+koje preferira udaljeno i push koji se označi kao obavljen iako je pao. Nijedan ne izgleda kao
+greška.
+
+**Metoda:** tvrdnja o **svojstvu** („može li se išta izgubiti"), ne o rezultatu — vrijedi za svaki
+ulaz i ne stari s podacima. Mutacije: preferiraj udaljeno → pada 5/10; unija → „zadnji pobjeđuje"
+→ pada 4; pomak `snapshot`-a bez uspjeha → pada **točno 1**.
+
+**Dva vlastita promašaja, oba popravljena:** prva verzija testa slanja mjerila je **tuđi poziv**
+(`pullAndMerge` pri prijavi sam postavi `snapshot`); i jedini pravi dodir u specu je visio jer
+bočni izbornik na telefonu prekriva stupac — razlog je zapisan u testu, a ne zaobiđen šutke.
+
+**Slijedi:** **C4** (browse + lekcije). ⚠️ Prije njega stoji dug u alatu: `css:diff` je slijep za
+cigle koje sele vrijednost iz markupa u CSS, a C4–C7 rade točno to.
+
+---
+
 ## 2026-08-28 — cigla P3 („preživi deploy") · kriterij faze POLICA ispunjen
 
 **Isporučeno:** dvorazinsko pravilo u `sw.js` (`odgovoriNaAsset`), `isStale()` + vidljivo stanje

@@ -5,6 +5,28 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-28 (OPUS) — **P4: napredak preživi povratak mreže** · faza POLICA ZATVORENA
+
+P4 ne gradi nego dokazuje. Sinkronizacija je offline-first od F-faze, ali obećanje faze („uči bez
+mreže") ima naličje koje dotad nitko nije mjerio: **što se s tim napretkom dogodi kad se mreža
+vrati.** Dva su tiha načina da nestane — spajanje koje preferira udaljeno (sve naučeno offline
+ispari pri prvoj prijavi) i push koji se označi kao obavljen iako je pao (promjena nikad ne
+stigne). Nijedan se ne vidi kao greška; korisnik samo jednog dana ima manje nego jučer.
+
+**Tvrdnja je o SVOJSTVU, ne o rezultatu:** nijedan brojač ne smije pasti ispod nijedne strane i
+nijedan naučeni id ne smije ispariti — **u oba smjera**. Mutacijski provjereno triput.
+
+**Dvije stvari koje su pale usput:** ① prva verzija testa slanja **nije ni takla** put koji tvrdi
+(`pullAndMerge` pri prijavi sam postavi `snapshot` i sam pošalje razliku); ② jedini pravi dodir u
+specu je visio jer je bočni izbornik na telefonu **dio rasporeda** i prekriva stupac — klik ide
+kroz `evaluate`, a dohvatljivost mjeri phone-gate (jedna činjenica, jedno mjesto).
+
+**Brane:** `tests/unit/cloud-sync.test.js` (10) · `offline-study.spec.js` **7** (bilo 6) ·
+puna suita **100/100** · preflight **EXIT 0**.
+
+**✅ FAZA POLICA JE ZATVORENA:** P1 skida · P2 pokazuje · P3 poslužuje po pravilu i preživi deploy ·
+P4 dokazuje da se stečeno ne gubi.
+
 ## 2026-08-28 (OPUS) — **P3: skinut predmet preživi deploy** (kriterij faze POLICA ispunjen)
 
 `sw.js` sada pita policu **prije** općeg puta, i to dvorazinski: **točan `?v=`** → cache-first bez

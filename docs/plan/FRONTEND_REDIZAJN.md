@@ -3452,3 +3452,59 @@ dodir, nikad automatsko**.
 ⚠️ **Što P3 NIJE napravio:** ne dira `activate`, ne uvodi automatsko osvježavanje, i **ne
 dokazuje se do kraja bez pravog deploya** — lokalno se „deploy" simulira promjenom tokena, što
 pokriva logiku ali ne i stvarno isporučen SW.
+
+### 9.21 ✅ P4 JE ISPUNJEN — faza POLICA je ZATVORENA (2026-08-28)
+
+P4 je bio jedini u fazi koji **ne gradi nego dokazuje**: sinkronizacija je offline-first od
+F-faze i radi. Ali obećanje faze — *„uči bez mreže"* — ima naličje koje dotad **nitko nije
+mjerio**: što se s tim napretkom dogodi kad se mreža vrati.
+
+#### Dva načina da napredak nestane, i oba su tiha
+
+| kvar | posljedica | tvrdnja koja ga hvata |
+|---|---|---|
+| spajanje preferira **udaljeno** | sve naučeno offline nestane pri prvoj prijavi | ⛔ BEZ GUBITKA · ⛔ OBRNUTO |
+| **push** se označi kao obavljen iako je pao | promjena se nikad ne pošalje na drugi uređaj | ⛔ PAD SLANJA |
+
+Nijedan se **ne vidi kao greška**. Korisnik samo jednog dana ima manje nego jučer.
+
+#### Metoda: tvrdnja o SVOJSTVU, ne o rezultatu
+
+Ključni test ne pita *„vraća li spajanje točno ovo"* nego *„može li se išta izgubiti"* — nijedan
+brojač ne smije pasti ispod nijedne strane, nijedan naučeni id ne smije ispariti, **i u oba
+smjera** (lokalno⊕udaljeno i udaljeno⊕lokalno). Tvrdnja o rezultatu ostari s podacima; tvrdnja o
+svojstvu vrijedi za svaki ulaz.
+
+**Mutacijski provjereno**, tri puta: spajanje koje preferira udaljeno obara **5 od 10**; unija
+zamijenjena „zadnji pobjeđuje" obara **4**; pomak `snapshot`-a bez uspješnog upserta obara
+**točno jedan** — baš onaj koji ga tvrdi.
+
+#### Dvije stvari koje su pale usput
+
+**① Prva verzija testa slanja mjerila je tuđi poziv.** `pullAndMerge()` pri prijavi **sam
+postavi `snapshot`** i **sam pošalje** razliku — pa poslije prijave nema „promijenjenog" ključa i
+`pushNow()` ne radi ništa. Test je izgledao kao da prolazi kroz put slanja, a nije ga ni takao.
+Popravak: napredak raste **poslije** prijave, a klijent ima prekidač umjesto liste odgovora
+(redoslijed bi tiho iskliznuo za jedan).
+
+**② Jedini PRAVI dodir u specu je visio.** Na telefonskom profilu je bočni izbornik s predmetima
+**dio rasporeda** i prekriva studijski stupac, pa Playwrightova provjera izvedivosti nikad ne
+prođe. Klik ide kroz `evaluate`, i to je **zapisano u testu s razlogom**: dohvatljivost kontrola
+na telefonu mjeri **phone-gate** (osnovica prazna) — ovdje bi bila **druga kopija iste činjenice**
+(ADR-027).
+
+#### Dokazi
+
+- `tests/unit/cloud-sync.test.js` — **10 tvrdnji** (pravila spajanja · svojstvo bez gubitka ·
+  pad slanja · povratak mreže ne pregazi lokalno). `mergeValues` je izložen **po istom razlogu
+  kao `watchedKeys`**: tvrdnja se iz ponašanja ne vidi bez računa, mreže i čekanja intervala.
+- `tests/offline-study.spec.js` — **7** (bilo 6): dodan dokaz da se napredak stečen **bez mreže**
+  stvarno zapiše na uređaj. Bez toga bi spajanje bilo besprijekorno nad **ničim**.
+- Puna suita **100/100**, preflight **EXIT 0**.
+
+#### ✅ Faza POLICA je zatvorena
+
+P1 skida · P2 pokazuje · P3 poslužuje po pravilu i preživi deploy · P4 dokazuje da se stečeno ne
+gubi. **Kriterij faze je ispunjen i mjeren, ne tvrdnjom nego testom.**
+⚠️ **Ostaje N2 (pola):** polica pokazuje **skinuto**, a ne uniju skinutog i onoga što se uči.
+To nije dug ove faze nego zasebna stavka u `BACKLOG.md`.
