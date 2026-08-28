@@ -109,6 +109,38 @@ test('bez Cache Storagea modul se ne pravi da radi', function () {
   assert.strictEqual(O.supported, false);
 });
 
+// ── isStale (P3) ───────────────────────────────────────────────────────
+// Keš `sokrat-offline` preživi deploy (P1), pa skinuto NE zastarijeva samo.
+// Ova funkcija je jedino mjesto koje o tome sudi — i za nju je pogrešna tvrdnja
+// skupa u OBA smjera: propušten alarm znači da korisnik uči staru verziju ne
+// znajući, a lažni alarm ga tjera da bez razloga potroši mobilni promet.
+test('isStale: isti CONTENT_VERSION → nije zastarjelo', function () {
+  const O = noviWindow().SokratOffline;
+  assert.strictEqual(O.isStale({ id: 'x', v: VER }), false);
+});
+
+test('isStale: drugi CONTENT_VERSION (deploy) → zastarjelo', function () {
+  const O = noviWindow().SokratOffline;
+  assert.strictEqual(O.isStale({ id: 'x', v: '20200101000000' }), true);
+});
+
+test('⚠️ isStale: zapis BEZ `v` ne tvrdi ništa (stariji zapis nije dokaz zastarjelosti)', function () {
+  const O = noviWindow().SokratOffline;
+  assert.strictEqual(O.isStale({ id: 'x' }), false);
+});
+
+test('⚠️ isStale: bez tekuće verzije ne tvrdi ništa', function () {
+  const win = { CONTENT_VERSION: '', localStorage: lazniLocalStorage(), caches: lazniCaches(), fetch: lazniFetch([], 10) };
+  new Function('window', 'SokratCatalog', KOD)(win, SokratCatalog);
+  assert.strictEqual(win.SokratOffline.isStale({ id: 'x', v: VER }), false);
+});
+
+test('isStale: prazan ulaz ne ruši', function () {
+  const O = noviWindow().SokratOffline;
+  assert.strictEqual(O.isStale(null), false);
+  assert.strictEqual(O.isStale(undefined), false);
+});
+
 // ── plan: što se skida ─────────────────────────────────────────────────
 test('plan() za JSON-predmet vraća study-JSON-ove I codeScripts', function () {
   const O = noviWindow().SokratOffline;
@@ -276,6 +308,70 @@ Promise.resolve()
         assert.strictEqual(caches1._stores['sokrat-offline'].size, 0, 'bajtovi moraju otici, ne samo zapis');
         assert.strictEqual(w2.SokratOffline.get('statistics'), null);
       });
+    });
+  }))
+
+  .then(() => testAsync('⛔ svježe skinut predmet NIJE zastarjeo — inače bi alarm bio uvijek upaljen', function () {
+    const w = noviWindow();
+    return w.SokratOffline.download('statistics').then((zapis) => {
+      assert.strictEqual(zapis.v, VER, 'download() mora zapisati tekuću verziju');
+      assert.strictEqual(w.SokratOffline.isStale(zapis), false);
+    });
+  }))
+
+  .then(() => testAsync('⛔ OSVJEŽAVANJE poslije deploya: stare adrese odu, nove dođu, zapis se pomakne', function () {
+    // Ovo je radnja koju P3 nudi korisniku kad pločica kaže „zastarjelo". Mora
+    // ZAMIJENITI komplet, ne dodati drugi pored prvoga — inače uređaj nosi dvije
+    // verzije istog predmeta i korisnik plaća prostor za obje.
+    const ls = lazniLocalStorage();
+    const kes = lazniCaches();
+    const w1 = { CONTENT_VERSION: VER, localStorage: ls, caches: kes, fetch: lazniFetch([], 100) };
+    new Function('window', 'SokratCatalog', KOD)(w1, SokratCatalog);
+
+    return w1.SokratOffline.download('statistics').then(() => {
+      const stare = Array.from(kes._stores['sokrat-offline'].keys());
+      assert.strictEqual(stare.length, 5);
+
+      // deploy: novi token, ISTI uređaj
+      const NOVA = '20990101000000';
+      const w2 = { CONTENT_VERSION: NOVA, localStorage: ls, caches: kes, fetch: lazniFetch([], 100) };
+      new Function('window', 'SokratCatalog', KOD)(w2, SokratCatalog);
+      const O2 = w2.SokratOffline;
+
+      assert.strictEqual(O2.isStale(O2.get('statistics')), true, 'poslije deploya zapis MORA biti zastarjeo — inače test ništa ne mjeri');
+
+      return O2.download('statistics').then((zapis) => {
+        const sad = Array.from(kes._stores['sokrat-offline'].keys());
+        assert.strictEqual(sad.length, 5, 'na uređaju smije ostati TOČNO jedan komplet, dobiveno: ' + sad.length);
+        stare.forEach((u) => assert.ok(sad.indexOf(u) === -1, 'stara adresa je ostala: ' + u));
+        assert.strictEqual(zapis.v, NOVA, 'zapis mora nositi NOVU verziju');
+        assert.strictEqual(O2.isStale(zapis), false, 'poslije osvježavanja alarm se mora ugasiti');
+      });
+    });
+  }))
+
+  .then(() => testAsync('⛔ NEUSPJELO osvježavanje ne smije ostaviti korisnika bez ičega', function () {
+    // Sve-ili-ništa vrijedi i za osvježavanje: padne li nova verzija, stari komplet
+    // je već obrisan (download() čisti PRIJE skidanja) — pa zapis mora nestati, a ne
+    // ostati kao lažno obećanje da predmet i dalje radi offline.
+    const ls = lazniLocalStorage();
+    const kes = lazniCaches();
+    const w1 = { CONTENT_VERSION: VER, localStorage: ls, caches: kes, fetch: lazniFetch([], 100) };
+    new Function('window', 'SokratCatalog', KOD)(w1, SokratCatalog);
+
+    return w1.SokratOffline.download('statistics').then(() => {
+      const NOVA = '20990101000000';
+      const pad = ['data/statistics/exercises.js?v=' + NOVA];
+      const w2 = { CONTENT_VERSION: NOVA, localStorage: ls, caches: kes, fetch: lazniFetch(pad, 100) };
+      new Function('window', 'SokratCatalog', KOD)(w2, SokratCatalog);
+
+      return w2.SokratOffline.download('statistics').then(
+        () => { throw new Error('osvježavanje je smjelo pasti, a nije'); },
+        () => {
+          assert.strictEqual(kes._stores['sokrat-offline'].size, 0, 'poluskinuto ne smije ostati');
+          assert.strictEqual(w2.SokratOffline.get('statistics'), null, 'zapis ne smije obećavati offline koji ne postoji');
+        }
+      );
     });
   }))
 

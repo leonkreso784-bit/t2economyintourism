@@ -653,6 +653,11 @@
     'offline.done': { en: 'Saved to device', hr: 'Spremljeno na uređaj' },
     'offline.removed': { en: 'Removed from device', hr: 'Uklonjeno s uređaja' },
     'offline.failed': { en: 'Download failed — nothing was saved', hr: 'Skidanje nije uspjelo — ništa nije spremljeno' },
+    // P3: skinuto ne zastarijeva samo (kes `sokrat-offline` prezivi deploy), pa
+    // stanje mora biti VIDLJIVO. Osvjezavanje je na dodir -- nikad automatsko.
+    'offline.stale': { en: 'Outdated version on device', hr: 'Zastarjela verzija na uređaju' },
+    'offline.refresh': { en: 'Refresh', hr: 'Osvježi' },
+    'offline.refreshed': { en: 'Updated to the latest version', hr: 'Osvježeno na najnoviju verziju' },
     // P2 (POLICA) — drugi izvor police: skinuti predmeti.
     'shelf.title': { en: 'Downloaded for offline', hr: 'Skinuto za offline' },
     'shelf.empty': { en: 'Nothing downloaded yet. Open a subject and choose “Download for offline”.', hr: 'Još ništa nije skinuto. Otvori predmet i odaberi „Skini za offline”.' },

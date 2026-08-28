@@ -167,7 +167,7 @@ PRAZNA** — brana traži **nulu**; brojku zna `tests/phone-baseline.json`, ne o
 ⚠️ **Iz D2 ostaje živo pravilo:** `answer` je obavezan i drži **prvi** odgovor i kad postoji
 `answers` — zbog **keširane stare skripte**, ne zbog urednosti sheme.
 
-**🟢 TEKUĆA FAZA = POLICA** — **P1 ✅ · P2 ✅ · P3 slijedi · P4**; iza nje
+**🟢 TEKUĆA FAZA = POLICA** — **P1 ✅ · P2 ✅ · P3 ✅ · P4 slijedi** (samo dokaz, ne novi kôd); iza nje
 **C4 → C5a → C5b → C6 → C7**. Zašto POLICA prije C4 — tri mjere u specu §9.17; najkraća: landing
 već obećava **„Radi offline"**, a `sw.js` u `activate` briše keš na **svaki** deploy.
 ⚠️ Prije C4 stoji dug u alatu: **`css:diff` je slijep za cigle koje sele vrijednost iz markupa u

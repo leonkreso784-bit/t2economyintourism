@@ -5,6 +5,29 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-28 — cigla P3 („preživi deploy") · kriterij faze POLICA ispunjen
+
+**Isporučeno:** dvorazinsko pravilo u `sw.js` (`odgovoriNaAsset`), `isStale()` + vidljivo stanje
+„zastarjelo" s radnjom „Osvježi" na obje površine, 3 i18n ključa, `tests/offline-study.spec.js` (6),
+`offline-store.test.js` 18 → **26**.
+
+**Najvažniji nalaz nije bug nego METODA:** prva verzija kriterija faze prolazila bi i **bez** cigle,
+jer `caches.match` bez `cacheName` pretražuje sve keševe. Test je prepravljen da simulira **deploy**,
+i mutacija (uklonjena razina ②) pokazuje da pada **samo on** — dakle mjeri baš P3.
+*„Test prolazi" i „test mjeri ono zbog čega cigla postoji" nisu isto.*
+
+**Dva prava kvara, oba našli testovi:** ① neuspjelo osvježavanje ostavljalo je manifest koji laže
+(uređaj prazan, zapis tvrdi „offline") — dohvatljivo tek od P3, jer se prije skidalo samo kad zapisa
+nema; ② `[hidden]` na gumbu nije radio jer ga gazi eksplicitan `display`.
+
+**Granice ispoštovane doslovno:** `activate` nedirnut, navigacijski put nedirnut, ime keša
+nepromijenjeno.
+
+**Slijedi:** P4 — napredak se već sinkronizira offline-first, pa se **dokazuje testom, ne gradi**.
+Time se zatvara faza POLICA.
+
+---
+
 ## 2026-08-28 — AUTH-1: sirova poruka o lozinci → i18n (prije P3)
 
 **Isporučeno:** `authError()` u `js/auth.js` + 6 i18n ključeva (EN/HR) +

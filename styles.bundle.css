@@ -10550,7 +10550,7 @@ body.mm-dragging {
   gap: 0.5rem 0.75rem;
   margin-top: 1rem;
 }
-.offline-btn {
+.offline-btn, .offline-refresh {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -10565,12 +10565,15 @@ body.mm-dragging {
   cursor: pointer;
   transition: var(--transition);
 }
-.offline-btn:hover:not(:disabled) {
+.offline-btn:hover:not(:disabled), .offline-refresh:hover:not(:disabled) {
   border-color: var(--primary);
 }
-.offline-btn:disabled {
+.offline-btn:disabled, .offline-refresh:disabled {
   opacity: 0.6;
   cursor: default;
+}
+.offline-refresh[hidden] {
+  display: none;
 }
 .offline-icon {
   font-size: 0.85em;
@@ -10651,6 +10654,40 @@ body.mm-dragging {
   color: var(--danger-text);
 }
 .shelf-tile__remove:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+[data-offline-state="stale"] .offline-icon {
+  color: var(--warning-text);
+}
+[data-offline-state="stale"] .offline-meta {
+  color: var(--warning-text);
+}
+.offline-refresh {
+  background: none;
+  font-weight: 500;
+}
+.shelf-tile[data-shelf-stale] .shelf-tile__icon {
+  color: var(--warning-text);
+}
+.shelf-tile[data-shelf-stale] .shelf-tile__meta {
+  color: var(--warning-text);
+}
+.shelf-tile__refresh {
+  flex-shrink: 0;
+  min-width: var(--touch-target);
+  min-height: var(--touch-target);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: none;
+  color: var(--warning-text);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.shelf-tile__refresh:hover:not(:disabled) {
+  border-color: var(--primary);
+}
+.shelf-tile__refresh:disabled {
   opacity: 0.5;
   cursor: default;
 }

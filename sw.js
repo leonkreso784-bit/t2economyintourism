@@ -8,6 +8,10 @@
  *    novim `?v=` tokenima se UVIJEK pokupi (index.html se ne servira immutable).
  *  • Statički asseti (js/css/json/slike; verzionirani `?v=` = immutable URL) = STALE-WHILE-REVALIDATE
  *    (posluži keš odmah, osvježi u pozadini) → brzo + samo-liječivo.
+ *  • P3: SKINUT PREDMET (keš `sokrat-offline`, P1) ima prednost, i to DVORAZINSKI —
+ *    točan `?v=` → cache-first bez mreže; drugi `?v=` (poslije deploya) → network-first
+ *    pa pad na staru kopiju. Bez druge razine skinut predmet postane NEVIDLJIV prvim
+ *    deployom, jer stranica traži adresu koje u kešu nema. V. `odgovoriNaAsset` niže.
  *  • NE `skipWaiting` — novi SW aktivira se tek kad se stare stranice zatvore (bez mismatcha
  *    novi-asset/stari-JS usred sesije). `activate` čisti stare cache-verzije.
  *  • `SW_VERSION` bumpa `npm run bump` (jedan broj za cijelu app) → svaki deploy = nova sw.js =
@@ -16,8 +20,14 @@
  * ===================================================================== */
 'use strict';
 
-const SW_VERSION = '20260828220746'; // bumpan `npm run bump` (usklađen s ?v= i CONTENT_VERSION)
+const SW_VERSION = '20260828222849'; // bumpan `npm run bump` (usklađen s ?v= i CONTENT_VERSION)
 const CACHE = 'sokrat-cache-' + SW_VERSION;
+
+// ⚠️ NIJE verzioniran, i to je cijela poanta: brisač u `activate` gađa prefiks
+// `sokrat-cache-`, pa ovaj keš preživi deploy SAM PO SEBI. Ime mora ostati identično
+// onome u `js/offline-store.js` (ondje je i obrazloženje). Mijenjati ga ovdje sam znači
+// obrisati svima sve skinuto.
+const OFFLINE = 'sokrat-offline';
 
 // Minimalni precache: navigacijski shell. Ostalo se kešira runtime-om po verzioniranom URL-u
 // (robusnije od hardkodirane liste — ne mora se održavati u koraku s tokenima).
@@ -90,21 +100,64 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Statički asset → stale-while-revalidate.
-  event.respondWith(
-    caches.match(req).then((cached) => {
-      const network = fetch(req)
-        .then((res) => {
-          if (res && res.status === 200 && res.type === 'basic') {
-            // waitUntil legalan: vanjski waitUntil(networkDone) niže drži event živim do ovog trena.
-            event.waitUntil(caches.open(CACHE).then((c) => c.put(req, res.clone())).catch(() => {}));
-          }
-          return res;
-        })
-        .catch(() => cached);
-      // Drži SW živim dok revalidacija (i upis u keš) ne završi — i kad je odgovor već otišao iz keša.
-      event.waitUntil(network.then(() => {}, () => {}));
-      return cached || network;
-    })
-  );
+  // Statički asset. Prvo se pita polica (P3), pa tek onda opći put.
+  event.respondWith(odgovoriNaAsset(event, req));
 });
+
+/** Upis u tekući keš — samo uspješan, same-origin odgovor. */
+function spremi(event, req, res) {
+  if (res && res.status === 200 && res.type === 'basic') {
+    event.waitUntil(caches.open(CACHE).then((c) => c.put(req, res.clone())).catch(() => {}));
+  }
+  return res;
+}
+
+/** Zatečeni opći put: posluži keš odmah, osvježi u pozadini. */
+function staleWhileRevalidate(event, req) {
+  return caches.match(req).then((cached) => {
+    const network = fetch(req)
+      .then((res) => spremi(event, req, res))
+      .catch(() => cached);
+    // Drži SW živim dok revalidacija (i upis u keš) ne završi — i kad je odgovor već otišao iz keša.
+    event.waitUntil(network.then(() => {}, () => {}));
+    return cached || network;
+  });
+}
+
+/**
+ * P3 — skinut predmet ide ispred općeg puta, u DVIJE razine.
+ *
+ * Zašto dvije: URL gradiva nosi `?v=CONTENT_VERSION`, a `cache.match` NE ignorira
+ * query. Poslije deploya stranica traži `…?v=novi`, a u kešu leži `…?v=stari` →
+ * jednorazinsko poklapanje bi promašilo i skinut predmet bi postao NEVIDLJIV.
+ * To je točno kvar zbog kojeg cijela faza POLICA postoji.
+ *
+ *  ① točan `?v=`  → cache-first, BEZ mreže. Skinuto je aktualno, pa je svaki
+ *     mrežni poziv trošenje tuđeg podatkovnog prometa bez ikakve koristi.
+ *  ② samo `ignoreSearch` → network-first, pa pad na tu kopiju. Online dobiješ
+ *     ispravno, offline dobiješ STARO UMJESTO NIČEGA.
+ *  ③ nema poklapanja → zatečeni stale-while-revalidate (ništa se ne mijenja).
+ *
+ * ⚠️ Odbačeno je „uvijek posluži iz keša": tiho bi serviralo zastarjelo gradivo
+ * korisniku koji ima mrežu, i to bez ijednog znaka. Zato je ② network-FIRST.
+ * To vrijedi i za `codeScripts` (vježbe + lib su KÔD, BUG-012): zastario paket uz
+ * osvježen engine ne izgleda kao greška nego kao KRIV REZULTAT.
+ *
+ * ⚠️ Neuspjeh nije samo bačena iznimka: 404/500 se tretira kao pad, jer prazan
+ * ekran nije bolji od starog gradiva. Isti obzir koji navigacijski put već ima.
+ */
+function odgovoriNaAsset(event, req) {
+  // `cacheName` umjesto `caches.open`: otvaranje bi keš STVORILO i onda bi ga imao
+  // svaki posjetitelj koji nikad ništa nije skinuo.
+  const uPolici = (opts) => caches.match(req, opts).catch(() => undefined);
+
+  return uPolici({ cacheName: OFFLINE }).then((tocno) => {
+    if (tocno) return tocno;                                            // ①
+    return uPolici({ cacheName: OFFLINE, ignoreSearch: true }).then((stara) => {
+      if (!stara) return staleWhileRevalidate(event, req);              // ③
+      return fetch(req)                                                 // ②
+        .then((res) => (res && res.ok ? spremi(event, req, res) : stara))
+        .catch(() => stara);
+    });
+  });
+}

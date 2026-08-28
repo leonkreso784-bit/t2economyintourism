@@ -19,7 +19,8 @@
     margin-top: 1rem;
 }
 
-.offline-btn {
+.offline-btn,
+.offline-refresh {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -35,8 +36,15 @@
     transition: var(--transition);
 }
 
-.offline-btn:hover:not(:disabled) { border-color: var(--primary); }
-.offline-btn:disabled { opacity: 0.6; cursor: default; }
+.offline-btn:hover:not(:disabled),
+.offline-refresh:hover:not(:disabled) { border-color: var(--primary); }
+.offline-btn:disabled,
+.offline-refresh:disabled { opacity: 0.6; cursor: default; }
+
+/* ⚠️ Eksplicitan `display` GAZI UA-pravilo `[hidden] { display: none }`, pa je gumb
+   „Osvježi" bio vidljiv i kad nije zastarjelo — dakle uvijek. Uhvatio test, ne oko.
+   Vrijedi za svaki element kojem se ovdje postavi `display`. */
+.offline-refresh[hidden] { display: none; }
 
 .offline-icon { font-size: 0.85em; color: var(--primary); }
 
@@ -131,3 +139,46 @@
 }
 
 .shelf-tile__remove:disabled { opacity: 0.5; cursor: default; }
+
+/* =====================================================================
+   P3 (POLICA) — „zastarjelo" je STANJE, ne greška
+   =====================================================================
+   `sokrat-offline` preživi deploy (to je cijela poanta P1), pa skinuto NE
+   zastarijeva samo. `sw.js` poslije deploya posluži staru kopiju samo kad mreže
+   nema — dakle korisnik može učiti staru verziju a da to ne zna. Zato stanje
+   ima boju i vlastitu radnju.
+
+   Boja ide na IKONU i TEKST, nikad na plohu: `--warning-text` je jantar za tekst,
+   a ispuna u punoj tinti tražila bi zakucan tekst na sebi (tvrda zabrana
+   `check:palette`). Isti obrazac koji „ready" već koristi sa `--success`.
+   ===================================================================== */
+
+[data-offline-state="stale"] .offline-icon { color: var(--warning-text); }
+[data-offline-state="stale"] .offline-meta { color: var(--warning-text); }
+
+/* Sporedna radnja uz glavnu: ista visina i meta na dodir, tiša ploha. Bez toga
+   bi „Osvježi" i „Ukloni" izgledali jednako važno, a nisu. */
+.offline-refresh {
+    background: none;
+    font-weight: 500;
+}
+
+.shelf-tile[data-shelf-stale] .shelf-tile__icon { color: var(--warning-text); }
+.shelf-tile[data-shelf-stale] .shelf-tile__meta { color: var(--warning-text); }
+
+/* Isti kalup kao `__remove` (meta na dodir, prozirna ploha), druga boja ruba na
+   pokazivač — radnja je popravak, ne brisanje. */
+.shelf-tile__refresh {
+    flex-shrink: 0;
+    min-width: var(--touch-target);
+    min-height: var(--touch-target);
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    background: none;
+    color: var(--warning-text);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.shelf-tile__refresh:hover:not(:disabled) { border-color: var(--primary); }
+.shelf-tile__refresh:disabled { opacity: 0.5; cursor: default; }

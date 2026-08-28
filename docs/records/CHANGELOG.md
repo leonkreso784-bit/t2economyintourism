@@ -5,6 +5,28 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-28 (OPUS) — **P3: skinut predmet preživi deploy** (kriterij faze POLICA ispunjen)
+
+`sw.js` sada pita policu **prije** općeg puta, i to dvorazinski: **točan `?v=`** → cache-first bez
+mreže (skinuto je aktualno, pa je mrežni poziv trošenje tuđeg prometa); **drugi `?v=`** →
+network-first pa pad na staru kopiju (online ispravno, offline **staro umjesto ničega**).
+`activate` i navigacijski put **nisu dirnuti**.
+
+**Tvrdnja koja je pala:** prva verzija dokaza (*„skinut predmet se offline otvori"*) prolazila bi i
+**bez** cigle — `caches.match` bez `cacheName` pretražuje sve keševe, pa točno poklapanje radi samo
+od sebe. Tek deploy to razbije. Test koji simulira deploy je **mutacijski provjeren**: bez razine ②
+pada **samo on**.
+
+**Dva kvara koja su testovi našli, a ekran nije pokazivao:** ① neuspjelo **osvježavanje** ostavljalo
+je manifest koji tvrdi „dostupno offline" nad **praznim** uređajem (put je P3 tek učinio dohvatljivim);
+② gumb „Osvježi" bio bi vidljiv **uvijek**, jer eksplicitan `display` gazi `[hidden]`.
+
+**Zastarjelost se vidi** na stranici predmeta i na polici, a osvježava se **na dodir** — automatsko
+bi trošilo tuđi podatkovni promet bez pitanja.
+
+**Brane:** `tests/offline-study.spec.js` (6) · `offline-store.test.js` **26** (bilo 18) · zatečeni
+SW/P1/P2 specovi **12/12** · puna suita **99/99** · preflight **EXIT 0**.
+
 ## 2026-08-28 (OPUS) — **AUTH-1: poruka o lozinci govori korisnikov jezik**
 
 Uključivanjem `auth_leaked_password_protection` server je počeo odbijati lozinke koje su **duge ali

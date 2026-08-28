@@ -16,6 +16,14 @@
  * svaki predmet pamtimo `v` (CONTENT_VERSION s kojim je skinut) — P3 na temelju
  * toga odlučuje što s neslaganjem. Bez tog zapisa bi P3 morao pogađati.
  *
+ * ── P3: ZAŠTO SE ZASTARJELOST VIDI, A NE POPRAVLJA SAMA ──────────────
+ * `sw.js` poslije deploya posluži staru kopiju SAMO kad mreže nema (network-first
+ * na `?v=`-neslaganje). Online korisnik dakle uvijek dobije ispravno — ali onaj
+ * koji uči u zrakoplovu uči STARU verziju, i to mora znati. Zato `isStale()`
+ * postoji i zato pločica nosi vidljivo stanje.
+ * ⚠️ Osvježavanje je NA DODIR, nikad automatsko: tiho ponovno skidanje trošilo bi
+ * tuđi podatkovni promet bez pitanja, a mobilni podaci nisu naši da ih trošimo.
+ *
  * ── ZAŠTO SVE-ILI-NIŠTA ──────────────────────────────────────────────
  * Predmet s vježbama nije samo JSON: `content.codeScripts` nosi `generate()`
  * funkcije i lib (BUG-012 — one ne prežive serializaciju, pa nikad ne idu u
@@ -129,6 +137,15 @@
     return _estCache[id];
   }
 
+  // Je li skinuto zastarjelo — zapis je nastao s DRUGIM CONTENT_VERSION-om.
+  // Oprez u oba smjera: bez `v` (stariji zapis) ili bez tekuće verzije NE tvrdimo
+  // ništa. Lažno „zastarjelo" tjera korisnika da bez potrebe potroši promet, a to
+  // je gore od šutnje.
+  function isStale(zapis) {
+    const sad = version();
+    return !!(zapis && zapis.v && sad && String(zapis.v) !== sad);
+  }
+
   // Adrese koje su STVARNO upisane (manifest = činjenica). Stariji zapisi nemaju
   // `urls` — za njih je plan jedina raspoloživa pretpostavka, i to je u redu jer su
   // nastali s tada važećim tokenom.
@@ -195,8 +212,20 @@
         return zapis;
       }).catch((err) => {
         // Sve-ili-ništa: pospremi za sobom pa proslijedi grešku dalje.
+        //
+        // ⚠️ Briše se I ZAPIS, ne samo bajtovi. Do P3 ovaj put nije bio dohvatljiv
+        // (skidalo se samo kad zapisa nema), pa se nije vidjelo: OSVJEŽAVANJE počne
+        // s `ocistiStare()`, dakle stari komplet je već otišao. Ostavi li se zapis,
+        // uređaj je prazan a manifest i dalje tvrdi „dostupno offline" — pa predmet
+        // padne tek u zrakoplovnom načinu, što je točno kvar zbog kojeg P1 postoji.
+        // Nadjeno testom osvježavanja, ne na ekranu.
         return Promise.all(napisano.map((u) => cache.delete(u).catch(() => {})))
-          .then(() => { throw err; });
+          .then(() => {
+            const map = readAll();
+            delete map[id];
+            writeAll(map);
+            throw err;
+          });
       });
     });
   }
@@ -260,10 +289,27 @@
     gumb.appendChild(ikona);
     gumb.appendChild(natpis);
 
+    // Zaseban gumb, a ne pregaženo značenje glavnoga: „Ukloni" i „Osvježi" su
+    // suprotne namjere i ne smiju dijeliti istu metu na dodir.
+    const osvjezi = doc.createElement('button');
+    osvjezi.type = 'button';
+    // Vlastita klasa, ne varijanta `offline-btn`: dvije mete pod istim imenom cine
+    // svaki upit dvosmislenim (i testu i citacu ekrana). Izgled dijele kroz CSS.
+    osvjezi.className = 'offline-refresh';
+    osvjezi.hidden = true;
+    const osvIkona = doc.createElement('i');
+    osvIkona.className = 'fas fa-rotate offline-icon';
+    osvIkona.setAttribute('aria-hidden', 'true');
+    const osvNatpis = doc.createElement('span');
+    osvNatpis.textContent = tr('offline.refresh', 'Refresh');
+    osvjezi.appendChild(osvIkona);
+    osvjezi.appendChild(osvNatpis);
+
     const meta = doc.createElement('span');
     meta.className = 'offline-meta';
 
     red.appendChild(gumb);
+    red.appendChild(osvjezi);
     red.appendChild(meta);
     host.appendChild(red);
 
@@ -271,8 +317,12 @@
 
     function crtaj() {
       const zapis = get(id);
+      const staro = isStale(zapis);
       gumb.disabled = radi;
-      red.setAttribute('data-offline-state', radi ? 'busy' : (zapis ? 'ready' : 'idle'));
+      osvjezi.disabled = radi;
+      osvjezi.hidden = radi || !staro;
+      red.setAttribute('data-offline-state',
+        radi ? 'busy' : (zapis ? (staro ? 'stale' : 'ready') : 'idle'));
 
       if (radi) {
         ikona.className = 'fas fa-arrow-down offline-icon offline-icon--busy';
@@ -282,9 +332,13 @@
       }
 
       if (zapis) {
-        ikona.className = 'fas fa-circle-check offline-icon';
+        ikona.className = staro
+          ? 'fas fa-triangle-exclamation offline-icon'
+          : 'fas fa-circle-check offline-icon';
         natpis.textContent = tr('offline.remove', 'Remove from device');
-        const dijelovi = [tr('offline.ready', 'Available offline')];
+        const dijelovi = [staro
+          ? tr('offline.stale', 'Outdated version on device')
+          : tr('offline.ready', 'Available offline')];
         if (zapis.bytes) dijelovi.push(human(zapis.bytes));
         if (zapis.at) dijelovi.push(datum(zapis.at));
         meta.textContent = dijelovi.join(' · ');
@@ -300,6 +354,20 @@
         meta.textContent = '~' + human(b);
       }).catch(() => { /* bez mreže nema procjene; gumb ostaje */ });
     }
+
+    // Osvježavanje je isto skidanje: `download()` prvo obriše STARE adrese (one iz
+    // manifesta), pa se dva kompleta ne mogu nakupiti na uređaju.
+    osvjezi.addEventListener('click', () => {
+      if (radi || !get(id)) return;
+      radi = true; crtaj();
+      download(id).then(() => {
+        radi = false; crtaj();
+        toast(tr('offline.refreshed', 'Updated to the latest version'));
+      }).catch(() => {
+        radi = false; crtaj();
+        toast(tr('offline.failed', 'Download failed — nothing was saved'));
+      });
+    });
 
     gumb.addEventListener('click', () => {
       if (radi) return;
@@ -373,9 +441,12 @@
     const id = String(zapis.id);
     const subject = (typeof SokratCatalog !== 'undefined') ? SokratCatalog.getSubject(id) : null;
 
+    const staro = isStale(zapis);
+
     const tile = doc.createElement('div');
     tile.className = 'shelf-tile';
     tile.setAttribute('data-shelf-id', id);
+    if (staro) tile.setAttribute('data-shelf-stale', '1');
 
     const ikona = doc.createElement('i');
     ikona.className = 'fas ' + sigurnaIkona(subject && subject.icon) + ' shelf-tile__icon';
@@ -393,6 +464,8 @@
     const meta = doc.createElement('p');
     meta.className = 'shelf-tile__meta';
     const dijelovi = [];
+    // Zastarjelost ide PRVA: to je jedino što mijenja ono što korisnik vidi u gradivu.
+    if (staro) dijelovi.push(tr('offline.stale', 'Outdated version on device'));
     if (zapis.bytes) dijelovi.push(human(zapis.bytes));
     const nap = progressOf(id);
     if (nap && nap.lastStudy) {
@@ -404,6 +477,21 @@
 
     tijelo.appendChild(veza);
     tijelo.appendChild(meta);
+
+    let osv = null;
+    if (staro) {
+      osv = doc.createElement('button');
+      osv.type = 'button';
+      osv.className = 'shelf-tile__refresh';
+      osv.setAttribute('data-shelf-refresh', id);
+      // Kao i kod uklanjanja: ime kontrole nosi NA ČEMU djeluje — pet „Osvježi"
+      // gumba u popisu je za čitač ekrana pet istih kontrola.
+      osv.setAttribute('aria-label', tr('offline.refresh', 'Refresh') + ' — ' + ((subject && subject.name) || id));
+      const r = doc.createElement('i');
+      r.className = 'fas fa-rotate';
+      r.setAttribute('aria-hidden', 'true');
+      osv.appendChild(r);
+    }
 
     const ukloni = doc.createElement('button');
     ukloni.type = 'button';
@@ -419,6 +507,7 @@
 
     tile.appendChild(ikona);
     tile.appendChild(tijelo);
+    if (osv) tile.appendChild(osv);
     tile.appendChild(ukloni);
     return tile;
   }
@@ -427,15 +516,25 @@
   // umire sa svojim retkom.
   if (doc && typeof doc.addEventListener === 'function') {
     doc.addEventListener('click', (e) => {
-      const t = e.target && e.target.closest ? e.target.closest('[data-shelf-remove]') : null;
+      const t = e.target && e.target.closest
+        ? e.target.closest('[data-shelf-remove], [data-shelf-refresh]')
+        : null;
       if (!t) return;
-      const id = t.getAttribute('data-shelf-remove');
+      const osvjezava = t.hasAttribute('data-shelf-refresh');
+      const id = t.getAttribute(osvjezava ? 'data-shelf-refresh' : 'data-shelf-remove');
       const host = t.closest('#shelfList');
       t.disabled = true;
-      remove(id).then(() => {
+      (osvjezava ? download(id) : remove(id)).then(() => {
         mountShelf(host);
-        toast(tr('offline.removed', 'Removed from device'));
-      }).catch(() => { t.disabled = false; });
+        toast(osvjezava
+          ? tr('offline.refreshed', 'Updated to the latest version')
+          : tr('offline.removed', 'Removed from device'));
+      }).catch(() => {
+        // Neuspjeh osvježavanja je sve-ili-ništa (download radi rollback): na uređaju
+        // ostaje STARI komplet, pa se pločica ne smije prekrižiti nego samo oživjeti.
+        t.disabled = false;
+        if (osvjezava) toast(tr('offline.failed', 'Download failed — nothing was saved'));
+      });
     });
   }
 
@@ -451,6 +550,7 @@
     mount: mount,
     mountShelf: mountShelf,
     progressOf: progressOf,
+    isStale: isStale,
     CACHE: CACHE
   };
 })(window);

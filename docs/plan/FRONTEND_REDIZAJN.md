@@ -3401,3 +3401,54 @@ pack + osvježeni engine = drift koji se ne vidi kao greška nego kao **kriv rez
 
 Ne dira policu kao prikaz (to je P2), ne dira napredak (P4), i **ne uvodi automatsko osvježavanje
 skinutog** — to bi trošilo tuđi podatkovni promet bez pitanja. Osvježava se **na dodir**.
+
+### 9.20 ✅ P3 JE ISPUNJEN — skinut predmet preživi deploy (2026-08-28)
+
+Izvedeno **točno po §9.19**: dvorazinsko poklapanje u kešu `sokrat-offline`, prije općeg
+puta. Tvrde granice ispoštovane doslovno — **`activate` nije dirnut** (brisač po prefiksu
+`sokrat-cache-` je ono što policu drži živom) i **navigacijski put nije dirnut**.
+
+#### Mjera koja je promijenila razumijevanje testa
+
+Prva verzija dokaza tvrdila je *„skinut predmet se offline otvori"* — i **prolazila bi i bez
+cigle**. `caches.match(req)` bez `cacheName` pretražuje **sve** keševe, pa se skinuta datoteka
+posluži sama od sebe **dok se `?v=` poklapa**. Tek prvi deploy to razbije.
+
+Zato je dodan test koji simulira deploy (ista datoteka, drugi token) i **mutacijski je
+provjeren**: uklanjanjem razine ② pada **samo on**, ostalih pet prolazi. *To je jedini test
+koji mjeri baš P3, i tako je i zapisano u samom specu.*
+
+#### Dva prava kvara koja su testovi našli — nijedan se nije vidio na ekranu
+
+**① Neuspjelo osvježavanje ostavljalo je manifest koji LAŽE.** `download()` prvo obriše stari
+komplet (`ocistiStare`) pa skida novi; padne li novi, rollback počisti keš **ali ne i zapis** →
+uređaj prazan, a manifest i dalje tvrdi „dostupno offline". Predmet bi pao **tek u zrakoplovnom
+načinu** — točno kvar zbog kojeg P1 postoji, vraćen na mala vrata.
+⚠️ **Do P3 nije bio dohvatljiv** (skidalo se samo kad zapisa nema); **osvježavanje ga je
+otvorilo**. Komentar u kodu je čak već obećavao *„korisniku ostaje čist uređaj i jasna poruka"* —
+poruka nije bila jasna nego lažna. Popravak: rollback briše i zapis.
+
+**② Gumb „Osvježi" bio bi vidljiv UVIJEK.** Zajedničko pravilo daje mu `display: inline-flex`, a
+eksplicitan `display` **gazi** UA-pravilo `[hidden] { display: none }`. Atribut je bio postavljen
+ispravno i kôd je izgledao točno. Uhvatio test, ne oko.
+
+#### Cijena je na ekranu, ne samo u kodu
+
+`isStale()` sudi po `v` iz manifesta (P1). Oprez ide u **oba** smjera: bez `v` ili bez tekuće
+verzije **ne tvrdi se ništa** — lažno „zastarjelo" tjera korisnika da bez razloga potroši mobilni
+promet. Stanje se vidi na **oba** mjesta (stranica predmeta + polica), a **osvježavanje je na
+dodir, nikad automatsko**.
+
+#### Dokazi
+
+- `tests/offline-study.spec.js` — **6 testova**: kriterij faze (sva četiri načina offline) ·
+  **obrnuta provjera** (neskinut predmet offline **padne**) · **poslije deploya** · zastarjelost
+  na kontroli · zastarjelost na polici · **nula mrežnih poziva** za skinuto.
+- `tests/unit/offline-store.test.js` — **26** (bilo 18): `isStale` u pet rubova, osvježavanje
+  poslije deploya, i **neuspjelo** osvježavanje.
+- Zatečeno nedirnuto: `sw.spec.js` · `offline-download.spec.js` · `shelf.spec.js` = **12/12**.
+  Puna suita na jednom profilu: **99/99**. Preflight **EXIT 0**.
+
+⚠️ **Što P3 NIJE napravio:** ne dira `activate`, ne uvodi automatsko osvježavanje, i **ne
+dokazuje se do kraja bez pravog deploya** — lokalno se „deploy" simulira promjenom tokena, što
+pokriva logiku ali ne i stvarno isporučen SW.
