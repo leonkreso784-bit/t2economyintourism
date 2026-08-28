@@ -1267,7 +1267,7 @@ kvar; ulazi tek kad K1–K4 stoje, jer se oslanja i na rute i na pločicu iz K4.
 |---|---|---|
 | **A1 · Google-prijava** | ne dira CSS, ne čeka redizajn, ~1 cigla. Danas [`auth.js`](../../js/auth.js) ima **samo** `signInWithPassword` — nula OAuth-a, a obavezna lozinka je jedini put | [`BACKLOG.md`](../records/BACKLOG.md) §A |
 | **C4 → C5a → C5b** | nastavak redizajna, sad na stranicama koje već imaju traku i adresu | §3 |
-| **C6** | nosi **tri** odgode koje su tu i zapisane: pitanja pri registraciji (shema → SQL = Leonova ruka) · **CSP** · brisanje `bright-function` | §3 + BACKLOG |
+| **C6** | nosi **dvije** odgode (bilo tri): pitanja pri registraciji (shema → SQL = Leonova ruka) · **CSP**. ~~brisanje `bright-function`~~ **odrađeno 2026-08-28** | §3 + BACKLOG |
 | **C7** | gašenje starog CSS-a | §3 |
 | **MCP → objava/dijeljenje** | ADR-030. **Dijeljenje sad ima na što objesiti token, jer rute postoje** | ROADMAP |
 

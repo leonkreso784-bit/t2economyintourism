@@ -421,8 +421,8 @@ provedba **ne može** dobiti bez proxyja — to nije propust izvedbe nego svojst
 
 1. **`minlength="8"` je obećanje preglednika, ne pravilo servera.** Forma traži 8
    (`js/auth.js:206`), Supabaseov serverski minimum je zadanih **6** → tko pošalje zahtjev mimo
-   forme, registrira se sa šest znakova. **Popravak je besplatan i dostupan na free planu:**
-   Dashboard → Authentication → Sign In / Providers → **Minimum password length 6 → 8**.
+   forme, registrira se sa šest znakova. **✅ NAPRAVLJENO 2026-08-28** — serverski minimum je **8**,
+   pa se sučelje i server od tada poklapaju.
    ⚠️ **Polje „Password Requirements" NE dirati** — traženje velikih slova/brojki/simbola server bi
    provodio, a **naša forma to nigdje ne piše**; bila bi to ista greška okrenuta naopako (server
    stroži od sučelja). *Mijenja se isključivo ono što UI već obećava.*
@@ -430,6 +430,14 @@ provedba **ne može** dobiti bez proxyja — to nije propust izvedbe nego svojst
    lozinkom se **uspješno prijavi**, ali Supabase uz sesiju vrati i `error` → naš `if (error)`
    pokaže **crvenu poruku** iako je prijava prošla. Nije zaključavanje, jest zbunjivanje.
    **Mora se popraviti PRIJE nego se serverski minimum digne** (ili barem u istoj isporuci).
+   > ⛔ **UPOZORENJE SE OBISTINILO 2026-08-28: minimum je dignut, popravak nije napravljen.**
+   > Stanje je točno ono na koje je ovaj redak upozoravao. **I ne da se popraviti kodom danas:**
+   > serverska postavka je **živa na produkciji**, a svaka izmjena `js/auth.js`-a sjedi
+   > **nedeployana** na grani — dakle popravak čeka deploy, koji čeka Leonov OK.
+   > **Ozbiljnost, pošteno:** pogađa samo **postojećeg** korisnika s lozinkom < 8 znakova; on se
+   > **prijavi**, ali uz crvenu poruku. Nije zaključavanje. Koliko ih je i dalje **nemjerljivo**.
+   > **Prva stavka za sljedeću sesiju** (mala): `handleSignIn` mora uzeti i `data`, pa kad postoji
+   > sesija **greška nije greška** nego najviše upozorenje.
    Koliko je pogođenih: **nemjerljivo** — duljina lozinke se ne pohranjuje, samo hash. Vjerojatno
    nula (forma traži 8 od početka), ali „vjerojatno nula" nije mjera i tako se i vodi.
 
@@ -969,10 +977,16 @@ redoslijed je bitan:
 **Veže se na:** kartica-standard u [architecture/CONTENT_SCHEMA.md](../architecture/CONTENT_SCHEMA.md)
 (kratke definicije <200 znak., detalj → learn). [[content-model-standard]]
 
-## 🔥 RUČNO ČEKA LEONA (2 stavke) — pripremljeno 2026-08-10, ostala je samo RADNJA
-Obje su **istražene, izmjerene i opremljene gateom**; ostao je klik/naredba koje Claude ne smije
-izvesti. Nijedna ne ruši produkciju. **Treća (re-sync `macroeconomics`) je izvršena 2026-08-21** —
-v. ispod.
+## ✅ RUČNO ČEKA LEONA — **SVE IZVRŠENO 2026-08-28**
+Tekst ispod ostaje jer objašnjava **zašto su stavke postojale**, ne kakvo je stanje.
+
+> **✅ Obje obrisane, provjereno DVJEMA neovisnim metodama:** popis funkcija ih više ne vraća, a
+> `npm run check:functions` dobiva **404** preko HTTP-a i prvi put je **ZELEN**
+> („produkcija ima točno ono što repozitorij opisuje"). **`delete-account` je netaknut** i i dalje
+> traži JWT (401) — a to je bio jedini stvarni rizik, jer su se **dvije funkcije zvale isto** i
+> razlikovao ih je samo **slug**.
+> ➕ Istog dana i **min. lozinka 6 → 8** te **leaked password protection UKLJUČENA**
+> (advisori **16 → 15 WARN**). ⚠️ Zadnje dvoje ovisi o **Pro planu, koji traje ~mjesec dana.**
 
 1. **Obrisati `bright-function` i `quick-api`** — Supabase Dashboard → Edge Functions → `<ime>` → Delete.
    **Nalaz je ozbiljniji nego što je zapisano 2026-08-09:** `bright-function` ima **sha256 `49363e4b…`,
@@ -1025,10 +1039,15 @@ v. ispod.
    > **Ništa se nije commitalo ni deployalo, i to nije previd:** poravnata je **baza**, datoteke su
    > izvor istine i već su bile ispravne. Bez `npm run bump`, bez commita — produkcija ostaje
    > netaknuta.
-3. ⛔ ~~**Uključiti Leaked Password Protection**~~ — **NIJE STAVKA ZA RUKU. Provjereno 2026-08-21:
-   to je Pro značajka**, a organizacija (`pfbkisxynphwxdbqmmtt`) je na **free** planu → prekidača u
-   Dashboardu **nema**. Advisor ga svejedno prijavljuje jer ne gleda plan. **Premisa je stajala
-   ovdje 11 dana i poslala bi Leona da traži kontrolu koja ne postoji.**
+3. ✅ **Uključiti Leaked Password Protection — NAPRAVLJENO 2026-08-28.**
+   > ⚠️ **Ova je stavka dvaput bila kriva, i to u SUPROTNIM smjerovima.** Prvo je 11 dana stajala
+   > kao izvediva radnja, iako je Pro značajka a org je bila `free` — poslala bi Leona da traži
+   > kontrolu koja ne postoji. Onda je prepravljena u „NIJE stavka za ruku", što je **postalo
+   > netočno čim je org prešla na `pro`**, i po tome se planirao posao (~30 redaka HIBP koda) koji
+   > više nije trebao. *Tvrdnja o TUĐEM sustavu stari bez ijedne naše izmjene — mora se provjeriti,
+   > ne pamtiti.* Advisor je danas više ne prijavljuje (16 → 15 WARN).
+   > ⚠️ **Vrijedi dok traje Pro (~mjesec).** Poslije seobe na self-host provjeri iznova; HIBP u
+   > kodu ostaje rezerva.
    **Zamijenjena je radnjom koja JEST izvediva na free planu:** Dashboard → Authentication →
    Sign In / Providers → **Minimum password length 6 → 8** (forma traži 8, ali `minlength` je
    pravilo **preglednika**; serverski minimum je zadanih 6). ⚠️ Polje *Password Requirements* **ne
