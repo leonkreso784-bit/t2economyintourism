@@ -577,9 +577,11 @@ Koncentrirano: `subject-selector` 6 · `learn` 4 · `home-section` 4 · `quiz-se
 `profile` 2, ostatak pojedinačno. **Birač NE ČEKA C4–C7 nego 24 pravila** — posao od
 jednog popodneva, izdvojiv u vlastitu ciglu kad god.
 
-> ✅ **AŽURIRANO 2026-08-29 (C4a):** brisanjem `subject-selector.css` FATALNO je palo
-> **24 → 18** — onih 6 pogodaka iz te datoteke. Ostatak stoji; brojku zna
-> `npm run palette:breakdown`, ne ova proza. Ovo je drugi put da ista čegrtaljka
+> ✅ **AŽURIRANO 2026-08-29:** FATALNO je istoga dana palo **DVAPUT** — brisanjem
+> `subject-selector.css` (C4a) **24 → 18**, pa popravkom devet zakucanih bjelina (§10.2)
+> **18 → 11**. Dakle **manje od pola** onoga što je jutros blokiralo birač tema, i to bez
+> ijedne odluke o izgledu. ⚠️ Brojku zna `npm run palette:breakdown`, ne ova proza —
+> ostarjela je unutar **jednog dana**, dvaput. Ovo je drugi put da ista čegrtaljka
 zavara: agregatna brojka mjeri točno, a savjetuje krivo.
 
 ---

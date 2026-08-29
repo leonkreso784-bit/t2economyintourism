@@ -31,13 +31,20 @@
 - [ ] `npm run test:unit` → graderi engine-a vježbi + `app-state` + `blocks-renderer` (escape-granica).
 - [ ] `npm run bump:check` → svi `?v=` tokeni + `CONTENT_VERSION` identični (drift = ručni bump podskupa → BUG-004, ADR-017). Popravak: `npm run bump`.
 - [ ] `npm run build:css -- --check` → `styles.bundle.css` i `css/tokens.static.css` u sinku s manifestom `css/app.css`.
-- [ ] `npm run check:tailwind` · `check:cdn` · `check:palette` · `check:safearea` · `check:budget` · `check:seo` · `check:contrast` · `check:docs` · `check:state` · `check:lockfile` → **što svaka tvrdi, piše u `CLAUDE.md` §Komande; ZAŠTO postoji, u zaglavlju svoje skripte.**
+- [ ] **sve ostale `check:*` brane** (`check:tailwind`, `check:cdn`, `check:palette`, `check:orphan-css`, `check:safearea`, `check:budget`, `check:seo`, `check:contrast`, `check:docs`, `check:state`, `check:lockfile`, …) → **što svaka tvrdi, piše u `CLAUDE.md` §Komande; ZAŠTO postoji, u zaglavlju svoje skripte.**
+      ⚠️ **Mjerodavan popis je `"preflight"` u `package.json`, ne ovaj redak.** Popis iznad je ostario
+      istog dana kad je nastala nova brana — isti razred greške zbog kojeg je ovaj dokument
+      2026-08-25 prestao biti inventar, samo u malom.
 - [ ] `npm run typecheck` → `tsc --checkJs`, bez builda (scope u `tsconfig.json` raste modul po modul).
 
 ### Sporije brane — traže preglednik, mrežu ili prijavu
 
 - [ ] `npm run test:responsive` → Playwright, default (odjavljena) suita na iPhone profilima.
 - [ ] `npm run test:authed` → pozitivan admin-put (v. odjeljak niže).
+- [ ] `npm run check:contrast:live` → kontrast kakav se STVARNO iscrta (4 teme × 11 ruta).
+      ⚠️ Nije isto što i `check:contrast`: onaj čita **parove tokena** i ne zna KORISTI li ih CSS.
+      Povod (BUG-035): `color: white` zakucan u modulu davao je **1.13** u zadanoj temi, a
+      **cijeli preflight javljao je zeleno**. Traži `npm run serve:test`.
 - [ ] `npm run css:diff` → dokaz da se **prikaz** nije promijenio; uz svaku ciglu koja dira CSS.
       ⚠️ **Mjeri samo promjene u CSS-u** — presreće stylesheet, a HTML uzima iz radnog stabla. Premjesti li cigla vrijednost **iz markupa u CSS**, referenca je stranica koja **nikad nije postojala**, pa prijavljuje razlike i ondje gdje se ništa nije promijenilo. Tada se dokazuje **pravim A/B-om**: `HEAD` poslužen iz zasebnog `git worktree`-a na drugom portu, obje verzije sa **svojim** markupom i **svojim** CSS-om.
 - [ ] `npm run test:rls` → anon čita `subject_content`, **ne vidi** `progress`. Pad = curenje; SKIP na uspavanu bazu.

@@ -51,7 +51,7 @@ se prijelazi sada **dovršavaju**. ② sonda je **lažno optužila `.crumb-sep`*
 `aria-hidden="true"` — WCAG ukrasnom sadržaju kontrast **ne mjeri**; popravak je otišao u **mjeru**,
 ne u kod.
 
-**⛔ Što se namjerno NE tvrdi:** 536 mjerenja iza gradijenta je preskočeno (pokriva ih zabrana #4,
+**⛔ Što se namjerno NE tvrdi:** ~530 mjerenja iza gradijenta je preskočeno (pokriva ih zabrana #4,
 ali samo za ispunu marke) · **semantičke ispune nisu pokrivene, i ondje isti kvar POSTOJI** —
 izmjereno na `chalk`: bijelo na `--success` **2.14**, `--danger` **3.12**, `--secondary` **3.00**
 (prag 4.5); popravak traži **nove tokene** (`--on-success`…), dakle odluku o paleti → **Leonova

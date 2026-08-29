@@ -245,8 +245,8 @@ obrazloženje: spec §9.5. [[exercises-code-vs-data]]
 Leon je postavio tri pitanja i na moje preporuke **nije odgovorio**. Brojke su izmjerene tog dana:
 
 - **Birač tema na landingu.** Mehanika je GOTOVA (4 teme, `setTheme` pamti izbor,
-  `check:contrast` 164 provjere, klik-vezanje već stoji u `js/init.js`). Blokira ga **18 pravila**
-  (`palette:breakdown` → „FATALNO"; bilo 24 do C4a), **ne C4–C7**. ⚠️ Peta kontrola u traci landinga nije
+  `check:contrast` 164 provjere, klik-vezanje već stoji u `js/init.js`). Blokira ga **11 pravila**
+  (`palette:breakdown` → „FATALNO"; bilo **24** ujutro 2026-08-29), **ne C4–C7**. ⚠️ Peta kontrola u traci landinga nije
   besplatna (K3/BUG-029) — vjerojatnije mjesto je red kvadratića u heroju.
 - **OAuth (Google/Apple).** **5 registriranih korisnika, 3 su Leonova** → stvarnih vanjskih
   **dvoje**, uz e-mail+lozinku kao jedini put. Google je besplatan i ne čeka redizajn; **Apple

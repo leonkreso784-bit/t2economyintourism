@@ -17,11 +17,53 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
-_(nema otvorenih bugova — zadnji zatvoren: BUG-034, 2026-08-24)_
+_(nema otvorenih bugova — zadnji zatvoren: BUG-035, 2026-08-29)_
 
 ---
 
 ## Riješeni / Lekcije
+
+### BUG-035 — Tri ikone na `about`-u nevidljive u ZADANOJ temi (kontrast 1.13)
+
+- Status: ✅ **riješen** (2026-08-29, cigle C4a i §10.2) · Težina: **visok** (sadržaj koji
+  korisnik ne vidi, u zadanoj temi, na stranici koja objašnjava proizvod) · Našao: **slučajno** —
+  ispao je usput dok se mjerilo koliko je CSS-a mrtvo pred C4. **To je samo po sebi nalaz.**
+
+- **Opis:** ikone na tri kartice stranice `about` (`.about-card-icon > i.fas`) crtale su se
+  **bijelo na `#edf1f7`**. Izmjeren kontrast **1.13** (tema `academic`, zadana) i **1.16**
+  (`paper`); prag za ne-tekstualni element je **3.0**. U tamnim temama (`chalk`, `mint`) su bile
+  vidljive, pa se kvar nije dao primijetiti ako se gledala kriva tema.
+
+- **Reprodukcija:** otvori `#/about` u zadanoj temi. Ikone su na svojim mjestima (pločica
+  `--bg-tertiary` se vidi), ali glif u njima nije.
+
+- **Uzrok:** `css/subject-selector.css` je bio **mrtva datoteka koja je gazila živu**. Nosio je
+  STARU `about` stranicu (39 od 44 klase nije spominjao nitko), a preostalih pet klasa
+  **dupliralo** je `pages.css` — novu `about` stranicu iz §9.14. `css/app.css` je mrtvu datoteku
+  uvozio **POSLIJE** žive, pa je pri jednakoj specifičnosti pobjeđivala mrtva:
+  `.about-card-icon` je otud dobivao `color: white`. **Ispuna koja je tu bjelinu nosila**
+  (`.mission-card .about-card-icon`, gradijent marke) živjela je na klasama kojih markup više
+  nema — pa je ostala bjelina bez svoje podloge.
+
+- **Rješenje:** `css/subject-selector.css` **obrisan cijel** (−495 redaka, −47 `!important`),
+  zajedno s 31 pravilom iste mrtve površine drugdje. Poslije: **5.60 / 4.87 / 7.27 / 6.38** u
+  četiri teme, i ikona je dobila namjeravanu veličinu (60 → 45 px).
+
+- **Zašto ga nije vidjela nijedna brana** — nije previd nego **doseg**, i svaka je
+  bio u pravu za ono što mjeri: `check:contrast` čita **parove tokena** (bjelina je bila zakucana
+  u modulu), `check:palette` traži vrijednosti **stare palete** (`#ffffff` to nije), `axe`
+  ukrasnoj ikoni bez teksta **ne mjeri** kontrast, a `css:diff` uspoređuje granu s `HEAD`-om — pa
+  je kvar bio **jednak na obje strane**. *Alat koji mjeri PROMJENU ne vidi zatečeno stanje.*
+
+- **Lekcija (kako spriječiti ubuduće):** razred kvara je **„ispuna i boja teksta odlučuju se na
+  RAZLIČITIM mjestima"** — ovdje dvije datoteke, u §10.2 dva pravila. Tri nove brane:
+  **`check:orphan-css`** (mrtav CSS bi ovu datoteku prijavljivao tjednima prije nego je itko
+  pogledao stranicu), **`check:palette` zabrana #4** (zakucana boja na POTOMKU ispune marke) i
+  **`npm run check:contrast:live`** (izračunati kontrast, 4 teme × 11 ruta). Sve tri su obrnuto
+  provjerene mutacijom; zadnja je puštena na stanje **prije** popravka i uhvatila točno `1.13`.
+  ⚠️ **Druga lekcija je o traženju, ne o kodu:** kvar je nađen slučajno, pa je isti razred zatim
+  potražen **sustavno** — i našao je još **9 mjesta** (latentnih, jer birač tema nije izložen).
+  *Kad kvar nađeš slučajno, pitanje „koliko ih još ima" mora dobiti mjeru, ne procjenu.*
 
 ### BUG-034 — Brana za ćirilicu nije skenirala korijen: 23 datoteke, od toga 12 sa SADRŽAJEM
 

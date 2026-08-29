@@ -1054,9 +1054,11 @@ s vraćenim `color: white` pada s **2.15**, točno onom brojkom koju daje stati�
 > pravilo, a ne `[data-ink="dark"]`, koje posao zapravo radi. **Obrnuta provjera mora ukloniti ono
 > što djeluje, ne ono što je najlakše vratiti.**
 
-**Otvoreno za sljedeću ciglu:** `css/subject-selector.css` nosi **22 od preostalih 126** pogodaka
-`check:palette` — isti obrazac (`color: white` + gradijenti stare palete), na još jednoj površini
-s pločicama predmeta.
+~~**Otvoreno za sljedeću ciglu:** `css/subject-selector.css` nosi **22 od preostalih 126** pogodaka~~
+✅ **ISPUNJENO u C4a (2026-08-29), ali ne popravkom nego BRISANJEM:** datoteka je stilizirala zaslon
+i `about` stranicu kojih markup više nema, pa je otišla cijela — a s njom i sva 22 pogotka.
+⚠️ *Redak je ostavljen precrtan jer je bio **nalog sljedećoj sesiji**, a takav zapis, kad ostari,
+ne zavarava nego ŠALJE NA POSAO koji je već obavljen.* Spec §10.1.
 
 ---
 
@@ -3209,6 +3211,12 @@ Mjerenje mijenja redoslijed rizika: **C5a, C5b i C6 imaju NULA `!important`.** C
 sjedi na **tri mjesta**: `subject-selector.css` (47), `css/responsive/*` (35) i
 `components.css` (21). Dakle:
 
+> ⚠️ **AŽURIRANO 2026-08-29 (C4a):** prvo od ta tri mjesta **više ne postoji** —
+> `subject-selector.css` je obrisan, pa je s njim otišlo **47 od tadašnjih 106** `!important`.
+> Zaključak ispod — da je **C4 jedina cigla kojoj je rat specifičnosti stvaran problem** —
+> time **prestaje vrijediti**: C4 ih danas ima **2**, a gotovo sav preostali dug je u **C7**.
+> Brojke mjeri `npm run css:debt`, ne ova proza.
+
 - **C4 je jedina cigla kojoj je rat specifičnosti stvaran problem**;
 - za C5a/C5b/C6 rizik nije kaskada nego **paleta i markup** (`check:palette`,
   `palette:breakdown`, tvrde zabrane iz §7.7/§7.9);
@@ -3566,7 +3574,7 @@ Prag za ne-tekstualni element je **3.0**. **Tri ikone na `about`-u bile su nevid
 obje svijetle teme — a zadana tema je svijetla.** Ikona je usput dobila i namjeravanu
 veličinu (60 → **45 px**) i boju teme umjesto zakucane bjeline.
 
-#### Zašto ovo nije vidio nijedan od petnaestak postojećih gateova
+#### Zašto ovo nije vidjela nijedna postojeća brana
 
 Nije previd nego **doseg**, i svaki od njih je bio u pravu za ono što mjeri:
 
@@ -3632,9 +3640,9 @@ umjesto nje ostala ona koja bi **isti kvar** uhvatila bez ijednog lažnog poziva
 
 | mjera | prije | poslije |
 |---|---|---|
-| `css:debt` C4 | 1477 redaka, 49 `!important` | **905 redaka, 2 `!important`** |
+| `css:debt` C4 | 1477 redaka, 49 `!important` | **905 redaka, 2 `!important`** (na dan C4a; živu brojku zna `npm run css:debt`) |
 | `check:palette` ukupno | 125 | **103** |
-| `palette:breakdown` **FATALNO** | 24 | **18** |
+| `palette:breakdown` **FATALNO** | 24 | **18** (pa **11** nakon §10.2 — v. ondje) |
 | siročad u cijelom CSS-u | 144 | **81** |
 
 FATALNO je jedini broj koji stvarno blokira **birač tema na landingu** (§ Otvoreno) —
@@ -3722,6 +3730,13 @@ latentnog kvara: da je bilo razlike, popravak bi bio prevelik.
   Nije u preflightu (traži preglednik i poslužitelj) — stoji uz `css:diff` i `check:cdn:live`.
   Mutacija: pušten na stanje **prije** §10.1 → **izlaz 1**, i to točno na `1.13`.
 
+#### Usputni dobitak: birač tema je danas prepolovljeno blizu
+
+`palette:breakdown` → **FATALNO** (jedini broj koji stvarno blokira birač tema na landingu):
+**24 ujutro → 18 nakon C4a → 11 nakon ovih devet popravaka.** Manje od pola, i to bez ijedne
+odluke o izgledu — jer je devet od tih pravila bilo upravo zakucana bjelina na temiranoj ispuni.
+⚠️ Brojku mjeri alat; **ova je proza ostarila dvaput u jednom danu** i zato nosi datume.
+
 #### 🧭 Dvije greške u vlastitoj mjeri, obje uhvaćene prije nego su nekoga zavele
 
 1. **Prvo mjerenje je dalo 18 nalaza; sedamnaest ih je bio artefakt.** Promjena teme pokreće
@@ -3735,7 +3750,8 @@ latentnog kvara: da je bilo razlike, popravak bi bio prevelik.
 
 #### ⛔ Što se NAMJERNO ne tvrdi
 
-- **536 mjerenja iza gradijenta ili slike je preskočeno.** To je poznata rupa i pokriva ju
+- **Oko 530 mjerenja iza gradijenta ili slike je preskočeno** (broj se mijenja s markupom, pa se
+  ne prepisuje kao tvrdnja — ispisuje ga sama brana). To je poznata rupa i pokriva ju
   zabrana #4 — ali samo za **ispunu marke**.
 - **Semantičke ispune nisu pokrivene, i ondje isti kvar POSTOJI.** Izmjereno na `chalk`:
   bijelo na `--success` = **2.14**, na `--danger` = **3.12**, na `--secondary` = **3.00**
