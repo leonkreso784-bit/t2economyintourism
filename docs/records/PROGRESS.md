@@ -28,10 +28,11 @@ nula generiranih, T5 ih je uveo samo za ritam heroja — sve dosad je bila pripr
 razlike objašnjene · ciljani specovi browsea **44 prošlo / 0 palo** · usporedba stare i nove
 ljestve na **14 širina** protiv `git worktree` na prethodnom commitu.
 
-**⚠️ Što NIJE potvrđeno:** **puna Playwright suita**. Pokrenuta je i **prekinuta** jer je Leon
-morao s mreže. To je **prva stvar u sljedećoj sesiji**, prije bilo kakvog novog posla.
+**Puna suita: 529 prošlo · 0 palo · 108 preskočeno (24.1 min)** — identično stanju prije C4b,
+dakle migracija dvije površine nije pomaknula nijednu tvrdnju. (Prvi pokušaj je bio prekinut jer
+je Leon morao s mreže; potvrđen je istog dana po povratku.)
 
-**Slijedi:** dovršiti suitu → pa **C5a** (četiri načina uvježbavanja **+ kromo ekrana za učenje**,
+**Slijedi:** **C5a** (četiri načina uvježbavanja **+ kromo ekrana za učenje**,
 koje je C4b svjesno ostavio jer je to ista površina; ondje su i posljednja dva `!important` izvan
 C7). ⚠️ C5a mora predati svoje rute `css:diff`-u (`CSS_DIFF_RUTE`), inače mjeri prazan ekran.
 
