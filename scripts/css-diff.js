@@ -51,6 +51,24 @@ const PORT_REF = PORT + 1;                 // referentno stablo ide na svoj port
 const KAP = Number(process.env.CSS_DIFF_ALL ? 100000 : (process.env.CSS_DIFF_KAP || 8));
 const BUNDLE = 'styles.bundle.css';
 
+/**
+ * RUTE na kojima mjerimo (C4b).
+ *
+ * ⚠️ Dosad je alat gledao ISKLJUČIVO `/`. Za landing je to bilo dovoljno, ali `COLLECT`
+ * nasilno pali svaku `*-page` sekciju, pa je nastao dojam da su sve stranice izmjerene —
+ * a izmjeren je samo njihov MARKUP IZ `index.html`. Sve što crta JavaScript pri ulasku u
+ * rutu (kartice kataloga, popis lekcija, polica) na `/` NE POSTOJI, pa se nije ni
+ * uspoređivalo. To je „Zamka 2" iz §9.16, i C4b je prva cigla koja u nju stvarno upada.
+ *
+ * Zadano ostaje `/` da ostale cigle ne postanu trostruko sporije; cigla koja migrira
+ * površinu s JS-om PREDAJE svoje rute:
+ *     CSS_DIFF_RUTE="#/subjects,#/subject/te2" npm run css:diff
+ * Ispis UVIJEK imenuje što je mjereno — šutnja o dosegu je upravo ono što je zamku i
+ * održalo na životu.
+ */
+const RUTE = (process.env.CSS_DIFF_RUTE || '').split(',').map((r) => r.trim()).filter(Boolean);
+if (!RUTE.length) RUTE.push('');
+
 /** Širine na kojima mjerimo — svaka otvara drugi skup media queryja. */
 const VIEWPORTS = [
   { name: 'telefon-375', width: 375, height: 812 },
@@ -288,11 +306,12 @@ async function measure(page, url, overrideCss) {
   let problems = 0;
   let elementsChecked = 0;
   try {
-    for (const vp of VIEWPORTS) {
+    for (const par of VIEWPORTS.flatMap((v) => RUTE.map((r) => [v, r]))) {
+      const vp = { name: par[0].name + (par[1] ? '  ' + par[1] : ''), width: par[0].width, height: par[0].height };
       const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, serviceWorkers: 'block' });
       const page = await ctx.newPage();
-      const url = 'http://localhost:' + PORT + '/';
-      const urlRef = wt ? ('http://localhost:' + PORT_REF + '/') : url;
+      const url = 'http://localhost:' + PORT + '/' + par[1];
+      const urlRef = wt ? ('http://localhost:' + PORT_REF + '/' + par[1]) : url;
 
       // Jedno mjesto koje zna ŠTO je referenca — inače bi se odluka ponovila na tri
       // mjesta (glavna usporedba + dvije sonde za detalje) i razišla pri prvoj izmjeni.
@@ -392,6 +411,10 @@ async function measure(page, url, overrideCss) {
     ocistiWorktree(wt);
   }
 
+  console.log('\n   mjereno na rutama: ' + RUTE.map((r) => (r || '/')).join(' · ') +
+    (RUTE.length === 1 && !RUTE[0]
+      ? '   ⚠️ sadržaj koji crta JS pri ulasku u rutu NIJE uspoređen (CSS_DIFF_RUTE=…)'
+      : ''));
   console.log('\n' + (problems === 0
     ? '✅ Nijedan element nije promijenio prikaz (' + elementsChecked + ' usporedbi kroz ' + VIEWPORTS.length + ' širine).'
     : '⚠️  ' + problems + ' razlika u prikazu — pročitaj ih prije nego proglasiš ciglu gotovom.'));

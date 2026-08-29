@@ -55,7 +55,7 @@
 /* Bočni popis predmeta. */
 @import "./sidebar.css";
 
-/* Browse (Fakultet → Program → Godina → Predmet). */
+/* Browse — od C4b samo KARTICA; skela je u utilityjima (`index.html`, `navigation.js`). */
 @import "./browse.css";
 
 /* Stranice (Lekcije, Učenje, O nama). */
@@ -140,7 +140,13 @@
 
    `{,!}` na početku hvata i oblik s `!` modifikatorom. Nije kozmetika: `.\!container` je
    nastao iz JavaScripta — `if (!container || …)`. Skener ne zna da je to negacija, vidi tekst. */
-@source not inline("{,!}{block,blur,collapse,container,filter,fixed,grid,inline,italic,ordinal,resize,table}");
+/* C4b: `grid` je OTIŠAO s popisa — prvi put ga je netko stvarno napisao kao klasu
+   (`BROWSE_GRID` u `js/navigation.js`, mreža kataloga). To je i predviđeni put:
+   „ime odlazi s ovog popisa tek kad ga netko stvarno napiše na migriranoj površini".
+   ⚠️ Dok je stajalo ovdje, isključenje je bilo TIHO — Tailwind pravilo ne bi generirao,
+   a mreža bi se raspala tek u pregledniku. Zato se popis mijenja u ISTOM koraku u kojem
+   se piše klasa, nikad poslije. */
+@source not inline("{,!}{block,blur,collapse,container,filter,fixed,inline,italic,ordinal,resize,table}");
 @source not inline("{,!}{hidden,text-danger}");
 
 /* T4: `visible` je usao iz KODA, i to iz nove podvrste istog kvara. Dosad su kandidati

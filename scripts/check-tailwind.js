@@ -155,6 +155,23 @@ function generatedUtilities() {
   return out;
 }
 
+/**
+ * Ukloni komentare, a SAČUVAJ broj redaka (nalazi se prijavljuju s brojem retka).
+ *
+ * C4b: peti put u ovom projektu je „skener ne razlikuje objašnjenje od klase" — samo je
+ * ovaj put pogriješila NAŠA brana, ne Tailwind. Komentar uz `BROWSE_GRID` objašnjava zašto
+ * je sastavljanje imena zabranjeno i pritom pokazuje kako izgleda; provjera #1 ga je
+ * pročitala kao prekršaj. Isti razred kao pouka uz `check:safearea` („komentar nije
+ * pravilo"), obrnutog smjera: ondje je komentar lažno optužen kao propust, ovdje kao kod.
+ *
+ * Skidaju se samo BLOK-komentari i redci koji SU komentar (`//`, `*`) — nikad `//` usred
+ * retka, jer ondje živi `https://`, a i to je u nizu koji je stvaran kod.
+ */
+function stripComments(txt) {
+  const bezBlokova = txt.replace(/\/\*[\s\S]*?\*\//g, (blok) => blok.replace(/[^\n]/g, ' '));
+  return bezBlokova.split('\n').map((r) => (/^\s*(?:\/\/|\*)/.test(r) ? '' : r)).join('\n');
+}
+
 /** Imena klasa koja se pojavljuju u `class="..."` atributima i `classList` pozivima. */
 function classTokensIn(file) {
   const txt = fs.readFileSync(file, 'utf8');
@@ -163,6 +180,21 @@ function classTokensIn(file) {
   let m;
   while ((m = attr.exec(txt)) !== null) {
     for (const t of m[2].split(/\s+/)) if (t) tokens.add(t);
+  }
+
+  /* C4b: niz utilityja smije stajati u IMENOVANOJ KONSTANTI, i to je jedini način da
+     isti raspored koji crta više renderera ne postane pet kopija. Zato se `class="${IME}"`
+     prati do definicije te konstante U ISTOJ DATOTECI i njen sadržaj broji kao napisan.
+     ⚠️ Brana se time NE labavi: ne čitaju se svi nizovi u datoteci nego SAMO oni koji su
+     stvarno upotrijebljeni kao vrijednost `class` atributa. Bez ovoga je pošten obrazac
+     prijavljen kao „šum", a jedina alternativa bila bi prepisati klase u svaki renderer. */
+  const pokazivaci = new Set();
+  const ptr = /class(?:Name)?\s*=\s*["'`]\s*\$\{\s*([A-Za-z_$][\w$]*)\s*\}/g;
+  while ((m = ptr.exec(txt)) !== null) pokazivaci.add(m[1]);
+  for (const ime of pokazivaci) {
+    const def = new RegExp('(?:const|let|var)\\s+' + ime + '\\s*=\\s*(["\'`])((?:\\\\.|(?!\\1)[^\\\\])*)\\1');
+    const d = txt.match(def);
+    if (d) for (const t of d[2].replace(/\\(.)/g, '$1').split(/\s+/)) if (t) tokens.add(t);
   }
   const list = /classList\.(?:add|remove|toggle|contains)\(([^)]*)\)/g;
   while ((m = list.exec(txt)) !== null) {
@@ -179,7 +211,7 @@ function checkDynamicClassNames() {
   const hits = [];
   for (const f of sourceFiles()) {
     if (!f.endsWith('.js') && !f.endsWith('.html')) continue;
-    fs.readFileSync(f, 'utf8').split('\n').forEach((line, i) => {
+    stripComments(fs.readFileSync(f, 'utf8')).split('\n').forEach((line, i) => {
       re.lastIndex = 0;
       if (re.test(line)) hits.push(rel(f) + ':' + (i + 1) + '  ' + line.trim().slice(0, 110));
     });

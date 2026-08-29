@@ -1,95 +1,37 @@
 /* =====================================================
-   BROWSE PAGE
-   Sokrat Study — drill-down catalog explorer
-   Faculty → Program → Year → Subject (sve iz data/catalog.js)
+   BROWSE — KARTICA (Fakultet → Smjer → Godina → Predmet)
+   Sokrat Study
 
-   ⚠ CACHE: pri izmjeni bumpaj ?v= token u styles.css (@import) i deploy provjeri.
+   ⚠️ OVDJE JE SAMO KOMPONENTA. Skela stranice (ljuska, sadržaj, naslov razine,
+   uvod, mreža, naslov semestra, prazno stanje) prešla je u C4b u **utilityje**,
+   i to u `index.html` te u `BROWSE_GRID` / `BROWSE_SECTION_TITLE` u
+   `js/navigation.js`. Rez ide po ELEMENTU, ne po datoteci: **nijedno svojstvo se
+   ne odlučuje na dva mjesta.** Kartica je ostala u CSS-u jer nosi `::before` s
+   `color-mix` gradijentom, akcent-varijablu iz `data/catalog.js` i varijante po
+   `data-ink` — sve troje u utilityjima postaje nečitljivo, a ništa ne dobiva.
+
+   ⚠️ `min-height` ljuske je OBRISAN, ne preseljen. Bio je mrtav: `css/topbar.css`
+   ga bezuvjetno gazi za svih osam ljuski (`calc(100dvh - var(--chrome-h))`) i stoji
+   kasnije u bundleu uz jednaku specifičnost — izmjereno 792 px u prozoru od 900.
+   Da je otišao u utility, POBIJEDIO BI topbar (utilityji su ZADNJI) i svaka stranica
+   bi postala viša od ekrana za visinu kroma. Obrnuto od pouke C1: ondje legacy
+   pravilo tuče utility, ovdje utility oživljava pravilo koje je netko namjerno gazio.
+
+   ⚠ CACHE: pri izmjeni pokreni `npm run bump`.
    ===================================================== */
 
-.browse-page {
-    min-height: 100vh;
-    min-height: 100dvh;
-    background: var(--bg-primary);
-}
-
-/* ===== ZAGLAVLJE JE OBRISANO (T2) =====
-   `.browse-header` je bio `position: sticky` i trošio **140 px** trajno, a nosio je dvije
-   stvari koje ondje nisu trebale stajati: položaj (preselio u mrvicu, gdje sada stoji
-   cijeli lanac fakultet › smjer › godina) i uputu (preselila u sadržaj, dolje). S njim
-   su otišli `.browse-title`, `.browse-title h1` i `.browse-logo` — znak je već u K2b
-   otišao u globalnu traku, pa je ovaj bio duplikat i prije T2. */
-
-/* Uputa razine („Odaberi smjer") — SADRŽAJ, ne kromo: smije se odskrolati. */
-.browse-heading {
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.25;
-    margin-bottom: 0.35rem;
-    text-wrap: balance;
-}
-
-/* ===== CONTENT ===== */
-.browse-content {
-    padding: 1.5rem;
-    padding-bottom: calc(2rem + var(--safe-bottom));
-    max-width: 960px;
-    width: 100%;
-    margin: 0 auto;
-    min-width: 0;
-}
-
-.browse-intro {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-.browse-intro:empty {
-    display: none;
-}
-
-/* ===== SEMESTER / GROUP SECTION ===== */
-.browse-section {
-    min-width: 0;
-}
-
-.browse-section-title {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-size: 0.95rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    color: var(--text-muted);
-    margin-bottom: 1rem;
-}
-
-.browse-section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-}
-
-/* ===== GRID OF CARDS ===== */
-.browse-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1rem;
-    min-width: 0;
-}
-
-/* ===== CARD (faculty / program / year / subject share the base) ===== */
+/* ===== KARTICA (fakultet / smjer / godina / predmet dijele osnovu) ===== */
 .browse-card {
     position: relative;
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
-    padding: 1.35rem;
-    background: var(--bg-secondary);
-    border: 2px solid var(--border);
+    /* Mobile-first: širi razmak dolazi na `sm` (640px) — JEDAN skup pragova
+       (izlazni uvjet §2). Prijašnjih 600px bio je ad-hoc prag te je umro s
+       površinom koja ga je koristila. */
+    padding: 1.1rem;
+    background: var(--color-surface-1);
+    border: 2px solid var(--color-line);
     border-radius: var(--radius-lg);
     cursor: pointer;
     transition: var(--transition);
@@ -100,13 +42,19 @@
     color: inherit;
 }
 
-/* subtle accent glow on hover, tinted by the card's --accent (set inline) */
+@media (min-width: 40rem) {
+    .browse-card {
+        padding: 1.35rem;
+    }
+}
+
+/* Blagi sjaj na dodiru, obojen akcentom kartice (`--card-accent`, inline iz kataloga). */
 .browse-card::before {
     content: '';
     position: absolute;
     inset: 0;
     background: radial-gradient(120% 120% at 0% 0%,
-        color-mix(in srgb, var(--card-accent, var(--primary)) 14%, transparent), transparent 60%);
+        color-mix(in srgb, var(--card-accent, var(--color-brand-500)) 14%, transparent), transparent 60%);
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
@@ -114,9 +62,9 @@
 
 .browse-card:hover,
 .browse-card:focus-visible {
-    border-color: var(--card-accent, var(--primary));
+    border-color: var(--card-accent, var(--color-brand-500));
     transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-e2);
     outline: none;
 }
 
@@ -139,21 +87,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--on-primary);
+    color: var(--color-on-brand);
     font-size: 1.4rem;
     flex-shrink: 0;
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-400));
 }
 
-/* ⚠️ Pločica NIJE uvijek marka. Fakultet/program/godina nose gradijent marke iznad, pa im
-   `--on-primary` odgovara. Kartice PREDMETA dobivaju inline gradijent iz `data/catalog.js`
+/* ⚠️ Pločica NIJE uvijek marka. Fakultet/smjer/godina nose gradijent marke iznad, pa im
+   `--color-on-brand` odgovara. Kartice PREDMETA dobivaju inline gradijent iz `data/catalog.js`
    i uz njega `data-ink`, izračunat iz luminancije te boje (`inkForTint()`). Zato se obje
    vrijednosti navode IZRIČITO: da se navede samo „dark", predmet sa svijetlom tintom bi na
-   temi „chalk" naslijedio TAMNI `--on-primary` i glif bi nestao. Mjeri `check:contrast`. */
+   temi „chalk" naslijedio TAMNI `--color-on-brand` i glif bi nestao. Mjeri `check:contrast`. */
 .browse-card-icon[data-ink="light"] { color: var(--color-on-tint-light); }
 .browse-card-icon[data-ink="dark"]  { color: var(--color-on-tint-dark); }
 
-/* Year cards: show the year number big inside the icon tile */
+/* Kartica godine: broj godine ide velik unutar pločice. */
 .browse-card-icon.is-year {
     font-size: 1.6rem;
     font-weight: 800;
@@ -174,13 +122,13 @@
 
 .browse-card-sub {
     font-size: 0.8rem;
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     margin-top: 0.15rem;
 }
 
 .browse-card-desc {
     font-size: 0.85rem;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     line-height: 1.5;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -194,7 +142,7 @@
     align-items: center;
     gap: 0.4rem 0.9rem;
     font-size: 0.78rem;
-    color: var(--text-muted);
+    color: var(--color-ink-2);
 }
 
 .browse-card-meta span {
@@ -204,25 +152,25 @@
 }
 
 .browse-card-meta i {
-    color: var(--card-accent, var(--primary));
+    color: var(--card-accent, var(--color-brand-500));
 }
 
-/* chevron, pinned bottom-right */
+/* Kljunić, prikvačen dolje-desno. */
 .browse-card-arrow {
     position: absolute;
     right: 1.1rem;
     bottom: 1.1rem;
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     font-size: 0.95rem;
     transition: var(--transition);
 }
 
 .browse-card:hover .browse-card-arrow {
-    color: var(--card-accent, var(--primary));
+    color: var(--card-accent, var(--color-brand-500));
     transform: translateX(4px);
 }
 
-/* ===== SUBJECT PROGRESS BAR ===== */
+/* ===== TRAKA NAPRETKA NA KARTICI PREDMETA ===== */
 .browse-progress {
     display: flex;
     align-items: center;
@@ -233,22 +181,22 @@
 .browse-progress-track {
     flex: 1;
     height: 6px;
-    background: var(--bg-tertiary);
-    border-radius: 999px;
+    background: var(--color-surface-2);
+    border-radius: var(--radius-full);
     overflow: hidden;
 }
 
 .browse-progress-fill {
     height: 100%;
-    border-radius: 999px;
-    background: linear-gradient(90deg, var(--card-accent, var(--primary)), var(--primary-light));
+    border-radius: var(--radius-full);
+    background: linear-gradient(90deg, var(--card-accent, var(--color-brand-500)), var(--color-brand-400));
     transition: width 0.4s ease;
 }
 
 .browse-progress-label {
     font-size: 0.72rem;
     font-weight: 600;
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     flex-shrink: 0;
     min-width: 2.5rem;
     text-align: right;
@@ -257,37 +205,3 @@
 /* ⚠️ „COMING SOON" NA BROWSE-KARTICI NE POSTOJI — obrisano u C4a. Stanje živi
    isključivo na LEKCIJI (`lesson-card--soon`, `js/navigation.js`), a `.is-soon` je
    ostatak imena od prije preimenovanja: nijedan browse-element ga nikad ne dobiva. */
-
-/* ===== EMPTY STATE ===== */
-.browse-empty {
-    text-align: center;
-    color: var(--text-muted);
-    padding: 3rem 1rem;
-}
-
-.browse-empty i {
-    font-size: 2rem;
-    margin-bottom: 0.75rem;
-    opacity: 0.6;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 600px) {
-    .browse-content {
-        padding: 1.25rem 1rem;
-        /* ⚠️ T1: kratica iznad je do danas BRISALA `padding-bottom: calc(2rem +
-           var(--safe-bottom))` iz baznog pravila — i to točno na širinama gdje sigurna
-           zona jedina i postoji. Izmjereno: zadnja kartica kataloga je na dnu skrola
-           ulazila 14 px pod home-indikator i odande se nije dala izvući, jer je stranica
-           već bila na kraju. Pravilo je postojalo, mjesto primjene ga je poništilo. */
-        padding-bottom: calc(1.25rem + var(--safe-bottom));
-    }
-    .browse-grid {
-        grid-template-columns: 1fr;
-        gap: 0.85rem;
-    }
-    .browse-card {
-        padding: 1.1rem;
-    }
-}
-

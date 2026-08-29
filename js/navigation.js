@@ -859,14 +859,27 @@ function browseBack() {
     }
 }
 
+/* ── C4b · SKELA BROWSEA U UTILITYJIMA ──────────────────────────────────────────
+   Nizovi su DOSLOVNI i stoje na jednom mjestu. Doslovni jer Tailwind skenira izvor
+   kao tekst: ime sastavljeno u runtimeu nikad ne vidi, pa bi pravilo izostalo iz izlaza
+   (ADR-028, granica #5, brana `check:tailwind` #1). Na jednom mjestu jer isti raspored crtaju ČETIRI renderera
+   (fakultet · smjer · godina · predmet) — prije C4b je `browse-grid` bio napisan
+   pet puta, pa bi utility-niz bio pet kopija koje se raziđu prvom izmjenom.
+
+   ⚠️ Semantička imena (`browse-grid`, `browse-empty`, …) OSTAJU uz utilityje: gađa ih
+   delegacija klika niže u ovoj datoteci i 23 tvrdnje u `tests/browse.spec.js`. C4b seli
+   STIL, ne imena — inače bi suita pozelenjela zato što više ništa ne nalazi (spec §5). */
+const BROWSE_GRID = 'browse-grid grid min-w-0 grid-cols-1 gap-3.5 sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] sm:gap-4';
+const BROWSE_SECTION_TITLE = 'browse-section-title mb-4 flex items-center gap-2.5 text-sm font-semibold uppercase tracking-[0.6px] text-ink-2 after:h-px after:flex-1 after:bg-line after:content-[\'\']';
+
 function browseEmpty(msg) {
-    return `<div class="browse-empty"><i class="fas fa-inbox"></i><p>${browseEsc(msg)}</p></div>`;
+    return `<div class="browse-empty px-4 py-12 text-center text-ink-2"><i class="fas fa-inbox mb-3 text-3xl opacity-60"></i><p>${browseEsc(msg)}</p></div>`;
 }
 
 function renderFacultyCards() {
     const fs = SokratCatalog.faculties();
     if (!fs.length) return browseEmpty(_t('browse.empty.faculties', 'No faculties yet.'));
-    return `<div class="browse-grid">` + fs.map(f => {
+    return `<div class="${BROWSE_GRID}">` + fs.map(f => {
         const n = SokratCatalog.programsOf(f.id).length;
         return `
             <button type="button" class="browse-card" data-browse="faculty" data-id="${browseEsc(f.id)}">
@@ -885,7 +898,7 @@ function renderFacultyCards() {
 function renderProgramCards(facultyId) {
     const ps = SokratCatalog.programsOf(facultyId);
     if (!ps.length) return browseEmpty(_t('browse.empty.programs', 'No programs yet.'));
-    return `<div class="browse-grid">` + ps.map(p => {
+    return `<div class="${BROWSE_GRID}">` + ps.map(p => {
         const years = SokratCatalog.yearsOf(p.id).length;
         const subs = SokratCatalog.subjectsOf(p.id).length;
         return `
@@ -909,7 +922,7 @@ function renderYearCards(programId) {
     const years = SokratCatalog.yearsOf(programId);
     if (!years.length) return browseEmpty(_t('browse.empty.years', 'No years yet.'));
     const ordinal = ['', '1st', '2nd', '3rd', '4th', '5th', '6th'];
-    return `<div class="browse-grid">` + years.map(y => {
+    return `<div class="${BROWSE_GRID}">` + years.map(y => {
         const subs = SokratCatalog.subjectsOf(programId, y).length;
         const yearTitle = _hr() ? `${y}. godina` : `${ordinal[y] || (y + '.')} Year`;
         return `
@@ -960,9 +973,9 @@ function renderSubjectCards(programId, year) {
     return semesters.map(sem => {
         const subs = SokratCatalog.subjectsOf(programId, year).filter(s => s.semester === sem);
         return `
-            <section class="browse-section">
-                <h2 class="browse-section-title">${_t('browse.semester', 'Semester')} ${sem}</h2>
-                <div class="browse-grid">${subs.map(subjectBrowseCard).join('')}</div>
+            <section class="browse-section min-w-0">
+                <h2 class="${BROWSE_SECTION_TITLE}">${_t('browse.semester', 'Semester')} ${sem}</h2>
+                <div class="${BROWSE_GRID}">${subs.map(subjectBrowseCard).join('')}</div>
             </section>`;
     }).join('');
 }
