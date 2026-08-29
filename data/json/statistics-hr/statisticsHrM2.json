@@ -1,0 +1,732 @@
+{
+  "sampling": {
+    "name": "Uzorci i uzorkovanje",
+    "icon": "fa-filter",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "Na koja se dva načina jedinice biraju u uzorak?",
+        "answer": "SLUČAJNO (na temelju vjerojatnosti) i NAMJERNO (bez vjerojatnosti). Kod namjernih uzoraka pogrešku NIJE moguće brojčano izraziti.",
+        "explanation": "To je ključna prednost slučajnih uzoraka."
+      },
+      {
+        "question": "Što obilježava jednostavan slučajni uzorak?",
+        "answer": "Svaka jedinica populacije ima JEDNAKU vjerojatnost izbora u uzorak.",
+        "explanation": "Temeljni oblik vjerojatnosnog uzorka."
+      },
+      {
+        "question": "Što je pogreška uzorka?",
+        "answer": "Razlika između rezultata dobivenog na uzorku i stvarne vrijednosti u populaciji.",
+        "explanation": "Mjerljiva je samo kod slučajnih uzoraka."
+      },
+      {
+        "question": "Što se događa pri izboru S ponavljanjem?",
+        "answer": "Populacija se NE smanjuje — izabrana jedinica se vraća, pa broj jedinica ostaje konstantan i vjerojatnost izbora se ne mijenja.",
+        "explanation": "Bez ponavljanja populacija se smanjuje za jedan."
+      },
+      {
+        "question": "Kada je nužan faktor korekcije konačno prebrojive populacije?",
+        "answer": "Kada je relativno VELIK uzorak izabran iz MALE populacije.",
+        "explanation": "Tada bi bez korekcije pogreška bila precijenjena."
+      },
+      {
+        "question": "Kada se koristi prosudbeni uzorak?",
+        "answer": "Kada istraživanje obuhvaća vrlo malu i rijetku populaciju — jedinice bira istraživač prosudbom.",
+        "explanation": "Namjerni (nevjerojatnosni) uzorak."
+      },
+      {
+        "question": "Sistemski vs stratificirani uzorak?",
+        "answer": "Sistemski bira svaku k-tu jedinicu iz popisa. Stratificirani DIJELI populaciju na podskupine (stratume) prema karakteristikama pa iz svake bira.",
+        "explanation": "Česta zamka: podjela na podskupine NIJE sistemski uzorak."
+      },
+      {
+        "question": "Po čemu se Studentova distribucija razlikuje od normalne?",
+        "answer": "Vrhom je SPLJOŠTENIJA (niža) i ima deblje repove; koristi se kod malih uzoraka. S porastom uzorka teži normalnoj.",
+        "explanation": "Zato daje šire intervale pouzdanosti."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "U jednostavnom slučajnom uzorku svaka jedinica ima:",
+        "options": [
+          "različitu vjerojatnost izbora",
+          "jednaku vjerojatnost izbora",
+          "nultu vjerojatnost",
+          "vjerojatnost koju bira istraživač"
+        ],
+        "correct": 1,
+        "id": "1ltkhd"
+      },
+      {
+        "question": "Razlika rezultata uzorka i populacije naziva se:",
+        "options": [
+          "varijanca",
+          "pogreška uzorka",
+          "standardna devijacija",
+          "okvir uzorka"
+        ],
+        "correct": 1,
+        "id": "7k19yz"
+      },
+      {
+        "question": "Kod izbora S ponavljanjem populacija se:",
+        "options": [
+          "smanjuje za jedan",
+          "ne smanjuje",
+          "udvostručuje",
+          "briše"
+        ],
+        "correct": 1,
+        "id": "iflwyp"
+      },
+      {
+        "question": "Podjela populacije na podskupine prema karakteristikama je uzorak:",
+        "options": [
+          "sistemski",
+          "stratificirani",
+          "prosudbeni",
+          "jednostavni slučajni"
+        ],
+        "correct": 1,
+        "id": "l1z8zj"
+      },
+      {
+        "question": "Kod namjernih (nevjerojatnosnih) uzoraka pogrešku:",
+        "options": [
+          "je moguće brojčano izraziti",
+          "nije moguće brojčano izraziti",
+          "uvijek je nula",
+          "računa se kao varijanca"
+        ],
+        "correct": 1,
+        "id": "pgo51u"
+      },
+      {
+        "question": "Studentova distribucija je u odnosu na normalnu:",
+        "options": [
+          "šiljatija",
+          "spljoštenija vrhom",
+          "identična",
+          "asimetrična"
+        ],
+        "correct": 1,
+        "id": "3vryd0"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Jedinice se u uzorak biraju slučajno i _______.",
+        "answer": "namjerno",
+        "hint": "bez vjerojatnosti",
+        "id": "sm94fg"
+      },
+      {
+        "sentence": "Razlika rezultata uzorka i populacije je _______ uzorka.",
+        "answer": "pogreška",
+        "hint": "greška",
+        "id": "aydmzx"
+      },
+      {
+        "sentence": "Kod izbora s ponavljanjem broj jedinica ostaje _______.",
+        "answer": "konstantan",
+        "hint": "nepromijenjen",
+        "id": "ukdyqq"
+      },
+      {
+        "sentence": "_______ uzorak dijeli populaciju na podskupine prema karakteristikama.",
+        "answer": "Stratificirani",
+        "hint": "stratumi",
+        "id": "pn4pzs"
+      },
+      {
+        "sentence": "Studentova distribucija je vrhom _______ od normalne.",
+        "answer": "spljoštenija",
+        "hint": "niža",
+        "id": "arksk6"
+      }
+    ],
+    "learn": {
+      "title": "Uzorci i uzorkovanje",
+      "content": "\n                <h3>Kako se bira uzorak</h3>\n                <div class=\"formula-box\">\n                    SLUČAJNO (vjerojatnosni uzorci) — pogreška se DA brojčano izraziti<br>\n                    NAMJERNO (nevjerojatnosni) — pogrešku NIJE moguće brojčano izraziti\n                </div>\n                <p><strong>Pogreška uzorka</strong> = razlika između rezultata dobivenog na uzorku i stvarne vrijednosti u populaciji.</p>\n\n                <h4>Vrste slučajnih uzoraka</h4>\n                <ul>\n                    <li><strong>Jednostavan slučajni</strong> — svaka jedinica ima <em>jednaku</em> vjerojatnost izbora.</li>\n                    <li><strong>Sistemski</strong> — bira se svaka <em>k-ta</em> jedinica s popisa.</li>\n                    <li><strong>Stratificirani</strong> — populacija se <em>dijeli na podskupine (stratume)</em> prema karakteristikama, pa se iz svake bira.</li>\n                    <li><strong>Klasterski</strong> — bira se skupina (klaster) pa se ispituju sve jedinice u njoj.</li>\n                </ul>\n                <p><em>Namjerni uzorci:</em> <strong>prosudbeni</strong> (istraživač bira; koristi se kad je populacija vrlo mala i rijetka), prigodni, kvotni.</p>\n\n                <h4>S ponavljanjem i bez ponavljanja</h4>\n                <p>Kod izbora <strong>s ponavljanjem</strong> jedinica se vraća → populacija se <em>ne smanjuje</em>, broj jedinica ostaje konstantan. Kod izbora <strong>bez ponavljanja</strong> populacija se nakon svakog izbora smanjuje za jedan.</p>\n                <p><strong>Faktor korekcije konačno prebrojive populacije</strong> nužan je kada je <em>relativno velik</em> uzorak izabran iz <em>male</em> populacije — inače bi se pogreška precijenila.</p>\n\n                <h4>Studentova distribucija</h4>\n                <p>Koristi se kod <strong>malih uzoraka</strong> (kad je nepoznata varijanca populacije). Vrhom je <strong>spljoštenija</strong> od normalne i ima deblje repove; s porastom uzorka teži normalnoj distribuciji.</p>\n            ",
+      "id": "iqwb7s"
+    },
+    "id": "lfshi7"
+  },
+  "correlation": {
+    "name": "Korelacija",
+    "icon": "fa-link",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "Što mjeri koeficijent korelacije?",
+        "answer": "Smjer i JAKOST linearne povezanosti dviju varijabli. Vrijednosti se kreću od −1 do +1.",
+        "explanation": "0 znači da linearne povezanosti nema."
+      },
+      {
+        "question": "Dokazuje li korelacija uzročnost?",
+        "answer": "NE. Na temelju koeficijenta korelacije NIJE moguće zaključivati o uzročno-posljedičnom odnosu promatranih varijabli.",
+        "explanation": "Najvažnije pravilo cijele teme."
+      },
+      {
+        "question": "Kada se koristi Pearsonov koeficijent korelacije?",
+        "answer": "Za mjerenje povezanosti dviju varijabli mjerenih na INTERVALNOJ ili OMJERNOJ ljestvici.",
+        "explanation": "Za ordinalne podatke koristi se Spearmanov koeficijent ranga."
+      },
+      {
+        "question": "Kako se linearna povezanost prikazuje grafički?",
+        "answer": "Dijagramom rasipanja (oblakom točaka); linearna se povezanost može prikazati RAVNOM linijom.",
+        "explanation": "Nelinearna veza traži krivulju."
+      },
+      {
+        "question": "Što znači pozitivna, a što negativna korelacija?",
+        "answer": "Pozitivna: obje varijable rastu zajedno. Negativna: kad jedna raste, druga pada.",
+        "explanation": "Predznak pokazuje smjer, apsolutna vrijednost jakost."
+      },
+      {
+        "question": "Što znači koeficijent korelacije blizu +1 ili −1?",
+        "answer": "Vrlo jaku linearnu povezanost — točke u dijagramu rasipanja leže gotovo na pravcu.",
+        "explanation": "Blizu 0 = raspršen oblak, nema linearne veze."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Koeficijent korelacije poprima vrijednosti:",
+        "options": [
+          "0 do 1",
+          "−1 do +1",
+          "−3 do +3",
+          "0 do 100"
+        ],
+        "correct": 1,
+        "id": "4sdg3p"
+      },
+      {
+        "question": "Na temelju koeficijenta korelacije o uzročno-posljedičnom odnosu:",
+        "options": [
+          "smijemo zaključivati",
+          "NIJE moguće zaključivati",
+          "zaključujemo samo ako je pozitivan",
+          "zaključujemo ako je veći od 0,5"
+        ],
+        "correct": 1,
+        "id": "3hg57h"
+      },
+      {
+        "question": "Pearsonov koeficijent traži varijable mjerene ljestvicom:",
+        "options": [
+          "nominalnom",
+          "ordinalnom",
+          "intervalnom ili omjernom",
+          "bilo kojom"
+        ],
+        "correct": 2,
+        "id": "4tzujx"
+      },
+      {
+        "question": "Za ordinalne (rangirane) podatke koristi se:",
+        "options": [
+          "Pearsonov koeficijent",
+          "Spearmanov koeficijent ranga",
+          "koeficijent varijacije",
+          "medijan"
+        ],
+        "correct": 1,
+        "id": "wuzw6o"
+      },
+      {
+        "question": "Linearna povezanost grafički se prikazuje:",
+        "options": [
+          "krivuljom",
+          "ravnom linijom",
+          "stupcem",
+          "kružnicom"
+        ],
+        "correct": 1,
+        "id": "ufy4zs"
+      },
+      {
+        "question": "Koeficijent korelacije blizu nule znači:",
+        "options": [
+          "jaku pozitivnu vezu",
+          "jaku negativnu vezu",
+          "nema linearne povezanosti",
+          "savršenu vezu"
+        ],
+        "correct": 2,
+        "id": "j66czu"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Koeficijent korelacije kreće se od −1 do _______.",
+        "answer": "+1",
+        "hint": "gornja granica",
+        "id": "f3qyuy"
+      },
+      {
+        "sentence": "Iz korelacije _______ zaključivati o uzročno-posljedičnom odnosu.",
+        "answer": "nije moguće",
+        "hint": "negacija",
+        "id": "44n52o"
+      },
+      {
+        "sentence": "_______ koeficijent korelacije traži intervalnu ili omjernu ljestvicu.",
+        "answer": "Pearsonov",
+        "hint": "najpoznatiji",
+        "id": "8d2s5j"
+      },
+      {
+        "sentence": "Za rangirane (ordinalne) podatke koristi se _______ koeficijent.",
+        "answer": "Spearmanov",
+        "hint": "koeficijent ranga",
+        "id": "hru1qe"
+      },
+      {
+        "sentence": "Linearna povezanost prikazuje se _______ linijom.",
+        "answer": "ravnom",
+        "hint": "pravac",
+        "id": "zqqdll"
+      }
+    ],
+    "learn": {
+      "title": "Korelacija",
+      "content": "\n                <h3>Što je korelacija</h3>\n                <p><strong>Korelacija</strong> mjeri <em>smjer</em> i <em>jakost</em> linearne povezanosti dviju varijabli.</p>\n                <div class=\"formula-box\">\n                    \\[ -1 \\le r \\le +1 \\]\n                    r &gt; 0 → pozitivna veza (rastu zajedno)<br>\n                    r &lt; 0 → negativna veza (jedna raste, druga pada)<br>\n                    r ≈ 0 → nema LINEARNE povezanosti\n                </div>\n\n                <h4>⚠️ Najvažnije pravilo</h4>\n                <p>Na temelju koeficijenta korelacije <strong>NIJE moguće zaključivati o uzročno-posljedičnom odnosu</strong> promatranih varijabli. Dvije varijable mogu biti povezane zbog treće, zajedničke, ili sasvim slučajno.</p>\n\n                <h4>Koji koeficijent kada</h4>\n                <ul>\n                    <li><strong>Pearsonov</strong> — varijable mjerene na <strong>intervalnoj ili omjernoj</strong> ljestvici.</li>\n                    <li><strong>Spearmanov koeficijent ranga</strong> — kad je barem jedna varijabla <strong>ordinalna</strong> (rangirana).</li>\n                </ul>\n\n                <h4>Grafički prikaz</h4>\n                <p><strong>Dijagram rasipanja</strong> (oblak točaka) pokazuje odnos dviju varijabli. Linearna se povezanost može prikazati <strong>ravnom linijom</strong>; što su točke bliže pravcu, to je veza jača.</p>\n            ",
+      "id": "ps6jzr"
+    },
+    "id": "2tkrg8"
+  },
+  "regression": {
+    "name": "Regresijska analiza",
+    "icon": "fa-chart-line",
+    "color": "#ef4444",
+    "flashcards": [
+      {
+        "question": "Kako se označavaju zavisna i nezavisna varijabla?",
+        "answer": "Nezavisna se označava s X, a zavisna s Y. Istraživač može kontrolirati i njome manipulirati NEZAVISNU varijablu.",
+        "explanation": "Česta zamka: zavisna NIJE ona kojom se manipulira."
+      },
+      {
+        "question": "Što je jednostavna, a što višestruka regresija?",
+        "answer": "Jednostavna promatra utjecaj JEDNE nezavisne varijable na zavisnu; višestruka utjecaj VIŠE nezavisnih varijabli na jednu zavisnu.",
+        "explanation": "Model se širi, zavisna ostaje jedna."
+      },
+      {
+        "question": "Deterministički vs stohastički model?",
+        "answer": "Deterministički opisuje TOČNU povezanost zavisne i nezavisne varijable (bez odstupanja); stohastički uključuje slučajnu pogrešku.",
+        "explanation": "Stvarni podaci traže stohastički model."
+      },
+      {
+        "question": "Koliko se pravaca može ucrtati kroz oblak točaka?",
+        "answer": "Samo JEDAN regresijski pravac — onaj koji najbolje pristaje podacima (metoda najmanjih kvadrata).",
+        "explanation": "Minimizira zbroj kvadrata odstupanja."
+      },
+      {
+        "question": "Što su protumačena, a što neprotumačena odstupanja?",
+        "answer": "Protumačena objašnjava nezavisna varijabla (model). Neprotumačena su odstupanja od regresijskog pravca koja model NE objašnjava — reziduali.",
+        "explanation": "Njihov omjer daje koeficijent determinacije."
+      },
+      {
+        "question": "Ima li konstantni član uvijek smisleno značenje?",
+        "answer": "NE. Konstantni član (odsječak) često nema smisleno tumačenje — npr. kad vrijednost X = 0 nije realna u promatranom kontekstu.",
+        "explanation": "Tumači se samo ako je X = 0 smisleno."
+      },
+      {
+        "question": "Što pokazuje koeficijent determinacije?",
+        "answer": "Koliki udio ukupnih odstupanja zavisne varijable objašnjava model — kvadrat koeficijenta korelacije: \\( R^2 = r^2 \\).",
+        "explanation": "Kreće se od 0 do 1 (0–100 %)."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Nezavisna varijabla označava se simbolom:",
+        "options": [
+          "Y",
+          "X",
+          "r",
+          "σ"
+        ],
+        "correct": 1,
+        "id": "ux54a8"
+      },
+      {
+        "question": "Istraživač može kontrolirati i manipulirati:",
+        "options": [
+          "zavisnom varijablom",
+          "nezavisnom varijablom",
+          "pogreškom",
+          "konstantom"
+        ],
+        "correct": 1,
+        "id": "8xuawu"
+      },
+      {
+        "question": "Višestruka regresija promatra:",
+        "options": [
+          "jednu nezavisnu na jednu zavisnu",
+          "više nezavisnih na jednu zavisnu",
+          "jednu nezavisnu na više zavisnih",
+          "korelaciju bez modela"
+        ],
+        "correct": 1,
+        "id": "1r8alu"
+      },
+      {
+        "question": "Model koji opisuje TOČNU povezanost bez odstupanja je:",
+        "options": [
+          "stohastički",
+          "deterministički",
+          "linearni",
+          "nelinearni"
+        ],
+        "correct": 1,
+        "id": "s26gsr"
+      },
+      {
+        "question": "Kroz oblak točaka može se ucrtati:",
+        "options": [
+          "beskonačno regresijskih pravaca",
+          "samo jedan regresijski pravac",
+          "najviše dva",
+          "nijedan"
+        ],
+        "correct": 1,
+        "id": "806e86"
+      },
+      {
+        "question": "Konstantni član (odsječak):",
+        "options": [
+          "uvijek ima smisleno značenje",
+          "nema uvijek smisleno značenje",
+          "uvijek je nula",
+          "jednak je koeficijentu korelacije"
+        ],
+        "correct": 1,
+        "id": "hg22co"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Nezavisna varijabla označava se s X, a zavisna s _______.",
+        "answer": "Y",
+        "hint": "slovo",
+        "id": "6ejw35"
+      },
+      {
+        "sentence": "Istraživač manipulira _______ varijablom.",
+        "answer": "nezavisnom",
+        "hint": "ona koja utječe",
+        "id": "yvmgb9"
+      },
+      {
+        "sentence": "_______ regresija promatra utjecaj više nezavisnih varijabli.",
+        "answer": "Višestruka",
+        "hint": "multipla",
+        "id": "9rv81o"
+      },
+      {
+        "sentence": "_______ model opisuje točnu povezanost bez slučajne pogreške.",
+        "answer": "Deterministički",
+        "hint": "suprotno od stohastičkog",
+        "id": "scllj3"
+      },
+      {
+        "sentence": "Odstupanja koja model ne objašnjava nazivaju se _______.",
+        "answer": "neprotumačena",
+        "hint": "reziduali",
+        "id": "7sb7oo"
+      }
+    ],
+    "learn": {
+      "title": "Regresijska analiza",
+      "content": "\n                <h3>Varijable i model</h3>\n                <div class=\"formula-box\">\n                    X = NEZAVISNA varijabla (istraživač je kontrolira i njome manipulira)<br>\n                    Y = ZAVISNA varijabla (ishod koji se objašnjava)<br>\n                    \\[ \\hat{y} = a + bx \\]\n                </div>\n                <ul>\n                    <li><strong>Jednostavna regresija</strong> — jedna nezavisna varijabla.</li>\n                    <li><strong>Višestruka regresija</strong> — <em>više</em> nezavisnih varijabli na <em>jednu</em> zavisnu.</li>\n                </ul>\n\n                <h4>Deterministički i stohastički model</h4>\n                <p><strong>Deterministički</strong> model opisuje <em>točnu</em> povezanost zavisne i nezavisne varijable — bez odstupanja. <strong>Stohastički</strong> uključuje i slučajnu pogrešku, pa odgovara stvarnim podacima.</p>\n\n                <h4>Regresijski pravac</h4>\n                <p>Kroz oblak točaka moguće je ucrtati <strong>samo jedan</strong> regresijski pravac — onaj koji najbolje pristaje podacima (metoda najmanjih kvadrata: minimizira zbroj kvadrata odstupanja).</p>\n\n                <h4>Odstupanja</h4>\n                <ul>\n                    <li><strong>Protumačena</strong> — odstupanja koja objašnjava nezavisna varijabla (model).</li>\n                    <li><strong>Neprotumačena (reziduali)</strong> — odstupanja od regresijskog pravca koja model <em>ne</em> objašnjava.</li>\n                </ul>\n                <div class=\"formula-box\">\n                    \\[ R^2 = r^2 \\quad \\text{(koeficijent determinacije)} \\]\n                </div>\n                <p>Pokazuje koliki <strong>udio</strong> ukupnih odstupanja zavisne varijable objašnjava model (0 do 1, tj. 0–100 %).</p>\n                <p>⚠️ <strong>Konstantni član (odsječak) nema uvijek smisleno značenje</strong> — tumači se samo ako je vrijednost \\( x = 0 \\) realna u promatranom kontekstu.</p>\n            ",
+      "id": "soo84n"
+    },
+    "id": "p14fe3"
+  },
+  "indices": {
+    "name": "Indeksni brojevi",
+    "icon": "fa-percent",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "Što je indeksni broj?",
+        "answer": "Relativni pokazatelj koji uspoređuje vrijednost pojave u promatranom razdoblju s vrijednošću u baznom razdoblju, izražen u postotku.",
+        "explanation": "Bazno razdoblje ima indeks 100."
+      },
+      {
+        "question": "Koje vrijednosti indeksni broj može poprimiti?",
+        "answer": "Veće, jednake ili MANJE od 100 — indeks manji od 100 posve je moguć rezultat i znači pad u odnosu na bazu.",
+        "explanation": "Česta zamka: manji od 100 nije nemoguć."
+      },
+      {
+        "question": "Što su individualni indeksi?",
+        "answer": "Indeksi koji prate razvoj SAMO JEDNE pojave (npr. cijena jednog proizvoda).",
+        "explanation": "Skupni prate više pojava zajedno."
+      },
+      {
+        "question": "Što su skupni (agregatni) indeksi?",
+        "answer": "Indeksi koji prate razvoj VIŠE pojava zajedno, pomoću pondera (npr. indeks potrošačkih cijena).",
+        "explanation": "Laspeyresov i Paascheov indeks."
+      },
+      {
+        "question": "Kako se prati dinamika raznorodnih pojava?",
+        "answer": "VRIJEDNOSNIM izražavanjem (množenjem količine i cijene) — količinsko izražavanje to ne omogućuje jer se raznorodne jedinice ne mogu zbrajati.",
+        "explanation": "Ne mogu se zbrojiti kilogrami i komadi."
+      },
+      {
+        "question": "Što su verižni, a što bazni indeksi?",
+        "answer": "Bazni uspoređuju svako razdoblje s istim baznim razdobljem. Verižni uspoređuju svako razdoblje s PRETHODNIM.",
+        "explanation": "Verižni pokazuju stopu promjene iz razdoblja u razdoblje."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Indeksni broj manji od 100:",
+        "options": [
+          "nije moguć rezultat",
+          "moguć je i znači pad u odnosu na bazu",
+          "znači rast",
+          "znači pogrešku u računu"
+        ],
+        "correct": 1,
+        "id": "ryocp6"
+      },
+      {
+        "question": "Individualni indeksi prate razvoj:",
+        "options": [
+          "više pojava",
+          "samo jedne pojave",
+          "cijele populacije",
+          "samo cijena"
+        ],
+        "correct": 1,
+        "id": "g6iuu2"
+      },
+      {
+        "question": "Bazno razdoblje ima indeks:",
+        "options": [
+          "0",
+          "1",
+          "100",
+          "1000"
+        ],
+        "correct": 2,
+        "id": "lrrnaj"
+      },
+      {
+        "question": "Praćenje dinamike raznorodnih pojava omogućuje izražavanje:",
+        "options": [
+          "količinsko",
+          "vrijednosno",
+          "grafičko",
+          "nominalno"
+        ],
+        "correct": 1,
+        "id": "h2k38a"
+      },
+      {
+        "question": "Indeksi koji svako razdoblje uspoređuju s prethodnim su:",
+        "options": [
+          "bazni",
+          "verižni",
+          "individualni",
+          "skupni"
+        ],
+        "correct": 1,
+        "id": "ukbd7i"
+      },
+      {
+        "question": "Indeks potrošačkih cijena primjer je indeksa:",
+        "options": [
+          "individualnog",
+          "skupnog (agregatnog)",
+          "verižnog isključivo",
+          "nominalnog"
+        ],
+        "correct": 1,
+        "id": "1tnj3p"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Bazno razdoblje ima indeks _______.",
+        "answer": "100",
+        "hint": "broj",
+        "id": "7efw8o"
+      },
+      {
+        "sentence": "_______ indeksi prate razvoj samo jedne pojave.",
+        "answer": "Individualni",
+        "hint": "pojedinačni",
+        "id": "wvc19z"
+      },
+      {
+        "sentence": "Dinamiku raznorodnih pojava prati _______ izražavanje.",
+        "answer": "vrijednosno",
+        "hint": "količina × cijena",
+        "id": "2biq8s"
+      },
+      {
+        "sentence": "_______ indeksi uspoređuju svako razdoblje s prethodnim.",
+        "answer": "Verižni",
+        "hint": "lančani",
+        "id": "3zv92p"
+      },
+      {
+        "sentence": "Indeks manji od 100 znači _______ u odnosu na bazno razdoblje.",
+        "answer": "pad",
+        "hint": "smanjenje",
+        "id": "5bvb3d"
+      }
+    ],
+    "learn": {
+      "title": "Indeksni brojevi",
+      "content": "\n                <h3>Što je indeksni broj</h3>\n                <p><strong>Indeksni broj</strong> je relativni pokazatelj koji uspoređuje vrijednost pojave u promatranom razdoblju s vrijednošću u <strong>baznom</strong> razdoblju, izražen u postotku.</p>\n                <div class=\"formula-box\">\n                    \\[ I = \\frac{\\text{vrijednost u promatranom razdoblju}}{\\text{vrijednost u baznom razdoblju}} \\times 100 \\]\n                    bazno razdoblje = 100\n                </div>\n                <p>⚠️ Indeks može biti <strong>veći, jednak ILI manji od 100</strong> — indeks manji od 100 posve je moguć i znači <em>pad</em> u odnosu na bazu.</p>\n\n                <h4>Podjela</h4>\n                <ul>\n                    <li><strong>Individualni</strong> — prate razvoj <em>samo jedne</em> pojave (npr. cijena jednog proizvoda).</li>\n                    <li><strong>Skupni (agregatni)</strong> — prate <em>više</em> pojava zajedno, pomoću pondera (npr. indeks potrošačkih cijena). Poznati oblici: Laspeyresov (bazni ponderi) i Paascheov (tekući ponderi).</li>\n                </ul>\n                <div class=\"formula-box\">\n                    BAZNI — svako razdoblje se uspoređuje s ISTIM baznim razdobljem<br>\n                    VERIŽNI (lančani) — svako razdoblje se uspoređuje s PRETHODNIM\n                </div>\n\n                <h4>Raznorodne pojave</h4>\n                <p>Praćenje dinamike <strong>raznorodnih</strong> pojava omogućuje <strong>vrijednosno</strong> izražavanje (količina × cijena) — količinsko to ne može, jer se raznorodne jedinice (kilogrami, komadi, litre) ne mogu zbrajati.</p>\n            ",
+      "id": "u1r7f1"
+    },
+    "id": "0c210s"
+  },
+  "timeSeries": {
+    "name": "Vremenski nizovi",
+    "icon": "fa-clock",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "Što je vremenski niz?",
+        "answer": "Niz podataka o istoj pojavi promatranoj kroz uzastopna vremenska razdoblja ili u uzastopnim trenucima.",
+        "explanation": "Omogućuje analizu dinamike pojave."
+      },
+      {
+        "question": "Koji su uvjeti da vremenski niz bude valjan?",
+        "answer": "Frekvencije (podaci) niza moraju biti MEĐUSOBNO USPOREDIVE — po obuhvatu, definiciji pojave, teritoriju i mjernoj jedinici.",
+        "explanation": "Bez usporedivosti analiza je besmislena."
+      },
+      {
+        "question": "Intervalni vs trenutačni vremenski niz?",
+        "answer": "Intervalni prikazuje pojavu ostvarenu TIJEKOM razdoblja (npr. godišnja proizvodnja); trenutačni stanje u TOČNO ODREĐENOM trenutku (npr. broj stanovnika na dan popisa).",
+        "explanation": "Intervalne se vrijednosti smiju zbrajati, trenutačne ne."
+      },
+      {
+        "question": "Uz koji se niz veže kritični trenutak?",
+        "answer": "Uz TRENUTAČNI vremenski niz — to je točno određen trenutak na koji se stanje odnosi (npr. ponoć na dan popisa).",
+        "explanation": "Zamka: kritični trenutak NIJE obilježje intervalnog niza."
+      },
+      {
+        "question": "Što je trend u vremenskom nizu?",
+        "answer": "Osnovna, dugoročna tendencija kretanja pojave — smjer razvoja nakon uklanjanja kratkoročnih oscilacija.",
+        "explanation": "Uz trend: sezonske, ciklične i slučajne komponente."
+      },
+      {
+        "question": "Koje komponente čine vremenski niz?",
+        "answer": "Trend (dugoročna tendencija), sezonske oscilacije, ciklične oscilacije i slučajne (nepravilne) varijacije.",
+        "explanation": "Analiza ih razdvaja da se vidi prava dinamika."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Frekvencije vremenskog niza moraju biti:",
+        "options": [
+          "jednake",
+          "međusobno usporedive",
+          "rastuće",
+          "izražene u postotku"
+        ],
+        "correct": 1,
+        "id": "lpzmss"
+      },
+      {
+        "question": "Kritični trenutak nužno je definirati kod niza:",
+        "options": [
+          "intervalnog",
+          "trenutačnog",
+          "baznog",
+          "verižnog"
+        ],
+        "correct": 1,
+        "id": "g3lk89"
+      },
+      {
+        "question": "Godišnja proizvodnja poduzeća primjer je niza:",
+        "options": [
+          "trenutačnog",
+          "intervalnog",
+          "nominalnog",
+          "skupnog"
+        ],
+        "correct": 1,
+        "id": "6oev69"
+      },
+      {
+        "question": "Broj stanovnika na dan popisa primjer je niza:",
+        "options": [
+          "intervalnog",
+          "trenutačnog",
+          "verižnog",
+          "individualnog"
+        ],
+        "correct": 1,
+        "id": "zvxez3"
+      },
+      {
+        "question": "Dugoročna tendencija kretanja pojave naziva se:",
+        "options": [
+          "sezonska oscilacija",
+          "trend",
+          "slučajna varijacija",
+          "kritični trenutak"
+        ],
+        "correct": 1,
+        "id": "68viwj"
+      },
+      {
+        "question": "Vrijednosti kojeg niza se SMIJU zbrajati?",
+        "options": [
+          "trenutačnog",
+          "intervalnog",
+          "nijednog",
+          "oba jednako"
+        ],
+        "correct": 1,
+        "id": "bkb88h"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Frekvencije vremenskog niza moraju biti međusobno _______.",
+        "answer": "usporedive",
+        "hint": "komparabilne",
+        "id": "vkzl3b"
+      },
+      {
+        "sentence": "Kritični trenutak definira se kod _______ niza.",
+        "answer": "trenutačnog",
+        "hint": "stanje u trenutku",
+        "id": "r747oy"
+      },
+      {
+        "sentence": "_______ niz prikazuje pojavu ostvarenu tijekom razdoblja.",
+        "answer": "Intervalni",
+        "hint": "npr. godišnja proizvodnja",
+        "id": "0xigm8"
+      },
+      {
+        "sentence": "_______ je dugoročna tendencija kretanja pojave.",
+        "answer": "Trend",
+        "hint": "osnovni smjer",
+        "id": "bocnk0"
+      },
+      {
+        "sentence": "Uz trend, niz sadrži sezonske, ciklične i _______ varijacije.",
+        "answer": "slučajne",
+        "hint": "nepravilne",
+        "id": "pyw4qs"
+      }
+    ],
+    "learn": {
+      "title": "Vremenski nizovi",
+      "content": "\n                <h3>Što je vremenski niz</h3>\n                <p><strong>Vremenski niz</strong> je niz podataka o istoj pojavi promatranoj kroz uzastopna vremenska razdoblja ili u uzastopnim trenucima. Omogućuje analizu <em>dinamike</em> pojave.</p>\n                <p>⚠️ <strong>Uvjet valjanosti:</strong> frekvencije niza moraju biti <strong>međusobno usporedive</strong> — po obuhvatu, definiciji pojave, teritoriju i mjernoj jedinici. Bez toga je analiza besmislena.</p>\n\n                <h4>Dvije vrste nizova</h4>\n                <div class=\"formula-box\">\n                    INTERVALNI — pojava ostvarena TIJEKOM razdoblja (godišnja proizvodnja, mjesečni prihod)<br>\n                    &nbsp;&nbsp;→ vrijednosti se SMIJU zbrajati<br>\n                    TRENUTAČNI — stanje u TOČNO ODREĐENOM trenutku (broj stanovnika na dan popisa)<br>\n                    &nbsp;&nbsp;→ vrijednosti se NE smiju zbrajati; traži KRITIČNI TRENUTAK\n                </div>\n                <p><strong>Kritični trenutak</strong> je točno određen trenutak na koji se stanje odnosi (npr. ponoć na dan popisa). Veže se uz <strong>trenutačni</strong> niz — <em>ne</em> uz intervalni.</p>\n\n                <h4>Komponente vremenskog niza</h4>\n                <ol>\n                    <li><strong>Trend</strong> — osnovna, dugoročna tendencija kretanja pojave.</li>\n                    <li><strong>Sezonske oscilacije</strong> — pravilna kolebanja unutar godine.</li>\n                    <li><strong>Ciklične oscilacije</strong> — dulji valovi (poslovni ciklusi).</li>\n                    <li><strong>Slučajne (nepravilne) varijacije</strong> — nepredvidivi utjecaji.</li>\n                </ol>\n                <p>Analiza razdvaja te komponente kako bi se vidjela prava dinamika pojave.</p>\n            ",
+      "id": "65oqqo"
+    },
+    "id": "yzkb5a"
+  }
+}
