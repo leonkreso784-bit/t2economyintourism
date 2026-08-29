@@ -49,14 +49,6 @@
     display: none;
 }
 
-/* The container JS fills: stacks sections (or a single grid) vertically. */
-.browse-grid-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    min-width: 0;
-}
-
 /* ===== SEMESTER / GROUP SECTION ===== */
 .browse-section {
     min-width: 0;
@@ -262,35 +254,9 @@
     text-align: right;
 }
 
-/* ===== COMING-SOON / DISABLED STATE ===== */
-.browse-card.is-soon {
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-.browse-card.is-soon:hover {
-    transform: none;
-    border-color: var(--border);
-    box-shadow: none;
-}
-
-.browse-card.is-soon:hover::before {
-    opacity: 0;
-}
-
-.browse-badge {
-    position: absolute;
-    top: 0.9rem;
-    right: 0.9rem;
-    font-size: 0.62rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 0.2rem 0.5rem;
-    border-radius: 999px;
-    background: var(--bg-tertiary);
-    color: var(--text-muted);
-}
+/* ⚠️ „COMING SOON" NA BROWSE-KARTICI NE POSTOJI — obrisano u C4a. Stanje živi
+   isključivo na LEKCIJI (`lesson-card--soon`, `js/navigation.js`), a `.is-soon` je
+   ostatak imena od prije preimenovanja: nijedan browse-element ga nikad ne dobiva. */
 
 /* ===== EMPTY STATE ===== */
 .browse-empty {
@@ -324,3 +290,4 @@
         padding: 1.1rem;
     }
 }
+

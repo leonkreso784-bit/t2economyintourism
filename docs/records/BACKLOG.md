@@ -529,7 +529,11 @@ stara paleta (neusklađeno, čitljivo)     61
 
 Koncentrirano: `subject-selector` 6 · `learn` 4 · `home-section` 4 · `quiz-section` 3 ·
 `profile` 2, ostatak pojedinačno. **Birač NE ČEKA C4–C7 nego 24 pravila** — posao od
-jednog popodneva, izdvojiv u vlastitu ciglu kad god. Ovo je drugi put da ista čegrtaljka
+jednog popodneva, izdvojiv u vlastitu ciglu kad god.
+
+> ✅ **AŽURIRANO 2026-08-29 (C4a):** brisanjem `subject-selector.css` FATALNO je palo
+> **24 → 18** — onih 6 pogodaka iz te datoteke. Ostatak stoji; brojku zna
+> `npm run palette:breakdown`, ne ova proza. Ovo je drugi put da ista čegrtaljka
 zavara: agregatna brojka mjeri točno, a savjetuje krivo.
 
 ---
@@ -585,7 +589,15 @@ stroju pada — tek tada je nalaz, a ne okruženje.
 
 ---
 
-## ➖ `css/subject-selector.css` — 22 pogotka `check:palette` — 2026-08-15
+## ✅ RIJEŠENO 2026-08-29 (C4a) — `css/subject-selector.css` — 22 pogotka `check:palette`
+
+> **Datoteka je OBRISANA, ne popravljena.** Mjerenje pred C4 pokazalo je da **39 od 44** klase ne
+> spominje ni markup, ni JS, ni gradivo, ni test — nosila je zaslon s dvije ponude predmeta i
+> STARU `about` stranicu. Preostalih pet klasa **gazilo je** `pages.css` (uvozila se poslije
+> njega) i držalo tri ikone na `about`-u s kontrastom **1.13** u zadanoj temi. S njom je otišlo
+> svih 22 pogotka palete i **47 od 49** preostalih `!important`. Puni zapis: spec §10.1.
+
+### Zatečeno stanje kad je stavka otvorena (2026-08-15)
 
 > ⚠️ Naslov je do 2026-08-24 pisao „22 od preostalih **126**"; osnovica je od tada **125**
 > (cigla §9.15 zamijenila indigo glow tokenom). **Ukupan broj ovdje više ne stoji** — zna ga

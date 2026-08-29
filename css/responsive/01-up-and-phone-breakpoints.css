@@ -242,21 +242,6 @@
        nosio `font-size: 2rem !important` — jedini `!important` koji bi TUKAO Tailwind-skalu
        i tiho zaključao naslov na 32px na svakom telefonu. Zato se briše, a ne nadglašava. */
 
-    /* Subject cards small phones */
-    .subject-card {
-        padding: 1.5rem 1rem !important;
-    }
-    
-    .subject-icon {
-        width: 70px !important;
-        height: 70px !important;
-        font-size: 1.75rem !important;
-    }
-    
-    .card-title {
-        font-size: 1.2rem;
-    }
-    
     /* Quiz small phones */
     .question-card h2 {
         font-size: 1rem;

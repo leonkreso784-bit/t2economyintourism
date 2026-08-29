@@ -34,7 +34,9 @@ const ROOT = path.join(__dirname, '..');
 
 /** Mete po cigli — izvor je tablica §3 spec-a; imena datoteka, ne brojke. */
 const CIGLE = [
-  ['C4  browse + lekcije', ['css/browse.css', 'css/subject-selector.css', 'css/pages.css']],
+  /* `css/subject-selector.css` je stajao ovdje do C4a, kad je OBRISAN a ne migriran:
+     39 od 44 klase nije spominjao nitko, a preostalih pet je gazilo `pages.css`. */
+  ['C4  browse + lekcije', ['css/browse.css', 'css/pages.css']],
   ['C5a modovi uvježbavanja', ['css/flashcards-section.css', 'css/quiz-section.css',
     'css/fill-blanks-section.css', 'css/progress-section.css']],
   ['C5b gradivo + vježbe', ['css/learn.css', 'css/learn-blocks.css', 'css/math.css',

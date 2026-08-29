@@ -70,7 +70,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 ### `npm run preflight` — sve brze brane odjednom (pokreni PRIJE svakog main-pusha)
 
 `check:lockfile` · `verify` · `bump:check` · css-drift · `check:tailwind` · `check:cdn` ·
-`check:palette` · `check:safearea` · `check:budget` · `check:seo` · `check:contrast` ·
+`check:palette` · `check:orphan-css` · `check:safearea` · `check:budget` · `check:seo` · `check:contrast` ·
 `typecheck` · `validate:schema` · `export:json --check` · `check:docs` · `check:state` ·
 `test:unit`. Pre-push hook ga automatski vrti na `main`.
 
@@ -82,6 +82,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 | `check:tailwind` | 6 brana oko Tailwind sloja (dinamička imena klasa · sudar s legacy klasom · `@source` ugovor · klase bez bundlea · šum · **sudar `@keyframes`**) |
 | `check:cdn` | vanjski podresursi imaju **SRI + `crossorigin` + verzioniran URL**; `check:cdn:live --verify` uspoređuje bajtove s izdavačevim hashem (mrežno) |
 | `check:palette` | **čegrtaljka**: broj ostataka stare palete ne smije **porasti** (`--update` spušta osnovicu). Uz nju **tri tvrde zabrane**: zakucan tekst na ispuni marke · `--primary-light` kao tekst · **zakucana tamna ploha** |
+| `check:orphan-css` | **čegrtaljka**: klasa u `css/**` koju ne spominje ni markup, ni JS, ni gradivo, ni test. Osnovica ih **imenuje** — dio je legitiman (KaTeX; `lb-color-*` nastaje u runtimeu) |
 | `check:safearea` | `env(safe-area-inset-*)` samo u `css/variables.css`, drugdje `var(--safe-*)` — pravilo pisano golim `env()` je **nemjerljivo** |
 | `check:budget` | posjetiteljev put: **nijedna editorska datoteka** + **≤ 200 KB prenesenih** skripti (mjeri PRENESENE bajtove, ne disk) |
 | `check:seo` | ono što tražilica i pretpregled VIDE: sitemap == disk · robots ne `Disallow`-a `noindex` stranicu · jedan tekst u `<title>`/`og:`/`twitter:` · `og:image` **1200×630** · JSON-LD **parsira**. `--write` regenerira sitemap |
@@ -91,7 +92,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 
 | naredba | što radi | zašto nije u preflightu |
 |---|---|---|
-| `npm run css:diff` | izračunati stilovi u pravom Chromiumu, radno stablo vs git-referencu, 3 širine. Referencu vadi u **`git worktree`** → premota **cijelo stablo**, pa vidi i seobu vrijednosti iz markupa u CSS. (`--css-only` = stari način, sam upozorava da za to laže) | preglednik + port |
+| `npm run css:diff` | izračunati stilovi u pravom Chromiumu, radno stablo vs git-referencu, 3 širine. Referencu vadi u **`git worktree`** → premota **cijelo stablo**, pa vidi i seobu vrijednosti iz markupa u CSS. (`--css-only` = stari način, sam upozorava da za to laže; **`CSS_DIFF_ALL=1`** = svi promijenjeni elementi, ne prvih 8) | preglednik + port |
 | `npm run build:og` | crta `og-cover.png` **1200×630** (boje iz tokena, tekst iz i18n) | preglednik; PNG se **commita**, dimenzije mjeri `check:seo` |
 | `npm run css:debt` | što je ostalo za C4–C7: po cigli datoteke, redci, `!important` izvan komentara | read-only, **nije gate** — plan je do 2026-08-25 te brojke nosio **ručno** i obje su ostarile |
 | `npm run palette:breakdown` | razloži ostatak palete po **POSLJEDICI** (nevidljiv tekst · blijede plohe · stara paleta) | read-only, **nije gate** |
@@ -144,7 +145,7 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 > | što je na produkciji | zadnji **🚀** redak u `docs/records/CHANGELOG.md` |
 > | grana · commiti · je li pushano | `git status -sb` · `git log --oneline -1 origin/main` |
 > | koliko predmeta | `npm run verify` |
-> | zašto je cigla izvedena baš tako | `docs/plan/FRONTEND_REDIZAJN.md` §7 (C0–C3, landing) · §8 (KOSTUR) · §9 (TELEFON, `about`, SEO) |
+> | zašto je cigla izvedena baš tako | `docs/plan/FRONTEND_REDIZAJN.md` §7 (C0–C3, landing) · §8 (KOSTUR) · §9 (TELEFON, `about`, SEO) · §10 (C4) |
 > | koji su bugovi bili i što su naučili | `docs/records/BUGS.md` |
 > | što je isporučeno i kada | `CHANGELOG.md` · dnevnik sesija: `PROGRESS.md` |
 >
@@ -170,9 +171,9 @@ PRAZNA** — brana traži **nulu**; brojku zna `tests/phone-baseline.json`, ne o
 **✅ FAZA POLICA JE ZATVORENA** — **P1 · P2 · P3 · P4 svi ispunjeni** (spec §9.17–9.21).
 Kriterij je **mjeren, ne tvrđen**: skinut predmet se otvara bez mreže, **preživi deploy**, a
 napredak stečen offline se po povratku mreže **spoji bez gubitka**.
-**🟢 TEKUĆA FAZA = C4** → C5a → C5b → C6 → C7.
-✅ **Dug u alatu pred C4 je PLAĆEN (ALAT-1):** `css:diff` više nije slijep za seobu vrijednosti iz
-markupa u CSS. Mjere i obrnuta provjera: `CHANGELOG.md`; zašto: zaglavlje `scripts/css-diff.js`.
+**🟢 TEKUĆA FAZA = C4** → C5a → C5b → C6 → C7. ✅ **C4a ISPUNJEN** (grana `feat/c4-browse-lekcije`):
+`subject-selector.css` je **obrisana, ne migrirana** — nije ju spominjao nitko, a **gazila je**
+`pages.css`. **C4b = prava migracija** i tek ona piše utilityje. Zašto i mjere: spec **§10.1**.
 **K4 se NE radi zasebno** — utapa se u **P2** (ista pločica, isti ekran). **K5** (editor
 dvojezično) čeka i ne blokira ništa: 28 od 48 `studio.*` ključeva nedostaje, a `block-editor.js`
 i `admin-editors.js` imaju **nula** `t()` poziva.
@@ -231,19 +232,18 @@ pushati bez OK-a, nego se na to ne smije ni **nagovarati**. [[leon-decides-deplo
 
 ### 🧪 VJEŽBE — smjer je zaključan, radi se TEK nakon frontenda (§9.5)
 
-Tvrdnja *„vježbe su KÔD"* je **oborena mjerenjem**: od 234 vježbe **151 (65 %) je čisti podatak**,
-a `params` su **već deklarirani kao podatak u svih 83** koje imaju funkciju — kôd je samo
-**formula**. Smjer: formula seli u **imenovanu, verzioniranu knjižnicu recepata**
-(`recipe:'sample-sd'`) → vježba postaje 100 % podatak i **BUG-012 se smije umiroviti**. Odbačeni:
-evaluator izraza i sandbox za korisnički JS (ruši ADR-018). [[exercises-code-vs-data]]
+Tvrdnja *„vježbe su KÔD"* je **oborena mjerenjem** (65 % je čisti podatak; kôd je samo **formula**).
+Smjer: formula seli u **imenovanu knjižnicu recepata** → vježba postaje 100 % podatak i **BUG-012 se
+smije umiroviti**. Odbačeni: evaluator izraza i sandbox za korisnički JS (ruši ADR-018). Brojke i
+obrazloženje: spec §9.5. [[exercises-code-vs-data]]
 
 ### ❓ OTVORENO — RAZGOVARANO 2026-08-24, ALI NIJE PRESUĐENO. Ne planirati kao dogovoreno.
 
 Leon je postavio tri pitanja i na moje preporuke **nije odgovorio**. Brojke su izmjerene tog dana:
 
 - **Birač tema na landingu.** Mehanika je GOTOVA (4 teme, `setTheme` pamti izbor,
-  `check:contrast` 164 provjere, klik-vezanje već stoji u `js/init.js`). Blokira ga **24 pravila**
-  (`palette:breakdown` → „FATALNO"), **ne C4–C7**. ⚠️ Peta kontrola u traci landinga nije
+  `check:contrast` 164 provjere, klik-vezanje već stoji u `js/init.js`). Blokira ga **18 pravila**
+  (`palette:breakdown` → „FATALNO"; bilo 24 do C4a), **ne C4–C7**. ⚠️ Peta kontrola u traci landinga nije
   besplatna (K3/BUG-029) — vjerojatnije mjesto je red kvadratića u heroju.
 - **OAuth (Google/Apple).** **5 registriranih korisnika, 3 su Leonova** → stvarnih vanjskih
   **dvoje**, uz e-mail+lozinku kao jedini put. Google je besplatan i ne čeka redizajn; **Apple
@@ -287,13 +287,10 @@ Leon je postavio tri pitanja i na moje preporuke **nije odgovorio**. Brojke su i
   („produkcija ima točno ono što repozitorij opisuje"); **min. lozinka 6 → 8**; **leaked password
   protection UKLJUČENA** → advisori **16 → 15 WARN**. ⚠️ Zadnje dvoje ovisi o **Pro planu, koji
   traje ~mjesec** — poslije seobe na self-host provjeri iznova.
-  ✅ **Rub koji je time bio otvoren je ZATVOREN (AUTH-1, 2026-08-28):** `authError()` mapira
-  Supabase auth-greške na i18n, sa **sirovom porukom kao zadnjim fallbackom** (nikad prazan crveni
-  okvir). Išlo je na **četiri** mjesta, ne na jedno; najvažnije je bilo **postavljanje nove lozinke
-  nakon reseta**. Dokaz: `tests/unit/auth-error.test.js` (26 tvrdnji, mutacijski provjeren).
-  ⚠️ **Istom prilikom oborena je tvrdnja da `js/auth.js:343` krivo tretira `WeakPasswordError`** —
-  u zakucanom `supabase-js@2.110.8` prijava slabu lozinku vraća kao `data.weakPassword` uz
-  **`error: null`**, pa crvene poruke nema. Zapis je opisivao stariji SDK. Puni trag: `BACKLOG.md`.
+  ✅ **AUTH-1 (2026-08-28):** `authError()` mapira auth-greške na i18n, sirova poruka je zadnji
+  fallback (`tests/unit/auth-error.test.js`). ⚠️ **NE „popravljaj" `js/auth.js:343`** — tvrdnja o
+  `WeakPasswordError` je **oborena**: u zakucanom `supabase-js@2.110.8` slaba lozinka dolazi kao
+  `data.weakPassword` uz `error: null`. Zapis je opisivao stariji SDK.
 - **Sitni dug (ne blokira):** siročad u Storageu · advisor-WARN `snapshot_content_version` /
   `handle_new_user` · staging poravnati s `supabase/f1-nodes.sql`. ⚠️ **`is_admin()` se NE smije
   revokeati `authenticated`-u** — zovu ga RLS politike kao pozivatelj. Advisori PROD: **0 ERROR,

@@ -68,8 +68,12 @@
 @import "./sokrat-modal.css";
 @import "./sokrat-confirm.css";
 
-/* Odjeljci učenja. */
-@import "./subject-selector.css";
+/* Odjeljci učenja.
+   ⚠️ `subject-selector.css` je OBRISAN u C4a, ne migriran. Nosio je zaslon s dvije
+   ponude predmeta (`te2`/`ent`) i STARU `about` stranicu — oboje je markup odavno
+   izgubio. Od 44 klase njih 39 nije spominjao ni markup ni JS, a preostalih pet je
+   DUPLIRALO `pages.css` i, budući da se uvozio POSLIJE njega, pobjeđivalo ga: tri
+   ikone na `about`-u imale su kontrast 1.13 u zadanoj (svijetloj) temi. */
 @import "./home-section.css";
 @import "./flashcards-section.css";
 @import "./quiz-section.css";

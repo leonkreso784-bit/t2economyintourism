@@ -1,0 +1,111 @@
+{
+  "css/auth.css": [
+    "nav-auth-btn"
+  ],
+  "css/blind-map.css": [
+    "map-input-group",
+    "map-input-label",
+    "map-location-input",
+    "map-marker"
+  ],
+  "css/block-editor.css": [
+    "be-edit--h3",
+    "be-edit--h4",
+    "frac-line"
+  ],
+  "css/components.css": [
+    "logo-img",
+    "main-content",
+    "nav-menu",
+    "nav-visible"
+  ],
+  "css/learn-blocks.css": [
+    "lb-callout--tip",
+    "lb-color-amber",
+    "lb-color-blue",
+    "lb-color-cyan",
+    "lb-color-indigo",
+    "lb-color-pink",
+    "lb-color-red",
+    "lb-color-violet"
+  ],
+  "css/math.css": [
+    "katex-display"
+  ],
+  "css/profile.css": [
+    "header-materials-btn"
+  ],
+  "css/progress-section.css": [
+    "history-item"
+  ],
+  "css/responsive/01-up-and-phone-breakpoints.css": [
+    "logo-img",
+    "main-content"
+  ],
+  "css/responsive/02-mobile-core.css": [
+    "main-content"
+  ],
+  "css/responsive/03-modes-a11y-print.css": [
+    "main-content",
+    "pull-indicator",
+    "swipe-indicator"
+  ],
+  "css/responsive/04-mobile-extra.css": [
+    "action-content",
+    "action-icon",
+    "analytics-card",
+    "analytics-grid",
+    "analytics-header",
+    "analytics-section",
+    "categories-grid",
+    "category-card",
+    "category-icon",
+    "category-info",
+    "chart-container",
+    "fill-blank",
+    "fill-content",
+    "fill-header",
+    "fill-info",
+    "fill-navigation",
+    "fill-question",
+    "fill-section",
+    "fill-text",
+    "flashcard-content",
+    "flashcard-navigation",
+    "flashcards-controls",
+    "flashcards-header",
+    "flashcards-section",
+    "progress-grid",
+    "progress-header",
+    "progress-item",
+    "progress-label",
+    "progress-section",
+    "progress-value",
+    "question-text",
+    "quick-action-card",
+    "quiz-content",
+    "quiz-info",
+    "quiz-navigation",
+    "quiz-option",
+    "quiz-question",
+    "quiz-section",
+    "results-message",
+    "results-score",
+    "stat-value",
+    "study-home-actions",
+    "study-home-header",
+    "study-stats",
+    "subject-option",
+    "subject-option-icon",
+    "subject-option-info"
+  ],
+  "css/responsive/05-device-sizes.css": [
+    "bottom-nav",
+    "flashcard-nav",
+    "quiz-option",
+    "subjects-grid"
+  ],
+  "css/topbar.css": [
+    "topbar-iconbtn"
+  ]
+}

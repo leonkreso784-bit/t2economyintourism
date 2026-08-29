@@ -5,6 +5,75 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-29 (OPUS) — **C4a: mrtva površina odlazi, i vodila je pravu ikonu u nevidljivost**
+
+Prva cigla C4. Pitanje prije koda nije bilo „kako ovo migrirati" nego **„koristi li se ovo uopće"**.
+Mjereno: **144 od 1068 klasa** u cijelom `css/**` ne spominje ni markup, ni JS, ni gradivo, ni
+ijedan test — a **39 od 44** njih sjedi u `css/subject-selector.css`. Ta je datoteka nosila zaslon
+s dvije ponude predmeta (`te2`/`ent`) i **STARU `about` stranicu**, koju je §9.14 zamijenila.
+
+**⚠️ Nalaz koji je promijenio težinu cigle: mrtva datoteka je GAZILA živu.** Preostalih pet živih
+klasa **dupliralo** je `pages.css`, a `app.css` je mrtvu datoteku uvozio **poslije** njega — pri
+jednakoj specifičnosti odlučuje redoslijed. `.about-card-icon` je otud dobivao `color: white`, a
+ispunu koja je tu bjelinu nosila (`.mission-card .about-card-icon`) markup više nije imao.
+Izmjereno u pregledniku, sve četiri teme:
+
+| tema | prije | poslije |
+|---|---|---|
+| **academic** (zadana) | **1.13** ⛔ | **5.60** |
+| **paper** | **1.16** ⛔ | 4.87 |
+| chalk | 12.21 | 7.27 |
+| mint | 13.05 | 6.38 |
+
+Prag za ne-tekstualni element je **3.0**: **tri ikone na `about`-u bile su nevidljive u obje
+svijetle teme, a zadana tema je svijetla.**
+
+**Zašto to nije vidio nijedan gate** — nije previd nego doseg: `check:contrast` čita **parove
+tokena** (bjelina je bila zakucana u modulu), `check:palette` traži **staru paletu** (`#ffffff` to
+nije), `axe` ukrasnoj ikoni bez teksta ne mjeri kontrast, a `css:diff` uspoređuje s `HEAD`-om — kvar
+je bio **jednak na obje strane**. *Alat koji mjeri PROMJENU ne vidi zatečeno stanje.*
+
+**Obrisano:** `css/subject-selector.css` cijela (−495 redaka, **−47 `!important`**) · **31 pravilo**
+drugdje koje je gađalo istu mrtvu površinu (`responsive/01·02·03·05`, `browse.css`, `pages.css` —
+ukupno −181 redak, uklj. rez jednog selektora iz skupine) · `#subject-selector.active` iz
+`components.css` · `.browse-card.is-soon` (stanje živi samo na lekciji, `lesson-card--soon`) ·
+`.lang-toggle`/`.header-lang-toggle` (zaglavlja koja je K2b spojio u jednu traku).
+
+**Dokaz da se nije pomaknulo ništa drugo:** `css:diff` daje **79 razlika**, i **sve su unutar
+`#about-page`** (uz `body`/`html` čija se visina mijenja kao posljedica). ⚠️ Ta se tvrdnja nije dala
+izreći postojećim alatom — ispisivao je **prvih osam** elemenata pa „… i još 19". Dovoljno dok se
+lovi *nenamjerna* razlika; cigla koja **migrira** površinu mijenja desetke elemenata namjerno.
+Granica je zato podesiva: **`CSS_DIFF_ALL=1`**.
+
+**Nova brana `npm run check:orphan-css`** (čegrtaljka, u preflightu): klasa u `css/**` koju nitko ne
+spominje. Osnovica **imenuje** siročad po datoteci, jer je dio legitiman i ne smije se popraviti
+brisanjem — `katex-display` dolazi iz KaTeX-a, a `lb-color-*` **sastavlja `js/block-editor.js` u
+runtimeu**. Imenovana iznimka je vidljiva; prešućena nije. **Obrnuto provjereno mutacijom:** vraćene
+`.browse-card.is-soon` i `.te2-title` → izlaz **1** i oba imena ispisana.
+
+**⛔ Brana koja je razmatrana i odbačena MJERENJEM:** „ista klasa u dva modula" dala bi **29
+pogodaka, od kojih je 28 legitimno** (`.about-page` u `topbar.css` zbog rasporeda, `.is-error` u dva
+neovisna modula, `.correct`/`.wrong` u četiri načina). *Brana koja 28 puta viče krivo nauči te da ju
+ignoriraš.*
+
+**Brojke koje su pale kao nuspojava:** `css:debt` C4 **1477 → 905** redaka i **49 → 2** `!important` ·
+`check:palette` **125 → 103** · `palette:breakdown` **FATALNO 24 → 18** (jedini broj koji stvarno
+blokira birač tema na landingu — pao za četvrtinu bez ijedne odluke o izgledu) · siročad **144 → 81**.
+
+**Tri greške u vlastitom mjerenju, sve zapisane jer se razred ponavlja:** ① prvi detektor je lagao u
+**8 od 12** provjerenih slučajeva jer je granicu riječi gradio regexom, a **heredoc pojede jednu
+razinu obrnutih kosih crta** (`\\s` → `\s` → obični `s`), pa je razmak ispao iz razdjelnika —
+popravak nije bio bolji regex nego **druga mjera** (razlomi izvor na tokene, pitaj za pripadnost
+skupu); ② **`grep -w` je lažno POTVRDIO živu klasu**, jer mu je crtica granica riječi, pa
+`landing-subject-card` potvrđuje `subject-card` — *alat koji provjerava mjeru mora biti stroži od
+nje, ne labaviji*; ③ **složeni selektor nije skupina** — `.a, .b` odlazi kad su oba mrtva, ali
+`.lesson-card.is-soon` odlazi kad je **bilo koji** dio mrtav; tri su pravila zato preživjela prvi
+prolaz i našla ih je tek **nova brana**.
+
+**C4a NAMJERNO nije napisao nijedan Tailwind utility** — miče samo ono što ne smije sudjelovati u
+migraciji, po presedanu kojim je C3 počeo gateom prije migracije. Prava migracija je **C4b**.
+
+
 ## 2026-08-29 (OPUS) — **ALAT-1: `css:diff` prestaje lagati o seobi markup → CSS**
 
 Dug koji je stajao pred C4. Alat je premotavao **samo** `styles.bundle.css`, a HTML i JS uzimao iz

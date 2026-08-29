@@ -14,46 +14,6 @@
         width: 100%;
     }
 
-    /* ===== SUBJECT CARDS MOBILE ===== */
-    .subject-cards {
-        padding: 0 0.5rem;
-        gap: 1.25rem;
-    }
-    
-    .subject-card {
-        padding: 2rem 1.5rem !important;
-    }
-    
-    .subject-icon {
-        width: 80px !important;
-        height: 80px !important;
-        font-size: 2rem !important;
-        margin-bottom: 1.25rem !important;
-    }
-    
-    .card-title {
-        font-size: 1.35rem;
-    }
-    
-    .card-desc {
-        font-size: 0.9rem;
-        max-width: 100%;
-    }
-    
-    .subject-meta {
-        gap: 1rem;
-    }
-    
-    .subject-meta span {
-        font-size: 0.85rem;
-    }
-    
-    .subject-btn {
-        padding: 0.875rem 2rem !important;
-        font-size: 0.95rem !important;
-        width: 100%;
-    }
-    
     /* ===== CATEGORY BUTTONS MOBILE ===== */
     .categories {
         gap: 0.75rem;
@@ -313,45 +273,10 @@
         padding: 1.25rem;
     }
     
-    .about-title {
-        font-size: 1.6rem;
-    }
-    
-    .about-icon {
-        width: 70px;
-        height: 70px;
-        font-size: 1.75rem;
-    }
-    
-    .features-grid {
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-    }
-    
-    .feature-item {
-        padding: 0.875rem;
-    }
-    
-    .creator-card {
-        flex-direction: column;
-        text-align: center;
-        padding: 1.25rem;
-    }
-    
     .creator-avatar {
         width: 70px;
         height: 70px;
         font-size: 1.75rem;
-    }
-    
-    .email-box {
-        flex-direction: column;
-        padding: 1rem;
-        gap: 0.5rem;
-    }
-    
-    .email-box a {
-        font-size: 1rem;
     }
     
     /* ===== GENERAL MOBILE FIXES ===== */

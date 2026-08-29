@@ -5,6 +5,42 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-29 — cigla C4a: mrtva površina odlazi (grana `feat/c4-browse-lekcije`)
+
+**Mjera prije koda promijenila je posao.** Umjesto „kako migrirati `subject-selector.css`" mjereno
+je **koristi li se uopće**: od 44 klase njih **39** ne spominje ni markup, ni JS, ni gradivo, ni
+ijedan test. Repozitorij ukupno: **144 od 1068**.
+
+**⚠️ Nalaz koji je promijenio težinu cigle:** mrtva je datoteka **gazila živu** — pet preostalih
+klasa dupliralo je `pages.css`, a uvozila se poslije njega. `.about-card-icon` je otud dobivao
+`color: white` bez ispune koja je tu bjelinu nosila. Izmjereno u pregledniku: kontrast **1.13**
+(zadana tema) i **1.16** (paper), prag je **3.0** → **tri nevidljive ikone na `about`-u**. Poslije
+brisanja **5.60 / 4.87 / 7.27 / 6.38** u četiri teme.
+
+**Isporučeno:** `css/subject-selector.css` **obrisana** (−495 redaka, −47 `!important`) · 31 pravilo
+iste mrtve površine drugdje (−181 redak) · `#subject-selector.active`, `.browse-card.is-soon`,
+`.lang-toggle`/`.header-lang-toggle` · **nova brana `npm run check:orphan-css`** (čegrtaljka, u
+preflightu, osnovica **imenuje** siročad) · `css:diff` dobio **`CSS_DIFF_ALL=1`**, bez čega se
+tvrdnja cigle nije dala izreći (ispisivao je samo prvih osam elemenata).
+
+**Testirano:** `css:diff` → **79 razlika, sve unutar `#about-page`**, nula drugdje · mutacija nove
+brane (vraćena dva mrtva pravila → izlaz 1, oba imena ispisana) · `preflight` **EXIT 0** ·
+puna Playwright suita.
+
+**Brojke koje su pale:** `css:debt` C4 **1477 → 905** redaka, **49 → 2** `!important` ·
+`check:palette` **125 → 103** · **FATALNO 24 → 18** · siročad **144 → 81**.
+
+**⛔ Odbačeno mjerenjem:** brana „ista klasa u dva modula" (29 pogodaka, **28 legitimnih**).
+
+**Tri greške u vlastitom mjerenju:** regex-razdjelnik je lagao u 8/12 slučajeva (heredoc pojede
+razinu obrnutih kosih crta) · `grep -w` **lažno potvrđuje** klasu jer mu je crtica granica riječi
+(`landing-subject-card` → `subject-card`) · složeni selektor nije skupina, pa su tri mrtva pravila
+preživjela prvi prolaz i našla ih je **tek nova brana**.
+
+**Slijedi:** **C4b** — prava Tailwind migracija browsea i lekcija, nad površinom manjom za trećinu.
+
+---
+
 ## 2026-08-29 — ALAT-1: `css:diff` premota cijelo stablo (dug plaćen PRIJE C4)
 
 **Odluka je Leonova** (ponuđeno A: ručni A/B po cigli, B: popraviti alat → **B**), obrazloženje:
@@ -29,7 +65,9 @@ nestane iz `getAnimations()`**. Prijelazi se sada dovršavaju. 6/6 čistih prola
 commit koji ih je slučajno pokupio (`-am`). Otad: kopija u scratchpad prije svake git-radnje koja
 briše, i **nijedan `reset --hard` nad nepospremljenim radom**.
 
-**Slijedi:** **C4** (browse + lekcije, 1477 redaka, 47 od 49 `!important` u `subject-selector.css`).
+**Slijedi:** **C4** (browse + lekcije). ⚠️ *Brojka „1477 redaka, 47 od 49 `!important`"
+koja je ovdje stajala vrijedila je do C4a istoga dana: mjerenje je pokazalo da se najveći dio te
+površine ne migrira nego BRIŠE. Danas: 905 redaka, 2 `!important`.*
 
 ---
 

@@ -13,26 +13,6 @@
 /* T2: `.lessons-header` je obrisan — h1 je pisao točno ono što piše zadnja mrvica
    („Tourism Economics"), a stajao je 119 px trajno (`position: sticky`). */
 
-.back-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius);
-    border: none;
-    background: var(--bg-tertiary);
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.back-btn:hover {
-    background: var(--primary);
-    color: var(--on-primary);
-}
-
 /* T2: `.lessons-title`, `.lessons-title h1` i `.breadcrumb` su obrisani zajedno sa
    zaglavljem. `.breadcrumb` je bio zadnji korisnik klase — mrvica u traci ima svoju
    (`.crumb`), pa bi dvije klase za istu stvar bile upravo ono što ova cigla uklanja. */
@@ -625,30 +605,6 @@ body:has(.browse-page.active) .footer {
     display: none;
 }
 
-/* ===== Language toggle (globalni HR/EN prekidač sučelja; vidi js/i18n.js) ===== */
-.lang-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    background: var(--bg-tertiary);
-    color: var(--text-secondary);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 0.4rem 0.7rem;
-    font-family: inherit;
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 0.02em;
-    cursor: pointer;
-    transition: var(--transition);
-    min-height: var(--touch-target);
-    white-space: nowrap;
-}
-.lang-toggle:hover {
-    background: var(--primary);
-    color: var(--on-primary);
-    border-color: var(--primary);
-}
-.lang-toggle i { font-size: 0.85rem; }
-/* U headerima (browse/lessons/study) gumb stoji uz auth ikonu */
-.header-lang-toggle { padding: 0.35rem 0.6rem; }
+/* ⚠️ `.lang-toggle` / `.header-lang-toggle` su OBRISANI u C4a: gađali su prekidač
+   jezika u tri zaglavlja (browse/lessons/study) koja je K2b spojio u jednu traku.
+   Živi prekidač je `.lang-toggle-label` i stilizira ga `topbar.css`. */

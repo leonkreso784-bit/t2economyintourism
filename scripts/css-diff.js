@@ -44,6 +44,11 @@ const { spawn, execFileSync } = require('child_process');
 const ROOT = path.resolve(__dirname, '..');
 const PORT = Number(process.env.CSS_DIFF_PORT || 5051);
 const PORT_REF = PORT + 1;                 // referentno stablo ide na svoj port
+/* Koliko promijenjenih elemenata se ISPISUJE. Osam je dovoljno dok se lovi nenamjerna
+   razlika, ali cigla koja MIGRIRA površinu mijenja desetke elemenata namjerno — i tada
+   je „… i još 19" upravo ono što se mora pročitati da bi se smjelo tvrditi da se ništa
+   IZVAN površine nije pomaknulo. Zato granica postaje podesiva (C4a). */
+const KAP = Number(process.env.CSS_DIFF_ALL ? 100000 : (process.env.CSS_DIFF_KAP || 8));
 const BUNDLE = 'styles.bundle.css';
 
 /** Širine na kojima mjerimo — svaka otvara drugi skup media queryja. */
@@ -355,7 +360,7 @@ async function measure(page, url, overrideCss) {
           tokenBroken.length + ' pregaženih tokena' + note);
         tokenBroken.slice(0, 10).forEach(function (t) { console.log('      ⚠ pregažen token: ' + t); });
         if (diffStd.length) {
-          const probe = diffStd.slice(0, 8);
+          const probe = diffStd.slice(0, KAP);
           await mjeriRef();
           const a = await page.evaluate(DETAIL, probe);
           await mjeriRad();
@@ -371,7 +376,10 @@ async function measure(page, url, overrideCss) {
             });
             if (props.length > 12) console.log('         … i još ' + (props.length - 12) + ' svojstava');
           }
-          if (diffStd.length > 8) console.log('      … i još ' + (diffStd.length - 8) + ' elemenata');
+          if (diffStd.length > KAP) {
+            console.log('      … i još ' + (diffStd.length - KAP) + ' elemenata' +
+              '  (CSS_DIFF_ALL=1 ispisuje sve)');
+          }
         }
       }
       await ctx.close();

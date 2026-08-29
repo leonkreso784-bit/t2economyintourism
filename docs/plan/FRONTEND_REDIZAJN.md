@@ -59,7 +59,7 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 | **C2** ✅ | **Landing** — koncept odbijen (§7.13) pa prepravljen u četiri cigle: **A** živi prikaz obrisan · **B** tinta na pločicama · **C** katalog (svih 24, tražilica, filtar, grupe, ＋ pločica) + svoje gradivo + četiri načina + MCP „uskoro" · **D** podloga i prostor za znak (§7.15). **Sve četiri na produkciji od 2026-08-24** (A+B od 2026-08-18, C+D s fazom TELEFON). | `landing.css` 1079 → 578 → **380** (A) → ~660 (C+D) → **749** (T5: tip i ritam heroja, §9.12) | posjetitelj koji prvi put dođe vidi **oboje**: da ima gotovih predmeta **i** da smije napraviti svoje; kriteriji 1, 2, 5 vrijede za tu stranicu |
 | **C3** 🔄 | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori. **Tri cigle gotove i na produkciji** (authed a11y-gate · širina + kvar u rendereru · `studio.css` na nuli `!important`); **ostaje Studio na telefonu** — dok stoji, C3 se ne smije proglasiti gotovim (kriterij #1 imenuje editor na 320 px). | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
 | **K** 🔄 | **„KOSTUR" — rute i jedna gornja traka** (§8). Ubačena između C3 i C4 (Leon, 2026-08-18) po presedanu C0-a: informacijska arhitektura prije kozmetike. **K1 ✅ rute** (§8.6) · **K2** jedna traka · **K3** brana dohvatljivosti · **K4** materijali u kvaliteti kataloga | tri duplicirana zaglavlja (`browse-`/`lessons-`/`study-header`) | iz **svake** stranice — uključujući `#editor-page` — vodi bar jedan klik drugamo, a svaka stranica ima adresu koja se da podijeliti |
-| **C4** | **Browse + lekcije** | `browse.css`, `subject-selector.css`, `pages.css` (**brojke: `npm run css:debt`**) | student dođe do bilo kojeg predmeta i lekcije |
+| **C4** 🔄 | **Browse + lekcije** — zapis: **§10**. **C4a ✅** (mrtva površina obrisana; `subject-selector.css` je **nestala**, ne migrirana) · **C4b** = prava migracija | `browse.css`, `pages.css` (**brojke: `npm run css:debt`**) | student dođe do bilo kojeg predmeta i lekcije |
 | **C5a** | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
 | **C5b** | **Gradivo + vježbe** — sve što ide kroz renderer ili engine | `learn.css`, `learn-blocks.css`, `math.css`, `exercises.css`, `blind-map.css` | student čita gradivo i rješava vježbe; KaTeX, slike i tablice nedirnuti |
 | **C6** | **Profil, auth, pravne, consent** | `profile.css`, `auth.css`, `legal.css`, `consent.css` | korisnik se prijavi, uredi profil, obriše račun |
@@ -3518,3 +3518,147 @@ P1 skida · P2 pokazuje · P3 poslužuje po pravilu i preživi deploy · P4 doka
 gubi. **Kriterij faze je ispunjen i mjeren, ne tvrdnjom nego testom.**
 ⚠️ **Ostaje N2 (pola):** polica pokazuje **skinuto**, a ne uniju skinutog i onoga što se uči.
 To nije dug ove faze nego zasebna stavka u `BACKLOG.md`.
+
+---
+
+## 10 · C4 — BROWSE + LEKCIJE
+
+Tablica §3 daje C4 tri datoteke: `browse.css` (327), `subject-selector.css` (495),
+`pages.css` (655) — **1477 redaka i 47 od 49 preostalih `!important`**. Mjerenje prije
+koda promijenilo je redoslijed posla: **najveći dio te površine nije trebalo migrirati
+nego OBRISATI**, pa C4 počinje ciglom koja ne dodaje ništa novo.
+
+### 10.1 ✅ C4a JE ISPUNJEN — mrtva površina odlazi, i vodila je pravu ikonu u nevidljivost (2026-08-29)
+
+#### Mjera prije koda
+
+Pitanje nije bilo „kako ovo migrirati" nego **„koristi li se ovo uopće"**. Mjereno je
+koliko klasa iz `css/**` markup, JS, gradivo ili ijedan test **ikad spomene**:
+
+```
+    144 od 1068 klasa u cijelom CSS-u ne spominje nitko
+    css/subject-selector.css:  39 od 44   ← najgušća koncentracija u repozitoriju
+```
+
+Datoteka je nosila **zaslon s dvije ponude predmeta** (`te2`/`ent`, ostatak iz doba kad
+je platforma imala dva predmeta) i **STARU `about` stranicu** — markup je i jedno i
+drugo izgubio davno prije, `about` još u §9.14.
+
+#### ⚠️ NALAZ KOJI JE PROMIJENIO TEŽINU CIGLE: mrtva datoteka je GAZILA živu
+
+Da je ostalo na mrtvom teretu, ovo bi bilo čišćenje. Nije ostalo. Preostalih **pet**
+živih klasa **dupliralo** je `pages.css` (novi `about`, §9.14) — a `css/app.css` je
+mrtvu datoteku uvozio **POSLIJE** njega. Specifičnost je jednaka, pa odlučuje
+redoslijed: **pobjeđivala je mrtva.**
+
+Posljedica nije bila kozmetička. `.about-card-icon` je iz mrtvog pravila dobivao
+`color: white`, a **ispunu koja je tu bjelinu nosila** (`.mission-card .about-card-icon`)
+markup više nije imao. Izmjereno u pregledniku, sve četiri teme:
+
+| tema | prije | poslije |
+|---|---|---|
+| **academic** (zadana) | **1.13** ⛔ | **5.60** |
+| **paper** | **1.16** ⛔ | 4.87 |
+| chalk | 12.21 | 7.27 |
+| mint | 13.05 | 6.38 |
+
+Prag za ne-tekstualni element je **3.0**. **Tri ikone na `about`-u bile su nevidljive u
+obje svijetle teme — a zadana tema je svijetla.** Ikona je usput dobila i namjeravanu
+veličinu (60 → **45 px**) i boju teme umjesto zakucane bjeline.
+
+#### Zašto ovo nije vidio nijedan od petnaestak postojećih gateova
+
+Nije previd nego **doseg**, i svaki od njih je bio u pravu za ono što mjeri:
+
+- **`check:contrast`** čita **parove tokena** iz `css/tokens.css`. Ovdje bjelina nije
+  bila token nego **zakucana vrijednost u modulu** — izvan njegova vidokruga.
+- **`check:palette`** traži vrijednosti **stare palete** (indigo/slate). `#ffffff` to nije.
+- **`axe`** ukrasnoj ikoni bez teksta **ne mjeri** kontrast — i to je ispravno ponašanje.
+- **`css:diff`** uspoređuje granu s `HEAD`-om: kvar je bio **jednak na obje strane**, pa
+  razlike nije bilo. *Alat koji mjeri PROMJENU ne vidi zatečeno stanje.*
+
+Jedina mjera koja bi ovo prijavila jest **mrtav CSS** — i prijavila bi ga tjednima prije
+nego što je itko pogledao stranicu.
+
+#### Izvedeno
+
+- **`css/subject-selector.css` je OBRISAN**, ne migriran (−495 redaka, **−47 `!important`**).
+- **31 pravilo drugdje** koje je gađalo istu mrtvu površinu: `responsive/01` (3),
+  `responsive/02` (15), `responsive/03` (1), `responsive/05` (5 + jedan rez selektora iz
+  skupine `.subject-card, .lesson-card, .flashcard, .quiz-container`), `browse.css` (2),
+  `pages.css` (4) — ukupno **−181 redak**.
+- **`#subject-selector.active { display: flex !important }`** iz `components.css`.
+- **`.browse-card.is-soon`** (×3) — „coming soon" na browse-kartici **ne postoji**; stanje
+  živi isključivo na lekciji kao `lesson-card--soon`, a `.is-soon` je ostatak imena od
+  prije preimenovanja.
+- **`.lang-toggle` / `.header-lang-toggle`** — gađali su prekidač jezika u tri zaglavlja
+  koja je **K2b** spojio u jednu traku.
+
+#### Dokaz da se nije pomaknulo ništa osim namjeravanog
+
+`css:diff` (popravljen u ALAT-1, dakle premota **cijelo stablo**) daje **79 razlika** — i
+sve do jedne su unutar `#about-page`, uz `body`/`html` čija se visina mijenja kao
+posljedica. Nula razlika na landingu, browseu, lekcijama, učenju, profilu i editoru.
+
+⚠️ **Ta se tvrdnja nije dala izreći postojećim alatom.** `css:diff` je ispisivao **prvih
+osam** promijenjenih elemenata i „… i još 19" — dovoljno dok se lovi *nenamjerna* razlika,
+ali cigla koja **migrira** površinu mijenja desetke elemenata namjerno, i tada je upravo
+taj rep ono što se mora pročitati. Granica je zato postala podesiva: **`CSS_DIFF_ALL=1`**.
+Bez toga bi „sve razlike su na `about`-u" bila **procjena, ne mjera**.
+
+#### Nova brana: `npm run check:orphan-css` (čegrtaljka, u preflightu)
+
+Mjeri jedno: **klasu u `css/**` koju ne spominje ni markup, ni JS, ni gradivo, ni test.**
+Osnovica `scripts/orphan-css-baseline.json` **imenuje** siročad po datoteci; broj smije
+samo padati (`--update`).
+
+**Zašto čegrtaljka, a ne tvrda zabrana:** dio siročadi je legitiman i ne smije se
+popraviti brisanjem — `katex-display` dolazi iz KaTeX-a, a `lb-color-*` **sastavlja
+`js/block-editor.js` u runtimeu** (`'lb-color-' + token`). Osnovica ih **imenuje**, pa
+iznimka postaje vidljiva umjesto da bude nevidljiva.
+
+**Obrnuta provjera (mutacija):** vraćena `.browse-card.is-soon` i `.te2-title` → brana
+pada s **izlazom 1** i imenuje točno ta dva imena.
+
+#### ⛔ Brana koja je RAZMATRANA i odbačena MJERENJEM
+
+Kvar je nastao od „ista klasa u dva modula", pa se ta mjera nametala sama. Izmjerena je
+prije nego je napisana: **29 pogodaka, od kojih je 28 legitimno** — `.about-page` u
+`topbar.css` zbog rasporeda, `.is-error` u dva neovisna modula, `.correct`/`.wrong` u
+četiri načina učenja. *Brana koja 28 puta viče krivo nauči te da ju ignoriraš*, pa je
+umjesto nje ostala ona koja bi **isti kvar** uhvatila bez ijednog lažnog poziva.
+
+#### Usputni dobitak, jer je dug bio koncentriran
+
+| mjera | prije | poslije |
+|---|---|---|
+| `css:debt` C4 | 1477 redaka, 49 `!important` | **905 redaka, 2 `!important`** |
+| `check:palette` ukupno | 125 | **103** |
+| `palette:breakdown` **FATALNO** | 24 | **18** |
+| siročad u cijelom CSS-u | 144 | **81** |
+
+FATALNO je jedini broj koji stvarno blokira **birač tema na landingu** (§ Otvoreno) —
+pao je za **četvrtinu** kao nuspojava, bez ijedne odluke o izgledu.
+
+#### 🧭 Tri greške u vlastitom mjerenju, sve zapisane jer se razred ponavlja
+
+1. **Prvi detektor je lagao u 8 od 12 provjerenih slučajeva.** Gradio je granicu riječi
+   regexom, a **heredoc kroz alat pojede jednu razinu obrnutih kosih crta** — `\\s` je
+   stigao kao `\s`, što u JS-nizu postane obični `s`, pa je **razmak ispao iz
+   razdjelnika**. Popravak nije bio bolji regex nego **druga mjera**: izvor se razlomi na
+   tokene po svemu što ne može biti dio imena klase, i pitanje postane pripadnost skupu.
+2. **`grep -w` je lažno POTVRDIO živu klasu.** Crtica mu je granica riječi, pa
+   `landing-subject-card` potvrđuje `subject-card` — a to su dvije različite klase. *Alat
+   koji provjerava mjeru mora biti stroži od nje, ne labaviji.*
+3. **Složeni selektor nije skupina.** Analizator je znao da `.a, .b` odlazi tek kad su oba
+   mrtva, ali je isto pravilo primijenio i na `.lesson-card.is-soon` — a taj je mrtav ako
+   je **bilo koji** njegov dio mrtav. Tri pravila su zato preživjela prvi prolaz i našla
+   ih je tek nova brana. *Brana je uhvatila propust alata koji ju je trebao učiniti
+   nepotrebnom* — što je i cijeli razlog zašto se piše.
+
+#### ⛔ Što C4a NAMJERNO nije napravio
+
+**Nijedan Tailwind utility nije napisan.** C4a samo miče ono što ne smije sudjelovati u
+migraciji — po istom presedanu po kojem je **C3 počeo gateom prije migracije** (§7.10).
+Prava migracija browsea i lekcija je **C4b** i radi se nad površinom koja je od danas
+manja za trećinu i bez ijednog `!important`-a osim dva u `pages.css`.

@@ -76,10 +76,6 @@
         transform: scale(0.99);
     }
     
-    .subject-card:active {
-        transform: translateY(-2px) scale(0.99);
-    }
-    
     .flashcard:active {
         transform: scale(0.99);
     }
