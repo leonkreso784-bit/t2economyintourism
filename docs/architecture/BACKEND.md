@@ -73,7 +73,9 @@ s **fallbackom na datoteke** (offline-first; datoteke ostaju izvor istine + sigu
 - **Re-sync:** nakon dodavanja/izmjene predmeta → ponovno `node scripts/migrate-content.js <id>` (datoteke su izvor).
 
 **🆕 JSON tier (F2 2A, ✅ LIVE 2026-07-02):** read-path je sada TROSLOJNI — **baza → `data/json/<id>/<var>.json`
-(predmeti s catalog `content.dataFormat:'json'`, 18/18) → `.js` fallback**. Loader: `_loadSubjectFromJson()` u
+(predmeti s catalog `content.dataFormat:'json'` — **danas SVI**, a da nije tako, pao bi
+`npm run export:json -- --check` u preflightu) → `.js` fallback**. *(Ovdje je do 2026-08-29 stajalo
+„18/18"; predmeta je u međuvremenu 24. Pokrivenost drži gate, ne ova rečenica.)* Loader: `_loadSubjectFromJson()` u
 `content-loader.js`. Kad je baza budna, sadržaj i dalje dolazi iz baze (JSON tier se ne okida); kad je uspavana/nedostupna,
 JSON preuzima prije `.js`. `.json` su generirani export (`npm run export:json`) — **nakon izmjene `.js` migriranog
 predmeta obavezan i re-export I `migrate-content.js` re-sync** (dva zrcala istog izvora). Vježbe i dalje SAMO `.js` (BUG-012).

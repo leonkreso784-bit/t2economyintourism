@@ -279,8 +279,12 @@ to pitanje: koliko je podvlaka postaje nevažno.
 > **STATUS 2026-08-25:** faza **„TELEFON" (T0–T6) je gotova i NA PRODUKCIJI** od 2026-08-24,
 > zajedno s BUG-030/031/032; phone-osnovica je **prazna**, pa brana od tada traži **nulu**.
 > **AŽURIRANO 2026-08-28: faza „POLICA" (P1–P4) je ISPUNJENA** (spec §9.17–9.21) i čeka na grani
-> `feat/polica`. Sljedeća cigla je **C4**. Nalaz ispod ostaje jer objašnjava **zašto su brane
-> takve kakve jesu**, a to se nije promijenilo.
+> `feat/polica`. Nalaz ispod ostaje jer objašnjava **zašto su brane takve kakve jesu**, a to se
+> nije promijenilo.
+> ⚠️ **Ovdje je do 2026-08-29 stajalo „Sljedeća cigla je C4" — C4 je u međuvremenu ZATVOREN.**
+> Redoslijed cigli se **više ne prepisuje u BACKLOG**: zna ga `CLAUDE.md` §Gdje smo i spec §3, a
+> ovdje je ostario **treći put u tri revizije**. Zastarjela činjenica zavara; zastarjeli **nalog**
+> šalje sljedeću sesiju na posao koji je obavljen.
 > ➖ **Ostaje N2 (pola):** polica pokazuje *skinuto*, ne uniju skinutog i onoga što se uči.
 
 > **📐 RAZRAĐENO U DVIJE FAZE — radna specifikacija je
@@ -531,7 +535,23 @@ vremena, i zato ovo čeka. Kad dođe red → **ADR**, ne usputna odluka.
 
 ---
 
-## ➖ `css:diff` mjeri samo POLA stranice — izmjereno u T5 (2026-08-22)
+## ✅ RIJEŠENO — `css:diff` je mjerio samo POLA stranice (nađeno u T5 2026-08-22, zatvoreno 2026-08-29)
+
+> **① Prijedlog ispod je IZVEDEN** kao **ALAT-1** (`81665d2`, prije C4): worktree-način je postao
+> **zadani**, a `--css-only` je stari put koji sam upozorava da laže. Kriterij prihvaćanja iz
+> prijedloga je i **naplaćen u polju**: C4b je premjestio vrijednosti iz CSS-a u markup na dvije
+> površine i dobio **0 razlika izvan njih**.
+>
+> **② Ista je datoteka imala DRUGU rupu, i našla ju je tek C4b** (spec §10.3): alat je gledao
+> **isključivo rutu `/`**, a `COLLECT` nasilno pali svaku `*-page` sekciju — pa je izgledalo kao da
+> su sve stranice pokrivene, dok je pokriven bio samo njihov **markup iz `index.html`**. Sve što
+> crta JS pri ulasku u rutu ondje **ne postoji**. Dodan **`CSS_DIFF_RUTE`**; ispis **uvijek**
+> imenuje što je mjereno. **C5a–C7 moraju predati svoje rute**, inače mjere prazan ekran.
+>
+> *Pouka koja preživljava obje: alat koji mjeri pola stranice ne kaže da mjeri pola — zato svaki
+> mjerni izvještaj od sada imenuje SVOJ DOSEG.*
+
+Nalaz ispod je izvorni zapis iz T5 i ostaje kao obrazloženje.
 
 **Što je nađeno.** `scripts/css-diff.js` presreće **stylesheet**, a HTML uzima iz **radnog
 stabla**. Dok cigla mijenja samo CSS, to je točno. Čim cigla premjesti vrijednost **iz markupa u
@@ -563,26 +583,32 @@ mjesto je **pred C4**, jer ondje počinje niz cigli koje bi bez toga sve morale 
 
 ---
 
-## ➖ Birač tema je bliže nego što spec tvrdi — 24 pravila, ne 126 (2026-08-18)
+## ➖ Birač tema je bliže nego što spec tvrdi — blokira ga JEDNA od tri skupine (2026-08-18)
 
-Leon je pitao kad dolaze druge boje cijele stranice. `npm run palette:breakdown`:
+Leon je pitao kad dolaze druge boje cijele stranice. Nalaz je da agregatna brojka
+`check:palette` **mjeri točno, a savjetuje krivo**, jer u jedan zbroj trpa tri različite
+posljedice — a birač blokira **samo prva**:
 
 ```
-FATALNO (tekst nevidljiv na svijetlom)   24   ← JEDINO ovo blokira birač
-plohe/rubovi (blijedo, ali ispravno)     28
-stara paleta (neusklađeno, čitljivo)     61
+FATALNO (tekst nevidljiv na svijetlom)   ← JEDINO ovo blokira birač
+plohe/rubovi (blijedo, ali ispravno)
+stara paleta (neusklađeno, čitljivo)
 ```
 
-Koncentrirano: `subject-selector` 6 · `learn` 4 · `home-section` 4 · `quiz-section` 3 ·
-`profile` 2, ostatak pojedinačno. **Birač NE ČEKA C4–C7 nego 24 pravila** — posao od
-jednog popodneva, izdvojiv u vlastitu ciglu kad god.
+⚠️ **Brojke ovdje NE STOJE, i to je namjera.** Prepisane su bile **24 / 28 / 61**, a u jednom
+jedinom danu (2026-08-29) FATALNO je palo **24 → 18 → 11**. Ispisuje ih
+**`npm run palette:breakdown`** pri svakom pokretanju — proza ih ne može pratiti.
+
+Dug je **koncentriran, ne razmazan** — nekoliko datoteka nosi većinu, ostatak je pojedinačan; koje
+su, ispisuje `palette:breakdown`. Nosiva tvrdnja koja se **nije** promijenila:
+**birač NE ČEKA C4–C7, nego samo skupinu FATALNO** — posao od jednog popodneva, izdvojiv u
+vlastitu ciglu kad god.
 
 > ✅ **AŽURIRANO 2026-08-29:** FATALNO je istoga dana palo **DVAPUT** — brisanjem
-> `subject-selector.css` (C4a) **24 → 18**, pa popravkom devet zakucanih bjelina (§10.2)
-> **18 → 11**. Dakle **manje od pola** onoga što je jutros blokiralo birač tema, i to bez
-> ijedne odluke o izgledu. ⚠️ Brojku zna `npm run palette:breakdown`, ne ova proza —
-> ostarjela je unutar **jednog dana**, dvaput. Ovo je drugi put da ista čegrtaljka
-zavara: agregatna brojka mjeri točno, a savjetuje krivo.
+> `subject-selector.css` (C4a) i popravkom devet zakucanih bjelina (§10.2) — na **manje od pola**
+> onoga što je toga jutra blokiralo birač, i to **bez ijedne odluke o izgledu**. To je i razlog
+> zašto brojke iz ovog odjeljka više ne stoje u prozi: ostarjele su unutar **jednog dana, dvaput**.
+> ⚠️ **C4b (2026-08-29) NIJE dirao paletu i ne tvrdi da jest** — `browse.css` je već bio na nuli.
 
 ---
 

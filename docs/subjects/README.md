@@ -5,9 +5,10 @@
 
 ## Invarijante (vrijede za sve predmete)
 - Svaki predmet = **3 lekcije**: `first-midterm` / `second-midterm` / `final` (final = `Object.assign(M1, M2, {examPractice})`, učitava se **ZADNJI**).
-- **JSON dual-read 18/18**: study sadržaj se čita DB → `data/json/<id>/*.json` → `.js` fallback. Datoteke = izvor istine do F4.6 flipa.
+- **JSON dual-read**: study sadržaj se čita DB → `data/json/<id>/*.json` → `.js` fallback. Datoteke = izvor istine do F4.6 flipa. ⚠️ **Pokrivenost se ne prepisuje ovamo** — drži ju gate `npm run export:json -- --check` (u preflightu): JSON postoji za **svaki** migrirani predmet ili CI pada. *(Ovdje je do 2026-08-29 stajalo „18/18", a na disku ih je bilo 24.)*
 - **Vježbe = JS moduli** (`data/<id>/exercises.js` + lib), NIKAD u bazu/JSON (BUG-012); učitavaju se preko `content.codeScripts`.
-- Baza `subject_content`: **51 red / 17 predmeta** (17×3; **accounting nije u bazi** — study ide s JSON/datoteka).
+- Baza `subject_content`: **svi EN predmeti × 3 lekcije**; **HR klon-program NIJE u bazi** (ide s JSON/datoteka dok program ne bude potpun — ADR-012/022).
+  ⚠️ **ISPRAVLJENO 2026-08-29:** ovdje je stajalo *„accounting nije u bazi"*. **Neistina** — provjereno upitom, `accounting` ima svoja tri reda kao i svi ostali. Tvrdnja je bila zapisana prije njegove migracije i nikad povučena, a slala je na krivi trag pri svakom debugiranju read-patha. Živu brojku daje `select count(*) from subject_content`, ne ova proza.
 - Kvantitativni predmeti = **KaTeX** (ADR-009; currency-safe delimiteri `\( \)` / `\[ \]` / `$$ $$`, NIKAD jedan `$`).
 
 ## 2. godina HM — 8/8 KOMPLETNO i LIVE

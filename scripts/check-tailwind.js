@@ -6,13 +6,15 @@
  * Tailwind ima jedno svojstvo koje ga u našem projektu čini opasnijim nego u običnom: klase
  * generira SKENIRANJEM IZVORA KAO TEKSTA. Ako ime klase u trenutku skeniranja ne postoji kao
  * cjelovit niz, pravilo se ne generira — i stil tiho nestane. Naš markup velikim dijelom nastaje
- * u JS-u, pa je to realan put, a ne teorijski. Ove četiri provjere zatvaraju sve načine na koje
- * to može proći nezapaženo:
+ * u JS-u, pa je to realan put, a ne teorijski. Ove provjere zatvaraju načine na koje to može
+ * proći nezapaženo — četiri izvorne (C1) i dvije koje su nastale kad su se pokazale (T4, C1):
  *
  *   1. Dinamički sastavljeno ime klase (`'bg-' + boja`)     → ADR-028, granica #5
  *   2. Generirani utility koji se zove kao naša legacy klasa → tiho gaženje (utilityji su ZADNJI)
  *   3. `@source` ugovor: `data/` se NE skenira, `index.html`/`js` DA → ADR-028
  *   4. Tailwind klase na stranicama koje ne učitavaju bundle → stil koji nikad ne stigne
+ *   5. Generirani utility koji NITKO nije napisao kao klasu   → šum iz skeniranja teksta
+ *   6. Dva `@keyframes` istog imena u izlazu                  → imena animacija ne poznaju slojeve
  *
  * Provjere 2 i 4 ne nagađaju što je „Tailwind klasa" iz popisa prefiksa — PITAJU Tailwind, tako
  * da mu ponude token kroz `@source inline(...)` i vide generira li pravilo. Popis prefiksa u

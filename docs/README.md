@@ -71,7 +71,7 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 
 | Dokument | Svrha |
 |---|---|
-| [FRONTEND_REDIZAJN.md](./plan/FRONTEND_REDIZAJN.md) | 🟦 **tekući spec** — prelazak frontenda na Tailwind (cijela platforma + editor), cigle **C0–C7**. ⚠️ Nosi i fazu **„KOSTUR" (K1–K5, §8)**, ubačenu između C3 i C4 (Leon, 2026-08-18): navigacija prije kozmetike, po presedanu C0-a. K1 · K2a · K2b · **K3** su ispunjeni (K3 je usput našao **BUG-029**). |
+| [FRONTEND_REDIZAJN.md](./plan/FRONTEND_REDIZAJN.md) | 🟦 **tekući spec** — prelazak frontenda na Tailwind (cijela platforma + editor), cigle **C0–C7**. Usput je primio i tri faze koje su se ubacile između cigli, svaka jer je mjerenje pokazalo da je hitnija: **„KOSTUR"** (§8, navigacija prije kozmetike) · **„TELEFON"** (§9) · **„POLICA"** (§9.17–9.21). ⚠️ **Koje su cigle ispunjene NE STOJI ovdje** — ovaj je redak nabrajao K1–K3 i ostario je; status zna `CLAUDE.md` §Gdje smo i tablica §3 u samom specu. |
 | [ROADMAP.md](./plan/ROADMAP.md) | Milestones + status (**povijesni zapis**, ne plan rada) |
 
 > Prethodne dvije faze ispunjene su i deployane, pa su im planovi istog dana otišli u arhivu

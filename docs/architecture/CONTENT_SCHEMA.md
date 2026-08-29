@@ -157,7 +157,8 @@ Ugovor je strojno provjeren: `schema/subject-content.schema.json` (`block` = `on
   (struktura/tipovi/nepoznata polja, `additionalProperties:false`). Mijenjaš li shemu → ažuriraj OBA dokumenta.
   Provjera: **`npm run validate:schema [subjectId]`** (ajv; u CI-u). Semantiku (correct-u-rasponu, KaTeX
   balans, `_______`) i dalje provjerava `npm run validate:content` — dvije razine se nadopunjuju.
-- **JSON dual-read:** predmeti s `content.dataFormat:'json'` u catalogu (**18/18**, accounting dovršen 2026-07-03)
+- **JSON dual-read:** predmeti s `content.dataFormat:'json'` u catalogu (**danas svi** — pokrivenost
+  drži gate `npm run export:json -- --check`, ne ova rečenica; „18/18" je ovdje stajalo do 2026-08-29)
   čitaju study sadržaj iz **`data/json/<subjectId>/<varName>.json`** (1 datoteka = 1 window-var),
   s fallbackom na `.js`. **`.js` datoteke OSTAJU izvor istine** — `.json` je generirani export.
 - ⚠️ **PRAVILO RE-EXPORTA:** nakon SVAKE izmjene `data/*.js` migriranog predmeta pokreni

@@ -46,6 +46,10 @@
       Povod (BUG-035): `color: white` zakucan u modulu davao je **1.13** u zadanoj temi, a
       **cijeli preflight javljao je zeleno**. Traži `npm run serve:test`.
 - [ ] `npm run css:diff` → dokaz da se **prikaz** nije promijenio; uz svaku ciglu koja dira CSS.
+      ⚠️ **Bez `CSS_DIFF_RUTE` mjeri SAMO `/`.** `COLLECT` nasilno pali svaku `*-page` sekciju, pa
+      izgleda kao da su sve stranice pokrivene — a pokriven je samo njihov markup iz `index.html`.
+      Kartice kataloga, popis lekcija i polica na `/` **ne postoje**. Cigla koja migrira površinu
+      s JS-om predaje svoje rute: `CSS_DIFF_RUTE="#/subjects,#/subject/te2"` (nađeno u C4b).
       ⚠️ **Mjeri samo promjene u CSS-u** — presreće stylesheet, a HTML uzima iz radnog stabla. Premjesti li cigla vrijednost **iz markupa u CSS**, referenca je stranica koja **nikad nije postojala**, pa prijavljuje razlike i ondje gdje se ništa nije promijenilo. Tada se dokazuje **pravim A/B-om**: `HEAD` poslužen iz zasebnog `git worktree`-a na drugom portu, obje verzije sa **svojim** markupom i **svojim** CSS-om.
 - [ ] `npm run test:rls` → anon čita `subject_content`, **ne vidi** `progress`. Pad = curenje; SKIP na uspavanu bazu.
 - [ ] `npm run test:storage` → bucket `node-images` kroz pravi HTTP Storage API. **WRITE → TVRDO odbija prod.**

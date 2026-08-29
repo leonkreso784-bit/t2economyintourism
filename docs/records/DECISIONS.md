@@ -301,9 +301,12 @@ Ove su odluke donesene prije pisanja arhitekture, upravo da se to ne ponovi.
    ograničenja zapisati kao mjerljive brojke.
 8. **Kvote — granicu zapisati sad, provesti kasnije.** Danas postoji samo 5 MB po datoteci.
 
-**Posljedica.** Sljedeći posao nije frontend redizajn nego **dovršetak osobnog gradiva**: kartice/kviz/dopune
-se ne mogu napraviti od nule (`presentModes` crta mod samo ako je niz neprazan) i iz vlastitog materijala se
-**ne može učiti** (`initStudyPage` vuče isključivo iz kataloga).
+**Posljedica** (zapisana 2026-08-05, **✅ ISPUNJENA** — v. `docs/archive/`)**.** Sljedeći posao tada nije bio frontend redizajn nego **dovršetak osobnog gradiva**: kartice/kviz/dopune
+se nisu mogle napraviti od nule (`presentModes` crta mod samo ako je niz neprazan) i iz vlastitog materijala se
+**nije moglo učiti** (`initStudyPage` je vukao isključivo iz kataloga).
+⚠️ **Ovo je povijesno obrazloženje, ne nalog** — oboje je izvedeno i na produkciji; tekući redoslijed zna
+`CLAUDE.md` §Gdje smo. ADR-ovi se ne prepravljaju, ali se ispunjena posljedica **označi**, jer inače
+sljedeća sesija pročita „sljedeći posao je…" kao uputu.
 
 ---
 

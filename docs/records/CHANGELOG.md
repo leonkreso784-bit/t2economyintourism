@@ -66,7 +66,7 @@ prekršaj. Peti put isti razred u projektu, ali **prvi put je pogriješila naša
 zvala ju je „šum"; brana sada prati pokazivač do definicije, i **ne labavi se** — čita samo nizove
 stvarno upotrijebljene kao `class`.
 
-**Izvedeno:** `browse.css` 293 → **208** · novi **`css/lessons.css` (114)**, uvezen točno ondje gdje
+**Izvedeno** (brojke po `npm run css:debt`)**:** `browse.css` 294 → **208** · novi **`css/lessons.css` (114)**, uvezen točno ondje gdje
 je ta sekcija bila unutar `pages.css` · `pages.css` 616 → **508** · `responsive/05` **−8 pravila**,
 `/06` **−5** · `grid` skinut s popisa isključenih imena u `app.css`. **Paleti ovo ne donosi ništa i
 to se ne tvrdi** — `browse.css` je već bio na nuli.

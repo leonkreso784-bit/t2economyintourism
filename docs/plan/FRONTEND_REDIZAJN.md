@@ -178,10 +178,15 @@ ali **`[data-theme="light"]` ne postoji nigdje u CSS-u**, a `.theme-toggle` gumb
 ## 5 · Gateovi koji moraju ostati zeleni
 
 `npm run preflight` (uklj. `check:docs`, css drift, `bump:check` i — od C1 — **`check:tailwind`**) ·
-`npm run test:responsive` (**304 testa**, 4 iPhone profila) · `npm run test:authed` · axe
-**0 serious/critical** na sve četiri stranice · Lighthouse budžeti.
+`npm run test:responsive` (iPhone profili) · `npm run test:authed` · axe **0 serious/critical** na
+svaku rutu koju pokriva `tests/a11y.spec.js` · Lighthouse budžeti.
+⚠️ **Broj testova se ovdje NE piše** — rastao je sa svakom ciglom (zapisanih „304" bilo je krivo
+već pri C4b, gdje je puna suita dala **529 prošlo / 0 palo / 108 preskočeno**), a ispisuje ga sam
+Playwright. Isto vrijedi za „četiri stranice": doseg zna spec-datoteka, ne ova proza.
 Uz svaku ciglu koja dira CSS ide i **`npm run css:diff`** (nije u preflightu — traži preglednik):
 u C1 dokazuje 0 razlika, u C2–C7 da se promijenila **samo** ciljana površina.
+⚠️ **Cigla mora predati svoje rute** (`CSS_DIFF_RUTE`) — bez toga alat mjeri samo `/`, gdje ničega
+što crta JS nema (nađeno u C4b, §10.3).
 Postupak i pragovi: [workflow/TESTING.md](../workflow/TESTING.md).
 
 **Poznata zamka:** dio Playwright-selektora gađa **klase**. Migracija površine i njeni testovi idu u
@@ -3918,10 +3923,14 @@ ispis **uvijek imenuje što je mjereno** — šutnja o dosegu je ono što je zam
 
 #### Izvedeno
 
-- `css/browse.css` **293 → 207** redaka (skela otišla, ostala kartica na tokenima).
-- **`css/lessons.css` (novo, 113 redaka)** — kartica lekcije. Uvezen **točno ondje gdje je ta
+> ⚠️ Brojke redaka ispod su po **`npm run css:debt`** — to je jedini brojač na koji dokumentacija
+> upućuje, a razlikuje se od `wc -l` za jedan redak. Prva verzija ovog zapisa je miješala oba, pa
+> je ista datoteka u specu i CHANGELOG-u imala dvije „točne" vrijednosti.
+
+- `css/browse.css` **294 → 208** redaka (skela otišla, ostala kartica na tokenima).
+- **`css/lessons.css` (novo, 114 redaka)** — kartica lekcije. Uvezen **točno ondje gdje je ta
   sekcija bila unutar `pages.css`**, pa se kaskada ne mijenja ni za jedno pravilo.
-- `css/pages.css` **616 → 505** — bez lekcija; preostala tri stanara **imenovana s vlasnikom**
+- `css/pages.css` **616 → 508** — bez lekcija; preostala tri stanara **imenovana s vlasnikom**
   (kromo → C5a · `about` → C6 · toast i footer → C7).
 - `responsive/05` **−8 pravila**, `responsive/06` **−5 pravila**: druga ljestva pragova više ne
   postoji.

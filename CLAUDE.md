@@ -92,7 +92,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 
 | naredba | što radi | zašto nije u preflightu |
 |---|---|---|
-| `npm run css:diff` | izračunati stilovi u pravom Chromiumu, radno stablo vs git-referencu, 3 širine. Referencu vadi u **`git worktree`** → premota **cijelo stablo**, pa vidi i seobu vrijednosti iz markupa u CSS. (`--css-only` = stari način, sam upozorava da za to laže; **`CSS_DIFF_ALL=1`** = svi promijenjeni elementi, ne prvih 8) | preglednik + port |
+| `npm run css:diff` | izračunati stilovi u pravom Chromiumu, radno stablo vs git-referencu, 3 širine. Referencu vadi u **`git worktree`** → premota **cijelo stablo**, pa vidi i seobu vrijednosti iz markupa u CSS. ⚠️ **mjeri SAMO rutu `/` ako mu je ne predaš** — `CSS_DIFF_RUTE="#/subjects,#/subject/te2"`; sve što crta JS na `/` ne postoji. (`--css-only` = stari način, sam upozorava da za to laže; **`CSS_DIFF_ALL=1`** = svi promijenjeni elementi, ne prvih 8) | preglednik + port |
 | `npm run check:contrast:live` | kontrast kakav se STVARNO iscrta: 4 teme × 11 ruta. `check:contrast` čita tokene i ne zna KORISTI li ih CSS — ovo mjeri ekran; iznimke **imenovane** u `scripts/contrast-live-allow.json` | preglednik + poslužitelj |
 | `npm run build:og` | crta `og-cover.png` **1200×630** (boje iz tokena, tekst iz i18n) | preglednik; PNG se **commita**, dimenzije mjeri `check:seo` |
 | `npm run css:debt` | što je ostalo za C4–C7: po cigli datoteke, redci, `!important` izvan komentara | read-only, **nije gate** — plan je do 2026-08-25 te brojke nosio **ručno** i obje su ostarile |
