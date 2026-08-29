@@ -5,6 +5,72 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-29 (OPUS) — **C4b: prva migrirana površina — i dvije ljestve pragova koje su se tukle**
+
+Prva cigla u fazi koja **stvarno piše Tailwind utilityje na površinu**: C1 je namjerno završio s
+nula generiranih, T5 ih je uveo samo za ritam heroja. Spec **§10.3**.
+
+**Mjera prije koda promijenila je i opseg i oblik cigle.** `pages.css` nikad nije bila jedna
+površina nego **četiri stanara i dvije globalne komponente** — lekcije 114 · kromo učenja 192 ·
+`about` 236 · toast 42 · footer 27 redaka. C4 je vlasnik **samo prvog**, pa je odnio svoj dio
+(`css/lessons.css`), a ostali su dobili **imenovanog vlasnika** (kromo → C5a · `about` → C6 ·
+toast i footer → C7). Tablica §3 je vodila cijeli `pages.css` pod C4 jer je pisana prije te mjere.
+
+**⚠️ `min-height` ljuske stranice bio je MRTAV — i ne smije postati utility.** `topbar.css` ga
+bezuvjetno gazi za svih osam ljuski (mjereno **792 px u prozoru od 900**). Važnije od toga što je
+mrtav je što bi bio da je preseljen: **utilityji stoje zadnji**, pa bi pravilo koje je netko
+namjerno gazio počelo pobjeđivati — i svaka bi stranica postala viša od ekrana za visinu kroma.
+To je obrnuta strana pouke C1: ondje legacy tuče utility i rješenje je obrisati pravilo; ovdje
+utility **oživljava** pravilo koje je trebalo gubiti. **Pravilo za C5–C7:** prije nego pravilo
+postane utility, provjeri tuče li ga danas netko.
+
+**⚠️ Raspored lekcija odlučivale su DVIJE ljestve pragova**, u `responsive/05` (600/768/1024/1280/1536)
+i `/06` (768/1024). `06` se uvozi kasnije, pa je na svakoj širini pobjeđivala mješavina koju
+nijedna od dvije nije opisivala. Mjereno u pregledniku, **tri su pravila bila mrtva**:
+
+- **600–767 px:** `grid-template-columns: repeat(2, 1fr)` stajao je **na `flex` spremniku** →
+  mjereno **1 kartica po retku, isto kao na 599**. Pravilo koje se čita kao „dva stupca na malom
+  tabletu" nije radilo ništa od dana kad je napisano.
+- **≥1536 px:** `max-width: 1200px` na mreži — roditelj staje na 1000, pa mreža nikad nije mogla
+  preko **936**.
+- **768–1023 px:** `padding: 20px` iz `05` gazio je `1.5rem` iz `06`.
+
+**⚠️ Stupac sadržaja nije mjerio sebe nego SVOJE DIJETE.** `.lessons-page.active` je flex-stupac, a
+`.lessons-content` ima `margin: 0 auto` — **auto margine gase `stretch`**, pa se stavka smanjivala
+na sadržaj: 764 px = mreža 700 + padding 64. Zato je uklanjanje kapice s **mreže** mijenjalo širinu
+**stupca**. Popravak je `w-full`. Nađeno tek kad je razlika od 4 px odbila biti objašnjena čitanjem
+CSS-a — treći put ove sesije da instrumentacija odgovori iz prve ondje gdje nagađanje ide u krug.
+
+**Rez ide po ELEMENTU, ne po datoteci.** §3 traži „ili cijela nova ili cijela stara"; doslovno po
+datoteci je neizvedivo (kartica nosi `::before` s `color-mix`, akcent-varijablu i `data-ink`
+varijante). Pravilo je zato izrečeno onako kako glasi njegov razlog: **nijedno svojstvo se ne
+odlučuje na dva mjesta.** Skela → utilityji; komponenta → CSS na tokenima.
+
+**Jedan skup pragova, izmjeren na obje strane** (14 širina, staro stablo vs novo): **broj kartica u
+retku je nepromijenjen na svakoj širini**. Mijenjaju se samo mjere koje je druga ljestva proizvoljno
+kapirala — najviše u pojasu **1024–1279**, gdje je mreža bila **800 px** (kartica 251) a sada je
+**936** (kartica 296), dakle poravnata s onim što isti raspored već daje na 1280. Nigdje nema
+vodoravnog prelijevanja. Izrečeno, ne prešućeno: browse u pojasu **601–639 px** dobiva telefonsku
+obradu, jer je ad-hoc prag 600 zamijenjen s `sm` (640).
+
+**Alat: `css:diff` nije mjerio ništa što crta JavaScript.** Gledao je isključivo `/`, a `COLLECT`
+nasilno pali svaku `*-page` sekciju — pa je nastao dojam pokrivenosti, dok je pokriven bio samo
+markup iz `index.html`. Kartice kataloga i popis lekcija na `/` ne postoje. To je „Zamka 2" iz
+§9.16 i C4b je prva cigla koja u nju stvarno upada. Dodan **`CSS_DIFF_RUTE`**; ispis **uvijek
+imenuje što je mjereno**.
+
+**Dvije izmjene u `check:tailwind`, obje obrnuto provjerene mutacijom.** ① Provjera #1 je čitala
+**komentare** — bilješka koja objašnjava zašto je sastavljanje imena zabranjeno prijavljena je kao
+prekršaj. Peti put isti razred u projektu, ali **prvi put je pogriješila naša brana, ne Tailwind**.
+② Provjera #5 nije znala za **imenovanu konstantu** (`const X = 'utilityji'` → `class="${X}"`) i
+zvala ju je „šum"; brana sada prati pokazivač do definicije, i **ne labavi se** — čita samo nizove
+stvarno upotrijebljene kao `class`.
+
+**Izvedeno:** `browse.css` 293 → **208** · novi **`css/lessons.css` (114)**, uvezen točno ondje gdje
+je ta sekcija bila unutar `pages.css` · `pages.css` 616 → **508** · `responsive/05` **−8 pravila**,
+`/06` **−5** · `grid` skinut s popisa isključenih imena u `app.css`. **Paleti ovo ne donosi ništa i
+to se ne tvrdi** — `browse.css` je već bio na nuli.
+
 ## 2026-08-29 (OPUS) — **Potraga za kvarovima koji se ne vide: 9 mjesta, 2 nove brane**
 
 Kvar iz C4a našao se **slučajno**. Leon je od tri ponuđena smjera izabrao da se to pitanje zatvori

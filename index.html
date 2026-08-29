@@ -19,11 +19,11 @@
     <meta name="format-detection" content="telephone=no">
     
     <!-- Favicon & App Icons -->
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260829164522">
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260829164522">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260829164522">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260829164522">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260829164522">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260829165649">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260829165649">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260829165649">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260829165649">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260829165649">
     <link rel="manifest" href="manifest.json">
     
     <!-- SEO & Social -->
@@ -97,7 +97,7 @@
     <!-- Preconnect for faster loading -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <link rel="stylesheet" href="styles.bundle.css?v=20260829164522">
+    <link rel="stylesheet" href="styles.bundle.css?v=20260829165649">
 
     <!-- C2: GOOGLE FONTS SU OTIŠLI. Inter + Space Grotesk = 2 obitelji, 11 težina, dva
          `preconnect`-a i treći poslužitelj na kritičnom putu — a §7.1 ih je imenovao kao
@@ -133,7 +133,7 @@
     <!-- Learn styles are managed in css/learn.css to avoid inline conflicts on mobile. -->
 
     <!-- Cookie consent + Google Analytics (Consent Mode v2; analytics loads only after Accept) -->
-    <link rel="stylesheet" href="css/consent.css?v=20260829164522">
+    <link rel="stylesheet" href="css/consent.css?v=20260829165649">
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -144,8 +144,8 @@
         });
     </script>
     <!-- Praćenje grešaka (Faza 2, 2E): učita se prije consent.js; consent-gated + no-op bez DSN-a. -->
-    <script src="js/monitoring.js?v=20260829164522" defer></script>
-    <script src="js/consent.js?v=20260829164522" defer></script>
+    <script src="js/monitoring.js?v=20260829165649" defer></script>
+    <script src="js/consent.js?v=20260829165649" defer></script>
 </head>
 <!-- ⚠️ `no-pathbar` STOJI U MARKUPU, NE ČEKA JS (CLS, 2026-08-24).
      `#landing-page` je u markupu već `active`, a landing NEMA drugi red trake — pa je `<body>`
@@ -204,7 +204,7 @@
     <div class="chrome" id="chrome">
     <header class="topbar" id="top" role="banner">
         <a class="topbar-logo" href="#/" id="topbarHome" aria-label="Sokrat Study">
-            <img src="assets/logo.svg?v=20260829164522" alt="" class="logo-image">
+            <img src="assets/logo.svg?v=20260829165649" alt="" class="logo-image">
             <span class="logo-text">Sokrat Study</span>
         </a>
 
@@ -470,7 +470,7 @@
                 <div class="footer-cols">
                     <div class="footer-brand">
                         <div class="landing-logo">
-                            <img src="assets/logo.svg?v=20260829164522" alt="" class="logo-image">
+                            <img src="assets/logo.svg?v=20260829165649" alt="" class="logo-image">
                             <span class="logo-text">Sokrat Study</span>
                         </div>
                         <p data-i18n="footer.tagline">Write your own study material, or use one that's ready. Free for everyone.</p>
@@ -506,7 +506,7 @@
     <aside class="subjects-sidebar" id="subjectsSidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260829164522" alt="Sokrat Study" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260829165649" alt="Sokrat Study" class="logo-image"></div>
                 <span data-i18n="sidebar.choose">Choose Subject</span>
             </div>
             <button class="close-sidebar-btn" id="closeSidebar" aria-label="Close sidebar">
@@ -553,22 +553,31 @@
     </section>
 
     <!-- ==================== LESSONS PAGE ==================== -->
-    <section id="lessons-page" class="lessons-page">
+    <section id="lessons-page" class="lessons-page bg-surface-0">
         <!-- T2: `header.lessons-header` je OBRISAN jer je bio ČISTI duplikat — h1 je
              pisao točno ono što piše zadnja mrvica („Tourism Economics"), a stajao je
              **119 px**. Naslov ostaje kao `visually-hidden` h1: stranica mora imati
              naslov za čitač ekrana, ali ga ne mora imati DVAPUT na ekranu. Id se čuva
              jer ga pišu `navigation.js` i četiri testa. -->
-        <main class="lessons-content">
+        <!-- C4b: skela u utilityjima, KARTICA u `css/lessons.css` (isti rez kao browse:
+             nijedno svojstvo se ne odlučuje na dva mjesta).
+             ⚠️ Raspored lekcija je do C4b odlučivalo DVOJE ljestava pragova odjednom
+             (`responsive/05-device-sizes.css` i `/06-component-improvements.css`), pa je
+             ishod na svakoj širini bio stvar redoslijeda uvoza. Izmjereno prije zahvata:
+             na 600–767 px stajao je `grid-template-columns: repeat(2,1fr)` NA FLEX
+             SPREMNIKU — dakle mrtvo slovo (mjereno: 1 kartica po retku, isto kao na 599),
+             a `max-width: 1200px` na ≥1536 nikad nije mogao vrijediti jer roditelj staje
+             na 1000. Ovdje je ta ljestva JEDNA i mobile-first: 1 → md:2 → lg:3. -->
+        <main class="lessons-content mx-auto w-full max-w-[800px] p-6 md:p-8 lg:max-w-[1000px]">
             <h1 id="currentSubjectTitle" class="visually-hidden">Subject Name</h1>
-            <div class="lessons-intro">
-                <p id="subjectDescription">Select a lesson to start studying</p>
+            <div class="lessons-intro mb-8 text-center">
+                <p id="subjectDescription" class="text-ink-1">Select a lesson to start studying</p>
                 <!-- P1 (POLICA): kontrolu crta `js/offline-store.js` pri svakom
                      renderu lekcija. Prazna je u markupu jer stanje („skinuto?",
                      „koliko zauzima?") zna tek uređaj, ne poslužitelj. -->
                 <div id="offlineControl"></div>
             </div>
-            <div class="lessons-grid" id="lessonsGrid">
+            <div class="lessons-grid grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3" id="lessonsGrid">
                 <!-- Lessons will be rendered dynamically -->
             </div>
         </main>
@@ -1149,7 +1158,7 @@
         <main class="about-content">
             <h1 class="visually-hidden" data-i18n="about.title">About Sokrat Study</h1>
             <div class="about-hero-section">
-                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260829164522" alt="Sokrat Study Logo" class="logo-image"></div>
+                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260829165649" alt="Sokrat Study Logo" class="logo-image"></div>
                 <p class="about-tagline" data-i18n="about.tagline">Created by students, for students</p>
 
                 <!-- ⚠️ IZLAZ. Izmjereno prije popravka: cijela stranica imala je TOČNO JEDNU
@@ -1298,54 +1307,54 @@
          (Blok B): loadSubjectContent() later becomes fetch('/api/subject/...'). -->
 
     <!-- Catalog: single source of truth for subjects (must load before js/config.js) -->
-    <script src="data/catalog.js?v=20260829164522"></script>
+    <script src="data/catalog.js?v=20260829165649"></script>
     <!-- Autogeneriran landing broj pitanja (npm run stats). Eager + sitan; čita ga renderLandingMeta(). -->
-    <script src="data/landing-stats.js?v=20260829164522"></script>
+    <script src="data/landing-stats.js?v=20260829165649"></script>
 
     <!-- App modules (split from app.js) -->
     <!-- T6: tema je izrezana iz init.js jer ju treba i editor.html, koji boot aplikacije NE ucitava. -->
-    <script src="js/theme.js?v=20260829164522"></script>
-    <script src="js/i18n.js?v=20260829164522"></script>
+    <script src="js/theme.js?v=20260829165649"></script>
+    <script src="js/i18n.js?v=20260829165649"></script>
     <!-- AppState (S3, Faza 2C): namespace runtime stanja — MORA prije config.js (grupe migriraju iz njega). -->
-    <script src="js/app-state.js?v=20260829164522"></script>
-    <script src="js/config.js?v=20260829164522"></script>
-    <script src="js/content-loader.js?v=20260829164522"></script>
+    <script src="js/app-state.js?v=20260829165649"></script>
+    <script src="js/config.js?v=20260829165649"></script>
+    <script src="js/content-loader.js?v=20260829165649"></script>
     <!-- ContentRepository (S1, Faza 2): jedinstveni šav za dohvat sadržaja (nakon catalog+config+loader). -->
-    <script src="js/content-repo.js?v=20260829164522"></script>
+    <script src="js/content-repo.js?v=20260829165649"></script>
     <!-- P1 (POLICA): skidanje predmeta na uredaj. Poslije loadera - cita isti
          izvor istine (content.resolve / codeScripts) da bi skinuo TOCNO ono
          sto ce loader poslije traziti. -->
-    <script src="js/offline-store.js?v=20260829164522"></script>
-    <script src="js/components/sokrat-toast.js?v=20260829164522"></script>
-    <script src="js/components/sokrat-modal.js?v=20260829164522"></script>
+    <script src="js/offline-store.js?v=20260829165649"></script>
+    <script src="js/components/sokrat-toast.js?v=20260829165649"></script>
+    <script src="js/components/sokrat-modal.js?v=20260829165649"></script>
     <!-- <sokrat-confirm> (2D.3) — nakon sokrat-modal.js (gradi se na njemu). -->
-    <script src="js/components/sokrat-confirm.js?v=20260829164522"></script>
-    <script src="js/utils.js?v=20260829164522"></script>
-    <script src="js/storage.js?v=20260829164522"></script>
-    <script src="js/analytics.js?v=20260829164522"></script>
-    <script src="js/navigation.js?v=20260829164522"></script>
-    <script src="js/math.js?v=20260829164522"></script>
-    <script src="js/blocks-renderer.js?v=20260829164522"></script>
-    <script src="js/flashcards.js?v=20260829164522"></script>
-    <script src="js/quiz.js?v=20260829164522"></script>
-    <script src="js/fill-blanks.js?v=20260829164522"></script>
-    <script src="js/learn.js?v=20260829164522"></script>
-    <script src="js/progress.js?v=20260829164522"></script>
-    <script src="js/blind-map.js?v=20260829164522"></script>
-    <script src="js/exercises-core.js?v=20260829164522"></script>
-    <script src="js/acc-kernel.js?v=20260829164522"></script>
-    <script src="js/exercises.js?v=20260829164522"></script>
-    <script src="js/auth.js?v=20260829164522"></script>
+    <script src="js/components/sokrat-confirm.js?v=20260829165649"></script>
+    <script src="js/utils.js?v=20260829165649"></script>
+    <script src="js/storage.js?v=20260829165649"></script>
+    <script src="js/analytics.js?v=20260829165649"></script>
+    <script src="js/navigation.js?v=20260829165649"></script>
+    <script src="js/math.js?v=20260829165649"></script>
+    <script src="js/blocks-renderer.js?v=20260829165649"></script>
+    <script src="js/flashcards.js?v=20260829165649"></script>
+    <script src="js/quiz.js?v=20260829165649"></script>
+    <script src="js/fill-blanks.js?v=20260829165649"></script>
+    <script src="js/learn.js?v=20260829165649"></script>
+    <script src="js/progress.js?v=20260829165649"></script>
+    <script src="js/blind-map.js?v=20260829165649"></script>
+    <script src="js/exercises-core.js?v=20260829165649"></script>
+    <script src="js/acc-kernel.js?v=20260829165649"></script>
+    <script src="js/exercises.js?v=20260829165649"></script>
+    <script src="js/auth.js?v=20260829165649"></script>
     <!-- F4: privatne slike osobnog gradiva (`node-img:` oznaka ↔ potpisani URL). Prije block-editora. -->
-    <script src="js/node-images.js?v=20260829164522"></script>
+    <script src="js/node-images.js?v=20260829165649"></script>
     <!-- T6: otkrivanje admina je izrezano iz admin.js i MORA ici prije njega (studioBridge se veze pri parsiranju). -->
-    <script src="js/admin-reveal.js?v=20260829164522"></script>
-    <script src="js/cloud-sync.js?v=20260829164522"></script>
+    <script src="js/admin-reveal.js?v=20260829165649"></script>
+    <script src="js/cloud-sync.js?v=20260829165649"></script>
     <!-- „Moji materijali" (F2) — mora prije profile.js (renderProfilePage ga montira). -->
-    <script src="js/my-materials.js?v=20260829164522"></script>
-    <script src="js/profile.js?v=20260829164522"></script>
-    <script src="js/init.js?v=20260829164522"></script>
+    <script src="js/my-materials.js?v=20260829165649"></script>
+    <script src="js/profile.js?v=20260829165649"></script>
+    <script src="js/init.js?v=20260829165649"></script>
     <!-- Service Worker (F3 3A): offline app-shell; registrira se na load, fail-safe. -->
-    <script src="js/sw-register.js?v=20260829164522" defer></script>
+    <script src="js/sw-register.js?v=20260829165649" defer></script>
 </body>
 </html>

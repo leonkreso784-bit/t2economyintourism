@@ -58,7 +58,11 @@
 /* Browse — od C4b samo KARTICA; skela je u utilityjima (`index.html`, `navigation.js`). */
 @import "./browse.css";
 
-/* Stranice (Lekcije, Učenje, O nama). */
+/* Lekcije — od C4b vlastiti modul; stoji na mjestu gdje je ta sekcija bila unutar
+   `pages.css`, pa se kaskada ne mijenja ni za jedno pravilo. */
+@import "./lessons.css";
+
+/* Stranice — od C4b bez lekcija: kromo učenja (C5a), `about` (C6), toast i footer (C7). */
 @import "./pages.css";
 
 /* Komponente (zaglavlje, navigacija, glavni sadržaj). */

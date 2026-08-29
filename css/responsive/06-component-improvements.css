@@ -236,32 +236,13 @@
 
 /* ===== LESSONS PAGE TABLET/DESKTOP IMPROVEMENTS ===== */
 @media (min-width: 768px) {
-    .lessons-content {
-        padding: 2rem;
-        max-width: 800px;
-        margin: 0 auto;
+        
+        
     }
-    
-    .lessons-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-    }
-    
-    .lesson-card {
-        padding: 1.5rem;
-    }
-}
 
 @media (min-width: 1024px) {
-    .lessons-content {
-        max-width: 1000px;
+        
     }
-    
-    .lessons-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
 
 /* ===== STUDY PAGE CONTENT CENTERING ===== */
 @media (min-width: 768px) {

@@ -1,0 +1,113 @@
+/* =====================================================
+   LEKCIJE — KARTICA
+   Sokrat Study
+
+   ⚠️ OVDJE JE SAMO KOMPONENTA. Skela (ljuska, sadržaj, uvod, mreža) prešla je u C4b
+   u **utilityje**, u `index.html`. Rez ide po ELEMENTU: nijedno svojstvo se ne
+   odlučuje na dva mjesta.
+
+   ZAŠTO ZASEBAN MODUL, A NE DALJE U `pages.css`: ta datoteka nikad nije bila jedna
+   površina nego ČETIRI stanara i dvije globalne komponente — izmjereno u C4b:
+   lekcije 114 · kromo učenja 192 · `about` 236 · toast 42 · footer 27 redaka. C4 je
+   vlasnik samo prvog. Držati kraj njega tri tuđa stanara znači da sljedeća cigla ne
+   zna što smije dirati; svaki od preostalih dobiva vlastiti modul kad njegova
+   površina dođe na red (kromo → C5a · `about` → C6 · toast i footer → C7).
+
+   ⚠️ `min-height` ljuske je OBRISAN, ne preseljen — `css/topbar.css` ga bezuvjetno
+   gazi za svih osam ljuski i stoji kasnije u bundleu (mjereno 792 px u prozoru od
+   900). Da je otišao u utility, POBIJEDIO BI topbar, jer utilityji stoje zadnji.
+   Obrazloženje u cijelosti: zaglavlje `css/browse.css`.
+
+   ⚠ CACHE: pri izmjeni pokreni `npm run bump`.
+   ===================================================== */
+
+/* BUG-032: kartica lekcije je `<a>` (otvoriva lekcija) ili `<button>` (uskoro), a ne više
+   `<div>`. Oba nose vlastite zadane stilove preglednika, pa se ovdje izričito gase — inače
+   sidro dobije plavi podcrtan tekst, a gumb sistemski font i sredinsko poravnanje. */
+.lesson-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    /* JEDNA ljestva pragova (izlazni uvjet §2). Prije C4b su ovu vrijednost dijelila
+       ČETIRI pravila iz dvije `responsive/` datoteke (12px < 375 · 20px baza ·
+       20px na 768–1023 · 24px od 768 i od 1536), od kojih je jedno bilo mrtvo jer ga
+       je kasnije gazilo drugo. Ostaje: 20px do `md`, 24px od `md`. */
+    padding: 1.25rem;
+    background: var(--color-surface-1);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--color-line);
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    text-decoration: none;
+}
+
+@media (min-width: 48rem) {
+    .lesson-card {
+        padding: 1.5rem;
+    }
+}
+
+/* Fokus je od BUG-032 jedini način da se do lekcije dođe tipkovnicom — mora se VIDJETI.
+   `:focus-visible`, ne `:focus`: mišem se prsten ne pojavljuje, tipkovnicom uvijek. */
+.lesson-card:focus-visible {
+    outline: 3px solid var(--color-brand-500);
+    outline-offset: 2px;
+}
+
+/* Bilo je inline (`card.style.opacity`) — stil iz podatka natrag u stilsku datoteku. */
+.lesson-card--soon {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.lesson-card:hover {
+    border-color: var(--color-brand-500);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-e2);
+}
+
+.lesson-number {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-400));
+    /* 10px je doslovna vrijednost, ne token — C4b seli BOJE i SJENE na tokene (jer
+       `variables.css` umire u C7), a ne prekraja mjere. Snap na `--radius-md` (12px)
+       bio bi redizajn, a ova cigla mijenja jezik, ne izgled (§1). */
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-on-brand);
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.lesson-info {
+    flex: 1;
+}
+
+.lesson-info h3 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.lesson-info p {
+    font-size: 0.85rem;
+    color: var(--color-ink-1);
+}
+
+.lesson-arrow {
+    color: var(--color-ink-2);
+    font-size: 1.25rem;
+    transition: var(--transition);
+}
+
+.lesson-card:hover .lesson-arrow {
+    color: var(--color-brand-500);
+    transform: translateX(5px);
+}

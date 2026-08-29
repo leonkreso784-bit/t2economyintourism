@@ -59,8 +59,8 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 | **C2** ✅ | **Landing** — koncept odbijen (§7.13) pa prepravljen u četiri cigle: **A** živi prikaz obrisan · **B** tinta na pločicama · **C** katalog (svih 24, tražilica, filtar, grupe, ＋ pločica) + svoje gradivo + četiri načina + MCP „uskoro" · **D** podloga i prostor za znak (§7.15). **Sve četiri na produkciji od 2026-08-24** (A+B od 2026-08-18, C+D s fazom TELEFON). | `landing.css` 1079 → 578 → **380** (A) → ~660 (C+D) → **749** (T5: tip i ritam heroja, §9.12) | posjetitelj koji prvi put dođe vidi **oboje**: da ima gotovih predmeta **i** da smije napraviti svoje; kriteriji 1, 2, 5 vrijede za tu stranicu |
 | **C3** 🔄 | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori. **Tri cigle gotove i na produkciji** (authed a11y-gate · širina + kvar u rendereru · `studio.css` na nuli `!important`); **ostaje Studio na telefonu** — dok stoji, C3 se ne smije proglasiti gotovim (kriterij #1 imenuje editor na 320 px). | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
 | **K** 🔄 | **„KOSTUR" — rute i jedna gornja traka** (§8). Ubačena između C3 i C4 (Leon, 2026-08-18) po presedanu C0-a: informacijska arhitektura prije kozmetike. **K1 ✅ rute** (§8.6) · **K2** jedna traka · **K3** brana dohvatljivosti · **K4** materijali u kvaliteti kataloga | tri duplicirana zaglavlja (`browse-`/`lessons-`/`study-header`) | iz **svake** stranice — uključujući `#editor-page` — vodi bar jedan klik drugamo, a svaka stranica ima adresu koja se da podijeliti |
-| **C4** 🔄 | **Browse + lekcije** — zapis: **§10**. **C4a ✅** (mrtva površina obrisana; `subject-selector.css` je **nestala**, ne migrirana) · **C4b** = prava migracija | `browse.css`, `pages.css` (**brojke: `npm run css:debt`**) | student dođe do bilo kojeg predmeta i lekcije |
-| **C5a** | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
+| **C4** ✅ | **Browse + lekcije** — zapis: **§10**. **C4a ✅** (mrtva površina obrisana; `subject-selector.css` je **nestala**, ne migrirana) · **C4b ✅** (§10.3) — prva migrirana površina u fazi | `subject-selector.css` (obrisan) · skela browsea i lekcija (u utilityje) · **13 pravila druge ljestve pragova** iz `responsive/05`+`/06` (**brojke: `npm run css:debt`**) | student dođe do bilo kojeg predmeta i lekcije |
+| **C5a** | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak, **i kromo ekrana za učenje** (§10.3: ista površina, pa ide zajedno) | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` · `pages.css` (kromo; ondje su i **posljednja dva `!important`** izvan C7) | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
 | **C5b** | **Gradivo + vježbe** — sve što ide kroz renderer ili engine | `learn.css`, `learn-blocks.css`, `math.css`, `exercises.css`, `blind-map.css` | student čita gradivo i rješava vježbe; KaTeX, slike i tablice nedirnuti |
 | **C6** | **Profil, auth, pravne, consent** | `profile.css`, `auth.css`, `legal.css`, `consent.css` | korisnik se prijavi, uredi profil, obriše račun |
 | **C7** | **Gašenje** | `responsive/*`, `components.css`, `variables.css`, `styles.bundle.css`, mrtva tema | u repozitoriju nema starog CSS-a ni mrtvog koda teme |
@@ -3765,3 +3765,177 @@ odluke o izgledu — jer je devet od tih pravila bilo upravo zakucana bjelina na
   Rješava se u **C5a**, čija je to površina.
   ⚠️ Iznimka je **imenovana, ne prešućena** — i popis je kratak namjerno: čim naraste,
   prestaje biti iznimka i postaje tepih.
+
+### 10.3 ✅ C4b JE ISPUNJEN — prva migrirana površina, i dvije ljestve pragova koje su se tukle (2026-08-29)
+
+C4b je **prva cigla u fazi koja stvarno piše Tailwind utilityje na površinu**. C1 je namjerno
+završio s **nula** generiranih (§3), T5 ih je uveo samo za ritam heroja (§9.12). Sve dosad je
+bila priprema; ovdje se prvi put migrira.
+
+#### Mjera prije koda — i promijenila je i OPSEG i OBLIK cigle
+
+| pitanje | mjera | posljedica |
+|---|---|---|
+| je li `pages.css` jedna površina? | **nije**: lekcije **114** · kromo učenja **192** · `about` **236** · toast **42** · footer **27** | C4 je vlasnik **samo prvog** |
+| koliko je toga utility-izrazivo? | `browse.css` **142/147** deklaracija · `pages.css` **301/317** | migracija je moguća, ostatak je pseudoelement i `-webkit-` |
+| tko odlučuje raspored lekcija? | **dvije** ljestve pragova, u `responsive/05` i `/06` | ishod na svakoj širini = redoslijed uvoza |
+| koliko `browse` ovisi o `responsive/*`? | **nula pravila** | browse je čista površina, lekcije nose sav rizik |
+| donosi li cigla dobitak paleti? | `browse.css` **0/0/0**, `pages.css` **0** FATALNO | **ne** — i to se ne tvrdi |
+
+#### ⚠️ NALAZ 1 — `min-height` ljuske je MRTAV, i ne smije postati utility
+
+`css/topbar.css` bezuvjetno gazi `min-height` za **svih osam ljuski stranica**
+(`calc(100dvh - var(--chrome-h))`), stoji kasnije u bundleu, specifičnost je jednaka.
+Izmjereno na browse/lessons/about: **792 px u prozoru od 900** — dakle deklaracija u
+`browse.css` i `pages.css` nikad ništa nije radila.
+
+Važnije od toga što je mrtva je **što bi bila da je preseljena**:
+
+> Utilityji stoje **zadnji i neuslojeni**. Pravilo koje je netko namjerno GAZIO, pretvoreno
+> u utility, počinje **pobjeđivati** — i to na svim stranicama odjednom.
+
+Da je `min-height` otišao u markup, svaka bi stranica postala viša od ekrana za visinu kroma.
+To je **obrnuta strana pouke C1 br. 1**: ondje legacy pravilo veće specifičnosti tuče utility
+i rješenje je *obrisati pravilo*; ovdje utility **oživljava** pravilo koje je trebalo gubiti.
+Zato je obrisan, ne preseljen — a pravilo koje iz toga slijedi za C5–C7:
+
+**Prije nego pravilo postane utility, provjeri TUČE LI GA netko danas. Ako da, utility je
+promjena ponašanja, ne migracija.**
+
+#### ⚠️ NALAZ 2 — raspored lekcija odlučivale su DVIJE ljestve, i tri su rulja bila mrtva
+
+`responsive/05-device-sizes.css` je nosio ljestvu 600 / 768 / 1024 / 1280 / 1536, a
+`06-component-improvements.css` posve drugu — 768 / 1024. `06` se uvozi **poslije**, pa je na
+svakoj širini pobjeđivala mješavina koju nijedna od dvije nije opisivala. Mjereno u pregledniku,
+ne pročitano iz koda:
+
+- **600–767 px:** `grid-template-columns: repeat(2, 1fr)` stajao je **na `flex` spremniku**
+  (`.lessons-grid` je bio `display:flex`). Deklaracija je inertna → **mjereno: 1 kartica po
+  retku, identično kao na 599.** Pravilo koje se čita kao „dva stupca na malom tabletu"
+  nije radilo **ništa**, i to od dana kad je napisano.
+- **≥1536 px:** `.lessons-grid { max-width: 1200px }` — roditelj `.lessons-content` staje na
+  **1000**, pa mreža nikad nije mogla biti šira od **936**. Mrtvo.
+- **768–1023 px:** `05` je tražio `padding: 20px`, `06` `1.5rem`. Pobjeđivao je `06`; prvo
+  pravilo je bilo mrtvo slovo.
+
+#### ⚠️ NALAZ 3 — stupac sadržaja nije sebe mjerio, nego SVOJE DIJETE
+
+Zašto je uklanjanje `max-width: 700px` s **mreže** promijenilo širinu **stupca**? Jer
+`.lessons-page.active` je `display: flex; flex-direction: column`, a `.lessons-content` ima
+`margin: 0 auto` — **auto margine u poprečnoj osi gase `stretch`**, pa se stavka smanjuje na
+sadržaj. Stupac je bio 764 px = mreža 700 + padding 64. Dakle širina stranice je dolazila
+odozdo, iz najšireg djeteta, umjesto odozgo iz vlastite mjere.
+
+Popravak je `w-full`: stupac od sada **kaže koliko je širok**, umjesto da ga izmjeri dijete.
+Nađeno tek kad je razlika od 4 px odbila biti objašnjena čitanjem CSS-a — **treći put ove
+sesije da instrumentacija odgovori iz prve ondje gdje je nagađanje otišlo u krug.**
+
+#### Rez ide po ELEMENTU, ne po datoteci
+
+§3 traži da je „površina ili cijela nova ili cijela stara". Doslovno po datoteci to je
+neizvedivo: kartica nosi `::before` s `color-mix` gradijentom, akcent-varijablu iz kataloga i
+varijante po `data-ink` — u utilityjima nečitljivo, a ništa se ne dobiva. Zato je pravilo
+izrečeno preciznije, onako kako i glasi njegov razlog (rat specifičnosti):
+
+> **Nijedno svojstvo se ne odlučuje na dva mjesta.** Polovična površina koju §3 zabranjuje je
+> ona gdje se dva sustava tuku oko **istog elementa** — ne datoteka s dva stanara.
+
+- **Skela** (ljuska · stupac · naslov razine · uvod · mreža · naslov semestra · prazno stanje)
+  → **utilityji**, u `index.html` i u **dvije imenovane konstante** u `js/navigation.js`.
+- **Komponenta** (kartica i njena djeca) → **CSS**, prepisan na `@theme` tokene.
+
+Konstante su nužne, ne stilske: isti raspored crtaju **četiri renderera**, pa bi utility-niz
+inače bio pet kopija koje se raziđu prvom izmjenom. Nizovi su **doslovni** — sastavljeno ime
+Tailwind ne vidi (ADR-028, granica #5).
+
+#### Zašto komponente idu na tokene, iako paleta od toga nema koristi
+
+`browse.css` je već imao **0** pogodaka `check:palette`. Zamjena `--bg-secondary` →
+`--color-surface-1` dakle **ne popravlja ništa danas**; radi se jer **`variables.css` umire u
+C7**, a svaki alias koji dotad preživi mora se tada ionako prepisati — samo pod pritiskom i u
+cigli koja već diže sve ostalo. **Mjere (10px, 14px, 1.05rem) se NE diraju:** snap na
+`--radius-md` bio bi redizajn, a ova cigla mijenja jezik, ne izgled (§1).
+
+#### Jedan skup pragova — izmjereno na obje strane
+
+Ad-hoc pragovi (375 · 600 · 1280 · 1536) umiru s površinom koja ih je koristila; ostaje
+`xs/sm/md/lg/xl/2xl` iz `tokens.css`. Usporedba starog i novog stabla na 14 širina —
+**broj kartica u retku je NEPROMIJENJEN na svakoj**, mijenjaju se samo mjere koje je druga
+ljestva proizvoljno kapirala:
+
+| širina | staro | novo | što se promijenilo |
+|---|---|---|---|
+| 320 · 374 | kartica 272/326, padding **12** | isti, padding **20** | iznimka `<375 px` obrisana |
+| 375–767 | — | — | **ništa** |
+| 768–1023 | mreža **700**, kartica 338 | mreža 704–736, kartica 340–356 | mreža više nije kapirana na 700 |
+| **1024–1279** | mreža **800**, kartica **251** | mreža **936**, kartica **296** | **poravnato s 1280+** |
+| 1280 · 1536 | — | — | **ništa** |
+
+Nigdje nema vodoravnog prelijevanja. Pojas 1024–1279 je i bio anomalija: bio je **uži** od
+onoga što isti raspored daje na 1280, iz jedinog razloga što su ga dvije ljestve različito
+kapirale.
+
+⚠️ **Izrečeno, ne prešućeno:** browse u pojasu **601–639 px** od sada dobiva telefonsku
+obradu (jedan stupac, uži padding) umjesto tabletne — jer je prag 600 zamijenjen s `sm` (640).
+Ispod 497 i iznad 640 nema promjene.
+
+#### Dokaz da se nije pomaknulo ništa izvan površine
+
+`css:diff` (rute `#/subjects` i `#/subject/te2`, 3 širine): **21 razlika na browseu, sve na
+skeli** — i **nijedan `.browse-card*` element**, čime je zamjena alias → token dokazana kao
+bajt-identična. Na lekcijama **21 razlika**, sve na stupcu, mreži i karticama, i svaka
+objašnjena tablicom iznad.
+
+Namjerne razlike na browseu: naslov razine 20 → **22 px** (`text-xl`), uvod 15.2 → **16 px**
+(`text-base`, prored `normal` → 1.6), razmak mreže 13.6 → 14 px ispod 640.
+
+#### 🔧 Alat: `css:diff` nije mjerio ništa što crta JavaScript
+
+Alat je gledao **isključivo `/`**. `COLLECT` nasilno pali svaku `*-page` sekciju, pa je nastao
+dojam da su sve stranice pokrivene — a pokriven je bio samo njihov **markup iz `index.html`**.
+Kartice kataloga, popis lekcija i polica na `/` **ne postoje**, pa se nikad nisu ni
+uspoređivale. To je **„Zamka 2" iz §9.16**, a C4b je prva cigla koja u nju stvarno upada.
+
+Dodan `CSS_DIFF_RUTE` (zadano ostaje `/`, da ostale cigle ne postanu trostruko sporije), a
+ispis **uvijek imenuje što je mjereno** — šutnja o dosegu je ono što je zamku i održalo.
+**C5a, C5b, C6 i C7 moraju predati svoje rute**, inače mjere prazan ekran.
+
+#### 🔧 Dvije izmjene u brani `check:tailwind`, obje obrnuto provjerene
+
+1. **Provjera #1 je čitala KOMENTARE.** Bilješka koja objašnjava zašto je sastavljanje imena
+   zabranjeno — i pritom pokazuje kako izgleda — prijavljena je kao prekršaj. **Peti put isti
+   razred u projektu** („skener ne razlikuje objašnjenje od klase": `.\!container` iz koda,
+   `flex-wrap` i `sticky` iz proze, `visible` iz usporedbe niza), ali **prvi put je
+   pogriješila naša brana, ne Tailwind.** Blok-komentari i redci koji **jesu** komentar sada
+   se skidaju uz očuvan broj redaka; `//` usred retka se ne dira, jer ondje živi `https://`.
+2. **Provjera #5 nije znala za IMENOVANU KONSTANTU.** Niz utilityja u `const`, korišten kao
+   `class="${X}"`, prijavljen je kao „šum". Brana sada prati **pokazivač** do definicije u
+   istoj datoteci — i time se **ne labavi**: čitaju se samo nizovi stvarno upotrijebljeni kao
+   vrijednost `class` atributa, ne svi nizovi u datoteci.
+
+**Mutacije:** dinamičko ime u komentaru → **zeleno** (to je popravak) · isto u kodu →
+**izlaz 1**, s točnim retkom · konstanta izvan dosega pokazivača → **izlaz 1** na „šum".
+
+#### Izvedeno
+
+- `css/browse.css` **293 → 207** redaka (skela otišla, ostala kartica na tokenima).
+- **`css/lessons.css` (novo, 113 redaka)** — kartica lekcije. Uvezen **točno ondje gdje je ta
+  sekcija bila unutar `pages.css`**, pa se kaskada ne mijenja ni za jedno pravilo.
+- `css/pages.css` **616 → 505** — bez lekcija; preostala tri stanara **imenovana s vlasnikom**
+  (kromo → C5a · `about` → C6 · toast i footer → C7).
+- `responsive/05` **−8 pravila**, `responsive/06` **−5 pravila**: druga ljestva pragova više ne
+  postoji.
+- `css/app.css`: `grid` skinut s popisa isključenih imena — prvi put ga je netko stvarno
+  napisao kao klasu.
+
+#### ⛔ Što C4b NAMJERNO nije napravio
+
+- **`pages.css` nije obrisan**, iako ga tablica §3 vodi pod „što nestaje". Ta je tablica
+  pisana prije nego se izmjerilo da datoteka ima četiri stanara; **brišu ga C5a, C6 i C7**,
+  svaki svoj dio. Isto vrijedi za `landing.css`, koji je C2 preživio iz istog razloga.
+- **Kromo učenja (`.study-nav`, `.study-mobile-nav`) nije dirano** — to je isti ekran kao
+  četiri načina učenja, pa bi migracija samo trake bila upravo polovična površina koju §3
+  zabranjuje. Ide s **C5a**, zajedno s dva preostala `!important` u projektu izvan C7.
+- **Pravilo `prefers-contrast: high` za `.lesson-card` ostavljeno je u `responsive/05`**
+  svjesno: skupni je selektor s `.flashcard` i `.quiz-container`, dakle a11y-način koji po
+  naravi živi izvan komponente, a cijeli je taj blok duplikat koji ionako umire u C7.

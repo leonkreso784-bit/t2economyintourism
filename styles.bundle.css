@@ -1191,36 +1191,14 @@ section[id$="-page"] {
   min-width: 2.5rem;
   text-align: right;
 }
-.lessons-page {
-  min-height: 100vh;
-  min-height: 100dvh;
-  background: var(--bg-primary);
-}
-.lessons-content {
-  padding: 1.5rem;
-  max-width: 800px;
-  margin: 0 auto;
-}
-.lessons-intro {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-.lessons-intro p {
-  color: var(--text-secondary);
-}
-.lessons-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
 .lesson-card {
   display: flex;
   align-items: center;
   gap: 1rem;
   padding: 1.25rem;
-  background: var(--bg-secondary);
+  background: var(--color-surface-1);
   border-radius: var(--radius-lg);
-  border: 2px solid var(--border);
+  border: 2px solid var(--color-line);
   cursor: pointer;
   transition: var(--transition);
   width: 100%;
@@ -1229,8 +1207,13 @@ section[id$="-page"] {
   color: inherit;
   text-decoration: none;
 }
+@media (min-width: 48rem) {
+  .lesson-card {
+    padding: 1.5rem;
+  }
+}
 .lesson-card:focus-visible {
-  outline: 3px solid var(--primary);
+  outline: 3px solid var(--color-brand-500);
   outline-offset: 2px;
 }
 .lesson-card--soon {
@@ -1238,19 +1221,19 @@ section[id$="-page"] {
   cursor: not-allowed;
 }
 .lesson-card:hover {
-  border-color: var(--primary);
+  border-color: var(--color-brand-500);
   transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-e2);
 }
 .lesson-number {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-400));
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--on-primary);
+  color: var(--color-on-brand);
   font-weight: 700;
   font-size: 1.1rem;
   flex-shrink: 0;
@@ -1264,15 +1247,15 @@ section[id$="-page"] {
 }
 .lesson-info p {
   font-size: 0.85rem;
-  color: var(--text-secondary);
+  color: var(--color-ink-1);
 }
 .lesson-arrow {
-  color: var(--text-muted);
+  color: var(--color-ink-2);
   font-size: 1.25rem;
   transition: var(--transition);
 }
 .lesson-card:hover .lesson-arrow {
-  color: var(--primary);
+  color: var(--color-brand-500);
   transform: translateX(5px);
 }
 .study-page {
@@ -4931,9 +4914,6 @@ sokrat-modal.sokrat-confirm-modal > * {
     padding: 12px 20px;
     font-size: 0.9rem;
   }
-  .lesson-card {
-    padding: 12px;
-  }
   .flashcard {
     min-height: 280px;
   }
@@ -4968,10 +4948,6 @@ sokrat-modal.sokrat-confirm-modal > * {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
-  .lessons-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
   .flashcard {
     min-height: 380px;
   }
@@ -4982,15 +4958,6 @@ sokrat-modal.sokrat-confirm-modal > * {
     gap: 24px;
     max-width: 700px;
     margin: 0 auto;
-  }
-  .lessons-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    max-width: 700px;
-    margin: 0 auto;
-  }
-  .lesson-card {
-    padding: 20px;
   }
   .flashcard {
     min-height: 400px;
@@ -5020,12 +4987,6 @@ sokrat-modal.sokrat-confirm-modal > * {
     max-width: 900px;
     margin: 0 auto;
   }
-  .lessons-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
   .flashcard {
     min-height: 420px;
     max-width: 700px;
@@ -5046,12 +5007,6 @@ sokrat-modal.sokrat-confirm-modal > * {
   .subjects-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 28px;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  .lessons-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
     max-width: 1000px;
     margin: 0 auto;
   }
@@ -5077,15 +5032,6 @@ sokrat-modal.sokrat-confirm-modal > * {
     gap: 32px;
     max-width: 1200px;
     margin: 0 auto;
-  }
-  .lessons-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .lesson-card {
-    padding: 24px;
   }
   .flashcard {
     min-height: 500px;
@@ -5341,29 +5287,6 @@ sokrat-modal.sokrat-confirm-modal > * {
   .subject-item-info p {
     font-size: 0.9rem;
   }
-  .lessons-content {
-    padding: 2rem;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  .lessons-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-  .lesson-card {
-    padding: 1.5rem;
-  }
-}
-@media (min-width: 1024px) {
-  .lessons-content {
-    max-width: 1000px;
-  }
-  .lessons-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media (min-width: 768px) {
   .study-content {
     max-width: 900px;
     margin: 0 auto;
@@ -9973,6 +9896,9 @@ body.mm-dragging {
 .mb-6 {
   margin-bottom: calc(var(--spacing) * 6);
 }
+.mb-8 {
+  margin-bottom: calc(var(--spacing) * 8);
+}
 .flex {
   display: flex;
 }
@@ -9987,6 +9913,9 @@ body.mm-dragging {
 }
 .max-w-\[60rem\] {
   max-width: 60rem;
+}
+.max-w-\[800px\] {
+  max-width: 800px;
 }
 .max-w-xl {
   max-width: var(--container-xl);
@@ -10006,8 +9935,14 @@ body.mm-dragging {
 .gap-3\.5 {
   gap: calc(var(--spacing) * 3.5);
 }
+.gap-4 {
+  gap: calc(var(--spacing) * 4);
+}
 .bg-surface-0 {
   background-color: var(--color-surface-0);
+}
+.p-6 {
+  padding: calc(var(--spacing) * 6);
 }
 .px-4 {
   padding-inline: calc(var(--spacing) * 4);
@@ -10126,9 +10061,26 @@ body.mm-dragging {
   .md\:mt-24 {
     margin-top: calc(var(--spacing) * 24);
   }
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .md\:gap-6 {
+    gap: calc(var(--spacing) * 6);
+  }
+  .md\:p-8 {
+    padding: calc(var(--spacing) * 8);
+  }
   .md\:text-3xl {
     font-size: var(--text-3xl);
     line-height: var(--tw-leading, var(--text-3xl--line-height));
+  }
+}
+@media (width >= 64rem) {
+  .lg\:max-w-\[1000px\] {
+    max-width: 1000px;
+  }
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 @property --tw-leading {
