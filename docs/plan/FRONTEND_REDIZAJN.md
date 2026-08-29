@@ -3662,3 +3662,90 @@ pao je za **četvrtinu** kao nuspojava, bez ijedne odluke o izgledu.
 migraciji — po istom presedanu po kojem je **C3 počeo gateom prije migracije** (§7.10).
 Prava migracija browsea i lekcija je **C4b** i radi se nad površinom koja je od danas
 manja za trećinu i bez ijednog `!important`-a osim dva u `pages.css`.
+
+### 10.2 ✅ POTRAGA ZA KVAROVIMA KOJI SE NE VIDE — jer je prvi nađen SLUČAJNO (2026-08-29)
+
+Kvar iz §10.1 nije našao nijedan gate ni pogled na ekran — ispao je usput, dok se tražilo
+nešto drugo. To pitanje se ne smije ostaviti otvoreno: **koliko ih još ima?** Leon je od
+tri ponuđena smjera izabrao upravo taj.
+
+#### Dvije mjere, jer je svaka slijepa ondje gdje druga vidi
+
+| mjera | što gleda | što NE može |
+|---|---|---|
+| **preglednik** (`check:contrast:live`) | izračunate stilove, **4 teme × 11 ruta**, tekst i glif | ne vidi ništa **iza gradijenta** — kontrast se ondje ne da svesti na dva broja |
+| **statika** (`check:palette` zabrana #4) | ispunu marke i zakucanu boju u **različitim pravilima** | ne zna što je stvarno na ekranu |
+
+To nije podjela posla nego **nužda, izmjerena**: od devet mjesta s istim kvarom, **sedam**
+ih preglednik nije mogao vidjeti jer sjede na gradijentu. *Statička analiza i preglednik
+hvataju različite bugove* — nalaz C1 br. 4, treći put potvrđen.
+
+#### 🎯 Razred kvara ima ime: **ispuna i boja teksta odlučuju se na RAZLIČITIM mjestima**
+
+U §10.1 su to bile **dvije datoteke**. Ovdje su **dva pravila**, i to jedno ispod drugoga:
+
+```css
+.study-nav-btn.active   { background: var(--primary); color: var(--on-primary); }  /* ispravno */
+.study-nav-btn.active span,
+.study-nav-btn.active i { color: white; }                                          /* poništava */
+```
+
+Ispravno pravilo **postoji** i stoji odmah iznad — pa ga sljedeće poništi na djetetu. Zabrana
+#1 to nije mogla vidjeti jer traži ispunu i zakucanu boju **u istom bloku**.
+
+Izmjereno na temi `chalk` (marka je ondje amber `#f2c14e`): **kontrast 1.68** na prekidaču
+načina učenja, dakle na najkorištenijem ekranu u aplikaciji.
+
+⚠️ **Ovo je bio LATENTAN kvar, ne živ** — i tu razliku treba držati čistom. Birač tema
+**ne postoji u markupu** (`js/init.js` veže klik na `[data-set-theme]`, ali takve kontrole
+nema), pa je zadana `academic` jedina dohvatljiva tema, a u njoj je marka plava i bijeli
+tekst na njoj prolazi. Kvar iz §10.1 je bio **živ u zadanoj temi**; ovaj postaje živ onog
+dana kad birač izađe — a to je opisano kao *posao od jednog popodneva*.
+
+#### Izvedeno — devet mjesta, jedan potez
+
+`color: white` → **`color: inherit`** (dijete preuzima roditeljevu odluku) u
+`home-section.css` (2) · `learn.css` (4) · `pages.css` (2); u `quiz-section.css` (1) ide
+**`var(--on-primary)`**, jer `.score-circle` **nema vlastiti `color`** pa bi nasljeđivanje
+uzelo boju okolnog teksta umjesto boje na ispuni.
+
+**Dokaz da je popravak točno onoliko velik koliko treba:** `css:diff` daje **3393 usporedbe
+kroz 3 širine i 0 razlika**. U zadanoj temi se **ne mijenja ništa** — što je i potpis
+latentnog kvara: da je bilo razlike, popravak bi bio prevelik.
+
+#### Dvije nove brane, obje obrnuto provjerene
+
+- **`check:palette` zabrana #4** — zakucana boja teksta na **potomku** ispune marke.
+  Smije biti **tvrda**, a ne čegrtaljka, jer je izmjereno **0 lažnih pogodaka** na cijelom
+  repozitoriju. Mutacija: vraćena bijela → **izlaz 1**, oba selektora imenovana.
+- **`npm run check:contrast:live`** — izračunati kontrast u pregledniku, 4 teme × 11 ruta.
+  Nije u preflightu (traži preglednik i poslužitelj) — stoji uz `css:diff` i `check:cdn:live`.
+  Mutacija: pušten na stanje **prije** §10.1 → **izlaz 1**, i to točno na `1.13`.
+
+#### 🧭 Dvije greške u vlastitoj mjeri, obje uhvaćene prije nego su nekoga zavele
+
+1. **Prvo mjerenje je dalo 18 nalaza; sedamnaest ih je bio artefakt.** Promjena teme pokreće
+   **prijelaze boje**, a mjerilo se 120 ms poslije — dakle **na pola prijelaza**, pa je
+   sonda prijavljivala „sivo na sivom" u temi koja te boje uopće nema. Ista zamka koju je
+   **ALAT-1** već platio u `css:diff`: prijelaz se mora **dovršiti**, ne dočekati na sreću.
+   *Da je nalaz otišao dalje kakav je bio, potrošili bismo dan na kvarove kojih nema.*
+2. **Sonda je lažno optužila `.crumb-sep`** (razmaknicu `›` u mrvici). Taj element **već
+   nosi `aria-hidden="true"`** — dakle izričito je proglašen ukrasnim, a WCAG ukrasnom
+   sadržaju kontrast **ne mjeri**. Popravak je otišao u **mjeru**, ne u kod.
+
+#### ⛔ Što se NAMJERNO ne tvrdi
+
+- **536 mjerenja iza gradijenta ili slike je preskočeno.** To je poznata rupa i pokriva ju
+  zabrana #4 — ali samo za **ispunu marke**.
+- **Semantičke ispune nisu pokrivene, i ondje isti kvar POSTOJI.** Izmjereno na `chalk`:
+  bijelo na `--success` = **2.14**, na `--danger` = **3.12**, na `--secondary` = **3.00**
+  (prag za tekst je 4.5). Popravak traži **nove tokene** (`--on-success`, `--on-danger`),
+  dakle odluku o paleti — ne mehaničku izmjenu. **Leonova odluka**, vodi se u `BACKLOG.md`.
+- **Jedna imenovana iznimka** (`scripts/contrast-live-allow.json`): ikona kategorije u
+  napretku, **2.15–2.80**. Njezina boja **ne dolazi iz CSS-a nego iz SADRŽAJA**
+  (`js/progress.js` stavlja `data.color` inline na glif) — isti razred koji je za **ispune**
+  već riješen s `inkForTint()` (BUG-024), a za **tekst na svijetloj plohi** ekvivalent još
+  ne postoji. Glif stoji uz `<strong>` naziv kategorije, pa nije jedini nositelj značenja.
+  Rješava se u **C5a**, čija je to površina.
+  ⚠️ Iznimka je **imenovana, ne prešućena** — i popis je kratak namjerno: čim naraste,
+  prestaje biti iznimka i postaje tepih.

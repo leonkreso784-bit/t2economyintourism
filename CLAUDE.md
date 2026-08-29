@@ -81,7 +81,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 | `check:docs` | jedan aktivni plan · svaki `.md` u indeksu · nula mrtvih poveznica · **nula ćirilice** u kodu i sadržaju (popis datoteka se **čita s diska**, BUG-034) |
 | `check:tailwind` | 6 brana oko Tailwind sloja (dinamička imena klasa · sudar s legacy klasom · `@source` ugovor · klase bez bundlea · šum · **sudar `@keyframes`**) |
 | `check:cdn` | vanjski podresursi imaju **SRI + `crossorigin` + verzioniran URL**; `check:cdn:live --verify` uspoređuje bajtove s izdavačevim hashem (mrežno) |
-| `check:palette` | **čegrtaljka**: broj ostataka stare palete ne smije **porasti** (`--update` spušta osnovicu). Uz nju **tri tvrde zabrane**: zakucan tekst na ispuni marke · `--primary-light` kao tekst · **zakucana tamna ploha** |
+| `check:palette` | **čegrtaljka**: broj ostataka stare palete ne smije **porasti** (`--update` spušta osnovicu). Uz nju **četiri tvrde zabrane**: zakucan tekst na ispuni marke · isto to na **POTOMKU** ispune (ispuna i boja teksta u dva pravila) · `--primary-light` kao tekst · **zakucana tamna ploha** |
 | `check:orphan-css` | **čegrtaljka**: klasa u `css/**` koju ne spominje ni markup, ni JS, ni gradivo, ni test. Osnovica ih **imenuje** — dio je legitiman (KaTeX; `lb-color-*` nastaje u runtimeu) |
 | `check:safearea` | `env(safe-area-inset-*)` samo u `css/variables.css`, drugdje `var(--safe-*)` — pravilo pisano golim `env()` je **nemjerljivo** |
 | `check:budget` | posjetiteljev put: **nijedna editorska datoteka** + **≤ 200 KB prenesenih** skripti (mjeri PRENESENE bajtove, ne disk) |
@@ -93,6 +93,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 | naredba | što radi | zašto nije u preflightu |
 |---|---|---|
 | `npm run css:diff` | izračunati stilovi u pravom Chromiumu, radno stablo vs git-referencu, 3 širine. Referencu vadi u **`git worktree`** → premota **cijelo stablo**, pa vidi i seobu vrijednosti iz markupa u CSS. (`--css-only` = stari način, sam upozorava da za to laže; **`CSS_DIFF_ALL=1`** = svi promijenjeni elementi, ne prvih 8) | preglednik + port |
+| `npm run check:contrast:live` | kontrast kakav se STVARNO iscrta: 4 teme × 11 ruta. `check:contrast` čita tokene i ne zna KORISTI li ih CSS — ovo mjeri ekran; iznimke **imenovane** u `scripts/contrast-live-allow.json` | preglednik + poslužitelj |
 | `npm run build:og` | crta `og-cover.png` **1200×630** (boje iz tokena, tekst iz i18n) | preglednik; PNG se **commita**, dimenzije mjeri `check:seo` |
 | `npm run css:debt` | što je ostalo za C4–C7: po cigli datoteke, redci, `!important` izvan komentara | read-only, **nije gate** — plan je do 2026-08-25 te brojke nosio **ručno** i obje su ostarile |
 | `npm run palette:breakdown` | razloži ostatak palete po **POSLJEDICI** (nevidljiv tekst · blijede plohe · stara paleta) | read-only, **nije gate** |
@@ -174,6 +175,8 @@ napredak stečen offline se po povratku mreže **spoji bez gubitka**.
 **🟢 TEKUĆA FAZA = C4** → C5a → C5b → C6 → C7. ✅ **C4a ISPUNJEN** (grana `feat/c4-browse-lekcije`):
 `subject-selector.css` je **obrisana, ne migrirana** — nije ju spominjao nitko, a **gazila je**
 `pages.css`. **C4b = prava migracija** i tek ona piše utilityje. Zašto i mjere: spec **§10.1**.
+⚠️ **§10.2**: isti razred kvara potražen sustavno → **9 mjesta** popravljeno, dvije nove brane.
+**Ostaje Leonu:** semantičke ispune traže nove tokene (`--on-success`…) — v. `BACKLOG.md`.
 **K4 se NE radi zasebno** — utapa se u **P2** (ista pločica, isti ekran). **K5** (editor
 dvojezično) čeka i ne blokira ništa: 28 od 48 `studio.*` ključeva nedostaje, a `block-editor.js`
 i `admin-editors.js` imaju **nula** `t()` poziva.
@@ -249,13 +252,11 @@ Leon je postavio tri pitanja i na moje preporuke **nije odgovorio**. Brojke su i
   **dvoje**, uz e-mail+lozinku kao jedini put. Google je besplatan i ne čeka redizajn; **Apple
   ~99 $/god** i nema smisla bez iOS aplikacije; „Sign in with ChatGPT" je **NEPOTVRĐEN** — ne
   obećavati.
-- **Self-host vs OAuth — redoslijed.** Seoba je od 2026-08-27 **odlučena** (v. §Seoba gore); sve
-  tri čekajuće auth-stavke su **Supabase-konfiguracija**, pa bi se prije seobe radile dvaput
-  (mijenja se URL, dakle i redirect URI). ⚠️ **Dugujem ti odgovor:** smije li staging biti na
-  drugom laptopu — da za razvoj, ali CI ne može do laptopa iza kućnog rutera bez tunela, a brana
-  koja ovisi o tome je li laptop upaljen prestaje biti brana.
-  ➕ Migracija je **jeftinija nego zapisano**: nepovratan je samo sadržaj dvaju Storage bucketa
-  (`node-images`, `lesson-images`) — njih nema u gitu.
+- **Self-host vs OAuth — redoslijed.** Sve tri auth-stavke su **Supabase-konfiguracija**, pa bi se
+  prije seobe radile dvaput (mijenja se URL → i redirect URI). ⚠️ **Dugujem ti odgovor:** staging na
+  drugom laptopu — za razvoj da, ali **brana koja ovisi o tome je li laptop upaljen nije brana**
+  (CI ne može iza kućnog rutera bez tunela). ➕ Seoba je jeftinija nego zapisano: nepovratan je samo
+  sadržaj dvaju Storage bucketa — njih nema u gitu.
 
 ### Stalno — vrijedi neovisno o fazi
 
@@ -270,10 +271,9 @@ Leon je postavio tri pitanja i na moje preporuke **nije odgovorio**. Brojke su i
 - **STAGING Supabase:** `sokrat-staging` (ref `czljmvigkgiajzjxtndq`) — write/draft testovi, da
   prod-audit ostane čist. `test:authed`/`rls-check` gađaju staging kad su `STAGING_*` u `.env`;
   seed = `node scripts/seed-staging.js`.
-- **⏳ Grane izvan `main`-a:** koje su — zna `git branch --no-merged main`, ne ova datoteka.
-  **Pouka za svaki zaostali content-PR:** grane znaju izgledati kao platformski zahvat, a nositi
-  isključivo `?v=` tokene (izmjereno: `git diff` bez token-redaka = 0) → razrješenje je *uzmi
-  `main`, pa `npm run bump`*, ne ručno spajanje. **Token nije sadržaj nego izlaz alata.**
+- **⏳ Grane izvan `main`-a:** zna ih `git branch --no-merged main`, ne ova datoteka. **Pouka za
+  zaostali content-PR:** grana zna izgledati kao platformski zahvat a nositi samo `?v=` tokene →
+  razrješenje je *uzmi `main`, pa `npm run bump`*. **Token nije sadržaj nego izlaz alata.**
 - **👥 Saša Vudrag** (content-suradnik) — opseg **SAMO HR sadržaj + PR-workflow**
   (`docs/workflow/TEAM.md`, role-router gore; ADR-023). **Na stanci je dok frontend redizajn nije
   gotov** (razlog je mehanički: C2–C7 bumpaju iste tokene i prepisuju `index.html`, koje dira i
@@ -282,15 +282,12 @@ Leon je postavio tri pitanja i na moje preporuke **nije odgovorio**. Brojke su i
 - **HR-ekspanzija:** HR 1. god × 3 smjera FMTU dijele vezne predmete (ADR-022). Kad HR program
   bude potpun → **HR u Supabase** (Leon/Claude `migrate-content.js`, ne Saša). [[hrv-program]]
 - **PAUZIRANO za nas:** 3. godina · novi EN sadržaj (ADR-018: student uploada PODATKE, nikad KOD).
-- **✅ SVE TRI „ZA LEONOVU RUKU" STAVKE SU ODRAĐENE (2026-08-28), provjereno mjerenjem:**
-  `bright-function` i `quick-api` **obrisani** → `npm run check:functions` je **ZELEN** prvi put
-  („produkcija ima točno ono što repozitorij opisuje"); **min. lozinka 6 → 8**; **leaked password
-  protection UKLJUČENA** → advisori **16 → 15 WARN**. ⚠️ Zadnje dvoje ovisi o **Pro planu, koji
-  traje ~mjesec** — poslije seobe na self-host provjeri iznova.
-  ✅ **AUTH-1 (2026-08-28):** `authError()` mapira auth-greške na i18n, sirova poruka je zadnji
-  fallback (`tests/unit/auth-error.test.js`). ⚠️ **NE „popravljaj" `js/auth.js:343`** — tvrdnja o
-  `WeakPasswordError` je **oborena**: u zakucanom `supabase-js@2.110.8` slaba lozinka dolazi kao
-  `data.weakPassword` uz `error: null`. Zapis je opisivao stariji SDK.
+- **✅ Tri „za Leonovu ruku" stavke odrađene (2026-08-28):** strane Edge Functions obrisane →
+  `check:functions` **ZELEN** prvi put; **min. lozinka 6 → 8**; **leaked-password zaštita ON**
+  (advisori 16 → 15 WARN). ⚠️ Zadnje dvoje ovisi o **Pro planu (~mjesec)** — poslije seobe provjeri.
+  ✅ **AUTH-1:** `authError()` mapira auth-greške na i18n (`tests/unit/auth-error.test.js`).
+  ⚠️ **NE „popravljaj" `js/auth.js:343`** — tvrdnja o `WeakPasswordError` je **oborena**: u
+  zakucanom `supabase-js@2.110.8` slaba lozinka dolazi kao `data.weakPassword` uz `error: null`.
 - **Sitni dug (ne blokira):** siročad u Storageu · advisor-WARN `snapshot_content_version` /
   `handle_new_user` · staging poravnati s `supabase/f1-nodes.sql`. ⚠️ **`is_admin()` se NE smije
   revokeati `authenticated`-u** — zovu ga RLS politike kao pozivatelj. Advisori PROD: **0 ERROR,

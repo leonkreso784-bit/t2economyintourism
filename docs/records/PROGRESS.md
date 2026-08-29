@@ -5,6 +5,36 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-29 — potraga za kvarovima koji se ne vide (isti dan, poslije C4a)
+
+**Povod je Leonov izbor.** Kvar iz C4a našao se slučajno; ponuđena su tri smjera, a Leon je izabrao
+da se pitanje *„koliko ih još ima"* zatvori **mjerenjem**, ne čekanjem sljedećeg sretnog slučaja.
+
+**Razred kvara ima ime: ispuna i boja teksta odlučuju se na RAZLIČITIM mjestima.** U C4a dvije
+datoteke, ovdje **dva pravila** — ispravno (`var(--on-primary)`) pa odmah ispod njega zakucana
+bijela na djetetu. Na `chalk` temi to je **1.68** na prekidaču načina učenja.
+⚠️ **Latentno, ne živo:** birač tema ne postoji u markupu, pa je `academic` jedina dohvatljiva.
+
+**Isporučeno:** 9 mjesta popravljeno (`color: inherit`, odnosno `var(--on-primary)` ondje gdje
+roditelj nema vlastiti `color`) · **`check:palette` zabrana #4** (tvrda — 0 lažnih pogodaka
+izmjereno) · **`npm run check:contrast:live`** (4 teme × 11 ruta, izvan preflighta, uz `css:diff`).
+
+**Testirano:** `css:diff` **3393 usporedbe, 0 razlika** (popravak je nevidljiv u zadanoj temi — to je
+potpis latentnog kvara) · mutacija obje brane (izlaz 1 kad treba) · brana puštena na stanje **prije**
+C4a → hvata `1.13` · `preflight` **EXIT 0** · puna Playwright suita.
+
+**⚠️ Dvije greške u vlastitoj mjeri:** prvo mjerenje je dalo **18 nalaza od kojih 17 artefakata**
+(mjerilo se **na pola prijelaza boje** — ista zamka koju je ALAT-1 platio u `css:diff`) · sonda je
+**lažno optužila `.crumb-sep`**, koji već nosi `aria-hidden="true"` → popravak je otišao u **mjeru**,
+ne u kod.
+
+**Ostaje Leonu:** semantičke ispune (`--success` 2.14, `--danger` 3.12, `--secondary` 3.00 na
+`chalk`) traže **nove tokene** — odluka o paleti, ne mehanička izmjena. U `BACKLOG.md`.
+
+**Slijedi:** **C4b** — prava Tailwind migracija browsea i lekcija.
+
+---
+
 ## 2026-08-29 — cigla C4a: mrtva površina odlazi (grana `feat/c4-browse-lekcije`)
 
 **Mjera prije koda promijenila je posao.** Umjesto „kako migrirati `subject-selector.css`" mjereno

@@ -1,0 +1,8 @@
+{
+  "#categoryBars>div.category-bar>i.fas": {
+    "mjereno": "2.15-2.80 (prag 3.0), teme academic i paper",
+    "zasto": "Boja NE dolazi iz CSS-a nego iz SADRZAJA: js/progress.js stavlja data.color kategorije inline na glif. To nije kvar u stilu nego posljedica toga da sadrzaj bira boju TEKSTA. Isti razred koji je vec jednom ugrizao (BUG-024) i za ISPUNE je rijesen funkcijom inkForTint(); za TEKST na svijetloj plohi ekvivalent jos ne postoji.",
+    "ublazavanje": "Glif stoji neposredno uz <strong>naziv kategorije</strong>, pa nije jedini nositelj znacenja.",
+    "gdje se rjesava": "C5a (progress je njegova povrsina) — v. BACKLOG.md"
+  }
+}

@@ -256,7 +256,9 @@
     margin: 0 auto 1rem;
 }
 
-.score-circle span { font-size: 2rem; font-weight: 700; color: white; }
+/* `--on-primary`, ne `inherit`: `.score-circle` NEMA vlastiti `color`, pa bi
+   nasljedjivanje uzelo boju okolnog teksta umjesto boje NA ispuni marke. */
+.score-circle span { font-size: 2rem; font-weight: 700; color: var(--on-primary); }
 
 .results-stats {
     display: flex;

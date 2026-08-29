@@ -3,6 +3,52 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](../plan/ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
+## 🔥 ZA LEONOVU ODLUKU — nedostaju tokeni `--on-success` / `--on-danger` (izmjereno 2026-08-29)
+
+Isti razred kvara koji je C4a zatvorio na **ispuni marke** postoji i na **semantičkim** ispunama,
+ali se ondje **ne da popraviti mehanički** — jer token za boju teksta na njima **ne postoji**.
+
+Izmjereno na temi `chalk` (bijelo naspram ispune, prag za tekst je **4.5**):
+
+| pravilo | ispuna | bijelo daje |
+|---|---|---|
+| `.answer-btn.correct` (`quiz-section.css`) | `--success` `#8fbf6b` | **2.14** ⛔ |
+| `.answer-btn.wrong` (`quiz-section.css`) | `--danger` `#e3705c` | **3.12** ⛔ |
+| `.action-btn.tertiary` (`home-section.css`) | `--secondary` `#6da34d` | **3.00** ⛔ |
+
+U ostale tri teme sve prolazi (5.30–8.10) — problem je **samo na `chalk`**, jer su ondje semantičke
+boje svijetle.
+
+**Zašto ovo nije popravljeno odmah:** marka već ima `--on-primary` (`--color-on-brand`), koji je
+**bijel u tri teme i taman u `chalk`** — dakle obrazac je mehanički. Ali dodati `--on-success` i
+`--on-danger` znači **proširiti sustav tokena kroz sve četiri teme**, a paleta je Leonova odluka
+(dvije tamne palete su već jednom pale na živom ekranu). **Ne dira se bez njegove riječi.**
+
+⚠️ **Nije hitno:** birač tema **ne postoji u markupu**, pa je `chalk` danas nedohvatljiv. Postaje
+hitno **istoga dana kad birač izađe** — a to je opisano kao „posao od jednog popodneva".
+
+**Kad se odluči:** zabrana #4 u `check:palette` proširuje se s `MARKA_BG` na semantičke tokene,
+i tada pokriva i ovo. Zapis: spec §10.2.
+
+---
+
+## ➖ Tinta iz SADRŽAJA kao boja TEKSTA — ikona kategorije u napretku (2026-08-29)
+
+`js/progress.js` stavlja `data.color` kategorije **inline na glif** (`<i style="color: …">`). Na
+svijetloj plohi to daje **2.15–2.80** (prag za glif **3.0**) u temama `academic` i `paper`.
+
+**To nije kvar u stilu nego posljedica toga da SADRŽAJ bira boju TEKSTA.** Isti razred je za
+**ISPUNE** već riješen — `inkForTint()` u `js/navigation.js` bira tintu po luminanciji (BUG-024) —
+ali za **tekst na svijetloj plohi** ekvivalent ne postoji.
+
+**Ublažavajuće:** glif stoji neposredno uz `<strong>` naziv kategorije, pa **nije jedini nositelj
+značenja**.
+
+Vodi se kao **imenovana iznimka** u `scripts/contrast-live-allow.json` (ne prešućena — brana ju
+ispisuje pri svakom pokretanju). **Rješava se u C5a**, čija je to površina.
+
+---
+
 ## ✅ RIJEŠENO 2026-08-25 — `TESTING.md` je prestao biti inventar
 
 > **Izvedena je druga opcija (skupine).** Odluku je potvrdilo mjerenje: **52 od 53 speca već

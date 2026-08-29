@@ -1425,7 +1425,7 @@ section[id$="-page"] {
   color: var(--on-primary);
 }
 .study-nav-btn.active span, .study-nav-btn.active i {
-  color: white;
+  color: inherit;
 }
 .study-content {
   padding: 1rem;
@@ -2129,7 +2129,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   flex-shrink: 0;
 }
 .category-btn.active i {
-  color: white;
+  color: inherit;
 }
 .category-btn span {
   font-weight: 600;
@@ -2138,7 +2138,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   flex: 1;
 }
 .category-btn.active span {
-  color: white;
+  color: inherit;
 }
 .category-btn small {
   color: var(--text-muted);
@@ -2655,7 +2655,7 @@ sokrat-modal.sokrat-confirm-modal > * {
 .score-circle span {
   font-size: 2rem;
   font-weight: 700;
-  color: white;
+  color: var(--on-primary);
 }
 .results-stats {
   display: flex;
@@ -5590,7 +5590,7 @@ sokrat-modal.sokrat-confirm-modal > * {
 }
 #learn .learn-container > h1 i {
   font-size: 1.2rem;
-  color: white;
+  color: inherit;
 }
 #learn .learn-filter {
   display: flex;
@@ -5685,7 +5685,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   font-size: 1rem;
   font-weight: 600;
   margin: 0;
-  color: white;
+  color: inherit;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -5695,7 +5695,7 @@ sokrat-modal.sokrat-confirm-modal > * {
 #learn .learn-card-header i {
   font-size: 1.1rem;
   flex-shrink: 0;
-  color: white;
+  color: inherit;
 }
 #learn .learn-card-header span {
   font-size: 0.8rem;

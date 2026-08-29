@@ -93,9 +93,11 @@
 }
 
 .category-btn i { font-size: 1.5rem; color: var(--primary); width: 40px; text-align: center; flex-shrink: 0; }
-.category-btn.active i { color: white; }
+/* ⚠️ `inherit`, NE zakucana bijela: roditelj vec odlucuje bojom teme (`--on-primary`),
+   a dijete ju je do 2026-08-29 ponistavalo. Na kredi je to davalo kontrast 1.68. */
+.category-btn.active i { color: inherit; }
 .category-btn span { font-weight: 600; color: var(--text-primary); font-size: 0.9rem; flex: 1; }
-.category-btn.active span { color: white; }
+.category-btn.active span { color: inherit; }
 .category-btn small { color: var(--text-muted); font-size: 0.75rem; flex-shrink: 0; }
 .category-btn.active small { color: rgba(255,255,255,0.8); }
 

@@ -384,6 +384,73 @@ if (tamnePlohe.length) {
   process.exit(1);
 }
 
+/* ── TVRDA ZABRANA #4: ZAKUCAN TEKST NA POTOMKU ISPUNE MARKE ─────────────────
+ * Povod (2026-08-29, C4a): zabrana #1 traži ispunu marke i zakucanu boju **u
+ * ISTOM pravilu**. Ali kvar se najčešće piše u DVA pravila — roditelj dobije
+ * ispunu i ispravan `var(--on-primary)`, pa ga sljedeće pravilo odmah poništi
+ * na djetetu:
+ *
+ *     .study-nav-btn.active        { background: var(--primary); color: var(--on-primary); }
+ *     .study-nav-btn.active span,
+ *     .study-nav-btn.active i      { color: white; }          ← poništava ispravno iznad
+ *
+ * Na temi `chalk` je marka amber #f2c14e, pa je bijeli tekst davao **1.68**
+ * (prag 4.5) na prekidaču načina učenja — dakle na najkorištenijem ekranu.
+ * Izmjereno je devet takvih mjesta u pet datoteka, i **nijedno** nije vidjela
+ * zabrana #1, jer nijedno nema ispunu u vlastitom bloku.
+ *
+ * ⚠️ Sedam od devet nije vidio ni preglednik: sjede na GRADIJENTU, gdje se
+ * kontrast ne da svesti na dva broja pa ih mjera pošteno preskače. Statička
+ * analiza i preglednik hvataju različite bugove (nalaz C1 br. 4) — ova zabrana
+ * pokriva upravo ono što mjerenje u pregledniku ne može.
+ *
+ * Zašto smije biti TVRDA, a ne čegrtaljka: izmjereno je 0 lažnih pogodaka na
+ * cijelom repozitoriju. (Srodna ideja — „ista klasa u dva modula" — odbačena je
+ * baš zato što bi dala 29 pogodaka od kojih 28 legitimnih.)
+ *
+ * ⚠️ Što OVA zabrana NE pokriva: ispune SEMANTIČKIM tokenom (`--success`,
+ * `--danger`, `--secondary`). Ondje isti kvar postoji — na `chalk` bijelo na
+ * `--success` daje 2.14 — ali popravak traži NOVE tokene (`--on-success`…),
+ * dakle odluku o paleti, ne mehaničku izmjenu. Vodi se u `BACKLOG.md`. */
+const POTOMAK_ISPUNE = (function () {
+  const ispuna = new Set();
+  const zakucani = [];
+  for (const abs of files) {
+    if (!abs.endsWith('.css')) continue;
+    if (abs === SOURCE_OF_TRUTH || abs === GENERATED) continue;
+    const rel = path.relative(ROOT, abs).replace(/\\/g, '/');
+    const css = stripComments(fs.readFileSync(abs, 'utf8'));
+    const re = /([^{}]+)\{([^{}]*)\}/g;
+    let m;
+    while ((m = re.exec(css)) !== null) {
+      const sels = m[1].split(',').map((x) => x.trim().replace(/\s+/g, ' ')).filter(Boolean);
+      /* pseudo-element se skida: `.a::before` je i dalje ploha `.a` za potomke */
+      if (MARKA_BG.test(m[2])) for (const x of sels) ispuna.add(x.replace(/::?[a-z-]+(\([^)]*\))?$/i, '').trim());
+      if (ZAKUCAN_TEKST.test(m[2])) for (const x of sels) zakucani.push({ rel: rel, sel: x });
+    }
+  }
+  const out = [];
+  for (const z of zakucani) {
+    for (const i of ispuna) {
+      if (!i || z.sel === i) continue;          // isti selektor → to je zabrana #1
+      if (z.sel.startsWith(i + ' ') || z.sel.startsWith(i + '>')) {
+        out.push(z.rel + '  →  ' + z.sel.slice(0, 52) + '   (ispuna: ' + i.slice(0, 34) + ')');
+        break;
+      }
+    }
+  }
+  return out;
+})();
+
+if (POTOMAK_ISPUNE.length) {
+  console.log('\n❌ ' + POTOMAK_ISPUNE.length + ' pravilo/a zakucava boju teksta na POTOMKU ispune marke:');
+  POTOMAK_ISPUNE.slice(0, 20).forEach((r) => console.log('      ' + r));
+  console.log('\n   Roditelj već bira boju po temi (`var(--on-primary)`), a ovo ju poništava.');
+  console.log('   Popravak je `color: inherit` — dijete preuzima roditeljevu odluku.');
+  console.log('   (Bijelo na kredi #f2c14e = 1.68; `--on-primary` = 9.87.)\n');
+  process.exit(1);
+}
+
 if (grand < allowedTotal) {
   console.log(`\n✅ čisto — i PALO za ${allowedTotal - grand}. Spusti branu: node scripts/check-palette.js --update\n`);
 } else if (grand === 0) {

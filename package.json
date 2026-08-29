@@ -34,6 +34,7 @@
     "check:cdn:live": "node scripts/check-cdn.js --verify",
     "check:palette": "node scripts/check-palette.js",
     "check:orphan-css": "node scripts/check-orphan-css.js",
+    "check:contrast:live": "node scripts/check-contrast-live.js",
     "palette:breakdown": "node scripts/palette-breakdown.js",
     "check:functions": "node scripts/check-edge-functions.js",
     "css:debt": "node scripts/css-debt.js",

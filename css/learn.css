@@ -46,7 +46,8 @@
 
 #learn .learn-container > h1 i {
     font-size: 1.2rem;
-    color: white;
+    /* naslijedi `--on-primary` s roditelja; zakucana bijela ga je ponistavala */
+    color: inherit;
 }
 
 /* =====================================================
@@ -180,7 +181,8 @@
     font-size: 1rem;
     font-weight: 600;
     margin: 0;
-    color: white;
+    /* boja dolazi s `.learn-card-header` (`--on-primary`), ne zakucano */
+    color: inherit;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -191,7 +193,7 @@
 #learn .learn-card-header i {
     font-size: 1.1rem;
     flex-shrink: 0;
-    color: white;
+    color: inherit;
 }
 
 #learn .learn-card-header span {

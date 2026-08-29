@@ -200,9 +200,14 @@
     color: var(--on-primary);
 }
 
+/* ⚠️ `inherit`, NE zakucana bijela. Pravilo IZNAD vec bira boju po temi
+   (`--on-primary`), a ovo ju je ponistavalo: na temi `chalk` je ispuna marke
+   amber #f2c14e, pa je bijeli tekst davao kontrast 1.68 (prag 4.5).
+   Kvar je bio nevidljiv branama jer ispuna i boja teksta zive u DVA RAZLICITA
+   PRAVILA, a `check:palette` je gledao samo unutar jednog. */
 .study-nav-btn.active span,
 .study-nav-btn.active i {
-    color: white;
+    color: inherit;
 }
 
 .study-content {
