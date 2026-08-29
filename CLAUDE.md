@@ -161,28 +161,26 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 **landing C+D** · prije toga C0–C3 i sve starije. Točan SHA/token/Vercel-ref se **namjerno ne
 prepisuje** ovamo (ADR-027) — zna ih zadnji **🚀** redak CHANGELOG-a.
 
-**✅ GOTOVO, NIJE DEPLOYANO** — dvije grane. `feat/about`: **`about`** (§9.14),
-**PREDSTAVLJANJE + SEO** (§9.15), **D1 + D2** (dopune). `feat/polica` (grana se od nje):
-**P1 + P2** (§9.17–9.18) — predmet se skida na uređaj, polica ima dva izvora; **K4 potrošen**,
-**N2 pola** (polica pokazuje skinuto, ne sve što učiš). Time je i **phone-osnovica PRVI PUT
-PRAZNA** — brana traži **nulu**; brojku zna `tests/phone-baseline.json`, ne ova proza.
-⚠️ **Iz D2 ostaje živo pravilo:** `answer` je obavezan i drži **prvi** odgovor i kad postoji
-`answers` — zbog **keširane stare skripte**, ne zbog urednosti sheme.
+**✅ GOTOVO, NIJE DEPLOYANO** — **popis grana i njihov sadržaj NE STOJI ovdje** (ADR-027): zna ih
+`git branch --no-merged main` i **🚀**-redci CHANGELOG-a, a ovakav se inventar raziđe s repozitorijem
+istog dana. Ovdje ostaje samo ono što je **živo pravilo**, a ne stanje:
+⚠️ **Iz D2:** `answer` je obavezan i drži **prvi** odgovor i kad postoji `answers` — zbog
+**keširane stare skripte**, ne zbog urednosti sheme.
+⚠️ **N2 je POLA:** polica pokazuje **skinuto**, ne uniju skinutog i onoga što se uči.
 
 **✅ FAZA POLICA JE ZATVORENA** — **P1 · P2 · P3 · P4 svi ispunjeni** (spec §9.17–9.21).
 Kriterij je **mjeren, ne tvrđen**: skinut predmet se otvara bez mreže, **preživi deploy**, a
 napredak stečen offline se po povratku mreže **spoji bez gubitka**.
-**🟢 TEKUĆA FAZA = C4** → C5a → C5b → C6 → C7. ✅ **C4a ISPUNJEN** (grana `feat/c4-browse-lekcije`):
-`subject-selector.css` je **obrisana, ne migrirana** — nije ju spominjao nitko, a **gazila je**
-`pages.css`. **C4b = prava migracija** i tek ona piše utilityje. Zašto i mjere: spec **§10.1**.
-⚠️ **§10.2**: isti razred kvara potražen sustavno → **9 mjesta** popravljeno, dvije nove brane.
+✅ **C4 JE ISPUNJEN** (grana `feat/c4-browse-lekcije`) — C4a (§10.1) · §10.2 · **C4b (§10.3) =
+prva migrirana površina u fazi**, i prva koja piše utilityje. **🟢 SLJEDEĆA CIGLA = C5a** → C5b
+→ C6 → C7. ⚠️ **Dva pravila iz C4b vrijede za svaku preostalu ciglu:** ① prije nego pravilo
+postane utility, **provjeri tuče li ga danas netko** — utilityji stoje zadnji, pa migracija
+oživi pravilo koje je trebalo gubiti; ② **`css:diff` mjeri samo `/` ako mu rutu ne predaš**
+(`CSS_DIFF_RUTE`) — sve što crta JS ondje ne postoji.
 **Ostaje Leonu:** semantičke ispune traže nove tokene (`--on-success`…) — v. `BACKLOG.md`.
-**K4 se NE radi zasebno** — utapa se u **P2** (ista pločica, isti ekran). **K5** (editor
-dvojezično) čeka i ne blokira ništa: 28 od 48 `studio.*` ključeva nedostaje, a `block-editor.js`
-i `admin-editors.js` imaju **nula** `t()` poziva.
-**A1 + A0: REDOSLIJED NIJE PRESUĐEN** (Leon, 2026-08-19: *„ne znam još, to ćemo se dogovorit"*).
-Kad dođe, idu **zajedno**: `#authModal` je građen za jedan put, a OAuth-gumbi su primarni i idu
-IZNAD e-maila, pa se inače prepravlja dvaput.
+**K4** se NE radi zasebno (utopljen u **P2**). **K5** (editor dvojezično) čeka i ne blokira ništa.
+**A1 + A0: REDOSLIJED NIJE PRESUĐEN** (Leon, 2026-08-19: *„ne znam još, to ćemo se dogovorit"*);
+kad dođe, idu **zajedno** — `#authModal` je građen za jedan put, pa se inače prepravlja dvaput.
 
 ### 🚚 SEOBA JE ODLUČENA (Leon, 2026-08-27) — **s Vercela na Hostinger + self-host Supabase**
 
@@ -237,8 +235,8 @@ pushati bez OK-a, nego se na to ne smije ni **nagovarati**. [[leon-decides-deplo
 
 Tvrdnja *„vježbe su KÔD"* je **oborena mjerenjem** (65 % je čisti podatak; kôd je samo **formula**).
 Smjer: formula seli u **imenovanu knjižnicu recepata** → vježba postaje 100 % podatak i **BUG-012 se
-smije umiroviti**. Odbačeni: evaluator izraza i sandbox za korisnički JS (ruši ADR-018). Brojke i
-obrazloženje: spec §9.5. [[exercises-code-vs-data]]
+smije umiroviti**. Odbačeni (ruše ADR-018): evaluator izraza i sandbox za korisnički JS. §9.5.
+[[exercises-code-vs-data]]
 
 ### ❓ OTVORENO — RAZGOVARANO 2026-08-24, ALI NIJE PRESUĐENO. Ne planirati kao dogovoreno.
 
@@ -253,10 +251,9 @@ Leon je postavio tri pitanja i na moje preporuke **nije odgovorio**. Brojke su i
   ~99 $/god** i nema smisla bez iOS aplikacije; „Sign in with ChatGPT" je **NEPOTVRĐEN** — ne
   obećavati.
 - **Self-host vs OAuth — redoslijed.** Sve tri auth-stavke su **Supabase-konfiguracija**, pa bi se
-  prije seobe radile dvaput (mijenja se URL → i redirect URI). ⚠️ **Dugujem ti odgovor:** staging na
-  drugom laptopu — za razvoj da, ali **brana koja ovisi o tome je li laptop upaljen nije brana**
-  (CI ne može iza kućnog rutera bez tunela). ➕ Seoba je jeftinija nego zapisano: nepovratan je samo
-  sadržaj dvaju Storage bucketa — njih nema u gitu.
+  prije seobe radile **dvaput** (mijenja se URL → i redirect URI). ⚠️ **Dugujem ti odgovor:**
+  staging na drugom laptopu — za razvoj da, ali **brana koja ovisi o tome je li laptop upaljen
+  nije brana**. ➕ Seoba je jeftinija nego zapisano: nepovratan je samo sadržaj dvaju bucketa.
 
 ### Stalno — vrijedi neovisno o fazi
 

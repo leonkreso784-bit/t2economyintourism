@@ -5,6 +5,38 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-29 — C4b: prva migrirana površina (isti dan, poslije potrage za kvarovima)
+
+**Cigla je isporučena u dva commita** — `C4b/1` browse, `C4b/2` lekcije. Puni zapis s mjerama:
+spec **§10.3**; sažetak: `CHANGELOG.md`.
+
+**Prva cigla u fazi koja stvarno piše Tailwind utilityje na površinu.** C1 je namjerno završio s
+nula generiranih, T5 ih je uveo samo za ritam heroja — sve dosad je bila priprema.
+
+**Tri nalaza koja se ne bi vidjela čitanjem koda:**
+
+1. **`min-height` ljuske stranice je mrtav** (`topbar.css` ga gazi za svih osam ljuski; mjereno
+   792 px u prozoru od 900) — i **ne smije postati utility**, jer utilityji stoje zadnji pa bi
+   pravilo koje je trebalo gubiti počelo pobjeđivati na svim stranicama odjednom.
+2. **Raspored lekcija odlučivale su DVIJE ljestve pragova**, a tri su pravila bila mrtva — među
+   njima `grid-template-columns` na **flex** spremniku, koje se čita kao „dva stupca na malom
+   tabletu" a nije radilo ništa.
+3. **Stupac sadržaja je mjerio svoje dijete, ne sebe** — auto margine gase `stretch` u flex-stupcu.
+
+**Testirano:** `preflight` **EXIT 0** (uklj. `check:tailwind` 6/6, `orphan-css`, `palette`,
+`contrast` kroz 4 teme) · `css:diff` na rutama `#/subjects` i `#/subject/te2`, 3 širine, sve
+razlike objašnjene · ciljani specovi browsea **44 prošlo / 0 palo** · usporedba stare i nove
+ljestve na **14 širina** protiv `git worktree` na prethodnom commitu.
+
+**⚠️ Što NIJE potvrđeno:** **puna Playwright suita**. Pokrenuta je i **prekinuta** jer je Leon
+morao s mreže. To je **prva stvar u sljedećoj sesiji**, prije bilo kakvog novog posla.
+
+**Slijedi:** dovršiti suitu → pa **C5a** (četiri načina uvježbavanja **+ kromo ekrana za učenje**,
+koje je C4b svjesno ostavio jer je to ista površina; ondje su i posljednja dva `!important` izvan
+C7). ⚠️ C5a mora predati svoje rute `css:diff`-u (`CSS_DIFF_RUTE`), inače mjeri prazan ekran.
+
+---
+
 ## 2026-08-29 — potraga za kvarovima koji se ne vide (isti dan, poslije C4a)
 
 **Povod je Leonov izbor.** Kvar iz C4a našao se slučajno; ponuđena su tri smjera, a Leon je izabrao
