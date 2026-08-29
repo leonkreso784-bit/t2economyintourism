@@ -722,6 +722,44 @@ const SOKRAT_CATALOG = {
         },
         dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/ebusiness-hr/*.json)
       }
+    },
+    {
+      id: 'statistics-hr',
+      programId: 'hospitality-management-hr',
+      year: 1, semester: 1,
+      name: 'Statistika',
+      shortName: 'STAT',
+      icon: 'fa-chart-simple',
+      color: '#f43f5e',
+      iconGradient: ['#f43f5e', '#fb7185'],
+      description: 'Statistika (FMTU): osnovni pojmovi (populacija, uzorak, obilježja, ljestvice), srednje vrijednosti (potpune i položajne), mjere disperzije te momenti, asimetrija i zaobljenost; potom uzorci i uzorkovanje, korelacija, regresijska analiza, indeksni brojevi i vremenski nizovi — kvantitativni predmet (KaTeX formule + interaktivne vježbe)',
+      storageKey: 'statistics-hr-progress',
+      features: { blindMap: false, exercises: true },
+      lessons: [
+        { id: 'first-midterm', name: '1. kolokvij', description: 'Osnovni pojmovi statistike, srednje vrijednosti (aritmetička, mod, medijan, kvartili), mjere disperzije (raspon, interkvartil, varijanca, standardna devijacija, koeficijent varijacije) te momenti, asimetrija i zaobljenost' },
+        { id: 'second-midterm', name: '2. kolokvij', description: 'Uzorci i uzorkovanje, korelacija, regresijska analiza, indeksni brojevi te vremenski nizovi' },
+        { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus ispitna pitanja kroz sve teme' }
+      ],
+      content: {
+        // final.js MORA se učitati zadnji (Object.assign M1 + M2 + examPractice).
+        // stat-lib.js se DIJELI s engleskim predmetom — čista matematika bez ijednog
+        // korisnički vidljivog stringa, pa nema smisla duplicirati je u HR mapu.
+        scripts: [
+          'data/statistics-hr/midterm-1.js',
+          'data/statistics-hr/midterm-2.js',
+          'data/statistics-hr/final.js',
+          'data/statistics/stat-lib.js',
+          'data/statistics-hr/exercises.js'
+        ],
+        resolve: {
+          'first-midterm': 'statisticsHrM1',
+          'second-midterm': 'statisticsHrM2',
+          'final': 'statisticsHrFinal'
+        },
+        dataFormat: 'json', // F2 2A.4b (dual-read; study iz data/json/statistics-hr/*.json)
+        codeScripts: ['data/statistics/stat-lib.js', 'data/statistics-hr/exercises.js'], // KOD → uvijek iz datoteke (BUG-012)
+        exercises: 'statisticsHrExercises'
+      }
     }
   ]
 };
