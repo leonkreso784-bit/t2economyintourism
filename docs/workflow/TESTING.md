@@ -60,7 +60,9 @@
 | **autorstvo (UGC + Studio)** | graditelj materijala, blok-editor, media, slike pod vlasničkim prefiksom, stropovi kartica | `my-materials.authed` · `studio.authed` · `node-images.authed` · `card-limits.authed` |
 | **platforma** | Service Worker (offline shell + update-flow), monitoring iza privole, UI-primitivi, i18n, pravne stranice | `sw` · `monitoring` · `components` · `i18n` · `legal` |
 
-⚠️ **`sw.spec.js` je izoliran:** app-testovi imaju `serviceWorkers: 'block'` (u `playwright.config.js`), inače SW presreće `page.route` i lomi npr. dual-read. Samo taj spec ima `test.use({ serviceWorkers: 'allow' })`.
+⚠️ **`sw.spec.js` je izoliran:** app-testovi imaju `serviceWorkers: 'block'` (u `playwright.config.js`), inače SW presreće `page.route` i lomi npr. dual-read. Dva speca imaju `test.use({ serviceWorkers: 'allow' })`: **`sw.spec.js`** (ljuska) i — od cigle P3
+— **`offline-study.spec.js`** (sadržaj skinutog predmeta). Dodaješ li treći, pravilo je isto:
+`allow` samo ondje gdje se SW **mjeri**, jer inače presreće `page.route` i lomi npr. dual-read.
 ⚠️ **Konvencija privole:** specovi koji klikaju donje kontrole pred-postavljaju `localStorage['sokrat-cookie-consent'] = 'denied'` — inače fiksna cookie-traka presreće klik (isti kvar koji je T4 mjerio kao ⑧).
 ⚠️ **Gdje editor živi zna JEDNO mjesto:** `tests/helpers/studio-entry.js`. Do T6 je isti ulaz bio prepisan **sedamnaest puta**. *Ovisnost nije samo „tko spominje" nego i „tko čeka"* — dva speca stranicu ne spominju, ali čekaju njezine globale, pa ne padnu nego **vise**.
 

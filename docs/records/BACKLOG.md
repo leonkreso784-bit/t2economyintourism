@@ -232,8 +232,10 @@ to pitanje: koliko je podvlaka postaje nevažno.
 
 > **STATUS 2026-08-25:** faza **„TELEFON" (T0–T6) je gotova i NA PRODUKCIJI** od 2026-08-24,
 > zajedno s BUG-030/031/032; phone-osnovica je **prazna**, pa brana od tada traži **nulu**.
-> **Faza „POLICA" (P1–P4) NIJE počela** i ostaje sljedeći ponuđeni posao. Nalaz ispod ostaje
-> jer objašnjava **zašto su brane takve kakve jesu**.
+> **AŽURIRANO 2026-08-28: faza „POLICA" (P1–P4) je ISPUNJENA** (spec §9.17–9.21) i čeka na grani
+> `feat/polica`. Sljedeća cigla je **C4**. Nalaz ispod ostaje jer objašnjava **zašto su brane
+> takve kakve jesu**, a to se nije promijenilo.
+> ➖ **Ostaje N2 (pola):** polica pokazuje *skinuto*, ne uniju skinutog i onoga što se uči.
 
 > **📐 RAZRAĐENO U DVIJE FAZE — radna specifikacija je
 > [`FRONTEND_REDIZAJN.md` §9](../plan/FRONTEND_REDIZAJN.md): faza „TELEFON" (T0–T6) i faza

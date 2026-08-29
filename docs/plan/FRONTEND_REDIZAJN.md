@@ -1712,7 +1712,8 @@ zatečenog kvara.
 > ## ✅ FAZA „TELEFON" (T0–T6) JE ISPORUČENA NA PRODUKCIJU — 2026-08-24
 > `2e9fff9..82f8560`, 45 commita, verifikacija posluženim sadržajem = zadnji **🚀** redak u
 > `docs/records/CHANGELOG.md`. **Rollback: `2e9fff9`.** Uz nju su izišli i **KOSTUR (K1–K4a)**,
-> **BUG-032** i **landing C+D**. **Faza „POLICA" (P1–P4) NIJE napravljena** i i dalje stoji.
+> **BUG-032** i **landing C+D**. ~~Faza „POLICA" (P1–P4) NIJE napravljena~~ → **POLICA je
+> ISPUNJENA 2026-08-28** (§9.17–9.21), ali **nije deployana** — živi na grani `feat/polica`.
 >
 > ⚠️ **Odluka ① niže je POTROŠENA, ne ukinuta.** Leon je 2026-08-24 sam odobrio merge
 > (*„moze merge na main"*) iako C4–C7 i POLICA nisu gotovi — obrazloženje koje je stajalo iza
@@ -2203,6 +2204,11 @@ Chromiumu 0, pa promjena ne smije pomaknuti nijedan piksel) · `preflight` **EXI
 phone-brana **9/9 javno, 10/10 prijavljeno**. Dirano je 8 CSS datoteka → **`npm run bump`
 pokrenut** (81 token).
 
+> ✅ **ANOTACIJA 2026-08-29 (ALAT-1):** doseg opisan niže vrijedio je **do tada**. Alat sada
+> referencu vadi u `git worktree` i poslužuje **cijelo stablo**, pa je i `css/consent.css`
+> **od tada pokriven** — upravo rupa koju ovaj odlomak imenuje. Zapis ostaje jer objašnjava
+> **zašto se doseg gate-a mora izreći**, a to pravilo nije prestalo vrijediti.
+>
 > ⚠️ **Doseg `css:diff`-a mora se izreći, jer inače tvrdi više nego što mjeri.** Ta usporedba
 > zamjenjuje **samo `styles.bundle.css`** (radno stablo vs `HEAD:styles.bundle.css`), a
 > **`css/consent.css` NIJE u bundleu** — `index.html` ga učitava vlastitim `<link>`-om. Znači
@@ -2339,6 +2345,10 @@ ponavljao, i to je izrečeno**: nakon njezina prolaza promijenjena je **isključ
 `tests/materials-entry.spec.js`, dakle nijedan izvršni redak aplikacije — pa onih 437 prolaza
 i dalje opisuje **ovo** stablo.
 
+> ✅ **ANOTACIJA 2026-08-29 (ALAT-1):** i ovo je opis alata **prije** popravka. Od tada premota
+> cijelo stablo, pa o obrisanom markupu **kaže**. Pouka ispod svejedno stoji: *gate koji nije
+> mogao vidjeti promjenu nije je ni odobrio.*
+>
 > ⚠️ **Isti doseg-oprez kao u T1, sad s druge strane:** `css:diff` mijenja **samo bundle**, a
 > DOM drži iz radnog stabla — dakle o **obrisanom markupu** ne kaže ništa i ne može. Zato su
 > tri obrisana zaglavlja dokazana brojkom iz phone-brane (kromo 307 → 167), a ne odsutnošću
