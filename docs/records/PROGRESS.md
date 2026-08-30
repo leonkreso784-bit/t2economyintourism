@@ -39,8 +39,9 @@ kasniji pobjeđuje raniji.* Nije popravljeno u cigli, jer bi ispravak bio odluka
 jamči telefonska brana, koja kviz otvara kao način učenja.
 
 **Alat:** vlastita skripta za rez pala je **zatvoreno** iz prve (komentar završio u „glavi"
-selektora; zadnji `.quiz-container` bio član grupnog selektora). Peti put u fazi da prvi kvar nije
-u cigli nego u mjeraču — ali prvi put da je mjerač bio **naš, napisan iste sesije**.
+selektora; zadnji `.quiz-container` bio član grupnog selektora). **Četvrti put u ovoj fazi**
+(C4b · C5a/1 · /2 · /3) i **treći zaredom** da prvi kvar nije u cigli nego u mjeraču — ali prvi
+put da je mjerač bio **naš, napisan iste sesije**. (T5 je peta pojava, ali iz faze TELEFON.)
 
 **Slijedi:** C5a/4 (napredak, 184 retka) — i ondje se skupilo troje: `progress` u `phone-gate`,
 landscape ispod 768 px (BUG-037), kontrastna iznimka. **Ne ulagati u analitiku kartica**

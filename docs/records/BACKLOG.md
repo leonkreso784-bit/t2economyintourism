@@ -643,8 +643,9 @@ a odluka je zapisana ovdje umjesto u ADR-u jer ne mijenja arhitekturu nego doma�
 > poslužitelja.
 >
 > *Pouka koja preživljava sve tri: alat koji mjeri pola stranice ne kaže da mjeri pola — zato svaki
-> mjerni izvještaj od sada imenuje SVOJ DOSEG. I: **dvaput zaredom je prvi kvar cigle bio u
-> MJERAČU**, ne u cigli.*
+> mjerni izvještaj od sada imenuje SVOJ DOSEG. I: **triput zaredom je prvi kvar cigle bio u
+> MJERAČU**, ne u cigli — u C5a/3 (2026-08-30) i to u mjeraču **pisanom iste sesije**, pa ni
+> „naš alat" nije iznimka.*
 
 Nalaz ispod je izvorni zapis iz T5 i ostaje kao obrazloženje.
 
@@ -713,7 +714,7 @@ vlastitu ciglu kad god.
 >
 > | datoteka | fatalnih | cigla |
 > |---|---|---|
-> | `quiz-section.css` | 2 | **C5a/3** |
+> | `quiz-section.css` | 2 | ⛔ **NE MOŽE C5a/3 SAMA** — v. bilješku ispod |
 > | `progress-section.css` | 1 | C5a/4 |
 > | `learn.css` · `learn-blocks.css` · `blind-map.css` | 3 | C5b |
 > | `profile.css` | 2 | C6 |
@@ -721,6 +722,16 @@ vlastitu ciglu kad god.
 >
 > **Zaključak: birač može izaći nakon C6, NE nakon C7.** C7 je o `!important` i mrtvom kodu, ne o
 > bojama. ⚠️ Brojka je od 2026-08-30 i **stari** — mjerodavan je `npm run palette:breakdown`.
+>
+> #### ⛔ NALAZ REVIZIJE (2026-08-30, poslije C5a/3): dva reda ove tablice VISE O LEONOVOJ ODLUCI
+> Ta dva „fatalna" pravila su `.answer-btn.correct` i `.answer-btn.wrong` — **`color: white` na
+> ispuni `var(--success)` / `var(--danger)`**. Ispravak traži tokene **`--on-success` /
+> `--on-danger`, kojih NEMA** (postoji samo `--on-primary`). A hoće li ih uopće trebati, ovisi o
+> **otvorenom pitanju „smiju li zelena i crvena uopće biti ISPUNA, ili samo obrub i tekst"** —
+> ako je odgovor „samo obrub i tekst", ispuna nestaje i token ne treba nikad.
+> **C5a/3 ih zato NIJE dirala**, i to nije propust cigle nego **ovisnost koju ova tablica nije
+> imenovala.** Isto vrijedi za `.close-sidebar-btn:hover` u `sidebar.css` (C6).
+> *Cigla ne može ugasiti pravilo čiji ispravak čeka odluku o izgledu.*
 >
 > #### ⚠️ NALAZ: dvije datoteke nisu pripadale NIJEDNOJ cigli
 > `css/home-section.css` i `css/sidebar.css` su **u bundleu, a u planu ih nema** — `scripts/css-debt.js`

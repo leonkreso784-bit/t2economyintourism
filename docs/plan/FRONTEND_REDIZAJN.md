@@ -3269,10 +3269,13 @@ prave adrese umjesto hash-ruta, SEM. Popis s izmjerenim brojkama je u `CLAUDE.md
 i u `BACKLOG.md`.
 
 > ⚠️ **TRI OD PET SU PRESUĐENE 2026-08-30** — ovaj odlomak ostaje kao zapis stanja tog dana:
-> **① self-host Supabase** → radi se **odmah**, i to **samo backend** (Vercel ostaje); faza se
-> zbog toga **pauzira nakon C5a/2**. **② birač tema** → ide s ciglama, najranije **nakon C6**
-> (11 fatalnih pravila, razlaganje u `BACKLOG.md`). **③ A0+A1** → **poslije seobe**, jer je
-> auth Supabase-konfiguracija. Ostaje neodlučeno: **treba li OAuth uopće**, i prave adrese/SEM.
+> **① self-host Supabase** → radi se **odmah**, i to **samo backend** (Vercel ostaje).
+> ⚠️ **Ispravak istog dana:** prvo je zapisano da se faza *„pauzira nakon C5a/2"*; Leon je to
+> poslijepodne ukinuo (*„krenimo sa daljnjom C radnjom za frontend… VPS ću ja sutra setupat"*).
+> **Seoba i cigle teku USPOREDO** — ne dijele nijednu datoteku. **② birač tema** → ide s
+> ciglama, najranije **nakon C6** (11 fatalnih pravila, razlaganje u `BACKLOG.md`).
+> **③ A0+A1** → **poslije seobe**, jer je auth Supabase-konfiguracija. Ostaje neodlučeno:
+> **treba li OAuth uopće**, i prave adrese/SEM.
 
 ### 9.17 ✅ FAZA „POLICA" JE OTVORENA — mjerenje joj je promijenilo prvu ciglu (2026-08-26)
 
@@ -4321,6 +4324,19 @@ u `05` (visoki kontrast). `.control-btn` i `.flashcard` u njima su tuđi stanari
 i ne treba biti, ali samo zato što se naš token zove **`--color-ok`, a ne `--color-success`**.
 Preimenuje li ga C7, klasa istog imena nastaje sama i tiho preuzima boju. Zapisano uz sam par
 pravila u `css/quiz-section.css`, jer ondje se odluka o preimenovanju i mora sudariti s njom.
+
+#### ⛔ Što C5a/3 NAMJERNO nije napravila — i to nije previd nego OVISNOST
+
+`palette:breakdown` pripisuje `quiz-section.css` **2 od 11 fatalnih pravila**, a tablica u
+`BACKLOG.md` ih je dodijelila baš ovoj cigli. **Nisu dirana, i ne mogu biti.** Riječ je o
+`.answer-btn.correct` i `.answer-btn.wrong`, koji pišu **`color: white` na ispuni
+`var(--success)` / `var(--danger)`**. Ispravak traži tokene `--on-success` / `--on-danger`,
+**kojih nema** — postoji samo `--on-primary`. A treba li ih uopće, ovisi o Leonovoj otvorenoj
+stavci: **smiju li zelena i crvena uopće biti ISPUNA, ili samo obrub i tekst.** Ako je odgovor
+„samo obrub i tekst", ispuna nestaje i token ne treba nikad.
+
+*Cigla ne može ugasiti pravilo čiji ispravak čeka odluku o izgledu.* Zapisano i u `BACKLOG.md`,
+uz sam redak tablice koji je to obećao — jer je ondje obećanje i nastalo.
 
 #### Dokaz
 

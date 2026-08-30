@@ -176,23 +176,26 @@ prva migrirana površina u fazi**, i prva koja piše utilityje.
 🔄 **C5a JE U TIJEKU** (grana `feat/c5a-modovi`, spec **§11**) — u **četiri commita**, jer uz pet
 CSS datoteka nosi i **179 pravila iz `responsive/*`** (§11.0). **/1 kromo ✅ · /2 kartice+dopune ✅**
 **/3 kviz ✅** → /4 napredak → C5b → C6 → C7.
-✅ **PAUZA UKINUTA ISTI DAN (Leon):** *„krenimo sa daljnjom C radnjom… VPS ću ja sutra."*
-Seoba i cigle teku USPOREDO — ne dijele nijednu datoteku (seoba: `js/auth.js`, `.env`, testovi).
-⚠️ **Tri pravila za preostale cigle** (zašto: §10.3, §11.1, §11.2): ① prije nego pravilo postane
+⚠️ **Četiri pravila za preostale cigle** (zašto: §10.3, §11.1–11.3): ① prije nego pravilo postane
 utility **izmjeri tko ga danas tuče**; ② **rez ide po SVOJSTVU** — što neki preživjeli `@media` još
-mijenja ne smije u utility; ③ **dvaput zaredom je prvi kvar bio u MJERAČU, ne u cigli** — prije
-nego povjeruješ nalazu, provjeri mjeri li alat ono što misliš.
-**K4** se NE radi zasebno (utopljen u **P2**). **K5** (editor dvojezično) čeka i ne blokira ništa.
+mijenja ne smije u utility; ③ **triput zaredom je prvi kvar bio u MJERAČU, ne u cigli** (u C5a/3 i
+to u mjeraču pisanom **iste sesije**) — provjeri mjeri li alat ono što misliš; ④ **seljenje pravila
+iz `responsive/*` u datoteku komponente POMIČE GA UNAPRIJED u kaskadi** → sele se **sva** pravila
+za selektor ili nijedno, nijedna kasnija datoteka ne smije dirati te selektore, a **grupni
+selektor se SKRAĆUJE, ne briše** (u njemu žive tuđi stanari).
+**K5** (editor dvojezično) čeka i ne blokira ništa.
 **A1 (Google-prijava) + A0 (prepravak dijaloga) idu ZAJEDNO** — `#authModal` je građen za jedan
 put, pa se inače prepravlja dvaput. **Oboje TEK POSLIJE SEOBE** (auth je Supabase-konfiguracija;
 seoba mijenja URL, a time i redirect URI). Redoslijed unutar para nije presuđen i nije važan.
 
-### 🚚 SEOBA SE RADI ODMAH (Leon, 2026-08-30) — **SAMO Supabase; Vercel OSTAJE**
+### 🚚 SEOBA — **SAMO Supabase; Vercel OSTAJE** · teče USPOREDO s ciglama (Leon, 2026-08-30)
 
-*„danas ili sutra (samo supabase)… iznajmit ću VPS… **hostanje ostaje na Vercelu, ne mijenjamo do
-daljnjeg!**"* **Zašto sada, iako plan kaže „poslije frontenda":** *„prije nego faks krene."*
-Suženje opsega je **ukinulo dvije od tri zapisane prepreke** (`vercel.json`/`sw.js` i „push =
-produkcija" — oboje otpada jer ostajemo na Vercelu). **Ostaje: DVIJE instance.**
+*„iznajmit ću VPS… **hostanje ostaje na Vercelu, ne mijenjamo do daljnjeg!**"* **Zašto sada, iako
+plan kaže „poslije frontenda":** *„prije nego faks krene."* ⚠️ **VPS diže Leon u ponedjeljak; faza
+se zbog seobe NE pauzira** — isprva je bila pauzirana, pa ukinuto istog dana (*„krenimo sa daljnjom
+C radnjom za frontend"*), jer seoba i cigle **ne dijele nijednu datoteku**.
+Suženje je **ukinulo dvije od tri zapisane prepreke** — obje su bile o Vercelu, koji ostaje
+(tablica: `BACKLOG.md`). **Ostaje: DVIJE instance.**
 
 **Pet stvari koje se ne smiju zaboraviti** (brojke i obrazloženja: `BACKLOG.md` §SELF-HOST):
 ① **stari projekt živi još ~2 tjedna** — anon-ključ je u `js/auth.js`, koji preglednik drži godinu
@@ -280,10 +283,8 @@ poslije nje). Ostaje:
 - **HR-ekspanzija:** HR 1. god × 3 smjera FMTU dijele vezne predmete (ADR-022). Kad HR program
   bude potpun → **HR u Supabase** (Leon/Claude `migrate-content.js`, ne Saša). [[hrv-program]]
 - **PAUZIRANO za nas:** 3. godina · novi EN sadržaj (ADR-018: student uploada PODATKE, nikad KOD).
-- **✅ Tri „za Leonovu ruku" stavke odrađene (2026-08-28):** strane Edge Functions obrisane →
-  `check:functions` **ZELEN** prvi put; **min. lozinka 6 → 8**; **leaked-password zaštita ON**
-  (advisori 16 → 15 WARN). ⚠️ Zadnje dvoje ovisi o **Pro planu (~mjesec)** — poslije seobe provjeri.
-  ✅ **AUTH-1:** `authError()` mapira auth-greške na i18n (`tests/unit/auth-error.test.js`).
+- ⚠️ **Min. lozinka 8 + leaked-password zaštita ovise o Pro planu (~mjesec)** — poslije seobe
+  provjeri jesu li preživjele. (Što je odrađeno 2026-08-28: CHANGELOG.)
   ⚠️ **NE „popravljaj" `js/auth.js:343`** — tvrdnja o `WeakPasswordError` je **oborena**: u
   zakucanom `supabase-js@2.110.8` slaba lozinka dolazi kao `data.weakPassword` uz `error: null`.
 - **Sitni dug (ne blokira):** siročad u Storageu · advisor-WARN `snapshot_content_version` /
