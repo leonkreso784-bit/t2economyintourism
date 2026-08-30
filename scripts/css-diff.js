@@ -260,6 +260,27 @@ const DETAIL = function (targetPaths) {
   return out;
 };
 
+/**
+ * ⚠️ `Math.random` SE ZAMRZAVA PRIJE UČITAVANJA (C5a).
+ *
+ * Rute načina učenja su prve koje alat mjeri, a njihov sadržaj se MIJEŠA
+ * (`shuffleArray` u `js/utils.js`, zove ga i `flashcards.js` i `fill-blanks.js`).
+ * Referenca i radno stablo su zato dobivali RAZLIČITE kartice, pa je alat prijavljivao
+ * razlike u boji akcenta — a boja dolazi iz `data/catalog.js`, ne iz CSS-a. Nalaz koji
+ * ovisi o kocki nije nalaz: ili se ignorira (pa alat prestaje značiti), ili se svaki put
+ * iznova istražuje. Determinizam je jeftiniji od oboje.
+ *
+ * Zamjena je namjerno TRIVIJALNA (LCG): ne treba nam kvaliteta slučajnosti nego to da
+ * oba stabla dobiju ISTI niz. `addInitScript` se izvršava prije ijedne skripte stranice.
+ */
+const SJEME = function () {
+  let s = 0x2f6e2b1;
+  Math.random = function () {
+    s = (s * 1103515245 + 12345) & 0x7fffffff;
+    return s / 0x7fffffff;
+  };
+};
+
 async function measure(page, url, overrideCss) {
   await page.unrouteAll({ behavior: 'ignoreErrors' });
   if (overrideCss !== null) {
@@ -310,6 +331,7 @@ async function measure(page, url, overrideCss) {
       const vp = { name: par[0].name + (par[1] ? '  ' + par[1] : ''), width: par[0].width, height: par[0].height };
       const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, serviceWorkers: 'block' });
       const page = await ctx.newPage();
+      await page.addInitScript(SJEME);   // isti niz „slučajnih" brojeva u obje verzije
       const url = 'http://localhost:' + PORT + '/' + par[1];
       const urlRef = wt ? ('http://localhost:' + PORT_REF + '/' + par[1]) : url;
 

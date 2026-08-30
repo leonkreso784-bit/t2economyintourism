@@ -5,6 +5,50 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-30 — C5a/1: kromo ekrana za učenje (prvi od četiri commita cigle)
+
+Puni zapis s mjerama: spec **§11.0** (mjera koja je odredila opseg cigle) i **§11.1** (izvedba);
+sažetak: `CHANGELOG.md`.
+
+**Mjerenje je C5a proglasilo drugom vrstom cigle nego što tablica §3 opisuje.** Uz pet CSS
+datoteka, površina nosi i **179 pravila iz `css/responsive/*`** (C4b: 13, browse: 0), **101 par
+(selektor, svojstvo) o kojem odlučuju dvije ili više datoteka**, i **pet ljestvi pragova**.
+Zato se izvodi kao četiri commita na jednoj grani: /1 kromo · /2 kartice + dopune · /3 kviz ·
+/4 napredak.
+
+**Pooštreno pravilo reza, i ono vrijedi za /2–/4 i za C5b–C7:** rez ide **po svojstvu, ne po
+elementu**. Utilityji stoje zadnji i neuslojeni, pa svojstvo koje neki preživjeli medijski upit
+još mijenja **ne smije** u utility — inače ga utility tiho ubije.
+
+**Tri nalaza, i sva tri su oborila nešto što sam sâm napisao:**
+
+1. **Pravilo koje sam proglasio mrtvim nije bilo** — `responsive/02` je tiho pobjeđivao
+   `pages.css`, pa je prepisivanje „istinitih" vrijednosti naraslo traku **63 → 75 px**.
+   Uhvatio `css:diff`, ne čitanje koda. *Treći put u fazi da statička analiza kaskade promaši.*
+2. **`hidden` je zauzeto ime** (`responsive/01` + `js/fill-blanks.js`) — utility je izgubio od
+   `!important`-a i tabovi su nestali i na desktopu.
+3. **Mrtvo pravilo nas je štitilo** — `z-index: 9999` iz `pages.css` nikad nije vrijedio; da je
+   otišao u utility, donja bi traka stajala iznad toasta i modala.
+
+**Alat:** `css:diff` je na rutama načina učenja mjerio **promiješan sadržaj** (`shuffleArray` +
+`Math.random`) i prijavljivao razlike u boji koje dolaze iz kataloga — na jednoj kombinaciji 690
+elemenata. `Math.random` se sada zamrzava prije učitavanja. *Nalaz koji ovisi o kocki nije nalaz.*
+
+**BUG-036** — kratica `padding` u landscape-upitu brisala je sigurni rub; traka je sjedala u
+pojas kućnog indikatora (568 × 320: 4 px uz rub od 21). Popravljeno; obje brane koje bi to
+„trebale" vidjeti mjere nešto drugo, i to je zapisano uz bug.
+
+**Mjere:** `study-chrome.css` 292 retka (novo) · `pages.css` 508 → 322, preseljen pod **C6** ·
+`!important` u projektu **47 → 41** · `responsive/*` −99 redaka kroz 11 blokova.
+
+**Testirano:** `css:diff` 3 rute × 3 širine — 768 i 1280 **0 razlika**, 375 **1** (uklonjeno
+mrtvo pravilo) · visina trake identična osnovici na 320/393/430/767 · `phone.spec.js` 10/0 ·
+`preflight` **EXIT 0** · puna suita.
+
+**Slijedi:** **C5a/2** — kartice + dopune (dijele `.control-btn`).
+
+---
+
 ## 2026-08-29 — C4b: prva migrirana površina (isti dan, poslije potrage za kvarovima)
 
 **Cigla je isporučena u dva commita** — `C4b/1` browse, `C4b/2` lekcije. Puni zapis s mjerama:

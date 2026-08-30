@@ -4,15 +4,6 @@
         padding-bottom: calc(var(--safe-bottom) + 60px);
     }
     
-    .mobile-nav {
-        padding-bottom: calc(var(--safe-bottom) / 2);
-    }
-    
-    .mobile-nav-btn {
-        min-height: 50px;
-        padding: 0.35rem 0.25rem;
-    }
-    
     .flashcard {
         /* BUG-016: bila fiksna height:200px (relikt prije BUG-013 grid-stacka) — lica sad
            rastu sa sadržajem pa su stršala iz kartice i prekrivala Known/Unknown gumbe. */

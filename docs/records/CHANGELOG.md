@@ -5,6 +5,60 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-30 (OPUS) — **C5a/1: kromo ekrana za učenje — i tri pravila koja su lagala o sebi**
+
+Prvi od četiri commita cigle C5a. Spec **§11.1**; mjera koja je odredila opseg cijele cigle je **§11.0**.
+
+**Mjerenje je C5a proglasilo drugom vrstom cigle.** Tablica §3 ju je opisivala kao pet CSS
+datoteka; izmjereno, površina nosi i **179 pravila u `css/responsive/*`** (C4b ih je imao 13,
+browse **nula**), **101 par (selektor, svojstvo) o kojem odlučuju dvije ili više datoteka**, i
+**pet ljestvi pragova** koje se natječu. `.flashcard { min-height }` deklarira se na **22 mjesta
+u 6 datoteka**. Zato se cigla izvodi kao **četiri commita na jednoj grani**, a ne kao jedan zahvat.
+
+**Rez je morao postati stroži nego u C4b: ide po SVOJSTVU, ne po elementu.** Utilityji stoje
+zadnji i neuslojeni, pa svojstvo koje neki preživjeli medijski upit još mijenja **ne smije** u
+utility — inače ga utility tiho ubije. U CSS-u su zato ostali `padding` svih triju ploha
+(mijenjaju ga `@media print` i dva landscape-upita) i cijela komponenta gumba.
+
+**🐞 Tri nalaza, i sva tri su oborila nešto što je bilo napisano:**
+
+1. **Pravilo proglašeno mrtvim nije bilo.** `responsive/02` je s `.mobile-nav { padding: 0.25rem 0 }`
+   tiho pobjeđivao `pages.css`. Prepisane „istinite" vrijednosti iz `pages.css` narasle su traku
+   **63 → 75 px**; oborio to `css:diff`, ne čitanje koda.
+2. **`hidden` je zauzeto ime.** `responsive/01` drži `.hidden { display: none !important }`, a
+   `js/fill-blanks.js` ga koristi kao stanje — utility je izgubio od `!important`-a i **tabovi su
+   nestali i na desktopu**.
+3. **Mrtvo pravilo nas je štitilo.** `pages.css` je traci pisao `z-index: 9999`, a živjela je s
+   **1000**. Preseljen u utility, 9999 bi donju traku postavio **iznad toasta (2000) i modala
+   (3000)**. Obrnuto od C4b/NALAZ-1 — i zajednička pouka je ista: *prije nego pravilo postane
+   utility, izmjeri tko ga danas tuče.*
+
+**🔧 `css:diff` je na ovim rutama mjerio promiješan sadržaj.** Načini učenja miješaju kartice
+(`shuffleArray` + `Math.random`), pa su referenca i radno stablo dobivali različit sadržaj i alat
+je prijavljivao boje akcenta koje dolaze iz `data/catalog.js`, ne iz CSS-a — na jednoj kombinaciji
+**690 elemenata**. `Math.random` se sada zamrzava prije učitavanja (`addInitScript`, LCG).
+
+**Izvedeno:** `css/study-chrome.css` (novo, **292 retka**, uvezen poslije `responsive/*` i
+`components.css` — bitku s `.mobile-nav` sada dobiva redoslijed, ne `!important`) ·
+`css/pages.css` **508 → 322** i time preseljen pod **C6** · **`!important` u projektu 47 → 41**,
+uz nalaz da su **„posljednja dva izvan C7" bila MRTVA**, a stvarna četiri stajala u
+`responsive/04` · `responsive/*` **−99 redaka** kroz 11 blokova (6 mrtvih, 4 preseljena, **1
+prazan medijski blok**) · `fixed` skinut s popisa isključenih imena, istim putem kao `grid` u C4b.
+
+**🐞 BUG-036:** kratica `padding: 0.25rem 0` u landscape-upitu brisala je
+`padding-bottom: var(--safe-bottom)`, pa je donja traka sjedala u pojas kućnog indikatora
+(izmjereno 568 × 320: **4 px uz sigurni rub od 21**). `check:safearea` to ne vidi jer mjeri gdje
+se sigurna zona **definira**, ne gdje se **pojede**; phone-gate ne vidi jer landscape mjeri na
+852 px, gdje je traka ionako skrivena.
+
+**Dokaz:** `css:diff` na tri rute × tri širine — **768 i 1280 bez ijedne razlike**, na 375
+**jedna** (uklonjen mrtav `max-width: 1200px`). Visina trake **59 / 63 / 63 / 63 px** identična
+osnovici. `phone.spec.js` **10 prošlo, 0 palo**. `preflight` **EXIT 0**.
+
+> ⚠️ `check:palette` je uhvatio grešku i bio u pravu: zakucana sjena prepisana iz `components.css`
+> u novu datoteku nije narasla u zbroju (103/103), ali je stigla u datoteku koje nema u osnovici.
+> Popravak je bio **brisanje duplikata**, ne spuštanje osnovice.
+
 ## 2026-08-29 (OPUS) — **C4b: prva migrirana površina — i dvije ljestve pragova koje su se tukle**
 
 Prva cigla u fazi koja **stvarno piše Tailwind utilityje na površinu**: C1 je namjerno završio s

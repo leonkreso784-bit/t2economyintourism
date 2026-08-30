@@ -17,11 +17,56 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
-_(nema otvorenih bugova — zadnji zatvoren: BUG-035, 2026-08-29)_
+_(nema otvorenih bugova — zadnji zatvoren: BUG-036, 2026-08-30)_
 
 ---
 
 ## Riješeni / Lekcije
+
+### BUG-036 — Donja traka učenja u landscapeu sjeda U pojas kućnog indikatora (sigurni rub pojela KRATICA)
+
+- Status: ✅ **riješen** (2026-08-30, cigla C5a/1) · Težina: **nizak** — i to se izriče pošteno:
+  pogađa samo uređaje **uže od 768 px U LANDSCAPEU** koji uz to imaju donji izrez, a današnji
+  iPhonei su u landscapeu svi širi od 768 px, gdje je traka ionako skrivena. Nije se dakle
+  događalo Leonu na iPhoneu 16 · Našao: **mjerenje pred migraciju**, ne prijava.
+
+- **Opis:** `.study-mobile-nav` je u landscapeu dobivao `padding-bottom: 4px` uz sigurni rub od
+  **21 px** — donjih ~17 px trake, zajedno s dnom gumba, završavalo je ispod kućnog indikatora.
+  Izmjereno na 568 × 320 uz `--safe-bottom: 21px`.
+
+- **Reprodukcija:** otvori bilo koju lekciju na uređaju užem od 768 px u landscapeu, s donjim
+  izrezom. Donji rub gumba u traci ulazi u pojas indikatora.
+
+- **Uzrok — i to je cijela lekcija:** pravilo u `css/responsive/04-mobile-extra.css` glasilo je
+
+  ```css
+  @media (max-width: 900px) and (orientation: landscape) {
+      .study-mobile-nav { padding: 0.25rem 0; }
+  }
+  ```
+
+  **Kratica `padding` piše sve četiri strane.** Namjera je bila „stisni gornji i donji rub jer je
+  ekran nizak", a učinak je bio i **brisanje `padding-bottom: var(--safe-bottom)`** koje je
+  dolazilo iz bezuvjetnog pravila na kraju `responsive`-a. Sigurni rub nigdje nije bio pogrešno
+  izračunat — bio je **pregažen kraticom koja o njemu ne zna**.
+
+- **Rješenje:** kromo je u C5a preseljen u `css/study-chrome.css`, gdje ploha ima JEDNO pravilo
+  za `padding`, a landscape mijenja samo donju stranu (`calc(0.25rem + var(--safe-bottom))`).
+  Popravak je najmanji mogući: gornji rub ostaje 0.25rem, donji dobiva natrag ono što mu je uzeto.
+  Izmjereno poslije: 568 × 320 → `padding-bottom` **4 → 25 px**, portret nepromijenjen.
+
+- **Zašto ga nije vidjela nijedna brana** — i opet nije previd nego **doseg**:
+  `check:safearea` provjerava da se goli `env()` ne piše izvan `css/variables.css`, a ovo pravilo
+  `env()` uopće ne spominje — ono ga **briše**. *Brana mjeri gdje se sigurna zona DEFINIRA, ne
+  gdje se POJEDE.* `phone-gate` landscape mjeri na **852 × 393**, dakle na širini na kojoj traka
+  ne postoji, pa do nje nikad nije ni došao.
+
+- **Lekcija:** razred kvara je **„kratica gazi svojstvo koje netko drugi izračunava"** i rođak je
+  BUG-035 („ispuna i tekst se odlučuju na dva mjesta"). Pravilo koje iz toga slijedi i vrijedi za
+  ostatak faze: **na plohi koja nosi sigurni rub ne piše se kratica `padding`** — piše se strana
+  koja se stvarno mijenja. Druga je lekcija o brani, ne o kodu: mjerni raspon phone-gatea u
+  landscapeu (852 px) **širi je od praga na kojem mjerena traka uopće postoji** (768 px), pa
+  jedna cijela površina u toj orijentaciji nije bila pokrivena ni na jednom ekranu.
 
 ### BUG-035 — Tri ikone na `about`-u nevidljive u ZADANOJ temi (kontrast 1.13)
 

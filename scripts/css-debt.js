@@ -36,18 +36,22 @@ const ROOT = path.join(__dirname, '..');
 const CIGLE = [
   /* `css/subject-selector.css` je stajao ovdje do C4a, kad je OBRISAN a ne migriran:
      39 od 44 klase nije spominjao nitko, a preostalih pet je gazilo `pages.css`. */
-  /* ⚠️ `css/pages.css` je od C4b PRESELJEN pod C5a. Nije premještanje duga nego ispravak
+  /* ⚠️ `css/pages.css` je od C5a/1 PRESELJEN pod C6. Kromo ekrana za učenje otišlo je u
+     `css/study-chrome.css`, pa je najveći preostali stanar te datoteke `about` — dakle C6.
+     Ostaju u njoj još toast i podnožje, koji su C7-ovi; datoteku briše onaj tko odnese
+     zadnjeg stanara. Bilješka ispod opisuje raniji korak istog puta. */
+  /* ⚠️ `css/pages.css` je od C4b bio PRESELJEN pod C5a. Nije premještanje duga nego ispravak
      krive adrese: mjerenjem u C4b utvrđeno je da ta datoteka nikad nije bila jedna
      površina nego četiri stanara — lekcije 114 · kromo učenja 192 · `about` 236 ·
      toast 42 · footer 27 redaka. C4 je odnio svoj dio (lekcije → `css/lessons.css`);
      najveći preostali stanar je kromo ekrana za učenje, dakle C5a. */
   ['C4  browse + lekcije', ['css/browse.css', 'css/lessons.css']],
   ['C5a modovi uvježbavanja', ['css/flashcards-section.css', 'css/quiz-section.css',
-    'css/fill-blanks-section.css', 'css/progress-section.css', 'css/pages.css']],
+    'css/fill-blanks-section.css', 'css/progress-section.css', 'css/study-chrome.css']],
   ['C5b gradivo + vježbe', ['css/learn.css', 'css/learn-blocks.css', 'css/math.css',
     'css/exercises.css', 'css/blind-map.css']],
   ['C6  profil, auth, pravne', ['css/profile.css', 'css/auth.css', 'css/legal.css',
-    'css/consent.css']],
+    'css/consent.css', 'css/pages.css']],
   ['C7  gašenje', ['css/components.css', 'css/variables.css']]
 ];
 

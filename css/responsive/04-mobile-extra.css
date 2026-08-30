@@ -453,18 +453,6 @@
 
 /* --- EXTRA SMALL SCREENS (iPhone SE, older phones) --- */
 @media (max-width: 374px) {
-    .study-mobile-nav .mobile-nav-btn {
-        padding: 0.35rem 0.1rem;
-        font-size: 0.55rem;
-        min-height: 54px;
-    }
-    
-    .study-mobile-nav .mobile-nav-btn i {
-        font-size: 1.1rem;
-    }
-
-
-    
     .flashcard {
         min-height: 180px;
         padding: 1rem;
@@ -504,19 +492,6 @@
 
 /* --- LANDSCAPE MOBILE --- */
 @media (max-width: 900px) and (orientation: landscape) {
-    .study-mobile-nav {
-        padding: 0.25rem 0;
-    }
-    
-    .study-mobile-nav .mobile-nav-btn {
-        min-height: 50px;
-        padding: 0.25rem 0.1rem;
-    }
-    
-    .study-mobile-nav .mobile-nav-btn i {
-        font-size: 1rem;
-    }
-    
     .flashcard {
         /* BUG-016: max-height cap ovdje NE smije postojati — lica rastu sa sadržajem
            (BUG-013 grid-stack) pa bi prekoračila karticu i prekrila Known/Unknown gumbe. */
@@ -524,24 +499,6 @@
     }
 }
 
-/* --- ENSURE STUDY MOBILE NAV ALWAYS VISIBLE WHEN IN STUDY PAGE --- */
-@media (max-width: 767px) {
-    .study-page .study-mobile-nav {
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-    }
-    
-    /* Hide regular mobile nav when in study page */
-    .study-page .mobile-nav:not(.study-mobile-nav) {
-        display: none !important;
-    }
-}
-
-/* ===== LANDSCAPE MODE ===== */
-@media screen and (max-width: 900px) and (orientation: landscape) {
-    
-}
 
 /* ===== ACCESSIBILITY - ENSURE GOOD CONTRAST ===== */
 

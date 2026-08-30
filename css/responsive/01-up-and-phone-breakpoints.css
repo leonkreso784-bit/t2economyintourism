@@ -229,14 +229,6 @@
         font-size: 1rem;
     }
     
-    .mobile-nav-btn {
-        font-size: 0.6rem;
-    }
-    
-    .mobile-nav-btn i {
-        font-size: 1.1rem;
-    }
-    
     /* Landing page small phones — C2: OBRISANO.
        `.hero-subtitle`/`.hero-visual`/`.float-card` više ne postoje, a `.hero-title` je
        nosio `font-size: 2rem !important` — jedini `!important` koji bi TUKAO Tailwind-skalu

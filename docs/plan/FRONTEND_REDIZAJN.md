@@ -60,7 +60,7 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 | **C3** 🔄 | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori. **Tri cigle gotove i na produkciji** (authed a11y-gate · širina + kvar u rendereru · `studio.css` na nuli `!important`); **ostaje Studio na telefonu** — dok stoji, C3 se ne smije proglasiti gotovim (kriterij #1 imenuje editor na 320 px). | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
 | **K** 🔄 | **„KOSTUR" — rute i jedna gornja traka** (§8). Ubačena između C3 i C4 (Leon, 2026-08-18) po presedanu C0-a: informacijska arhitektura prije kozmetike. **K1 ✅ rute** (§8.6) · **K2** jedna traka · **K3** brana dohvatljivosti · **K4** materijali u kvaliteti kataloga | tri duplicirana zaglavlja (`browse-`/`lessons-`/`study-header`) | iz **svake** stranice — uključujući `#editor-page` — vodi bar jedan klik drugamo, a svaka stranica ima adresu koja se da podijeliti |
 | **C4** ✅ | **Browse + lekcije** — zapis: **§10**. **C4a ✅** (mrtva površina obrisana; `subject-selector.css` je **nestala**, ne migrirana) · **C4b ✅** (§10.3) — prva migrirana površina u fazi | `subject-selector.css` (obrisan) · skela browsea i lekcija (u utilityje) · **13 pravila druge ljestve pragova** iz `responsive/05`+`/06` (**brojke: `npm run css:debt`**) | student dođe do bilo kojeg predmeta i lekcije |
-| **C5a** | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak, **i kromo ekrana za učenje** (§10.3: ista površina, pa ide zajedno) | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` · `pages.css` (kromo; ondje su i **posljednja dva `!important`** izvan C7) | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
+| **C5a** 🔄 | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak, **i kromo ekrana za učenje** (§10.3: ista površina, pa ide zajedno). Zapis: **§11**. **C5a/1 ✅ kromo** (§11.1) · ostaju /2 kartice+dopune · /3 kviz · /4 napredak. ⚠️ Mjereno: cigla nosi i **179 pravila iz `responsive/*`** (§11.0), što je red veličine više nego što je ova tablica opisivala | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` · kromo → **`css/study-chrome.css`** (novo); `pages.css` je time preseljen pod **C6**. ⚠️ „Posljednja dva `!important` izvan C7" **bila su mrtva** — stvarna četiri stajala su u `responsive/04` | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
 | **C5b** | **Gradivo + vježbe** — sve što ide kroz renderer ili engine | `learn.css`, `learn-blocks.css`, `math.css`, `exercises.css`, `blind-map.css` | student čita gradivo i rješava vježbe; KaTeX, slike i tablice nedirnuti |
 | **C6** | **Profil, auth, pravne, consent** | `profile.css`, `auth.css`, `legal.css`, `consent.css` | korisnik se prijavi, uredi profil, obriše račun |
 | **C7** | **Gašenje** | `responsive/*`, `components.css`, `variables.css`, `styles.bundle.css`, mrtva tema | u repozitoriju nema starog CSS-a ni mrtvog koda teme |
@@ -3948,3 +3948,137 @@ ispis **uvijek imenuje što je mjereno** — šutnja o dosegu je ono što je zam
 - **Pravilo `prefers-contrast: high` za `.lesson-card` ostavljeno je u `responsive/05`**
   svjesno: skupni je selektor s `.flashcard` i `.quiz-container`, dakle a11y-način koji po
   naravi živi izvan komponente, a cijeli je taj blok duplikat koji ionako umire u C7.
+
+---
+
+## 11 · C5a — modovi uvježbavanja i kromo ekrana za učenje
+
+C5a je prva cigla u fazi kojoj mjerenje nije samo promijenilo oblik nego i **veličinu**.
+Tablica §3 je opisuje kao pet CSS datoteka; izmjereno, površina ima i **179 pravila u
+`css/responsive/*`**, a to je red veličine drukčiji posao (C4b ih je imao 13, browse **nula**).
+
+### 11.0 Mjera prije koda — i zašto je C5a druga vrsta cigle
+
+| pitanje | C4b (browse) | C4b (lekcije) | **C5a** |
+|---|---|---|---|
+| pravila u `responsive/*` koja diraju površinu | **0** | 13 | **179** |
+| (selektor, svojstvo) parova o kojima odlučuje ≥ 2 datoteke | 0 | 2 ljestve | **101** |
+| ljestve pragova koje se natječu | — | 2 | **5** |
+
+Pragovi zatečeni na toj površini: `374 · 375–413 · 390–427 · 414–479 · 428–767 · 480 ·
+480–599 · 500 · 501–900 · 600–767 · 767 · 768 · 768–1023 · 900 · 1024 · 1024–1279 ·
+1280–1535 · 1536`.
+
+**Mjereno u pregledniku, ne pročitano:** `.flashcard { min-height }` deklarira se na **22
+mjesta u 6 datoteka**, a iscrtavaju se četiri vrijednosti — 200 px do 480, 380 do 767, 400
+do 1023, pa 420/450/500 iznad — **ali samo ako je prozor viši od 900 px**; inače landscape-
+pravilo daje 300 px i `max-width: 70%`. Na običnom laptopu (1440 × ~810) desktop-ljestva iz
+`responsive/05` dakle **nikad ne dođe na red**.
+
+> ⚠️ **Vlastita greška u tom mjerenju, uhvaćena isti čas:** prvi prolaz je mjerio na visini
+> 900 i dao 300 px na 1024/1280/1536, iz čega bi slijedio zaključak da je cijela desktop-
+> ljestva mrtva. Bila je moja **visina prozora**, ne CSS. Otud dva prolaza i otud pravilo:
+> *kad mjeriš širinu, visina je isto varijabla.*
+
+**Dvije tvrdnje iz §3 koje je mjerenje ispravilo:**
+
+1. *„Četiri moda dijele `.control-btn`/`.answer-btn` — migriraju se zajedno ili se tuku."*
+   Sprega je stvarna ali **mala i imenovana**: u `responsive/*` samo **2 pravila** spajaju
+   dvije skupine (oba skupni selektori koji ionako umiru u C7), a među datotekama modova
+   dijele se `.control-btn` (kartice ↔ dopune) i `.wrong`/`.correct`. Cigla se zato smije
+   izvesti kao **četiri commita na jednoj grani**, ne kao jedan zahvat.
+2. *„C5a nosi najveći rizik od BUG-025."* **Već je namiren.** Kviz (`qEsc`), dopune (`fEsc`
+   + `esc` po dijelovima rečenice) i napredak (`pEsc`) idu kroz `SokratBlocks.esc`; kartice
+   `innerHTML` uopće ne koriste, samo `textContent`. Zatvorile su to cigle D; spec to nije
+   povukao.
+
+### 11.1 ✅ C5a/1 — kromo ekrana za učenje (2026-08-30)
+
+Prvi commit uzima ljusku, tabove, `<main>` i donju traku. **Rez je ovdje morao biti stroži
+nego u C4b:** ondje je vrijedilo „skela u utilityje, komponenta u CSS", a to ovdje nije
+dovoljno — utilityji stoje **zadnji i neuslojeni**, pa svojstvo koje neki preživjeli medijski
+upit još mijenja **ne smije** u utility. Pravilo je zato:
+
+> **Rez ide po SVOJSTVU, ne po elementu.** U utility ide ono što nijedan preživjeli upit ne
+> dira (`display` gdje je slobodno, `position`, `inset`, `z-index`, boje, rub, `max-width`,
+> `margin`, `width`); u CSS ostaje `padding` svih triju ploha (mijenjaju ga `@media print` i
+> dva landscape-upita) i cijela komponenta gumba.
+
+#### 🐞 Tri nalaza, i sva tri su oborila nešto što sam bio napisao
+
+**① Pravilo koje sam proglasio mrtvim nije bilo.** `responsive/02` je s
+`.mobile-nav { padding: 0.25rem 0 }` (ista specifičnost, kasnije u bundleu) tiho pobjeđivao
+`pages.css`, a donji rub je dolazio iz **bezuvjetnog** `.mobile-nav { padding-bottom:
+var(--safe-bottom) }` na kraju `responsive`-a. Prepisao sam vrijednosti iz `pages.css` kao da
+su istina i traka je narasla **63 → 75 px**. Oborio to `css:diff`, ne čitanje koda.
+*Treći put u fazi da statička analiza kaskade promaši — i svaki put ju je ispravio preglednik.*
+
+**② `hidden` je u ovom projektu ZAUZETO IME.** `css/responsive/01` drži
+`.hidden { display: none !important }`, a `js/fill-blanks.js` ga koristi kao stanje. Utility
+`hidden md:flex` je izgubio od tog `!important`-a i **tabovi su nestali i na desktopu**. Ime
+je zato i na popisu isključenih (`@source not inline`) — ali isključenje sprječava GENERIRANJE,
+ne PISANJE. Vidljivost tabova je zato ostala u CSS-u, na istom pragu (48rem).
+
+**③ Mrtvo pravilo nas je ŠTITILO — i to je obrnuto od C4b/NALAZ-1.** `pages.css` je traci
+davao `z-index: 9999`, ali živjela je s **1000** (iz `components.css`). Da je 9999 otišao u
+utility, donja bi traka na telefonu stajala **iznad toasta (2000) i modala (3000)**. U C4b je
+utility oživio pravilo koje je trebalo gubiti; ovdje bi oživio pravilo koje **nikad nije
+smjelo pobijediti**. Zajedničko im je jedno: *prije nego pravilo postane utility, izmjeri
+tuče li ga danas netko — i tko pobjeđuje.*
+
+#### 🔧 Alat: `css:diff` je na ovim rutama mjerio PROMIJEŠAN sadržaj
+
+Rute načina učenja su prve koje alat gleda, a njihov se sadržaj miješa (`shuffleArray` +
+`Math.random`). Referenca i radno stablo dobivali su **različite kartice**, pa je alat
+prijavljivao razlike u boji akcenta — a ta boja dolazi iz `data/catalog.js`, ne iz CSS-a.
+Na jednoj kombinaciji je razlika narasla na **690 elemenata**, dakle nalaz koji ne znači
+ništa. `Math.random` se sada zamrzava prije učitavanja (`addInitScript`, trivijalan LCG):
+oba stabla dobiju isti niz. *Nalaz koji ovisi o kocki nije nalaz.*
+
+#### Izvedeno
+
+- **`css/study-chrome.css` (novo, 292 retka)** — uvezen **poslije `responsive/*` i poslije
+  `components.css`**, i to je jedini razlog zašto ne stoji uz ostale komponente: traka nosi i
+  klasu `.mobile-nav`, koju `components.css` gasi. Ta se bitka dosad dobivala `!important`-om;
+  sada ju dobiva **redoslijed**.
+- **`css/pages.css` 508 → 322** — kromo je otišlo; datoteka je time **preseljena pod C6**
+  (`about` je najveći preostali stanar; toast i podnožje su C7).
+- **`!important` u projektu 47 → 41.** ⚠️ Nalaz: **dva „posljednja izvan C7" bila su MRTVA**
+  (mutacija ih je maknula bez ijedne promjene u prikazu), a stvarna četiri na toj površini
+  stajala su u `responsive/04` — ondje ih tablica §3 nije ni tražila.
+- **`responsive/*` −99 redaka**, 11 blokova: 6 mrtvih (nadglašeni specifičnijim selektorom),
+  4 preseljena, 1 **prazan medijski blok** koji je ondje stajao bez ijednog pravila.
+- **`css/app.css`: `fixed` skinut s popisa isključenih imena** — istim putem kao `grid` u C4b,
+  uz prethodnu provjeru da u `css/**` nema pravila `.fixed`.
+- **BUG-036** (v. `BUGS.md`): kratica `padding` u landscapeu je brisala sigurni rub.
+
+#### Dokaz
+
+`css:diff` na **tri rute × tri širine**: 768 i 1280 **bez ijedne razlike**, na 375 **jedna** —
+`.study-content max-width: 1200px → none`, dakle uklonjeno mrtvo pravilo (ispod 768 je prozor
+uvijek uži od 1200, iznad vrijede `md:max-w-[900px]` / `lg:max-w-[1100px]`). Ciljano mjerenje
+visine trake: **59 / 63 / 63 / 63 px** na 320/393/430/767 — identično osnovici.
+`phone.spec.js` **10 prošlo, 0 palo**. `preflight` **EXIT 0**.
+
+> ⚠️ **`check:palette` je uhvatio moju grešku i bio je u pravu.** Prepisao sam zakucanu sjenu
+> (`rgba(0,0,0,0.1)`) iz `components.css` u novu datoteku „radi potpunosti". Zbroj nije narastao
+> (103/103), ali je zakucana crna stigla u datoteku koje nema u osnovici. Popravak je bio
+> **brisanje duplikata**, ne spuštanje osnovice: *preseliti zakucanu vrijednost znači potpisati je.*
+
+#### ⛔ Što C5a/1 NAMJERNO nije napravio
+
+- **`components.css` nije diran**, iako je njegov `.mobile-nav*` blok u cijelosti zasjenjen.
+  Otkad je komponenta trake pod `@media (width < 48rem)`, taj blok je legitiman **≥ md
+  fallback za skriven element** — i upravo on drži `css:diff` čistim na 768 i 1280. Briše ga C7.
+- **Četiri načina uvježbavanja nisu dirana** — idu u C5a/2 (kartice + dopune, dijele
+  `.control-btn`), C5a/3 (kviz) i C5a/4 (napredak + kontrastna iznimka).
+- **Ad-hoc pragovi trake (≤ 374, landscape ≤ 900) preseljeni su NEPROMIJENJENI.** Ova cigla
+  mijenja jezik, ne izgled; njihovu sudbinu presuđuje C7 zajedno s `responsive/*`.
+
+#### Što ostaje, i čije je
+
+- **`progress` nije u `phone-gate`-u** (`NACINI = ['learn','flashcards','quiz','fill']`) — jedina
+  C5a površina bez mjere na telefonu. Dodaje ju **C5a/4**, zajedno s kontrastnom iznimkom za
+  ikonu kategorije.
+- **Landscape ispod 768 px nije mjeren ni na jednom ekranu** (v. BUG-036). Odluka o tome je li
+  to vrijedno novog ekrana u brani ide uz C5a/4, s izmjerenim brojkama, ne prije.

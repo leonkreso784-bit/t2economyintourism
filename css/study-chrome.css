@@ -1,0 +1,291 @@
+/* =====================================================
+   KROMO EKRANA ZA UČENJE — tabovi (desktop) + donja traka (telefon)
+   Sokrat Study · cigla C5a
+
+   ⚠️ REZ IDE PO SVOJSTVU, NE PO ELEMENTU — i to je pooštrenje pravila iz C4b.
+   Ondje je vrijedilo „skela u utilityje, komponenta u CSS". Ovdje to nije dovoljno,
+   jer utilityji stoje **zadnji i neuslojeni**: svojstvo koje neki preživjeli
+   medijski upit iz `css/responsive/*` još mijenja **ne smije** otići u utility —
+   utility bi taj upit tiho ubio. Zato:
+
+     • u utilityje (`index.html`) su otišli: `display`, `position`, `inset`,
+       `z-index`, `flex-direction`, boje, rub, `max-width`, `margin`, `width`;
+     • u CSS-u su ostali: **`padding` svih triju ploha** (mijenjaju ga `@media print`
+       i dva landscape-upita) i **cijela komponenta gumba** (`::before`, tri stanja,
+       `transition: var(--transition)`).
+
+   Kad C7 ugasi `css/responsive/*`, i ti paddingi smiju u utilityje — ne prije.
+
+   ⚠️ ZAŠTO SE UVOZI POSLIJE `responsive/*`, A NE UZ OSTALE KOMPONENTE:
+   `.study-mobile-nav` nosi i klasu `.mobile-nav`, koju `css/components.css`
+   (uvezen POSLIJE `pages.css`) gasi s `display: none`. Do C5a se ta bitka dobivala
+   **`!important`**-om, i to na dva mjesta; sada se dobiva REDOSLIJEDOM. Isti
+   postupak koji `learn.css` i `studio.css` već koriste.
+
+   ⚠ CACHE: pri izmjeni pokreni `npm run bump`.
+   ===================================================== */
+
+/* ===== LJUSKA ===== */
+
+/* ⚠️ `min-height` je OBRISAN, ne preseljen — bio je mrtav. `css/topbar.css` ga
+   bezuvjetno gazi za svih osam ljuski (`calc(100dvh - var(--chrome-h))`), stoji
+   kasnije u bundleu i ima jednaku specifičnost. Isti nalaz kao u C4b, treća ljuska
+   po redu. U utilityju bi POBIJEDIO topbar i stranica bi narasla za visinu kroma.
+
+   `padding-bottom` ostaje ovdje jer ga `@media print` u `responsive/05` nulira. */
+.study-page {
+    padding-bottom: calc(80px + var(--safe-bottom));
+}
+
+/* Zastor dok se skripte predmeta dohvaćaju (DB → JSON → .js). */
+.study-loading {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: color-mix(in srgb, var(--color-surface-0) 88%, transparent);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    color: var(--color-ink-1);
+    font-size: 0.95rem;
+}
+
+.study-loading[hidden] { display: none; }
+
+.study-loading-spinner {
+    width: 44px;
+    height: 44px;
+    border: 3px solid var(--color-surface-2);
+    border-top-color: var(--color-brand-500);
+    border-radius: 50%;
+    animation: studySpin 0.8s linear infinite;
+}
+
+@keyframes studySpin { to { transform: rotate(360deg); } }
+
+/* ===== SADRŽAJ ===== */
+
+/* Samo padding — širine i centriranje su utilityji. */
+.study-content {
+    padding: 0.75rem;
+    padding-bottom: calc(70px + var(--safe-bottom) + 1rem);
+}
+
+@media (min-width: 48rem) {
+    .study-content {
+        padding: 1.5rem 2rem;
+    }
+}
+
+/* ===== TABOVI (≥ md) ===== */
+
+/* Traka klizi vodoravno kad načina ima više nego širine; klizač se ne crta.
+   ⚠️ `display` je OVDJE, a ne u utilityju, i to nije nedosljednost: `hidden` je u
+   ovom projektu ZAUZETO IME (`css/responsive/01`: `display: none !important`, a
+   `js/fill-blanks.js` ga koristi kao stanje). Utility `hidden` bi na toj traci
+   izgubio od `!important`-a i tabovi bi nestali i na desktopu — izmjereno prije
+   nego je pravilo napisano. Prag je isti kao Tailwindov `md` (48rem), pa ljestva
+   ostaje jedna. */
+.study-nav {
+    display: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 48rem) {
+    .study-nav {
+        display: flex;
+    }
+}
+
+.study-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.study-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    border: none;
+    background: transparent;
+    color: var(--color-ink-1);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.study-nav-btn:hover {
+    background: var(--color-surface-2);
+    color: var(--color-brand-500);
+}
+
+.study-nav-btn.active {
+    background: var(--color-brand-500);
+    color: var(--color-on-brand);
+}
+
+/* ⚠️ `inherit`, NE zakucana bijela. Pravilo IZNAD već bira boju po temi
+   (`--color-on-brand`), a zakucana ju je poništavala: na temi `chalk` je ispuna
+   marke amber #f2c14e, pa je bijeli tekst davao kontrast 1.68 (prag 4.5).
+   Kvar je bio nevidljiv branama jer ispuna i boja teksta žive u DVA RAZLIČITA
+   PRAVILA, a `check:palette` je gledao samo unutar jednog. */
+.study-nav-btn.active span,
+.study-nav-btn.active i {
+    color: inherit;
+}
+
+/* ===== DONJA TRAKA (< md) ===== */
+
+/* PLOHA je bezuvjetna jer je takva bila i zatečena: donji sigurni rub dolazio je iz
+   bezuvjetnog `.mobile-nav { padding-bottom: var(--safe-bottom) }` na kraju
+   `responsive`-a, a ne iz `pages.css`.
+
+   ⚠️ SJENA SE NAMJERNO NE SELI OVAMO. `components.css` je već ima na `.mobile-nav`
+   (`0 -4px 20px rgba(0,0,0,0.1)`), a to je ISTI element — traka nosi obje klase. Prva
+   verzija ju je prepisala „radi potpunosti" i `check:palette` je pao: zakucana crna
+   nije narasla u zbroju (103/103), ali je stigla u datoteku koje nema u osnovici.
+   Brana je bila u pravu, i popravak je bio BRISANJE duplikata, a ne spuštanje osnovice.
+   *Preseliti zakucanu vrijednost znači potpisati je.* Tokenizira ju C7, gdje i živi. */
+.study-mobile-nav {
+    padding-bottom: var(--safe-bottom);
+}
+
+/* ⚠️ KOMPONENTA JE POD PRAGOM, i to nije ukras. U `pages.css` je cijeli ovaj blok
+   živio unutar `@media (max-width: 767px)`; ≥ md su vrijedile OSNOVNE vrijednosti iz
+   `components.css` (gumb 60 px, natpis 0.65rem, zakucani indigo `#312e81`). Traka je
+   ondje `md:hidden`, pa se ništa od toga ne vidi — ali `css:diff` uspoređuje IZRAČUNATE
+   stilove i bez ovog omotača prijavljuje **25 razlika po širini na nevidljivom elementu**.
+   Prag je pisan kao `width < 48rem`, dakle TOČAN komplement Tailwindovoj `md` (48rem):
+   ljestva ostaje JEDNA i između njih nema procjepa na razlomljenoj širini, kakav bi
+   `max-width: 767px` ostavio pri zumu. Rasponska sintaksa traži Safari 16.4+ — a taj je
+   prag projekt već prešao: bundle ima 5 `@property` (Tailwind v4) i 162 `color-mix`,
+   od kojih nijedno ne radi ispod te verzije. Ne uvodi se novo ograničenje, samo se
+   koristi ono koje već vrijedi. */
+@media (width < 48rem) {
+    .study-mobile-nav {
+        padding-top: 0.25rem;
+    }
+
+    .study-mobile-nav .mobile-nav-btn {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0.4rem 0.15rem;
+        min-height: 58px;
+        background: transparent;
+        border: none;
+        color: var(--color-ink-2);
+        font-family: inherit;
+        font-size: 0.6rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+        gap: 0.2rem;
+        position: relative;
+    }
+
+    .study-mobile-nav .mobile-nav-btn i {
+        font-size: 1.2rem;
+        transition: var(--transition);
+    }
+
+    /* ⚠️ `font-size` je OVDJE, iako ga `pages.css` na spanu nikad nije imao: postavljao
+       ga je `responsive/02` (`.mobile-nav-btn span`) i time NADGLAŠAVAO nasljeđivanje od
+       gumba. Gumb ima 0.6rem, span 0.7rem — natpis je dakle VEĆI od vlastitog gumba.
+       Zatečeno i preseljeno kakvo jest; da je ispušteno, natpisi bi se stisnuli. */
+    .study-mobile-nav .mobile-nav-btn span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        font-size: 0.7rem;
+    }
+
+    .study-mobile-nav .mobile-nav-btn.active {
+        color: var(--color-brand-500);
+    }
+
+    .study-mobile-nav .mobile-nav-btn.active i {
+        transform: scale(1.1);
+    }
+
+    /* Pokazivač odabranog načina — crtica koja se razvuče iz sredine. */
+    .study-mobile-nav .mobile-nav-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%) scaleX(0);
+        width: 60%;
+        height: 3px;
+        background: var(--color-brand-500);
+        border-radius: 0 0 3px 3px;
+        transition: transform 0.3s ease;
+    }
+
+    .study-mobile-nav .mobile-nav-btn.active::before {
+        transform: translateX(-50%) scaleX(1);
+    }
+}
+
+/* ===== ZATEČENI AD-HOC PRAGOVI ===== */
+/* Preseljeni NEPROMIJENJENI (uz jednu imenovanu iznimku niže): ova cigla mijenja
+   jezik, ne izgled. Njihovu sudbinu presuđuje C7 zajedno s `css/responsive/*`. */
+
+/* Uski telefon (≤ 374 px, iPhone SE). Isti je gumb dosad bio opisan na DVA mjesta:
+   `responsive/01` (`.mobile-nav-btn`, jedna klasa) i `responsive/04`
+   (`.study-mobile-nav .mobile-nav-btn`, dvije). Pobjeđivao je 04 — i njegove su
+   vrijednosti ovdje. Vrijednosti iz 01 se ne prepisuju: nikad nisu vrijedile. */
+@media (max-width: 374px) {
+    .study-mobile-nav .mobile-nav-btn {
+        min-height: 54px;
+        padding: 0.35rem 0.1rem;
+        font-size: 0.55rem;
+    }
+
+    .study-mobile-nav .mobile-nav-btn i {
+        font-size: 1.1rem;
+    }
+}
+
+/* Telefon položen na bok — traka mora uzeti manje od niskog ekrana.
+   ⚠️ JEDINA NAMJERNA PROMJENA IZGLEDA U OVOJ CIGLI, i to popravak: zatečeno pravilo
+   je glasilo `padding: 0.25rem 0` — KRATICA, koja je uz gornji rub **obrisala i
+   `calc(0.5rem + var(--safe-bottom))` s donjeg**. Traka je time u landscapeu sjedala
+   U pojas kućnog indikatora: izmjereno na 568 × 320 `padding-bottom: 4px` uz sigurni
+   rub od **21 px**. Brana to nije uhvatila jer landscape mjeri na 852 × 393, gdje je
+   traka ≥ md ionako skrivena — v. `docs/records/BUGS.md` (BUG-035).
+   Popravak je NAJMANJI mogući: gornji rub ostaje 0.25rem (iz osnovnog pravila), a
+   donji dobiva natrag sigurni rub koji je kratica bila pojela. */
+@media (max-width: 900px) and (orientation: landscape) {
+    .study-mobile-nav {
+        padding-bottom: calc(0.25rem + var(--safe-bottom));
+    }
+
+    .study-mobile-nav .mobile-nav-btn {
+        min-height: 50px;
+        padding: 0.25rem 0.1rem;
+    }
+
+    .study-mobile-nav .mobile-nav-btn i {
+        font-size: 1rem;
+    }
+}
+
+/* Tablet položen na bok — `<main>` ostavlja mjesta traci koja ondje NE POSTOJI
+   (≥ md je skrivena). Pravilo je zatečeno i preseljeno kakvo jest; presuđuje C7. */
+@media (min-width: 768px) and (max-width: 1023px) and (orientation: landscape) {
+    .study-content {
+        padding-bottom: calc(60px + var(--safe-bottom));
+    }
+}

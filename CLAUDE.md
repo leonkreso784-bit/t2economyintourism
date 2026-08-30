@@ -172,11 +172,13 @@ istog dana. Ovdje ostaje samo ono što je **živo pravilo**, a ne stanje:
 Kriterij je **mjeren, ne tvrđen**: skinut predmet se otvara bez mreže, **preživi deploy**, a
 napredak stečen offline se po povratku mreže **spoji bez gubitka**.
 ✅ **C4 JE ISPUNJEN** (grana `feat/c4-browse-lekcije`) — C4a (§10.1) · §10.2 · **C4b (§10.3) =
-prva migrirana površina u fazi**, i prva koja piše utilityje. **🟢 SLJEDEĆA CIGLA = C5a** → C5b
-→ C6 → C7. ⚠️ **Dva pravila iz C4b vrijede za svaku preostalu ciglu:** ① prije nego pravilo
-postane utility, **provjeri tuče li ga danas netko** — utilityji stoje zadnji, pa migracija
-oživi pravilo koje je trebalo gubiti; ② **`css:diff` mjeri samo `/` ako mu rutu ne predaš**
-(`CSS_DIFF_RUTE`) — sve što crta JS ondje ne postoji.
+prva migrirana površina u fazi**, i prva koja piše utilityje.
+🔄 **C5a JE U TIJEKU** (grana `feat/c5a-modovi`, spec **§11**) — u **četiri commita**, jer uz pet
+CSS datoteka nosi i **179 pravila iz `responsive/*`** (§11.0). **/1 kromo ✅** → **🟢 /2 kartice+dopune**
+→ /3 kviz → /4 napredak → C5b → C6 → C7.
+⚠️ **Tri pravila za preostale cigle** (zašto: §10.3, §11.1): ① prije nego pravilo postane utility
+**izmjeri tko ga danas tuče**; ② **`css:diff` bez `CSS_DIFF_RUTE` mjeri samo `/`**; ③ **rez ide po
+SVOJSTVU** — što neki preživjeli `@media` još mijenja ne smije u utility.
 **Ostaje Leonu:** semantičke ispune traže nove tokene (`--on-success`…) — v. `BACKLOG.md`.
 **K4** se NE radi zasebno (utopljen u **P2**). **K5** (editor dvojezično) čeka i ne blokira ništa.
 **A1 + A0: REDOSLIJED NIJE PRESUĐEN** (Leon, 2026-08-19: *„ne znam još, to ćemo se dogovorit"*);
@@ -242,10 +244,10 @@ smije umiroviti**. Odbačeni (ruše ADR-018): evaluator izraza i sandbox za kori
 
 Leon je postavio tri pitanja i na moje preporuke **nije odgovorio**. Brojke su izmjerene tog dana:
 
-- **Birač tema na landingu.** Mehanika je GOTOVA (4 teme, `setTheme` pamti izbor,
-  `check:contrast` 164 provjere, klik-vezanje već stoji u `js/init.js`). Blokira ga **11 pravila**
-  (`palette:breakdown` → „FATALNO"; bilo **24** ujutro 2026-08-29), **ne C4–C7**. ⚠️ Peta kontrola u traci landinga nije
-  besplatna (K3/BUG-029) — vjerojatnije mjesto je red kvadratića u heroju.
+- **Birač tema na landingu.** Mehanika je GOTOVA (4 teme, `setTheme` pamti izbor, klik-vezanje
+  već stoji u `js/init.js`). Blokira ga **broj koji ispisuje `palette:breakdown` pod „FATALNO"**,
+  **ne C4–C7**. ⚠️ Peta kontrola u traci landinga nije besplatna (K3/BUG-029) — vjerojatnije
+  mjesto je red kvadratića u heroju.
 - **OAuth (Google/Apple).** **5 registriranih korisnika, 3 su Leonova** → stvarnih vanjskih
   **dvoje**, uz e-mail+lozinku kao jedini put. Google je besplatan i ne čeka redizajn; **Apple
   ~99 $/god** i nema smisla bez iOS aplikacije; „Sign in with ChatGPT" je **NEPOTVRĐEN** — ne

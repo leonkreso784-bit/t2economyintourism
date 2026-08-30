@@ -95,6 +95,12 @@
 @import "./responsive/05-device-sizes.css";
 @import "./responsive/06-component-improvements.css";
 
+/* Kromo ekrana za učenje (C5a) — POSLIJE responsivea I POSLIJE `components.css`,
+   i to je jedini razlog zašto stoji ovdje a ne uz ostale komponente: donja traka
+   nosi i klasu `.mobile-nav`, koju `components.css` gasi. Do C5a se ta bitka
+   dobivala s dva `!important`; sada ju dobiva redoslijed. */
+@import "./study-chrome.css";
+
 /* Learn i editor — POSLIJE responsivea, da nadglasaju njegove konflikte. */
 @import "./learn.css";
 @import "./learn-blocks.css";
@@ -142,6 +148,12 @@
    stvarno napiše kao Tailwind klasu na migriranoj površini. `check:tailwind` čuva pravilo
    u oba smjera — i da se popis ne zaboravi, i da se ne pretvori u tepih pod koji se mete.
 
+   ⚠️ ISKLJUČENJE SPRJEČAVA GENERIRANJE, NE PISANJE — i to je zamka koja je C5a/1 stajala
+   jednog kruga. Napišeš li `hidden` u markup, Tailwind pravilo neće napraviti, ali NAŠE
+   pravilo `.hidden { display: none !important }` (`css/responsive/01`) i dalje pogađa taj
+   element. Ondje su tabovi učenja tako nestali i na desktopu. `hidden` i `text-danger` su
+   dakle ZAUZETA IMENA: ne piši ih u markup dok ih C7 ne ugasi.
+
    `{,!}` na početku hvata i oblik s `!` modifikatorom. Nije kozmetika: `.\!container` je
    nastao iz JavaScripta — `if (!container || …)`. Skener ne zna da je to negacija, vidi tekst. */
 /* C4b: `grid` je OTIŠAO s popisa — prvi put ga je netko stvarno napisao kao klasu
@@ -150,7 +162,13 @@
    ⚠️ Dok je stajalo ovdje, isključenje je bilo TIHO — Tailwind pravilo ne bi generirao,
    a mreža bi se raspala tek u pregledniku. Zato se popis mijenja u ISTOM koraku u kojem
    se piše klasa, nikad poslije. */
-@source not inline("{,!}{block,blur,collapse,container,filter,fixed,inline,italic,ordinal,resize,table}");
+/* C5a: `fixed` je OTIŠAO s popisa, istim putem kao `grid` — donja traka učenja je
+   prva ploha koja ga je stvarno napisala kao klasu (`index.html`, `.study-mobile-nav`).
+   Provjereno prije micanja da NEMA sudara: u `css/**` ne postoji nijedno pravilo
+   `.fixed`, za razliku od `hidden`/`text-danger` koji ostaju jer JESU naše klase.
+   Izvor kandidata i dalje postoji u kodu (`cs.position !== 'fixed'`, `js/consent.js`) —
+   ali od danas taj kandidat proizvodi utility koji doista koristimo, a ne šum. */
+@source not inline("{,!}{block,blur,collapse,container,filter,inline,italic,ordinal,resize,table}");
 @source not inline("{,!}{hidden,text-danger}");
 
 /* T4: `visible` je usao iz KODA, i to iz nove podvrste istog kvara. Dosad su kandidati
