@@ -4,6 +4,64 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-032 — Semantika je UVIJEK PUNA ISPUNA; prilagođava se TINTA, ne ispuna
+**Datum:** 2026-08-30 · **Status:** ✅ ODLUČENO (Leon) · **Vezano:** [ADR-028](#adr-028) (Tailwind/tokeni), [ADR-027](#adr-027) (jedna činjenica = jedno mjesto)
+
+**Kontekst.** Kroz cigle C4–C5a izmjereno je **11 fatalnih pravila palete** — mjesta gdje tekst na
+ispuni pada ispod praga čitljivosti u bar jednoj temi. **Sedam ih dijeli jedan uzrok:** zakucano
+`white`/`#fff` na `var(--danger)` ili `var(--success)`, u pet datoteka (`blind-map`, `profile` ×2,
+`progress-section`, `quiz-section` ×2, `sidebar`) i kroz četiri cigle. Pitanje nije bilo koji token
+odabrati, nego **smiju li zelena i crvena uopće biti ISPUNA, ili samo obrub i tekst** — jer je
+„samo obrub" bio jeftin izlaz koji bi zatvorio svih sedam odjednom.
+
+**Odluka (Leon):** *„ne smije biti obruba uopće, uvijek mora biti potpuna ispuna. boja mora biti
+prilagođena na način da ne ruši tekst. tako isto za kartice."*
+
+---
+
+### Odluka
+
+**① Puna ispuna je OBAVEZNA.** Obrub smije **dopuniti** ispunu, ali je **nikad ne zamjenjuje**.
+Ovo je izgledna, ne tehnička odluka: „točno/netočno" je najvažniji signal u alatu za učenje i mora
+se vidjeti prije nego se pročita.
+
+**② Prilagođava se TINTA, ne ispuna.** Ovo je mjerom izabrano između dva čitanja Leonove rečenice,
+i mjera je jednoznačna — kontrast punih ispuna po temama:
+
+| tema | `--color-ok` | `--color-danger` | bijeli tekst | tamni tekst (`#14161a`) |
+|---|---|---|---|---|
+| `academic` | `#10794a` | `#c0332b` | **5.45 / 5.60** ✅ | 3.33 / 3.23 |
+| `paper` | `#15703c` | `#c6362c` | **6.15 / 5.30** ✅ | 2.95 / 3.42 |
+| `chalk` | `#8fbf6b` | `#e3705c` | 2.14 / 3.12 ⛔ | **8.48 / 5.81** ✅ |
+| `mint` | `#6bcb77` | `#e2725f` | 2.01 / 3.09 ⛔ | **9.00 / 5.87** ✅ |
+
+**Svaka ispuna VEĆ ima tintu koja prolazi AA (4.5:1) — samo u `chalk` i `mint` to nije bijela.**
+Zato se boje ispuna **ne diraju**: mijenjati ih da bijelo prolazi svugdje značilo bi potamniti
+zelenu i crvenu u obje svijetle pastelne teme, čime `chalk` i `mint` gube ono po čemu postoje.
+
+**③ Mehanizam = isti koji marka već koristi.** Uvode se `--color-on-ok` i `--color-on-danger`, po
+temi, točno kako `--color-on-brand` već stoji (bijelo u `academic`/`paper`, tamno u `chalk`/`mint`
+— **isti raspored koji mjera iz ② traži**, što je neovisna potvrda da je obrazac pravi).
+
+**④ Kartice su isti princip, drugi smjer.** Ondje boja dolazi **izvana** (katalog, korisnik) pa se
+ispuna ne može unaprijed namjestiti → tintu bira **`inkForTint()`** (`js/navigation.js`, prag
+`0.1967`), što je **već izvedeno u C5a/4** za `.category-bar-icon`. Pravilo: **gdje boju
+kontroliramo mi → token po temi; gdje dolazi izvana → `inkForTint()`.** Puna ispuna u oba slučaja.
+
+---
+
+### Posljedice
+
+- **Gasi 7 od 11 fatalnih pravila palete** i time **otključava birač tema**, koji je na njih čekao.
+- Izvedba je **razdijeljena po ciglama** koje ionako diraju te datoteke (C5b nosi `blind-map`),
+  a ne kao zaseban zahvat — pravila palete su čegrtaljka, ne jednokratni popravak.
+- **Nijedna boja ispune se ne mijenja** → `check:contrast` po temi i `check:contrast:live` ostaju
+  mjera, a ne pregovaračka strana.
+- ⚠️ Preostala **4 fatalna pravila NISU pokrivena** ovom odlukom (poluprozirno bijelo na
+  poluprozirnom bijelom, bijelo na gradijentu) — njih rješava cigla koja ih drži.
+
+---
+
 ## ADR-031 — MCP je CJEVOVOD `Learn → kartice → dopune/kviz`, u nacrt, kroz KORISNIKOV AI
 **Datum:** 2026-08-30 · **Status:** ✅ ODLUČENO (Leon) · **Vezano:** [ADR-030](#adr-030) (MCP je glavni put stvaranja), [ADR-026](#adr-026) (MCP invarijante), [ADR-025](#adr-025) (doseg osobnog materijala), [ADR-018](#) (podatak, nikad kod)
 
