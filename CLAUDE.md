@@ -251,8 +251,8 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
 - **Semantika je UVIJEK PUNA ISPUNA — obrub NIJE zamjena za nju** (ADR-032, Leon: *„ne smije biti
   obruba uopće"*). Prilagođava se **tinta, ne ispuna**: `--color-on-ok`/`--color-on-danger` po
   temi, jer je izmjereno da bijelo pada u `chalk`/`mint` (**2.01–3.12**), a tamno ondje daje
-  **5.81–9.00**; u `academic`/`paper` bijelo prolazi (5.30–6.15). **Gasi 7 od 11 fatalnih pravila
-  palete.** Isto vrijedi za KARTICE, gdje boja dolazi izvana → `inkForTint()` (već postoji, C5a/4).
+  **5.81–9.00**; u `academic`/`paper` bijelo prolazi (5.30–6.15). **Gasi 7 od preostalih 10
+  fatalnih pravila palete.** Isto vrijedi za KARTICE, gdje boja dolazi izvana → `inkForTint()` (već postoji, C5a/4).
 - **OAuth: NE zasad.** Od 5 računa **4 su Leonova**, peti je neaktivan → stvarnih vanjskih
   korisnika **nula**. Ne planirati; ne obećavati „Sign in with ChatGPT" (nepotvrđen).
 - **„Povijest učenja" OSTAJE, ali plitko.** Smisao dobiva tek s objavom materijala i mnogo

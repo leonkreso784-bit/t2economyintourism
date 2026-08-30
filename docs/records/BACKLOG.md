@@ -84,6 +84,11 @@ i tada pokriva i ovo. Zapis: spec §10.2.
 
 </details>
 
+⚠️ **Od 11 fatalnih pravila ostalo ih je 10** — `learn-blocks.css` `.lb-video__icon` ugasio je
+**C5b/0** (2026-08-31, spec §12.7): `var(--grad, …)` nije bio tematiziran nego zakucan, jer
+`--grad` nije definiran nigdje. To je bilo jedno od „preostala četiri (#2–#5)" iz tablice u
+`<details>` gore, ne iz sedmorke.
+
 ⚠️ **Tablica sedmorke gore vrijedi i dalje kao POPIS POSLA** — mijenja se samo status: više ne
 čekaju odluku nego svoju ciglu. #8 (`progress-section` `.reset-btn:hover`) i #9/#10
 (`quiz-section`) pripadaju **već zatvorenim** ciglama C5a/3 i C5a/4 → njih pokupi **C7** kao

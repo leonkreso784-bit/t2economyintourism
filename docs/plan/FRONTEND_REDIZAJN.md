@@ -61,8 +61,8 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 | **K** 🔄 | **„KOSTUR" — rute i jedna gornja traka** (§8). Ubačena između C3 i C4 (Leon, 2026-08-18) po presedanu C0-a: informacijska arhitektura prije kozmetike. **K1 ✅ rute** (§8.6) · **K2** jedna traka · **K3** brana dohvatljivosti · **K4** materijali u kvaliteti kataloga | tri duplicirana zaglavlja (`browse-`/`lessons-`/`study-header`) | iz **svake** stranice — uključujući `#editor-page` — vodi bar jedan klik drugamo, a svaka stranica ima adresu koja se da podijeliti |
 | **C4** ✅ | **Browse + lekcije** — zapis: **§10**. **C4a ✅** (mrtva površina obrisana; `subject-selector.css` je **nestala**, ne migrirana) · **C4b ✅** (§10.3) — prva migrirana površina u fazi | `subject-selector.css` (obrisan) · skela browsea i lekcija (u utilityje) · **13 pravila druge ljestve pragova** iz `responsive/05`+`/06` (**brojke: `npm run css:debt`**) | student dođe do bilo kojeg predmeta i lekcije |
 | **C5a** ✅ | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak, **i kromo ekrana za učenje** (§10.3: ista površina, pa ide zajedno). Zapis: **§11**. **C5a/1 ✅ kromo** (§11.1) · **C5a/2 ✅ kartice + dopune** (§11.2) · **C5a/3 ✅ kviz** (§11.3) · **C5a/4 ✅ napredak** (§11.4). ⚠️ Mjereno: cigla nosi i **179 pravila iz `responsive/*`** (§11.0), što je red veličine više nego što je ova tablica opisivala | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` · kromo → **`css/study-chrome.css`** (novo); `pages.css` je time preseljen pod **C6**. ⚠️ „Posljednja dva `!important` izvan C7" **bila su mrtva** — stvarna četiri stajala su u `responsive/04`. Iz /2: `responsive/*` **−528 redaka**, `!important` **41 → 35**, siročad **81 → 67**; iz /3: **−347 redaka**, siročad **67 → 57**, ukupni dug **7238 → 7000**; iz /4: **−160 redaka**, siročad **57 → 46**, ukupni dug **7000 → 6951**, `!important` **35 → 34** | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
-| **C5b** 🔜 | **Gradivo + vježbe** — sve što ide kroz renderer ili engine. ⚠️ **Mjera je napravljena PRIJE koda: §12.** Nije isti posao kao C5a — `responsive/*` je ovdje **prazan**, ali `learn.css` je sagrađen na **`#learn`** (102 od 112 pravila), pa **utility ne prolazi dok ID stoji** (izmjereno) | `learn.css`, `learn-blocks.css`, `math.css`, `exercises.css`, `blind-map.css` | student čita gradivo i rješava vježbe; KaTeX, slike i tablice nedirnuti |
-| **C6** | **Profil, auth, pravne, consent** ➕ `pages.css` (iz C5a/1) ➕ **`home-section.css` i `sidebar.css`** — bile su u bundleu a **u planu ih nije bilo** (Leon 2026-08-30: *„Ubaci"*); drže **3 od 11** fatalnih pravila koja blokiraju birač tema | `profile.css`, `auth.css`, `legal.css`, `consent.css`, `pages.css`, `home-section.css`, `sidebar.css` | korisnik se prijavi, uredi profil, obriše račun **i smije prebaciti temu** — nakon C6 birač više nije blokiran |
+| **C5b** 🔄 | **Gradivo + vježbe** — sve što ide kroz renderer ili engine. ⚠️ **Mjera je napravljena PRIJE koda: §12.** **C5b/0 ✅** (§12.7 — 11 boja gradiva bilo je nevidljivo na zadanoj temi; tokeni `--color-ink-*`, +120 provjera u brani). Slijedi **C5b/1**. Nije isti posao kao C5a — `responsive/*` je ovdje **prazan**, ali `learn.css` je sagrađen na **`#learn`** (102 od 112 pravila), pa **utility ne prolazi dok ID stoji** (izmjereno) | `learn.css`, `learn-blocks.css`, `math.css`, `exercises.css`, `blind-map.css` | student čita gradivo i rješava vježbe; KaTeX, slike i tablice nedirnuti |
+| **C6** | **Profil, auth, pravne, consent** ➕ `pages.css` (iz C5a/1) ➕ **`home-section.css` i `sidebar.css`** — bile su u bundleu a **u planu ih nije bilo** (Leon 2026-08-30: *„Ubaci"*); drže **3 od 10** fatalnih pravila koja blokiraju birač tema | `profile.css`, `auth.css`, `legal.css`, `consent.css`, `pages.css`, `home-section.css`, `sidebar.css` | korisnik se prijavi, uredi profil, obriše račun **i smije prebaciti temu** — nakon C6 birač više nije blokiran |
 | **C7** | **Gašenje** | `responsive/*`, `components.css`, `variables.css`, `styles.bundle.css`, mrtva tema | u repozitoriju nema starog CSS-a ni mrtvog koda teme |
 
 > ### ✂️ C5 JE RAZBIJEN NA DVIJE CIGLE (Leon, 2026-08-13: *„možemo razbit C5 na dvije cigle"*)
@@ -3273,7 +3273,7 @@ i u `BACKLOG.md`.
 > ⚠️ **Ispravak istog dana:** prvo je zapisano da se faza *„pauzira nakon C5a/2"*; Leon je to
 > poslijepodne ukinuo (*„krenimo sa daljnjom C radnjom za frontend… VPS ću ja sutra setupat"*).
 > **Seoba i cigle teku USPOREDO** — ne dijele nijednu datoteku. **② birač tema** → ide s
-> ciglama, najranije **nakon C6** (11 fatalnih pravila, razlaganje u `BACKLOG.md`).
+> ciglama, najranije **nakon C6** (10 fatalnih pravila — od C5b/0; razlaganje u `BACKLOG.md`).
 > **③ A0+A1** → **poslije seobe**, jer je auth Supabase-konfiguracija. Ostaje neodlučeno:
 > **treba li OAuth uopće**, i prave adrese/SEM.
 
@@ -4726,11 +4726,12 @@ po uzorku mora računati na oba oblika.
   siroče.
 - **KaTeX** (`math.css`, 36 redaka): `.katex-display` je također imenovano siroče. KaTeX-ov
   vlastiti CSS nije naš i ne migrira se.
-- C5b nosi **3 od 11 fatalnih pravila palete**: `learn-blocks.css` `.lb-video__icon` (bijelo na
-  gradijentu) · `learn.css` `#learn .learn-card-header span` (poluprozirno bijelo na
-  poluprozirnom bijelom) · `blind-map.css` `.map-clear-btn:hover` (bijelo na `--danger`).
-  ⚠️ **Treće je jedno od sedam koja čekaju Leonovu odluku o semantičkim ispunama** i C5b ga ne
-  može ugasiti sam; prva dva može.
+- C5b je nosio **3 od 11 fatalnih pravila palete**; **od C5b/0 su to 2 od 10** (§12.7):
+  ~~`learn-blocks.css` `.lb-video__icon`~~ **ugašeno** · `learn.css` `#learn .learn-card-header
+  span` (poluprozirno bijelo na poluprozirnom bijelom) → **C5b/3** · `blind-map.css`
+  `.map-clear-btn:hover` (bijelo na `--danger`) → **C5b/2**.
+  ⚠️ **Zadnje je jedno od sedam koja gasi ADR-032** (semantičke ispune) i C5b ga ne rješava
+  sam nego po tom receptu: ispuna ostaje puna, prilagođava se tinta.
 
 ### 12.6 Rute koje C5b mora predati mjeračima
 

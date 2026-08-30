@@ -41,7 +41,8 @@
 
 - [ ] `npm run test:responsive` → Playwright, default (odjavljena) suita na iPhone profilima.
 - [ ] `npm run test:authed` → pozitivan admin-put (v. odjeljak niže).
-- [ ] `npm run check:contrast:live` → kontrast kakav se STVARNO iscrta (4 teme × 11 ruta).
+- [ ] `npm run check:contrast:live` → kontrast kakav se STVARNO iscrta (4 teme × **13** ruta;
+      `exercises` i `blind-map` dodani u C5b/0 — `te2` ih nema, pa ih brana dotad nije vidjela).
       ⚠️ Nije isto što i `check:contrast`: onaj čita **parove tokena** i ne zna KORISTI li ih CSS.
       Povod (BUG-035): `color: white` zakucan u modulu davao je **1.13** u zadanoj temi, a
       **cijeli preflight javljao je zeleno**. Traži `npm run serve:test`.
@@ -64,7 +65,7 @@
 | **sadržaj i katalog** | sve sekcije svih predmeta se renderiraju, podaci teku kroz catalog, 0 JS grešaka, lijeno učitavanje stvarno je lijeno | `smoke` · `browse` · `lazy-load` · `dual-read` |
 | **tijekovi učenja** | flashcards/quiz/fill/learn kroz **prave klikove**, napredak, povratak na zadnju poziciju | `app-state` · `quiz-reset` · `restore-position` · `learn-parity` |
 | **geometrija i telefon** | nijedna kontrola nije odrezana, prekrivena ni preklopljena; **telefon kao STRANICA** (osnovica u `tests/phone-baseline.json`, danas prazna) | `phone` (+`.authed`) · `reachability` (+`.authed`) · `layout-guard` · `layout.authed` |
-| **izgled po temama** | kontrast i tinta kroz sve 4 teme, uklj. boje koje dolaze iz **podatka**, ne iz CSS-a | `tint-ink` · `a11y` (+`.authed`) |
+| **izgled po temama** | kontrast i tinta kroz sve 4 teme, uklj. boje koje dolaze iz **podatka**, ne iz CSS-a | `tint-ink` · `a11y` (+`.authed`) · `learn-blocks-contrast` |
 | **sigurnost prikaza** | svaki tekst iz podataka ide kroz `esc`; `:hover`/`:disabled` se ne tuku s kaskadom | `escaping` · `cascade.authed` |
 | **adrese i vraćanje** | devet stranica ima devet dijeljivih adresa; „natrag" ima **jedan** model; kartica lekcije je prava kontrola | `routes` · `back-model` · `lesson-card` · `materials-entry` |
 | **auth, admin, RLS** | odjavljeni put ne vidi ništa admina; prijavljeni put stvarno piše i stvarno je odbijen gdje treba | `auth` · `admin` · `admin-detect.authed` · `publish-rpc.authed` |
@@ -144,6 +145,37 @@ U jednom pushu je to naplaćeno **tri puta**:
 iz artefakta od **87 MB** koji traži prijavu — a svaki pokušaj košta rundu od **~18 min**.
 ⚠️ **GitHubov javni API ima 60 zahtjeva/h** — ne provjeravati CI u petlji, inače ostaneš bez
 očitanja baš kad ti treba.
+
+## ⚠️ ZELENA BRANA NIJE DOKAZ AKO NE GLEDA (2026-08-31, C5b/0)
+
+Prethodno poglavlje govori o brani koja **promijeni ishod** bez promjene u proizvodu. Ovo je
+druga vrsta kvara: brana koja **nikad nije ni pogledala** ono što tvrdi da čuva. Prošla je
+neprimijećeno dok 11 boja teksta nije bilo **nevidljivo na zadanoj temi** (jantar **1.67** na
+bijelom), a sve tri brane koje bi to trebale hvatati bile su zelene — svaka iz svog razloga:
+
+| brana | što je mjerila | zašto nije mogla vidjeti |
+|---|---|---|
+| `check:palette` | boju uz **pozadinu u istom pravilu** | tekst bez vlastite pozadine nasljeđuje plohu → nema što upariti. **Slijepa točka joj je najčešći slučaj koji postoji.** |
+| `check:contrast` | **vrijednosti** tokena u `tokens.css` | ne zna KORISTI li ih itko; pravila su čitala zakucani hex |
+| `check:contrast:live` | stvarni ekran | obilazila je **samo `te2`**, koji nema ni `exercises` ni `blind-map` |
+
+**Tri trajna pravila iz toga:**
+
+- **Brana koja mjeri DEFINICIJU ne dokazuje UPOTREBU.** Token koji prolazi AA ne znači da ga
+  ijedno pravilo koristi. Ako je tvrdnja „ovo je čitljivo na ekranu", mjeri se ekran.
+- **Brana koja obilazi rute dokazuje samo rute koje je obišla.** Uvjetne površine (`exercises`,
+  `blind-map`) ne postoje na svakom predmetu; ruta na krivom predmetu mjeri **prazan ekran** i
+  mirno javlja nulu. Isto vrijedi za `css:diff`. *Nula na ekranu kojeg nema nije dokaz.*
+- **Prije nego novu tvrdnju proglasiš pokrivenom, vrati stari kvar i vidi pada li.** Za
+  `tests/learn-blocks-contrast.spec.js` je to napravljeno: stare vrijednosti nametnute preko
+  tokena obore **16 od 32** mjerenja, i to točno na dvije svijetle teme. *Test koji ne bi pao ni
+  da je tvrdnja lažna nije test nego ukras.*
+
+⚠️ **Posebno za `learn-blocks.css`:** javni katalog od te datoteke iscrtava **2 od 44 pravila**
+(`.lb-legacy`, `.lb-table-wrap`) jer je gradivo v1 HTML kroz DOMPurify. Ostalo živi u editoru i
+u korisnikovim materijalima. Zato se ta datoteka **ne dokazuje kataloškom rutom** nego crtanjem
+kroz `window.renderBlocks` — globalno dostupan i bez prijave (v. i `learn-parity.spec.js`).
+
 
 ## Smoke test (uvijek, ~2 min)
 - [ ] Stranica se učita bez greške u konzoli (F12 → Console).
