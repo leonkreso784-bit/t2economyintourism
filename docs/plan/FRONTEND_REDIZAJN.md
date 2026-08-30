@@ -4624,30 +4624,61 @@ toj površini** — Tailwind bi ga generirao, klasa bi stajala u markupu, a prik
 promijenio. Isti razred tihog promašaja kao `@source not inline` (isključenje sprječava
 generiranje, ne pisanje), samo s druge strane.
 
-### 12.2 ⚠️ OBRNUTI RIZIK je imenovan: točno DVA pravila se bude kad ID padne
+### 12.2 ✅ OBRNUTI RIZIK je NULA — a prva verzija ovog odjeljka tvrdila je „dva"
 
 `#learn` je napisan **da bi tukao `responsive.css`**. Makne li se, pravila koja godinama gube
-mogu početi pobjeđivati. To nije nagađanje — izmjereno je: iz živog DOM-a je pokupljeno
-**32 klase koje stvarno postoje unutar `#learn`**, pa provjereno koja bi ih pravila iz
-`css/responsive/*` tada dohvatila.
+mogu početi pobjeđivati. Zato je prvo pitanje C5b-a bilo: **koja?**
 
-**Odgovor: dva.** Oba preko `.filter-btn`, oba na telefonu:
+**Prvi odgovor (2026-08-30, analiza PO SELEKTORU) glasio je „dva".** Iz živog DOM-a pokupljene su
+**32 klase koje stvarno postoje unutar `#learn`**, pa je provjereno koja bi ih pravila iz
+`css/responsive/*` tada dohvatila. Ispala su dva, oba preko `.filter-btn`, oba na telefonu:
 
-| datoteka | upit | što bi se probudilo |
-|---|---|---|
-| `responsive/04` | `@media (max-width: 374px)` | `.filter-btn { padding: .5rem .75rem; font-size: .75rem; min-height: 40px }` |
-| `responsive/06` | `@media (max-width: 767px) and (hover: none) and (pointer: coarse)` | `.control-btn, .action-btn, .filter-btn, .category-btn { min-height: 48px }` |
+| datoteka | red u `app.css` | upit | kandidat |
+|---|---|---|---|
+| `responsive/04` | 94 | `@media (max-width: 374px)` | `.filter-btn { padding: .5rem .75rem; font-size: .75rem; min-height: 40px }` |
+| `responsive/06` | 96 | `@media (max-width: 767px) and (hover: none) and (pointer: coarse)` | `.control-btn, .action-btn, .filter-btn, .category-btn { min-height: 48px }` |
 
-Dakle: **skidanje `#learn` je sigurno svugdje osim na filter-gumbima**, i ondje treba prije/poslije
-mjera na 320/374/375 px. Nijedan drugi selektor iz `responsive/*` ne dohvaća tu površinu.
-⚠️ I obrnuto vrijedi već danas: ta ista dva pravila **ne rade ništa** dok ID stoji — pa ako se
-netko oslanjao na 48 px dodirnu metu filter-gumba u učenju, **nikad je nije imao.**
+**Ta je tvrdnja OBORENA mjerom (2026-08-30, isti dan).** Analiza po selektoru gleda samo tko
+selektira — a kad skidanje ID-a **izjednači** specifičnosti (0-1-0 vs 0-1-0), odlučuje ono što ta
+analiza uopće nije pitala: **redoslijed u snopu.** `learn.css` je u `css/app.css` na **105**,
+dakle **KASNIJI od oba kandidata** (94 i 96). Learn i dalje pobjeđuje — samo sada zato što je
+zadnji, a ne zato što ima ID. I svako je svojstvo pokriveno: bazno `.filter-btn` u `learn.css`
+nosi `min-height: 44px`, a `@max-380` blok nosi i `padding` i `font-size`.
+
+**Mjereno u pravom Chromiumu**, prepisivanjem selektora u CSSOM-u (pravilo ostaje na **istom
+mjestu u kaskadi**, mijenja mu se samo specifičnost — 101 pravilo prepisano):
+
+| kontekst | `min-height` | visina | `padding-top` | `font-size` |
+|---|---|---|---|---|
+| dodir (coarse), 360 px | 44 → **44** | 44 → **44** | 6 → **6** | 12.48 → **12.48** |
+| dodir (coarse), 320 px | 44 → **44** | 44 → **44** | 6 → **6** | 12.48 → **12.48** |
+| miš, 360 px | 44 → **44** | 44 → **44** | 6 → **6** | 12.48 → **12.48** |
+| miš, 320 px | 44 → **44** | 44 → **44** | 6 → **6** | 12.48 → **12.48** |
+
+⇒ **Skidanje `#learn` ne mijenja ništa — ni na filter-gumbima.** Obrnuti rizik je **nula, ne dva**,
+i prije/poslije mjera na 320/374/375 px više nije uvjet nego rutinska potvrda.
+⚠️ Ono što iz prve verzije **ostaje točno**: ta dva pravila **ne rade ništa ni danas** — pa ako se
+netko oslanjao na 48 px dodirnu metu filter-gumba u učenju, **nikad je nije imao.** Learn ima
+svojih **44 px** (Appleov minimum, WCAG 2.5.5 AAA), pa nedostatak nije fatalan — ali `responsive/06`
+je pisan s namjerom da na dodir bude 48, i ta namjera **nikad nije stigla do učenja.**
+
+> ⚠️ **DVIJE POUKE, obje o mjeraču — sedma i osma u fazi.**
+> **① Prazan `CSSRuleList` je truthy.** Prva verzija ovog mjerača hodala je stablom s
+> `if (r.cssRules) { rekurzija; continue; }`. Otkad postoji ugniježđeni CSS, **i `CSSStyleRule`
+> ima `cssRules`** — prazan, ali truthy — pa je svako obično pravilo završilo kao „spremnik" i
+> preskočilo obradu. Ispis je bio **`prepisanih pravila: 0`** uz uredna četiri „bez promjene".
+> Da nije ispisivao **koliko** je prepisao, taj bi nalaz prošao kao potvrda.
+> **② Kontrola je uhvatila ono što brojač ne bi.** „Bez promjene" smije značiti „nema
+> natjecatelja" samo ako je ID **doista** pao. Dokaz je izravan: `.learn-container` + `p-6`
+> **10 px → 24 px** ✅ — dok ID stoji, isti utility ne prolazi (§12.1). *Mjerač koji ne izvještava
+> o vlastitom opsegu nije mjerač nego mišljenje.*
 
 ### 12.3 Ljestva C5b-a je već uz komponentu — ali ima SVOJE pragove
 
 `responsive/*` ne sadrži nijedno pravilo za ovu površinu. (Tri naizgled pogotka su tuđa:
 `.toast.show` — `show` je generičko stanje koje `blind-map.css` koristi za nešto drugo — i dva
-gornja `.filter-btn`, koja danas ionako gube od ID-a.) To je ista situacija kao browse u C4b, i
+gornja `.filter-btn`, koja gube od `learn.css` **i s ID-om i bez njega** — §12.2.) To je ista
+situacija kao browse u C4b, i
 **dobra vijest: nema seobe ljestve, pa nema ni zamke pomicanja u kaskadi (pravilo ④).**
 
 Loša vijest je što su pragovi **vlastiti i drukčiji od svih ostalih**:
