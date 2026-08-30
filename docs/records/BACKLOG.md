@@ -660,7 +660,25 @@ provedba **ne može** dobiti bez proxyja — to nije propust izvedbe nego svojst
 
 ---
 
-## 🚚 SELF-HOST SUPABASE — **RADI SE ODMAH** (Leon, 2026-08-30) · opseg suženo: SAMO backend
+## 🚚 SELF-HOST SUPABASE — **ODGOĐENO ZA ~MJESEC DANA (Leon, 2026-08-31)** · SAMO backend
+
+> ### ⛔ NE PLANIRATI U SLJEDEĆIM SESIJAMA — ovo više NIJE „radi se odmah"
+> **Leon, 2026-08-31:** *„ma ne, to ću na kraju mjeseca, sada oću iskoristit vrijeme da što više
+> gradim iskreno jer na laptop moram skinut Linux i razne pizdarije pripremit… mijenjanje na
+> laptop će ići za nekih mjesec dana otp."* ⇒ ciljano **~kraj rujna 2026**.
+>
+> **Nije odustajanje nego preraspodjela vremena.** Seoba ide na **Leonov vlastiti laptop** (8 GB),
+> a priprema stroja (Linux, alati) je **njegova ruka i njegov trošak vremena** — dok to ne postoji,
+> od nas ovdje nema posla. **Do tada sve vrijeme ide u cigle.**
+>
+> ⚠️ **Kad dođe na red, prvo provjeriti vrijedi li još IZVORNI razlog za žurbu** — *„prije nego
+> faks krene"*. Odgodom od mjesec dana taj prozor vjerojatno prolazi; ako prođe, **žurbe više
+> nema** i redoslijed se bira iznova, umjesto da se naslijedi.
+> ⚠️ **Jedna stvar se ipak poklapa:** Supabase Pro ističe **~kraj rujna**, dakle otprilike kad je
+> seoba planirana. To nije slučajnost — ista je računica i bila razlog. Ako se seoba pomakne
+> dalje, provjeriti što s free-tier spavanjem (~7 dana neaktivnosti).
+
+**Sve niže vrijedi kao PRIPREMA za taj dan, ne kao plan za sljedeću sesiju.**
 
 > ### ⚠️ OVO NADILAZI SVE ISPOD (2026-08-30). Ispod je izvorni zapis od 2026-08-21 i ostaje kao
 > obrazloženje ZAŠTO se ide; **kada** i **koliko** su presuđeni sada.

@@ -168,8 +168,8 @@ prepisuje** ovamo (ADR-027) — zna ih zadnji **🚀** redak CHANGELOG-a.
 **keširane stare skripte**, ne zbog urednosti sheme.
 ⚠️ **N2 je POLA:** polica pokazuje **skinuto**, ne uniju skinutog i onoga što se uči.
 
-**✅ ZATVORENO:** faza **POLICA** (P1–P4, spec §9.17–9.21) · **C4** (§10.1–10.3, grana
-`feat/c4-browse-lekcije`) · **C5a** u sva četiri dijela (§11, grana `feat/c5a-modovi`).
+**✅ ZATVORENO:** faza **POLICA** (P1–P4, spec §9.17–9.21) · **C4** (§10.1–10.3) · **C5a** u sva
+četiri dijela (§11).
 **Slijedi C5b → C6 → C7.** ⚠️ **C5b je DRUGA VRSTA posla — mjera je već napravljena (spec §12):**
 `responsive/*` je za nju **prazan**, ali `learn.css` je sagrađen na **`#learn`** (102 od 112
 pravila) pa **utility ne prolazi dok ID stoji** — izmjereno, s kontrolom. Prvo skinuti ID uz
@@ -188,23 +188,24 @@ nijedna kasnija datoteka ne smije dirati te selektore, a **grupni selektor se SK
 put, pa se inače prepravlja dvaput. **Oboje TEK POSLIJE SEOBE** (auth je Supabase-konfiguracija;
 seoba mijenja URL, a time i redirect URI). Redoslijed unutar para nije presuđen i nije važan.
 
-### 🚚 SEOBA — **SAMO Supabase; Vercel OSTAJE** · teče USPOREDO s ciglama (Leon, 2026-08-30)
+### 🚚 SEOBA — **ODGOĐENA ZA ~MJESEC DANA (Leon, 2026-08-31)** · SAMO Supabase; Vercel OSTAJE
 
-*„iznajmit ću VPS… **hostanje ostaje na Vercelu, ne mijenjamo do daljnjeg!**"* **Zašto sada, iako
-plan kaže „poslije frontenda":** *„prije nego faks krene."* **Faza se zbog seobe NE pauzira** —
-seoba i cigle **ne dijele nijednu datoteku**. **Ostaje: DVIJE instance.**
-⚠️ **GDJE seoba ide NIJE presuđeno** (Leon, 2026-08-30): *„ne isplati se baš… razmišljam da VPS
-sredim možda na svojem drugom laptopu, on ima 8 giga rama."* Plaćeni VPS **više nije
-pretpostavka**, a **datum („ponedjeljak") je otpao s njim.** Za laptop odgovoriti na dvoje:
+⚠️ **NE PLANIRATI SEOBU U SLJEDEĆIM SESIJAMA.** Leon, 2026-08-31: *„to ću na kraju mjeseca, sada
+oću iskoristit vrijeme da što više gradim… na laptop moram skinut Linux i razne pizdarije
+pripremit; mijenjanje na laptop će ići za nekih mjesec dana otp."* ⇒ ciljano **~kraj rujna 2026**.
+**Nije odustajanje nego preraspodjela vremena:** ide na **vlastiti laptop** (8 GB, dosta za prod +
+staging), a priprema stroja je **Leonova ruka**, ne naš posao. Do tada **sve vrijeme ide u cigle.**
+⚠️ Kad seoba dođe na red, **provjeriti vrijedi li još njezin izvorni razlog** — *„prije nego faks
+krene"*; ako je prozor prošao, žurbe više nema i redoslijed se bira iznova.
+Ranije istog tjedna: *„iznajmit ću VPS"* → **plaćeni VPS je otpao** (*„ne isplati se baš"*), a s
+njim i datum („ponedjeljak"). **Ostaje: DVIJE instance.** Za laptop odgovoriti na dvoje:
 **dostupnost izvana** (kućni IP, NAT, upload, struja) i **tko drži backup kad je stroj u stanu**.
-Za `sokrat-staging` je laptop **bez zadrške dobar**.
+Za `sokrat-staging` je laptop **bez zadrške dobar** i smije ići prvi.
 
-**Pet stvari koje se ne smiju zaboraviti** (brojke i obrazloženja: `BACKLOG.md` §SELF-HOST):
-① **stari projekt živi još ~2 tjedna** — anon-ključ je u `js/auth.js`, koji preglednik drži godinu
-dana · ② **`sokrat-staging` seli s prodom**, inače prestaje biti brana · ③ **backup je naš od
-prvog dana** (`pg_dump` + kopija IZVAN VPS-a; `npm run backup` je aplikacijski snimak, **ne**
-zamjena) · ④ **`delete-account` = najveći rizik** (GDPR) · ⑤ **prvo provjeri jesu li URL-ovi slika
-APSOLUTNI** — inače sve slike puknu. **Testovi su uvjet, ne dodatak.**
+**Pet stvari koje se ne smiju zaboraviti stoje u `BACKLOG.md` §SELF-HOST** i čitaju se **tek kad
+seoba krene** — ovdje su suvišne mjesec dana unaprijed. Jedina koja se tiče rada DO tada:
+⚠️ **anon-ključ i URL su u `js/auth.js`, koji preglednik drži godinu dana** (ADR-017) → stari
+projekt mora živjeti **~2 tjedna nakon** seobe. **Testovi su uvjet, ne dodatak.**
 
 ### 🎯 Tekuća faza = FRONTEND REDIZAJN NA TAILWIND (spec: `docs/plan/FRONTEND_REDIZAJN.md`, ADR-028)
 
@@ -282,15 +283,15 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
 - **HR-ekspanzija:** HR 1. god × 3 smjera FMTU dijele vezne predmete (ADR-022). Kad HR program
   bude potpun → **HR u Supabase** (Leon/Claude `migrate-content.js`, ne Saša). [[hrv-program]]
 - **PAUZIRANO za nas:** 3. godina · novi EN sadržaj (ADR-018: student uploada PODATKE, nikad KOD).
-- ⚠️ **Min. lozinka 8 + leaked-password zaštita ovise o Pro planu (~mjesec)** — poslije seobe
-  provjeri jesu li preživjele. (Što je odrađeno 2026-08-28: CHANGELOG.)
+- ⚠️ **Min. lozinka 8 + leaked-password zaštita ovise o Pro planu** — poslije seobe provjeri jesu
+  li preživjele.
   ⚠️ **NE „popravljaj" `js/auth.js:343`** — tvrdnja o `WeakPasswordError` je **oborena**: u
   zakucanom `supabase-js@2.110.8` slaba lozinka dolazi kao `data.weakPassword` uz `error: null`.
 - **Sitni dug (ne blokira):** siročad u Storageu · advisor-WARN `snapshot_content_version` /
   `handle_new_user` · staging poravnati s `supabase/f1-nodes.sql`. ⚠️ **`is_admin()` se NE smije
   revokeati `authenticated`-u** — zovu ga RLS politike kao pozivatelj.
-- **Napomene:** ⚠️ **Supabase org je `pro` — ali samo ~mjesec dana** (Leon, 2026-08-27), pa
-  free-tier spavanje nakon ~7 dana neaktivnosti **trenutno ne vrijedi** i vratit će se s planom · `content_versions`/`node_content_versions` = **append-only audit**,
+- **Napomene:** ⚠️ **Supabase org je `pro` do ~kraja rujna 2026** — dotad nema free-tier spavanja
+  (~7 dana neaktivnosti); **istek se poklapa sa seobom**, to je ista računica · `content_versions`/`node_content_versions` = **append-only audit**,
   brisanje **samo uz izričit OK** · PWA drži staru ikonu do reinstalacije (nije bug) ·
   `mcp-admin/` = untracked read-only spike [[mcp-admin-spike]].
 

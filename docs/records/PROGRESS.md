@@ -5,6 +5,44 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-31 — sve otvorene odluke zatvorene · obrnuti rizik C5b-a oboren · seoba ODGOĐENA
+
+**Sesija bez izmjene koda.** Leon je pitao za stanje `learn`-a; provjera je otvorila jedan pravi
+nalaz, a zatim je odgovorio na sva četiri otvorena pitanja.
+
+**① Ispravak vlastite tvrdnje od prethodnog dana.** Spec §12.2 je tvrdio da bi skidanje `#learn`
+**probudilo dva pravila** iz `responsive/04` i `/06`. **Oboreno mjerom.** Analiza je bila po
+selektoru — gleda tko selektira, ne tko pobjeđuje. Kad skidanje ID-a **izjednači** specifičnosti,
+odlučuje **redoslijed u snopu**, a `learn.css` je u `app.css` na **105**, kasniji od oba kandidata
+(94, 96). Mjereno prepisivanjem selektora u CSSOM-u (pravilo ostaje na istom mjestu u kaskadi,
+101 prepisano): `min-height`, visina, `padding`, `font-size` **identični** u sva četiri konteksta
+(dodir/miš × 320/360 px). ⇒ **obrnuti rizik je NULA, ne dva** — C5b je lakši nego što je pisalo.
+
+**⚠️ Dvije pouke o mjeraču, sedma i osma u fazi.** Prvi mjerač je javio uredna četiri „bez
+promjene" a bio je prepisao **nula** pravila: hodao je stablom s `if (r.cssRules) {rekurzija;
+continue}`, a otkad postoji ugniježđeni CSS **i `CSSStyleRule` ima `cssRules`** — prazan, ali
+truthy — pa je svako obično pravilo proglasio spremnikom. Uhvatio ga je **samo brojač opsega u
+ispisu.** Druga: kontrola (`.learn-container` + `p-6` → 10 → 24 px) dokazuje da je ID doista pao.
+*Mjerač koji ne izvještava o vlastitom opsegu nije mjerač nego mišljenje.*
+
+**② Četiri Leonove odluke** (`ff1b87e`): **ADR-032** — semantika je **uvijek puna ispuna**,
+prilagođava se **tinta**, ne ispuna; mjera po sve četiri teme pokazala je da svaka ispuna već ima
+tintu koja prolazi AA (u `chalk`/`mint` tamnu, ne bijelu), pa se **nijedna boja ne mijenja** —
+dodaju se `--color-on-ok`/`--color-on-danger`. ⚠️ **Moja preporuka je bila suprotna i odbijena.**
+· **OAuth: NE** — 4 od 5 računa su Leonova → vanjskih korisnika **nula**, što obara zaključak da je
+lozinka prepreka · **„Povijest učenja" ostaje, ali plitka** → `.history-item*` su **namjerno mrtva,
+nisu siročad**.
+
+**③ SEOBA ODGOĐENA ZA ~MJESEC DANA** (Leon: *„to ću na kraju mjeseca, sada oću iskoristit vrijeme
+da što više gradim… na laptop moram skinut Linux"*) → ~kraj rujna 2026, na **vlastiti laptop**
+(8 GB). **Ne planirati je u sljedećim sesijama.** Kad dođe red, provjeriti vrijedi li još izvorni
+razlog za žurbu („prije nego faks krene") — odgodom taj prozor vjerojatno prolazi.
+
+**Slijedi:** **C5b/1** (`exercises.css` + `math.css` + `learn-blocks.css` — najravniji dio, bez
+ID-a), pa /2 `blind-map.css`, pa /3 `learn.css` u dva koraka (ID, pa migracija). Zatim C6, C7.
+
+---
+
 ## 2026-08-30 (f) — revizija pred compact + MJERA za C5b (cigla nije započeta)
 
 **Pravilo #6 odrađeno.** Prošla je sva dokumentacija; četiri prave ispravke: ① redak C5a u
