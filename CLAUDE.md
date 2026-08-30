@@ -11,7 +11,7 @@ Repo ima 2 suradnika. Provjeri `git config user.name`:
 
 ## Što je projekt
 Interaktivna platforma za učenje (flashcards / quiz / fill / learn + interaktivne vježbe). Live: **www.sokratstudy.com**.
-Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-platforma za SVE** (bilo koji student / škola / sveučilište, bilo koji sadržaj) — **FMTU je samo odskočna daska.** Kasnije: AI tutor + natjecanje. Vlasnik/jedini autor: **Leon Kreso**. Vizualni stil: **„čisto i bogato", dark.**
+Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-platforma za SVE** (bilo koji student / škola / sveučilište, bilo koji sadržaj) — **FMTU je samo odskočna daska.** Kasnije: AI tutor + natjecanje. Vlasnik/jedini autor: **Leon Kreso**. Vizualni stil: **„čisto i bogato"**; zadana tema je **svijetla** (§7.3).
 
 ## Stack
 - Frontend: **statički, vanilla JS, BEZ build-koraka/frameworka** (biblioteke preko CDN-a/vendorane su OK). Hosting: **Vercel** (git push na `main` = produkcijski deploy; grane = preview).
@@ -86,14 +86,14 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 | `check:safearea` | `env(safe-area-inset-*)` samo u `css/variables.css`, drugdje `var(--safe-*)` — pravilo pisano golim `env()` je **nemjerljivo** |
 | `check:budget` | posjetiteljev put: **nijedna editorska datoteka** + **≤ 200 KB prenesenih** skripti (mjeri PRENESENE bajtove, ne disk) |
 | `check:seo` | ono što tražilica i pretpregled VIDE: sitemap == disk · robots ne `Disallow`-a `noindex` stranicu · jedan tekst u `<title>`/`og:`/`twitter:` · `og:image` **1200×630** · JSON-LD **parsira**. `--write` regenerira sitemap |
-| `check:contrast` | WCAG **po temi** — 164 provjere kroz sve 4 teme; parsira `css/tokens.css`, ne drži kopiju vrijednosti |
+| `check:contrast` | WCAG **po temi** — 358 provjera kroz sve teme; parsira `css/tokens.css`, ne drži kopiju vrijednosti |
 
 ### Izvan preflighta — traže mrežu ili preglednik
 
 | naredba | što radi | zašto nije u preflightu |
 |---|---|---|
 | `npm run css:diff` | izračunati stilovi u pravom Chromiumu, radno stablo vs git-referencu kroz **`git worktree`** (cijelo stablo, pa vidi i seobu iz markupa u CSS). ⚠️ **Doseg se PREDAJE — zadani laže tiho:** `CSS_DIFF_RUTE` (inače samo `/`) · `CSS_DIFF_SIRINE` (inače samo 375/768/1280) · `CSS_DIFF_ALL=1`. ⚠️ **NE dvije instance usporedo.** Obrazloženja: zaglavlje `scripts/css-diff.js` | preglednik + port |
-| `npm run check:contrast:live` | kontrast kakav se STVARNO iscrta: 4 teme × 11 ruta. `check:contrast` čita tokene i ne zna KORISTI li ih CSS — ovo mjeri ekran; iznimke **imenovane** u `scripts/contrast-live-allow.json` | preglednik + poslužitelj |
+| `npm run check:contrast:live` | kontrast kakav se STVARNO iscrta: 4 teme × **13** ruta (`te2` NEMA `exercises`/`blind-map` → imenovani zasebno, inače ih brana ne vidi). `check:contrast` čita tokene i ne zna KORISTI li ih CSS — ovo mjeri ekran; iznimke u `scripts/contrast-live-allow.json` (**prazne**) | preglednik + poslužitelj |
 | `npm run build:og` | crta `og-cover.png` **1200×630** (boje iz tokena, tekst iz i18n) | preglednik; PNG se **commita**, dimenzije mjeri `check:seo` |
 | `npm run css:debt` | što je ostalo za C4–C7: po cigli datoteke, redci, `!important` izvan komentara | read-only, **nije gate** — plan je do 2026-08-25 te brojke nosio **ručno** i obje su ostarile |
 | `npm run palette:breakdown` | razloži ostatak palete po **POSLJEDICI** (nevidljiv tekst · blijede plohe · stara paleta) | read-only, **nije gate** |
@@ -147,14 +147,12 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 > | što je na produkciji | zadnji **🚀** redak u `docs/records/CHANGELOG.md` |
 > | grana · commiti · je li pushano | `git status -sb` · `git log --oneline -1 origin/main` |
 > | koliko predmeta | `npm run verify` |
-> | zašto je cigla izvedena baš tako | `docs/plan/FRONTEND_REDIZAJN.md` §7 (C0–C3, landing) · §8 (KOSTUR) · §9 (TELEFON, `about`, SEO) · §10 (C4) · §11 (C5a) · **§12 (C5b — MJERA prije koda, cigla nije započeta)** |
+> | zašto je cigla izvedena baš tako | `docs/plan/FRONTEND_REDIZAJN.md` §7 (C0–C3, landing) · §8 (KOSTUR) · §9 (TELEFON, `about`, SEO) · §10 (C4) · §11 (C5a) · **§12 (C5b — mjera) · §12.7 (C5b/0)** |
 > | koji su bugovi bili i što su naučili | `docs/records/BUGS.md` |
 > | što je isporučeno i kada | `CHANGELOG.md` · dnevnik sesija: `PROGRESS.md` |
 >
-> **Brojka prepisana u prozu ostari istog dana** — dogodilo se triput u tri dana. Zato postoji
-> **`npm run check:state`**: ne zabranjuje brojku nego ju provjerava protiv gita, i pada na
-> **zapovijed koja je već izvršena** (zastarjeli NALOG navodi sesiju na radnju).
-> ⚠️ **Memorija je izvan repozitorija pa ju gate ne doseže** — poznata rupa, ne previd.
+> **Brojka prepisana u prozu ostari istog dana** → zato **`npm run check:state`** (zašto: u
+> skripti). ⚠️ **Memorija je izvan repozitorija pa ju gate ne doseže** — poznata rupa, ne previd.
 
 ### Gdje smo
 
@@ -168,16 +166,18 @@ prepisuje** ovamo (ADR-027) — zna ih zadnji **🚀** redak CHANGELOG-a.
 **keširane stare skripte**, ne zbog urednosti sheme.
 ⚠️ **N2 je POLA:** polica pokazuje **skinuto**, ne uniju skinutog i onoga što se uči.
 
-**✅ ZATVORENO:** faza **POLICA** (P1–P4, spec §9.17–9.21) · **C4** (§10.1–10.3) · **C5a** u sva
-četiri dijela (§11).
-**Slijedi C5b → C6 → C7.** ⚠️ **C5b je DRUGA VRSTA posla — mjera je već napravljena (spec §12):**
+**✅ ZATVORENO:** **POLICA** (P1–P4, §9.17–9.21) · **C4** (§10.1–10.3) · **C5a** (§11) · **C5b/0**
+(§12.7 — 11 boja gradiva bilo je NEVIDLJIVO na zadanoj temi; sad tokeni `--color-ink-*`).
+**Slijedi C5b/1 → C6 → C7.** ⚠️ **C5b je DRUGA VRSTA posla — mjera je gotova (§12):**
 `responsive/*` je za nju **prazan**, ali `learn.css` je sagrađen na **`#learn`** (102 od 112
-pravila) pa **utility ne prolazi dok ID stoji** — izmjereno, s kontrolom. Prvo skinuti ID uz
-`css:diff` = 0, pa migrirati; **obrnuti rizik je izmjeren i NULA** (§12.2).
-⚠️ **`exercises`/`blind-map` su uvjetni tabovi — `te2` ih NEMA**, mjeri na `statistics`/`geography`.
+pravila) pa **utility ne prolazi dok ID stoji**. Prvo skinuti ID uz `css:diff` = 0, pa migrirati;
+**obrnuti rizik je izmjeren i NULA** (§12.2).
+⚠️ **`exercises`/`blind-map` su uvjetni tabovi — `te2` ih NEMA**, mjeri na `statistics`/`geography`;
+a **katalog iscrtava samo 2 od 44 pravila `learn-blocks.css`-a** (gradivo je v1 HTML) → ta se
+datoteka dokazuje kroz `window.renderBlocks`, nikad kataloškom rutom (§12.7).
 ⚠️ **Četiri pravila za preostale cigle** (zašto: §10.3, §11.1–11.4): ① prije nego pravilo postane
 utility **izmjeri tko ga danas tuče**; ② **rez ide po SVOJSTVU** — što neki preživjeli `@media` još
-mijenja ne smije u utility; ③ **mjerač je bio prvi kvar 8× u fazi**, i dvaput je vratio **uvjerljiv
+mijenja ne smije u utility; ③ **mjerač je bio prvi kvar 9× u fazi**, i dvaput je vratio **uvjerljiv
 krivi broj umjesto da padne** (§11.4, §12.2) → svaki mjerač mora ispisati **i koliko je toga
 dotaknuo**; ④ **seljenje pravila iz `responsive/*` u datoteku
 komponente POMIČE GA UNAPRIJED u kaskadi** → sele se **sva** pravila za selektor ili nijedno,
@@ -197,10 +197,8 @@ pripremit; mijenjanje na laptop će ići za nekih mjesec dana otp."* ⇒ ciljano
 staging), a priprema stroja je **Leonova ruka**, ne naš posao. Do tada **sve vrijeme ide u cigle.**
 ⚠️ Kad seoba dođe na red, **provjeriti vrijedi li još njezin izvorni razlog** — *„prije nego faks
 krene"*; ako je prozor prošao, žurbe više nema i redoslijed se bira iznova.
-Ranije istog tjedna: *„iznajmit ću VPS"* → **plaćeni VPS je otpao** (*„ne isplati se baš"*), a s
-njim i datum („ponedjeljak"). **Ostaje: DVIJE instance.** Za laptop odgovoriti na dvoje:
-**dostupnost izvana** (kućni IP, NAT, upload, struja) i **tko drži backup kad je stroj u stanu**.
-Za `sokrat-staging` je laptop **bez zadrške dobar** i smije ići prvi.
+**Plaćeni VPS je otpao** (*„ne isplati se baš"*); ostaju **DVIJE instance**. Otvorena pitanja o
+laptopu (dostupnost izvana · 24/7 · backup izvan stroja) razložena su u `BACKLOG.md` §SELF-HOST.
 
 **Pet stvari koje se ne smiju zaboraviti stoje u `BACKLOG.md` §SELF-HOST** i čitaju se **tek kad
 seoba krene** — ovdje su suvišne mjesec dana unaprijed. Jedina koja se tiče rada DO tada:

@@ -120,6 +120,57 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Riješeni / Lekcije
 
+### BUG-040 — Boje teksta u gradivu bile su nevidljive na zadanoj temi, a tri brane su to propustile
+
+- Status: ✅ **riješen** (2026-08-31, C5b/0) · Težina: **visok** — pogađa čitljivost sadržaja ·
+  Našao: priprema za C5b/1, mjerenjem tvrdnje koju je `palette-breakdown` već iznosio
+- **Opis.** 11 zakucanih boja teksta (`.lb-color-*` ×8 u `learn-blocks.css`, `.ex-tacc-dr/-cr` u
+  `exercises.css`, `.katex-error` u `math.css`) pisano je za tamnu podlogu. Zadana tema je od C3
+  svijetla. Izmjereno kroz sve teme i sve tri plohe: **165 usporedbi, 103 ispod AA** —
+  `.lb-color-amber` **1.67** na bijelom, `.ex-tacc-dr` 1.80, `.katex-error` 2.78. U `chalk`/`mint`
+  sve prolaze (4.4–10.7), pa je kvar bio **nevidljiv onome tko gleda tamnu temu**.
+- **Reprodukcija.** Zadana tema (`academic`) → obojen tekst u bloku gradiva, ili T-konta u vježbi
+  računovodstva nakon upisa stavke, ili formula s greškom. Tekst se stapa s plohom.
+- **Uzrok.** Datoteke su starije od odluke da zadana tema bude svijetla, a nijedna brana ih nije
+  mogla vidjeti — **iz tri različita razloga**:
+  ① `check:palette` prepoznaje fatalno **samo kad su boja i pozadina u ISTOM pravilu**. Tekst bez
+  vlastite pozadine nasljeđuje plohu, pa ga klasifikator ne može upariti i svrsta ga u „stara =
+  čitljivo". Slijepa točka mu je time **najčešći slučaj koji postoji: obojen tekst**.
+  ② `check:contrast` mjeri **vrijednosti tokena**, ne njihovu upotrebu — pravila su čitala zakucani
+  hex, pa je token bio posve nevažan.
+  ③ `check:contrast:live` mjeri ekran, ali je obilazio **samo `te2`**, koji nema ni `exercises` ni
+  `blind-map`; te dvije plohe nikad nisu bile izmjerene.
+- **Rješenje.** 8 tinti autora postalo je tokeni `--color-ink-<ton>` u svih 5 blokova tema
+  (vrijednosti **izračunate**: zadržan ton, pomaknuta svjetloća do ≥ 5.0:1, zasićenost ≤ 75 % na
+  svijetlim temama). Tokeni su ušli u `AS_TEXT` (`check:contrast` **238 → 358** provjera),
+  `check:contrast:live` je dobio dvije nove rute (**11 → 13**), a `learn-blocks.css` je dobio
+  vlastiti test (`tests/learn-blocks-contrast.spec.js`) jer ga kataloška ruta ne iscrtava.
+- **Lekcija.** **Brana koja mjeri DEFINICIJU ne dokazuje UPOTREBU, a brana koja mjeri ekran ne
+  dokazuje ništa o ekranu koji ne posjeti.** Tri zelena gatea nisu tri potvrde nego tri različita
+  načina da se ne gleda. Kad se pita „je li ovo pokriveno", pitanje nije *postoji li brana* nego
+  *bi li pala da je tvrdnja lažna* — što se provjerava samo tako da se stara vrijednost vrati i
+  vidi pada li (ovdje: **16 od 32** mjerenja).
+
+### BUG-041 — `var()` s fallbackom izgledao je kao tematiziranost, a varijabla nije postojala
+
+- Status: ✅ **riješen** za dvije od tri pojave (2026-08-31, C5b/0) · Težina: **srednji** ·
+  Našao: `check:contrast:live` odmah po proširenju obilaska na `blind-map`
+- **Opis.** `.map-diff-btn` je imao `background: var(--card-bg, #fff)`, a **`--card-bg` nije
+  definiran nigdje u `css/`** → uvijek je pobjeđivao zakucani `#fff`. Tekst je pritom bio
+  tematiziran, pa je u `chalk`/`mint` ispadala svijetla tinta na bijeloj plohi: **1.43**.
+  Ista mehanika u `learn-blocks.css`: `background: var(--grad, linear-gradient(…))` s `color:#fff`
+  — `--grad` također ne postoji, i to je bilo jedno od 11 fatalnih pravila palete.
+- **Uzrok.** `var(--x, fallback)` **izgleda** kao da poštuje temu. Ako `--x` nikad nije definiran,
+  to je zakucana vrijednost s ukrasom — i to takva koju pretraživanje po `#hex` teže nalazi jer je
+  sakrivena iza imena varijable.
+- **Rješenje.** `--card-bg` → `var(--color-surface-1)`; `--grad` → puna ispuna `--color-brand-500`
+  uz `--color-on-brand` (ADR-032). **`--border-color` (11 upotreba) je ostavljen svjesno** —
+  fallback mu je poluproziran, dakle blijed a ne nevidljiv; pripada ciglama koje te datoteke ionako
+  otvaraju.
+- **Lekcija.** **Prije nego `var()` shvatiš kao tematiziranost, provjeri da varijabla postoji.**
+  Prebrojano u ovom projektu: tri se koriste a nijedna nije definirana. Brzina provjere:
+  usporedi broj definicija i broj upotreba po imenu.
+
 ### BUG-038 — Brojači na ekranu dopuna nisu imali NIJEDNO pravilo, a isti blok na karticama jest
 
 - Status: ✅ **riješen** (2026-08-30, cigla C5a/2) · Težina: **nizak** (kozmetika, ništa se ne

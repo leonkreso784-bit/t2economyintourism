@@ -235,6 +235,25 @@
   --shadow-e1: 0 1px 2px rgb(14 26 43 / 0.06), 0 4px 12px -4px rgb(14 26 43 / 0.10);
   --shadow-e2: 0 2px 4px rgb(14 26 43 / 0.06), 0 12px 28px -8px rgb(14 26 43 / 0.16);
 
+  /* ---------- TINTE AUTORA (8 nijansi iz trake editora) ----------
+     Autor bira TON, ne vrijednost — pa vrijednost mora biti stvar teme. Do 2026-08-31
+     su ove boje bile zakucane u `css/learn-blocks.css` i pisane za tamnu podlogu; na
+     zadanoj svijetloj temi mjerile su **1.47–2.98** (jantar 1.67 na bijelom), dakle
+     nevidljive. Nijedna brana ih nije vidjela: `check:palette` prepoznaje fatalno samo
+     kad su boja i pozadina u ISTOM pravilu, a tekst bez vlastite pozadine mu je slijepa
+     točka — što je najčešći slučaj. Sada su u `AS_TEXT` (`scripts/check-contrast.js`),
+     pa ih brana mjeri kroz sve teme i sve tri plohe.
+     ⚠️ Vrijednosti su IZMJERENE, ne odabrane okom: zadržan je ton, pomaknuta samo
+     svjetloća do ≥ 5.0:1 na najgoroj plohi (margina nad AA 4.5, da sitna izmjena plohe
+     ne obori branu). Na svijetlim temama je zasićenost ograničena na 75 % — bez toga
+     ispadaju neonske (`#ce0a0a`) i ne pripadaju uz `--color-danger: #c0332b`.
+     ⚠️ NE pisati ih kao `var(--color-danger-ink)` i sl.: `check-contrast.js` PARSIRA
+     ovu datoteku i `var()` mu nije hex → token bi tiho ispao iz mjerenja. */
+  --color-ink-red: #c81d1d;      --color-ink-amber: #806212;
+  --color-ink-green: #197453;    --color-ink-cyan: #12707e;
+  --color-ink-blue: #1b65bf;     --color-ink-indigo: #4554e4;
+  --color-ink-violet: #8a33e2;   --color-ink-pink: #c11c72;
+
   /* ---------- PRAGOVI (breakpointi) ---------- */
   /* JEDAN skup za cijelu aplikaciju (izlazni uvjet §2). Zadani Tailwindov skup
      (sm/md/lg/xl/2xl) + `xs` za veliki telefon, jer 480px je prag koji naš layout
@@ -256,21 +275,19 @@
    `@theme static` gore = ZADANA tema (i jedina koja rađa utility klase — imena
    dolaze odande). Blokovi ispod mijenjaju samo vrijednosti.
 
-   ⚠️ ZAŠTO JE ZADANA „chalk", A NE „paper": svih ~434 zakucanih boja u `css/`
-   (300 iz stare palete + 134 bijele/crne) pretpostavljaju TAMNU podlogu.
-   `color: rgba(255,255,255,.9)` na papiru nije neusklađeno — nevidljivo je.
-   Dok `npm run check:palette` ne dođe na nulu, svijetle teme SU ISPRAVNE ali
-   aplikacija još nije spremna za njih → birač tema se uključuje tek tada.
-   Do tada je zadana tamna, ali topla.
+   ⚠️ ZADANA JE „academic" (svijetla), od 2026-08-13. Ovdje je do 2026-08-31 stajalo
+   obrazloženje zašto je zadana „chalk" — s njim još dvije tvrdnje koje su u međuvremenu
+   prestale vrijediti: da `js/init.js` zakucava `data-theme="dark"` (to je popravljeno
+   u `js/theme.js`, koji vrijednost PROVJERAVA prema popisu) i da „~13 legacy pravila
+   u `learn.css` i `components.css`" selektira `[data-theme="dark"]` (izmjereno:
+   **četiri** pojave, i to u `tokens.css` i `variables.css` — u te dvije datoteke
+   nijedna). Zapis se ne popravlja u hodu nego se briše kad ga mjera obori.
 
-   ⚠️ ŠTO JOŠ NE POSTOJI, A MORA PRIJE NEGO SE BIRAČ UKLJUČI:
-   `js/init.js` danas zakucava `data-theme="dark"` — vrijednost koja ne odgovara
-   nijednoj temi ispod, pa se primjenjuje ZADANA. To je namjerno sigurno stanje
-   dok traje prelazak. Ali ~13 legacy pravila u `learn.css` i `components.css`
-   selektiraju baš `[data-theme="dark"]`; čim birač postavi `data-theme="mint"`,
-   ta pravila prestaju vrijediti. Ona ionako reagiraju na SVJETLOĆU (bijeli tekst,
-   prozirni obrubi), a ne na paletu — pa se pri čišćenju tih površina (C4/C5)
-   prepisuju na tokene, a ne na drugi selektor. Do tada birača nema.
+   ⚠️ ŠTO JOŠ DIJELI BIRAČ TEMA OD UKLJUČENJA: `npm run check:palette` još nije na
+   nuli. Preostalo je razloženo po POSLJEDICI (`npm run palette:breakdown`) — jedini
+   broj koji stvarno blokira svijetle teme je FATALNO, dakle tekst koji na svijetloj
+   podlozi nestaje. ADR-032 ih je gasio kroz semantičke ispune, a tinte autora
+   (`--color-ink-*` gore) kroz ovu ciglu.
    ═════════════════════════════════════════════════════════════════════ */
 
 /* ── PAPIR I MARKER (svijetlo) — topli papir, crna tinta, plava akcija, žuti marker.
@@ -287,6 +304,10 @@
   --color-ok: #15703c;         --color-ok-strong: #0f5c30;
   --color-warn: #8a5a00;       --color-warn-ink: #7a4f00;
   --color-danger: #c6362c;     --color-danger-ink: #a82a22;
+  --color-ink-red: #c61c1c;      --color-ink-amber: #7e6012;
+  --color-ink-green: #197151;    --color-ink-cyan: #126e7c;
+  --color-ink-blue: #1b64bd;     --color-ink-indigo: #4352e4;
+  --color-ink-violet: #8931e2;   --color-ink-pink: #bf1b71;
   --shadow-e1: 0 1px 2px rgb(28 26 23 / 0.06), 0 4px 12px -4px rgb(28 26 23 / 0.10);
   --shadow-e2: 0 2px 4px rgb(28 26 23 / 0.06), 0 12px 28px -8px rgb(28 26 23 / 0.16);
 }
@@ -305,6 +326,12 @@
   --color-ok: #8fbf6b;         --color-ok-strong: #6da34d;
   --color-warn: #e3a93c;       --color-warn-ink: #edbe63;
   --color-danger: #e3705c;     --color-danger-ink: #ee8b78;
+  /* Tamne teme jedva se miču — ove su boje i pisane za tamnu podlogu; pomak je
+     0–5 točaka svjetloće, taman da i najsvjetlija ploha (surface-2) prođe ≥ 5.0. */
+  --color-ink-red: #f98484;      --color-ink-amber: #fbbf24;
+  --color-ink-green: #34d399;    --color-ink-cyan: #22d3ee;
+  --color-ink-blue: #67a9fa;     --color-ink-indigo: #97a0f9;
+  --color-ink-violet: #c58efc;   --color-ink-pink: #f580bd;
   --shadow-e1: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
   --shadow-e2: 0 10px 15px -3px rgb(0 0 0 / 0.45), 0 4px 6px -4px rgb(0 0 0 / 0.35);
 }
@@ -323,6 +350,10 @@
   --color-ok: #10794a;         --color-ok-strong: #0b5e39;
   --color-warn: #8a5800;       --color-warn-ink: #7a4d00;
   --color-danger: #c0332b;     --color-danger-ink: #a32821;
+  --color-ink-red: #c81d1d;      --color-ink-amber: #806212;
+  --color-ink-green: #197453;    --color-ink-cyan: #12707e;
+  --color-ink-blue: #1b65bf;     --color-ink-indigo: #4554e4;
+  --color-ink-violet: #8a33e2;   --color-ink-pink: #c11c72;
   --shadow-e1: 0 1px 2px rgb(14 26 43 / 0.06), 0 4px 12px -4px rgb(14 26 43 / 0.10);
   --shadow-e2: 0 2px 4px rgb(14 26 43 / 0.06), 0 12px 28px -8px rgb(14 26 43 / 0.16);
 }
@@ -338,6 +369,10 @@
   --color-ok: #6bcb77;         --color-ok-strong: #46b36a;
   --color-warn: #e2b53f;       --color-warn-ink: #efc762;
   --color-danger: #e2725f;     --color-danger-ink: #e8836f;
+  --color-ink-red: #f87b7b;      --color-ink-amber: #fbbf24;
+  --color-ink-green: #34d399;    --color-ink-cyan: #22d3ee;
+  --color-ink-blue: #60a5fa;     --color-ink-indigo: #8f99f9;
+  --color-ink-violet: #c186fc;   --color-ink-pink: #f474b7;
   --shadow-e1: 0 4px 6px -1px rgb(3 12 13 / 0.45), 0 2px 4px -2px rgb(3 12 13 / 0.35);
   --shadow-e2: 0 10px 15px -3px rgb(3 12 13 / 0.5), 0 4px 6px -4px rgb(3 12 13 / 0.4);
 }

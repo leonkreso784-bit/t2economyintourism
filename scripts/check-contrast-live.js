@@ -144,8 +144,16 @@ const MJERA = function () {
     // Zadani obilazak: svaka stranica koja ima adresu + svi nacini ucenja. Predmet
   // `te2` je prvi u katalogu i ima sve nacine; argumenti ga smiju pregaziti.
   const L = '/#/subject/te2/first-midterm';
+  // ⚠️ `te2` NEMA `exercises` ni `blind-map` — to su UVJETNI tabovi. Do 2026-08-31 je
+  // zadani obilazak bio samo `te2`, pa te dvije plohe brana NIKAD nije izmjerila i mirno
+  // javljala zeleno. `features.exercises` ima 5 predmeta (math, statistics, accounting,
+  // academic-writing, macroeconomics), `features.blindMap` samo `geography`.
+  // Ruta koja ne postoji na predmetu mjeri prazan ekran, a nula nalaza na ekranu kojeg
+  // nema nije dokaz.
   const ZADANO = ['/', '/#/subjects', '/#/about', '/#/materials', '/#/subject/te2',
-    L, L + '/learn', L + '/flashcards', L + '/quiz', L + '/fill', L + '/progress'];
+    L, L + '/learn', L + '/flashcards', L + '/quiz', L + '/fill', L + '/progress',
+    '/#/subject/statistics/first-midterm/exercises',
+    '/#/subject/geography/first-midterm/blind-map'];
   const stranice = process.argv.length > 2 ? process.argv.slice(2) : ZADANO;
   const browser = await chromium.launch();
   const nalazi = new Map();

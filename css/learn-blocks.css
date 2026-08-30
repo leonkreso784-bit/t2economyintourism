@@ -1,7 +1,14 @@
 /* ===== learn-blocks.css — stil za U7 learn-BLOKOVE (renderira js/blocks-renderer.js) =====
- * Jedan renderer = sigurnosna granica; ovdje živi njegov vizual („čisto i bogato", dark).
+ * Jedan renderer = sigurnosna granica; ovdje živi njegov vizual („čisto i bogato").
  * Blokovi se učitavaju u #learnContent (U7c). Kartice/kviz/fill = zaseban stil (ne diraju se).
- * Tokeni iz css/variables.css → preživljava dark-temu i redizajn. */
+ *
+ * ⚠️ JAVNI KATALOG OVU DATOTEKU JEDVA DODIRUJE. Izmjereno 2026-08-31 na četiri predmeta
+ * (te2, statistics, geography, accounting): na `…/learn` se iscrtavaju SAMO `.lb-legacy`
+ * i `.lb-table-wrap` — gradivo je v1 HTML kroz DOMPurify. Ostala 42 pravila žive u
+ * EDITORU (`js/block-editor.js`) i u korisnikovim materijalima (UGC). Posljedica za
+ * mjerenje: `css:diff` na kataloškoj learn-ruti javlja „0 razlika" za gotovo cijelu
+ * datoteku, i to nije dokaz nego prazan ekran. Dokazuje se kroz `window.renderBlocks`
+ * (isti put koji koristi `tests/learn-parity.spec.js`) — vidi `tests/learn-blocks-contrast.spec.js`. */
 
 .lb-heading {
     font-family: var(--font-display);
@@ -29,15 +36,21 @@ h4.lb-heading { font-size: 1.1rem; }
 }
 .lb-list li { margin: 0.25em 0; }
 
-/* ── inline boje teksta (a11y nijanse za dark; SAMO kurirani token-set) ── */
-.lb-color-indigo { color: #818cf8; }
-.lb-color-green  { color: #34d399; }
-.lb-color-amber  { color: #fbbf24; }
-.lb-color-red    { color: var(--danger-text, #f87171); }
-.lb-color-cyan   { color: #22d3ee; }
-.lb-color-blue   { color: #60a5fa; }
-.lb-color-violet { color: #c084fc; }
-.lb-color-pink   { color: #f472b6; }
+/* ── inline boje teksta (SAMO kurirani set od 8; ugovor: `INLINE_COLORS`) ──
+   ⚠️ IME KLASE JE UGOVOR, NE STIL: `lb-color-<ton>` se serijalizira u model bloka i
+   round-trippa kroz editor (`js/block-editor.js` → `editableToInline`), pa se ton ne
+   preimenuje. Mijenja se samo VRIJEDNOST — i ona živi u temi, ne ovdje.
+   Do 2026-08-31 su vrijednosti bile zakucane i pisane za tamnu podlogu: na zadanoj
+   svijetloj temi mjerile su 1.47–2.98 (jantar **1.67** na bijelom). Brane ih nisu
+   vidjele jer nemaju vlastitu pozadinu — sad su tokeni pod `check:contrast`. */
+.lb-color-indigo { color: var(--color-ink-indigo); }
+.lb-color-green  { color: var(--color-ink-green); }
+.lb-color-amber  { color: var(--color-ink-amber); }
+.lb-color-red    { color: var(--color-ink-red); }
+.lb-color-cyan   { color: var(--color-ink-cyan); }
+.lb-color-blue   { color: var(--color-ink-blue); }
+.lb-color-violet { color: var(--color-ink-violet); }
+.lb-color-pink   { color: var(--color-ink-pink); }
 
 /* ── callout (info / warning / tip) ── */
 .lb-callout {
@@ -53,7 +66,7 @@ h4.lb-heading { font-size: 1.1rem; }
     margin-bottom: 0.35em;
 }
 .lb-callout__body { color: var(--text-secondary); line-height: 1.6; }
-.lb-callout--info    { border-left-color: #06b6d4; background: rgba(6, 182, 212, 0.08); }
+.lb-callout--info    { border-left-color: var(--color-ink-cyan); background: rgba(6, 182, 212, 0.08); }
 .lb-callout--warning { border-left-color: var(--accent); background: rgba(245, 158, 11, 0.08); }
 .lb-callout--tip     { border-left-color: var(--secondary); background: rgba(16, 185, 129, 0.08); }
 
@@ -78,8 +91,11 @@ h4.lb-heading { font-size: 1.1rem; }
     aspect-ratio: 16 / 9;
     border-radius: 12px;
     overflow: hidden;
-    background: radial-gradient(circle at 50% 45%, #1e293b, #0f172a);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    /* Ploha fasade ide po TEMI. Do 2026-08-31 je ovdje stajao zakucan tamni radijal
+       (#1e293b → #0f172a) — na svijetlim temama crna rupa u tekstu, i jedna od četiri
+       tvrde zabrane u `check:palette`. Dubina se zadržava, samo iz tokena. */
+    background: radial-gradient(circle at 50% 45%, var(--color-surface-2), var(--color-surface-0));
+    box-shadow: var(--shadow-e2);
 }
 .lb-video__play {
     position: absolute;
@@ -105,11 +121,16 @@ h4.lb-heading { font-size: 1.1rem; }
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background: var(--grad, linear-gradient(135deg, #6366f1, #8b5cf6));
-    color: #fff;
+    /* ⚠️ `var(--grad, …)` je bio PRAZNO OBEĆANJE: `--grad` nije definiran nigdje u
+       `css/`, pa se uvijek crtao zakucani fallback (stari indigo/ljubičasta) i na
+       njemu `color: #fff` — jedno od 11 fatalnih pravila palete. Po ADR-032 ispuna
+       ostaje PUNA, prilagođava se TINTA: `--color-on-brand` je već po temi bijel
+       (academic/paper) ili taman (chalk/mint), i brana ga mjeri protiv `brand-500`. */
+    background: var(--color-brand-500);
+    color: var(--color-on-brand);
     font-size: 1.5rem;
     padding-left: 4px;
-    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.45);
+    box-shadow: var(--shadow-e2);
 }
 .lb-video__label { font-size: 0.85rem; color: var(--text-muted); letter-spacing: 0.02em; }
 .lb-video__frame { width: 100%; height: 100%; border: 0; display: block; }

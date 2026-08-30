@@ -4752,3 +4752,104 @@ imenovati predmet koji ih ima. Izmjereno iz kataloga (2026-08-30):
 **`te2` nema ni jedno ni drugo.** Mjerač koji to ne provjeri uspoređivat će prazan ekran i
 mirno javiti „0 razlika" — isti razred kao granica dokaza u §11.3 (`.quiz-game` iza `hidden`) i
 §11.4 (`.history-item` kojeg nema). *Nula razlika na ekranu kojeg nema nije dokaz.*
+
+### 12.7 ✅ C5b/0 — boje gradiva, PRIJE nego se gradivo migrira (2026-08-31)
+
+Cigla koju mjera nije predvidjela. Priprema za C5b/1 krenula je od tvrdnje `palette-breakdown`-a
+da su zakucane boje u ovim datotekama *„stara = neusklađeno, ali **čitljivo**"*. Ta tvrdnja
+**nije bila točna**, i to se vidjelo tek kad ih se izmjerilo naspram ploha:
+
+| boja | gdje | na bijelom (`academic`, ZADANA) |
+|---|---|---|
+| `.lb-color-amber` `#fbbf24` | `learn-blocks.css` | **1.67** |
+| `.lb-color-cyan` `#22d3ee` | `learn-blocks.css` | 1.81 |
+| `.lb-color-green` `#34d399` | `learn-blocks.css` | 1.92 |
+| `.ex-tacc-dr` `#93c5fd` | `exercises.css` | 1.80 |
+| `.katex-error` `#ff6b6b` | `math.css` | 2.78 |
+
+**165 usporedbi (11 boja × 3 plohe × 5 blokova tema), 103 ispod AA.** Svih 11 pisano je za tamnu
+podlogu i u `chalk`/`mint` prolazi (4.4–10.7) — datoteke su starije od odluke da zadana tema bude
+svijetla.
+
+#### 🔴 Zašto to nijedna brana nije vidjela — tri odvojene rupe
+
+**① `check:palette` prepoznaje fatalno samo kad su boja i pozadina u ISTOM pravilu.** Tekst bez
+vlastite pozadine nasljeđuje plohu, pa ga klasifikator ne može upariti — i svrsta ga u „stara".
+Slijepa točka mu je time **najčešći slučaj koji postoji: obojen tekst.**
+
+**② `check:contrast` mjeri VRIJEDNOSTI tokena, ne njihovu upotrebu.** Sve četiri teme godinama
+prolaze AA, a pravila su čitala zakucani hex — token je bio posve nevažan.
+
+**③ `check:contrast:live` mjeri ekran, ali je obilazio SAMO `te2`** — predmet koji nema ni
+`exercises` ni `blind-map`. Te dvije plohe brana **nikad nije izmjerila.** Čim su rute dodane
+(11 → 13), odmah je pao nalaz koji ondje stoji: `.map-diff-btn` ima
+`background: var(--card-bg, #fff)`, a **`--card-bg` nije definiran nigdje u `css/`** → u
+`chalk`/`mint` svijetla tinta na bijeloj plohi, **1.43**.
+
+> ⚠️ **`var()` S FALLBACKOM IZGLEDA KAO TEMATIZIRANOST, A BEZ DEFINICIJE JE ZAKUCANA VRIJEDNOST
+> S UKRASOM.** Prebrojano: tri varijable se koriste a **nijedna ne postoji** — `--card-bg`
+> (1 upotreba, dala nevidljiv tekst), `--grad` (1, dala jedno od 11 fatalnih pravila palete) i
+> **`--border-color` (11 upotreba)**. Prve dvije su popravljene; treća je imenovana i ostaje
+> C5b-u jer joj je fallback poluproziran, dakle blijed, ne nevidljiv.
+
+#### 🔧 Što je izvedeno
+
+- **8 tinti autora postalo je tokeni** `--color-ink-<ton>` u svih 5 blokova tema. Vrijednosti su
+  **izračunate, ne odabrane okom**: zadržan ton, pomaknuta samo svjetloća do ≥ 5.0:1 na najgoroj
+  plohi (margina nad AA 4.5), uz **zasićenost ≤ 75 % na svijetlim temama** — bez tog ograničenja
+  ispadaju neonske (`#ce0a0a`) i ne pripadaju uz `--color-danger: #c0332b`. Tamne teme se jedva
+  miču (0–5 točaka svjetloće): boje su i bile pisane za njih.
+- **Ime klase je ostalo netaknuto.** `lb-color-<ton>` se serijalizira u model bloka i round-trippa
+  kroz editor — to je **ugovor, ne stil**. Mijenja se vrijednost, ne ime.
+- **`check:contrast` ih je dobio u `AS_TEXT`: 238 → 358 provjera** (+120 = 8 × 3 plohe × 5 tema).
+  ⚠️ Tokeni se NE smiju pisati kao `var(--color-danger-ink)`: brana **parsira** `tokens.css` i
+  `var()` joj nije hex → token bi tiho ispao iz mjerenja.
+- **Uzorci boja u traci editora čitaju iste tokene** (`TB_COLORS`). Dotad su ondje stajale
+  zakucane hex-vrijednosti — druga kopija istoga — pa je uzorak pokazivao boju za tamnu temu i
+  kad je autor na svijetloj.
+- **`.lb-video__icon`**: `var(--grad, …)` + `color:#fff` → puna ispuna `--color-brand-500` +
+  `--color-on-brand` (ADR-032: ispuna ostaje puna, prilagođava se tinta).
+- **`.lb-video`**: zakucani tamni radijal (`#1e293b → #0f172a`) → isti radijal iz tokena.
+- **Paleta: `learn-blocks.css` 15 → 7**, ukupno **102 → 94**; **fatalnih 11 → 10**.
+
+#### 🧪 Dokaz — i zašto je trebao NOVI test
+
+`learn-blocks.css` se **ne da dokazati kataloškom rutom.** Izmjereno na četiri predmeta (`te2`,
+`statistics`, `geography`, `accounting`): na `…/learn` se iscrtavaju **samo `.lb-legacy` i
+`.lb-table-wrap`** — gradivo je v1 HTML kroz DOMPurify. Od 44 pravila datoteke katalog dodiruje
+**dva**; ostala 42 žive u editoru i u korisnikovim materijalima. **Ruta iz §12.6 dakle ne pokriva
+datoteku kojoj je namijenjena** — da je cigla išla po njoj, `css:diff` bi javio „0 razlika" za 42
+od 44 pravila i to bi prošlo kao dokaz.
+
+Zato **`tests/learn-blocks-contrast.spec.js`**: crta blokove kroz `window.renderBlocks` (isti ulaz
+koji koristi `tests/learn-parity.spec.js`, dostupan bez prijave) i mjeri iscrtano kroz sve četiri
+teme — 8 tonova × 4 teme.
+
+> ⚠️ **KONTROLA: tvrdnja GRIZE.** Sa starim vrijednostima nametnutima preko tokena, **16 od 32**
+> mjerenja pada — i to točno na dvije svijetle teme (`paper`, `academic`), dok `chalk`/`mint`
+> prolaze. Test koji ne bi pao ni da je tvrdnja lažna nije test.
+
+#### 🐞 Mjerač je bio prvi kvar — deveti put u fazi
+
+**`css:diff` je dobio rute s vodećom kosom crtom** (`/#/subject/…`), a alat sam dodaje `/`
+(redak 413) → `http://…//#/…`, dakle prazna stranica. Ispis: **„5 elemenata, 0 razlika"** kroz
+svih 9 kombinacija, uz uredan zeleni zaključak. Uhvaćeno **samo zato što alat ispisuje broj
+dotaknutih elemenata** — u C5a je na ovakvim rutama mjerio tisuće. Spec §12.6 rutu piše ispravno
+(bez `/`); greška je nastala pri prepisivanju.
+
+Uz to su **dva mjerača pala naglas**, i to je uspjeh a ne šteta: prvi je plohe tražio s
+`css.indexOf('[data-theme')` i pogodio **komentar** ~1450 znakova prije prve definicije; drugi je
+imao `\s` u JS **string-literalu** (gdje je to samo slovo `s`), pa je regex tražio `surface-0:s*`.
+Oba puta je ispis opsega (`dotaknuto: 0`) spriječio da izmišljotina prođe kao nalaz.
+
+> *Mjerač koji ne izvještava o vlastitom opsegu nije mjerač nego mišljenje.* Pravilo ③ iz
+> `CLAUDE.md` bilo je u ovoj sesiji **triput** jedina obrana.
+
+#### ⛔ Što C5b/0 NAMJERNO nije napravio
+
+- **Nijedna datoteka nije migrirana na Tailwind.** To je i dalje C5b/1–/3; ova cigla samo miče
+  minu koja bi se pri migraciji prenijela dalje.
+- **`--border-color` (11 upotreba) nije dirano** — fallback je poluproziran, dakle blijed a ne
+  nevidljiv; pripada ciglama koje te datoteke ionako otvaraju.
+- **`.map-clear-btn:hover`** (bijelo na `--danger`) ostaje: to je jedno od sedam pravila koja gasi
+  **ADR-032**, ne ova cigla.

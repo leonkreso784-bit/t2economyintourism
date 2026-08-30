@@ -1,6 +1,6 @@
 /* =====================================================
    SOKRAT STUDY — KaTeX MATH (ADR-009)
-   Dark-theme + mobile-safe overflow for rendered formulas.
+   Theme-aware + mobile-safe overflow for rendered formulas.
    KaTeX inherits currentColor, so formulas match surrounding text colour.
    The project guards hard against horizontal page overflow (Playwright on 4
    iPhone profiles), so wide display formulas scroll INSIDE their own box
@@ -21,9 +21,11 @@
 }
 
 /* throwOnError:false renders the offending source in this colour — keep it visible
-   on the dark background so a formula typo is obvious during human review. */
+   so a formula typo is obvious during human review.
+   ⚠️ Bilo je zakucano `#ff6b6b`, pisano za tamnu podlogu: na zadanoj svijetloj temi
+   2.78, dakle upravo ono što ovo pravilo pokušava spriječiti — greška koja se ne vidi. */
 .katex-error {
-    color: #ff6b6b;
+    color: var(--color-ink-red);
 }
 
 @media (max-width: 767px) {

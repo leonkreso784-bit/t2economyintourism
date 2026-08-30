@@ -40,13 +40,19 @@
     image: 'Slika', video: 'Video', table: 'Tablica', formula: 'Formula', 'legacy-html': 'HTML'
   };
   const CALLOUT_VARIANTS = { info: 1, warning: 1, tip: 1 };
-  // F6 — kurirana paleta boja teksta (legibilna na tamnoj temi): token → hex (swatch) + naziv (title).
+  // F6 — kurirana paleta boja teksta: ton → CSS-varijabla (swatch) + naziv (title). Legibilnost
+  // je od 2026-08-31 pod branom (`check:contrast`, `--color-ink-*`), a ne stvar procjene.
   // JEDINI izvor: allowlist + serijalizator-regex + traka-swatch-evi svi se izvode odavde (bez drift-a).
   // ⚠ blocks-renderer.js ima ZASEBAN INLINE_COLORS (drugi IIFE) — mora ostati usklađen s ovim tokenima.
+  // ⚠️ UZORAK MORA POKAZIVATI ONO ŠTO ĆE SE ISCRTATI. Do 2026-08-31 su ovdje stajale
+  // zakucane hex-vrijednosti, druga kopija onoga što je pisalo u `css/learn-blocks.css`
+  // — pa je uzorak u traci pokazivao boju za TAMNU temu i kad je korisnik na svijetloj.
+  // Sada obje strane čitaju isti token, pa se kopije ne mogu razići.
   const TB_COLORS = [
-    ['red', '#f87171', 'Crvena'], ['amber', '#fbbf24', 'Jantar'], ['green', '#34d399', 'Zelena'],
-    ['cyan', '#22d3ee', 'Tirkiz'], ['blue', '#60a5fa', 'Plava'], ['indigo', '#818cf8', 'Indigo'],
-    ['violet', '#c084fc', 'Ljubičasta'], ['pink', '#f472b6', 'Roza']
+    ['red', 'var(--color-ink-red)', 'Crvena'], ['amber', 'var(--color-ink-amber)', 'Jantar'],
+    ['green', 'var(--color-ink-green)', 'Zelena'], ['cyan', 'var(--color-ink-cyan)', 'Tirkiz'],
+    ['blue', 'var(--color-ink-blue)', 'Plava'], ['indigo', 'var(--color-ink-indigo)', 'Indigo'],
+    ['violet', 'var(--color-ink-violet)', 'Ljubičasta'], ['pink', 'var(--color-ink-pink)', 'Roza']
   ];
   const INLINE_COLORS = TB_COLORS.reduce(function (m, c) { m[c[0]] = 1; return m; }, {}); // 'default' = bez boje (nema spana)
   const COLOR_CLASS_RE = new RegExp('(?:^|\\s)lb-color-(' + Object.keys(INLINE_COLORS).join('|') + ')(?:\\s|$)');

@@ -5,6 +5,44 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-31 (OPUS) — **C5b/0: tinte gradiva su bile nevidljive na zadanoj temi**
+
+Cigla ispred C5b/1, iz njegove pripreme. Spec **§12.7**. Migracija na Tailwind nije dirana.
+
+**① Nalaz.** 11 zakucanih boja teksta u `learn-blocks.css` / `exercises.css` / `math.css`
+pisano je za tamnu podlogu, a zadana tema je od C3 svijetla. Izmjereno kroz sve teme i plohe:
+**165 usporedbi, 103 ispod AA** — `.lb-color-amber` **1.67** na bijelom, `.ex-tacc-dr` 1.80,
+`.katex-error` 2.78. `palette-breakdown` ih je zvao *„stara = čitljivo"*.
+
+**② Tri brane, tri različita razloga za šutnju.** `check:palette` prepoznaje fatalno samo kad su
+boja i pozadina u **istom pravilu** (tekst bez vlastite pozadine = slijepa točka).
+`check:contrast` mjeri **vrijednost tokena**, ne upotrebu. `check:contrast:live` mjeri ekran, ali
+je obilazio **samo `te2`**, koji nema ni `exercises` ni `blind-map`.
+
+**③ Popravak.** 8 tinti autora postalo je tokeni `--color-ink-<ton>` u svih 5 blokova tema.
+Vrijednosti **izračunate**: zadržan ton, pomaknuta svjetloća do ≥ 5.0:1 na najgoroj plohi,
+zasićenost ≤ 75 % na svijetlim temama. Ime klase `lb-color-<ton>` **ostaje** — serijalizira se u
+model bloka, dakle ugovor a ne stil. Uzorci u traci editora (`TB_COLORS`) više ne drže vlastitu
+kopiju hexova nego čitaju iste tokene.
+
+**④ Brana je proširena da se ne vrati.** `check:contrast`: **238 → 358 provjera** (8 tonova × 3
+plohe × 5 tema). `check:contrast:live`: **11 → 13 ruta** (`exercises` + `blind-map`).
+Novi **`tests/learn-blocks-contrast.spec.js`** crta blokove kroz `window.renderBlocks` i mjeri
+iscrtano — jer katalog od te datoteke iscrtava samo 2 od 44 pravila (gradivo je v1 HTML), pa
+kataloška ruta ne bi dokazala ništa. Kontrola: sa starim vrijednostima pada **16 od 32** mjerenja.
+
+**⑤ Prošireni obilazak odmah je našao još jedan kvar.** `.map-diff-btn` je imao
+`background: var(--card-bg, #fff)`, a `--card-bg` **nije definiran nigdje** → u `chalk`/`mint`
+svijetla tinta na bijelom, **1.43**. Prebrojano: tri varijable se koriste a nijedna ne postoji —
+`--card-bg`, `--grad`, i `--border-color` (11 upotreba, ostaje C5b-u).
+
+**⑥ Paleta.** `learn-blocks.css` 15 → 7; ukupno **102 → 94**; **fatalnih 11 → 10**
+(`.lb-video__icon` ugašen; zakucana tamna ploha `.lb-video` prešla na tokene).
+
+**Provjereno:** `preflight` **EXIT 0** · `check:contrast:live` 13 × 4, **0 nalaza**, iznimke
+prazne · novi spec prolazi.
+
+
 ## 2026-08-30 (OPUS) — **C5a/4b: mjera, kontrast i jedna namjerna promjena prikaza**
 
 Druga polovica cigle C5a/4. Spec **§11.4**. Prvi commit nije smio promijeniti nijedan piksel;

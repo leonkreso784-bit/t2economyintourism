@@ -5,6 +5,64 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-31 (OPUS) — C5b/0: tinte gradiva su bile nevidljive, i tri brane su to propustile
+
+Sesija je počela kao **priprema** za C5b/1. Priprema je našla kvar, pa je Leon rekao neka se
+sesija potroši na njega: *„moze da odlicna ideja… ovu sesiju mozemo potrositi samo na to da se
+rijesimo tih problema"*. Migracija na Tailwind **nije dirana** — ovo je cigla ispred nje.
+
+**NALAZ.** `palette-breakdown` je 11 zakucanih boja u `learn-blocks.css` / `exercises.css` /
+`math.css` svrstavao u *„stara = neusklađeno, ali čitljivo"*. Mjera po svim temama i plohama:
+**165 usporedbi, 103 ispod AA.** Na zadanoj svijetloj temi `.lb-color-amber` je **1.67**,
+`.ex-tacc-dr` **1.80**, `.katex-error` **2.78**. Sve su pisane za tamnu podlogu i u `chalk`/`mint`
+prolaze (4.4–10.7) — datoteke su starije od odluke da zadana tema bude svijetla.
+
+**TRI BRANE, TRI RAZLIČITA RAZLOGA ZAŠTO SU ŠUTJELE** (spec §12.7):
+① `check:palette` prepoznaje fatalno samo kad su boja i pozadina u **istom pravilu** — tekst bez
+vlastite pozadine mu je slijepa točka, dakle najčešći slučaj koji postoji.
+② `check:contrast` mjeri **vrijednosti tokena**, ne njihovu upotrebu; pravila su čitala zakucani
+hex pa je token bio nevažan.
+③ `check:contrast:live` mjeri ekran, ali je obilazio **samo `te2`**, koji nema ni `exercises` ni
+`blind-map`. Te dvije plohe nikad nisu bile izmjerene.
+
+**IZVEDENO.** 8 tinti autora postalo je tokeni `--color-ink-<ton>` u svih 5 blokova tema;
+vrijednosti **izračunate** (zadržan ton, pomaknuta svjetloća do ≥ 5.0:1, zasićenost ≤ 75 % na
+svijetlim temama). Ime klase `lb-color-<ton>` ostaje netaknuto — ono je **ugovor** koji se
+serijalizira u model bloka. `check:contrast` ih je dobio u `AS_TEXT`: **238 → 358 provjera.**
+Uzorci u traci editora (`TB_COLORS`) čitaju iste tokene umjesto vlastite kopije hexova.
+Ugašeno je i jedno fatalno pravilo (`.lb-video__icon`) te zakucana tamna ploha (`.lb-video`).
+**Paleta 102 → 94, fatalnih 11 → 10.**
+
+**PROŠIRENJE OBILASKA JE ODMAH NAŠLO JOŠ JEDAN KVAR.** Čim su `exercises` i `blind-map` ušli u
+`check:contrast:live` (11 → 13 ruta), pao je `.map-diff-btn`: `background: var(--card-bg, #fff)`,
+a **`--card-bg` nije definiran nigdje** → u `chalk`/`mint` svijetla tinta na bijelom, **1.43**.
+Prebrojano: **tri varijable se koriste a nijedna ne postoji** — `--card-bg`, `--grad` i
+`--border-color` (11 upotreba, ostaje C5b-u jer joj je fallback blijed, ne nevidljiv).
+*`var()` s fallbackom izgleda kao tematiziranost, a bez definicije je zakucana vrijednost s
+ukrasom.*
+
+**DOKAZ JE TRAŽIO NOVI TEST.** Izmjereno na četiri predmeta: na kataloškim `…/learn` rutama se od
+`learn-blocks.css` iscrtavaju **samo `.lb-legacy` i `.lb-table-wrap`** — gradivo je v1 HTML kroz
+DOMPurify, pa 42 od 44 pravila datoteke katalog uopće ne dodiruje. Ruta iz spec §12.6 time **ne
+pokriva datoteku kojoj je namijenjena.** Novi `tests/learn-blocks-contrast.spec.js` crta blokove
+kroz `window.renderBlocks` i mjeri iscrtano kroz sve četiri teme. **Kontrola: sa starim
+vrijednostima pada 16 od 32 mjerenja**, i to točno na dvije svijetle teme.
+
+**MJERAČ JE OPET BIO PRVI KVAR — deveti put u fazi.** `css:diff` je dobio rute s vodećom kosom
+crtom, a alat sam dodaje `/` → prazna stranica i uredno zeleno **„5 elemenata, 0 razlika"** kroz
+svih 9 kombinacija. Uhvaćeno samo zato što alat ispisuje **koliko je toga dotaknuo**. Uz to su
+dva vlastita mjerača pala naglas (`indexOf` pogodio komentar; `\s` u string-literalu je samo
+slovo `s`) — oba puta ih je zaustavio ispis opsega.
+
+**Provjereno:** `check:contrast` 358/358 ✅ · `check:contrast:live` **13 ruta × 4 teme, 0 nalaza**,
+iznimke i dalje prazne ✅ · `check:palette` 94/94 ✅ · novi spec ✅ · `preflight` **EXIT 0**.
+
+**Slijedi:** **C5b/1** kako je i planiran — `exercises.css` + `math.css` + `learn-blocks.css` na
+Tailwind. Mina je maknuta, pa migracija više ne nosi boje sa sobom.
+
+---
+
+
 ## 2026-08-31 — sve otvorene odluke zatvorene · obrnuti rizik C5b-a oboren · seoba ODGOĐENA
 
 **Sesija bez izmjene koda.** Leon je pitao za stanje `learn`-a; provjera je otvorila jedan pravi

@@ -40,7 +40,14 @@
     padding: 0.6rem 1.2rem;
     border: 2px solid var(--border);
     border-radius: var(--radius-md, 12px);
-    background: var(--card-bg, #fff);
+    /* ⚠️ Bilo je `var(--card-bg, #fff)`, a `--card-bg` NIJE DEFINIRAN nigdje u `css/` —
+       pa je uvijek pobjeđivao zakucani `#fff`. Tekst je pritom bio tematiziran, tako da
+       je u `chalk`/`mint` ispadala svijetla tinta na bijeloj plohi: izmjereno **1.43**.
+       Isti rod kvara kao `var(--grad, …)` u `learn-blocks.css`: `var()` s fallbackom
+       IZGLEDA kao tematiziranost, a bez definicije je samo zakucana vrijednost s ukrasom.
+       Nijedna brana ga nije prijavila jer `check:contrast:live` do 2026-08-31 nije
+       obilazio `blind-map` — `te2` taj tab nema. */
+    background: var(--color-surface-1);
     color: var(--text-secondary);
     font-size: 0.9rem;
     font-weight: 600;

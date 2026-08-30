@@ -447,8 +447,11 @@
 }
 .ex-tacc-name { font-weight: 700; color: var(--text-primary); font-size: 0.88rem; margin-bottom: 0.35rem; }
 .ex-tacc-cols { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-muted); }
-.ex-tacc-dr { color: #93c5fd; }
-.ex-tacc-cr { color: #fca5a5; }
+/* Dugovna/potražna strana T-konta. Zakucane vrijednosti (#93c5fd / #fca5a5) mjerile su
+   na bijelom **1.80 / 1.90** — pisane za tamnu podlogu. Nijedna brana ih nije uhvatila:
+   `check:contrast:live` obilazi samo `te2`, a `te2` NEMA tab vježbi. */
+.ex-tacc-dr { color: var(--color-ink-blue); }
+.ex-tacc-cr { color: var(--color-ink-red); }
 .ex-tacc-bal { margin-top: 0.35rem; font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); border-top: 1px solid var(--border); padding-top: 0.3rem; }
 .ex-tacc-empty { color: var(--text-muted); font-size: 0.88rem; font-style: italic; }
 

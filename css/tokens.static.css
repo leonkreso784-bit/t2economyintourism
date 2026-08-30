@@ -65,6 +65,14 @@
     --radius-full: 9999px;
     --shadow-e1: 0 1px 2px rgb(14 26 43 / 0.06), 0 4px 12px -4px rgb(14 26 43 / 0.10);
     --shadow-e2: 0 2px 4px rgb(14 26 43 / 0.06), 0 12px 28px -8px rgb(14 26 43 / 0.16);
+    --color-ink-red: #c81d1d;
+    --color-ink-amber: #806212;
+    --color-ink-green: #197453;
+    --color-ink-cyan: #12707e;
+    --color-ink-blue: #1b65bf;
+    --color-ink-indigo: #4554e4;
+    --color-ink-violet: #8a33e2;
+    --color-ink-pink: #c11c72;
     --breakpoint-xs: 30rem;
   }
 }
@@ -89,6 +97,14 @@
   --color-warn-ink: #7a4f00;
   --color-danger: #c6362c;
   --color-danger-ink: #a82a22;
+  --color-ink-red: #c61c1c;
+  --color-ink-amber: #7e6012;
+  --color-ink-green: #197151;
+  --color-ink-cyan: #126e7c;
+  --color-ink-blue: #1b64bd;
+  --color-ink-indigo: #4352e4;
+  --color-ink-violet: #8931e2;
+  --color-ink-pink: #bf1b71;
   --shadow-e1: 0 1px 2px rgb(28 26 23 / 0.06), 0 4px 12px -4px rgb(28 26 23 / 0.10);
   --shadow-e2: 0 2px 4px rgb(28 26 23 / 0.06), 0 12px 28px -8px rgb(28 26 23 / 0.16);
 }
@@ -113,6 +129,14 @@
   --color-warn-ink: #edbe63;
   --color-danger: #e3705c;
   --color-danger-ink: #ee8b78;
+  --color-ink-red: #f98484;
+  --color-ink-amber: #fbbf24;
+  --color-ink-green: #34d399;
+  --color-ink-cyan: #22d3ee;
+  --color-ink-blue: #67a9fa;
+  --color-ink-indigo: #97a0f9;
+  --color-ink-violet: #c58efc;
+  --color-ink-pink: #f580bd;
   --shadow-e1: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
   --shadow-e2: 0 10px 15px -3px rgb(0 0 0 / 0.45), 0 4px 6px -4px rgb(0 0 0 / 0.35);
 }
@@ -137,6 +161,14 @@
   --color-warn-ink: #7a4d00;
   --color-danger: #c0332b;
   --color-danger-ink: #a32821;
+  --color-ink-red: #c81d1d;
+  --color-ink-amber: #806212;
+  --color-ink-green: #197453;
+  --color-ink-cyan: #12707e;
+  --color-ink-blue: #1b65bf;
+  --color-ink-indigo: #4554e4;
+  --color-ink-violet: #8a33e2;
+  --color-ink-pink: #c11c72;
   --shadow-e1: 0 1px 2px rgb(14 26 43 / 0.06), 0 4px 12px -4px rgb(14 26 43 / 0.10);
   --shadow-e2: 0 2px 4px rgb(14 26 43 / 0.06), 0 12px 28px -8px rgb(14 26 43 / 0.16);
 }
@@ -161,6 +193,14 @@
   --color-warn-ink: #efc762;
   --color-danger: #e2725f;
   --color-danger-ink: #e8836f;
+  --color-ink-red: #f87b7b;
+  --color-ink-amber: #fbbf24;
+  --color-ink-green: #34d399;
+  --color-ink-cyan: #22d3ee;
+  --color-ink-blue: #60a5fa;
+  --color-ink-indigo: #8f99f9;
+  --color-ink-violet: #c186fc;
+  --color-ink-pink: #f474b7;
   --shadow-e1: 0 4px 6px -1px rgb(3 12 13 / 0.45), 0 2px 4px -2px rgb(3 12 13 / 0.35);
   --shadow-e2: 0 10px 15px -3px rgb(3 12 13 / 0.5), 0 4px 6px -4px rgb(3 12 13 / 0.4);
 }

@@ -115,7 +115,16 @@ while ((tm = themeRe.exec(css)) !== null) {
 // ── provjere ────────────────────────────────────────────────────────────────
 const SURFACES = ['--color-surface-0', '--color-surface-1', '--color-surface-2'];
 const AS_TEXT = ['--color-ink-0', '--color-ink-1', '--color-ink-2', '--color-brand-500',
-                 '--color-ok', '--color-warn-ink', '--color-danger-ink'];
+                 '--color-ok', '--color-warn-ink', '--color-danger-ink',
+                 /* TINTE AUTORA (`.lb-color-*` u gradivu, 8 nijansi iz trake editora).
+                    Ušle su 2026-08-31 jer ih dotad NIJEDNA brana nije vidjela: `check:palette`
+                    prepoznaje fatalno samo kad su boja i pozadina u ISTOM pravilu, a ove nemaju
+                    vlastitu pozadinu — nasljeđuju plohu. Slijepa točka je time bila najčešći
+                    slučaj koji postoji: obojen tekst. Mjereno prije popravka: 1.47–2.98 na
+                    svijetlim temama, dakle nevidljivo, a `palette-breakdown` ih je svrstavao u
+                    „stara = čitljivo". Sada ih ovdje ima 8 × 3 plohe × 4 teme = 96 provjera. */
+                 '--color-ink-red', '--color-ink-amber', '--color-ink-green', '--color-ink-cyan',
+                 '--color-ink-blue', '--color-ink-indigo', '--color-ink-violet', '--color-ink-pink'];
 /* ⚠️ `--color-line` NAMJERNO NIJE OVDJE, `--color-line-strong` jest.
    Prva verzija ovog gatea mjerila je `--color-line` na 3:1 i oborila sve četiri teme.
    Provjera je bila kriva, ne palete: WCAG 1.4.11 traži 3:1 za granice KOJE SU NUŽNE
