@@ -17,6 +17,50 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
+### BUG-039 — Ljestva širine kviza i dva pravila za male telefone su MRTVI: kasniji širi upit gasi raniji uži
+
+- Status: 🔴 **otvoren** — svjesno odgođen, jer ispravak je **odluka o izgledu**, a našao ga je
+  migracijski korak (C5a/3, spec §11.3) · Težina: **nizak** — sve je upotrebljivo, samo nije ono
+  što je napisano · Našao: **mjerenje pred migraciju C5a/3**, ne prijava.
+
+- **Opis / izmjereno** (Chromium, ruta `#/subject/te2/first-midterm/quiz`):
+
+  | širina prozora | `.quiz-container` `max-width` **stvarno** | što je NAPISANO |
+  |---|---|---|
+  | 768–1023 | **650 px** | `05` → 600 px |
+  | 1024–1279 | **650 px** | `05` → 700 px |
+  | 1280–1535 | **650 px** | `05` → 800 px |
+  | ≥ 1536 | **650 px** | `05` → 900 px |
+
+  Na monitoru od 1920 px kviz je dakle širok 650 px. Isti mehanizam na drugom kraju ljestve:
+  `01 @max-374` piše `.answer-btn { padding: 0.75rem; font-size: 0.85rem }` i
+  `.question-card h2 { font-size: 1rem }`, pa na telefonu od 320 px ništa od toga ne vrijedi —
+  gumbi odgovora imaju iste razmjere kao na 767 px.
+
+- **Uzrok:** medijski upit **ne nosi specifičnost**. Kad dva pravila imaju isti selektor,
+  presuđuje **redoslijed izvora**, a ne to koje je „preciznije". `responsive/06` je zadnja
+  datoteka u nizu, pa njezin `@media (min-width: 768px) { max-width: 650px }` gasi četiri
+  uža upita iz `05`; `responsive/02` (`max-width: 767px`) iz istog razloga gasi `01`
+  (`max-width: 374px`). **Ista mehanika kao BUG-037**, samo na širini umjesto na orijentaciji —
+  a to je već treći put da se pojavi, pa je riječ o obrascu, ne o slučaju.
+
+- **Zašto NIJE popravljeno u C5a/3:** cigla je migracija i njezin je izlazni uvjet `css:diff`
+  s nula razlika. „Popravak" bi značio odlučiti **koliko širok kviz treba biti na velikom
+  monitoru** i **koliko sitan na 320 px** — dvije odluke o izgledu koje nijedna brana ne mjeri.
+  Mrtva pravila su zato **obrisana** (brisanje ne mijenja izračunati stil), a namjera je
+  zapisana ovdje s brojkama.
+
+- **Rješenje (kad se radi):** odlučiti ciljne širine i napisati ih **na jednom mjestu** —
+  u `css/quiz-section.css`, gdje ljestva sada i živi, pa redoslijed datoteka više ne može
+  presuditi umjesto autora. Prirodno mjesto: **C5a/4 ili C7**, zajedno s BUG-037.
+
+- **Lekcija:** *uži upit ne pobjeđuje širi — kasniji pobjeđuje raniji.* Dokle god su pragovi
+  razasuti po šest datoteka, „napisao sam pravilo za 1536 px" ne znači da će se ono iscrtati.
+  Zato cigle ove faze sabiru ljestvu **uz komponentu**: ne radi urednosti nego zato da autor
+  vidi cijelu ljestvu odjednom i da redoslijed prestane biti nevidljiv.
+
+---
+
 ### BUG-037 — Kartica u landscapeu telefona traži 280 px visine u pojasu od 205 px, a dva pravila pisana protiv toga su mrtva
 
 - Status: 🔴 **otvoren** — svjesno odgođen za ciglu **C5a/4** (ondje se otvara landscape ispod

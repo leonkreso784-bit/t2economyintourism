@@ -36,59 +36,6 @@
     }
 }
 
-/* ===== QUIZ IMPROVEMENTS ===== */
-@media (min-width: 480px) {
-    .quiz-container {
-        max-width: 500px;
-        margin: 0 auto;
-    }
-    
-    .quiz-options {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-    
-    .results-actions {
-        flex-direction: row;
-        justify-content: center;
-        gap: 1rem;
-    }
-    
-    .results-actions .action-btn {
-        flex: 0 1 auto;
-        min-width: 150px;
-    }
-}
-
-@media (min-width: 768px) {
-    .quiz-container {
-        max-width: 650px;
-    }
-    
-    .question-card {
-        padding: 2rem;
-    }
-    
-    .question-card h2 {
-        font-size: 1.25rem;
-    }
-    
-    .answer-btn {
-        padding: 1rem 1.25rem;
-        font-size: 1rem;
-    }
-    
-    .score-circle {
-        width: 140px;
-        height: 140px;
-    }
-    
-    .score-circle span {
-        font-size: 2.5rem;
-    }
-}
-
 /* ===== PROGRESS SECTION IMPROVEMENTS ===== */
 @media (min-width: 480px) {
     .progress-overview {
@@ -171,19 +118,11 @@
 
 /* ===== IMPROVED TOUCH TARGETS FOR MOBILE ===== */
 @media (max-width: 767px) and (hover: none) and (pointer: coarse) {
-    .answer-btn,
     .control-btn,
     .action-btn,
     .filter-btn,
     .category-btn {
         min-height: 48px;
-    }
-}
-
-/* ===== BETTER SPACING FOR LANDSCAPE TABLETS ===== */
-@media (min-width: 768px) and (max-width: 1023px) and (orientation: landscape) {
-    .quiz-container {
-        max-width: 70%;
     }
 }
 

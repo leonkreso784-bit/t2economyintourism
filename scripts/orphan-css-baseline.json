@@ -68,16 +68,7 @@
     "progress-label",
     "progress-section",
     "progress-value",
-    "question-text",
     "quick-action-card",
-    "quiz-content",
-    "quiz-info",
-    "quiz-navigation",
-    "quiz-option",
-    "quiz-question",
-    "quiz-section",
-    "results-message",
-    "results-score",
     "stat-value",
     "study-home-actions",
     "study-home-header",
@@ -88,7 +79,6 @@
   ],
   "css/responsive/05-device-sizes.css": [
     "bottom-nav",
-    "quiz-option",
     "subjects-grid"
   ],
   "css/topbar.css": [

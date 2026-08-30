@@ -152,97 +152,6 @@
     
     /* (removed orphaned .topic-* rules + stray brace — dead/malformed CSS) */
 
-/* --- QUIZ SECTION MOBILE --- */
-@media (max-width: 767px) {
-    .quiz-section {
-        padding: 0.75rem;
-        padding-bottom: calc(80px + var(--safe-bottom));
-    }
-    
-    .quiz-header {
-        padding: 0.75rem;
-        flex-direction: column;
-        gap: 0.75rem;
-        text-align: center;
-    }
-    
-    .quiz-header h2 {
-        font-size: 1.1rem;
-    }
-    
-    .quiz-info {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.75rem;
-    }
-    
-    .quiz-content {
-        padding: 0.5rem;
-    }
-    
-    .quiz-question {
-        padding: 1rem;
-        margin-bottom: 0.75rem;
-    }
-    
-    .question-text {
-        font-size: 1rem;
-        line-height: 1.5;
-    }
-    
-    .quiz-options {
-        gap: 0.6rem;
-    }
-    
-    .quiz-option {
-        padding: 0.9rem 1rem;
-        font-size: 0.9rem;
-        min-height: 50px;
-    }
-    
-    .quiz-navigation {
-        padding: 0.75rem;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        justify-content: center;
-    }
-    
-    .quiz-navigation .btn {
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
-        flex: 1;
-        max-width: 150px;
-    }
-    
-    /* Quiz Results Mobile */
-    .quiz-results {
-        padding: 1rem;
-    }
-    
-    .results-score {
-        font-size: 2.5rem;
-    }
-    
-    .results-message {
-        font-size: 1rem;
-    }
-    
-    .results-stats {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    
-    .results-actions {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    
-    .results-actions .btn {
-        width: 100%;
-        justify-content: center;
-    }
-}
-
 /* --- ANALYTICS/PROGRESS SECTION MOBILE --- */
 @media (max-width: 767px) {
     .analytics-section,
@@ -300,10 +209,6 @@
 
 /* --- EXTRA SMALL SCREENS (iPhone SE, older phones) --- */
 @media (max-width: 374px) {
-    .quiz-option {
-        padding: 0.75rem;
-        font-size: 0.85rem;
-    }
     
     .btn {
         padding: 0.5rem 0.75rem;

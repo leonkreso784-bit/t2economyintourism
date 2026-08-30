@@ -5,6 +5,57 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-30 (OPUS) — **C5a/3: kviz — ljestva koja se nikad nije iscrtala**
+
+Treći od četiri commita cigle C5a. Spec **§11.3**. Jedan novi bug: **BUG-039**, otvoren i svjesno
+odgođen.
+
+**Mjera prije koda.** Ekran za kviz nosi **57 pravila iz `css/responsive/*`** i **38 parova
+(selektor, svojstvo) o kojima odlučuju dvije ili više datoteka** — najgušća pojedinačna površina
+u cigli. Mjereno vlastitim obilaskom blokova, ne grepom: `grep` ne zna reći tko koga tuče.
+
+**🐞 Glavni nalaz: `.quiz-container` je 650 px na SVAKOM desktopu.** `responsive/05` piše ljestvu
+600 → 700 → 800 → 900 px kroz pragove 768/1024/1280/1536, a `responsive/06` dolazi poslije i
+jednim pravilom `@media (min-width: 768px) { max-width: 650px }` gasi **sve četiri**. Medijski
+upit ne nosi specifičnost — presuđuje redoslijed izvora. Isti mehanizam na drugom kraju: dva
+pravila iz `01 @max-374` (razmjeri gumba odgovora na malim telefonima) gasi `02 @max-767`, jer je
+**širi i kasniji**. Sve zapisano u **BUG-039** s brojkama; **nije popravljeno ovdje**, jer bi
+ispravak bio odluka o izgledu, a ne migracija.
+
+**🐞 Jedanaest pravila za DOM koji ne postoji.** Blok „QUIZ SECTION MOBILE" u `responsive/04`
+stilizira `.quiz-section`, `.quiz-info`, `.quiz-content`, `.quiz-question`, `.question-text`,
+`.quiz-option`, `.quiz-navigation`, `.results-score`, `.results-message` i još dva — **nula
+pojava** u markupu, JS-u, gradivu i testovima. Markup se nekad promijenio, CSS nije. Otud
+**siročad 67 → 57**.
+
+**Što je preseljeno.** `css/responsive/*` **1532 → 1185 redaka** (−347), `quiz-section.css`
+**313 → 422**, ukupni dug **7238 → 7000**. U markup su otišla dva **cijela** pravila
+(`.quiz-progress`, `.quiz-nav-buttons`, jer ih nijedan upit nije dirao) i pojedina svojstva sa
+šest elemenata. `.quiz-options` i `.results-stats` su **ostali** u CSS-u — prvi zato što od 480 px
+prestaje biti flex i postaje grid, drugi zato što se `flex-wrap` **ne smije napisati kao klasa**
+(stoji na popisu `@source not inline`).
+
+**⚠️ Zamka provjerena PRIJE reza.** Seljenje pravila iz `responsive/*` u `quiz-section.css`
+pomiče ga **unaprijed** u kaskadi, pa pravilo koje je dosad pobjeđivalo može izgubiti. Uvjet je:
+*ili se sele sva pravila za selektor, ili nijedno* — i nijedna od petnaest kasnijih datoteka ne
+smije dirati te selektore. Izmjereno: ne dira ih nijedna. Dva pravila su bila **grupna**
+(`.answer-btn, .control-btn, …` i `.lesson-card, .flashcard, .quiz-container`) pa su skraćena,
+ne obrisana — u njima žive tuđi stanari iz C5a/2.
+
+**Usput:** `.text-success` je siguran samo zato što se token zove `--color-ok`, a ne
+`--color-success` — inače bi Tailwind generirao istoimeni utility i tiho preuzeo boju.
+Zapisano uz sam par pravila, jer se ondje odluka o preimenovanju mora sudariti s njim.
+
+**Dokaz:** `css:diff` na **20 viewporta** (svaki prag i prag ± 1, plus tri landscape mjere)
+× ruta kviza = **31 120 usporedbi, 0 razlika u prikazu**. `tests/phone.spec.js` **10/0**.
+`preflight` **EXIT 0**.
+
+**🧭 Pouka:** skripta za rez pala je iz prve i to **zatvoreno** — komentar iznad pravila završio
+je u „glavi" selektora. Popravak: komentari se **zabijele čuvajući duljinu**, jer rez ide po
+spanovima. Druga pogreška istog kruga: zadnji `.quiz-container` bio je član **grupnog** selektora,
+pa ga traženje po točnom imenu nije našlo — inventar je rekao 7, rez našao 6. *Obje je uhvatilo
+to što skripta pada kad meta nije nađena točno onoliko puta koliko je najavljeno.*
+
 ## 2026-08-30 (OPUS) — **C5a/2: kartice i dopune — a prvi kvar je bio u mjeraču**
 
 Drugi od četiri commita cigle C5a. Spec **§11.2**. Dva buga: **BUG-038** riješen, **BUG-037**

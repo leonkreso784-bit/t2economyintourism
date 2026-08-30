@@ -175,9 +175,9 @@ napredak stečen offline se po povratku mreže **spoji bez gubitka**.
 prva migrirana površina u fazi**, i prva koja piše utilityje.
 🔄 **C5a JE U TIJEKU** (grana `feat/c5a-modovi`, spec **§11**) — u **četiri commita**, jer uz pet
 CSS datoteka nosi i **179 pravila iz `responsive/*`** (§11.0). **/1 kromo ✅ · /2 kartice+dopune ✅**
-→ **/3 kviz** → /4 napredak → C5b → C6 → C7.
-⛔ **FAZA JE PAUZIRANA NAKON C5a/2 (Leon, 2026-08-30) — prvo ide SEOBA SUPABASEA.** Sljedeći
-frontend-potez je C5a/3, **ali tek poslije nje.**
+**/3 kviz ✅** → /4 napredak → C5b → C6 → C7.
+✅ **PAUZA UKINUTA ISTI DAN (Leon):** *„krenimo sa daljnjom C radnjom… VPS ću ja sutra."*
+Seoba i cigle teku USPOREDO — ne dijele nijednu datoteku (seoba: `js/auth.js`, `.env`, testovi).
 ⚠️ **Tri pravila za preostale cigle** (zašto: §10.3, §11.1, §11.2): ① prije nego pravilo postane
 utility **izmjeri tko ga danas tuče**; ② **rez ide po SVOJSTVU** — što neki preživjeli `@media` još
 mijenja ne smije u utility; ③ **dvaput zaredom je prvi kvar bio u MJERAČU, ne u cigli** — prije

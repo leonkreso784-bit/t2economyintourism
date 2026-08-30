@@ -19,11 +19,11 @@
     <meta name="format-detection" content="telephone=no">
     
     <!-- Favicon & App Icons -->
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260830150824">
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260830150824">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260830150824">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260830150824">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260830150824">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260830191946">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260830191946">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260830191946">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260830191946">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260830191946">
     <link rel="manifest" href="manifest.json">
     
     <!-- SEO & Social -->
@@ -97,7 +97,7 @@
     <!-- Preconnect for faster loading -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <link rel="stylesheet" href="styles.bundle.css?v=20260830150824">
+    <link rel="stylesheet" href="styles.bundle.css?v=20260830191946">
 
     <!-- C2: GOOGLE FONTS SU OTIŠLI. Inter + Space Grotesk = 2 obitelji, 11 težina, dva
          `preconnect`-a i treći poslužitelj na kritičnom putu — a §7.1 ih je imenovao kao
@@ -133,7 +133,7 @@
     <!-- Learn styles are managed in css/learn.css to avoid inline conflicts on mobile. -->
 
     <!-- Cookie consent + Google Analytics (Consent Mode v2; analytics loads only after Accept) -->
-    <link rel="stylesheet" href="css/consent.css?v=20260830150824">
+    <link rel="stylesheet" href="css/consent.css?v=20260830191946">
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -144,8 +144,8 @@
         });
     </script>
     <!-- Praćenje grešaka (Faza 2, 2E): učita se prije consent.js; consent-gated + no-op bez DSN-a. -->
-    <script src="js/monitoring.js?v=20260830150824" defer></script>
-    <script src="js/consent.js?v=20260830150824" defer></script>
+    <script src="js/monitoring.js?v=20260830191946" defer></script>
+    <script src="js/consent.js?v=20260830191946" defer></script>
 </head>
 <!-- ⚠️ `no-pathbar` STOJI U MARKUPU, NE ČEKA JS (CLS, 2026-08-24).
      `#landing-page` je u markupu već `active`, a landing NEMA drugi red trake — pa je `<body>`
@@ -204,7 +204,7 @@
     <div class="chrome" id="chrome">
     <header class="topbar" id="top" role="banner">
         <a class="topbar-logo" href="#/" id="topbarHome" aria-label="Sokrat Study">
-            <img src="assets/logo.svg?v=20260830150824" alt="" class="logo-image">
+            <img src="assets/logo.svg?v=20260830191946" alt="" class="logo-image">
             <span class="logo-text">Sokrat Study</span>
         </a>
 
@@ -470,7 +470,7 @@
                 <div class="footer-cols">
                     <div class="footer-brand">
                         <div class="landing-logo">
-                            <img src="assets/logo.svg?v=20260830150824" alt="" class="logo-image">
+                            <img src="assets/logo.svg?v=20260830191946" alt="" class="logo-image">
                             <span class="logo-text">Sokrat Study</span>
                         </div>
                         <p data-i18n="footer.tagline">Write your own study material, or use one that's ready. Free for everyone.</p>
@@ -506,7 +506,7 @@
     <aside class="subjects-sidebar" id="subjectsSidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260830150824" alt="Sokrat Study" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260830191946" alt="Sokrat Study" class="logo-image"></div>
                 <span data-i18n="sidebar.choose">Choose Subject</span>
             </div>
             <button class="close-sidebar-btn" id="closeSidebar" aria-label="Close sidebar">
@@ -773,7 +773,7 @@
         <!-- QUIZ SECTION -->
         <section id="quiz" class="section">
             <div class="quiz-container">
-                <div class="quiz-setup" id="quizSetup">
+                <div class="quiz-setup text-center" id="quizSetup">
                     <h1><i class="fas fa-question-circle"></i> <span data-i18n="quiz.title">Quiz Mode</span></h1>
                     <p data-i18n="quiz.subtitle">Test your knowledge!</p>
 
@@ -810,7 +810,7 @@
 
                 <div class="quiz-game hidden" id="quizGame">
                     <div class="quiz-header">
-                        <div class="quiz-progress">
+                        <div class="quiz-progress flex justify-between items-center mb-2 text-[0.9rem]">
                             <span id="quizProgress">Question 1/10</span>
                         </div>
                         <div class="progress-bar">
@@ -821,17 +821,17 @@
                     <div class="question-card">
                         <div class="question-category" id="questionCategory">Category</div>
                         <h2 id="questionText">Question?</h2>
-                        <div class="answers" id="answersContainer">
+                        <div class="answers flex flex-col" id="answersContainer">
                             <!-- Answers loaded by JS -->
                         </div>
                     </div>
 
-                    <div class="quiz-score">
+                    <div class="quiz-score flex justify-center">
                         <span><i class="fas fa-check text-success"></i> <span id="correctCount">0</span></span>
                         <span><i class="fas fa-times text-danger"></i> <span id="wrongCount">0</span></span>
                     </div>
 
-                    <div class="quiz-nav-buttons">
+                    <div class="quiz-nav-buttons flex justify-between mt-4 gap-3">
                         <button class="quiz-nav-btn" id="quizPrevBtn" onclick="quizPrev()" style="display:none">
                             <i class="fas fa-arrow-left"></i> <span data-i18n="common.previous">Previous</span>
                         </button>
@@ -845,7 +845,7 @@
                 </div>
 
                 <div class="quiz-results hidden" id="quizResults">
-                    <div class="results-card">
+                    <div class="results-card text-center">
                         <div class="results-icon" id="resultsIcon">🎉</div>
                         <h1 id="resultsTitle">Excellent!</h1>
                         <div class="score-circle">
@@ -854,24 +854,24 @@
                         <p id="resultsMessage">Fantastic result!</p>
                         
                         <div class="results-stats">
-                            <div class="result-stat">
+                            <div class="result-stat flex flex-col items-center">
                                 <i class="fas fa-check-circle"></i>
                                 <span id="finalCorrect">8</span>
                                 <small data-i18n="common.correct">Correct</small>
                             </div>
-                            <div class="result-stat">
+                            <div class="result-stat flex flex-col items-center">
                                 <i class="fas fa-times-circle"></i>
                                 <span id="finalWrong">2</span>
                                 <small data-i18n="common.wrong">Wrong</small>
                             </div>
-                            <div class="result-stat">
+                            <div class="result-stat flex flex-col items-center">
                                 <i class="fas fa-clock"></i>
                                 <span id="totalTime">2:30</span>
                                 <small data-i18n="quiz.time">Time</small>
                             </div>
                         </div>
 
-                        <div class="wrong-answers-review" id="wrongAnswersReview">
+                        <div class="wrong-answers-review text-left my-6" id="wrongAnswersReview">
                             <h3><i class="fas fa-exclamation-triangle"></i> <span data-i18n="quiz.reviewWrong">Review Wrong Answers</span></h3>
                             <div id="wrongAnswersList"></div>
                         </div>
@@ -1174,7 +1174,7 @@
         <main class="about-content">
             <h1 class="visually-hidden" data-i18n="about.title">About Sokrat Study</h1>
             <div class="about-hero-section">
-                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260830150824" alt="Sokrat Study Logo" class="logo-image"></div>
+                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260830191946" alt="Sokrat Study Logo" class="logo-image"></div>
                 <p class="about-tagline" data-i18n="about.tagline">Created by students, for students</p>
 
                 <!-- ⚠️ IZLAZ. Izmjereno prije popravka: cijela stranica imala je TOČNO JEDNU
@@ -1323,54 +1323,54 @@
          (Blok B): loadSubjectContent() later becomes fetch('/api/subject/...'). -->
 
     <!-- Catalog: single source of truth for subjects (must load before js/config.js) -->
-    <script src="data/catalog.js?v=20260830150824"></script>
+    <script src="data/catalog.js?v=20260830191946"></script>
     <!-- Autogeneriran landing broj pitanja (npm run stats). Eager + sitan; čita ga renderLandingMeta(). -->
-    <script src="data/landing-stats.js?v=20260830150824"></script>
+    <script src="data/landing-stats.js?v=20260830191946"></script>
 
     <!-- App modules (split from app.js) -->
     <!-- T6: tema je izrezana iz init.js jer ju treba i editor.html, koji boot aplikacije NE ucitava. -->
-    <script src="js/theme.js?v=20260830150824"></script>
-    <script src="js/i18n.js?v=20260830150824"></script>
+    <script src="js/theme.js?v=20260830191946"></script>
+    <script src="js/i18n.js?v=20260830191946"></script>
     <!-- AppState (S3, Faza 2C): namespace runtime stanja — MORA prije config.js (grupe migriraju iz njega). -->
-    <script src="js/app-state.js?v=20260830150824"></script>
-    <script src="js/config.js?v=20260830150824"></script>
-    <script src="js/content-loader.js?v=20260830150824"></script>
+    <script src="js/app-state.js?v=20260830191946"></script>
+    <script src="js/config.js?v=20260830191946"></script>
+    <script src="js/content-loader.js?v=20260830191946"></script>
     <!-- ContentRepository (S1, Faza 2): jedinstveni šav za dohvat sadržaja (nakon catalog+config+loader). -->
-    <script src="js/content-repo.js?v=20260830150824"></script>
+    <script src="js/content-repo.js?v=20260830191946"></script>
     <!-- P1 (POLICA): skidanje predmeta na uredaj. Poslije loadera - cita isti
          izvor istine (content.resolve / codeScripts) da bi skinuo TOCNO ono
          sto ce loader poslije traziti. -->
-    <script src="js/offline-store.js?v=20260830150824"></script>
-    <script src="js/components/sokrat-toast.js?v=20260830150824"></script>
-    <script src="js/components/sokrat-modal.js?v=20260830150824"></script>
+    <script src="js/offline-store.js?v=20260830191946"></script>
+    <script src="js/components/sokrat-toast.js?v=20260830191946"></script>
+    <script src="js/components/sokrat-modal.js?v=20260830191946"></script>
     <!-- <sokrat-confirm> (2D.3) — nakon sokrat-modal.js (gradi se na njemu). -->
-    <script src="js/components/sokrat-confirm.js?v=20260830150824"></script>
-    <script src="js/utils.js?v=20260830150824"></script>
-    <script src="js/storage.js?v=20260830150824"></script>
-    <script src="js/analytics.js?v=20260830150824"></script>
-    <script src="js/navigation.js?v=20260830150824"></script>
-    <script src="js/math.js?v=20260830150824"></script>
-    <script src="js/blocks-renderer.js?v=20260830150824"></script>
-    <script src="js/flashcards.js?v=20260830150824"></script>
-    <script src="js/quiz.js?v=20260830150824"></script>
-    <script src="js/fill-blanks.js?v=20260830150824"></script>
-    <script src="js/learn.js?v=20260830150824"></script>
-    <script src="js/progress.js?v=20260830150824"></script>
-    <script src="js/blind-map.js?v=20260830150824"></script>
-    <script src="js/exercises-core.js?v=20260830150824"></script>
-    <script src="js/acc-kernel.js?v=20260830150824"></script>
-    <script src="js/exercises.js?v=20260830150824"></script>
-    <script src="js/auth.js?v=20260830150824"></script>
+    <script src="js/components/sokrat-confirm.js?v=20260830191946"></script>
+    <script src="js/utils.js?v=20260830191946"></script>
+    <script src="js/storage.js?v=20260830191946"></script>
+    <script src="js/analytics.js?v=20260830191946"></script>
+    <script src="js/navigation.js?v=20260830191946"></script>
+    <script src="js/math.js?v=20260830191946"></script>
+    <script src="js/blocks-renderer.js?v=20260830191946"></script>
+    <script src="js/flashcards.js?v=20260830191946"></script>
+    <script src="js/quiz.js?v=20260830191946"></script>
+    <script src="js/fill-blanks.js?v=20260830191946"></script>
+    <script src="js/learn.js?v=20260830191946"></script>
+    <script src="js/progress.js?v=20260830191946"></script>
+    <script src="js/blind-map.js?v=20260830191946"></script>
+    <script src="js/exercises-core.js?v=20260830191946"></script>
+    <script src="js/acc-kernel.js?v=20260830191946"></script>
+    <script src="js/exercises.js?v=20260830191946"></script>
+    <script src="js/auth.js?v=20260830191946"></script>
     <!-- F4: privatne slike osobnog gradiva (`node-img:` oznaka ↔ potpisani URL). Prije block-editora. -->
-    <script src="js/node-images.js?v=20260830150824"></script>
+    <script src="js/node-images.js?v=20260830191946"></script>
     <!-- T6: otkrivanje admina je izrezano iz admin.js i MORA ici prije njega (studioBridge se veze pri parsiranju). -->
-    <script src="js/admin-reveal.js?v=20260830150824"></script>
-    <script src="js/cloud-sync.js?v=20260830150824"></script>
+    <script src="js/admin-reveal.js?v=20260830191946"></script>
+    <script src="js/cloud-sync.js?v=20260830191946"></script>
     <!-- „Moji materijali" (F2) — mora prije profile.js (renderProfilePage ga montira). -->
-    <script src="js/my-materials.js?v=20260830150824"></script>
-    <script src="js/profile.js?v=20260830150824"></script>
-    <script src="js/init.js?v=20260830150824"></script>
+    <script src="js/my-materials.js?v=20260830191946"></script>
+    <script src="js/profile.js?v=20260830191946"></script>
+    <script src="js/init.js?v=20260830191946"></script>
     <!-- Service Worker (F3 3A): offline app-shell; registrira se na load, fail-safe. -->
-    <script src="js/sw-register.js?v=20260830150824" defer></script>
+    <script src="js/sw-register.js?v=20260830191946" defer></script>
 </body>
 </html>

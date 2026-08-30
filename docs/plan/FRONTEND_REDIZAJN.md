@@ -60,7 +60,7 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 | **C3** 🔄 | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori. **Tri cigle gotove i na produkciji** (authed a11y-gate · širina + kvar u rendereru · `studio.css` na nuli `!important`); **ostaje Studio na telefonu** — dok stoji, C3 se ne smije proglasiti gotovim (kriterij #1 imenuje editor na 320 px). | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
 | **K** 🔄 | **„KOSTUR" — rute i jedna gornja traka** (§8). Ubačena između C3 i C4 (Leon, 2026-08-18) po presedanu C0-a: informacijska arhitektura prije kozmetike. **K1 ✅ rute** (§8.6) · **K2** jedna traka · **K3** brana dohvatljivosti · **K4** materijali u kvaliteti kataloga | tri duplicirana zaglavlja (`browse-`/`lessons-`/`study-header`) | iz **svake** stranice — uključujući `#editor-page` — vodi bar jedan klik drugamo, a svaka stranica ima adresu koja se da podijeliti |
 | **C4** ✅ | **Browse + lekcije** — zapis: **§10**. **C4a ✅** (mrtva površina obrisana; `subject-selector.css` je **nestala**, ne migrirana) · **C4b ✅** (§10.3) — prva migrirana površina u fazi | `subject-selector.css` (obrisan) · skela browsea i lekcija (u utilityje) · **13 pravila druge ljestve pragova** iz `responsive/05`+`/06` (**brojke: `npm run css:debt`**) | student dođe do bilo kojeg predmeta i lekcije |
-| **C5a** 🔄 | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak, **i kromo ekrana za učenje** (§10.3: ista površina, pa ide zajedno). Zapis: **§11**. **C5a/1 ✅ kromo** (§11.1) · **C5a/2 ✅ kartice + dopune** (§11.2) · ostaju /3 kviz · /4 napredak. ⚠️ Mjereno: cigla nosi i **179 pravila iz `responsive/*`** (§11.0), što je red veličine više nego što je ova tablica opisivala | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` · kromo → **`css/study-chrome.css`** (novo); `pages.css` je time preseljen pod **C6**. ⚠️ „Posljednja dva `!important` izvan C7" **bila su mrtva** — stvarna četiri stajala su u `responsive/04`. Iz /2: `responsive/*` **−528 redaka**, `!important` **41 → 35**, siročad **81 → 67** | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
+| **C5a** 🔄 | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak, **i kromo ekrana za učenje** (§10.3: ista površina, pa ide zajedno). Zapis: **§11**. **C5a/1 ✅ kromo** (§11.1) · **C5a/2 ✅ kartice + dopune** (§11.2) · **C5a/3 ✅ kviz** (§11.3) · ostaje /4 napredak. ⚠️ Mjereno: cigla nosi i **179 pravila iz `responsive/*`** (§11.0), što je red veličine više nego što je ova tablica opisivala | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` · kromo → **`css/study-chrome.css`** (novo); `pages.css` je time preseljen pod **C6**. ⚠️ „Posljednja dva `!important` izvan C7" **bila su mrtva** — stvarna četiri stajala su u `responsive/04`. Iz /2: `responsive/*` **−528 redaka**, `!important` **41 → 35**, siročad **81 → 67**; iz /3: **−347 redaka**, siročad **67 → 57**, ukupni dug **7238 → 7000** | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
 | **C5b** | **Gradivo + vježbe** — sve što ide kroz renderer ili engine | `learn.css`, `learn-blocks.css`, `math.css`, `exercises.css`, `blind-map.css` | student čita gradivo i rješava vježbe; KaTeX, slike i tablice nedirnuti |
 | **C6** | **Profil, auth, pravne, consent** ➕ `pages.css` (iz C5a/1) ➕ **`home-section.css` i `sidebar.css`** — bile su u bundleu a **u planu ih nije bilo** (Leon 2026-08-30: *„Ubaci"*); drže **3 od 11** fatalnih pravila koja blokiraju birač tema | `profile.css`, `auth.css`, `legal.css`, `consent.css`, `pages.css`, `home-section.css`, `sidebar.css` | korisnik se prijavi, uredi profil, obriše račun **i smije prebaciti temu** — nakon C6 birač više nije blokiran |
 | **C7** | **Gašenje** | `responsive/*`, `components.css`, `variables.css`, `styles.bundle.css`, mrtva tema | u repozitoriju nema starog CSS-a ni mrtvog koda teme |
@@ -4240,3 +4240,108 @@ onome što se mjeri — *čekanje koje pretpostavi ishod ne može pasti* (isti r
 > `​.fill-stats`.** *Mjerenje koje ovisi o brzini mreže nije mjerenje* — isti rod nalaza kao
 > zamrzavanje `Math.random` u C5a/1, samo na osi vremena umjesto na osi slučaja. Dvije cigle
 > zaredom je alat, a ne cigla, bio prvi kvar koji treba popraviti.
+
+### 11.3 ✅ C5a/3 — kviz (2026-08-30)
+
+Treći commit uzima jednu površinu, ali najgušću: **57 pravila iz `responsive/*`** dira selektore
+ekrana za kviz, a o **38 parova (selektor, svojstvo)** odlučuju dvije ili više datoteka. Nakon
+migracije `css/responsive/*` je **1532 → 1185 redaka** (−347), `quiz-section.css` **313 → 422**,
+ukupni dug **7238 → 7000**, siročad **67 → 57**.
+
+#### 🐞 Nalaz koji nosi cijelu ciglu: ljestva `.quiz-container` NIKAD NIJE RADILA
+
+`responsive/05` piše četverostupanjsku ljestvu širine — 600 → 700 → 800 → 900 px kroz pragove
+768/1024/1280/1536 — i **nijedna prečka se nikad nije iscrtala.** `responsive/06` dolazi POSLIJE
+i jednim jedinim pravilom `@media (min-width: 768px) { max-width: 650px }` gasi sve četiri.
+Medijski upit ne nosi specifičnost; presuđuje **redoslijed izvora**, a `06` je zadnji.
+
+Ono što se stvarno iscrtava:
+
+| širina | `max-width` | odakle |
+|---|---|---|
+| < 480 | **800 px** | osnovno pravilo |
+| 480–767 | **500 px** | `06 @min-480` |
+| ≥ 768 | **650 px** | `06 @min-768` |
+| 768–1023 landscape | **70 %** | `06`, zadnji upit u datoteci |
+
+Dakle na monitoru od 1920 px kviz je širok 650 px, iako je netko napisao 900. **Nije popravljeno
+ovdje** — ispravak je odluka o izgledu, a ova je cigla migracija; brojke idu u **BUG-039**.
+
+#### 🐞 Isti mehanizam, drugi kraj ljestve: dva pravila za male telefone
+
+`01 @max-374` piše `.answer-btn { padding: 0.75rem; font-size: 0.85rem }` i
+`.question-card h2 { font-size: 1rem }`. Oba tuče `02 @max-767`, koji je **širi i kasniji**. Na
+telefonu od 320 px gumbi odgovora stoga imaju iste razmjere kao na 767 px. Isti razred kao
+BUG-037: *pravilo napisano za uži slučaj gubi od kasnijeg šireg.* Također **BUG-039**.
+
+#### 🐞 Cijeli mobilni blok za DOM koji ne postoji
+
+`responsive/04` drži blok „QUIZ SECTION MOBILE" s jedanaest pravila za `.quiz-section` ·
+`.quiz-info` · `.quiz-content` · `.quiz-question` · `.question-text` · `.quiz-option` ·
+`.quiz-navigation` · `.quiz-navigation .btn` · `.results-score` · `.results-message` ·
+`.results-actions .btn` — **nula pojava** u `*.html`, `js/**`, `data/**` i `tests/**`. Uz njih i
+`.quiz-header h2` (u `.quiz-header` nema `h2`) te `.quiz-option` u `05` i u `04 @max-374`.
+Markup je nekad izgledao drukčije; CSS to nije pratio. Obrisano — otud **−10 siročadi**.
+
+#### Što je otišlo u markup, a što je ostalo
+
+U utilityje su otišla **dva cijela pravila** (`.quiz-progress`, `.quiz-nav-buttons`) — nijedan ih
+upit nije dirao — i pojedina svojstva sa šest drugih elemenata (`text-center` na `.quiz-setup` i
+`.results-card`, `flex`/`flex-col` na `.answers`, `flex`/`justify-center` na `.quiz-score`,
+`flex flex-col items-center` na tri `.result-stat`, `text-left my-6` na `.wrong-answers-review`).
+
+**Ostalo je u CSS-u, i to s razlogom zapisanim uz pravilo:**
+
+- `.quiz-options` — od 480 px naviše **prestaje biti flex i postaje grid**; nijedno svojstvo nije
+  nedirnuto.
+- `.results-stats` — `flex-direction` i `gap` mijenja upit ≤ 767, a `flex-wrap` se **ne smije
+  napisati** kao klasa: stoji na popisu `@source not inline` (ušao ondje iz komentara u
+  `js/studio.js`). Rastaviti pravilo na tri mjesta bilo bi skuplje od cjeline.
+- `.quiz-container`, `.results-actions`, `.answers { gap }`, `.quiz-score { gap }` — sve po
+  pravilu ②: rez ide po svojstvu.
+
+#### ⚠️ Zamka koju je ova cigla morala provjeriti PRIJE reza
+
+Seljenje pravila iz `responsive/*` u `quiz-section.css` **pomiče ga UNAPRIJED u kaskadi** (redak
+83 umjesto 91–96). Pravilo koje je dosad pobjeđivalo zato može izgubiti. Uvjet ispravnosti je
+dakle: *ili se sele SVA pravila za taj selektor, ili nijedno* — i **nijedna datoteka iza
+`quiz-section.css` ne smije dirati te selektore.** Provjereno mjerenjem: petnaest kasnijih
+datoteka (`fill-blanks`, `blind-map`, `exercises`, `studio`, `topbar`, …) nema **nijedno** pravilo
+na ovim selektorima; `.correct`/`.wrong` u njima uvijek su spojeni s vlastitom komponentom
+(`.fill-feedback.correct`, `.ex-opt.is-correct`), pa ne dohvaćaju `.answer-btn`.
+
+Dva pravila su bila **grupna** i zato se nisu smjela obrisati nego samo skratiti:
+`.answer-btn, .control-btn, .action-btn, …` u `06` i `.lesson-card, .flashcard, .quiz-container`
+u `05` (visoki kontrast). `.control-btn` i `.flashcard` u njima su tuđi stanari iz C5a/2.
+
+#### ⚠️ Usput nađeno: `.text-success` je siguran samo slučajno
+
+`.text-danger` je na popisu `@source not inline` jer bi ga Tailwind generirao iz tokena
+`--color-danger` i — stojeći zadnji — pobijedio naše pravilo. `.text-success` na popisu **nije**,
+i ne treba biti, ali samo zato što se naš token zove **`--color-ok`, a ne `--color-success`**.
+Preimenuje li ga C7, klasa istog imena nastaje sama i tiho preuzima boju. Zapisano uz sam par
+pravila u `css/quiz-section.css`, jer ondje se odluka o preimenovanju i mora sudariti s njom.
+
+#### Dokaz
+
+**`css:diff`, 20 viewporta × ruta kviza = 31 120 usporedbi, `0 razlika u prikazu`.** Širine su
+birane po pragovima i prag ± 1 (320 · 374 · 375 · 393 · 430 · 479 · 480 · 599 · 600 · 767 · 768 ·
+1023 · 1024 · 1280 · 1440 · 1536 · 1920) plus tri landscape mjere (900 × 600 · 852 × 393 ·
+568 × 320) — dakle svaka prečka i s jedne i s druge strane.
+
+> ⚠️ **Granica tog dokaza, poštena:** `.quiz-game` i `.quiz-results` su iza klase `hidden`, pa ih
+> preglednik ne raspoređuje. Njihova izračunata svojstva se i dalje uspoređuju (i jednaka su), ali
+> **postotci i `auto` se ne razrješavaju**. Za te ekrane drugi dokaz nosi `tests/phone.spec.js`,
+> koji kviz otvara kao NAČIN UČENJA na tri širine: **10 prošlo / 0 palo.**
+
+#### 🧭 Pouka o metodi — peta zaredom o alatu, ali ovaj put o VLASTITOM
+
+Skripta za rez pala je iz prve, i to zatvoreno: *„očekivano 1, nađeno 0"*. Uzrok — **komentar
+iznad pravila završio je u „glavi" selektora**, jer je parser čitao izvor bez brisanja komentara.
+Popravak nije bio maknuti komentare nego ih **zabijeliti čuvajući duljinu**, jer se rez radi po
+spanovima u izvornom tekstu. Druga pogreška istog kruga: u `05` je zadnji `.quiz-container` bio
+**član grupnog selektora**, pa ga traženje po točnom imenu nije našlo — brojka 7 iz inventara i
+brojka 6 iz reza razlikovale su se **za točno taj jedan**.
+
+*Obje je uhvatila ista stvar: skripta koja pada kad meta nije nađena točno onoliko puta koliko je
+najavljeno.* Da je bila napisana da „zamijeni ako nađe", oba bi promašaja prošla tiho.

@@ -5,6 +5,50 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-30 (c) — C5a/3 (kviz) + pauza faze ukinuta istog dana
+
+**Pauza je pala prije nego je stigla vrijediti.** Zapis od jutros je govorio *„faza je pauzirana,
+prvo seoba"*; Leon je poslije podne rekao **„krenimo sa daljnjom C radnjom za frontend… VPS ću ja
+sutra (ponedjeljak) setupat"**. Seoba **nije odgođena** — ide usporedo, jer s ciglama ne dijeli
+nijednu datoteku (seoba: `js/auth.js`, `.env`, testovi; cigle: CSS i markup). Prvo što je
+napravljeno u sesiji bilo je **ispraviti taj nalog u `CLAUDE.md`**, prije ijednog retka koda:
+zastarjela zapovijed navodi sljedeću sesiju na krivu radnju (razlog zbog kojeg `check:state`
+uopće postoji).
+
+**Prije toga, na pitanje „može li se seoba odgoditi do kraja frontenda":** odgovoreno je da
+tehnički može — ništa u frontendu ne ovisi o seobi ni obrnuto — uz tri troška odgode (ostalo je
+**7238 redaka** kroz pet cigli, dakle prozor prije faksa se zatvara; danas se seli uz **dvoje**
+vanjskih korisnika, u listopadu uz razred; Pro plan istječe otprilike kad i prozor). Preporuka je
+bila **staging preseliti odmah, prod kad odgovara**. Leon je odabrao treće: **oboje ide, ali
+frontend ne čeka.**
+
+### C5a/3 — kviz (spec §11.3, CHANGELOG isti dan)
+
+Najgušća pojedinačna površina cigle: **57 pravila iz `responsive/*`**, **38 parova (selektor,
+svojstvo)** o kojima odlučuje više datoteka. Rezultat: `responsive/*` **1532 → 1185** (−347),
+`quiz-section.css` **313 → 422**, ukupni dug **7238 → 7000**, siročad **67 → 57**.
+
+**Nalaz koji nosi ciglu — BUG-039:** ljestva širine `.quiz-container` (600 → 700 → 800 → 900 px)
+**nikad se nije iscrtala**; jedno kasnije pravilo iz `responsive/06` drži 650 px na svakom
+desktopu. Isti mehanizam gasi i dva pravila za telefone ≤ 374 px. *Uži upit ne pobjeđuje širi —
+kasniji pobjeđuje raniji.* Nije popravljeno u cigli, jer bi ispravak bio odluka o izgledu.
+
+**Provjereno:** `css:diff` 20 viewporta × ruta kviza = **31 120 usporedbi, 0 razlika**;
+`tests/phone.spec.js` **10/0**; `preflight` **EXIT 0**. Poštena granica dokaza zapisana u specu:
+`.quiz-game` i `.quiz-results` su iza `hidden`, pa im se postotci ne razrješavaju — za njih
+jamči telefonska brana, koja kviz otvara kao način učenja.
+
+**Alat:** vlastita skripta za rez pala je **zatvoreno** iz prve (komentar završio u „glavi"
+selektora; zadnji `.quiz-container` bio član grupnog selektora). Peti put u fazi da prvi kvar nije
+u cigli nego u mjeraču — ali prvi put da je mjerač bio **naš, napisan iste sesije**.
+
+**Slijedi:** C5a/4 (napredak, 184 retka) — i ondje se skupilo troje: `progress` u `phone-gate`,
+landscape ispod 768 px (BUG-037), kontrastna iznimka. **Ne ulagati u analitiku kartica**
+(Leonov sud: grafikoni kasnije, i ne u C5a/4). Usporedo: **VPS u ponedjeljak**, prva provjera
+prije svega ostalog — jesu li URL-ovi slika apsolutni.
+
+---
+
 ## 2026-08-30 (b) — Razgovor koji je presudio TRI otvorene stvari i otvorio ADR-031
 
 Nije cigla nego **odluke**. Zapisano na Leonovu izričitu uputu („prvo ćemo raspravit onda ćemo

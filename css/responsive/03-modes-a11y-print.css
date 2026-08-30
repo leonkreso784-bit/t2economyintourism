@@ -13,13 +13,6 @@
     }
 }
 
-/* ===== iPAD PORTRAIT (768px - 1024px) ===== */
-@media (min-width: 768px) and (max-width: 1023px) {
-    .quiz-options {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
 /* ===== HOVER STATES - Only for devices that support hover ===== */
 @media (hover: hover) and (pointer: fine) {
     .category-btn:hover {
@@ -57,10 +50,6 @@
         opacity: 0.9;
     }
     
-    .answer-btn:active:not(.disabled) {
-        transform: scale(0.99);
-    }
-    
 }
 
 /* ===== DARK MODE ADJUSTMENTS FOR MOBILE — OBRISANO 2026-08-13 =====
@@ -77,10 +66,6 @@
 @media (prefers-contrast: high) {
     :root {
         --border: var(--color-line-strong);
-    }
-    
-    .answer-btn {
-        border-width: 3px;
     }
 }
 
