@@ -33,57 +33,6 @@
         font-size: 0.9rem;
     }
     
-    /* ===== FLASHCARDS MOBILE ===== */
-    .flashcard-container {
-        padding: 0;
-    }
-    
-    .flashcard {
-        min-height: 300px;
-        margin: 0 0.25rem;
-    }
-    
-    .flashcard-front,
-    .flashcard-back {
-        padding: 1.5rem 1rem;
-    }
-    
-    .flashcard-front p {
-        font-size: 1.05rem;
-        line-height: 1.6;
-    }
-    
-    .flashcard-back p {
-        font-size: 0.95rem;
-        line-height: 1.6;
-        white-space: pre-wrap;
-    }
-    
-    .flashcard-back .explanation {
-        font-size: 0.8rem;
-        padding: 0.6rem;
-    }
-    
-    .card-category {
-        font-size: 0.65rem;
-        padding: 0.2rem 0.5rem;
-    }
-    
-    .flip-hint {
-        font-size: 0.75rem;
-    }
-    
-    .flashcard-controls {
-        gap: 0.75rem;
-        padding: 0 0.25rem;
-    }
-    
-    .control-btn {
-        padding: 0.875rem 0.75rem;
-        font-size: 0.85rem;
-        min-height: 48px;
-    }
-    
     /* ===== QUIZ SECTION MOBILE ===== */
     .quiz-container {
         padding: 0;
@@ -173,38 +122,6 @@
     .wrong-answer-item {
         padding: 0.6rem;
         font-size: 0.85rem;
-    }
-    
-    /* ===== FILL BLANKS MOBILE ===== */
-    .fill-container {
-        padding: 0;
-    }
-    
-    .fill-card {
-        padding: 1.25rem;
-        margin: 0 0.25rem 1rem;
-    }
-    
-    .fill-sentence {
-        font-size: 1rem;
-        line-height: 1.8;
-    }
-    
-    .fill-sentence .blank {
-        min-width: 80px;
-    }
-    
-    .fill-input-wrapper input {
-        padding: 0.875rem;
-        font-size: 1rem;
-    }
-    
-    .check-btn {
-        padding: 0.875rem 1.25rem;
-    }
-    
-    .fill-controls {
-        gap: 0.6rem;
     }
     
     /* ===== PROGRESS SECTION MOBILE ===== */

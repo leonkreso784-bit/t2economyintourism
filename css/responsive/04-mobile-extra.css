@@ -152,100 +152,6 @@
     
     /* (removed orphaned .topic-* rules + stray brace — dead/malformed CSS) */
 
-/* --- FLASHCARDS SECTION MOBILE --- */
-@media (max-width: 767px) {
-    .flashcards-section {
-        padding: 0.75rem;
-        padding-bottom: calc(80px + var(--safe-bottom));
-    }
-    
-    .flashcards-header {
-        padding: 0.75rem;
-        flex-direction: column;
-        gap: 0.75rem;
-        text-align: center;
-    }
-    
-    .flashcards-header h2 {
-        font-size: 1.1rem;
-    }
-    
-    .flashcards-controls {
-        width: 100%;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.5rem;
-    }
-    
-    .flashcard-container {
-        padding: 0.5rem;
-    }
-    
-    .flashcard {
-        min-height: 220px;
-        height: auto;
-    }
-    
-    .flashcard-inner {
-        min-height: 220px;
-        height: auto;
-    }
-    
-    .flashcard-front,
-    .flashcard-back {
-        min-height: 220px;
-        height: auto;
-        padding: 1rem 0.75rem;
-    }
-    
-    .flashcard-front p {
-        font-size: 0.85rem;
-        line-height: 1.35;
-    }
-    
-    .flashcard-back p {
-        font-size: 0.8rem;
-        line-height: 1.35;
-    }
-    
-    .flashcard-content h3 {
-        font-size: 1rem;
-    }
-    
-    .flashcard-content p {
-        font-size: 0.85rem;
-    }
-    
-    .card-category {
-        font-size: 0.6rem;
-        padding: 0.2rem 0.5rem;
-    }
-    
-    .flip-hint {
-        font-size: 0.7rem;
-    }
-    
-    .flashcard-back .explanation {
-        font-size: 0.7rem;
-        padding: 0.5rem;
-    }
-    
-    .flashcard-navigation {
-        padding: 0.75rem;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .flashcard-navigation .btn {
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
-        flex: 1;
-        min-width: auto;
-        max-width: 120px;
-    }
-}
-
 /* --- QUIZ SECTION MOBILE --- */
 @media (max-width: 767px) {
     .quiz-section {
@@ -337,65 +243,6 @@
     }
 }
 
-/* --- FILL IN THE BLANKS MOBILE --- */
-@media (max-width: 767px) {
-    .fill-section {
-        padding: 0.75rem;
-        padding-bottom: calc(80px + var(--safe-bottom));
-    }
-    
-    .fill-header {
-        padding: 0.75rem;
-        flex-direction: column;
-        gap: 0.75rem;
-        text-align: center;
-    }
-    
-    .fill-header h2 {
-        font-size: 1.1rem;
-    }
-    
-    .fill-info {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.75rem;
-    }
-    
-    .fill-content {
-        padding: 0.5rem;
-    }
-    
-    .fill-question {
-        padding: 1rem;
-        margin-bottom: 0.75rem;
-    }
-    
-    .fill-text {
-        font-size: 1rem;
-        line-height: 1.7;
-    }
-    
-    .fill-blank {
-        min-width: 80px;
-        padding: 0.35rem 0.5rem;
-        font-size: 0.9rem;
-    }
-    
-    .fill-navigation {
-        padding: 0.75rem;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        justify-content: center;
-    }
-    
-    .fill-navigation .btn {
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
-        flex: 1;
-        max-width: 150px;
-    }
-}
-
 /* --- ANALYTICS/PROGRESS SECTION MOBILE --- */
 @media (max-width: 767px) {
     .analytics-section,
@@ -453,11 +300,6 @@
 
 /* --- EXTRA SMALL SCREENS (iPhone SE, older phones) --- */
 @media (max-width: 374px) {
-    .flashcard {
-        min-height: 180px;
-        padding: 1rem;
-    }
-    
     .quiz-option {
         padding: 0.75rem;
         font-size: 0.85rem;
@@ -490,14 +332,6 @@
     
 }
 
-/* --- LANDSCAPE MOBILE --- */
-@media (max-width: 900px) and (orientation: landscape) {
-    .flashcard {
-        /* BUG-016: max-height cap ovdje NE smije postojati — lica rastu sa sadržajem
-           (BUG-013 grid-stack) pa bi prekoračila karticu i prekrila Known/Unknown gumbe. */
-        min-height: 150px;
-    }
-}
 
 
 /* ===== ACCESSIBILITY - ENSURE GOOD CONTRAST ===== */

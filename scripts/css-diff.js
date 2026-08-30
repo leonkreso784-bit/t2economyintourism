@@ -33,6 +33,11 @@
  *   node scripts/css-diff.js main               # vs bilo koja git referenca
  *   node scripts/css-diff.js --css-only ref.css # SAMO bundle (v. upozorenje niže)
  *
+ * Doseg mjerenja se PREDAJE, jer zadani doseg laže tiho:
+ *   CSS_DIFF_RUTE="#/subjects,#/subject/te2"      # inače mjeri samo `/`
+ *   CSS_DIFF_SIRINE="374x812,375x812,768x1024"    # inače mjeri samo 375/768/1280
+ *   CSS_DIFF_ALL=1                                # ispiši SVE promijenjene elemente
+ *
  * Izlazni kod: 0 = nema razlika, 1 = ima. Traži Playwright + slobodan port (mrežno/browser) →
  * NIJE u `preflight`, pokreće se ručno uz ciglu koja dira CSS.
  */
@@ -69,12 +74,40 @@ const BUNDLE = 'styles.bundle.css';
 const RUTE = (process.env.CSS_DIFF_RUTE || '').split(',').map((r) => r.trim()).filter(Boolean);
 if (!RUTE.length) RUTE.push('');
 
-/** Širine na kojima mjerimo — svaka otvara drugi skup media queryja. */
-const VIEWPORTS = [
-  { name: 'telefon-375', width: 375, height: 812 },
-  { name: 'tablet-768', width: 768, height: 1024 },
-  { name: 'desktop-1280', width: 1280, height: 900 },
-];
+/**
+ * Širine na kojima mjerimo — svaka otvara drugi skup media queryja.
+ *
+ * ⚠️ **Tri širine ne mogu dokazati ljestvu od jedanaest pragova** (C5a/2). `.flashcard`
+ * mijenja `min-height` na 374 · 375 · 390 · 414 · 428 · 480 · 500 · 600 · 768 · 900 ·
+ * 1024 · 1280 · 1536 — uzorak 375/768/1280 pogađa tri stepenice i o ostalih deset ne
+ * kaže NIŠTA. To je točno pouka C0/2 („uzorak širina u gateu je i sam moguća rupa"),
+ * ovaj put na alatu umjesto na brani.
+ *
+ * Cigla koja migrira ljestvu zato predaje SVOJE širine (`prag` i `prag ± 1`):
+ *     CSS_DIFF_SIRINE="320x812,374x812,375x812,768x1024" npm run css:diff
+ * `ŠxV`; visina je neobavezna (zadano 900) — ali NIJE nevažna: landscape-upiti gledaju
+ * `max-height`, pa je i visina varijabla (§11.0). Zadane tri ostaju da ostale cigle ne
+ * postanu sporije.
+ */
+const VIEWPORTS = (function () {
+  const zadano = [
+    { name: 'telefon-375', width: 375, height: 812 },
+    { name: 'tablet-768', width: 768, height: 1024 },
+    { name: 'desktop-1280', width: 1280, height: 900 },
+  ];
+  const sirok = (process.env.CSS_DIFF_SIRINE || '').split(',').map((s) => s.trim()).filter(Boolean);
+  if (!sirok.length) return zadano;
+  return sirok.map(function (s) {
+    const d = s.split(/[x×]/i);
+    const w = Number(d[0]);
+    const h = Number(d[1] || 900);
+    if (!Number.isFinite(w) || w <= 0 || !Number.isFinite(h) || h <= 0) {
+      console.error('❌ CSS_DIFF_SIRINE: „' + s + '" nije ŠxV (npr. 375x812)');
+      process.exit(2);
+    }
+    return { name: w + 'x' + h, width: w, height: h };
+  });
+})();
 
 /**
  * Način rada iz argumenata.
@@ -289,8 +322,53 @@ async function measure(page, url, overrideCss) {
     });
   }
   await page.goto(url, { waitUntil: 'load' });
-  await page.waitForTimeout(700); // pusti `defer` skripte da sagrade markup
+  await smiri(page);
   return page.evaluate(COLLECT);
+}
+
+/**
+ * Čekaj da CRTANJE PRESTANE — ne fiksni broj milisekundi.
+ *
+ * ⚠️ **Zašto je fiksno čekanje ovdje lagalo (C5a/2).** Dotad je stajalo
+ * `waitForTimeout(700)` uz obrazloženje „pusti `defer` skripte da sagrade markup". Za
+ * landing i katalog je to bilo dovoljno. Rute **načina učenja** su prve na kojima nije:
+ * gradivo dolazi lijeno (DB → JSON → `.js`) iza zastora `#studyLoading`, pa je alat mjerio
+ * stranicu USRED CRTANJA. Posljedica nije bila tiha — prijavio je **420 elemenata koji
+ * postoje samo u radnom stablu** i stotine „razlika" na elementima koje cigla nije ni
+ * dirala, jer referenca i radno stablo nisu stigli do istog trenutka.
+ * *Mjerenje koje ovisi o brzini mreže nije mjerenje* — isti rod nalaza kao zamrzavanje
+ * `Math.random` u C5a/1, samo na osi vremena umjesto na osi slučaja.
+ *
+ * Uvjet je namjerno NEOVISAN o onome što se mjeri (mjere se izračunati stilovi, a čeka se
+ * da se broj elemenata i visina dokumenta prestanu mijenjati) — čekanje koje pretpostavi
+ * ishod ne može pasti. Ista metoda kao `smiriPrikaz` u `tests/helpers/phone-gate.js`;
+ * pojavi li se treća kopija, izdvaja se u zajednički modul.
+ */
+async function smiri(page, maxMs = 8000) {
+  /* Zastor je izričit signal i čeka se prvi — ali samo do roka: ostane li vidljiv,
+     mjeri se s njim, jer trajni zastor JEST razlika koju treba vidjeti. */
+  try {
+    await page.waitForFunction(function () {
+      const l = document.getElementById('studyLoading');
+      return !l || l.hasAttribute('hidden');
+    }, null, { timeout: maxMs });
+  } catch (e) { /* nema ga ili je ostao — neka mjera to i pokaže */ }
+
+  let prije = null;
+  const kraj = Date.now() + maxMs;
+  while (Date.now() < kraj) {
+    const sad = await page.evaluate(function () {
+      return document.querySelectorAll('*').length + '/' +
+        document.documentElement.scrollHeight + '/' + document.body.innerHTML.length;
+    });
+    if (sad === prije) break;
+    prije = sad;
+    await page.waitForTimeout(200);
+  }
+  /* Dva okvira da se dovrši ono što je zakazano u posljednjem `requestAnimationFrame`. */
+  await page.evaluate(function () {
+    return new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(r); }); });
+  });
 }
 
 (async () => {

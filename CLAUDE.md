@@ -92,7 +92,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 
 | naredba | što radi | zašto nije u preflightu |
 |---|---|---|
-| `npm run css:diff` | izračunati stilovi u pravom Chromiumu, radno stablo vs git-referencu, 3 širine. Referencu vadi u **`git worktree`** → premota **cijelo stablo**, pa vidi i seobu vrijednosti iz markupa u CSS. ⚠️ **mjeri SAMO rutu `/` ako mu je ne predaš** — `CSS_DIFF_RUTE="#/subjects,#/subject/te2"`; sve što crta JS na `/` ne postoji. (`--css-only` = stari način, sam upozorava da za to laže; **`CSS_DIFF_ALL=1`** = svi promijenjeni elementi, ne prvih 8) | preglednik + port |
+| `npm run css:diff` | izračunati stilovi u pravom Chromiumu, radno stablo vs git-referencu kroz **`git worktree`** (cijelo stablo, pa vidi i seobu iz markupa u CSS). ⚠️ **Doseg se PREDAJE — zadani laže tiho:** `CSS_DIFF_RUTE` (inače samo `/`) · `CSS_DIFF_SIRINE` (inače samo 375/768/1280) · `CSS_DIFF_ALL=1`. ⚠️ **NE dvije instance usporedo.** Obrazloženja: zaglavlje `scripts/css-diff.js` | preglednik + port |
 | `npm run check:contrast:live` | kontrast kakav se STVARNO iscrta: 4 teme × 11 ruta. `check:contrast` čita tokene i ne zna KORISTI li ih CSS — ovo mjeri ekran; iznimke **imenovane** u `scripts/contrast-live-allow.json` | preglednik + poslužitelj |
 | `npm run build:og` | crta `og-cover.png` **1200×630** (boje iz tokena, tekst iz i18n) | preglednik; PNG se **commita**, dimenzije mjeri `check:seo` |
 | `npm run css:debt` | što je ostalo za C4–C7: po cigli datoteke, redci, `!important` izvan komentara | read-only, **nije gate** — plan je do 2026-08-25 te brojke nosio **ručno** i obje su ostarile |
@@ -174,11 +174,12 @@ napredak stečen offline se po povratku mreže **spoji bez gubitka**.
 ✅ **C4 JE ISPUNJEN** (grana `feat/c4-browse-lekcije`) — C4a (§10.1) · §10.2 · **C4b (§10.3) =
 prva migrirana površina u fazi**, i prva koja piše utilityje.
 🔄 **C5a JE U TIJEKU** (grana `feat/c5a-modovi`, spec **§11**) — u **četiri commita**, jer uz pet
-CSS datoteka nosi i **179 pravila iz `responsive/*`** (§11.0). **/1 kromo ✅** → **🟢 /2 kartice+dopune**
-→ /3 kviz → /4 napredak → C5b → C6 → C7.
-⚠️ **Tri pravila za preostale cigle** (zašto: §10.3, §11.1): ① prije nego pravilo postane utility
-**izmjeri tko ga danas tuče**; ② **`css:diff` bez `CSS_DIFF_RUTE` mjeri samo `/`**; ③ **rez ide po
-SVOJSTVU** — što neki preživjeli `@media` još mijenja ne smije u utility.
+CSS datoteka nosi i **179 pravila iz `responsive/*`** (§11.0). **/1 kromo ✅ · /2 kartice+dopune ✅**
+→ **🟢 /3 kviz** → /4 napredak → C5b → C6 → C7.
+⚠️ **Tri pravila za preostale cigle** (zašto: §10.3, §11.1, §11.2): ① prije nego pravilo postane
+utility **izmjeri tko ga danas tuče**; ② **rez ide po SVOJSTVU** — što neki preživjeli `@media` još
+mijenja ne smije u utility; ③ **dvaput zaredom je prvi kvar bio u MJERAČU, ne u cigli** — prije
+nego povjeruješ nalazu, provjeri mjeri li alat ono što misliš.
 **Ostaje Leonu:** semantičke ispune traže nove tokene (`--on-success`…) — v. `BACKLOG.md`.
 **K4** se NE radi zasebno (utopljen u **P2**). **K5** (editor dvojezično) čeka i ne blokira ništa.
 **A1 + A0: REDOSLIJED NIJE PRESUĐEN** (Leon, 2026-08-19: *„ne znam još, to ćemo se dogovorit"*);

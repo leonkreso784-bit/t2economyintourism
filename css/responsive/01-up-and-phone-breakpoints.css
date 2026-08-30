@@ -91,24 +91,6 @@
         width: auto;
     }
     
-    .flashcard {
-        min-height: 350px;
-    }
-    
-    .flashcard-front p {
-        font-size: 1.4rem;
-    }
-    
-    .flashcard-back p {
-        font-size: 1.2rem;
-    }
-    
-    .flashcard-controls {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-    }
-    
     .quiz-setup {
         padding: 2.5rem;
     }
@@ -132,23 +114,6 @@
     
     .question-card h2 {
         font-size: 1.3rem;
-    }
-    
-    .fill-input-wrapper {
-        flex-direction: row;
-    }
-    
-    .fill-input-wrapper input {
-        max-width: 300px;
-    }
-    
-    .check-btn {
-        width: auto;
-    }
-    
-    .fill-controls {
-        display: flex;
-        justify-content: center;
     }
     
     .progress-overview {
@@ -221,14 +186,6 @@
         font-size: 0.8rem;
     }
     
-    .flashcard {
-        min-height: 280px;
-    }
-    
-    .flashcard-front p {
-        font-size: 1rem;
-    }
-    
     /* Landing page small phones — C2: OBRISANO.
        `.hero-subtitle`/`.hero-visual`/`.float-card` više ne postoje, a `.hero-title` je
        nosio `font-size: 2rem !important` — jedini `!important` koji bi TUKAO Tailwind-skalu
@@ -249,10 +206,6 @@
 
 /* ===== iPhone 14/15/16 (390px) ===== */
 @media (min-width: 390px) and (max-width: 427px) {
-    .flashcard {
-        min-height: 320px;
-    }
-    
     .hero h1 {
         font-size: 1.6rem;
     }
@@ -270,10 +223,6 @@
     
     .hero h1 {
         font-size: 1.75rem;
-    }
-    
-    .flashcard {
-        min-height: 340px;
     }
 }
 

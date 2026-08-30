@@ -17,11 +17,80 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
-_(nema otvorenih bugova — zadnji zatvoren: BUG-036, 2026-08-30)_
+### BUG-037 — Kartica u landscapeu telefona traži 280 px visine u pojasu od 205 px, a dva pravila pisana protiv toga su mrtva
+
+- Status: 🔴 **otvoren** — svjesno odgođen za ciglu **C5a/4** (ondje se otvara landscape ispod
+  768 px, v. spec §11.1) · Težina: **nizak** — ekran je upotrebljiv, traži skrol · Našao:
+  **mjerenje pred migraciju C5a/2**, ne prijava.
+
+- **Opis / izmjereno** (Chromium, `hover:none` + `pointer:coarse`):
+
+  | ekran | `min-height` kartice | visina kartice | slobodno između gornje trake i donje |
+  |---|---|---|---|
+  | 568 × 320 | 280 px | 280 px | **205 px** |
+  | 667 × 375 | 280 px | 280 px | **260 px** |
+  | 736 × 414 | 280 px | 280 px | 299 px (stane) |
+
+  Kartica time strši ispod donje trake, a gumbi „Znam / Ne znam" dolaze tek iza nje.
+
+- **Uzrok:** DVA pravila napisana baš protiv toga su **mrtva**:
+  `responsive/04` → `@media (max-width:900px) and (orientation:landscape) { .flashcard { min-height:150px } }`
+  (nosilo je i komentar o BUG-016, dakle netko je na to već jednom mislio) i
+  `responsive/05` → `@media (max-height:500px) and (orientation:landscape) { … 220px }`.
+  Oba tuče **kasniji** `responsive/06` →
+  `@media (max-width:767px) and (hover:none) and (pointer:coarse) { .flashcard { min-height:280px } }`,
+  koji o orijentaciji ne zna ništa i nikad nije ni namjeravao presuditi landscape.
+
+- **Zašto se NE popravlja u C5a/2:** ispravak nije jednoznačan (150 ili 220?) i mijenja razmjere
+  ekrana koji **nijedna brana ne mjeri** — `phone-gate` landscape mjeri na 852 px, gdje donja
+  traka ne postoji. Migracijska cigla seli jezik, ne izgled. Brojke iz ove tablice su upravo ono
+  što je spec §11.1 tražio da se pribavi „s izmjerenim brojkama, ne prije".
+
+- **Lekcija (ista obitelj kao C5a/1 ③):** **pravilo koje ne zna za tuđu os tiho presuđuje i o
+  njoj.** Upit po ŠIRINI i vrsti pokazivača pobijedio je dva upita po ORIJENTACIJI samo zato što
+  je napisan kasnije. Redoslijed datoteka je time postao skrivena politika.
+
 
 ---
 
 ## Riješeni / Lekcije
+
+### BUG-038 — Brojači na ekranu dopuna nisu imali NIJEDNO pravilo, a isti blok na karticama jest
+
+- Status: ✅ **riješen** (2026-08-30, cigla C5a/2) · Težina: **nizak** (kozmetika, ništa se ne
+  gubi) · Našao: **mjerenje pred migraciju** — `.fill-stats` se pojavio u markupu, a u CSS-u ga
+  nema nigdje.
+
+- **Opis:** ista dva brojača („Correct" / „Wrong") stoje na oba ekrana i imaju isti markup, ali
+  su se crtali različito:
+
+  | | ekran kartica | ekran dopuna |
+  |---|---|---|
+  | spremnik | `flex`, centrirano, razmak 48 px | `block` — brojači jedan ISPOD drugoga |
+  | brojka | zelena/crvena, `font-weight: 600`, ikona uz tekst | zadana tinta, 400, ikona iznad |
+
+- **Reprodukcija:** otvori lekciju → način **Dopune** → pogledaj dno ekrana. Usporedi s načinom
+  **Kartice**.
+
+- **Uzrok:** `css/flashcards-section.css` je pravila pisao kroz **`.flashcard-stats .stat…`** —
+  selektor vezan uz spremnik kartica. Kad je isti blok kasnije dodan na ekran dopuna pod imenom
+  `.fill-stats`, pravila ga nisu mogla dohvatiti, a nitko nije napisao njihov parnjak. Nijedna
+  brana to ne vidi: `check:orphan-css` traži klase BEZ elementa, a ovdje je obrnuto — **element
+  bez pravila**, što nijedan naš gate ne mjeri.
+
+- **Rješenje (C5a/2):** raspored je otišao u markup, jednak na oba mjesta
+  (`flex justify-center gap-12` na spremniku, `flex items-center gap-2 font-semibold` na
+  brojaču), a u CSS-u je ostalo samo **značenje boje**, prepisano s
+  `.flashcard-stats .stat.correct` na **`.stat.correct`**. Provjereno da `.stat` u dokumentu
+  postoji isključivo na ta dva mjesta — kviz koristi `.result-stat`.
+
+- **Lekcija:** **selektor vezan uz spremnik je obećanje da će se drugi spremnik zaboraviti.**
+  `.flashcard-stats .stat` je izgledao urednije od `.stat`, a značio je da drugi ekran s istim
+  blokom tiho ostaje bez stila. I: **nemamo branu za element bez pravila.** Ovaj se našao samo
+  zato što je cigla čitala CSS i markup jedno uz drugo — `css:diff` ga ne vidi (obje verzije
+  jednako nestilizirane), `check:orphan-css` gleda drugi smjer.
+
+---
 
 ### BUG-036 — Donja traka učenja u landscapeu sjeda U pojas kućnog indikatora (sigurni rub pojela KRATICA)
 

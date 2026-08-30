@@ -4,12 +4,6 @@
         padding-bottom: calc(var(--safe-bottom) + 60px);
     }
     
-    .flashcard {
-        /* BUG-016: bila fiksna height:200px (relikt prije BUG-013 grid-stacka) — lica sad
-           rastu sa sadržajem pa su stršala iz kartice i prekrivala Known/Unknown gumbe. */
-        height: auto;
-    }
-    
     .hero {
         padding: 0.5rem 0;
     }
@@ -67,9 +61,6 @@
         transform: scale(0.99);
     }
     
-    .flashcard:active {
-        transform: scale(0.99);
-    }
 }
 
 /* ===== DARK MODE ADJUSTMENTS FOR MOBILE — OBRISANO 2026-08-13 =====
@@ -99,10 +90,6 @@
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
-    }
-    
-    .flashcard-inner {
-        transition: none;
     }
 }
 

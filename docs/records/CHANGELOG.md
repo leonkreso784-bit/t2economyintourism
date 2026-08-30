@@ -5,6 +5,50 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-30 (OPUS) — **C5a/2: kartice i dopune — a prvi kvar je bio u mjeraču**
+
+Drugi od četiri commita cigle C5a. Spec **§11.2**. Dva buga: **BUG-038** riješen, **BUG-037**
+otvoren i svjesno odgođen.
+
+**Mjera prije koda.** Dvije datoteke nose 385 redaka, ali i **82 od 179 pravila** koja cijela
+cigla ima u `css/responsive/*`, te **38 parova (selektor, svojstvo) o kojima odlučuju dvije ili
+više datoteka**. O `.flashcard { min-height }` odlučuje **šest datoteka kroz 22 deklaracije** —
+a izmjereno kroz **svaki prag i prag ± 1**, u dva režima pokazivača i na dvije visine prozora,
+**12 od te 22 je mrtvo**. Cijela ljestva ispod 480 px ne postoji: jedno pravilo iz `responsive/06`
+sve gasi na 200 px.
+
+**🔧 Alat je bio prvi kvar — drugi put zaredom u ovoj fazi.** Prvi puni prolaz `css:diff`-a
+prijavio je **298 razlika** i **420 elemenata koji postoje samo u radnom stablu**, a nijedna
+nije bila naša: `measure()` je nakon `load` čekao **fiksnih 700 ms**, dok gradivo na rutama
+načina učenja dolazi **lijeno** (DB → JSON → `.js`) iza zastora `#studyLoading`. Referenca i
+radno stablo mjerili su se u dva različita trenutka. Zamijenjeno **uvjetom umjesto roka**:
+zastor mora nestati, pa se broj elemenata i visina dokumenta moraju prestati mijenjati kroz dvije
+uzastopne provjere. Nakon popravka **9 razlika umjesto 108 — i svih 9 je `.fill-stats`**, dakle
+točno namjerni popravak. *Mjerenje koje ovisi o brzini mreže nije mjerenje.*
+Alat je dobio i **`CSS_DIFF_SIRINE`** — tri zadane širine pogađaju tri od jedanaest stepenica
+ljestve (pouka C0/2, ovaj put na alatu, ne na brani).
+
+**🐞 Dva buga koja nijedna naša brana ne može vidjeti:**
+
+- **BUG-038 (riješen).** `.fill-stats` nije imao **nijedno** css-pravilo: isti blok brojača
+  crtao se na karticama centrirano, u boji i podebljano, a na dopunama kao dva bloka jedan ispod
+  drugoga u zadanoj tinti. Uzrok je selektor vezan uz spremnik (`.flashcard-stats .stat…`), koji
+  drugi spremnik ne može dohvatiti. *Nemamo branu za element BEZ pravila* — `check:orphan-css`
+  traži klasu bez elementa, dakle suprotan smjer.
+- **BUG-037 (otvoren, ide uz C5a/4).** Kartica u landscapeu telefona traži **280 px u pojasu od
+  205 px**; dva pravila pisana baš protiv toga (`responsive/04` 150 px, `responsive/05` 220 px)
+  tuče kasniji upit po širini i vrsti pokazivača, koji o orijentaciji ne zna ništa. Ne popravlja
+  se ovdje jer ispravak nije jednoznačan i mijenja razmjere ekrana koji nijedna brana ne mjeri.
+
+**Dokaz:** `css:diff` kroz **62 mjerenja** (31 kombinacija širine i visine × 2 rute) — **0 razlika u markupu**, a u prikazu ukupno **14 različitih elemenata**: devet je `.fill-stats` (popravak), pet su njihovi preci kojima je visina pala za 21 px, a jedan je `.fill-controls` s promjenom **bez učinka na ekranu**. Uz to inventar deklaracija HEAD ↔ radno (**433 → 331**), koji pokriva i `pointer: coarse` — ono što `css:diff` ne emulira. `phone.spec.js` **10/0**, `preflight` **EXIT 0**.
+
+**Izvedeno:** `css/responsive/*` **2060 → 1532 retka (−528)**, `04-mobile-extra.css` sam
+**507 → 341** · **`!important` u projektu 41 → 35** (pet iz `06` nije trebalo, šesti je bio
+duplikat) · **siročad 81 → 67** (14 imena bez ijednog elementa) · paleta 103 → 102 · tri prazna
+medijska upita obrisana, dva su ostatak C4b · u utilityje su otišli samo spremnik kartica,
+razmaci naslova i cijeli raspored oba bloka brojača — **`.fill-container` je ostao u CSS-u iako
+je „isti" element, jer njegov `max-width` mijenjaju dva upita.**
+
 ## 2026-08-30 (OPUS) — **C5a/1: kromo ekrana za učenje — i tri pravila koja su lagala o sebi**
 
 Prvi od četiri commita cigle C5a. Spec **§11.1**; mjera koja je odredila opseg cijele cigle je **§11.0**.
