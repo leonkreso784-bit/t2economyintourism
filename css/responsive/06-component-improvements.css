@@ -36,50 +36,6 @@
     }
 }
 
-/* ===== PROGRESS SECTION IMPROVEMENTS ===== */
-@media (min-width: 480px) {
-    .progress-overview {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-    
-    .progress-card.main {
-        grid-column: span 2;
-    }
-}
-
-@media (min-width: 768px) {
-    .progress-container {
-        max-width: 800px;
-        margin: 0 auto;
-    }
-    
-    .progress-overview {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .progress-card.main {
-        grid-column: span 3;
-    }
-    
-    .category-bars {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-}
-
-@media (min-width: 1024px) {
-    .progress-overview {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    
-    .progress-card.main {
-        grid-column: span 4;
-    }
-}
-
 /* ===== SUBJECT SIDEBAR TABLET IMPROVEMENTS ===== */
 @media (min-width: 768px) {
     .subjects-sidebar {

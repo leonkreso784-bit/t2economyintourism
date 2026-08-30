@@ -204,15 +204,15 @@ function renderProgressPage() {
         
         const color = pColor(data.color);          // '' ako nije čist #rrggbb → stil se izostavi
         const bar = document.createElement('div');
-        bar.className = 'category-bar';
+        bar.className = 'category-bar flex items-center gap-3';
         bar.innerHTML = `
             <i class="fas ${pIcon(data.icon)}"${color ? ` style="color: ${color}"` : ''}></i>
-            <div class="category-bar-info">
+            <div class="category-bar-info flex-1">
                 <span>
                     <strong>${pEsc(data.name)}</strong>
                     <span>${catProgress}%</span>
                 </span>
-                <div class="mini-progress">
+                <div class="mini-progress h-1.5 rounded-[10px] overflow-hidden mt-2">
                     <div class="mini-fill" style="width: ${catProgress}%${color ? `; background: ${color}` : ''}"></div>
                 </div>
             </div>

@@ -60,7 +60,7 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 | **C3** 🔄 | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori. **Tri cigle gotove i na produkciji** (authed a11y-gate · širina + kvar u rendereru · `studio.css` na nuli `!important`); **ostaje Studio na telefonu** — dok stoji, C3 se ne smije proglasiti gotovim (kriterij #1 imenuje editor na 320 px). | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
 | **K** 🔄 | **„KOSTUR" — rute i jedna gornja traka** (§8). Ubačena između C3 i C4 (Leon, 2026-08-18) po presedanu C0-a: informacijska arhitektura prije kozmetike. **K1 ✅ rute** (§8.6) · **K2** jedna traka · **K3** brana dohvatljivosti · **K4** materijali u kvaliteti kataloga | tri duplicirana zaglavlja (`browse-`/`lessons-`/`study-header`) | iz **svake** stranice — uključujući `#editor-page` — vodi bar jedan klik drugamo, a svaka stranica ima adresu koja se da podijeliti |
 | **C4** ✅ | **Browse + lekcije** — zapis: **§10**. **C4a ✅** (mrtva površina obrisana; `subject-selector.css` je **nestala**, ne migrirana) · **C4b ✅** (§10.3) — prva migrirana površina u fazi | `subject-selector.css` (obrisan) · skela browsea i lekcija (u utilityje) · **13 pravila druge ljestve pragova** iz `responsive/05`+`/06` (**brojke: `npm run css:debt`**) | student dođe do bilo kojeg predmeta i lekcije |
-| **C5a** 🔄 | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak, **i kromo ekrana za učenje** (§10.3: ista površina, pa ide zajedno). Zapis: **§11**. **C5a/1 ✅ kromo** (§11.1) · **C5a/2 ✅ kartice + dopune** (§11.2) · **C5a/3 ✅ kviz** (§11.3) · ostaje /4 napredak. ⚠️ Mjereno: cigla nosi i **179 pravila iz `responsive/*`** (§11.0), što je red veličine više nego što je ova tablica opisivala | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` · kromo → **`css/study-chrome.css`** (novo); `pages.css` je time preseljen pod **C6**. ⚠️ „Posljednja dva `!important` izvan C7" **bila su mrtva** — stvarna četiri stajala su u `responsive/04`. Iz /2: `responsive/*` **−528 redaka**, `!important` **41 → 35**, siročad **81 → 67**; iz /3: **−347 redaka**, siročad **67 → 57**, ukupni dug **7238 → 7000** | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
+| **C5a** 🔄 | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak, **i kromo ekrana za učenje** (§10.3: ista površina, pa ide zajedno). Zapis: **§11**. **C5a/1 ✅ kromo** (§11.1) · **C5a/2 ✅ kartice + dopune** (§11.2) · **C5a/3 ✅ kviz** (§11.3) · **C5a/4 ✅ napredak** (§11.4). ⚠️ Mjereno: cigla nosi i **179 pravila iz `responsive/*`** (§11.0), što je red veličine više nego što je ova tablica opisivala | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` · kromo → **`css/study-chrome.css`** (novo); `pages.css` je time preseljen pod **C6**. ⚠️ „Posljednja dva `!important` izvan C7" **bila su mrtva** — stvarna četiri stajala su u `responsive/04`. Iz /2: `responsive/*` **−528 redaka**, `!important` **41 → 35**, siročad **81 → 67**; iz /3: **−347 redaka**, siročad **67 → 57**, ukupni dug **7238 → 7000**; iz /4: **−160 redaka**, siročad **57 → 46**, ukupni dug **7000 → 6951**, `!important` **35 → 34** | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
 | **C5b** | **Gradivo + vježbe** — sve što ide kroz renderer ili engine | `learn.css`, `learn-blocks.css`, `math.css`, `exercises.css`, `blind-map.css` | student čita gradivo i rješava vježbe; KaTeX, slike i tablice nedirnuti |
 | **C6** | **Profil, auth, pravne, consent** ➕ `pages.css` (iz C5a/1) ➕ **`home-section.css` i `sidebar.css`** — bile su u bundleu a **u planu ih nije bilo** (Leon 2026-08-30: *„Ubaci"*); drže **3 od 11** fatalnih pravila koja blokiraju birač tema | `profile.css`, `auth.css`, `legal.css`, `consent.css`, `pages.css`, `home-section.css`, `sidebar.css` | korisnik se prijavi, uredi profil, obriše račun **i smije prebaciti temu** — nakon C6 birač više nije blokiran |
 | **C7** | **Gašenje** | `responsive/*`, `components.css`, `variables.css`, `styles.bundle.css`, mrtva tema | u repozitoriju nema starog CSS-a ni mrtvog koda teme |
@@ -4361,3 +4361,129 @@ brojka 6 iz reza razlikovale su se **za točno taj jedan**.
 
 *Obje je uhvatila ista stvar: skripta koja pada kad meta nije nađena točno onoliko puta koliko je
 najavljeno.* Da je bila napisana da „zamijeni ako nađe", oba bi promašaja prošla tiho.
+
+### 11.4 ✅ C5a/4 — napredak (2026-08-30)
+
+Četvrta i zadnja cigla C5a-a uzima površinu napretka: **25 pravila iz `responsive/*`** dira
+njezine selektore, a o **14 parova (selektor, svojstvo)** odlučuju dvije ili više datoteka.
+Nakon migracije `css/responsive/*` je **1185 → 1025 redaka** (−160), `progress-section.css`
+**183 → 294**, ukupni dug **7000 → 6951**, `!important` **35 → 34**, siročad **57 → 46**.
+
+> Cigla ide u **DVA commita**: prvi je migracija (izlazni uvjet: `css:diff` s nula razlika),
+> drugi nosi ono što prikaz **namjerno mijenja ili mjeri** — `progress` u `phone-gate`,
+> kontrastnu iznimku za ikonu kategorije i izmjerenu odluku o landscapeu ispod 768 px. Dvoje se
+> ne miješa u isti commit jer bi dokaz „nula razlika" prestao nešto značiti.
+
+Iz `responsive/*` je otišlo **32 pravila** — 25 koja gađaju selektore napretka plus sedam koja
+su s njima dijelila blok. Ovo je najmanja od četiri C5a površine po broju pravila i najveća po
+**udjelu mrtvog: 12 od 32 pravila nije imalo nikakav učinak** — brisanje im ne mijenja nijednu
+izračunatu vrijednost.
+
+#### 🐞 Ljestva `.progress-overview` iz `01` nikad se nije iscrtala — četvrta pojava BUG-039
+
+`responsive/01` piše dvije prečke za mrežu kartica napretka (`@768: 1fr 1fr` i
+`@1024: 1fr 1fr 1fr`, uz `gap: 1.5rem`). **Nijedna se ne iscrtava.** `responsive/06` dolazi
+POSLIJE i nosi vlastitu, potpuniju ljestvu (`@480` 2 stupca, `@768` **3**, `@1024` **4**, uz
+`gap: 1rem`), koja gasi svaku prečku iz `01` — i onu na istom pragu i onu na širem.
+
+Izmjereno u pregledniku (ne pročitano), `grid-template-columns` na `.progress-overview`:
+
+| širina | stupaca | odakle |
+|---|---|---|
+| < 480 | — (flex, stupac) | osnovno pravilo |
+| 480–767 | **2** | `06 @min-480` |
+| 768–1023 | **3** | `06 @min-768` — a `01` je za isti prag napisao **2** |
+| ≥ 1024 | **4** | `06 @min-1024` — a `01` je napisao **3** |
+
+`gap` je pritom **16 px na svakoj širini**: `01` je tražio 24, i nikad ga nije dobio.
+
+Isti mehanizam kao u C5a/3, samo drugi selektor: *uži upit ne pobjeđuje širi — kasniji
+pobjeđuje ranijeg.* Ovdje čak ni „uži" nije bio u igri; `01` i `06` imaju **isti prag**, pa je
+presudio isključivo redoslijed datoteka. Mrtva su pravila **obrisana** (brisanje ne mijenja
+izračunati stil), a nalaz je pribrojen **BUG-039**.
+
+#### 🐞 Osam pravila za DOM koji ne postoji — i jedan `!important` među njima
+
+`responsive/04` drži blok „ANALYTICS/PROGRESS SECTION MOBILE" s deset pravila, od kojih
+**osam gađa selektore kojih nema.** Selektori
+`.analytics-section` · `.analytics-header` · `.analytics-grid` · `.analytics-card` ·
+`.chart-container` · `.progress-section` · `.progress-header` · `.progress-grid` ·
+`.progress-item` · `.progress-label` · `.progress-value` imaju **nula pojava** u `*.html`,
+`js/**`, `data/**` i `tests/**`. Odjeljak napretka je `<section id="progress" class="section">`
+— klasa `progress-section` nikad nije postojala.
+
+Od preostala dva, **jedna polovica jednog pravila je bila živa**
+(`.analytics-card h3, .progress-card h3 { font-size: 1rem }`) i preselila se; druga
+(`.analytics-card, .progress-card { padding: 1rem }`) je bila **doslovan duplikat** pravila iz
+`02` na istom pragu i s istom vrijednošću. Blok je time nestao u cijelosti — s njim i
+`grid-template-columns: 1fr !important`, jedan od trinaest preostalih `!important`-a u
+`responsive/*`.
+
+#### Što je otišlo u markup, a što je ostalo
+
+U utilityje su otišla **tri cijela pravila** (`.progress-container h1`, `.progress-card.main`,
+`.category-bar-info`) i pojedina svojstva s osam drugih elemenata: `mb-8` na
+`.progress-overview`, `relative` na `.big-progress-circle`, `w-full h-full` na njegov `<svg>`,
+`flex items-center gap-2 mb-2` na pet `<h3>`, `h-1.5 rounded-[10px] overflow-hidden mt-2` na
+`.mini-progress` (u markupu **i** u `js/progress.js`), `flex items-center gap-3` na
+`.category-bar`, `mt-6` na `.study-history`, `w-full mt-6` na `.reset-btn`.
+
+**Ostalo je u CSS-u, i to s razlogom zapisanim uz pravilo:**
+
+- `.progress-overview` i `.category-bars` — obje od nekog praga **prestaju biti flex i postaju
+  grid**, a `gap` mijenja isti upit; nijedno svojstvo nije nedirnuto. Isti oblik kao
+  `.quiz-options` u /3.
+- `.progress-card h3 { font-size }`, `.big-progress-circle { width, height }`,
+  `.big-progress-circle span { font-size }`, `.progress-card { padding }`,
+  `.category-bar { padding }`, `.progress-container { max-width, margin }` — sve po pravilu ②:
+  rez ide po svojstvu.
+- **`.category-bar-info span` ostaje zbog DOSEGA, ne zbog upita** — v. nalaz niže.
+
+#### 🐞 Tri nalaza koje cigla NIJE ispravila, jer nisu o jeziku nego o izgledu
+
+1. **`.category-bar-info span` pogađa DVA elementa.** Selektor je pisan za vanjski redak
+   (naziv + postotak), ali `<span>NN%</span>` živi **unutar** njega, pa i on dobiva
+   `display: flex`, `justify-content: space-between` i `margin-bottom: 0.35rem`. Zato pravilo
+   nije moglo u markup: klase bi dobio samo vanjski. Da je pisano `> span`, ovdje bi ga danas
+   nestalo. Sužavanje selektora mijenja prikaz → odluka, ne migracija.
+2. **`#historyList` nitko nikad ne popuni.** Markup obećava `<!-- Generated by JS -->`, a u
+   `js/**` ne postoji **nijedan** zapis koji u taj element išta piše (provjereno i kroz
+   `git log -S`: od podjele `app.js` na module nikad nije ni postojao). „Povijest učenja" je
+   zato naslov iznad praznine na svakom otvaranju stranice napretka. Tri pravila
+   (`.history-item`, `:last-child`, `.date`) su mrtva — **nisu obrisana**, jer brisanje stila ne
+   rješava prazan odjeljak, a buduću izvedbu bi ostavilo tiho neoblikovanom.
+3. **`.reset-btn` nema `font-size`.** Nasljeđuje `font-family`, ali ne i veličinu, pa se natpis
+   iscrtava u **13.33 px** — zadanoj veličini `<button>`-a, sitnije od svega oko sebe. Nitko ga
+   nije smanjio; nikad nije ni bio postavljen.
+
+Sva tri su zapisana u `BACKLOG.md`; ① i ③ su kandidati za C7, ② je proizvodna odluka
+(izvesti povijest učenja ili maknuti odjeljak).
+
+#### Dokaz
+
+**`css:diff`, 20 viewporta × ruta napretka = 31 120 usporedbi, `0 razlika u prikazu`** — i to
+**dvaput**: jednom nakon seobe ljestve, jednom nakon seobe svojstava u markup. Širine su iste
+kao u /3 (svaki prag i prag ± 1, plus tri landscape mjere). Uz to **19 638 usporedbi na pet
+drugih ruta** (`/`, browse, lekcije, kartice), jer brisanje mrtvog bloka iz `04` dira datoteku
+koju čita cijela aplikacija.
+
+Neovisna potvrda: isti mjerni skript prije i poslije daje **znak po znak jednake** izračunate
+vrijednosti na 13 širina za 12 elemenata — uključujući onu koja je nalaz i izrodila
+(`gap: 16px` na svakoj širini).
+
+> ⚠️ **Granica dokaza, poštena:** `.history-item` **ne postoji ni u jednom stablu** (v. nalaz 2),
+> pa njegova tri pravila nijedan `css:diff` ne može usporediti. To je ujedno i razlog zašto su
+> ostavljena: neizmjerljiva su dok odjeljak stoji prazan.
+
+#### 🧭 Pouka o metodi — mjerač je lagao i ovaj put, ali tiho
+
+Prvi prolaz mjerio je `.progress-card` s `document.querySelector` i dobio **24 px razmaka na
+svakoj širini** — iz čega bi slijedilo da upit ≤ 767 px ne radi. Nije: `querySelector` je
+uhvatio **prvu** karticu, a prva je `.progress-card.main`, koja ima vlastito pravilo veće
+težine. Traženi je element bio `.progress-card:not(.main)`.
+
+*Peti put u ovoj fazi (C4b · C5a/1 · /2 · /3 · /4), i četvrti zaredom, prvi je kvar bio u
+mjeraču a ne u cigli* — ali za razliku od /3, ovaj put mjerač nije pao nego je **vratio
+uvjerljiv krivi broj**. Skripta koja pada zatvoreno štiti od promašaja
+u traženju; od promašaja u **odabiru uzorka** ne štiti ništa osim provjere da mjeriš element o
+kojem govoriš.

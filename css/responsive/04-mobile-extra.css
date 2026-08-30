@@ -152,61 +152,6 @@
     
     /* (removed orphaned .topic-* rules + stray brace — dead/malformed CSS) */
 
-/* --- ANALYTICS/PROGRESS SECTION MOBILE --- */
-@media (max-width: 767px) {
-    .analytics-section,
-    .progress-section {
-        padding: 0.75rem;
-        padding-bottom: calc(80px + var(--safe-bottom));
-    }
-    
-    .analytics-header,
-    .progress-header {
-        padding: 0.75rem;
-        flex-direction: column;
-        gap: 0.75rem;
-        text-align: center;
-    }
-    
-    .analytics-header h2,
-    .progress-header h2 {
-        font-size: 1.1rem;
-    }
-    
-    .analytics-grid,
-    .progress-grid {
-        grid-template-columns: 1fr !important;
-        gap: 0.75rem;
-    }
-    
-    .analytics-card,
-    .progress-card {
-        padding: 1rem;
-    }
-    
-    .analytics-card h3,
-    .progress-card h3 {
-        font-size: 1rem;
-    }
-    
-    .chart-container {
-        height: 180px;
-    }
-    
-    /* Progress Bars Mobile */
-    .progress-item {
-        padding: 0.75rem;
-    }
-    
-    .progress-label {
-        font-size: 0.9rem;
-    }
-    
-    .progress-value {
-        font-size: 0.85rem;
-    }
-}
-
 /* --- EXTRA SMALL SCREENS (iPhone SE, older phones) --- */
 @media (max-width: 374px) {
     

@@ -5,6 +5,48 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-30 (d) — C5a/4 (napredak): najmanja površina, najveći udio mrtvog
+
+**Zadnja cigla C5a.** Površina napretka je po broju pravila najmanja od četiri (25 prema 57 na
+kvizu), ali je od 32 obrisana pravila **njih 12 bilo bez ikakvog učinka** — najviši udio dosad.
+
+**Što je izmjereno prije koda.** Vlastiti obilazak blokova kroz šest `responsive/*` datoteka:
+25 pravila dira selektore napretka, 14 parova (selektor, svojstvo) ima dva ili više gospodara.
+Zatim **preglednik, ne čitanje**: 12 elemenata × 13 širina, prije i poslije.
+
+**Nalaz koji nosi ciglu.** `responsive/01` piše ljestvu za `.progress-overview` na pragovima 768
+i 1024; `responsive/06` piše svoju na 480/768/1024. Datoteke se učitavaju 01 → 06, pragovi su
+**isti**, pa `06` uzima sve. `gap` je 16 px na svakoj širini iako je `01` tražio 24; stupaca ima
+2/3/4 ondje gdje je `01` tražio −/2/3. **Četvrta pojava BUG-039**, i najčišća: dosad je uvijek
+bilo „uži gubi od kasnijeg šireg", ovdje je prag isti pa je presudio **samo redoslijed**.
+
+Uz to: cijeli blok „ANALYTICS/PROGRESS SECTION MOBILE" u `responsive/04` (deset pravila) gađa
+klase kojih **nema nigdje** — `.progress-section` nikad nije postojala, odjeljak je
+`<section id="progress" class="section">`. S blokom je otišao i jedan `!important`.
+
+**Tri stvari koje cigla NIJE dirala, i to nije previd.** ① `#historyList` nitko nikad ne popuni
+— „Povijest učenja" je naslov iznad praznine, i to od podjele `app.js` na module (provjereno
+`git log -S`). ② Natpis gumba za brisanje napretka je **13.33 px** jer mu `font-size` nikad nije
+napisan. ③ `.category-bar-info span` pogađa i unutarnji `<span>NN%</span>`, pa to pravilo nije
+moglo u markup. Sva tri mijenjaju prikaz → `BACKLOG.md`, uz Leonov postojeći zapis o ekranu
+napretka.
+
+**Testirano:** `css:diff` 31 120 usporedbi × **dvaput** (nakon CSS-a, nakon markupa) = 0 razlika;
+19 638 usporedbi na pet drugih ruta = 0 razlika; `phone.spec.js` 10/0; `preflight` EXIT 0;
+neovisno mjerenje prije/poslije jednako znak po znak.
+
+**Pouka o metodi.** Peti put u ovoj fazi (C4b · C5a/1 · /2 · /3 · /4) i **četvrti zaredom** prvi
+je kvar bio u mjeraču. Ali prvi put mjerač **nije pao** — vratio je uvjerljiv krivi broj (24 px
+razmaka na svakoj širini), jer je `querySelector('.progress-card')` uhvatio glavnu karticu koja
+ima vlastito pravilo veće težine. *Padanje zatvoreno štiti od promašaja u traženju; od promašaja
+u odabiru uzorka ne štiti ništa osim provjere da mjeriš ono o čemu govoriš.*
+
+**Slijedi:** druga polovica C5a/4 — `progress` u `phone-gate`, kontrastna iznimka za ikonu
+kategorije i izmjerena odluka o landscapeu ispod 768 px (BUG-037). Zatim C5b.
+
+---
+
+
 ## 2026-08-30 (c) — C5a/3 (kviz) + pauza faze ukinuta istog dana
 
 **Pauza je pala prije nego je stigla vrijediti.** Zapis od jutros je govorio *„faza je pauzirana,

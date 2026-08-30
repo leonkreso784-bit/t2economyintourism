@@ -44,6 +44,19 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
   (`max-width: 374px`). **Ista mehanika kao BUG-037**, samo na širini umjesto na orijentaciji —
   a to je već treći put da se pojavi, pa je riječ o obrascu, ne o slučaju.
 
+- **➕ ČETVRTA POJAVA (C5a/4, 2026-08-30) — `.progress-overview`:** `responsive/01` piše dvije
+  prečke za mrežu kartica napretka (`@768: 1fr 1fr`, `@1024: 1fr 1fr 1fr`, uz `gap: 1.5rem`).
+  Iscrtava se **nijedna**: `responsive/06` nosi vlastitu ljestvu na ISTIM pragovima (`@480` 2
+  stupca, `@768` **3**, `@1024` **4**, `gap: 1rem`) i, budući da je zadnja datoteka, uzima sve.
+  Izmjereno: `gap` je **16 px na svakoj širini**, a stupaca je 2/3/4 ondje gdje je `01` tražio
+  −/2/3. Ovdje ni „uži upit" nije bio u igri — pragovi su **isti**, pa je presudio isključivo
+  redoslijed datoteka. To je najčišći oblik ovog buga koji smo dosad vidjeli.
+
+  Uz to je u istoj cigli nađen i **cijeli mrtvi blok** u `responsive/04` („ANALYTICS/PROGRESS
+  SECTION MOBILE", deset pravila, osam za selektore kojih nema nigdje u `*.html`/`js/**`).
+  To NIJE isti razred — nije redoslijed nego markup koji se promijenio bez CSS-a — ali je
+  nađeno istim mjerenjem, pa stoji ovdje da se ne izgubi.
+
 - **Zašto NIJE popravljeno u C5a/3:** cigla je migracija i njezin je izlazni uvjet `css:diff`
   s nula razlika. „Popravak" bi značio odlučiti **koliko širok kviz treba biti na velikom
   monitoru** i **koliko sitan na 320 px** — dvije odluke o izgledu koje nijedna brana ne mjeri.

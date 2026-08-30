@@ -5,6 +5,59 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-30 (OPUS) — **C5a/4: napredak — pola ljestve nije imalo nikakav učinak**
+
+Četvrta i zadnja cigla C5a. Spec **§11.4**. Bez novog buga: nalazi su **četvrta pojava BUG-039**
+i tri stavke koje su otišle u `BACKLOG.md` jer su odluke o izgledu, ne o jeziku.
+
+**Mjera prije koda.** Površina napretka nosi **25 pravila iz `css/responsive/*`** i **14 parova
+(selektor, svojstvo) o kojima odlučuju dvije ili više datoteka** — najmanja od četiri C5a
+površine. Ali i najmrtvija: **12 od 32 obrisana pravila nije mijenjalo nijednu izračunatu
+vrijednost.**
+
+**🐞 Nalaz: mreža kartica napretka iz `responsive/01` nikad se nije iscrtala.** `01` piše
+`@768: 1fr 1fr` i `@1024: 1fr 1fr 1fr` uz `gap: 1.5rem`; `06` dolazi poslije i na **istim
+pragovima** piše 2/3/4 stupca uz `gap: 1rem`. Iscrtava se `06`. Izmjereno u pregledniku: `gap` je
+**16 px na svakoj širini** (traženo 24), a stupaca ima 2/3/4 ondje gdje je `01` tražio −/2/3.
+Najčišći dosad viđen oblik BUG-039: ovdje ni „uži upit" nije bio u igri, presudio je **samo
+redoslijed datoteka**.
+
+**🐞 Nalaz: deset pravila za DOM koji ne postoji.** Blok „ANALYTICS/PROGRESS SECTION MOBILE" u
+`responsive/04` gađa `.analytics-*`, `.progress-section`, `.progress-header`, `.progress-grid`,
+`.progress-item`, `.chart-container` — **nula pojava** u `*.html`, `js/**`, `data/**`, `tests/**`.
+Odjeljak napretka je `<section id="progress" class="section">`; klasa `progress-section` nikad
+nije postojala. Jedna polovica jednog pravila bila je živa i preselila se; druga je bila doslovan
+duplikat pravila iz `02`. S blokom je otišao i jedan `!important`.
+
+**Što je otišlo u markup.** Tri cijela pravila (`.progress-container h1`, `.progress-card.main`,
+`.category-bar-info`) i pojedina svojstva s osam elemenata. **Ostalo u CSS-u:**
+`.progress-overview` i `.category-bars` od praga **prestaju biti flex i postaju grid**, pa im
+nijedno svojstvo nije nedirnuto (isti oblik kao `.quiz-options` u /3); ostalo po pravilu ② —
+rez ide po svojstvu.
+
+**Tri nalaza koja cigla NIJE ispravila** (svi u `BACKLOG.md`, uz ekran napretka): ① **„Povijest
+učenja" je naslov iznad praznine** — `#historyList` nitko nikad ne popuni, i nikad nije ni
+postojao zapis koji bi to radio; ② **natpis gumba „Obriši napredak" je 13.33 px**, jer
+`font-size` nikad nije napisan; ③ **`.category-bar-info span` pogađa dva elementa**, pa to
+pravilo nije moglo u markup.
+
+**Dokaz.** `css:diff` **31 120 usporedbi (20 viewporta × ruta napretka) = 0 razlika**, i to
+**dvaput** — nakon seobe ljestve i nakon seobe svojstava u markup. Uz to **19 638 usporedbi na
+pet drugih ruta**, jer brisanje mrtvog bloka iz `04` dira datoteku koju čita cijela aplikacija.
+Neovisno: isti mjerni skript prije i poslije daje **znak po znak jednake** vrijednosti na 13
+širina za 12 elemenata. `phone.spec.js` **10 prošlo / 0 palo**, `preflight` **EXIT 0**.
+
+**Brojke:** `css/responsive/*` **1185 → 1025** redaka (−160), `!important` **14 → 13**;
+`progress-section.css` **183 → 294**; ukupni dug **7000 → 6951**, `!important` **35 → 34**;
+siročad **57 → 46**.
+
+**🧭 Pouka:** mjerač je i ovaj put bio prvi kvar — peti put u ovoj fazi, četvrti zaredom — ali
+prvi put **nije pao nego je vratio uvjerljiv krivi broj**: `querySelector('.progress-card')` hvata
+**prvu** karticu, a prva je `.progress-card.main` s vlastitim pravilom veće težine. Skripta koja
+pada zatvoreno štiti od promašaja u traženju; od promašaja u **odabiru uzorka** ne štiti ništa
+osim provjere da mjeriš element o kojem govoriš.
+
+
 ## 2026-08-30 (OPUS) — **C5a/3: kviz — ljestva koja se nikad nije iscrtala**
 
 Treći od četiri commita cigle C5a. Spec **§11.3**. Jedan novi bug: **BUG-039**, otvoren i svjesno
