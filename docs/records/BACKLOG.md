@@ -30,7 +30,32 @@ hitno **istoga dana kad birač izađe** — a to je opisano kao „posao od jedn
 **Kad se odluči:** zabrana #4 u `check:palette` proširuje se s `MARKA_BG` na semantičke tokene,
 i tada pokriva i ovo. Zapis: spec §10.2.
 
+> ### ⚠️ PITANJE JE PRECIZIRANO 2026-08-30 — i još uvijek čeka Leona
+> Objašnjeno mu je i **nije odgovorio**. Pravo pitanje nije „koje tokene dodati" nego:
+> **smiju li zelena i crvena uopće biti ISPUNA, ili žive samo kao OBRUB i BOJA TEKSTA?**
+>
+> - **① Dodati tokene** → pune semantičke plohe ostaju moguće, tekst na njima se okreće s temom.
+> - **② Zabraniti pune semantičke plohe** → značenje nose obrub i tekst. **Tada tokeni ne trebaju
+>   i stavka nestaje.** To je već napravljeno za `.control-btn.wrong/.correct` u C2 i bliže je
+>   Apple smjeru (§7.6) — vlas-crta umjesto ispune.
+>
+> Preporuka je **②**, jer je pola posla već tako izvedeno. Odluka ostaje Leonova.
+
 ---
+
+## 🔥 EKRAN NAPRETKA — Leonov sud o sadržaju, ne o izgledu (2026-08-30) · **utječe na C5a/4**
+
+Zapisano jer bi se inače cigla **C5a/4 (napredak)** radila s krivom pretpostavkom.
+
+- **„Po meni je analitika o karticama glupost ali nema veze"** (Leon) → **ne ulagati** u brojke o
+  karticama. One smiju ostati kakve jesu; ne proširuju se i ne dobivaju prostor.
+- **„Kasnije ćemo za analitiku dodavat grafikone i sve pizdarije da bude zanimljivije i stvarno
+  bolje"** → grafikoni su **odobreni smjer, ali NE u C5a/4**. C5a/4 je migracija na Tailwind, ne
+  nova značajka; miješanje toga dvoga je razlog zašto se cigle vraćaju.
+
+**Kriterij prihvaćanja kad dođe red:** korisnik na ekranu napretka vidi **kretanje kroz vrijeme**,
+ne samo trenutni zbroj — jer je to jedino što brojka o karticama danas ne daje.
+
 
 ## ➖ Tinta iz SADRŽAJA kao boja TEKSTA — ikona kategorije u napretku (2026-08-29)
 
@@ -502,7 +527,65 @@ provedba **ne može** dobiti bez proxyja — to nije propust izvedbe nego svojst
 
 ---
 
-## 🧭 SELF-HOST SUPABASE — **odlučeno: ide, ali TEK POSLIJE frontenda** (Leon, 2026-08-21)
+## 🚚 SELF-HOST SUPABASE — **RADI SE ODMAH** (Leon, 2026-08-30) · opseg suženo: SAMO backend
+
+> ### ⚠️ OVO NADILAZI SVE ISPOD (2026-08-30). Ispod je izvorni zapis od 2026-08-21 i ostaje kao
+> obrazloženje ZAŠTO se ide; **kada** i **koliko** su presuđeni sada.
+>
+> **Odluka (Leon, 2026-08-30):** *„napravit ćemo seobu onda danas ili sutra (samo supabase)…
+> iznajmit ću VPS. Samo backend će biti lokalni na iznajmljenom VPS-u. **Hostanje ostaje na
+> Vercelu ne mijenjamo do daljnjeg!**"*
+>
+> **⚠️ ZAŠTO SADA, IAKO JE ZAPISANO „POSLIJE FRONTENDA":** *„zato sada radimo seobu prije nego faks
+> krene da ne bude problema."* Prozor je akademski, ne tehnički — i zato nadjačava zapisani
+> redoslijed. Bez ove rečenice sljedeća sesija vidi samo proturječje.
+>
+> #### Suženje opsega je UKINULO DVIJE OD TRI PREPREKE
+>
+> | zapisana prepreka | status |
+> |---|---|
+> | `vercel.json` je ugovor koji umire s Vercelom (`/sw.js` → `immutable` = zaključan SW na godinu) | ❌ **otpada** — ostajemo na Vercelu |
+> | „push na `main` = produkcija" prestaje vrijediti | ❌ **otpada** — ostaje kako jest |
+> | **self-host traži DVIJE instance** (prod + staging) | ✅ **STOJI, i sad je to glavna stavka** |
+>
+> #### Što je presuđeno, a što nije
+>
+> - **VPS: 4 ili 8 GB — NIJE odlučeno, ovisi o cijeni** (Leon). Mjera za odluku: sedam kontejnera
+>   (Postgres · Kong · GoTrue · PostgREST · Realtime · Storage · Studio). **1 GB se ne diže · 2 GB
+>   tijesno i samo JEDNA instanca · 4 GB udobno za jednu · 8 GB za prod + staging na istom stroju.**
+>   Uz to **NVMe** (Postgres) i ≥ 2 vCPU.
+> - **`sokrat-staging` SELI ZAJEDNO S PRODOM.** Ostane li staging u Cloudu dok prod ode na VPS,
+>   write-testovi više ne gađaju isti stog kao produkcija — **pa prestaju biti brana**.
+> - **⚠️ STARI PROJEKT SE NE GASI ISTI DAN — barem ~2 tjedna** (Leon: *„sviđa mi se tvoja
+>   preporuka"*). Razlog je mehanički: **anon-ključ i URL su u `js/auth.js`**, a to preglednik drži
+>   godinu dana (immutable cache, ADR-017). Korisnik sa starim `auth.js` **i dalje priča sa starim
+>   Supabaseom** dok mu se cache ne osvježi.
+> - **BACKUP JE NAŠ OD PRVOG DANA, i radi se ODMAH uz seobu** (Leon: *„odmah uz seobu to radimo"*).
+>   Supabase Cloud na Pro planu backupira sam; **na VPS-u to ne radi nitko**. Treba `pg_dump` po
+>   rasporedu **i kopija IZVAN VPS-a** — kvar diska je inače potpun gubitak korisnika i njihovih
+>   materijala. ⚠️ Naš `npm run backup` je **aplikacijski** snimak (gzip-JSON), **ne** zamjena za
+>   `pg_dump`.
+> - **TESTOVI SU UVJET, NE DODATAK** (Leon: *„trebamo napraviti naravno testove"*). Seoba nije
+>   gotova dok skup ne prođe **protiv nove instance**. Većinu već imamo i svi gađaju ono što im kažu
+>   `.env` varijable: `test:storage` · `test:delete-account` · `rls-check` · `check:functions` ·
+>   `check:final` · `load-probe` · `backup:verify`.
+> - **⚠️ Najveći tehnički rizik: `delete-account`.** U self-hostu Edge Functions vrte se u zasebnom
+>   Deno kontejneru koji je najmanje „upali i radi" od svega, a ta funkcija je **GDPR brisanje
+>   računa** — pravna obveza, ne značajka.
+> - **⚠️ PRVA PROVJERA prije bilo čega: jesu li URL-ovi slika APSOLUTNI.** Ako u sadržaju stoje s
+>   domenom starog Supabasea, sve slike pucaju nakon prebacivanja i moraju se prepisati.
+> - **Održavanje prelazi na nas TRAJNO** — zakrpe, SSH, vatrozid, TLS certifikat. Stalni trošak,
+>   ne jednokratni. (Ista rečenica stoji i u izvornom zapisu ispod; sada je naplaćena.)
+>
+> #### Posljedica za druge stavke
+>
+> **A0 + A1 (prijava Google računom + prepravak dijaloga) IDU POSLIJE SEOBE.** Sve auth-stavke su
+> Supabase konfiguracija; seoba mijenja URL, a time i redirect URI → prije seobe bi se radile
+> dvaput. Time je **zatvoreno pitanje „self-host vs OAuth, redoslijed"** otvoreno 2026-08-24 —
+> ne odlukom nego posljedicom.
+
+
+### Izvorni zapis (2026-08-21) — obrazloženje ZAŠTO se ide
 
 Povod je bio bijes na Pro-gating (*„ja ovim supcima neću meda dat"*), ali odluka stoji i bez njega.
 Supabase je **open source** → self-host na VPS-u (~5 €/mj) otključava **sve Pro značajke**, uz
@@ -531,7 +614,8 @@ trenutno smeta**.
 **uspavljivanje baze nakon ~7 dana neaktivnosti**, koje nas već grize (app tad pada na datoteke,
 prijava i sync ne rade). **Cijena koja se mora izreći: postajemo sami sebi DBA** — backupi,
 nadogradnje, sigurnosne zakrpe, uptime. Za jednog autora usred redizajna to je stvarni trošak
-vremena, i zato ovo čeka. Kad dođe red → **ADR**, ne usputna odluka.
+vremena. ⚠️ **„Zato ovo čeka" je NADIĐENO 2026-08-30** — v. okvir iznad; red je došao,
+a odluka je zapisana ovdje umjesto u ADR-u jer ne mijenja arhitekturu nego domaćina.
 
 ---
 
@@ -548,8 +632,19 @@ vremena, i zato ovo čeka. Kad dođe red → **ADR**, ne usputna odluka.
 > crta JS pri ulasku u rutu ondje **ne postoji**. Dodan **`CSS_DIFF_RUTE`**; ispis **uvijek**
 > imenuje što je mjereno. **C5a–C7 moraju predati svoje rute**, inače mjere prazan ekran.
 >
-> *Pouka koja preživljava obje: alat koji mjeri pola stranice ne kaže da mjeri pola — zato svaki
-> mjerni izvještaj od sada imenuje SVOJ DOSEG.*
+> **③ I TREĆA rupa, nađena u C5a/2 (2026-08-30) — ista datoteka, treći put.** Alat je nakon `load`
+> čekao **fiksnih 700 ms**. Za landing i katalog dosta; rute **načina učenja** su prve na kojima
+> nije, jer gradivo dolazi lijeno (DB → JSON → `.js`) iza zastora `#studyLoading`. Referenca i radno
+> stablo mjerili su se u **dva različita trenutka** → prijavljeno **298 „razlika" i 420 elemenata
+> koji postoje samo u radnom stablu**, nijedna naša. Zamijenjeno **uvjetom umjesto roka**; poslije
+> popravka **9 razlika, sve namjerne**. Uz to dodan **`CSS_DIFF_SIRINE`** (tri zadane širine ne mogu
+> dokazati ljestvu od jedanaest pragova — pouka C0/2, ovaj put na alatu).
+> ⚠️ **Alat se NE SMIJE pokretati u dvije istovremene instance** — druga padne na podizanju
+> poslužitelja.
+>
+> *Pouka koja preživljava sve tri: alat koji mjeri pola stranice ne kaže da mjeri pola — zato svaki
+> mjerni izvještaj od sada imenuje SVOJ DOSEG. I: **dvaput zaredom je prvi kvar cigle bio u
+> MJERAČU**, ne u cigli.*
 
 Nalaz ispod je izvorni zapis iz T5 i ostaje kao obrazloženje.
 
@@ -609,6 +704,29 @@ vlastitu ciglu kad god.
 > onoga što je toga jutra blokiralo birač, i to **bez ijedne odluke o izgledu**. To je i razlog
 > zašto brojke iz ovog odjeljka više ne stoje u prozi: ostarjele su unutar **jednog dana, dvaput**.
 > ⚠️ **C4b (2026-08-29) NIJE dirao paletu i ne tvrdi da jest** — `browse.css` je već bio na nuli.
+
+> ### ✅ PRESUĐENO 2026-08-30 (Leon: *„birač ide kako smo odredili"*)
+> **Birač NE postaje zasebna cigla.** Nose ga cigle koje ionako dolaze — ponuđen mu je i treći put
+> („samo tih 11 pravila, pola dana, teme rade odmah") i **odbio ga je.**
+>
+> **Izmjereno 2026-08-30 — 11 FATALNO, i evo tko ih gasi:**
+>
+> | datoteka | fatalnih | cigla |
+> |---|---|---|
+> | `quiz-section.css` | 2 | **C5a/3** |
+> | `progress-section.css` | 1 | C5a/4 |
+> | `learn.css` · `learn-blocks.css` · `blind-map.css` | 3 | C5b |
+> | `profile.css` | 2 | C6 |
+> | `home-section.css` · `sidebar.css` | 3 | **C6** (v. niže) |
+>
+> **Zaključak: birač može izaći nakon C6, NE nakon C7.** C7 je o `!important` i mrtvom kodu, ne o
+> bojama. ⚠️ Brojka je od 2026-08-30 i **stari** — mjerodavan je `npm run palette:breakdown`.
+>
+> #### ⚠️ NALAZ: dvije datoteke nisu pripadale NIJEDNOJ cigli
+> `css/home-section.css` i `css/sidebar.css` su **u bundleu, a u planu ih nema** — `scripts/css-debt.js`
+> ih nije nabrajao, pa ih nijedna cigla nije gasila, a drže **3 od 11 fatalnih**.
+> **Leonova odluka (2026-08-30): „Ubaci" → ulaze u C6**, i u `css-debt.js`, inače ih alat i dalje
+> ne vidi. *Datoteka koju alat ne nabraja ne postoji za plan, koliko god bila živa u pregledniku.*
 
 ---
 

@@ -46,6 +46,10 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
   traka ne postoji. Migracijska cigla seli jezik, ne izgled. Brojke iz ove tablice su upravo ono
   što je spec §11.1 tražio da se pribavi „s izmjerenim brojkama, ne prije".
 
+- **✅ LEONOVA PRESUDA (2026-08-30): *„Oke nije toliki problem"*.** Ostaje otvoren **svjesno**, ne
+  zaboravljeno. Ne popravlja se ni u C5a/2 ni prije C5a/4; brojke iz tablice gore su ono što je
+  spec §11.1 tražio da postoji **prije** odluke, i sada postoje.
+
 - **Lekcija (ista obitelj kao C5a/1 ③):** **pravilo koje ne zna za tuđu os tiho presuđuje i o
   njoj.** Upit po ŠIRINI i vrsti pokazivača pobijedio je dva upita po ORIJENTACIJI samo zato što
   je napisan kasnije. Redoslijed datoteka je time postao skrivena politika.
@@ -83,6 +87,12 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
   brojaču), a u CSS-u je ostalo samo **značenje boje**, prepisano s
   `.flashcard-stats .stat.correct` na **`.stat.correct`**. Provjereno da `.stat` u dokumentu
   postoji isključivo na ta dva mjesta — kviz koristi `.result-stat`.
+
+- **✅ LEON JE PROMJENU VIDIO I ODOBRIO (2026-08-30): *„Jesi nema problema i svaka čast"*.**
+  Zapisano jer je ovo **jedina vidljiva promjena izgleda** koju je cigla C5a/2 napravila — bez ove
+  rečenice sljedeća sesija čita da je izgled promijenjen na svoju ruku.
+  ➕ Uz to je rekao i **što ekran napretka NIJE** (analitika o karticama ga ne zanima, grafikoni
+  dolaze kasnije) — zapisano u `BACKLOG.md`, jer to mijenja ciglu **C5a/4**.
 
 - **Lekcija:** **selektor vezan uz spremnik je obećanje da će se drugi spremnik zaboraviti.**
   `.flashcard-stats .stat` je izgledao urednije od `.stat`, a značio je da drugi ekran s istim

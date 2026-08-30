@@ -5,6 +5,50 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-30 (b) — Razgovor koji je presudio TRI otvorene stvari i otvorio ADR-031
+
+Nije cigla nego **odluke**. Zapisano na Leonovu izričitu uputu („prvo ćemo raspravit onda ćemo
+odlučit šta treba biti zapisano"), tek nakon što je popis prošao dva kruga — prvi je bio nepotpun.
+
+**① MCP je dobio oblik → `ADR-031`.** Prethodna pretpostavka (skup CRUD-alata) je **kriva**: Leon
+je opisao **cjevovod**. `Learn` je podloga svega; AI prvo prepozna lekcije/sekcije, napiše skriptu,
+pa iz nje kartice (**pojam/pitanje → objašnjenje**, boja po lekciji **da se vidi kojoj pripada**),
+pa iz kartica dopune i kviz — uz **pokrivenost, ne uzorak**. AI je **korisnikov**, materijal dolazi
+**kroz chat** (datoteku nikad ne vidimo), sve ide u **nacrt**, doseg je **samo vlastito gradivo**.
+**Četiri tvrde brane u write-putu.** Radi se **tek nakon frontenda**.
+⚠️ Ulaz je razjašnjen i jedno očekivanje ispravljeno: **nijedan AI ne može „odmah znati" za nas** —
+konektor se dodaje jednom, poslije je gumb prečac. Leon: *„upravo to sam i mislio."*
+
+**② Seoba se radi ODMAH, ali suženo — SAMO Supabase.** Vercel ostaje (*„ne mijenjamo do
+daljnjeg!"*). Razlog za sada, iako plan kaže poslije frontenda: *„prije nego faks krene."*
+**Suženje je ukinulo dvije od tri zapisane prepreke** — `vercel.json`/`sw.js` zamka i „push =
+produkcija" otpadaju same od sebe. Ostaje **dvije instance**. Frontend faza se **pauzira nakon
+C5a/2**.
+
+**③ Birač tema ide s ciglama, ne kao zaseban posao.** Ponuđen mu je i brzi put („samo tih 11
+pravila, pola dana") i **odbio ga je**. Razlaganje 11 fatalnih po ciglama pokazalo je da birač
+može izaći **nakon C6, ne nakon C7**.
+
+**⚠️ Nalaz koji je iz toga ispao:** `css/home-section.css` i `css/sidebar.css` **nisu pripadale
+nijednoj cigli** — u bundleu jesu, u planu ne — a drže 3 od 11 fatalnih. Nađeno tek zato što je
+Leon pitao *kada* dolazi birač, pa se brojka morala razložiti. Leon: *„Ubaci"* → **C6**, i u
+`scripts/css-debt.js`. Ukupni dug time **raste** 6895 → **7238 redaka**, i to je pošteno:
+nije narastao dug, nego je prestao biti nevidljiv.
+*Datoteka koju alat ne nabraja ne postoji za plan, koliko god bila živa u pregledniku.*
+
+**④ Ekran napretka — sud o SADRŽAJU, prije nego dođe C5a/4.** Leon: analitika o karticama ga ne
+zanima; grafikoni dolaze kasnije, ali **ne u C5a/4** (to je migracija, ne nova značajka).
+
+**⑤ Dvije presude na bugove:** BUG-038 — promjenu izgleda **vidio i odobrio**; BUG-037 — *„nije
+toliki problem"*, ostaje otvoren **svjesno**.
+
+**Zatvoreno od starog:** birač tema · redoslijed self-host vs OAuth (**posljedicom**: seoba prva).
+**Ostaje otvoreno:** treba li OAuth uopće · smiju li semantičke boje biti **ispuna** ili samo obrub.
+
+**Slijedi:** **seoba Supabasea** (danas/sutra), pa **C5a/3**.
+
+---
+
 ## 2026-08-30 — C5a/2: kartice i dopune (drugi od četiri commita cigle)
 
 Puni zapis s mjerama: spec **§11.2**; sažetak: `CHANGELOG.md`. Dva buga: **BUG-038** (riješen),

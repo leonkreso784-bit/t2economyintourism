@@ -13,8 +13,14 @@
 >
 > ⚠️ **MCP je 2026-08-13 promaknut ([ADR-030](../records/DECISIONS.md)):** više nije „pomoć na
 > mobitelu" nego **primarni način na koji gradivo nastaje**, a editor postaje alat za **doradu**.
-> Zbog toga je i pomaknut ispred objave/dijeljenja. **Prvi korak MCP-a nije write-put nego PRISTUP**
-> (kako korisnikov AI dokaže tko je) — dok to nije presuđeno, ostatak nema smisla graditi.
+> Zbog toga je i pomaknut ispred objave/dijeljenja.
+>
+> ✅ **PRISTUP JE PRESUĐEN 2026-08-30 ([ADR-031](../records/DECISIONS.md))** — to je pitanje
+> („kako korisnikov AI dokaže tko je") stajalo otvoreno **17 dana** i blokiralo sve ostalo.
+> Korisnik **jednom doda naš konektor** kod svog AI-ja (OAuth nad našim MCP poslužiteljem);
+> poslije je gumb u aplikaciji samo prečac. Usput je presuđen i OBLIK: MCP je **CJEVOVOD**
+> `Learn → kartice → dopune/kviz`, **ne skup CRUD-alata**. ⚠️ Konektor ovisi o Supabase Authu →
+> **radi se tek nakon seobe**; MCP u cjelini **tek nakon frontenda**.
 > **Matura = IZBAČENA.** SRS nije otkazan, samo više nije sljedeći.
 > Doseg dijeljenja je presuđen unaprijed: **link s tajnim tokenom, bez javne biblioteke** u prvoj fazi.
 >

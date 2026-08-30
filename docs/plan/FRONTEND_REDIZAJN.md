@@ -62,7 +62,7 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 | **C4** ✅ | **Browse + lekcije** — zapis: **§10**. **C4a ✅** (mrtva površina obrisana; `subject-selector.css` je **nestala**, ne migrirana) · **C4b ✅** (§10.3) — prva migrirana površina u fazi | `subject-selector.css` (obrisan) · skela browsea i lekcija (u utilityje) · **13 pravila druge ljestve pragova** iz `responsive/05`+`/06` (**brojke: `npm run css:debt`**) | student dođe do bilo kojeg predmeta i lekcije |
 | **C5a** 🔄 | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak, **i kromo ekrana za učenje** (§10.3: ista površina, pa ide zajedno). Zapis: **§11**. **C5a/1 ✅ kromo** (§11.1) · **C5a/2 ✅ kartice + dopune** (§11.2) · ostaju /3 kviz · /4 napredak. ⚠️ Mjereno: cigla nosi i **179 pravila iz `responsive/*`** (§11.0), što je red veličine više nego što je ova tablica opisivala | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` · kromo → **`css/study-chrome.css`** (novo); `pages.css` je time preseljen pod **C6**. ⚠️ „Posljednja dva `!important` izvan C7" **bila su mrtva** — stvarna četiri stajala su u `responsive/04`. Iz /2: `responsive/*` **−528 redaka**, `!important` **41 → 35**, siročad **81 → 67** | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
 | **C5b** | **Gradivo + vježbe** — sve što ide kroz renderer ili engine | `learn.css`, `learn-blocks.css`, `math.css`, `exercises.css`, `blind-map.css` | student čita gradivo i rješava vježbe; KaTeX, slike i tablice nedirnuti |
-| **C6** | **Profil, auth, pravne, consent** | `profile.css`, `auth.css`, `legal.css`, `consent.css` | korisnik se prijavi, uredi profil, obriše račun |
+| **C6** | **Profil, auth, pravne, consent** ➕ `pages.css` (iz C5a/1) ➕ **`home-section.css` i `sidebar.css`** — bile su u bundleu a **u planu ih nije bilo** (Leon 2026-08-30: *„Ubaci"*); drže **3 od 11** fatalnih pravila koja blokiraju birač tema | `profile.css`, `auth.css`, `legal.css`, `consent.css`, `pages.css`, `home-section.css`, `sidebar.css` | korisnik se prijavi, uredi profil, obriše račun **i smije prebaciti temu** — nakon C6 birač više nije blokiran |
 | **C7** | **Gašenje** | `responsive/*`, `components.css`, `variables.css`, `styles.bundle.css`, mrtva tema | u repozitoriju nema starog CSS-a ni mrtvog koda teme |
 
 > ### ✂️ C5 JE RAZBIJEN NA DVIJE CIGLE (Leon, 2026-08-13: *„možemo razbit C5 na dvije cigle"*)
@@ -3268,6 +3268,12 @@ K5 čeka i ne blokira.
 prave adrese umjesto hash-ruta, SEM. Popis s izmjerenim brojkama je u `CLAUDE.md` §Otvoreno
 i u `BACKLOG.md`.
 
+> ⚠️ **TRI OD PET SU PRESUĐENE 2026-08-30** — ovaj odlomak ostaje kao zapis stanja tog dana:
+> **① self-host Supabase** → radi se **odmah**, i to **samo backend** (Vercel ostaje); faza se
+> zbog toga **pauzira nakon C5a/2**. **② birač tema** → ide s ciglama, najranije **nakon C6**
+> (11 fatalnih pravila, razlaganje u `BACKLOG.md`). **③ A0+A1** → **poslije seobe**, jer je
+> auth Supabase-konfiguracija. Ostaje neodlučeno: **treba li OAuth uopće**, i prave adrese/SEM.
+
 ### 9.17 ✅ FAZA „POLICA" JE OTVORENA — mjerenje joj je promijenilo prvu ciglu (2026-08-26)
 
 Leon je presudio redoslijed: **POLICA (P1–P4) prije C4**. Do te riječi je zapis proturječio
@@ -3407,8 +3413,10 @@ pack + osvježeni engine = drift koji se ne vidi kao greška nego kao **kriv rez
    živim. Jedna promjena ondje briše svima sve skinuto.
 2. **Navigacijski put se NE dira** — ostaje network-first + offline shell.
 3. **`/sw.js` mora ostati `max-age=0, must-revalidate`** (`vercel.json`). Bez toga se novi SW ne
-   može isporučiti, pa ni ova cigla ni bilo koja buduća. *Ovo je i razlog zašto seoba na
-   Hostinger traži header-ugovor prije, ne poslije.*
+   može isporučiti, pa ni ova cigla ni bilo koja buduća. *Ovo je bio i razlog zašto bi seoba
+   frontenda tražila header-ugovor prije, ne poslije.*
+   ✅ **NEAKTUALNO od 2026-08-30:** seli se **samo Supabase**; **hosting ostaje na Vercelu**, pa
+   ovaj ugovor ostaje na snazi neizmijenjen. Zapis: `BACKLOG.md` §SELF-HOST.
 
 #### Kako se dokazuje
 

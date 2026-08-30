@@ -50,8 +50,14 @@ const CIGLE = [
     'css/fill-blanks-section.css', 'css/progress-section.css', 'css/study-chrome.css']],
   ['C5b gradivo + vježbe', ['css/learn.css', 'css/learn-blocks.css', 'css/math.css',
     'css/exercises.css', 'css/blind-map.css']],
+  /* ⚠️ `css/home-section.css` i `css/sidebar.css` DODANI 2026-08-30. Bile su u bundleu, a u
+     planu ih nije bilo — dakle nijedna cigla ih nije gasila, iako drže 3 od 11 pravila koja
+     `palette:breakdown` broji kao FATALNO (tekst nevidljiv na svijetloj temi) i time blokiraju
+     birač tema. Nađeno tek kad je Leon pitao KADA dolazi birač, pa se brojka morala razložiti
+     po ciglama. Leon: „Ubaci" → C6. *Datoteka koju alat ne nabraja ne postoji za plan, koliko
+     god bila živa u pregledniku.* */
   ['C6  profil, auth, pravne', ['css/profile.css', 'css/auth.css', 'css/legal.css',
-    'css/consent.css', 'css/pages.css']],
+    'css/consent.css', 'css/pages.css', 'css/home-section.css', 'css/sidebar.css']],
   ['C7  gašenje', ['css/components.css', 'css/variables.css']]
 ];
 

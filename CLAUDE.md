@@ -175,28 +175,31 @@ napredak stečen offline se po povratku mreže **spoji bez gubitka**.
 prva migrirana površina u fazi**, i prva koja piše utilityje.
 🔄 **C5a JE U TIJEKU** (grana `feat/c5a-modovi`, spec **§11**) — u **četiri commita**, jer uz pet
 CSS datoteka nosi i **179 pravila iz `responsive/*`** (§11.0). **/1 kromo ✅ · /2 kartice+dopune ✅**
-→ **🟢 /3 kviz** → /4 napredak → C5b → C6 → C7.
+→ **/3 kviz** → /4 napredak → C5b → C6 → C7.
+⛔ **FAZA JE PAUZIRANA NAKON C5a/2 (Leon, 2026-08-30) — prvo ide SEOBA SUPABASEA.** Sljedeći
+frontend-potez je C5a/3, **ali tek poslije nje.**
 ⚠️ **Tri pravila za preostale cigle** (zašto: §10.3, §11.1, §11.2): ① prije nego pravilo postane
 utility **izmjeri tko ga danas tuče**; ② **rez ide po SVOJSTVU** — što neki preživjeli `@media` još
 mijenja ne smije u utility; ③ **dvaput zaredom je prvi kvar bio u MJERAČU, ne u cigli** — prije
 nego povjeruješ nalazu, provjeri mjeri li alat ono što misliš.
-**Ostaje Leonu:** semantičke ispune traže nove tokene (`--on-success`…) — v. `BACKLOG.md`.
 **K4** se NE radi zasebno (utopljen u **P2**). **K5** (editor dvojezično) čeka i ne blokira ništa.
-**A1 + A0: REDOSLIJED NIJE PRESUĐEN** (Leon, 2026-08-19: *„ne znam još, to ćemo se dogovorit"*);
-kad dođe, idu **zajedno** — `#authModal` je građen za jedan put, pa se inače prepravlja dvaput.
+**A1 (Google-prijava) + A0 (prepravak dijaloga) idu ZAJEDNO** — `#authModal` je građen za jedan
+put, pa se inače prepravlja dvaput. **Oboje TEK POSLIJE SEOBE** (auth je Supabase-konfiguracija;
+seoba mijenja URL, a time i redirect URI). Redoslijed unutar para nije presuđen i nije važan.
 
-### 🚚 SEOBA JE ODLUČENA (Leon, 2026-08-27) — **s Vercela na Hostinger + self-host Supabase**
+### 🚚 SEOBA SE RADI ODMAH (Leon, 2026-08-30) — **SAMO Supabase; Vercel OSTAJE**
 
-Vrijeme nije presuđeno („vrlo uskoro"), a zapisana odluka je bila *poslije frontenda* — napetost
-je izrečena, nije razriješena. **Tri stvari koje moraju biti riješene PRIJE, ne poslije** (puni
-zapis: `BACKLOG.md` §Seoba):
-① **`vercel.json` je ugovor koji umire s Vercelom** — u njemu je iznimka `/sw.js` →
-`max-age=0, must-revalidate` ispod pravila `/(.*).js` → `immutable`. Napiše li novi host „sve
-`.js` godinu dana", **`sw.js` je `.js`** → korisnik zaključan na starom SW-u **godinu dana**,
-izlaz samo `__swKill()`. To je jedini scenarij u kojem se stranica zaključa u polju.
-② **„push na `main` = produkcija" prestaje vrijediti** (pravilo #2, pre-push hook, preview-grane)
-→ zamjenski deploy-put mora postojati prije seobe, inače prvi deploy bude ručan.
-③ **Self-host traži DVIJE instance** (prod + staging), inače write-testovi gađaju produkciju.
+*„danas ili sutra (samo supabase)… iznajmit ću VPS… **hostanje ostaje na Vercelu, ne mijenjamo do
+daljnjeg!**"* **Zašto sada, iako plan kaže „poslije frontenda":** *„prije nego faks krene."*
+Suženje opsega je **ukinulo dvije od tri zapisane prepreke** (`vercel.json`/`sw.js` i „push =
+produkcija" — oboje otpada jer ostajemo na Vercelu). **Ostaje: DVIJE instance.**
+
+**Pet stvari koje se ne smiju zaboraviti** (brojke i obrazloženja: `BACKLOG.md` §SELF-HOST):
+① **stari projekt živi još ~2 tjedna** — anon-ključ je u `js/auth.js`, koji preglednik drži godinu
+dana · ② **`sokrat-staging` seli s prodom**, inače prestaje biti brana · ③ **backup je naš od
+prvog dana** (`pg_dump` + kopija IZVAN VPS-a; `npm run backup` je aplikacijski snimak, **ne**
+zamjena) · ④ **`delete-account` = najveći rizik** (GDPR) · ⑤ **prvo provjeri jesu li URL-ovi slika
+APSOLUTNI** — inače sve slike puknu. **Testovi su uvjet, ne dodatak.**
 
 ### 🎯 Tekuća faza = FRONTEND REDIZAJN NA TAILWIND (spec: `docs/plan/FRONTEND_REDIZAJN.md`, ADR-028)
 
@@ -234,34 +237,29 @@ deploy opet traži izričit OK.
 NA PRODUKCIJU"*) — **ova stoji netaknuta.** Pravilo #2 time dobiva dopunu: ne samo da se ne smije
 pushati bez OK-a, nego se na to ne smije ni **nagovarati**. [[leon-decides-deploys]]
 
-### 🧪 VJEŽBE — smjer je zaključan, radi se TEK nakon frontenda (§9.5)
+### 🧪 VJEŽBE — smjer zaključan, radi se TEK nakon frontenda (§9.5)
 
-Tvrdnja *„vježbe su KÔD"* je **oborena mjerenjem** (65 % je čisti podatak; kôd je samo **formula**).
-Smjer: formula seli u **imenovanu knjižnicu recepata** → vježba postaje 100 % podatak i **BUG-012 se
-smije umiroviti**. Odbačeni (ruše ADR-018): evaluator izraza i sandbox za korisnički JS. §9.5.
+*„Vježbe su KÔD"* je **oboreno mjerenjem** (65 % je podatak; kôd je samo **formula**). Smjer:
+formula → **imenovana knjižnica recepata**, vježba postaje 100 % podatak, **BUG-012 se umirovljuje**.
+Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan MCP-a (ADR-031).
 [[exercises-code-vs-data]]
 
-### ❓ OTVORENO — RAZGOVARANO 2026-08-24, ALI NIJE PRESUĐENO. Ne planirati kao dogovoreno.
+### ❓ OTVORENO — ostalo je JEDNO. Ne planirati kao dogovoreno.
 
-Leon je postavio tri pitanja i na moje preporuke **nije odgovorio**. Brojke su izmjerene tog dana:
+Od tri pitanja otvorena 2026-08-24, **dva su zatvorena 2026-08-30**: birač tema (ide s ciglama,
+najranije nakon C6 — `BACKLOG.md`) i redoslijed self-host vs OAuth (**seoba je prva**, pa OAuth
+poslije nje). Ostaje:
 
-- **Birač tema na landingu.** Mehanika je GOTOVA (4 teme, `setTheme` pamti izbor, klik-vezanje
-  već stoji u `js/init.js`). Blokira ga **broj koji ispisuje `palette:breakdown` pod „FATALNO"**,
-  **ne C4–C7**. ⚠️ Peta kontrola u traci landinga nije besplatna (K3/BUG-029) — vjerojatnije
-  mjesto je red kvadratića u heroju.
-- **OAuth (Google/Apple).** **5 registriranih korisnika, 3 su Leonova** → stvarnih vanjskih
-  **dvoje**, uz e-mail+lozinku kao jedini put. Google je besplatan i ne čeka redizajn; **Apple
-  ~99 $/god** i nema smisla bez iOS aplikacije; „Sign in with ChatGPT" je **NEPOTVRĐEN** — ne
-  obećavati.
-- **Self-host vs OAuth — redoslijed.** Sve tri auth-stavke su **Supabase-konfiguracija**, pa bi se
-  prije seobe radile **dvaput** (mijenja se URL → i redirect URI). ⚠️ **Dugujem ti odgovor:**
-  staging na drugom laptopu — za razvoj da, ali **brana koja ovisi o tome je li laptop upaljen
-  nije brana**. ➕ Seoba je jeftinija nego zapisano: nepovratan je samo sadržaj dvaju bucketa.
+- **OAuth (Google/Apple) — DA ILI NE.** **5 registriranih korisnika, 3 su Leonova** → stvarnih
+  vanjskih **dvoje**, uz e-mail+lozinku kao jedini put. Google je besplatan; **Apple ~99 $/god** i
+  nema smisla bez iOS aplikacije; „Sign in with ChatGPT" je **NEPOTVRĐEN** — ne obećavati.
+- **Semantičke ispune** (`--on-success`/`--on-danger`): pravo pitanje nije koji token nego
+  **smiju li zelena i crvena uopće biti ISPUNA, ili samo obrub i tekst**. `BACKLOG.md`.
 
 ### Stalno — vrijedi neovisno o fazi
 
-- **🎨 Frontend je ZADNJI na redu** (Leon): *„sve mora savršeno raditi prije nego ga uredimo."*
-  → funkcija prije vizuala. [[frontend-last-function-first]]
+- **🎨 Funkcija prije vizuala** (Leon: *„sve mora savršeno raditi prije nego ga uredimo"*) —
+  zato je frontend zadnji, i zato smo tek sad u njemu. [[frontend-last-function-first]]
 - **⚠️ Osobni graditelj = ZASEBAN OTOK (ADR-024):** javni katalog · studentski vrući put ·
   `publish_document` = **NEDIRNUTI**. `anon` nema ništa, `authenticated` ima **samo SELECT**,
   **svaki upis ide kroz `SECURITY DEFINER` RPC s owner-checkom** (`owner_id = auth.uid()`).
@@ -299,11 +297,13 @@ Leon je postavio tri pitanja i na moje preporuke **nije odgovorio**. Brojke su i
 
 ## Ključne odluke — samo one koje MIJENJAJU današnji rad
 
-> Puni tekst i sve starije: **`docs/records/DECISIONS.md` (ADR-001…028)**.
+> Puni tekst i sve starije: **`docs/records/DECISIONS.md` (ADR-001…031)**.
 > Ovdje su ADR-ovi koji su **živa ograničenja**, ne povijesno obrazloženje.
 
-- **ADR-030:** **AI kroz MCP je GLAVNI put stvaranja; editor je DORADA, ne ishodište** (Leon, 2026-08-13). Editor se time smije **pojednostaviti** — smije izgubiti funkcije, ne dobiti ih. **Tri tvrde posljedice:** ① **MCP prestaje biti spike i postaje proizvod** (danas untracked read-only pokus) — najveći neriješeni komad plana, veći od cijelog frontenda; ② **PRISTUP JE PRVI PROBLEM:** sve visi o JWT-u iz preglednika, a korisnikov AI nema preglednik → treba osobni token/OAuth, i dok to nije presuđeno **ostatak MCP-a nema smisla graditi**; ③ **kontrola kvalitete seli s ekrana u write-put** — strop kartice (200/500) živi u editoru, a AI ga preskače; `js/card-limits.js` je jedna politika i MCP mora biti **treći čitatelj, nikad treća kopija**. Granica se postavlja UNAPRIJED: **samo vlastito gradivo**, nikad katalog/`is_admin()`/`service_role`, **vježbe izvan MCP-a** (ADR-018: podatak, nikad kod).
-- **ADR-029:** **UGC je GLAVNI proizvod**, javni katalog (24 predmeta) je **jedan izvor gradiva**, ne srce platforme. „Moji materijali" prestaju biti pododjeljak profila i postaju **ravnopravno odredište** (stranica + ulaz u navigaciji i na landingu). **Ne popušta ništa sigurnosno** — ADR-024/025/018 stoje netaknuti; ovo je odluka o **istaknutosti**. **➕ Dopuna 2026-08-14:** izvorno *„UGC PRIJE kataloga"* ublaženo je u **„ravnopravno, i to u herou"** — doslovna primjena skrivala je jedini dokaz da sadržaja ima. Naslov pokriva oba izvora, dvoja vrata su jednake težine, katalog je prva sekcija kao **dokaz supstance** (ne hijerarhija), vlastito gradivo puna sekcija odmah iza. **Vodi se kao ublažavanje, ne kao ispunjenje.**
+- **ADR-031:** **MCP je CJEVOVOD, ne CRUD** (Leon, 2026-08-30): `Learn` je podloga svega → AI prvo prepozna lekcije/sekcije i napiše skriptu → iz nje kartice (**pojam/pitanje → objašnjenje**, boja po lekciji da se vidi kojoj pripada) → iz kartica dopune i kviz, uz **pokrivenost, ne uzorak**. **AI je KORISNIKOV** (ne plaćamo tokene → kvalitetu držimo samo branama), **materijal dolazi kroz chat** (datoteku nikad ne vidimo), **sve ide u NACRT**, doseg = **samo vlastito gradivo** (ni čitanje kataloga). **Četiri tvrde brane u write-putu:** duljina kartice · svaka kartica daje bar jedno pitanje · svaka lekcija dobiva boju · dopuna ima jednoznačan odgovor. **Radi se TEK NAKON FRONTENDA**, a konektor traži OAuth → **tek nakon seobe**.
+- **ADR-030:** **AI kroz MCP je GLAVNI put stvaranja; editor je DORADA** (Leon, 2026-08-13) — smije IZGUBITI funkcije, ne dobiti ih. **Što od njega još stoji:** MCP je proizvod, ne spike (danas untracked read-only pokus) i najveći neriješeni komad plana; **kontrola kvalitete seli s ekrana u write-put** (`js/card-limits.js` mora biti **treći čitatelj, nikad treća kopija**); nikad katalog/`is_admin()`/`service_role`; **vježbe izvan MCP-a** (ADR-018). ⚠️ Njegovo „pristup je prvi problem" je **presuđeno u ADR-031** (konektor + OAuth).
+
+- **ADR-029:** **UGC je GLAVNI proizvod**, javni katalog (24 predmeta) je **jedan izvor gradiva**, ne srce platforme. „Moji materijali" prestaju biti pododjeljak profila i postaju **ravnopravno odredište** (stranica + ulaz u navigaciji i na landingu). **Ne popušta ništa sigurnosno** — ADR-024/025/018 stoje netaknuti; ovo je odluka o **istaknutosti**. **➕ Dopuna 2026-08-14:** *„UGC PRIJE kataloga"* ublaženo u **„ravnopravno, i to u herou"** — doslovna primjena skrivala je jedini dokaz da sadržaja ima. **Ublažavanje, ne ispunjenje.**
 - **ADR-028:** frontend ide na **Tailwind v4, ali SAMO preko CLI-ja** (generirani CSS se commita, kao i dosad `styles.bundle.css`) — **CDN nikad** (kompajler u pregledniku se tuče sa SW-om i immutable cacheom). **Tailwind NIKAD ne ulazi u `data/`** — gradivo zadržava semantičke klase, inače stil živi u podatku. **Dinamički sastavljene klase (`'bg-' + boja`) su zabranjene** — Tailwind skenira izvor, ne runtime; paleta od 8 boja ostaje na CSS varijablama.
 - **ADR-027:** znanje ide u **kod i testove**; proza nosi samo **ZAŠTO**. Jedna činjenica = **jedno mjesto**. Rub koji prepoznaš isti čas dobiva test — inače je zapis samo uredno dokumentiran propust (povod: BUG-023).
 - **ADR-026:** korisnik gradi **„materijal"**, spremnik je **„polica"** (EN ostaje `folder`); „gradivo" = javni katalog. **Mobilno autorstvo ide preko korisnikovog AI-a (MCP)**, ne preko editora na dodir. MCP invarijante: nikad katalog, nikad `is_admin()`, nikad `service_role`.

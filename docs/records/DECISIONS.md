@@ -4,6 +4,87 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-031 — MCP je CJEVOVOD `Learn → kartice → dopune/kviz`, u nacrt, kroz KORISNIKOV AI
+**Datum:** 2026-08-30 · **Status:** ✅ ODLUČENO (Leon) · **Vezano:** [ADR-030](#adr-030) (MCP je glavni put stvaranja), [ADR-026](#adr-026) (MCP invarijante), [ADR-025](#adr-025) (doseg osobnog materijala), [ADR-018](#) (podatak, nikad kod)
+
+**Kontekst.** [ADR-030](#adr-030) je odlučio **da** MCP postane glavni put stvaranja, ali je ostavio
+otvorenim **što točno radi** i **kako korisnik do njega dolazi** — i sam je zapisao da je *pristup prvi
+problem*. Ovaj ADR zatvara oboje. Povod je Leonov opis tijeka, 2026-08-30.
+
+**⚠️ Prethodna pretpostavka je bila KRIVA.** Plan je MCP zamišljao kao skup CRUD-alata („dodaj
+karticu", „uredi lekciju"). Leon je opisao **cjevovod**: svaki korak jede izlaz prethodnog. To nije
+ista stvar i mijenja oblik alata — CRUD bi dao AI-ju tisuću sitnih poteza i nikakav redoslijed.
+
+---
+
+### Odluka
+
+**① Ulaz.** Gumb u aplikaciji nudi korisniku njegove AI-jeve i vodi ga u chat.
+⚠️ **Nijedan AI ne može „odmah znati" za nas** — ChatGPT i Claude to rade preko konektora koje
+korisnik **doda jednom, kod sebe**. Zato je tijek: *prvi put* gumb vodi na upute + prijavu u naš
+konektor; *svaki sljedeći put* gumb je samo prečac, a AI već zna. Leon: *„Gumb je prihvatljiv, upravo
+to sam i mislio."*
+
+**② AI je KORISNIKOV, ne naš** (Leon: *„njihov"*). Ne plaćamo tokene i ne održavamo model.
+**Cijena te odluke:** nad kvalitetom ishoda imamo utjecaj **samo** kroz upute i kroz brane u
+write-putu — nikad kroz vlastiti prompt-inženjering nad tuđim modelom. Zato su brane iz ⑤ obavezne,
+a ne kozmetika.
+
+**③ Materijal dolazi kroz CHAT, ne kroz nas.** Korisnik ubaci PDF/bilješke u svoj AI; AI to pročita i
+zove naše alate s **gotovim tekstom**. **Mi datoteku nikad ne vidimo.** Leon: *„To je bio i glavni
+plan."* Manje koda, manje odgovornosti, manje GDPR-a — izvorna datoteka nikad ne dođe na naš disk.
+
+**④ Cjevovod, i to ovim redom:**
+
+1. **`Learn` je podloga svega i najbitniji je.** AI **prvo prepoznaje strukturu** — različite
+   lekcije/sekcije predmeta ili materijala — pa unutar Learna piše **skriptu**.
+2. **Kartice iz Learna.** Oblik je **pojam ili pitanje → objašnjenje** (*„što je API"*, pa
+   objašnjenje). Samo kratke stavke; ono što je bitno za znati.
+   **Boja po lekciji, i to sa svrhom: da se vidi kojoj lekciji kartica pripada** — nije ukras.
+3. **Dopune i kviz iz kartica.** Kartice su **na bazi pitanja**, pa su pitanja izvedena, ne izmišljena.
+   ⚠️ Traži se **POKRIVENOST**, ne uzorak — Leon: *„da uvrsti sve moguće da učenje bude što bolje
+   kroz pitanja."*
+4. **Vježbe su IZVAN ovog ADR-a** — *„to ćemo kasnije razjasniti kako će se raditi."* I dalje vrijedi
+   ADR-018/BUG-012: vježba je podatak, nikad kod.
+
+**⑤ Sve ide u NACRT, korisnik objavljuje** (Leon: *„naravno uvijek nacrt ide u draft"*).
+Razlog je asimetrija: AI u minuti napiše skriptu i dvjesto kartica, a **poništavanja nema** —
+`content_versions` je append-only audit, ne undo. Šav postoji (`SokratDraft` → `publish_document`),
+pa MCP ne izmišlja treći write-put.
+
+**⑥ Doseg.** **Samo vlastito gradivo prijavljenog korisnika**, i čitanje i pisanje. **Javni katalog je
+izvan dosega — i za čitanje**, dok se izričito ne otvori. Koliko materijala ulazi u jednu sesiju
+**odlučuje korisnik** i kaže to svom AI-ju; mi opseg ne ograničavamo umjesto njega.
+Invarijante iz ADR-026/030 stoje netaknute: **nikad katalog · nikad `is_admin()` · nikad
+`service_role`**.
+
+**⑦ ČETIRI TVRDE BRANE U WRITE-PUTU** (Leon: *„slažem se sa svime"*). Brane, ne preporuke — jer AI
+nema ekran na kojem bi ga se upozorilo:
+
+| brana | zašto postoji |
+|---|---|
+| **duljina kartice** (200 upozorenje / 500 blokada) | politika već postoji u `js/card-limits.js`, ali živi u **editoru**, koji MCP preskače — mora postati **treći čitatelj, nikad treća kopija** (ADR-027/030) |
+| **svaka kartica daje bar jedno pitanje** | mjerljiv oblik Leonova zahtjeva za pokrivenošću; bez toga je gradivo pokriveno napola, a to se ne vidi |
+| **svaka lekcija dobiva boju** | boja je nositelj pripadnosti (④.2), pa je izostanak boje gubitak podatka, ne izgleda |
+| **dopuna ima jednoznačan odgovor** | BUG-024/025: jedno pitanje u katalogu bilo je **neodgovorljivo**; AI taj razred greške proizvodi brže od čovjeka |
+
+**⑧ Vrijeme: TEK NAKON FRONTENDA** (Leon: *„MCP radimo nakon šta je frontend gotov"*).
+
+---
+
+**Posljedice**
+
+- **`js/card-limits.js` mora prijeći u write-put na serveru.** Dok je politika samo u pregledniku,
+  brana ⑦.1 ne postoji za MCP.
+- **Alati se oblikuju kao koraci cjevovoda, ne kao CRUD.** Ime i potpis alata nose redoslijed;
+  „dodaj karticu" bez Learna iznad sebe je poziv koji ne bi trebao uspjeti.
+- **Konektor traži OAuth nad našim MCP poslužiteljem** — to je odgovor na *„pristup je prvi problem"*
+  iz ADR-030. ⚠️ Ovisi o Supabase Authu, pa se **radi tek nakon seobe** (mijenja se URL, a time i
+  redirect URI).
+- **Ne mijenja se ništa sigurnosno.** ADR-024/025 stoje.
+
+---
+
 ## ADR-030 — AI kroz MCP je GLAVNI put stvaranja; editor je dorada, ne ishodište
 **Datum:** 2026-08-13 · **Status:** ✅ ODLUČENO (Leon) · **Vezano:** [ADR-026](#adr-026) (MCP invarijante), [ADR-029](#adr-029) (UGC je glavni proizvod), [ADR-018](#) (podatak, nikad kod)
 
