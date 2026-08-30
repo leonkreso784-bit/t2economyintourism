@@ -5,6 +5,41 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-30 (f) — revizija pred compact + MJERA za C5b (cigla nije započeta)
+
+**Pravilo #6 odrađeno.** Prošla je sva dokumentacija; četiri prave ispravke: ① redak C5a u
+tablici §3 još je stajao 🔄 · ② `BACKLOG` je „ekran napretka" i dalje pisao kao **nalog za
+C5a/4**, koji je odrađen — pretvoreno u živo pravilo za svaku sljedeću ciglu · ③ tablica birača
+tema pripisivala je `progress-section.css` cigli C5a/4, a to je pravilo iz one sedmorke koja
+čeka Leona · ④ zastarjela brojka advisora i jedna nadiđena tvrdnja o `!important` dobile su
+ispravak uz sebe umjesto tihog brisanja. `CLAUDE.md` je pritom dvaput probio budžet
+(33 220 → 32 918); prag NIJE dizan, izašla je gotova povijest.
+
+**Glavni posao sesije poslije cigle: MJERA ZA C5b, napisana kao spec §12.** Da sljedeća sesija ne
+počne s pretpostavkom da je C5b isto što i C5a. Nije:
+
+- **`responsive/*` ne sadrži NIJEDNO pravilo za tu površinu** (C5a ih je imala 179) → nema seobe
+  ljestve, pa ni zamke pomicanja u kaskadi.
+- 🔴 **`learn.css` je sagrađen na `#learn`** — 153 pojave, **102 od 112 pravila**. Zaglavlje to i
+  priznaje: *„Uses #learn prefix for specificity."* Specifičnost **1-1-0 tuče utility 0-1-0**, i
+  to što utilityji stoje zadnji ne pomaže. **Izmjereno s kontrolom:** `#learn .learn-container` +
+  `p-6` → 28 px ostaje 28 px; kontrola `.progress-card:not(.main)` + `p-6` → 20 → 24 px.
+  ⇒ dok ID stoji, pisanje utilityja na toj površini je **tihi promašaj**.
+- ⚠️ **Obrnuti rizik izmjeren i malen:** iz živog DOM-a pokupljene 32 klase unutar `#learn`, pa
+  provjereno tko bi ih dohvatio kad ID padne — **točno dva pravila**, oba preko `.filter-btn`.
+- **Vlastiti pragovi 380 · 430 · 640** ne postoje nigdje drugdje, i pisani su kao `screen and (…)`.
+- ⚠️ **`exercises`/`blind-map` su uvjetni tabovi — `te2` ih nema.** Mjerač koji to ne provjeri
+  uspoređuje prazan ekran i mirno javi „0 razlika". Rute: `statistics`, `geography`.
+
+**Pouka, šesta u fazi:** prva verzija mjere ID-a imala je **pokvarenu kontrolu** — uzela je
+`.progress-card`, a prva takva je `.main`, koja od C5a/4 već nosi `p-6`. *Kontrola koja ne bi
+pokazala razliku ni da je tvrdnja lažna nije kontrola.*
+
+**Slijedi:** C5b po §12, pa C6, C7. Usporedo Leonov VPS.
+
+---
+
+
 ## 2026-08-30 (e) — C5a/4b: kontrast, mjera na telefonu i nalaz koji vrijedi više od cigle
 
 **C5a je zatvorena.** Druga polovica zadnje cigle nosi ono što prvi commit nije smio: promjenu

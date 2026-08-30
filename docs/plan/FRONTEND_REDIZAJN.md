@@ -60,8 +60,8 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 | **C3** 🔄 | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori. **Tri cigle gotove i na produkciji** (authed a11y-gate · širina + kvar u rendereru · `studio.css` na nuli `!important`); **ostaje Studio na telefonu** — dok stoji, C3 se ne smije proglasiti gotovim (kriterij #1 imenuje editor na 320 px). | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
 | **K** 🔄 | **„KOSTUR" — rute i jedna gornja traka** (§8). Ubačena između C3 i C4 (Leon, 2026-08-18) po presedanu C0-a: informacijska arhitektura prije kozmetike. **K1 ✅ rute** (§8.6) · **K2** jedna traka · **K3** brana dohvatljivosti · **K4** materijali u kvaliteti kataloga | tri duplicirana zaglavlja (`browse-`/`lessons-`/`study-header`) | iz **svake** stranice — uključujući `#editor-page` — vodi bar jedan klik drugamo, a svaka stranica ima adresu koja se da podijeliti |
 | **C4** ✅ | **Browse + lekcije** — zapis: **§10**. **C4a ✅** (mrtva površina obrisana; `subject-selector.css` je **nestala**, ne migrirana) · **C4b ✅** (§10.3) — prva migrirana površina u fazi | `subject-selector.css` (obrisan) · skela browsea i lekcija (u utilityje) · **13 pravila druge ljestve pragova** iz `responsive/05`+`/06` (**brojke: `npm run css:debt`**) | student dođe do bilo kojeg predmeta i lekcije |
-| **C5a** 🔄 | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak, **i kromo ekrana za učenje** (§10.3: ista površina, pa ide zajedno). Zapis: **§11**. **C5a/1 ✅ kromo** (§11.1) · **C5a/2 ✅ kartice + dopune** (§11.2) · **C5a/3 ✅ kviz** (§11.3) · **C5a/4 ✅ napredak** (§11.4). ⚠️ Mjereno: cigla nosi i **179 pravila iz `responsive/*`** (§11.0), što je red veličine više nego što je ova tablica opisivala | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` · kromo → **`css/study-chrome.css`** (novo); `pages.css` je time preseljen pod **C6**. ⚠️ „Posljednja dva `!important` izvan C7" **bila su mrtva** — stvarna četiri stajala su u `responsive/04`. Iz /2: `responsive/*` **−528 redaka**, `!important` **41 → 35**, siročad **81 → 67**; iz /3: **−347 redaka**, siročad **67 → 57**, ukupni dug **7238 → 7000**; iz /4: **−160 redaka**, siročad **57 → 46**, ukupni dug **7000 → 6951**, `!important` **35 → 34** | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
-| **C5b** | **Gradivo + vježbe** — sve što ide kroz renderer ili engine | `learn.css`, `learn-blocks.css`, `math.css`, `exercises.css`, `blind-map.css` | student čita gradivo i rješava vježbe; KaTeX, slike i tablice nedirnuti |
+| **C5a** ✅ | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak, **i kromo ekrana za učenje** (§10.3: ista površina, pa ide zajedno). Zapis: **§11**. **C5a/1 ✅ kromo** (§11.1) · **C5a/2 ✅ kartice + dopune** (§11.2) · **C5a/3 ✅ kviz** (§11.3) · **C5a/4 ✅ napredak** (§11.4). ⚠️ Mjereno: cigla nosi i **179 pravila iz `responsive/*`** (§11.0), što je red veličine više nego što je ova tablica opisivala | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` · kromo → **`css/study-chrome.css`** (novo); `pages.css` je time preseljen pod **C6**. ⚠️ „Posljednja dva `!important` izvan C7" **bila su mrtva** — stvarna četiri stajala su u `responsive/04`. Iz /2: `responsive/*` **−528 redaka**, `!important` **41 → 35**, siročad **81 → 67**; iz /3: **−347 redaka**, siročad **67 → 57**, ukupni dug **7238 → 7000**; iz /4: **−160 redaka**, siročad **57 → 46**, ukupni dug **7000 → 6951**, `!important` **35 → 34** | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
+| **C5b** 🔜 | **Gradivo + vježbe** — sve što ide kroz renderer ili engine. ⚠️ **Mjera je napravljena PRIJE koda: §12.** Nije isti posao kao C5a — `responsive/*` je ovdje **prazan**, ali `learn.css` je sagrađen na **`#learn`** (102 od 112 pravila), pa **utility ne prolazi dok ID stoji** (izmjereno) | `learn.css`, `learn-blocks.css`, `math.css`, `exercises.css`, `blind-map.css` | student čita gradivo i rješava vježbe; KaTeX, slike i tablice nedirnuti |
 | **C6** | **Profil, auth, pravne, consent** ➕ `pages.css` (iz C5a/1) ➕ **`home-section.css` i `sidebar.css`** — bile su u bundleu a **u planu ih nije bilo** (Leon 2026-08-30: *„Ubaci"*); drže **3 od 11** fatalnih pravila koja blokiraju birač tema | `profile.css`, `auth.css`, `legal.css`, `consent.css`, `pages.css`, `home-section.css`, `sidebar.css` | korisnik se prijavi, uredi profil, obriše račun **i smije prebaciti temu** — nakon C6 birač više nije blokiran |
 | **C7** | **Gašenje** | `responsive/*`, `components.css`, `variables.css`, `styles.bundle.css`, mrtva tema | u repozitoriju nema starog CSS-a ni mrtvog koda teme |
 
@@ -3955,7 +3955,9 @@ ispis **uvijek imenuje što je mjereno** — šutnja o dosegu je ono što je zam
   svaki svoj dio. Isto vrijedi za `landing.css`, koji je C2 preživio iz istog razloga.
 - **Kromo učenja (`.study-nav`, `.study-mobile-nav`) nije dirano** — to je isti ekran kao
   četiri načina učenja, pa bi migracija samo trake bila upravo polovična površina koju §3
-  zabranjuje. Ide s **C5a**, zajedno s dva preostala `!important` u projektu izvan C7.
+  zabranjuje. Ide s **C5a** (isporučeno: §11.1), zajedno s dva preostala `!important` u projektu
+  izvan C7. ⚠️ **Ta brojka „dva" je poslije oborena** — bila su **mrtva**, a stvarna četiri stajala
+  su u `responsive/04` (v. redak C5a u §3). Ostavljeno kako je zapisano, s ispravkom uz sebe.
 - **Pravilo `prefers-contrast: high` za `.lesson-card` ostavljeno je u `responsive/05`**
   svjesno: skupni je selektor s `.flashcard` i `.quiz-container`, dakle a11y-način koji po
   naravi živi izvan komponente, a cijeli je taj blok duplikat koji ionako umire u C7.
@@ -4565,3 +4567,157 @@ trebaju li uopće, ovisi o otvorenom pitanju **smiju li zelena i crvena biti ISP
 obrub i tekst.** Dotad ta pravila nose **C5a/3, C5a/4, C6 i C7 zajedno**, i nijedna ih cigla ne
 može ugasiti sama. Zapisano ovako imenovano jer je dosad izgledalo kao sedam odvojenih dugova
 raspoređenih po pet datoteka.
+
+---
+
+## 12 · C5b — gradivo i vježbe (mjera napravljena, cigla NIJE započeta)
+
+> **Ovo je mjera prije koda, ne izvještaj.** Napisana je na kraju C5a/4 (2026-08-30) da sljedeća
+> sesija ne počne s pretpostavkom. Sve brojke su izmjerene, ne procijenjene; gdje je mjereno u
+> pregledniku, to je rečeno. **Nijedna datoteka C5b-a još nije dirana.**
+
+Opseg (§3): `learn.css` · `learn-blocks.css` · `math.css` · `exercises.css` · `blind-map.css` —
+**1876 redaka, 336 pravila, 0 `!important`**.
+
+### 12.0 C5b NIJE isti posao kao C5a — mjera to kaže odmah
+
+| pitanje | C5a (modovi) | **C5b (gradivo + vježbe)** |
+|---|---|---|
+| pravila u `responsive/*` koja diraju površinu | **179** | **0** (v. niže) |
+| pragovi razasuti po tuđim datotekama | 18 | **nijedan** |
+| pravila UNUTAR vlastitih datoteka | — | **336**, od toga **68 u `@media`** |
+| `!important` | 0 | **0** |
+| **pravila sa ID-selektorom** | ~0 | **102 od 112 u `learn.css`** |
+
+C5a je bila *„skupi razasutu ljestvu uz komponentu"*. **C5b je nešto drugo: prvo razoružati
+specifičnost, pa tek onda migrirati.**
+
+### 12.1 🔴 GLAVNI NALAZ: `learn.css` je sagrađen na `#learn`, a utility to NE MOŽE pobijediti
+
+Zaglavlje datoteke to i priznaje, riječ po riječ:
+
+> *„This file is loaded LAST to override any conflicts from responsive.css. **Uses #learn prefix
+> for specificity.**"*
+
+`#learn` se u datoteci pojavljuje **153 puta**; **102 od 112 pravila** nosi ID u selektoru.
+Specifičnost takvog pravila je **1-1-0**, a Tailwind utility je **0-1-0** — i to što utilityji
+stoje **zadnji i neuslojeni** tu ne pomaže, jer redoslijed odlučuje tek kad je specifičnost
+jednaka.
+
+**Izmjereno u pregledniku, na pravoj stranici, s kontrolom:**
+
+| meta | pravilo koje danas vrijedi | dodana klasa | ishod |
+|---|---|---|---|
+| `#learn .learn-container` | `padding: 14px` (+ upit ≥768 → 28px) | `p-6` (24px) | **28 px → 28 px** ⛔ utility ne prolazi |
+| **kontrola:** `.progress-card:not(.main)` | `padding: 1.25rem` (0-1-0) | `p-6` | **20 px → 24 px** ✅ utility prolazi |
+
+Kontrola je bitna: bez nje bi „utility ne prolazi" moglo značiti i da klasa nije generirana.
+Prolazi — samo ne kroz ID.
+
+> ⚠️ **Prva verzija ove mjere imala je pokvarenu kontrolu:** uzela je `.progress-card`, a prva
+> takva kartica je `.main`, koja **od C5a/4 već nosi `p-6`** — pa je „nije prošao" ispalo iz
+> posve drugog razloga. Šesti put u fazi da mjerač zavara prije nego cigla pukne. *Kontrola koja
+> ne bi pokazala razliku ni da je tvrdnja lažna nije kontrola.*
+
+**Posljedica za redoslijed rada:** dok `#learn` stoji, **nema smisla pisati nijedan utility na
+toj površini** — Tailwind bi ga generirao, klasa bi stajala u markupu, a prikaz se ne bi
+promijenio. Isti razred tihog promašaja kao `@source not inline` (isključenje sprječava
+generiranje, ne pisanje), samo s druge strane.
+
+### 12.2 ⚠️ OBRNUTI RIZIK je imenovan: točno DVA pravila se bude kad ID padne
+
+`#learn` je napisan **da bi tukao `responsive.css`**. Makne li se, pravila koja godinama gube
+mogu početi pobjeđivati. To nije nagađanje — izmjereno je: iz živog DOM-a je pokupljeno
+**32 klase koje stvarno postoje unutar `#learn`**, pa provjereno koja bi ih pravila iz
+`css/responsive/*` tada dohvatila.
+
+**Odgovor: dva.** Oba preko `.filter-btn`, oba na telefonu:
+
+| datoteka | upit | što bi se probudilo |
+|---|---|---|
+| `responsive/04` | `@media (max-width: 374px)` | `.filter-btn { padding: .5rem .75rem; font-size: .75rem; min-height: 40px }` |
+| `responsive/06` | `@media (max-width: 767px) and (hover: none) and (pointer: coarse)` | `.control-btn, .action-btn, .filter-btn, .category-btn { min-height: 48px }` |
+
+Dakle: **skidanje `#learn` je sigurno svugdje osim na filter-gumbima**, i ondje treba prije/poslije
+mjera na 320/374/375 px. Nijedan drugi selektor iz `responsive/*` ne dohvaća tu površinu.
+⚠️ I obrnuto vrijedi već danas: ta ista dva pravila **ne rade ništa** dok ID stoji — pa ako se
+netko oslanjao na 48 px dodirnu metu filter-gumba u učenju, **nikad je nije imao.**
+
+### 12.3 Ljestva C5b-a je već uz komponentu — ali ima SVOJE pragove
+
+`responsive/*` ne sadrži nijedno pravilo za ovu površinu. (Tri naizgled pogotka su tuđa:
+`.toast.show` — `show` je generičko stanje koje `blind-map.css` koristi za nešto drugo — i dva
+gornja `.filter-btn`, koja danas ionako gube od ID-a.) To je ista situacija kao browse u C4b, i
+**dobra vijest: nema seobe ljestve, pa nema ni zamke pomicanja u kaskadi (pravilo ④).**
+
+Loša vijest je što su pragovi **vlastiti i drukčiji od svih ostalih**:
+
+| prag | pravila | gdje |
+|---|---|---|
+| `screen and (min-width: 768px)` | 13 | `learn.css` |
+| `screen and (max-width: 380px)` | 12 | `learn.css` |
+| `(max-width: 640px)` | 11 | `learn.css` |
+| `screen and (min-width: 1024px)` | 9 | `learn.css` |
+| `screen and (max-width: 430px)` | 4 | `learn.css` |
+| `screen and (max-width: 767px)` | 3 | `learn.css` |
+| `(prefers-contrast: high)` · `(max-width: 767px)` · `(min-width: 768px)` · `(orientation: landscape)` · `(prefers-reduced-motion)` | 2+2+2+1+1 | `blind-map`, `exercises`, `math`, `learn-blocks` |
+
+**`380`, `430` i `640` ne postoje nigdje drugdje u projektu.** Tehnički izlazni uvjet faze glasi
+*„jedan skup breakpointa"* (§2), pa ih C5b mora ili opravdati ili spustiti na zajedničke — a to je
+promjena prikaza i traži mjeru, ne pretpostavku. Uz to su ovdje `screen and (…)`, dok je ostatak
+projekta u golom obliku; za medij `screen` to je isto, ali **nije isti tekst**, pa svako traženje
+po uzorku mora računati na oba oblika.
+
+### 12.4 Kako je posao raspoređen po datotekama
+
+| datoteka | redaka | pravila | u `@media` | ID-selektora | težina |
+|---|---|---|---|---|---|
+| `learn.css` | 845 | 112 | 47 | **102** | 🔴 najteža — cijela cigla je zapravo ona |
+| `exercises.css` | 510 | 119 | **3** | 0 | 🟢 gotovo ravna; najviše pravila, najmanje uvjeta |
+| `blind-map.css` | 308 | 56 | 15 | 0 | 🟡 4 upita + dva `@keyframes` |
+| `learn-blocks.css` | 177 | 44 | 1 | 0 | 🟢 |
+| `math.css` | 36 | 5 | 2 | 0 | 🟢 najmanja |
+
+**Predložena podjela na commite** (nije naredba, nego ono što mjera nosi): **/1** `exercises.css`
++ `math.css` + `learn-blocks.css` (ravno, bez ID-a, nosi 1 fatalno pravilo palete) · **/2**
+`blind-map.css` · **/3** `learn.css`, i to u dva koraka — **prvo skidanje `#learn` uz dokaz
+`css:diff` = 0**, pa tek onda migracija.
+
+### 12.5 Tvrde granice koje C5b NE SMIJE prijeći
+
+- **`js/blocks-renderer.js` i engine vježbi se NE DIRAJU** (§3). Mijenja se CSS oko njih.
+  Prikaz blokova ide isključivo kroz `renderContentBlocks()`; svaki tekst iz podataka i dalje
+  mora kroz `SokratBlocks.esc` (BUG-024/025).
+- **Tailwind NIKAD u `data/`** (ADR-028) — gradivo zadržava semantičke klase. Ovo je jedina C5b
+  površina gdje je ta granica blizu: `learn-blocks.css` stilizira ono što renderer crta **iz
+  podatka**, pa se klase moraju mijenjati u CSS-u i rendereru, nikad u gradivu.
+- **`lb-color-*` nastaje u runtimeu** — zato je u osnovici `check:orphan-css`. Ne brisati kao
+  siroče.
+- **KaTeX** (`math.css`, 36 redaka): `.katex-display` je također imenovano siroče. KaTeX-ov
+  vlastiti CSS nije naš i ne migrira se.
+- C5b nosi **3 od 11 fatalnih pravila palete**: `learn-blocks.css` `.lb-video__icon` (bijelo na
+  gradijentu) · `learn.css` `#learn .learn-card-header span` (poluprozirno bijelo na
+  poluprozirnom bijelom) · `blind-map.css` `.map-clear-btn:hover` (bijelo na `--danger`).
+  ⚠️ **Treće je jedno od sedam koja čekaju Leonovu odluku o semantičkim ispunama** i C5b ga ne
+  može ugasiti sam; prva dva može.
+
+### 12.6 Rute koje C5b mora predati mjeračima
+
+`css:diff` i `check:contrast:live` mjere prazan ekran ako im se ne preda ruta (§ „C5a, C5b, C6 i
+C7 moraju predati svoje rute"). Za C5b su to:
+
+```
+CSS_DIFF_RUTE="#/subject/te2/first-midterm/learn,#/subject/statistics/first-midterm/exercises,#/subject/geography/first-midterm/blind-map"
+```
+
+⚠️ **`exercises` i `blind-map` su UVJETNI tabovi — ne postoje na svakom predmetu**, pa ruta mora
+imenovati predmet koji ih ima. Izmjereno iz kataloga (2026-08-30):
+
+| značajka | predmeti |
+|---|---|
+| `features.exercises` | `math` · `statistics` · `accounting` · `academic-writing` · `macroeconomics` |
+| `features.blindMap` | `geography` (jedini) |
+
+**`te2` nema ni jedno ni drugo.** Mjerač koji to ne provjeri uspoređivat će prazan ekran i
+mirno javiti „0 razlika" — isti razred kao granica dokaza u §11.3 (`.quiz-game` iza `hidden`) i
+§11.4 (`.history-item` kojeg nema). *Nula razlika na ekranu kojeg nema nije dokaz.*

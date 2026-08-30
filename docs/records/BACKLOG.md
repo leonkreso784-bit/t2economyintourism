@@ -62,15 +62,17 @@ i tada pokriva i ovo. Zapis: spec §10.2.
 
 ---
 
-## 🔥 EKRAN NAPRETKA — Leonov sud o sadržaju, ne o izgledu (2026-08-30) · **utječe na C5a/4**
+## 🔥 EKRAN NAPRETKA — Leonov sud o SADRŽAJU, ne o izgledu (2026-08-30)
 
-Zapisano jer bi se inače cigla **C5a/4 (napredak)** radila s krivom pretpostavkom.
+> ✅ **C5a/4 je odrađena 2026-08-30 i ovaj je sud POŠTOVAN** — cigla je bila čista migracija,
+> nijedna brojka ni grafikon nisu dodani. Zapis **ostaje živ** jer vrijedi za svaku sljedeću
+> ciglu koja dira ovaj ekran, ne samo za C5a/4.
 
 - **„Po meni je analitika o karticama glupost ali nema veze"** (Leon) → **ne ulagati** u brojke o
   karticama. One smiju ostati kakve jesu; ne proširuju se i ne dobivaju prostor.
 - **„Kasnije ćemo za analitiku dodavat grafikone i sve pizdarije da bude zanimljivije i stvarno
-  bolje"** → grafikoni su **odobreni smjer, ali NE u C5a/4**. C5a/4 je migracija na Tailwind, ne
-  nova značajka; miješanje toga dvoga je razlog zašto se cigle vraćaju.
+  bolje"** → grafikoni su **odobreni smjer, ali NE unutar migracijske cigle**. Miješanje migracije
+  i nove značajke je razlog zašto se cigle vraćaju.
 
 **Kriterij prihvaćanja kad dođe red:** korisnik na ekranu napretka vidi **kretanje kroz vrijeme**,
 ne samo trenutni zbroj — jer je to jedino što brojka o karticama danas ne daje.
@@ -800,22 +802,24 @@ vlastitu ciglu kad god.
 > | datoteka | fatalnih | cigla |
 > |---|---|---|
 > | `quiz-section.css` | 2 | ⛔ **NE MOŽE C5a/3 SAMA** — v. bilješku ispod |
-> | `progress-section.css` | 1 | C5a/4 |
-> | `learn.css` · `learn-blocks.css` · `blind-map.css` | 3 | C5b |
+> | `progress-section.css` | 1 | ⛔ **NIJE MOGLA C5a/4** — `.reset-btn:hover`, isti razred |
+> | `learn.css` · `learn-blocks.css` · `blind-map.css` | 3 | C5b — ali `blind-map` je **isti razred**, C5b može samo dva |
 > | `profile.css` | 2 | C6 |
 > | `home-section.css` · `sidebar.css` | 3 | **C6** (v. niže) |
 >
 > **Zaključak: birač može izaći nakon C6, NE nakon C7.** C7 je o `!important` i mrtvom kodu, ne o
 > bojama. ⚠️ Brojka je od 2026-08-30 i **stari** — mjerodavan je `npm run palette:breakdown`.
 >
-> #### ⛔ NALAZ REVIZIJE (2026-08-30, poslije C5a/3): dva reda ove tablice VISE O LEONOVOJ ODLUCI
-> Ta dva „fatalna" pravila su `.answer-btn.correct` i `.answer-btn.wrong` — **`color: white` na
-> ispuni `var(--success)` / `var(--danger)`**. Ispravak traži tokene **`--on-success` /
-> `--on-danger`, kojih NEMA** (postoji samo `--on-primary`). A hoće li ih uopće trebati, ovisi o
-> **otvorenom pitanju „smiju li zelena i crvena uopće biti ISPUNA, ili samo obrub i tekst"** —
-> ako je odgovor „samo obrub i tekst", ispuna nestaje i token ne treba nikad.
-> **C5a/3 ih zato NIJE dirala**, i to nije propust cigle nego **ovisnost koju ova tablica nije
-> imenovala.** Isto vrijedi za `.close-sidebar-btn:hover` u `sidebar.css` (C6).
+> #### ⛔ NALAZ REVIZIJE (dopunjen 2026-08-30 poslije C5a/4): **SEDAM** redaka ove tablice VISE O JEDNOJ LEONOVOJ ODLUCI
+> Prvo je nađeno na kvizu (`.answer-btn.correct` / `.wrong`), pa prošireno na cijelu listu: od 11
+> fatalnih pravila **njih sedam ima isti uzrok** — `white`/`#fff` na ispuni `var(--danger)` ili
+> `var(--success)`. Popis s datotekama i ciglama stoji **gore, uz samo pitanje** (§ZA LEONOVU
+> ODLUKU). Ispravak traži tokene **`--on-success` / `--on-danger`, kojih NEMA** (postoji samo
+> `--on-primary`), a hoće li ih uopće trebati ovisi o **„smiju li zelena i crvena uopće biti
+> ISPUNA, ili samo obrub i tekst"** — ako je odgovor „samo obrub i tekst", ispuna nestaje i token
+> ne treba nikad.
+> **C5a/3 i C5a/4 ih zato NISU dirale**, i to nije propust cigli nego **ovisnost koju ova tablica
+> nije imenovala.** Isto čeka `sidebar.css`, `profile.css`, `blind-map.css`.
 > *Cigla ne može ugasiti pravilo čiji ispravak čeka odluku o izgledu.*
 >
 > #### ⚠️ NALAZ: dvije datoteke nisu pripadale NIJEDNOJ cigli

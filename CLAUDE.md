@@ -112,8 +112,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
   gađa **STAGING** kad su `STAGING_*` u `.env`; u CI-ju zaseban secret-gated job).
 - **`tests/phone.spec.js` + `phone.authed.spec.js`** (mjera: `tests/helpers/phone-gate.js`) —
   **telefon kao STRANICA**: 8 tvrdnji na 320/393/430 px i 852×393, + **pet** načina učenja
-  (`progress` dodan u C5a/4). ⚠️ **568×320 svjesno NIJE u brani** — 22 nalaza ondje su tuđi
-  (consent + donja traka), brojke u `BACKLOG.md`.
+  (`progress` dodan u C5a/4). ⚠️ **568×320 svjesno NIJE u brani** (22 tuđa nalaza; `BACKLOG.md`).
   Osnovica je `tests/phone-baseline.json` (danas **prazna** → traži nulu);
   spuštanje = `PHONE_BASELINE_UPDATE=1 npx playwright test …`.
 - **`npm run test:storage`** — bucket `node-images` kroz HTTP (vlastiti upload · tuđi prefiks ·
@@ -148,7 +147,7 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 > | što je na produkciji | zadnji **🚀** redak u `docs/records/CHANGELOG.md` |
 > | grana · commiti · je li pushano | `git status -sb` · `git log --oneline -1 origin/main` |
 > | koliko predmeta | `npm run verify` |
-> | zašto je cigla izvedena baš tako | `docs/plan/FRONTEND_REDIZAJN.md` §7 (C0–C3, landing) · §8 (KOSTUR) · §9 (TELEFON, `about`, SEO) · §10 (C4) |
+> | zašto je cigla izvedena baš tako | `docs/plan/FRONTEND_REDIZAJN.md` §7 (C0–C3, landing) · §8 (KOSTUR) · §9 (TELEFON, `about`, SEO) · §10 (C4) · §11 (C5a) · **§12 (C5b — MJERA prije koda, cigla nije započeta)** |
 > | koji su bugovi bili i što su naučili | `docs/records/BUGS.md` |
 > | što je isporučeno i kada | `CHANGELOG.md` · dnevnik sesija: `PROGRESS.md` |
 >
@@ -172,7 +171,11 @@ istog dana. Ovdje ostaje samo ono što je **živo pravilo**, a ne stanje:
 
 **✅ ZATVORENO:** faza **POLICA** (P1–P4, spec §9.17–9.21) · **C4** (§10.1–10.3, grana
 `feat/c4-browse-lekcije`) · **C5a** u sva četiri dijela (§11, grana `feat/c5a-modovi`).
-**Slijedi C5b → C6 → C7.**
+**Slijedi C5b → C6 → C7.** ⚠️ **C5b je DRUGA VRSTA posla — mjera je već napravljena (spec §12):**
+`responsive/*` je za nju **prazan**, ali `learn.css` je sagrađen na **`#learn`** (102 od 112
+pravila) pa **utility ne prolazi dok ID stoji** — izmjereno, s kontrolom. Prvo skinuti ID uz
+`css:diff` = 0, pa migrirati. ⚠️ **`exercises`/`blind-map` su uvjetni tabovi — `te2` ih NEMA**,
+mjeri na `statistics` i `geography`.
 ⚠️ **Četiri pravila za preostale cigle** (zašto: §10.3, §11.1–11.4): ① prije nego pravilo postane
 utility **izmjeri tko ga danas tuče**; ② **rez ide po SVOJSTVU** — što neki preživjeli `@media` još
 mijenja ne smije u utility; ③ **četiri puta zaredom je prvi kvar bio u MJERAČU, ne u cigli** — u
@@ -229,10 +232,8 @@ razmotren i ODBIJEN** — obrazloženje u ADR-028, **ne otvarati iznova**.
 
 ### 🔒 TVRDE ODLUKE O DEPLOYU
 
-① *„Ništa ne ide na produkciju dok cijeli frontend ne bude riješen"* (Leon, 2026-08-19) — **Leon
-je tu odluku sam promijenio 2026-08-24** i odobrio merge iako C4–C7 i POLICA nisu gotovi
-(prepreka je bio telefon, koji je riješen). **Odluka o odgodi je POTROŠENA, ne ukinuta:** sljedeći
-deploy opet traži izričit OK.
+① Odluka *„ništa na produkciju dok frontend ne bude gotov"* (2026-08-19) je **POTROŠENA, ne
+ukinuta** — Leon ju je sam iskoristio 2026-08-24. **Sljedeći deploy opet traži izričit OK.**
 ② **Broj commita izvan produkcije NIJE nalaz i NE SPOMINJE SE** (*„ZNAM KADA ZELIM PUSTIT NESTO
 NA PRODUKCIJU"*) — **ova stoji netaknuta.** Pravilo #2 time dobiva dopunu: ne samo da se ne smije
 pushati bez OK-a, nego se na to ne smije ni **nagovarati**. [[leon-decides-deploys]]
@@ -271,9 +272,8 @@ poslije nje). Ostaje:
 - **STAGING Supabase:** `sokrat-staging` (ref `czljmvigkgiajzjxtndq`) — write/draft testovi, da
   prod-audit ostane čist. `test:authed`/`rls-check` gađaju staging kad su `STAGING_*` u `.env`;
   seed = `node scripts/seed-staging.js`.
-- **⏳ Grane izvan `main`-a:** zna ih `git branch --no-merged main`, ne ova datoteka. **Pouka za
-  zaostali content-PR:** grana zna izgledati kao platformski zahvat a nositi samo `?v=` tokene →
-  razrješenje je *uzmi `main`, pa `npm run bump`*. **Token nije sadržaj nego izlaz alata.**
+- **⏳ Grane izvan `main`-a:** zna ih `git branch --no-merged main`, ne ova datoteka. ⚠️ Grana zna
+  izgledati kao platformski zahvat a nositi samo `?v=` tokene → *uzmi `main`, pa `npm run bump`*.
 - **👥 Saša Vudrag** (content-suradnik) — opseg **SAMO HR sadržaj + PR-workflow**
   (`docs/workflow/TEAM.md`, role-router gore; ADR-023). **Na stanci je dok frontend redizajn nije
   gotov** (razlog je mehanički: C2–C7 bumpaju iste tokene i prepisuju `index.html`, koje dira i
@@ -288,8 +288,7 @@ poslije nje). Ostaje:
   zakucanom `supabase-js@2.110.8` slaba lozinka dolazi kao `data.weakPassword` uz `error: null`.
 - **Sitni dug (ne blokira):** siročad u Storageu · advisor-WARN `snapshot_content_version` /
   `handle_new_user` · staging poravnati s `supabase/f1-nodes.sql`. ⚠️ **`is_admin()` se NE smije
-  revokeati `authenticated`-u** — zovu ga RLS politike kao pozivatelj. Advisori PROD: **0 ERROR,
-  16 WARN.**
+  revokeati `authenticated`-u** — zovu ga RLS politike kao pozivatelj.
 - **Napomene:** ⚠️ **Supabase org je `pro` — ali samo ~mjesec dana** (Leon, 2026-08-27), pa
   free-tier spavanje nakon ~7 dana neaktivnosti **trenutno ne vrijedi** i vratit će se s planom · `content_versions`/`node_content_versions` = **append-only audit**,
   brisanje **samo uz izričit OK** · PWA drži staru ikonu do reinstalacije (nije bug) ·
