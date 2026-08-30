@@ -5,6 +5,47 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-30 (e) — C5a/4b: kontrast, mjera na telefonu i nalaz koji vrijedi više od cigle
+
+**C5a je zatvorena.** Druga polovica zadnje cigle nosi ono što prvi commit nije smio: promjenu
+prikaza. Pravilo je bilo da smije, ali samo **izmjerena i imenovana**.
+
+**Ikona kategorije je postala čip.** Boja iz kataloga bila je boja TEKSTA glifa — 2.15–2.80 uz
+prag 3.0, imenovana iznimka od 2026-08-29. Sada je ista boja ISPUNA, a tinta se računa
+`inkForTint()`-om. **Ništa nije izmišljeno:** tri migrirane površine to već rade
+(`.subject-item-icon`, `.browse-card-icon`, `.landing-subject-icon`), a razred je za ispune
+riješen još u BUG-024. Izmjereno neovisno o brani u sve četiri teme: **najgori kontrast 4.47**
+(bilo 2.15), nula ispod praga. Datoteka dopuštenja je prazna.
+
+**Doseg promjene nije procijenjen nego izmjeren:** `css:diff` daje 20 razlika na 375 px — 5
+kategorija × 4 elementa. Ništa izvan `#categoryBars`, ni sam redak; visina i razmaci ostaju.
+
+**`progress` je ušao u `phone-gate`** (44 ekrana umjesto 40), prošlo 10/0 uz praznu osnovicu.
+
+**Landscape ispod 768 px — izmjeren, pa svjesno ostavljen izvan brane.** 568 × 320 obara branu s
+22 nalaza, a **nijedan nije na C5a površinama**: 10 o cookie-banneru (123 px na ekranu visokom
+320 → 38 %), 12 o donjoj traci ispod bočnog izreza. To je C6 i C7. `phone-baseline.json` je
+prazan i to mu je vrijednost — dodati ekran znači ili crveno za tuđi posao, ili puna osnovica i
+gubitak svojstva „nula". Brojke su zapisane da se ne mjeri iznova.
+
+**🔥 Najvredniji nalaz sesije nije u cigli.** Čitajući `palette:breakdown -- --list` redak po
+redak: od **11 fatalnih pravila palete njih 7 ima isti uzrok** — zakucano bijelo na ispuni
+`--danger` ili `--success`, razasuto po pet datoteka i četiri cigle (`blind-map`, `profile` ×2,
+`progress`, `quiz` ×2, `sidebar`). Nijedno se ne da popraviti bez tokena kojih nema, a trebaju
+li uopće ovisi o **jednom Leonovom odgovoru**: smiju li zelena i crvena biti ispuna ili samo
+obrub i tekst. Dosad je to izgledalo kao sedam odvojenih dugova. **Jedan odgovor gasi 7 od 11 —
+i time otključava birač tema.**
+
+**Testirano:** `preflight` EXIT 0 · `phone.spec.js` 10/0 (s napretkom) · `check:contrast:live`
+**nula imenovanih iznimaka, nula ispod praga** · `check:palette` čisto (46 = osnovica) ·
+neovisno mjerenje čipa u 4 teme.
+
+**Slijedi:** **C5b**, pa C6 i C7. Za Leona su otvorena dva pitanja s brojkama: ① semantičke
+ispune (gasi 7 od 11 fatalnih pravila) i ② „Povijest učenja" — izvesti je ili maknuti odjeljak.
+
+---
+
+
 ## 2026-08-30 (d) — C5a/4 (napredak): najmanja površina, najveći udio mrtvog
 
 **Zadnja cigla C5a.** Površina napretka je po broju pravila najmanja od četiri (25 prema 57 na

@@ -111,7 +111,9 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 - **`npm run test:authed`** — pozitivan admin-put (storageState; traži `TEST_ADMIN_EMAIL/PASSWORD`;
   gađa **STAGING** kad su `STAGING_*` u `.env`; u CI-ju zaseban secret-gated job).
 - **`tests/phone.spec.js` + `phone.authed.spec.js`** (mjera: `tests/helpers/phone-gate.js`) —
-  **telefon kao STRANICA**: 8 tvrdnji na 320/393/430 px i 852×393, + četiri načina učenja.
+  **telefon kao STRANICA**: 8 tvrdnji na 320/393/430 px i 852×393, + **pet** načina učenja
+  (`progress` dodan u C5a/4). ⚠️ **568×320 svjesno NIJE u brani** — 22 nalaza ondje su tuđi
+  (consent + donja traka), brojke u `BACKLOG.md`.
   Osnovica je `tests/phone-baseline.json` (danas **prazna** → traži nulu);
   spuštanje = `PHONE_BASELINE_UPDATE=1 npx playwright test …`.
 - **`npm run test:storage`** — bucket `node-images` kroz HTTP (vlastiti upload · tuđi prefiks ·
@@ -168,21 +170,17 @@ istog dana. Ovdje ostaje samo ono što je **živo pravilo**, a ne stanje:
 **keširane stare skripte**, ne zbog urednosti sheme.
 ⚠️ **N2 je POLA:** polica pokazuje **skinuto**, ne uniju skinutog i onoga što se uči.
 
-**✅ FAZA POLICA JE ZATVORENA** — **P1 · P2 · P3 · P4 svi ispunjeni** (spec §9.17–9.21).
-Kriterij je **mjeren, ne tvrđen**: skinut predmet se otvara bez mreže, **preživi deploy**, a
-napredak stečen offline se po povratku mreže **spoji bez gubitka**.
-✅ **C4 JE ISPUNJEN** (grana `feat/c4-browse-lekcije`) — C4a (§10.1) · §10.2 · **C4b (§10.3) =
-prva migrirana površina u fazi**, i prva koja piše utilityje.
-🔄 **C5a JE U TIJEKU** (grana `feat/c5a-modovi`, spec **§11**) — u **četiri commita**, jer uz pet
-CSS datoteka nosi i **179 pravila iz `responsive/*`** (§11.0). **/1 kromo ✅ · /2 kartice+dopune ✅**
-**/3 kviz ✅** → /4 napredak → C5b → C6 → C7.
-⚠️ **Četiri pravila za preostale cigle** (zašto: §10.3, §11.1–11.3): ① prije nego pravilo postane
+**✅ ZATVORENO:** faza **POLICA** (P1–P4, spec §9.17–9.21) · **C4** (§10.1–10.3, grana
+`feat/c4-browse-lekcije`) · **C5a** u sva četiri dijela (§11, grana `feat/c5a-modovi`).
+**Slijedi C5b → C6 → C7.**
+⚠️ **Četiri pravila za preostale cigle** (zašto: §10.3, §11.1–11.4): ① prije nego pravilo postane
 utility **izmjeri tko ga danas tuče**; ② **rez ide po SVOJSTVU** — što neki preživjeli `@media` još
-mijenja ne smije u utility; ③ **triput zaredom je prvi kvar bio u MJERAČU, ne u cigli** (u C5a/3 i
-to u mjeraču pisanom **iste sesije**) — provjeri mjeri li alat ono što misliš; ④ **seljenje pravila
-iz `responsive/*` u datoteku komponente POMIČE GA UNAPRIJED u kaskadi** → sele se **sva** pravila
-za selektor ili nijedno, nijedna kasnija datoteka ne smije dirati te selektore, a **grupni
-selektor se SKRAĆUJE, ne briše** (u njemu žive tuđi stanari).
+mijenja ne smije u utility; ③ **četiri puta zaredom je prvi kvar bio u MJERAČU, ne u cigli** — u
+C5a/3 u mjeraču pisanom iste sesije, u C5a/4 mjerač **nije pao nego vratio uvjerljiv krivi broj**
+(`querySelector` je uhvatio krivi element); ④ **seljenje pravila iz `responsive/*` u datoteku
+komponente POMIČE GA UNAPRIJED u kaskadi** → sele se **sva** pravila za selektor ili nijedno,
+nijedna kasnija datoteka ne smije dirati te selektore, a **grupni selektor se SKRAĆUJE, ne briše**
+(u njemu žive tuđi stanari).
 **K5** (editor dvojezično) čeka i ne blokira ništa.
 **A1 (Google-prijava) + A0 (prepravak dijaloga) idu ZAJEDNO** — `#authModal` je građen za jedan
 put, pa se inače prepravlja dvaput. **Oboje TEK POSLIJE SEOBE** (auth je Supabase-konfiguracija;
@@ -192,8 +190,7 @@ seoba mijenja URL, a time i redirect URI). Redoslijed unutar para nije presuđen
 
 *„iznajmit ću VPS… **hostanje ostaje na Vercelu, ne mijenjamo do daljnjeg!**"* **Zašto sada, iako
 plan kaže „poslije frontenda":** *„prije nego faks krene."* ⚠️ **VPS diže Leon u ponedjeljak; faza
-se zbog seobe NE pauzira** — isprva je bila pauzirana, pa ukinuto istog dana (*„krenimo sa daljnjom
-C radnjom za frontend"*), jer seoba i cigle **ne dijele nijednu datoteku**.
+se zbog seobe NE pauzira** — seoba i cigle **ne dijele nijednu datoteku**.
 Suženje je **ukinulo dvije od tri zapisane prepreke** — obje su bile o Vercelu, koji ostaje
 (tablica: `BACKLOG.md`). **Ostaje: DVIJE instance.**
 
@@ -257,7 +254,9 @@ poslije nje). Ostaje:
   vanjskih **dvoje**, uz e-mail+lozinku kao jedini put. Google je besplatan; **Apple ~99 $/god** i
   nema smisla bez iOS aplikacije; „Sign in with ChatGPT" je **NEPOTVRĐEN** — ne obećavati.
 - **Semantičke ispune** (`--on-success`/`--on-danger`): pravo pitanje nije koji token nego
-  **smiju li zelena i crvena uopće biti ISPUNA, ili samo obrub i tekst**. `BACKLOG.md`.
+  **smiju li zelena i crvena uopće biti ISPUNA, ili samo obrub i tekst**. ⚠️ **Izmjereno u C5a/4:
+  taj jedan odgovor gasi 7 od 11 fatalnih pravila palete** (pet datoteka, četiri cigle) — dakle
+  otključava birač tema. `BACKLOG.md`.
 
 ### Stalno — vrijedi neovisno o fazi
 

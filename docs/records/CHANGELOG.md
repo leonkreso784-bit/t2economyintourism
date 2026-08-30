@@ -5,6 +5,46 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-30 (OPUS) — **C5a/4b: mjera, kontrast i jedna namjerna promjena prikaza**
+
+Druga polovica cigle C5a/4. Spec **§11.4**. Prvi commit nije smio promijeniti nijedan piksel;
+ovaj smije, ali samo ondje gdje je promjena **izmjerena i imenovana**. **C5a je time ZATVORENA.**
+
+**① `progress` je ušao u `phone-gate`** — bio je jedina C5a površina bez mjere na telefonu.
+`NACINI` je s četiri narastao na pet, pa brana obilazi **44 ekrana** umjesto 40. Prošlo **10 /
+palo 0**, uz **praznu osnovicu** — bez ijednog ustupka. Napredak nije „samo još jedan tab":
+nosi jedini SVG koji se skalira i jedini popis koji JavaScript crta iz sadržaja.
+
+**② Kontrastna iznimka je UGAŠENA, ne prešućena.** Boja kategorije iz kataloga bila je boja
+TEKSTA glifa — **2.15–2.80** uz prag 3.0 u temama `academic` i `paper`, imenovana iznimka od
+2026-08-29. Sada je **čip**: ista boja je ISPUNA, a tinta se računa `inkForTint()`-om, kao na
+`.subject-item-icon` / `.browse-card-icon` / `.landing-subject-icon`. Razred je za ispune riješen
+još u BUG-024; ovdje je primijenjen na četvrtu površinu.
+
+Izmjereno neovisno o brani (WCAG formula, sve četiri teme): **najgori kontrast 4.47, nula čipova
+ispod praga**, obje tinte u upotrebi. Brojka je ista u sve četiri teme i to je točno — boja
+dolazi iz kataloga, ne iz teme. `scripts/contrast-live-allow.json` je od danas **prazan**.
+
+Doseg promjene je izmjeren: `css:diff` daje **20 razlika na 375 px** = 5 kategorija × 4 elementa
+(čip + tri potomka kojima je stupac uži za 4 px). **Ništa izvan `#categoryBars`**, ni sam redak
+`.category-bar` — visina i razmaci ostaju.
+
+**③ Landscape ispod 768 px: izmjereno, pa ODLUČENO da ne ulazi u branu — zasad.** Pokusni ekran
+**568 × 320** obara branu s **22 nalaza**, i nijedan nije na C5a površinama: 10 ih je o
+**pristanku na kolačiće** (banner od 123 px pojede 38 % ekrana visokog 320 px), 12 o **donjoj
+traci ispod bočnog izreza** — dakle C6 i C7. `phone-baseline.json` je prazan i to mu je
+vrijednost; dodati ekran značilo bi obojiti branu crveno za tuđi posao ili napuniti osnovicu.
+Brojke su u `BACKLOG.md` i specu, pa se ne mjeri iznova. **BUG-037 time čeka C7.**
+
+**🔥 Usput izmjereno — jedna Leonova odluka gasi 7 od 11 fatalnih pravila palete.**
+`palette:breakdown -- --list` nabraja 11; **sedam ih ima isti uzrok**: `white`/`#fff` na ispuni
+`var(--danger)` ili `var(--success)` (`blind-map`, `profile` ×2, `progress`, `quiz` ×2,
+`sidebar`). Nijedno se ne da popraviti bez tokena `--on-danger`/`--on-success`, kojih nema — a
+trebaju li uopće, ovisi o pitanju **smiju li zelena i crvena biti ISPUNA ili samo obrub i tekst**.
+Dosad je to izgledalo kao sedam odvojenih dugova po pet datoteka i četiri cigle; jedan odgovor ih
+zatvara sve. Zapisano u `BACKLOG.md` uz sam redak koji pitanje otvara.
+
+
 ## 2026-08-30 (OPUS) — **C5a/4: napredak — pola ljestve nije imalo nikakav učinak**
 
 Četvrta i zadnja cigla C5a. Spec **§11.4**. Bez novog buga: nalazi su **četvrta pojava BUG-039**

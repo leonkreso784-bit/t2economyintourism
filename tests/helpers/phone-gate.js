@@ -75,7 +75,10 @@ const EKRANI = [
 
 /** Stranice koje vidi ODJAVLJEN posjetitelj + četiri načina učenja. */
 const EKRANI_JAVNI = ['landing', 'browse', 'browse:dubina', 'lessons', 'about'];
-const NACINI = ['learn', 'flashcards', 'quiz', 'fill'];
+/** ⚠️ `progress` je dodan u C5a/4 (2026-08-30). Do tada je bio JEDINA C5a površina bez mjere
+ *  na telefonu — a nije „samo još jedan tab": nosi jedini SVG koji se skalira (`.big-progress-circle`)
+ *  i jedini popis koji crta JavaScript iz sadržaja (`.category-bar`, boja iz kataloga). */
+const NACINI = ['learn', 'flashcards', 'quiz', 'fill', 'progress'];
 
 /** Prijavljene stranice — mjeri ih `phone.authed.spec.js`. `admin` je unutra jer kriterij
  *  faze glasi da korisnik *„ne naiđe ni na jedan ekran koji brana ne posjećuje"*, a

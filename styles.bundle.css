@@ -3074,10 +3074,23 @@ sokrat-modal.sokrat-confirm-modal > * {
   padding: 0.875rem 1rem;
   border-radius: var(--radius);
 }
-.category-bar i {
-  font-size: 1.25rem;
-  color: var(--primary);
-  width: 30px;
+.category-bar-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: var(--primary);
+  color: var(--color-on-brand);
+}
+.category-bar-icon[data-ink="light"] {
+  color: var(--color-on-tint-light);
+}
+.category-bar-icon[data-ink="dark"] {
+  color: var(--color-on-tint-dark);
 }
 .category-bar-info span {
   display: flex;

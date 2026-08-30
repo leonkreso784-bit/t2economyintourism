@@ -40,6 +40,25 @@ i tada pokriva i ovo. Zapis: spec §10.2.
 >   Apple smjeru (§7.6) — vlas-crta umjesto ispune.
 >
 > Preporuka je **②**, jer je pola posla već tako izvedeno. Odluka ostaje Leonova.
+>
+> #### 🔥 IZMJERENO 2026-08-30 (C5a/4): ta jedna odluka gasi **7 od 11** fatalnih pravila
+> `palette:breakdown -- --list` nabraja 11 fatalnih pravila. Sedam ih ima **isti uzrok** —
+> `white`/`#fff` na ispuni `var(--danger)` ili `var(--success)`:
+>
+> | # | datoteka | selektor | ispuna | cigla koja ga „nosi" |
+> |---|---|---|---|---|
+> | 1 | `blind-map.css` | `.map-clear-btn:hover` | `--danger` | C5b |
+> | 6 | `profile.css` | `.admin-cat-del:hover, .admin-del:hover` | `--danger-bg` | C6 |
+> | 7 | `profile.css` | `.admin-quiz-delopt:hover` | `--danger-text` | C6 |
+> | 8 | `progress-section.css` | `.reset-btn:hover` | `--danger` | C5a/4 |
+> | 9 | `quiz-section.css` | `.answer-btn.correct` | `--success` | C5a/3 |
+> | 10 | `quiz-section.css` | `.answer-btn.wrong` | `--danger` | C5a/3 |
+> | 11 | `sidebar.css` | `.close-sidebar-btn:hover` | `--danger` | C6 |
+>
+> **Nijedna cigla ih ne može ugasiti sama** — čekaju odgovor gore. Dosad su izgledali kao sedam
+> odvojenih dugova raspoređenih po pet datoteka i četiri cigle; jedan odgovor ih zatvara sve.
+> Preostala četiri (#2–#5) su druga priča: gradijenti i poluprozirno bijelo, i njih doista
+> rješavaju cigle pojedinačno.
 
 ---
 
@@ -84,7 +103,15 @@ Migracija mjeri površinu prije nego je dirne, pa iznosi i ono što nije o CSS-u
    **C7**.
 
 
-## ➖ Tinta iz SADRŽAJA kao boja TEKSTA — ikona kategorije u napretku (2026-08-29)
+## ✅ RIJEŠENO 2026-08-30 (C5a/4) — Tinta iz SADRŽAJA kao boja TEKSTA — ikona kategorije u napretku
+
+**Zatvoreno:** glif je postao **čip** — ista boja iz kataloga je sada ISPUNA, a tinta se računa
+`inkForTint()`-om, kao na `.subject-item-icon` / `.browse-card-icon` / `.landing-subject-icon`.
+Izmjereno neovisno o brani, sve četiri teme: najgori kontrast **4.47** (bilo 2.15), **0 čipova
+ispod praga**. `scripts/contrast-live-allow.json` je od danas **prazan** — nula imenovanih
+iznimaka. Zapis: spec **§11.4**.
+
+<details><summary>Izvorni zapis (2026-08-29)</summary>
 
 `js/progress.js` stavlja `data.color` kategorije **inline na glif** (`<i style="color: …">`). Na
 svijetloj plohi to daje **2.15–2.80** (prag za glif **3.0**) u temama `academic` i `paper`.
@@ -98,6 +125,37 @@ značenja**.
 
 Vodi se kao **imenovana iznimka** u `scripts/contrast-live-allow.json` (ne prešućena — brana ju
 ispisuje pri svakom pokretanju). **Rješava se u C5a**, čija je to površina.
+
+</details>
+
+---
+
+## ➖ TELEFON POLEGNUT ISPOD 768 px — izmjereno u C5a/4, svjesno NIJE ušlo u branu (2026-08-30)
+
+`phone-gate` mjeri četiri ekrana; jedini polegnuti je **852 × 393** (iPhone 16), dakle **širi od
+768 px**. Ispod toga — iPhone SE polegnut, **568 × 320** — nije mjeren nikad, iako ondje vrijede
+sva `@media (max-width: 767px)` pravila.
+
+**Izmjereno (pokusno dodavanje ekrana, pa vraćeno):** brana pada s **22 nalaza**, i **nijedan
+nije na C5a površinama**:
+
+| nalaz | koliko | čije je |
+|---|---|---|
+| kromo **53 %** (170 od 261 px) na svih 6 study-ekrana — `#chrome` 56 px **+ `#cookieBanner` 114 px** | 6 | consent (**C6**) |
+| prvi ekran: kromo 56–64 px + banner **123 px** = **38 %** od 320 px (landing, browse, browse:dubina, about) | 4 | consent (**C6**) |
+| **`.mobile-nav-btn` stoji ispod bočnog izreza** — 59 px u pojasu `[0,245…95,295]` i simetrično desno | 12 | donja traka (**C7** / T-razred) |
+
+**Zašto ekran NIJE dodan:** `tests/phone-baseline.json` je **prazan i to je njegova vrijednost** —
+brana traži nulu. Dodati ekran znači ili obojiti branu crveno za tuđi posao (consent + donja
+traka), ili napuniti osnovicu i izgubiti svojstvo „nula". *Cigla ne smije platiti tuđim
+crvenilom.*
+
+**Kad se dodaje:** nakon što C6 riješi banner na niskim ekranima i C7 donju traku. Brojke su
+gore, ne treba mjeriti iznova — dovoljno je vratiti redak
+`{ w: 568, h: 320, ime: 'iPhone SE polegnut', rub: RUB_LANDSCAPE }` u `EKRANI`.
+
+⚠️ Treći nalaz je **pravi kvar, ne postavka**: isti razred koji je faza TELEFON zatvorila za
+druge veličine (gumb ispod izreza), samo nikad izmjeren na 568 px. Srodno **BUG-036/037**.
 
 ---
 

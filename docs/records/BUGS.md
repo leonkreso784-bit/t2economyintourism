@@ -76,8 +76,12 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ### BUG-037 — Kartica u landscapeu telefona traži 280 px visine u pojasu od 205 px, a dva pravila pisana protiv toga su mrtva
 
-- Status: 🔴 **otvoren** — svjesno odgođen za ciglu **C5a/4** (ondje se otvara landscape ispod
-  768 px, v. spec §11.1) · Težina: **nizak** — ekran je upotrebljiv, traži skrol · Našao:
+- Status: 🔴 **otvoren** — ⚠️ **preusmjeren 2026-08-30 (C5a/4)**: landscape ispod 768 px JEST
+  izmjeren u toj cigli, ali ekran **nije ušao u branu** — 22 nalaza na 568 × 320 pripadaju
+  consentu (banner od 123 px na ekranu visokom 320) i donjoj traci (gumb ispod bočnog izreza),
+  dakle **C6 i C7**, a osnovica `phone-baseline.json` je prazna i to joj je vrijednost.
+  Brojke i obrazloženje: `BACKLOG.md` §TELEFON POLEGNUT + spec §11.4. **Ovaj bug time čeka C7**,
+  zajedno s BUG-039 · Težina: **nizak** — ekran je upotrebljiv, traži skrol · Našao:
   **mjerenje pred migraciju C5a/2**, ne prijava.
 
 - **Opis / izmjereno** (Chromium, `hover:none` + `pointer:coarse`):

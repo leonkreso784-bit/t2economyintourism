@@ -4369,7 +4369,7 @@ njezine selektore, a o **14 parova (selektor, svojstvo)** odlučuju dvije ili vi
 Nakon migracije `css/responsive/*` je **1185 → 1025 redaka** (−160), `progress-section.css`
 **183 → 294**, ukupni dug **7000 → 6951**, `!important` **35 → 34**, siročad **57 → 46**.
 
-> Cigla ide u **DVA commita**: prvi je migracija (izlazni uvjet: `css:diff` s nula razlika),
+> Cigla je izvedena u **DVA commita**: prvi je migracija (izlazni uvjet: `css:diff` s nula razlika),
 > drugi nosi ono što prikaz **namjerno mijenja ili mjeri** — `progress` u `phone-gate`,
 > kontrastnu iznimku za ikonu kategorije i izmjerenu odluku o landscapeu ispod 768 px. Dvoje se
 > ne miješa u isti commit jer bi dokaz „nula razlika" prestao nešto značiti.
@@ -4487,3 +4487,81 @@ mjeraču a ne u cigli* — ali za razliku od /3, ovaj put mjerač nije pao nego 
 uvjerljiv krivi broj**. Skripta koja pada zatvoreno štiti od promašaja
 u traženju; od promašaja u **odabiru uzorka** ne štiti ništa osim provjere da mjeriš element o
 kojem govoriš.
+
+#### ✅ Druga polovica cigle — mjera, kontrast i jedna namjerna promjena prikaza
+
+Prvi commit nije smio promijeniti nijedan piksel; ovaj smije, ali samo ondje gdje je promjena
+**izmjerena i imenovana**. Tri stavke koje su C5a/1 i §11.1 ostavile ovoj cigli:
+
+**① `progress` je ušao u `phone-gate` — bio je jedina C5a površina bez mjere na telefonu.**
+`NACINI` je s četiri narastao na pet, pa brana sada obilazi **44 ekrana** umjesto 40
+(4 uređaja × (5 javnih + `study:home` + 5 načina)). Prošlo **10 / palo 0**, uz praznu osnovicu
+— dakle bez ijednog ustupka. Nije „samo još jedan tab": napredak nosi **jedini SVG koji se
+skalira** (`.big-progress-circle`, tri veličine kroz dva praga) i **jedini popis koji JavaScript
+crta iz sadržaja** (`.category-bar`, boja iz kataloga).
+
+**② Kontrastna iznimka je UGAŠENA, ne prešućena.** `scripts/contrast-live-allow.json` je od
+2026-08-29 imenovao jedan element: `#categoryBars > .category-bar > i.fas`, izmjereno
+**2.15–2.80** uz prag 3.0 u temama `academic` i `paper`. Uzrok nije bio stil nego to da
+**sadržaj bira boju TEKSTA** — `js/progress.js` je stavljao `data.color` inline kao `color:`
+na glif.
+
+Ispravak ne izmišlja ništa novo: **ista boja postaje ISPUNA, a tinta se računa** iz njezine
+luminancije (`inkForTint()`) — točno kao na tri već migrirane površine (`.subject-item-icon`,
+`.browse-card-icon`, `.landing-subject-icon`). Razred je za ispune riješen još u BUG-024; ovdje
+je samo primijenjen na četvrtu površinu.
+
+Izmjereno **neovisno o brani** (vlastita skripta, WCAG formula, sve četiri teme):
+
+| tema | čipova | tinte u upotrebi | najgori kontrast | ispod praga 3.0 |
+|---|---|---|---|---|
+| `academic` | 5 | dark + light | **4.47** | **0** |
+| `paper` | 5 | dark + light | **4.47** | **0** |
+| `chalk` | 5 | dark + light | **4.47** | **0** |
+| `mint` | 5 | dark + light | **4.47** | **0** |
+
+Brojka je ista u sve četiri teme **i to je točno** — boja čipa dolazi iz kataloga, ne iz teme,
+pa se s temom ne smije ni mijenjati. `check:contrast:live` od sada javlja **nula imenovanih
+iznimaka**; datoteka dopuštenja je prazna (`{}`).
+
+> ⚠️ **Obje tinte se navode IZRIČITO** (`[data-ink="light"]` **i** `[data-ink="dark"]`). Da se
+> navela samo jedna, kategorija s drugom luminancijom naslijedila bi `--color-on-brand` — token
+> izračunat za boju MARKE, koji na plohi iz podatka nitko nije mjerio. Ta ista pogreška je
+> 2026-08-15 stajala `.subject-item-icon`.
+
+**Doseg promjene je izmjeren, ne procijenjen:** `css:diff` na ruti napretka daje **20 razlika na
+375 px** — 5 kategorija × 4 elementa (sam čip + tri potomka kojima je stupac uži za 4 px, jer je
+čip 34 px umjesto ranijih 30 px). **Nijedan element izvan `#categoryBars` nije promijenjen**, a
+ni sam redak `.category-bar` — visina i razmaci ostaju.
+
+**③ Landscape ispod 768 px: IZMJERENO, pa ODLUČENO da NE ulazi u branu — zasad.**
+Pokusno je u `EKRANI` dodan **568 × 320** (iPhone SE polegnut) i brana je pala s **22 nalaza**.
+Ni jedan nije na površini napretka ni na ijednoj C5a površini:
+
+| nalaz | koliko | čije je |
+|---|---|---|
+| kromo **53 %** (170 od 261 px) na svih 6 study-ekrana — `#chrome` 56 px **+ `#cookieBanner` 114 px** | 6 | consent (**C6**) |
+| prvi ekran: kromo 56–64 px + banner 123 px = **38 %** od 320 px, na landingu/browseu/aboutu | 4 | consent (**C6**) |
+| **`.mobile-nav-btn` stoji ispod bočnog izreza** (59 px u pojasu `[0,245…95,295]` i desno) | 12 | donja traka (**C7**/T-razred) |
+
+Dvije trećine nalaza otpada na **pristanak na kolačiće**: banner od 123 px na ekranu visokom
+320 px pojede 38 %, i nijedna cigla ovog plana to ne mijenja. Treći nalaz je **pravi kvar** —
+isti razred koji je faza TELEFON zatvorila za druge veličine, samo nikad izmjeren na 568.
+
+Osnovica `phone-baseline.json` je **prazna i to je njezina vrijednost**. Dodati ekran znači ili
+obojiti branu crveno za tuđi posao, ili napuniti osnovicu i izgubiti svojstvo „traži nulu".
+**Zato ekran NE ulazi sada**, nego kad se riješi banner (C6) i donja traka (C7) — a brojke stoje
+ovdje i u `BACKLOG.md`, pa ne treba mjeriti iznova. *Cigla ne smije platiti tuđim crvenilom.*
+
+#### 🔥 Usput izmjereno: JEDNA Leonova odluka gasi 7 od 11 fatalnih pravila palete
+
+`palette:breakdown -- --list` nabraja 11 fatalnih pravila (zakucan tekst na ispuni). Nakon što je
+lista pročitana redak po redak, ispada da ih **sedam dijeli isti uzrok**: `white`/`#fff` na
+ispuni `var(--danger)` (#1 `blind-map`, #6 i #7 `profile`, #8 `progress`, #10 `quiz`,
+#11 `sidebar`) ili `var(--success)` (#9 `quiz`).
+
+Nijedno se ne može popraviti bez tokena `--on-danger` / `--on-success`, **kojih nema** — a
+trebaju li uopće, ovisi o otvorenom pitanju **smiju li zelena i crvena biti ISPUNA ili samo
+obrub i tekst.** Dotad ta pravila nose **C5a/3, C5a/4, C6 i C7 zajedno**, i nijedna ih cigla ne
+može ugasiti sama. Zapisano ovako imenovano jer je dosad izgledalo kao sedam odvojenih dugova
+raspoređenih po pet datoteka.

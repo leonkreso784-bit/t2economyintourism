@@ -14,6 +14,17 @@ function pIcon(s) {
 function pColor(s) {
     return (window.SokratBlocks && typeof SokratBlocks.accentFrom === 'function') ? SokratBlocks.accentFrom([s]) : '';
 }
+/**
+ * Koja tinta ide NA ploču u boji kategorije. `inkForTint` živi u `js/navigation.js` kao
+ * globalna funkcija (klasična skripta, `function` na vrhu datoteke) i učitava se prije ove.
+ * Vraća SAMO 'dark' ili 'light' — dvije vrijednosti, pa u markup ne može ući ništa iz podatka.
+ * ⚠️ Do C5a/4 je boja kategorije bila boja TEKSTA glifa i davala 2.15–2.80 na svijetloj plohi
+ * (prag 3.0) — imenovana iznimka u `scripts/contrast-live-allow.json`. Otkad je glif ČIP,
+ * boja je ISPUNA, a tinta se računa; iznimka je time ugašena, ne prešućena.
+ */
+function pInk(boja) {
+    return (typeof inkForTint === 'function') ? inkForTint(boja) : 'light';
+}
 
 // ========== CATEGORY BUTTONS ==========
 function updateCategoryButtons() {
@@ -206,7 +217,7 @@ function renderProgressPage() {
         const bar = document.createElement('div');
         bar.className = 'category-bar flex items-center gap-3';
         bar.innerHTML = `
-            <i class="fas ${pIcon(data.icon)}"${color ? ` style="color: ${color}"` : ''}></i>
+            <i class="fas ${pIcon(data.icon)} category-bar-icon"${color ? ` data-ink="${pInk(color)}" style="background: ${color}"` : ''}></i>
             <div class="category-bar-info flex-1">
                 <span>
                     <strong>${pEsc(data.name)}</strong>

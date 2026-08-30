@@ -99,11 +99,38 @@
     border-radius: var(--radius);
 }
 
-.category-bar i {
-    font-size: 1.25rem;
-    color: var(--primary);
-    width: 30px;
+/* ⚠️ IKONA KATEGORIJE JE ČIP, NE OBOJANI GLIF (C5a/4) — i to je jedina namjerna promjena
+   prikaza u ovoj cigli.
+
+   Do 2026-08-30 je `js/progress.js` stavljao boju kategorije iz kataloga INLINE kao
+   `color:` na glif. Boja iz SADRŽAJA kao boja TEKSTA daje na svijetloj plohi **2.15–2.80**
+   (prag za glif je 3.0) u temama `academic` i `paper` — mjereno, ne procijenjeno; stajalo je
+   kao imenovana iznimka u `scripts/contrast-live-allow.json`.
+
+   Ispravak ne izmišlja ništa: ista boja postaje ISPUNA, a tinta se računa iz njezine
+   luminancije (`inkForTint()`), točno kao na tri već migrirane površine
+   (`.subject-item-icon`, `.browse-card-icon`, `.landing-subject-icon`). To je razred koji je
+   za ispune riješen još u BUG-024; ovdje je samo primijenjen na četvrtu.
+
+   ⚠️ OBJE tinte se navode IZRIČITO. Da se navede samo „dark", kategorija sa svijetlom bojom
+   naslijedila bi `--color-on-brand` — token izračunat za boju MARKE, koji na plohi iz podatka
+   nitko nije mjerio. Ta ista pogreška je 2026-08-15 stajala `.subject-item-icon`.
+   Bez boje (podatak nije čist `#rrggbb`) ploha je marka, pa je i tinta njezina. */
+.category-bar-icon {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: var(--primary);
+    color: var(--color-on-brand);
 }
+
+.category-bar-icon[data-ink="light"] { color: var(--color-on-tint-light); }
+.category-bar-icon[data-ink="dark"]  { color: var(--color-on-tint-dark); }
 
 /* ⚠️ OSTAJE u CSS-u zbog DOSEGA, ne zbog upita: `.category-bar-info span` pogađa
    DVA elementa — vanjski redak (naziv + postotak) i unutarnji `<span>NN%</span>`
