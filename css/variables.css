@@ -41,6 +41,11 @@
        gumbu koji je ispunjen bojom marke. Detalji i brojke: tokens.css. */
     --on-primary: var(--color-on-brand);
 
+    /* Isti obrazac za semantičke ispune (ADR-032): točno/netočno je UVIJEK puna ispuna,
+       a tinta na njoj dolazi iz ovih imena — nikad zakucano `white`/`#fff`. */
+    --on-success: var(--color-on-ok);
+    --on-danger: var(--color-on-danger);
+
     --bg-primary: var(--color-surface-0);
     --bg-secondary: var(--color-surface-1);
     --bg-tertiary: var(--color-surface-2);

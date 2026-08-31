@@ -213,7 +213,7 @@
     border: 2px solid var(--danger);
 }
 
-.map-clear-btn:hover { background: var(--danger); color: white; }
+.map-clear-btn:hover { background: var(--danger); color: var(--on-danger); }
 
 .map-skip-btn {
     background: var(--bg-tertiary);

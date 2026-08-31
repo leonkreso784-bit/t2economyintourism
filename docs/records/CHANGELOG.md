@@ -5,6 +5,20 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **MREŽA C1: fatalno 10 → 0 — nevidljivog teksta više nema ni u jednoj temi**
+
+### Promijenjeno
+- **Novi tokeni `--color-on-ok`/`--color-on-danger`** po temi (`css/tokens.css`) + legacy aliasi
+  `--on-success`/`--on-danger` (`css/variables.css`) — izvedba ADR-032: semantika je UVIJEK puna
+  ispuna, prilagođava se tinta (bijelo u `academic`/`paper`, `#14161a` u `chalk`/`mint`).
+- **10 fatalnih pravila palete → 0** u 8 css datoteka: 7 zamjenom zakucanog `white`/`#fff` tokenom
+  (quiz točno/netočno, danger-hoveri u blind-map/progress/sidebar/profile ×2), 3 s izmjerenom
+  odlukom (`category-btn.active small` → `inherit` · `action-btn.tertiary` → gradijent iz
+  ok-tokena, briše zakucani `#059669` · `learn-card-header span` → puna ispuna `--primary-dark`,
+  jer bi rgba-pill u `paper` pao na 4.22).
+- **Osnovice spuštene:** `check:palette` 93 → **77** · `check:tokens` 3 → **2** iznimke.
+  Dokaz: `check:contrast` 358 ✅ · `check:contrast:live` 0 ispod praga (13 ruta × 4 teme) ✅.
+
 ## 2026-09-01 (FABLE) — **MREŽA B6: CI shardanje — blok B zatvoren** · **ADR-033: dvojezičnost se PREVODI**
 
 ### Promijenjeno

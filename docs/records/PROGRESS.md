@@ -5,6 +5,21 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-01 (FABLE) — C1: odluka iz kolovoza čekala je izvedbu — i mjera je srušila jedno „zadrži izgled"
+
+MREŽA blok C otvoren ciglom C1: **fatalno 10 → 0**. Sedam pravila palo je čistom zamjenom
+`white`→`--on-danger`/`--on-success` (mehanizam iz ADR-032, tokeni po temi kao `--color-on-brand`).
+Vrijedan dio su tri pravila izvan ADR-032, koja su po specu tražila odluku S MJEROM — i mjera je
+jedno lijepo rješenje oborila: zadržati poluprozirni bijeli pill u learn-headeru s tintom teme
+palo bi u `paper` na 4.22, pa je pill dobio punu ispunu tamnijim krajem gradijenta (6.02–9.50).
+Usput počišćen i krivi smjer tokena: `--danger-text` (tinta!) kao POZADINA u `profile.css`, i
+`--danger-bg` koji nikad nije ni definiran — var s fallbackom bez definicije, točno razred koji
+`check:tokens` zove „zakucana vrijednost s ukrasom". Osnovice: palette 93 → 77, tokens 3 → 2.
+⚠️ Prije cigle razriješen nesporazum: postoje DVIJE serije „C" (redizajn C0–C7 · MREŽA C1–C4) —
+Leon je „C1" pročitao kao davno gotov landing. Ubuduće: pisati **MREŽA-C1**, ne golo „C1".
+
+---
+
 ## 2026-09-01 (FABLE) — B6: prvi push je bio dokaz za tri stvari odjednom — i naplatio dug star tri tjedna
 
 Blok B zatvoren. Sama cigla je bila mala (Playwright u matrix-job s 2 sharda, `workers: 1`

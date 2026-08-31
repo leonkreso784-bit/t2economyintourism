@@ -24,6 +24,8 @@
     --color-brand-500: #1657d0;
     --color-brand-600: #0f3f9c;
     --color-on-brand: #ffffff;
+    --color-on-ok: #ffffff;
+    --color-on-danger: #ffffff;
     --color-on-tint-dark: #14161a;
     --color-on-tint-light: #ffffff;
     --color-mark: #ffd24a;
@@ -88,6 +90,8 @@
   --color-brand-600: #1f47a8;
   --color-on-brand: #ffffff;
   --color-mark: #ffd24a;
+  --color-on-ok: #ffffff;
+  --color-on-danger: #ffffff;
   --color-ok: #15703c;
   --color-ok-strong: #0f5c30;
   --color-warn: #8a5a00;
@@ -119,6 +123,8 @@
   --color-brand-600: #d3a233;
   --color-on-brand: #1e1f1c;
   --color-mark: rgb(242 193 78 / 0.30);
+  --color-on-ok: #14161a;
+  --color-on-danger: #14161a;
   --color-ok: #8fbf6b;
   --color-ok-strong: #6da34d;
   --color-warn: #e3a93c;
@@ -150,6 +156,8 @@
   --color-brand-600: #0f3f9c;
   --color-on-brand: #ffffff;
   --color-mark: #ffd24a;
+  --color-on-ok: #ffffff;
+  --color-on-danger: #ffffff;
   --color-ok: #10794a;
   --color-ok-strong: #0b5e39;
   --color-warn: #8a5800;
@@ -181,6 +189,8 @@
   --color-brand-600: #2fa88c;
   --color-on-brand: #0b1a1c;
   --color-mark: rgb(79 201 171 / 0.30);
+  --color-on-ok: #14161a;
+  --color-on-danger: #14161a;
   --color-ok: #6bcb77;
   --color-ok-strong: #46b36a;
   --color-warn: #e2b53f;
@@ -209,6 +219,8 @@
   --warning-text: var(--color-warn-ink);
   --success: var(--color-ok);
   --on-primary: var(--color-on-brand);
+  --on-success: var(--color-on-ok);
+  --on-danger: var(--color-on-danger);
   --bg-primary: var(--color-surface-0);
   --bg-secondary: var(--color-surface-1);
   --bg-tertiary: var(--color-surface-2);
@@ -1002,7 +1014,7 @@ section[id$="-page"] {
 }
 .close-sidebar-btn:hover {
   background: var(--danger);
-  color: white;
+  color: var(--on-danger);
 }
 .sidebar-content {
   flex: 1;
@@ -1936,7 +1948,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   flex-shrink: 0;
 }
 .category-btn.active small {
-  color: rgba(255,255,255,0.8);
+  color: inherit;
 }
 .quick-start h2 {
   margin-bottom: 1rem;
@@ -1981,8 +1993,8 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--primary);
 }
 .action-btn.tertiary {
-  background: linear-gradient(135deg, var(--secondary), #059669);
-  color: white;
+  background: linear-gradient(135deg, var(--success), var(--secondary));
+  color: var(--on-success);
 }
 .flashcard-container h1 {
   font-size: 1.3rem;
@@ -2491,12 +2503,12 @@ sokrat-modal.sokrat-confirm-modal > * {
 .answer-btn.correct {
   border-color: var(--success);
   background: var(--success);
-  color: white;
+  color: var(--on-success);
 }
 .answer-btn.wrong {
   border-color: var(--danger);
   background: var(--danger);
-  color: white;
+  color: var(--on-danger);
 }
 .answer-btn.disabled {
   cursor: not-allowed;
@@ -3177,7 +3189,7 @@ sokrat-modal.sokrat-confirm-modal > * {
 }
 .reset-btn:hover {
   background: var(--danger);
-  color: white;
+  color: var(--on-danger);
 }
 @media (min-width: 768px) {
   .progress-card.main {
@@ -3430,7 +3442,7 @@ sokrat-modal.sokrat-confirm-modal > * {
 }
 .map-clear-btn:hover {
   background: var(--danger);
-  color: white;
+  color: var(--on-danger);
 }
 .map-skip-btn {
   background: var(--bg-tertiary);
@@ -5143,8 +5155,8 @@ sokrat-modal.sokrat-confirm-modal > * {
 }
 #learn .learn-card-header span {
   font-size: 0.8rem;
-  background: rgba(255, 255, 255, 0.15);
-  color: rgba(255, 255, 255, 0.9);
+  background: var(--primary-dark);
+  color: inherit;
   padding: 4px 10px;
   border-radius: 12px;
   flex-shrink: 0;
@@ -8682,9 +8694,9 @@ sokrat-modal.auth-modal > * {
   gap: 0.35rem;
 }
 .admin-cat-del:hover, .admin-del:hover {
-  background: var(--danger-bg, #7f1d1d);
-  color: #fff;
-  border-color: var(--danger-text, #f87171);
+  background: var(--danger);
+  color: var(--on-danger);
+  border-color: var(--danger);
 }
 .admin-edit-btn[disabled] {
   opacity: 0.35;
@@ -8913,9 +8925,9 @@ sokrat-modal.auth-modal > * {
   justify-content: center;
 }
 .admin-quiz-delopt:hover {
-  background: var(--danger-text, #f87171);
-  color: #fff;
-  border-color: var(--danger-text, #f87171);
+  background: var(--danger);
+  color: var(--on-danger);
+  border-color: var(--danger);
 }
 .admin-quiz-addopt {
   align-self: flex-start;

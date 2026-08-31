@@ -196,7 +196,7 @@
 
 .reset-btn:hover {
     background: var(--danger);
-    color: white;
+    color: var(--on-danger);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════

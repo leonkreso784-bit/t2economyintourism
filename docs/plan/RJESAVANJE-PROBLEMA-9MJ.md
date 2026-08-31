@@ -398,6 +398,20 @@ Dokaz je `check:contrast` (358 provjera kroz sve teme) + `check:contrast:live` (
 | **C3** | **blago 21 → 0** — rgba bijela/crna plohe i rubovi | plohe dolaze iz tokena |
 | **C4** | **stara 46 → 0** — indigo/slate ostaci | osnovica `check:palette` **93 → 0** |
 
+**✅ C1 ISHOD (2026-09-01).** Fatalno **10 → 0**, točno mehanizmom iz ADR-032: novi tokeni
+`--color-on-ok`/`--color-on-danger` po temi (bijelo u `academic`/`paper`, `#14161a` u
+`chalk`/`mint` — isti raspored kao `--color-on-brand`) + legacy aliasi `--on-success`/`--on-danger`
+u `variables.css`. Sedam pravila iz ADR-032 klase palo je zamjenom `white`→token; **tri izvan
+ADR-032 dobila su odluku s mjerom**, kako je ova sekcija tražila: `category-btn.active small` →
+`inherit` (5.65–9.87) · `action-btn.tertiary` → gradijent iz ok-tokena umjesto zakucanog `#059669`
++ `--on-success` (najgori kraj 5.45) · `learn-card-header span` → **puna ispuna `--primary-dark`**
+umjesto rgba-pilla, jer bi zadržani poluprozirni pill pao u `paper` na **4.22** (ovako 6.02–9.50).
+Usput: `--danger-bg`/`--danger-text` kao pozadine u `profile.css` (var s fallbackom bez definicije
+= zakucana vrijednost s ukrasom) zamijenjeni pravom `--danger` ispunom → osnovica `check:tokens`
+**3 → 2** imenovane iznimke. Dokaz po specu: `check:contrast` 358 provjera ✅ ·
+`check:contrast:live` 0 elemenata ispod praga na 13 ruta × 4 teme ✅ · osnovica `check:palette`
+**93 → 77** (usput blago 21 → 20 — pill više nije rgba ploha).
+
 **Zašto sve četiri, a ne samo fatalne.** Kad čegrtaljka padne na nulu, osnovica se zakuca ondje i
 **C5b/2, C5b/3, C6 i C7 više nikad ne moraju misliti o boji** — jedna cijela dimenzija ispada iz
 svake preostale cigle redizajna.

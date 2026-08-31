@@ -198,8 +198,10 @@
 
 #learn .learn-card-header span {
     font-size: 0.8rem;
-    background: rgba(255, 255, 255, 0.15);
-    color: rgba(255, 255, 255, 0.9);
+    /* puna ispuna tamnijim krajem gradijenta umjesto rgba-bijele: poluprozirni pill
+       s bijelim tekstom pada u `paper` na 4.22; ovako 6.02–9.50 (MREŽA C1) */
+    background: var(--primary-dark);
+    color: inherit;
     padding: 4px 10px;
     border-radius: 12px;
     flex-shrink: 0;

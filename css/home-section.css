@@ -99,7 +99,9 @@
 .category-btn span { font-weight: 600; color: var(--text-primary); font-size: 0.9rem; flex: 1; }
 .category-btn.active span { color: inherit; }
 .category-btn small { color: var(--text-muted); font-size: 0.75rem; flex-shrink: 0; }
-.category-btn.active small { color: rgba(255,255,255,0.8); }
+/* `inherit`, NE zakucana bijela — isti razlog kao `span` iznad: roditelj bira tintu
+   teme (`--on-primary`); izmjereno 5.65–9.87 kroz sve teme (MREŽA C1). */
+.category-btn.active small { color: inherit; }
 
 .quick-start h2 { margin-bottom: 1rem; font-size: 1.1rem; }
 
@@ -148,6 +150,8 @@
 }
 
 .action-btn.tertiary {
-    background: linear-gradient(135deg, var(--secondary), #059669);
-    color: white;
+    /* oba kraja gradijenta iz ok-tokena (bio zakucan #059669), tinta po temi:
+       najgori kraj 5.45 (academic), tamne teme 6.03+ (MREŽA C1) */
+    background: linear-gradient(135deg, var(--success), var(--secondary));
+    color: var(--on-success);
 }

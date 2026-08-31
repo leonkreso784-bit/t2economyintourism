@@ -396,7 +396,7 @@
 .admin-cat-ctrls { flex: 0 0 auto; display: inline-flex; gap: 0.35rem; }
 /* U6e — grupa kontrola stavke (uredi ✎ + obriši 🗑; U6e-2 doda ↑↓) */
 .admin-card-ctrls { flex: 0 0 auto; display: inline-flex; gap: 0.35rem; }
-.admin-cat-del:hover, .admin-del:hover { background: var(--danger-bg, #7f1d1d); color: #fff; border-color: var(--danger-text, #f87171); }
+.admin-cat-del:hover, .admin-del:hover { background: var(--danger); color: var(--on-danger); border-color: var(--danger); }
 .admin-edit-btn[disabled] { opacity: 0.35; cursor: not-allowed; }
 .admin-edit-btn[disabled]:hover { background: var(--bg-tertiary); color: var(--text-secondary); border-color: var(--border); }
 .admin-add-btn--cat { margin-top: 1rem; width: 100%; justify-content: center; padding: 0.6rem 0.85rem; font-size: 0.9rem; }
@@ -485,7 +485,7 @@
     color: var(--text-secondary); cursor: pointer; font-size: 0.8rem;
     display: inline-flex; align-items: center; justify-content: center;
 }
-.admin-quiz-delopt:hover { background: var(--danger-text, #f87171); color: #fff; border-color: var(--danger-text, #f87171); }
+.admin-quiz-delopt:hover { background: var(--danger); color: var(--on-danger); border-color: var(--danger); }
 .admin-quiz-addopt {
     align-self: flex-start; margin-top: 0.55rem; padding: 0.35rem 0.7rem;
     border: 1px dashed var(--border); border-radius: 8px;
