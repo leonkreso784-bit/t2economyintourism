@@ -19,7 +19,15 @@ jobs:
   build:
     name: Lint + verify + tests
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # ⚠️ 20 → 30 (2026-08-31). Job je istekao na 20 min 16 s i GitHub ga je OTKAZAO — nije pao
+    # nijedan test. Izmjereno kako je budžet pojeden rastom suite, ne jednom izmjenom:
+    #   4c1817f (29. 8.) 16.8 min · 8a9479f 18.1 · e889825 18.4 · 9237006 20.3 = otkazan
+    # Na zadnjem zelenom runu ostajalo je 1.9 min margine, pa je svaka varijacija runnera
+    # tipala preko. Timeout je zaštita od VISEĆEG procesa, ne budžet izvedbe: kad postane
+    # ovo drugo, prestaje razlikovati kvar od sporog stroja i počne javljati lažne padove.
+    # ⚠️ Ako opet priđe granici, sljedeći potez NIJE novo podizanje broja nego `workers`
+    # (danas 1, radi determinizma) ili sharding — 533 testa u jednom procesu je uzrok.
+    timeout-minutes: 30
 
     steps:
       - name: Checkout

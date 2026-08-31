@@ -146,6 +146,15 @@ iz artefakta od **87 MB** koji traži prijavu — a svaki pokušaj košta rundu 
 ⚠️ **GitHubov javni API ima 60 zahtjeva/h** — ne provjeravati CI u petlji, inače ostaneš bez
 očitanja baš kad ti treba.
 
+⚠️ **OTKAZAN ≠ PAO.** Run može završiti kao `cancelled` a da nijedan test nije pao — to je
+**istek `timeout-minutes`**. Razlikuju se po tome što otkazani run **nema anotaciju s nazivom
+testa**, samo korak `-> cancelled`. Izmjereno 2026-08-31: job „Lint + verify + tests" rastao je
+**16.8 → 18.1 → 18.4 → 20.3 min** dok je granica stajala na 20, pa je posljednji otkazan uz
+**1.9 min** margine na prethodnom zelenom runu. *Timeout je zaštita od visećeg procesa, ne budžet
+izvedbe* — kad postane ovo drugo, prestaje razlikovati kvar od sporog stroja. Granica je podignuta
+na 30; **sljedeći put nije novo podizanje broja** nego `workers` (danas 1, radi determinizma) ili
+sharding: 533 testa u jednom procesu je uzrok, a ne simptom.
+
 ## ⚠️ ZELENA BRANA NIJE DOKAZ AKO NE GLEDA (2026-08-31, C5b/0)
 
 Prethodno poglavlje govori o brani koja **promijeni ishod** bez promjene u proizvodu. Ovo je
