@@ -5,6 +5,19 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-31 (FABLE) — B4: bug od tri godišnja doba postao je popis od 23 retka
+
+BUG-039/037 su živjeli kao „postoji negdje, četiri puta viđeno". `check:cascade` ih je
+pretvorio u izmjeren popis: 57 kandidat-parova, 23 stvarna gašenja, svako imenovano s
+uvjetima i vrijednostima (tko koga, čime, gdje). U popisu su prepoznatljivi svi zapisani
+oblici — `.categories` s istim pragovima (presuđuje samo redoslijed), `.hero h1` ljestva
+malih telefona pod blanket-upitom, landscape pod upitom koji o orijentaciji ne zna ništa.
+Redoslijed datoteka se čita iz manifesta `css/app.css` — jedina istina o redoslijedu — a
+obrnuta provjera ⑫ dokazuje da abeceda ne presuđuje. Prvi smjer anotacije („X gasi Y")
+bio je obrnut — uhvaćeno usporedbom s tablicom u BUG-039 prije nego je išta committano.
+
+---
+
 ## 2026-08-31 (FABLE) — B3c: popravak na jedinom mjestu kuda sve prolazi — i mjerenje presudilo detalj
 
 `.katex-display` je popravljen u `renderMath()` — jedinom mjestu kroz koje svaka formula

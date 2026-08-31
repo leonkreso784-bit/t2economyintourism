@@ -22,6 +22,9 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 - Status: 🔴 **otvoren** — svjesno odgođen, jer ispravak je **odluka o izgledu**, a našao ga je
   migracijski korak (C5a/3, spec §11.3) · Težina: **nizak** — sve je upotrebljivo, samo nije ono
   što je napisano · Našao: **mjerenje pred migraciju C5a/3**, ne prijava.
+  **➕ Od 2026-08-31 (MREŽA B4) cijeli razred MJERI `npm run check:cascade`** (u preflightu):
+  23 zatečena gašenja imenuje `scripts/cascade-baseline.json`, svako novo = pad. Bug time
+  prestaje biti „postoji negdje" — popis s uvjetima i vrijednostima čeka C7.
 
 - **Opis / izmjereno** (Chromium, ruta `#/subject/te2/first-midterm/quiz`):
 

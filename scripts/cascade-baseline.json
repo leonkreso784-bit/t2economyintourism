@@ -1,0 +1,28 @@
+{
+  "_zasto": "Zatecena gasenja u responsive/* (MREZA B4): kasnija datoteka gasi raniju jer medijski upit ne nosi specificnost (BUG-039/037). Odluka o IZGLEDU je C7 -- dotad brana pada samo na NOVOM gasenju. Spusta se s --update. Vidi scripts/check-cascade.js.",
+  "tolerirano": {
+    ".categories | grid-template-columns | responsive/01-up-and-phone-breakpoints.css@@media (min-width: 1024px) -> responsive/06-component-improvements.css@@media (min-width: 1024px)": "repeat(4, 1fr) gasi repeat(3, 1fr)",
+    ".categories | grid-template-columns | responsive/01-up-and-phone-breakpoints.css@@media (min-width: 1024px) -> responsive/06-component-improvements.css@@media (min-width: 480px)": "repeat(2, 1fr) gasi repeat(3, 1fr)",
+    ".categories | grid-template-columns | responsive/01-up-and-phone-breakpoints.css@@media (min-width: 768px) -> responsive/06-component-improvements.css@@media (min-width: 1024px)": "repeat(4, 1fr) gasi repeat(2, 1fr)",
+    ".categories | grid-template-columns | responsive/01-up-and-phone-breakpoints.css@@media (min-width: 768px) -> responsive/06-component-improvements.css@@media (min-width: 768px)": "repeat(3, 1fr) gasi repeat(2, 1fr)",
+    ".category-btn span | font-size | responsive/01-up-and-phone-breakpoints.css@@media (max-width: 374px) -> responsive/02-mobile-core.css@@media (max-width: 767px)": "0.9rem gasi 0.8rem",
+    ".category-btn | min-height | responsive/02-mobile-core.css@@media (max-width: 767px) -> responsive/06-component-improvements.css@@media (max-width: 767px) and (hover: none) and (pointer: coarse)": "48px gasi 70px",
+    ".cta-button | font-size | responsive/02-mobile-core.css@@media (max-width: 767px) -> responsive/05-device-sizes.css@@media screen and (max-width: 374px)": "0.9rem gasi 0.95rem",
+    ".cta-button | padding | responsive/02-mobile-core.css@@media (max-width: 767px) -> responsive/05-device-sizes.css@@media screen and (max-height: 500px) and (orientation: landscape)": "10px 20px gasi 0.875rem 1.5rem",
+    ".cta-button | padding | responsive/02-mobile-core.css@@media (max-width: 767px) -> responsive/05-device-sizes.css@@media screen and (max-width: 374px)": "12px 20px gasi 0.875rem 1.5rem",
+    ".filter-btn | min-height | responsive/04-mobile-extra.css@@media (max-width: 374px) -> responsive/06-component-improvements.css@@media (max-width: 767px) and (hover: none) and (pointer: coarse)": "48px gasi 40px",
+    ".hero h1 | font-size | responsive/01-up-and-phone-breakpoints.css@@media (max-width: 374px) -> responsive/02-mobile-core.css@@media (max-width: 767px)": "1.5rem gasi 1.3rem",
+    ".hero h1 | font-size | responsive/01-up-and-phone-breakpoints.css@@media (min-width: 390px) and (max-width: 427px) -> responsive/02-mobile-core.css@@media (max-width: 767px)": "1.5rem gasi 1.6rem",
+    ".hero h1 | font-size | responsive/01-up-and-phone-breakpoints.css@@media (min-width: 428px) and (max-width: 767px) -> responsive/02-mobile-core.css@@media (max-width: 767px)": "1.5rem gasi 1.75rem",
+    ".hero | padding | responsive/02-mobile-core.css@@media (max-width: 767px) -> responsive/03-modes-a11y-print.css@@media (max-height: 500px) and (orientation: landscape)": "0.5rem 0 gasi 0.75rem 0",
+    ".quick-actions | gap | responsive/02-mobile-core.css@@media (max-width: 767px) -> responsive/04-mobile-extra.css@@media (max-width: 767px)": "0.75rem gasi 0.6rem",
+    ".quick-actions | padding | responsive/02-mobile-core.css@@media (max-width: 767px) -> responsive/04-mobile-extra.css@@media (max-width: 767px)": "1rem gasi 0 0.25rem",
+    ".stat-card .stat-number | font-size | responsive/01-up-and-phone-breakpoints.css@@media (max-width: 374px) -> responsive/02-mobile-core.css@@media (max-width: 767px)": "1.4rem gasi 1.25rem",
+    ".stat-card h3 | font-size | responsive/01-up-and-phone-breakpoints.css@@media (max-width: 374px) -> responsive/02-mobile-core.css@@media (max-width: 767px)": "1.4rem gasi 1.25rem",
+    ".stat-card | padding | responsive/01-up-and-phone-breakpoints.css@@media (min-width: 428px) and (max-width: 767px) -> responsive/02-mobile-core.css@@media (max-width: 767px)": "0.875rem gasi 1.25rem",
+    ".stat-card | padding | responsive/01-up-and-phone-breakpoints.css@@media (min-width: 428px) and (max-width: 767px) -> responsive/04-mobile-extra.css@@media (max-width: 767px)": "1rem gasi 1.25rem",
+    ".stat-card | padding | responsive/02-mobile-core.css@@media (max-width: 767px) -> responsive/04-mobile-extra.css@@media (max-width: 767px)": "1rem gasi 0.875rem",
+    ".stats-overview | gap | responsive/01-up-and-phone-breakpoints.css@@media (min-width: 428px) and (max-width: 767px) -> responsive/02-mobile-core.css@@media (max-width: 767px)": "0.6rem gasi 1rem",
+    "body | padding-bottom | responsive/01-up-and-phone-breakpoints.css@@media (min-width: 768px) -> responsive/03-modes-a11y-print.css@@media (max-height: 500px) and (orientation: landscape)": "calc(var(--safe-bottom) + 60px) gasi 0"
+  }
+}

@@ -5,6 +5,15 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-31 (FABLE) — **MREŽA B4: `check:cascade` — tko koga gasi u `responsive/*` postaje izmjeren popis**
+
+### Dodano
+- **`scripts/check-cascade.js`** (u preflightu): isti selektor + isto svojstvo + različita
+  vrijednost + preklopljeni medijski uvjeti u dvjema `responsive/*` datotekama = gašenje
+  (mehanika BUG-039/037); redoslijed iz manifesta `css/app.css`. Izmjereno **23 zatečena**,
+  imenovana u `scripts/cascade-baseline.json`; nova pojava = pad; izgled ostaje C7.
+- **`tests/unit/check-cascade-gate.test.js`** — 13 obrnutih provjera (obje strane brane).
+
 ## 2026-08-31 (FABLE) — **MREŽA B3c: skrolabilne formule i tablice dohvatljive tipkovnicom — a11y osnovica opet prazna**
 
 ### Popravljeno

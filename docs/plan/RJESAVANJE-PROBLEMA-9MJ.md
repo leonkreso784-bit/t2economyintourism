@@ -316,6 +316,23 @@ BUG-039 i BUG-037 su **četiri pojave istog mehanizma**: kasnija datoteka gasi r
 
 Zato ovdje **ne odlučujemo širine.** Brana mehanički nalazi selektore koji se pojavljuju u više `responsive/*` datoteka s preklapajućim uvjetima i prijavljuje **tko koga gasi**. Bug time prelazi iz *„postoji negdje"* u **izmjeren popis**, a odluka o izgledu ostaje C7 — samo s punim podacima.
 
+#### B4 — ISHOD (2026-08-31) · ✅ gašenje je IZMJEREN POPIS: 23 zatečena, imenovana
+
+**`scripts/check-cascade.js`** (u preflightu): parsira `responsive/*` (redoslijed čita iz
+**manifesta `css/app.css`**, ne abecedno), modelira medijske uvjete (širina/visina kao
+intervali; orijentacija/hover/pointer… diskretno; zarez = OR preko kartezijevog produkta)
+i prijavljuje parove **isti selektor + isto svojstvo + različita vrijednost + preklopljeni
+uvjeti** — kasnija datoteka gasi raniju. Raniji `!important` i ista vrijednost se NE
+prijavljuju (tamo kasnija ne pobjeđuje / nema posljedice). **Izmjereno: 6 datoteka ·
+165 pravila · 321 deklaracija · 57 kandidat-parova → 23 gašenja**, sva imenovana u
+`scripts/cascade-baseline.json` — među njima točno oblici iz BUG-039 (`.categories` s
+ISTIM pragovima 01 vs 06; `.hero h1` ljestva iz `01` pod `02 @max-767`) i BUG-037
+(landscape-pravila pod kasnijim upitom bez orijentacije). **Odluka o izgledu ostaje C7**
+— brana pada samo na NOVOM gašenju. Granice mjere u zaglavlju skripte (doseg SAMO
+`responsive/*`: gašenje komponentnih datoteka postoji, ali je dijelom NAMJERNO —
+`app.css` learn/editor svjesno stavlja POSLIJE responsivea). 13 obrnutih provjera:
+`tests/unit/check-cascade-gate.test.js`.
+
 ### B5 · `check:i18n`
 Zakucani engleski nije bila jedna traka nego **razred** (backlog, 2026-08-24). Brana: nijedan tekst vidljiv korisniku ne smije biti zakucan mimo `js/i18n.js`. Osnovica imenuje zatečeno.
 
