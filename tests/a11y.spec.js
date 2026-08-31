@@ -1,5 +1,7 @@
 // Accessibility gate (FOUNDATION_PLAN F1, brick 1D.2). axe-core preko Playwrighta.
-// TVRDI gate: 0 serious/critical violationa na ključnim ekranima. Determinističan (ne timing) → pouzdan u CI-u.
+// TVRDI gate: 0 gateanih violationa na ključnim ekranima — od MREŽE B3b presuda je WCAG razina
+// A/AA ∪ težina serious/critical, uz imenovanu osnovicu (tests/a11y-baseline.json).
+// Determinističan (ne timing) → pouzdan u CI-u.
 //
 // Napomena: skeniramo na JEDNOM viewportu (prvi projekt) da izbjegnemo 4× šum istih nalaza; a11y nije viewport-ovisan
 // za ono što axe provjerava (kontrast/role/labele/alt). Pokreće se kroz Playwright (`test:responsive`/CI).
@@ -17,7 +19,7 @@
 const { test, expect } = require('@playwright/test');
 const { skeniraj } = require('./helpers/axe-gate');
 
-test.describe('a11y — no serious/critical axe violations', () => {
+test.describe('a11y — 0 gateanih axe prekršaja (WCAG A/AA ∪ serious/critical)', () => {
   test('landing', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'iPhone-SE-375', 'a11y se skenira na jednom viewportu');
     await page.goto('/');

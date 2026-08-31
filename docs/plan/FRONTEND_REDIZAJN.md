@@ -186,8 +186,9 @@ ali **`[data-theme="light"]` ne postoji nigdje u CSS-u**, a `.theme-toggle` gumb
 ## 5 · Gateovi koji moraju ostati zeleni
 
 `npm run preflight` (uklj. `check:docs`, css drift, `bump:check` i — od C1 — **`check:tailwind`**) ·
-`npm run test:responsive` (iPhone profili) · `npm run test:authed` · axe **0 serious/critical** na
-svaku rutu koju pokriva `tests/a11y.spec.js` · Lighthouse budžeti.
+`npm run test:responsive` (iPhone profili) · `npm run test:authed` · axe **0 gateanih prekršaja**
+(od MREŽE B3b presuda je **WCAG razina A/AA ∪ težina serious/critical**, uz imenovanu osnovicu
+`tests/a11y-baseline.json`) na svaku rutu koju pokriva `tests/a11y.spec.js` · Lighthouse budžeti.
 ⚠️ **Broj testova se ovdje NE piše** — rastao je sa svakom ciglom (zapisanih „304" bilo je krivo
 već pri C4b, gdje je puna suita dala **529 prošlo / 0 palo / 108 preskočeno**), a ispisuje ga sam
 Playwright. Isto vrijedi za „četiri stranice": doseg zna spec-datoteka, ne ova proza.
@@ -857,10 +858,12 @@ Uhvatila su ga dva postojeća unit-testa; **da ih nije bilo, pukao bi u pregledn
 
 #### Ostaje otvoreno
 
-**Skrolabilna ploha mora biti dostupna tipkovnicom** (WCAG 2.1.1; axe `scrollable-region-focusable`).
-`.lb-table-wrap` — i onaj iz v2, koji postoji od U7 — **nema `tabindex`**. Gate to nije uhvatio jer
-axe u našem a11y specu mjeri na **1280 px**, gdje tablica stane i ploha ne skrola. To je **treći
-primjerak istog obrasca u tri cigle** i zapisan je u `BACKLOG.md`, ne popravljen usput.
+~~**Skrolabilna ploha mora biti dostupna tipkovnicom**~~ (WCAG 2.1.1; axe
+`scrollable-region-focusable`) — **✅ ZATVORENO u fazi MREŽA B3c (2026-08-31):** `tabindex` +
+`role="group"` + `aria-label` na `.lb-table-wrap` (oba mjesta) i na aktivnom nositelju
+`.katex-display` (kroz `renderMath()`); a11y brana otad sudi po WCAG razini i skenira i
+kvantitativni predmet na 375 px. U trenutku zapisa gate je mjerio samo na 1280 px — to je bio
+**treći primjerak obrasca „gate koji mjeri jedno stanje tvrdi nešto o jednom stanju"**.
 
 ### 7.12 🧱 C3 · treća cigla — pet `!important` bila su dva puta isti kvar (2026-08-14)
 

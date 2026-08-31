@@ -22,7 +22,7 @@ const { test, expect } = require('@playwright/test');
 const { otvoriStudio } = require('./helpers/studio-entry');
 const { skenirajSveTeme } = require('./helpers/axe-gate');
 
-test.describe('a11y (prijavljen) — 0 serious/critical na vlastitom gradivu i u editoru', () => {
+test.describe('a11y (prijavljen) — 0 gateanih prekršaja (WCAG A/AA ∪ serious/critical) na vlastitom gradivu i u editoru', () => {
   test('Moji materijali — sa STABLOM, ne s pozivom na prijavu', async ({ page }) => {
     await page.goto('/');
     await page.waitForFunction(() => !!window.SokratMaterials && typeof window.navigateTo === 'function');
