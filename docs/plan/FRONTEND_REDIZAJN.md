@@ -4798,8 +4798,10 @@ prolaze AA, a pravila su čitala zakucani hex — token je bio posve nevažan.
 > ⚠️ **`var()` S FALLBACKOM IZGLEDA KAO TEMATIZIRANOST, A BEZ DEFINICIJE JE ZAKUCANA VRIJEDNOST
 > S UKRASOM.** Prebrojano: tri varijable se koriste a **nijedna ne postoji** — `--card-bg`
 > (1 upotreba, dala nevidljiv tekst), `--grad` (1, dala jedno od 11 fatalnih pravila palete) i
-> **`--border-color` (11 upotreba)**. Prve dvije su popravljene; treća je imenovana i ostaje
-> C5b-u jer joj je fallback poluproziran, dakle blijed, ne nevidljiv.
+> **`--border-color` (11 upotreba)**. Prve dvije su popravljene; treća je imenovana i ostavljena
+> C5b-u. **✅ Riješena u fazi MREŽA B1 (2026-08-31)** — preusmjerena na postojeći `var(--border)`;
+> usput izmjereno da je „poluproziran fallback" vrijedio za 1 od 11 (10× je bio pun `#334155`).
+> Brana `check:tokens` sad čuva cijeli razred.
 
 #### 🔧 Što je izvedeno
 
@@ -5097,6 +5099,6 @@ mjerenje (`NIJE NACRTANO: lb-NE-POSTOJI`, izlaz 1).
 
 Izmjereno nakon uvođenja: **20/20 klasa nacrtano, 174 usporedbe × 36 svojstava, 0 razlika.**
 
-⚠️ **Ostaje svjesno otvoreno:** `--border-color` (11 upotreba, varijabla nedefinirana — BUG-041,
-pripada cigli koja te datoteke otvara) · kolačić-traka je ~280 ms ispod AA **dok ulazi**
+⚠️ **Ostaje svjesno otvoreno:** ~~`--border-color`~~ (**✅ riješen u MREŽI B1, 2026-08-31** —
+`var(--border)` + brana `check:tokens`) · kolačić-traka je ~280 ms ispod AA **dok ulazi**
 (WCAG sudi konačno stanje, `prefers-reduced-motion` to gasi — čeka Leonovu odluku).

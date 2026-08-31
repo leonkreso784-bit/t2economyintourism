@@ -1254,6 +1254,11 @@ ne može doći do desnog dijela tablice. axe to pokriva pravilom `scrollable-reg
 
 **Zašto nijedan gate nije pisnuo:** axe u `a11y.spec.js`/`a11y.authed.spec.js` mjeri na **1280 px**,
 gdje tablica stane i ploha **ne skrola** — a pravilo se okida tek kad prelijev stvarno postoji.
+**⚠️ Dopuna iz mjerenja (MREŽA B3a, 2026-08-31):** javni spec od faze TELEFON vrti na **375 px**
+(gornja tvrdnja vrijedi još samo za authed projekt) — ali tablice i na 375 px svugdje STANU
+(0 preljeva od 9 wrapova), pa je ovaj zapis **latentan**. Aktivni nositelj istog prekršaja su
+**`.katex-display` formule** (9× serious/wcag2a na macro + entrepreneurship — površine koje se ne
+skeniraju). Brojke i posljedice za B3b/B3c: `docs/plan/RJESAVANJE-PROBLEMA-9MJ.md` §4·B3a.
 Novi `layout.authed.spec.js` mjeri prave širine, ali on ne vrti axe.
 **To je treći primjerak istog obrasca u tri cigle zaredom** (§7.9 boja · §7.10 teme · §7.11 širina):
 **gate koji mjeri jedno stanje tvrdi nešto o jednom stanju.**

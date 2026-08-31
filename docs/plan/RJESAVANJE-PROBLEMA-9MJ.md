@@ -246,7 +246,7 @@ i „dokazalo" da baza spava. Mjerač je opet bio prvi kvar; popravak je asinkro
 komentar koji to drži zapamćenim.
 
 ### B3 · a11y po WCAG **razini**, ne po axe **težini**
-`tests/helpers/axe-gate.js` filtrira `['serious','critical']`. Pravilo `scrollable-region-focusable` nosi tagove `wcag2a` + `wcag211` — dakle **razina A** — ali težinu `moderate`. Prag je izabran po *težini*, a WCAG sudi po *razini*: dvije ljestvice, i mi smo ih pobrkali. Zato `.lb-table-wrap` bez `tabindex` stoji u backlogu od 2026-08-14 uz zelenu branu.
+`tests/helpers/axe-gate.js` filtrira `['serious','critical']`. Pravilo `scrollable-region-focusable` nosi tagove `wcag2a` + `wcag211` — dakle **razina A** — ali težinu `moderate` *(⚠️ oboreno mjerenjem u B3a: u zakucanom axeu je `serious` — v. ISHOD niže)*. Prag je izabran po *težini*, a WCAG sudi po *razini*: dvije ljestvice, i mi smo ih pobrkali. Zato `.lb-table-wrap` bez `tabindex` stoji u backlogu od 2026-08-14 uz zelenu branu.
 
 - **B3a — samo mjerenje.** Filtar po tagovima, prebroji, **ništa ne popravljaj.** Opseg nije poznat unaprijed i to se ne skriva.
 - **B3b — prebacivanje brane** + osnovica koja nalaze **imenuje**.

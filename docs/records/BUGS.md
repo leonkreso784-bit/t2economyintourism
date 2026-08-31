@@ -200,9 +200,10 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
   to je zakucana vrijednost s ukrasom — i to takva koju pretraživanje po `#hex` teže nalazi jer je
   sakrivena iza imena varijable.
 - **Rješenje.** `--card-bg` → `var(--color-surface-1)`; `--grad` → puna ispuna `--color-brand-500`
-  uz `--color-on-brand` (ADR-032). **`--border-color` (11 upotreba) je ostavljen svjesno** —
-  fallback mu je poluproziran, dakle blijed a ne nevidljiv; pripada ciglama koje te datoteke ionako
-  otvaraju.
+  uz `--color-on-brand` (ADR-032). **`--border-color` (11 upotreba) je tada ostavljen svjesno**, uz obrazloženje
+  „fallback je poluproziran" — **koje je vrijedilo za 1 od 11**: deset ih je nosilo pun tamni
+  `#334155` (izmjereno u MREŽI B1). **✅ Riješen 2026-08-31 (MREŽA B1):** svih 11 → postojeći
+  `var(--border)`, a razred čuva nova brana `check:tokens` (u preflightu).
 - **Lekcija.** **Prije nego `var()` shvatiš kao tematiziranost, provjeri da varijabla postoji.**
   Prebrojano u ovom projektu: tri se koriste a nijedna nije definirana. Brzina provjere:
   usporedi broj definicija i broj upotreba po imenu.
