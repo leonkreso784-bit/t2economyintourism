@@ -5062,3 +5062,33 @@ Ostaje **C5b/2** (`blind-map.css` — 35 od 51 pravila je naše, `index.html`) p
 
 \* `.lb-video__frame` je obrisan kao pravilo pa **vraćen sa samo `display: block`** — v. tablicu gore.
 
+### 12.11 ✅ TRI RUPE IZ C5b/1 ZATVORENE — jedna od njih je bila propust, ne odgoda (2026-08-31)
+
+Revizija na Leonov upit *„je li sve od ovoga riješeno"*. Od svega što je cigla iznijela, tri
+stvari nisu bile zatvorene — i prva nije bila odgoda nego **greška u postupku**.
+
+**① Vodeća kosa crta u `css:diff` dobila je BRANU, dvije cigle prekasno.** Taj je kvar bio
+**deveta** pojava „mjerač je prvi kvar" (C5b/0) i tada je uredno zapisan u spec, `CLAUDE.md` i
+memoriju. U C5b/1a se **ponovio istoj osobi koja je zapis napisala** — alat je javio zeleno na
+1131 elemenata umjesto 8041. ADR-027 traži da rub koji prepoznaš **isti čas dobije test**; ovaj
+je dobio samo prozu, dvaput, i dvaput nije upalio. *Proza ne izvršava ništa.*
+Sada `provjeriRute()` pada na: vodeću crtu · putanju od MSYS-a (`:` ili `Program Files`, uz
+uputu `MSYS_NO_PATHCONV=1`) · rutu koja ne počinje s `#/`. Obrnuta provjera: sve tri krive rute
+padnu, ispravna prođe.
+
+**② `npm run blocks:diff` — dokaz za blokove gradiva postao je ALAT, ne jednokratna sonda.**
+Dokaz iz C5b/1b živio je u scratchpadu, dakle nitko ga nije mogao ponoviti, a sljedeći bi ga
+gradio ispočetka — vjerojatno s istim kvarom (ključ od imena klasa). Skripta nosi oba pravila
+zapisana u zaglavlju: **ključ je strukturni položaj, nikad ime klase** (izmjereno: 138 lažnih
+razlika) i **pokrivenost se dokazuje prije razlike**.
+
+**③ Pokrivenost više nije ad-hoc.** Alat prvo provjeri da je svaka od **20** klasa iz `META`
+doista u DOM-u i **padne ako nije** — uključujući `.lb-video__play` (postoji samo PRIJE klika na
+fasadu) i `.lb-video__frame` (samo POSLIJE). Obrnuta provjera: umetnuta nepostojeća klasa obori
+mjerenje (`NIJE NACRTANO: lb-NE-POSTOJI`, izlaz 1).
+
+Izmjereno nakon uvođenja: **20/20 klasa nacrtano, 174 usporedbe × 36 svojstava, 0 razlika.**
+
+⚠️ **Ostaje svjesno otvoreno:** `--border-color` (11 upotreba, varijabla nedefinirana — BUG-041,
+pripada cigli koja te datoteke otvara) · kolačić-traka je ~280 ms ispod AA **dok ulazi**
+(WCAG sudi konačno stanje, `prefers-reduced-motion` to gasi — čeka Leonovu odluku).

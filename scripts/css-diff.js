@@ -89,6 +89,40 @@ const RUTE = (process.env.CSS_DIFF_RUTE || '').split(',').map((r) => r.trim()).f
  * mora pasti, ne izmjeriti nesto drugo.
  */
 const KLIK = (process.env.CSS_DIFF_KLIK || '').trim();
+
+/**
+ * ⚠️ OBLIK RUTE SE PROVJERAVA, NE PRETPOSTAVLJA — i ova brana kasni dvije cigle.
+ *
+ * Alat sam dodaje `/` prije rute (niže: `'http://localhost:' + PORT + '/' + ruta`), pa ruta
+ * napisana s VODEĆOM KOSOM CRTOM daje `//#/…` = prazna stranica. Isto tako, Git Bash na
+ * Windowsu (MSYS) pretvara argument koji počinje kosom crtom u putanju: `#/subject/…` je
+ * dvaput postao `#C:/Program Files/Git/subject/…`. Oba puta je alat izmjerio KRIVU stranicu
+ * i mirno javio „0 razlika".
+ *
+ * ⚠️ Prvi put (C5b/0) je to zapisano u spec, `CLAUDE.md` i memoriju. Drugi put (C5b/1a) se
+ * dogodilo **istoj osobi koja je zapis napisala**. Zato ovdje sad stoji BRANA, a ne bilješka:
+ * *proza ne izvršava ništa* (ADR-027). Spasio je oba puta isključivo brojač opsega u ispisu —
+ * a on traži da netko pogleda broj, dok ovo pada samo od sebe.
+ *
+ * Lijek za MSYS je `MSYS_NO_PATHCONV=1` ispred naredbe, ne druga ruta.
+ */
+function provjeriRute(rute) {
+  for (const r of rute) {
+    if (r.startsWith('/')) {
+      throw new Error('css-diff: ruta „' + r + '" počinje kosom crtom. Alat je sam dodaje → ' +
+        '`//#/…` je PRAZNA stranica. Piši `#/subject/…` bez vodeće crte.');
+    }
+    if (/[:]|Program Files/.test(r)) {
+      throw new Error('css-diff: ruta „' + r + '" izgleda kao putanja, ne kao ruta — Git Bash ' +
+        '(MSYS) ju je pretvorio. Pokreni s `MSYS_NO_PATHCONV=1` ispred naredbe.');
+    }
+    if (!r.startsWith('#/')) {
+      throw new Error('css-diff: ruta „' + r + '" ne počinje s `#/`. Aplikacija je hash-router; ' +
+        'sve osim korijena (prazna ruta) mora izgledati kao `#/subject/…`.');
+    }
+  }
+}
+provjeriRute(RUTE);
 if (!RUTE.length) RUTE.push('');
 
 /**

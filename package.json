@@ -39,6 +39,7 @@
     "check:functions": "node scripts/check-edge-functions.js",
     "css:debt": "node scripts/css-debt.js",
     "css:diff": "node scripts/css-diff.js",
+    "blocks:diff": "node scripts/blocks-diff.js",
     "diff:db": "node scripts/diff-db-vs-files.js",
     "load-probe": "node scripts/load-probe.js",
     "backup": "node scripts/backup-db.js",

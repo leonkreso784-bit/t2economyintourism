@@ -92,7 +92,8 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 
 | naredba | što radi | zašto nije u preflightu |
 |---|---|---|
-| `npm run css:diff` | izračunati stilovi u pravom Chromiumu, radno stablo vs git-referencu kroz **`git worktree`** (cijelo stablo, pa vidi i seobu iz markupa u CSS). ⚠️ **Doseg se PREDAJE — zadani laže tiho:** `CSS_DIFF_RUTE` (inače samo `/`) · `CSS_DIFF_SIRINE` (inače samo 375/768/1280) · `CSS_DIFF_ALL=1`. ⚠️ **NE dvije instance usporedo.** Obrazloženja: zaglavlje `scripts/css-diff.js` | preglednik + port |
+| `npm run css:diff` | izračunati stilovi u pravom Chromiumu, radno stablo vs git-referencu kroz **`git worktree`**. ⚠️ **Doseg se PREDAJE:** `CSS_DIFF_RUTE` · `CSS_DIFF_SIRINE` · `CSS_DIFF_KLIK` (mjeri stanje POSLIJE klika) · `CSS_DIFF_ALL=1`. Oblik rute se od C5b/1 **provjerava i pada**. ⚠️ **NE dvije instance usporedo.** | preglednik + port |
+| `npm run blocks:diff` | isto za **blokove gradiva** kroz `window.renderBlocks`: katalog od `learn-blocks.css` crta **2 od 44 pravila**, pa `css:diff` ondje mjeri prazno. Dokazuje POKRIVENOST pa razliku. | preglednik + worktree |
 | `npm run check:contrast:live` | kontrast kakav se STVARNO iscrta: 4 teme × **13** ruta (`te2` NEMA `exercises`/`blind-map` → imenovani zasebno, inače ih brana ne vidi). `check:contrast` čita tokene i ne zna KORISTI li ih CSS — ovo mjeri ekran; iznimke u `scripts/contrast-live-allow.json` (**prazne**) | preglednik + poslužitelj |
 | `npm run build:og` | crta `og-cover.png` **1200×630** (boje iz tokena, tekst iz i18n) | preglednik; PNG se **commita**, dimenzije mjeri `check:seo` |
 | `npm run css:debt` | što je ostalo za C4–C7: po cigli datoteke, redci, `!important` izvan komentara | read-only, **nije gate** — plan je do 2026-08-25 te brojke nosio **ručno** i obje su ostarile |
@@ -166,15 +167,13 @@ prepisuje** ovamo (ADR-027) — zna ih zadnji **🚀** redak CHANGELOG-a.
 **keširane stare skripte**, ne zbog urednosti sheme.
 ⚠️ **N2 je POLA:** polica pokazuje **skinuto**, ne uniju skinutog i onoga što se uči.
 
-**✅ ZATVORENO:** **POLICA** (P1–P4, §9.17–9.21) · **C4** (§10.1–10.3) · **C5a** (§11) · **C5b/0**
-(§12.7 — 11 boja gradiva bilo je NEVIDLJIVO na zadanoj temi; sad tokeni `--color-ink-*`).
+**✅ ZATVORENO:** **POLICA** (P1–P4, §9.17–9.21) · **C4** (§10.1–10.3) · **C5a** (§11) · **C5b/0** (§12.7)
+· **C5b/1** (§12.9–12.10 — `exercises.css` + `learn-blocks.css`; `math.css` je KaTeX i NE migrira).
 **Slijedi C5b/2 → C6 → C7.** ⚠️ **C5b je DRUGA VRSTA posla — mjera je gotova (§12):**
 `responsive/*` je za nju **prazan**, ali `learn.css` je sagrađen na **`#learn`** (102 od 112
 pravila) pa **utility ne prolazi dok ID stoji**. Prvo skinuti ID uz `css:diff` = 0, pa migrirati;
 **obrnuti rizik je izmjeren i NULA** (§12.2).
-⚠️ **`exercises`/`blind-map` su uvjetni tabovi — `te2` ih NEMA**, mjeri na `statistics`/`geography`;
-a **katalog iscrtava samo 2 od 44 pravila `learn-blocks.css`-a** (gradivo je v1 HTML) → ta se
-datoteka dokazuje kroz `window.renderBlocks`, nikad kataloškom rutom (§12.7).
+⚠️ **`exercises`/`blind-map` su uvjetni tabovi — `te2` ih NEMA**, mjeri na `statistics`/`geography`.
 ⚠️ **Četiri pravila za preostale cigle** (zašto: §10.3, §11.1–11.4): ① prije nego pravilo postane
 utility **izmjeri tko ga danas tuče**; ② **rez ide po SVOJSTVU** — što neki preživjeli `@media` još
 mijenja ne smije u utility; ③ **mjerač je bio prvi kvar 12× u fazi**, i dvaput je vratio **uvjerljiv
