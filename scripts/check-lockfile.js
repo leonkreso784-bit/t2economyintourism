@@ -30,6 +30,15 @@
  *
  * Popravak koji zadovolji oba: `npx npm@10 install` (najstariji npm u igri
  * piše najpotpuniji lock; noviji ga onda prihvati kao nadskup).
+ *
+ * ── Kvar 3 (2026-09-01, `630d134`, MREŽA B6) — zato se drugi npm vrti UVIJEK ──
+ * Stroj i CI su oboje na Nodeu 24 → „isti major, drugog razrješivača nema" — pa
+ * je gate preskakao drugi prolaz. CI je svejedno pao u 5 s: lokalno npm 11.6.2,
+ * runner nosi NAJNOVIJI 11.x (11.19.1), a bomba iz Kvara 1 se opet naoružala
+ * (`@emnapi/core@1.11.3` + `runtime@1.11.3`) — stariji minor je ne vidi, noviji
+ * je vidi. Razrješivači se razlikuju već po MINORU, a runner slijedi najnoviji.
+ * Zato drugi prolaz ide kroz `npx npm@<major>` = najnoviji tog majora (ono što
+ * runner stvarno nosi) i NE preskače se ni kad se majori poklapaju.
  */
 
 'use strict';
@@ -81,22 +90,17 @@ const nodeCI = ciNodeMajor();
 const npmCI = nodeCI ? NPM_ZA_NODE[nodeCI] : null;
 
 const prolazi = [{ ime: `npm ${mojNpm ?? '?'} (lokalni)`, argv: ['npm', 'ci', '--dry-run', '--ignore-scripts'] }];
-if (npmCI && npmCI !== mojNpm) {
+if (npmCI) {
+  // Kvar 3: drugi prolaz se NE preskače ni kad se majori poklapaju — runner nosi
+  // najnoviji minor svog majora, a razrješivači se razlikuju već po minoru.
+  // `npx npm@<major>` razriješi upravo taj najnoviji, pa gate vrti ono što CI vrti.
   prolazi.push({
-    ime: `npm ${npmCI} (CI, Node ${nodeCI})`,
+    ime: `npm ${npmCI} — najnoviji minor (CI, Node ${nodeCI})`,
     argv: ['npx', '--yes', `npm@${npmCI}`, 'ci', '--dry-run', '--ignore-scripts'],
   });
-} else if (!npmCI) {
+} else {
   console.log('   ⚠️  Ne mogu pročitati `node-version` iz ci.yml — provjeravam samo lokalnim npm-om.');
   console.log('      Ako se verzije raziđu, CI može pasti ondje gdje je ovdje zeleno.\n');
-} else {
-  // ⚠️ MREŽA A2 (2026-08-31): otkad stroj i CI vrte isti Node (24 → npm 11), drugog
-  // razrješivača NEMA — pa se ni ne pokreće. To se MORA reći naglas: jedan zeleni
-  // redak ondje gdje su prije stajala dva izgleda kao izgubljen prolaz, a nije.
-  // Divergencija koja je dvaput oborila CI je uklonjena NA IZVORU (`check:node`), ne
-  // ovdje; ovaj gate ostaje kao osiguranje ako se verzije ikad opet raziđu.
-  console.log(`   ℹ️  Jedan npm u igri: stroj i CI (Node ${nodeCI}) oboje vrte npm ${mojNpm}.`);
-  console.log('      Drugi prolaz nije preskočen nego NE POSTOJI — v. `check:node`.\n');
 }
 
 for (const { ime, argv } of prolazi) {
