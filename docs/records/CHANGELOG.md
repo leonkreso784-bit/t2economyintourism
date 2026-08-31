@@ -5,6 +5,18 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-31 (FABLE) — **MREŽA B3a: a11y dug IZMJEREN po WCAG razini — ništa popravljano**
+
+### Dodano
+- **`wcagRazina()`** u `tests/helpers/axe-gate.js` (razina iz axe tagova) + mjerni ispis pod
+  `A11Y_WCAG_MJERENJE=1`; **`tests/unit/wcag-razina.test.js`** — 10 obrnutih provjera.
+
+### Izmjereno (brojke u specu §4·B3a)
+- 46 površina, obje brane: **0 WCAG prekršaja**, 265 nodeova best-practice → zamjena ljestvice
+  na današnjim površinama ne mijenja ništa. Pravi dug: `scrollable-region-focusable` **9×
+  serious/wcag2a** na macro/entrepreneurship @ 375 px — površine koje se NE skeniraju, a
+  prekršitelj su `.katex-display` formule, ne tablice (tablice svugdje stanu).
+
 ## 2026-08-31 (FABLE) — **MREŽA B2: `check:final` imenuje preskočene**
 
 ### Promijenjeno

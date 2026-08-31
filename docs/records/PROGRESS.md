@@ -5,6 +5,24 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-31 (FABLE) — B3a: mjerenje je oborilo premisu vlastite cigle
+
+B3 je pisan uz priču „`moderate` promakne gate-u koji hvata serious/critical". Izmjereno:
+pravilo je **serious** i promaklo bi SVEJEDNO — jer se površine na kojima se okida
+(macro/entrepreneurship, 9× `.katex-display` @ 375 px) uopće ne skeniraju. Peti krivi broj
+u prozi ove faze; kod opet čist. Uz to: tablice iz backloga danas nigdje ne prelijevaju
+(0 od 9 wrapova) — `.lb-table-wrap` je latentan, formule su aktivne.
+
+Mjerni alat: `wcagRazina()` + `A11Y_WCAG_MJERENJE=1` u axe-gateu (10 obrnutih provjera
+razvrstavača, uklj. `wcag2aa` ≠ A). Gate NIJE mijenjan — B3a je samo mjerenje, po specu.
+B3b time dobiva ispravljen dizajn: razina + osnovica + **kvantitativni predmet u popisu
+površina**, inače ljestvica zaključava prazan skup.
+
+Usputno naučeno (u scratch skripti, ne u repou): child-process čiji se start čeka na
+`stdout.once` umire TIHO s exit 0 kad padne na stderr — mjerač bez glasnog pada opet.
+
+---
+
 ## 2026-08-31 (FABLE) — B2: preskočeni finali imaju ime, razlog i zakucan popis
 
 Druga cigla BLOKA B, po specu §4·B2 („preskakanje je legitimno; tiho preskakanje nije").

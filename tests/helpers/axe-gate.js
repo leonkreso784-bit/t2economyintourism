@@ -21,6 +21,32 @@ function detalji(node) {
   return `fg ${d.fgColor} / bg ${d.bgColor} = ${d.contrastRatio} (treba ${d.expectedContrastRatio})`;
 }
 
+// ── B3a (MREŽA, 2026-08-31): WCAG RAZINA iz axe tagova — MJERENJE, ne gate ────
+// Gate gore sudi po axe TEŽINI (serious/critical), a WCAG sudi po RAZINI (A/AA):
+// dvije ljestvice. `scrollable-region-focusable` nosi `wcag2a` (razina A!) uz težinu
+// `moderate` — pa stoji u backlogu od 2026-08-14 uz zelenu branu. B3a samo mjeri koliko
+// je takvih; prebacivanje presude na razinu je B3b. Tagovi: wcag2a/wcag21a/wcag22a = A;
+// s `aa` = AA; bez wcag-taga = best-practice (axeova preporuka, ne WCAG zahtjev).
+function wcagRazina(tags) {
+  if (tags.some((t) => /^wcag2\d*aaa$/.test(t))) return 'AAA';
+  if (tags.some((t) => /^wcag2\d*aa$/.test(t))) return 'AA';
+  if (tags.some((t) => /^wcag2\d*a$/.test(t))) return 'A';
+  return 'best-practice';
+}
+
+// Mjerni ispis (A11Y_WCAG_MJERENJE=1): SVE prekršaje, s obje ljestvice, bez presude.
+function mjerenjePoRazini(results, ime) {
+  if (!process.env.A11Y_WCAG_MJERENJE) return;
+  const sve = results.violations.map((v) => ({
+    id: v.id,
+    impact: v.impact,
+    razina: wcagRazina(v.tags),
+    nodes: v.nodes.length,
+    uGateu: IMPACT_GATE.includes(v.impact),
+  }));
+  console.log('[B3a-mjerenje] ' + ime + ' ' + JSON.stringify(sve));
+}
+
 function gateViolations(results) {
   return results.violations
     .filter((v) => IMPACT_GATE.includes(v.impact))
@@ -87,7 +113,9 @@ async function smiri(page) {
 // `ime` ide u ispis da se u dnevniku vidi KOJA je površina pala.
 async function skeniraj(page, ime) {
   await smiri(page);
-  const gated = gateViolations(await new AxeBuilder({ page }).analyze());
+  const results = await new AxeBuilder({ page }).analyze();
+  mjerenjePoRazini(results, ime);
+  const gated = gateViolations(results);
   if (gated.length) console.log(`${ime} violations:`, JSON.stringify(gated, null, 2));
   return gated.map((g) => ({ povrsina: ime, ...g }));
 }
@@ -120,4 +148,4 @@ async function skenirajSveTeme(page, ime) {
   return nalazi;
 }
 
-module.exports = { IMPACT_GATE, TEME, detalji, gateViolations, smiri, skeniraj, skenirajSveTeme };
+module.exports = { IMPACT_GATE, TEME, detalji, gateViolations, wcagRazina, smiri, skeniraj, skenirajSveTeme };

@@ -252,6 +252,38 @@ komentar koji to drži zapamćenim.
 - **B3b — prebacivanje brane** + osnovica koja nalaze **imenuje**.
 - **B3c — spuštanje jeftinih.** `.lb-table-wrap` → `tabindex="0"` + `role="region"` + `aria-label`, i ostali koji ne traže odluku o izgledu.
 
+#### B3a — ISHOD MJERENJA (2026-08-31) · ✅ izmjereno, ništa nije popravljano
+
+**Metoda:** `wcagRazina()` u `tests/helpers/axe-gate.js` (razina iz axe tagova; 10 obrnutih
+provjera u `tests/unit/wcag-razina.test.js`, uklj. sufiks-zamku `wcag2aa` ≠ A) + mjerni ispis
+pod `A11Y_WCAG_MJERENJE=1` kroz POSTOJEĆE a11y specove + ad-hoc sken 4 predmeta na 375 px.
+
+**① Na 46 skeniranih površina (obje brane, sve teme): NULA WCAG prekršaja.** Svih 265 nodeova
+je `best-practice` (`region` 232 · `heading-order` 28 · `page-has-heading-one` 5). **Zamjena
+ljestvice (težina → razina) na današnjim površinama ne mijenja ništa** — gate-skup je prazan
+na obje ljestvice.
+
+**② Rupa NIJE (primarno) ljestvica nego IZBOR POVRŠINA.** `scrollable-region-focusable` se
+okida na `macroeconomics` i `entrepreneurship` learn @ 375 px: **9 nodeova, `impact=serious`,
+`wcag2a` (razina A)** — a te površine axe uopće ne skenira (STUDY pokriva samo `marketing`).
+`serious` bi i POSTOJEĆI gate uhvatio, da ondje gleda. Premisa B3 („težina `moderate`") je
+**oborena mjerenjem** — u zakucanom axeu je `serious`; peti krivi broj u prozi ove faze,
+i opet nula u kodu.
+
+**③ Prekršitelji nisu tablice nego `.katex-display`** — KaTeX display-formule skrolaju
+vodoravno bez `tabindex`. Tablice na 375 px svugdje STANU (`scrollW == clientW`, izmjereno
+na marketing/te2/macro/entrepreneurship — 0 preljeva od 9 wrapova), pa je `.lb-table-wrap`
+iz backloga (2026-08-14) danas LATENTAN, ne aktivan: `tabindex=null` potvrđen, okinuo bi tek
+sa širom tablicom. ⚠️ I backlog je napola kriv: javni a11y spec od faze TELEFON vrti na
+**375 px** (skip na svim drugim profilima), ne na 1280 — tvrdnja „mjeri na 1280" vrijedi
+samo za authed projekt.
+
+**Posljedica za B3b (dizajn se mijenja):** uz ljestvicu po razini + imenovanu osnovicu,
+sken MORA dobiti kvantitativni predmet (macro) u popis površina — inače zamjena ljestvice
+zaključava prazan skup. **Za B3c:** jeftini popravci su `.katex-display` (tabindex + role +
+label u `renderMath()`/CSS-u — jedan mehanizam za svih 9) i `.lb-table-wrap` (isti recept,
+latentni slučaj).
+
 ### B4 · `check:cascade`
 BUG-039 i BUG-037 su **četiri pojave istog mehanizma**: kasnija datoteka gasi raniju, pa pravilo napisano za 1536 px ili za landscape nikad ne dođe na ekran. Leonova presuda *„nije toliki problem"* stoji.
 
