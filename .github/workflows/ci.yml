@@ -19,15 +19,14 @@ jobs:
   build:
     name: Lint + verify + tests
     runs-on: ubuntu-latest
-    # ⚠️ 20 → 30 (2026-08-31). Job je istekao na 20 min 16 s i GitHub ga je OTKAZAO — nije pao
-    # nijedan test. Izmjereno kako je budžet pojeden rastom suite, ne jednom izmjenom:
-    #   4c1817f (29. 8.) 16.8 min · 8a9479f 18.1 · e889825 18.4 · 9237006 20.3 = otkazan
-    # Na zadnjem zelenom runu ostajalo je 1.9 min margine, pa je svaka varijacija runnera
-    # tipala preko. Timeout je zaštita od VISEĆEG procesa, ne budžet izvedbe: kad postane
-    # ovo drugo, prestaje razlikovati kvar od sporog stroja i počne javljati lažne padove.
-    # ⚠️ Ako opet priđe granici, sljedeći potez NIJE novo podizanje broja nego `workers`
-    # (danas 1, radi determinizma) ili sharding — 533 testa u jednom procesu je uzrok.
-    timeout-minutes: 30
+    # ⚠️ MREŽA B6 (2026-09-01): Playwright je IZAŠAO iz ovog joba u zaseban `playwright`
+    # matrix-job (shardovi) — ovdje ostaju samo brze brane bez preglednika (fail fast).
+    # Povijest granice: 20 → 30 (2026-08-31) jer je job istekao na 20 min 16 s bez ijednog
+    # palog testa (rast suite: 16.8 → 18.1 → 18.4 → 20.3 min). Pouka stoji: timeout je
+    # zaštita od VISEĆEG procesa, ne budžet izvedbe — kad postane budžet, prestaje
+    # razlikovati kvar od sporog stroja. Zato je B6 potez bio sharding, ne veći broj;
+    # sljedeći rast suite apsorbira NOVI shard, nikad podizanje timeouta.
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -83,19 +82,52 @@ jobs:
       - name: RLS security check (read-only)
         run: npm run test:rls
 
-      # --- Playwright (responsive overflow + smoke + sidebar) ---
+  # --- Playwright (responsive overflow + smoke + sidebar) — MREŽA B6: shardovi ---
+  # Zašto matrix-shardovi, a ne `workers > 1`: `workers: 1` u playwright.config.js postoji
+  # RADI DETERMINIZMA (utrke prijave su već obarale cijeli `authenticated` projekt, vidi
+  # tests/auth.setup.js) — sharding reže suitu PO DATOTEKAMA na N neovisnih procesa i u
+  # svakom zadržava workers: 1, pa determinizam unutar procesa ostaje netaknut.
+  # `needs: build` čuva izvorni dizajn „fail fast prije preglednika“: shard se ne pali dok
+  # jeftine brane ne prođu. `fail-fast: false` da pad jednog sharda ne guta dijagnostiku
+  # drugog. Rast suite se apsorbira dodavanjem sharda u matricu, ne dizanjem timeouta.
+  playwright:
+    name: Playwright shard ${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+    needs: build
+    runs-on: ubuntu-latest
+    # Pola suite (~10 min s pripremom) uz dvostruku maržu — zaštita od visećeg procesa,
+    # ne budžet izvedbe (vidi komentar na `build`).
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2]
+        shardTotal: [2]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install deps (clean)
+        run: npm ci
+
       - name: Install Playwright browser (chromium)
         run: npx playwright install --with-deps chromium
 
-      - name: Playwright tests
-        run: npx playwright test
+      - name: Playwright tests (shard)
+        run: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
       # Artefakti samo na padu: screenshotovi (screenshot: 'only-on-failure') + report.
+      # Ime mora biti jedinstveno po shardu — upload-artifact@v4 odbija duplikat imena.
       - name: Upload Playwright artifacts on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-artifacts
+          name: playwright-artifacts-shard-${{ matrix.shardIndex }}
           path: |
             test-results/
             playwright-report/
