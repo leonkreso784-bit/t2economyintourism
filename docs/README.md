@@ -136,6 +136,7 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 | [HRV_PLAN.md](./archive/HRV_PLAN.md) | HRV program (klon-program + UI toggle, ADR-012) — cigle 1–5c ✅, ostatak pauziran |
 | [EXERCISES_DB_FIX_PLAN.md](./archive/EXERCISES_DB_FIX_PLAN.md) | BUG-012 fix plan (✅ 2026-06-27) |
 | [SONNET_REVIEW_2026-06.md](./archive/SONNET_REVIEW_2026-06.md) | Vanjski review — potrošen input |
+| [MODEL_KARTICA_DEMO.md](./archive/MODEL_KARTICA_DEMO.md) | Izveden primjer **kartica-standarda** na `management-hr` (kratka kartica → detalj u `learn`). Grana `content/model-demo-management-hr` obrisana 2026-08-31; **model je ovdje**, ne u grani |
 
 ## `sokrat-ai/` — zaseban projekt
 

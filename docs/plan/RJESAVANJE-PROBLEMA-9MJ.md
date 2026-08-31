@@ -41,7 +41,7 @@ Izmjereno **2026-08-31**. Bez zapisane polazne brojke ne može se dokazati da je
 | `final == M1⊕M2` | **16 provjereno · 8 preskočeno** | `npm run check:final` |
 | budžet posjetitelja | **179.9 KiB / 200 KB** (37 skripti) | `npm run check:budget` |
 | CI, job „Lint + verify + tests" | **19.4 min / 30** (533 testa, 58 spec datoteka) | GitHub Actions |
-| ranjivosti | **runtime 0 · dev 15** (11 high, sve kroz `@lhci/cli`) | `npm audit` |
+| ranjivosti | **runtime 0 · dev 15** (11 high — **10** kroz `@lhci/cli`, **1** kroz `ajv`) | `npm audit` |
 | Node | **stroj 24.11.1 · `.nvmrc` 22 · CI 22** | `node -v` |
 | `--border-color` | **11 upotreba · 0 definicija** | — |
 | a11y po WCAG **razini** | **nije izmjereno** — to je cigla B3a | — |
@@ -120,6 +120,62 @@ izlazni uvjet u §9 postaje 15 → 10 i mora se ispraviti ondje.
 - **Mrtva grana** `content/model-demo-management-hr` (1 naprijed, 309 iza, 23 konfliktna mjesta, zadnji commit 2026-07-15) → diff u `docs/archive/`, grana se briše. Demo modela kartica je **ideja**, ne kôd koji se mergea.
 
 ---
+
+#### A2 — ISHOD (2026-08-31) · ⏳ **dvije trećine; dvije odluke čekaju Leona**
+
+**✅ `fast-uri` — jedini high koji NE dolazi iz lighthousea.** Osnovica je tvrdila *„11 high, sve
+kroz `@lhci/cli`"*. Izmjereno: **10 kroz `@lhci/cli`, 1 kroz `ajv`** (`ajv → fast-uri@3.1.3`,
+GHSA-v2hh-gcrm-f6hx + GHSA-7p8r-x3mc-p8w7, CVSS 7.5 oba, popravljeno u **3.1.5**). `ajv` traži
+`^3.0.1`, pa je dovoljan **pin kroz `overrides`** — raspon bi smio odlutati, a pravilo #9 to
+zabranjuje. **high 11 → 10 · ukupno 15 → 14.** `validate:schema` i dalje zeleno (72 dokumenta).
+
+⚠️ **`check:lockfile` je uhvatio moj vlastiti krivi potez** — `npm install --package-lock-only`
+pa `npm install` (npm 11) ostavili su lock koji bi `npm ci` na npm 10 srušio. Brana je pala i
+ispisala točan popravak (`npx npm@10 install`), koji je i primijenjen. **Točno onaj scenarij zbog
+kojeg brana postoji — samo što ga je ovaj put izazvao onaj tko ju je čitao.**
+
+**✅ Mrtva grana `content/model-demo-management-hr`.** Izmjereno: **1 naprijed / 309 iza**, i od
+**12 dirnutih datoteka je 11 samo `?v=` tokena**. Sadržaj je bio u jednoj — i nije otpad nego
+**izveden primjer kartica-standarda** (kratka kartica → detalj u `learn`), dakle isto što cigla
+**E2** tek treba provesti nad zatečenim gradivom. Arhivirano u
+[docs/archive/MODEL_KARTICA_DEMO.md](../archive/MODEL_KARTICA_DEMO.md) s punim diffom.
+**Brisanje grane čeka izričit OK** — arhiva je napisana, potez nije napravljen.
+
+**✅ Brana `check:node` — napisana i DOKAZANA, ⏳ namjerno JOŠ NIJE u preflightu.**
+Uspoređuje **četiri** izvora, ne dva: `.nvmrc` · `engines.node` · svaki `node-version:` u
+`.github/workflows/**` · `process.versions.node`. Ispisuje i **koliko je izvora dotaknula**
+(§11 pravilo o mjeraču). Obrnuta provjera živi kao test u `tests/unit/check-node-gate.test.js` i
+vrti se u `test:unit`: **6/6**, među njima tri ruba koje naivna brana propušta — CI koji odluta
+od `.nvmrc`-a · `engines` kao raspon uz točan major · nedostajući izvor (pada zatvoreno).
+
+⚠️ **ZAŠTO NIJE U PREFLIGHTU: čim uđe, preflight je CRVEN dok se stroj ne prebaci.** Stroj vrti
+**24.11.1**, `.nvmrc` i sva tri CI joba **22**. To blokira svaki Leonov push, pa je uvrštenje
+**njegova odluka, ne naša nuspojava.** Uz nju ide i drugi nalaz: `engines.node` je **`>=22`**,
+dakle **raspon** — istinit je i na Node 24, pa tvrdnja prolazi dok stanje ne valja. Pravilo #9
+traži točan pin; `engines` je bio jedino mjesto gdje to nije provedeno.
+
+**⏳ DVIJE ODLUKE ZA LEONA:**
+① **Koji broj pobjeđuje** — spustiti stroj na Node 22 (nvm nije instaliran, traži instalaciju),
+ili podići `.nvmrc` + `engines` + sva tri CI joba na 24. Brana radi s bilo kojim brojem;
+razilaženje je ono što ne smije stajati.
+② **`@lhci/cli`** — nosi preostalih **10 high**, a `npm` kao „popravak" nudi **spuštanje na
+`0.15.1 → 0.1.0`**, dakle pravog popravka nema. Mjerenje vrijednosti joba je niže.
+
+**Vrijedi li lighthouse job išta — izmjereno, da odluka ne bude na osjećaj.**
+Job gađa **jednu rutu** (`http://localhost:5050/`, dakle landing) i tvrdi šest stvari. Od njih:
+
+| tvrdnja | pokriva li je već netko drugi |
+|---|---|
+| `accessibility ≥ 0.95` | **da** — `a11y.spec.js` + `axe-gate` mjere **kroz sve teme**, strože |
+| `seo ≥ 0.95` | **da** — `check:seo` |
+| `best-practices ≥ 0.95` | djelomično — `check:cdn` (SRI) pokriva dio |
+| `performance ≥ 0.5` | **prag je mrtvo slovo** — komentar u `.lighthouserc.json` kaže *„PODIĆI prema 0.9 nakon F3"*; F3 je odavno gotov, prag i dalje stoji na 0.5 |
+| **`cumulative-layout-shift ≤ 0.1`** | **NE — nitko drugi** |
+| **`total-blocking-time ≤ 400ms`** | **NE — nitko drugi** |
+
+**Dakle:** četiri od šest tvrdnji su pokrivene ili mrtve; **dvije nisu ni od koga druge** — CLS i
+TBT su jedina mjera stvarnog doživljaja učitavanja koju projekt ima. To je cijena brisanja, i
+zato odluka nije očita.
 
 ## 4 · BLOK B — Brane koje ne mjere ono što tvrde
 

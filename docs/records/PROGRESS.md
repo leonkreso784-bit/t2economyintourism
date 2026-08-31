@@ -5,6 +5,40 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-31 (OPUS) — A2: brana za Node napisana i dokazana, ali **namjerno još ne stoji na vratima**
+
+Druga cigla faze MREŽA. **Dvije trećine gotove; dvije odluke čekaju Leona.**
+
+**Osnovica je opet bila kriva — treći put u dva dana.** Spec je tvrdio *„11 high, sve kroz
+`@lhci/cli`"*. Izmjereno: **10 kroz `@lhci/cli`, jedan kroz `ajv`** — `fast-uri@3.1.3`, dva
+advisoryja po CVSS 7.5, popravljeno u 3.1.5. Pinano kroz `overrides` (raspon bi smio odlutati,
+pravilo #9 to zabranjuje). **high 11 → 10.** `validate:schema` i dalje zeleno, 72 dokumenta.
+
+⚠️ **`check:lockfile` je uhvatio MOJ krivi potez, ne tuđi.** Pokrenuo sam
+`npm install --package-lock-only` pa `npm install` — točno ono na što brana u vlastitom
+zaglavlju upozorava — i lock je ostao takav da bi `npm ci` na npm 10 pao. Brana je pala,
+ispisala popravak (`npx npm@10 install`), popravak je primijenjen, oba npm-a zelena. Brana koja
+uhvati onoga tko ju je maloprije čitao **zaslužuje da se to zapiše**, ne prešuti.
+
+**`check:node` gleda ČETIRI izvora, ne dva:** `.nvmrc` · `engines.node` · svaki `node-version:`
+u workflowima · `process.versions.node`. Naivna brana (stroj vs `.nvmrc`) propustila bi tri ruba
+koje ova hvata, i sva tri su u obrnutoj provjeri: **CI koji odluta od `.nvmrc`-a** (a presuđuje
+CI, pa je „usklađen stroj" ondje lažna utjeha) · **`engines` kao raspon uz točan major**
+(tvrdnja prolazi dok stanje ne valja) · **nedostajući izvor** (pada zatvoreno). Obrnuta provjera
+je **6/6** i živi kao test u `tests/unit/`, ne kao bilješka — ADR-027.
+
+⚠️ **Brana NIJE u preflightu i to je namjerno.** Čim uđe, preflight je crven dok se stroj ne
+prebaci (24.11.1 vs `.nvmrc` 22), a to blokira svaki Leonov push. **Gate koji nekome zaključa
+rad je odluka, ne nuspojava** — pa čeka njegovu riječ. Prva izvedba ispisa je uz to označavala
+**pet ispravnih redaka umjesto onog koji odudara**; popravljeno da oko odmah nađe iznimku.
+
+**Mrtva grana nije bila mrtav kod.** `content/model-demo-management-hr`: 1 naprijed / 309 iza, a
+od 12 dirnutih datoteka **11 su samo `?v=` tokeni**. Ono što je ostalo je **izveden primjer
+kartica-standarda** — isto što cigla E2 tek treba provesti nad zatečenim gradivom. Arhivirano s
+punim diffom u `docs/archive/MODEL_KARTICA_DEMO.md`; **brisanje grane čeka OK.**
+
+---
+
 ## 2026-08-31 (OPUS) — A1: baza je popravljena na stagingu, i **plan je bio kriv na dva mjesta**
 
 Prva cigla faze MREŽA. Izvedena na **stagingu**, pa uz Leonov izričit OK i na **PRODUKCIJI**.

@@ -5,6 +5,30 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-31 (OPUS) — **MREŽA A2: `check:node`, `fast-uri` pin, arhiva demo-modela**
+
+### Dodano
+- **`npm run check:node`** — `.nvmrc` · `engines.node` · svaki `node-version:` u workflowima ·
+  `process.versions.node` moraju dati isti major. Pada zatvoreno; ispisuje i koliko je izvora
+  dotaknula. ⏳ **Još NIJE u preflightu** — uvrštenje čeka odluku o Node verziji.
+- **`tests/unit/check-node-gate.test.js`** — obrnuta provjera brane, **6/6**, u `test:unit`.
+- **`docs/archive/MODEL_KARTICA_DEMO.md`** — arhiviran demo kartica-standarda s punim diffom.
+
+### Promijenjeno
+- **`overrides: { "fast-uri": "3.1.5" }`** — zatvara GHSA-v2hh-gcrm-f6hx i GHSA-7p8r-x3mc-p8w7
+  (CVSS 7.5 oba) koji dolaze kroz `ajv`. **high 11 → 10 · ukupno 15 → 14.**
+
+### Ispravljeno u zapisima
+- Osnovica je tvrdila *„11 high, sve kroz `@lhci/cli`"*; izmjereno **10 kroz `@lhci/cli`, 1 kroz
+  `ajv`**. Treći krivi broj u prozi u dva dana — a nijedan nije bio kriv u kodu.
+
+### Čeka odluku
+- **Node major:** stroj 24.11.1 vs `.nvmrc`/CI 22. Uz to je `engines.node` **raspon** (`>=22`),
+  što pravilo #9 zabranjuje — istinit je i na krivoj verziji.
+- **`@lhci/cli`:** nosi preostalih 10 high, pravog popravka nema (npm nudi spuštanje na 0.1.0).
+  Izmjereno: **4 od 6 njegovih tvrdnji su pokrivene ili mrtve, ali CLS i TBT nisu ni od koga druge.**
+- **Brisanje grane** `content/model-demo-management-hr` (arhiva je već napisana).
+
 ## 2026-08-31 (OPUS) — 🚀 **MREŽA A1: RLS initplan, indeksi i grantovi — NA PRODUKCIJI**
 
 ### Promijenjeno (staging `sokrat-staging` → **produkcija `naxjubnedhrbhsuasayu`**, uz Leonov OK)
