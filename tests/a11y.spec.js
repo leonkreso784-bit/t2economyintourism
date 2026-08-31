@@ -78,6 +78,32 @@ test.describe('a11y — no serious/critical axe violations', () => {
     expect(prvo.concat(drugo)).toEqual([]);
   });
 
+  // B3b (MREŽA): KVANTITATIVNI predmet ulazi u branu. B3a je izmjerio da je jedini pravi
+  // a11y dug (`scrollable-region-focusable`, 9× serious/wcag2a na `.katex-display` @ 375 px)
+  // živio na macro/entrepreneurship — površinama koje se NISU skenirale, jer je STUDY gore
+  // pokrivao samo `marketing`, TEKSTUALNI predmet bez ijedne display-formule. Prebacivanje
+  // ljestvice na WCAG razinu bez ove površine zaključalo bi prazan skup: brana bi tvrdila
+  // „0 po razini" o skupu na kojem razina nema što suditi. Skeniraju se iste sekcije kao
+  // za marketing — formule žive u learn, ali inline-KaTeX ide i u quiz/fill.
+  test('study page — kvantitativni predmet (macroeconomics, sve sekcije)', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'iPhone-SE-375', 'a11y se skenira na jednom viewportu');
+    await page.goto('/');
+    await page.waitForFunction(() => window.navigateTo && window.switchSection);
+    await page.evaluate(() => window.navigateTo('study', { subject: 'macroeconomics', lesson: 'first-midterm' }));
+    await page.waitForSelector('#learn .learn-card', { state: 'attached', timeout: 15000 });
+
+    // KaTeX se renderira asinkrono (CDN + renderMath poslije umetanja) — čekaj da formule
+    // POSTOJE prije mjerenja, inače se skenira stranica bez onoga zbog čega je ovdje.
+    await page.waitForSelector('#learn .katex-display', { state: 'attached', timeout: 15000 });
+
+    const all = [];
+    for (const sec of ['learn', 'flashcards', 'quiz', 'fill', 'progress']) {
+      await page.evaluate((s) => window.switchSection(s), sec);
+      all.push(...await skeniraj(page, `STUDY-KVANT/${sec}`));
+    }
+    expect(all).toEqual([]);
+  });
+
   test('profile (signed out)', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'iPhone-SE-375', 'a11y se skenira na jednom viewportu');
     await page.goto('/');

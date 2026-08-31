@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-31 (FABLE) — B3b: presuda po razini, ali kao unija — i površina prije ljestvice
+
+Dizajn je slijedio B3a nalaz: prvo je macro UŠAO u branu (bez njega bi nova ljestvica
+sudila praznom skupu), tek onda je presuda prebačena na razinu — i to kao **unija** s
+težinom, jer bi čista zamjena izbacila serious best-practice nalaze, tj. oslabila branu
+usred cigle koja je pooštrava. Dokaz obostran: bez upisa u osnovici test pada s istih 9
+nodeova iz B3a mjerenja; s imenovanim upisom prolazi glasno. Osnovica se piše rukom —
+Playwrightovi paralelni workeri čine auto-update utrkom zapisa, a upis ionako traži razlog.
+
+---
+
 ## 2026-08-31 (FABLE) — B3a: mjerenje je oborilo premisu vlastite cigle
 
 B3 je pisan uz priču „`moderate` promakne gate-u koji hvata serious/critical". Izmjereno:

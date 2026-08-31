@@ -5,6 +5,20 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-31 (FABLE) — **MREŽA B3b: a11y brana sudi po WCAG razini (∪ težini) + imenovana osnovica + macro u površinama**
+
+### Promijenjeno
+- **`tests/helpers/axe-gate.js`**: presuda = WCAG razina A/AA **∪** težina serious/critical
+  (unija — zamjena ljestvice ne smije oslabiti branu); nalaz u ispisu nosi i `razina`.
+- **`tests/a11y.spec.js`**: novi test `STUDY-KVANT/*` — macroeconomics, svih 5 sekcija
+  (B3a: jedini pravi dug živio je na površini koju brana nije gledala).
+
+### Dodano
+- **`tests/a11y-baseline.json`** — imenovana osnovica (`POVRŠINA::rule-id` + razlog); riješeni
+  upisi glasni; nedostajuća datoteka ruši; piše se rukom (paralelni workeri = utrka zapisa).
+  Ulazni upis: 9× `.katex-display` na STUDY-KVANT/learn — živi samo do B3c.
+- **`tests/unit/a11y-gate.test.js`** — 13 obrnutih provjera presude i osnovice (u `test:unit`).
+
 ## 2026-08-31 (FABLE) — **MREŽA B3a: a11y dug IZMJEREN po WCAG razini — ništa popravljano**
 
 ### Dodano

@@ -1,13 +1,15 @@
 // Zajednička axe-logika za a11y gateove (odjavljeni `a11y.spec.js` + prijavljeni `a11y.authed.spec.js`).
 //
 // ⚠️ ZAŠTO ZAJEDNIČKI MODUL, a ne kopija u svakoj datoteci:
-// gate hvata `serious`/`critical` i ispisuje izmjerene brojke. Da su to dvije kopije, prva
-// zakrpa (npr. novi razred u `IMPACT_GATE`) vrijedila bi samo za jednu površinu — a upravo
+// gate sudi (WCAG razina A/AA ∪ težina serious/critical) i ispisuje izmjerene brojke. Da su
+// to dvije kopije, prva zakrpa (npr. promjena presude) vrijedila bi samo za jednu površinu — a upravo
 // je „ista provjera na dva mjesta, samo jedno održavano" obrazac koji je 2026-08-14 pustio
 // tamnu plohu na produkcijsku granu. Jedna činjenica = jedno mjesto (ADR-027).
 const AxeBuilder = require('@axe-core/playwright').default;
+const fs = require('fs');
+const path = require('path');
 
-// Gate hvata samo ozbiljne razrede; 'minor'/'moderate' su backlog (ne ruše build).
+// Ozbiljni razredi po axe TEŽINI — do B3b jedina ljestvica presude; od B3b jedna od dvije.
 const IMPACT_GATE = ['serious', 'critical'];
 
 // ⚠️ Ispisuj i axeove BROJKE, ne samo selektor.
@@ -21,17 +23,67 @@ function detalji(node) {
   return `fg ${d.fgColor} / bg ${d.bgColor} = ${d.contrastRatio} (treba ${d.expectedContrastRatio})`;
 }
 
-// ── B3a (MREŽA, 2026-08-31): WCAG RAZINA iz axe tagova — MJERENJE, ne gate ────
-// Gate gore sudi po axe TEŽINI (serious/critical), a WCAG sudi po RAZINI (A/AA):
-// dvije ljestvice. `scrollable-region-focusable` nosi `wcag2a` (razina A!) uz težinu
-// `moderate` — pa stoji u backlogu od 2026-08-14 uz zelenu branu. B3a samo mjeri koliko
-// je takvih; prebacivanje presude na razinu je B3b. Tagovi: wcag2a/wcag21a/wcag22a = A;
-// s `aa` = AA; bez wcag-taga = best-practice (axeova preporuka, ne WCAG zahtjev).
+// ── B3a (MREŽA, 2026-08-31): WCAG RAZINA iz axe tagova ───────────────────────
+// Axe ima DVIJE ljestvice: TEŽINU (minor…critical, axeova procjena posljedice) i RAZINU
+// (A/AA/AAA, WCAG-ov pravni standard). Do B3b gate je sudio SAMO po težini — pa je
+// `scrollable-region-focusable` (razina A, dakle tvrdi WCAG zahtjev) stajao u backlogu
+// od 2026-08-14 uz zelenu branu. Tagovi: wcag2a/wcag21a/wcag22a = A; s `aa` = AA;
+// bez wcag-taga = best-practice (axeova preporuka, ne WCAG zahtjev).
 function wcagRazina(tags) {
   if (tags.some((t) => /^wcag2\d*aaa$/.test(t))) return 'AAA';
   if (tags.some((t) => /^wcag2\d*aa$/.test(t))) return 'AA';
   if (tags.some((t) => /^wcag2\d*a$/.test(t))) return 'A';
   return 'best-practice';
+}
+
+// ── B3b (MREŽA, 2026-08-31): PRESUDA = razina A/AA ∪ težina serious/critical ─
+// UNIJA, ne zamjena: da je presuda prebačena SAMO na razinu, `serious` best-practice
+// (npr. budući axe-nalaz bez wcag-taga) bi ispao iz gatea — prebacivanje ljestvice ne
+// smije branu OSLABITI. AAA se ne gatea (cilj je AA, standard weba); AAA nalaz uđe samo
+// ako mu je težina serious/critical. B3a je izmjerio da na 46 dosadašnjih površina ova
+// promjena ne mijenja ništa — zube dobiva tek s novom površinom (macro, v. a11y.spec.js).
+function uGateu(v) {
+  const razina = wcagRazina(v.tags);
+  return razina === 'A' || razina === 'AA' || IMPACT_GATE.includes(v.impact);
+}
+
+// ── B3b: IMENOVANA OSNOVICA (tests/a11y-baseline.json) ───────────────────────
+// Kućni obrazac (check:orphan-css, phone-gate): brana pada samo na nalazu kojeg u osnovici
+// NEMA, a svaki tolerirani upis je imenovan („POVRŠINA::rule-id") i nosi razlog. Ključ
+// uključuje površinu: tolerancija se NE proteže na isti rule drugdje. Riješeni upisi se
+// ispisuju GLASNO — zastarjela osnovica tiho pokriva kvar koji se vratio.
+// ⚠️ Osnovica se piše RUKOM, nema auto-update flaga: Playwright vrti testove u paralelnim
+// workerima, pa bi dva istovremena zapisa iste datoteke bila utrka — a upis u osnovicu
+// ionako traži zapisan razlog, ne samo brojku (pouka iz phone-baseline `_zasto`).
+const OSNOVICA_PUT = path.join(__dirname, '..', 'a11y-baseline.json');
+
+// Nedostajuća/pokvarena osnovica RUŠI, ne tolerira ništa tiho: datoteka je ugovor u repou,
+// njezin nestanak je kvar okoline, a brana koja o kvaru šuti nije stroža nego pokvarena.
+function ucitajOsnovicu(putanja) {
+  const p = putanja || OSNOVICA_PUT;
+  let raw;
+  try { raw = fs.readFileSync(p, 'utf8'); } catch (e) {
+    throw new Error('axe-gate: osnovica ne postoji (' + p + ') — struktura je ugovor, ne smije se brisati. ' + e.message);
+  }
+  return JSON.parse(raw);
+}
+
+// Čista funkcija (unit-testirana bez preglednika): podijeli gateane nalaze jedne površine
+// na nove (padaju), tolerirane (imenovani u osnovici) i riješene (upis bez nalaza).
+function presudiOsnovicom(nalazi, povrsina, osnovica) {
+  const tol = (osnovica && osnovica.tolerirano) || {};
+  const novi = [];
+  const tolerirani = [];
+  for (const n of nalazi) {
+    const kljuc = povrsina + '::' + n.id;
+    if (Object.prototype.hasOwnProperty.call(tol, kljuc)) tolerirani.push(n);
+    else novi.push(n);
+  }
+  const prefiks = povrsina + '::';
+  const rijeseni = Object.keys(tol).filter(
+    (k) => k.startsWith(prefiks) && !nalazi.some((n) => prefiks + n.id === k)
+  );
+  return { novi, tolerirani, rijeseni };
 }
 
 // Mjerni ispis (A11Y_WCAG_MJERENJE=1): SVE prekršaje, s obje ljestvice, bez presude.
@@ -42,17 +94,18 @@ function mjerenjePoRazini(results, ime) {
     impact: v.impact,
     razina: wcagRazina(v.tags),
     nodes: v.nodes.length,
-    uGateu: IMPACT_GATE.includes(v.impact),
+    uGateu: uGateu(v),
   }));
   console.log('[B3a-mjerenje] ' + ime + ' ' + JSON.stringify(sve));
 }
 
 function gateViolations(results) {
   return results.violations
-    .filter((v) => IMPACT_GATE.includes(v.impact))
+    .filter(uGateu)
     .map((v) => ({
       id: v.id,
       impact: v.impact,
+      razina: wcagRazina(v.tags),
       nodes: v.nodes.length,
       help: v.help,
       target: v.nodes.map((n) => n.target).flat(),
@@ -109,15 +162,22 @@ async function smiri(page) {
   }
 }
 
-// Skenira trenutno stanje stranice i vraća gateane prekršaje (prazno = zeleno).
-// `ime` ide u ispis da se u dnevniku vidi KOJA je površina pala.
+// Skenira trenutno stanje stranice i vraća NOVE gateane prekršaje (prazno = zeleno).
+// `ime` ide u ispis da se u dnevniku vidi KOJA je površina pala — i ono je dio ključa
+// osnovice, pa se ne smije mijenjati bez migracije upisa u `tests/a11y-baseline.json`.
 async function skeniraj(page, ime) {
   await smiri(page);
   const results = await new AxeBuilder({ page }).analyze();
   mjerenjePoRazini(results, ime);
-  const gated = gateViolations(results);
-  if (gated.length) console.log(`${ime} violations:`, JSON.stringify(gated, null, 2));
-  return gated.map((g) => ({ povrsina: ime, ...g }));
+  const { novi, tolerirani, rijeseni } = presudiOsnovicom(gateViolations(results), ime, ucitajOsnovicu());
+  for (const t of tolerirani) {
+    console.log(`[a11y-osnovica] TOLERIRANO ${ime}::${t.id} (${t.nodes} nodeova) — imenovano u tests/a11y-baseline.json`);
+  }
+  for (const r of rijeseni) {
+    console.log(`[a11y-osnovica] ⚠️ RIJEŠENO: upis "${r}" više nema nalaza — ukloni ga iz tests/a11y-baseline.json (zastarjela osnovica tiho pokriva kvar koji se vrati)`);
+  }
+  if (novi.length) console.log(`${ime} violations:`, JSON.stringify(novi, null, 2));
+  return novi.map((g) => ({ povrsina: ime, ...g }));
 }
 
 // Sve teme koje `css/tokens.css` definira, plus zadana (bez atributa).
@@ -148,4 +208,7 @@ async function skenirajSveTeme(page, ime) {
   return nalazi;
 }
 
-module.exports = { IMPACT_GATE, TEME, detalji, gateViolations, wcagRazina, smiri, skeniraj, skenirajSveTeme };
+module.exports = {
+  IMPACT_GATE, TEME, detalji, gateViolations, wcagRazina, uGateu,
+  ucitajOsnovicu, presudiOsnovicom, smiri, skeniraj, skenirajSveTeme
+};

@@ -284,6 +284,20 @@ zaključava prazan skup. **Za B3c:** jeftini popravci su `.katex-display` (tabin
 label u `renderMath()`/CSS-u — jedan mehanizam za svih 9) i `.lb-table-wrap` (isti recept,
 latentni slučaj).
 
+#### B3b — ISHOD (2026-08-31) · ✅ brana sudi po razini, osnovica imenuje, macro u površinama
+
+**Presuda je UNIJA, ne zamjena:** nalaz ulazi u gate ako je WCAG razina **A ili AA** *ili*
+axe težina serious/critical — sama zamjena ljestvice izbacila bi serious best-practice
+nalaze, tj. **oslabila** branu. AAA se ne gatea (cilj je AA); uđe samo po težini.
+**Osnovica `tests/a11y-baseline.json`:** ključ `POVRŠINA::rule-id` + razlog; tolerancija se
+NE proteže na isti rule druge površine; riješeni upisi se ispisuju glasno; nedostajuća
+datoteka RUŠI. **Piše se rukom** — Playwright vrti paralelne workere pa bi auto-update bio
+utrka zapisā, a upis ionako traži razlog. **Macro je ušao u branu** (`STUDY-KVANT/*`, svih
+5 sekcija, uz čekanje da KaTeX POSTOJI prije mjerenja). Dokazano obostrano: bez upisa u
+osnovici test pada s **istih 9 nodeova** koje je B3a izmjerio (razina A, `.katex-display`);
+s imenovanim upisom prolazi uz glasan TOLERIRANO. Ostalih 6 javnih testova zeleno pod novom
+ljestvicom — potvrda B3a tvrdnje ①. 13 obrnutih provjera: `tests/unit/a11y-gate.test.js`.
+
 ### B4 · `check:cascade`
 BUG-039 i BUG-037 su **četiri pojave istog mehanizma**: kasnija datoteka gasi raniju, pa pravilo napisano za 1536 px ili za landscape nikad ne dođe na ekran. Leonova presuda *„nije toliki problem"* stoji.
 

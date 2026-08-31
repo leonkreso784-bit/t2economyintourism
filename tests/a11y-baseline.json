@@ -1,0 +1,6 @@
+{
+  "_zasto": "Imenovana osnovica a11y brane (MREZA B3b). Brana sudi po WCAG razini A/AA UNIJA axe tezini serious/critical i pada na svakom nalazu kojeg ovdje NEMA. Kljuc = 'POVRSINA::rule-id' (povrsina kako je ispisuje spec, ukljucujuci [temu]); vrijednost = razlog zasto se tolerira. Pise se RUKOM, nema auto-update flaga: Playwright vrti paralelne workere pa bi zapis bio utrka, a upis ionako trazi zapisan razlog. Rijeseni upisi se ispisuju glasno u dnevniku testa. Prazna 'tolerirano' kanta = brana trazi NULU. Vidi tests/helpers/axe-gate.js.",
+  "tolerirano": {
+    "STUDY-KVANT/learn::scrollable-region-focusable": "9x .katex-display bez tabindexa (B3a mjerenje); popravak je cigla B3c (jedan mehanizam u renderMath) -- ovaj upis zivi SAMO do nje"
+  }
+}
