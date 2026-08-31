@@ -12,6 +12,7 @@
     --font-weight-bold: 700;
     --tracking-tighter: -0.05em;
     --tracking-tight: -0.025em;
+    --aspect-video: 16 / 9;
     --color-white: #fff;
     --color-black: #000;
     --color-surface-0: #f7f9fc;

@@ -5,6 +5,57 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-31 (OPUS) — C5b/1b: dokaz je morao promijeniti alat, a mjerač sam ja pokvario
+
+Druga polovica C5b/1, odvojena **po dokazu a ne po veličini**: kataloška ruta od
+`learn-blocks.css` iscrtava 2 od 44 pravila, pa ondje `css:diff` mjeri prazno.
+
+**`math.css` JE IZAŠAO IZ OPSEGA MJEROM.** Sva tri selektora su KaTeX-ov vlastiti izlaz — te
+elemente ne emitiramo nigdje, pa nema markupa u koji bi utility išao. Migrabilnih pravila: **0 od
+5**. §12.5 je to tvrdio od početka; sad je i izmjereno.
+
+**IZVEDENO.** Skela `learn-blocks.css`-a otišla je u `js/blocks-renderer.js` — **7 mjesta,
+isključivo klase, nula izmjena logike**. ⚠️ `.lb-table-wrap` nastaje na **dva** puta
+(`renderTable` za v2 i runtime-omot legacy tablica), a provjera „već omotana" ide preko
+`classList.contains('lb-table-wrap')` → ime mora ostati prvo i nedirnuto. Dva svojstva namjerno
+ostaju u CSS-u: `margin` na `.lb-formula` i `display: block` na `.lb-video__frame`.
+
+**MJERAČ JE BIO PRVI KVAR DVANAESTI PUT, I NAPISAO SAM GA JA.** Ključ elementa gradio se od
+**imena klasa** — a cigla mijenja upravo klase. Ishod: **138 „razlika"**, sve redom isti element
+uspoređen sam sa sobom pod drugim imenom. Ključ mora biti strukturni položaj (`tag[index]`).
+*Mjerač ne smije ovisiti o onome što se mijenja* — nova podvrsta uz onu iz C5a/4 („vratio
+uvjerljiv krivi broj").
+
+**DVA PRAVA NALAZA, oba iz preglednika:**
+① **`display: block` se nije generirao.** `block` je, kao i `flex-wrap` u /1a, na popisu
+`@source not inline` → iframe videa pao na `inline`. Popis ovdje **nije** diran: ime je
+pregeneričko i stoji u skupnoj zabrani, pa `display` ostaje u CSS-u uz bilješku. Drugi put u
+istoj cigli da tiho isključenje pojede živo pravilo.
+② **Vlastiti argument oboren.** Zapisao sam da `text-align`/`overflow-x` na inline `<span>`-u
+nemaju učinka; izmjereno je da se izračunata vrijednost mijenja. Staro pravilo je vrijedilo za
+**obje** varijante formule, pa ih obje i dobivaju. *Kad se tvrdnja da izmjeriti, ne brani se
+argumentom.*
+
+**DVA UNIT-TESTA RENDERERA SU PALA I TO JE BILO ISPRAVNO.** `blocks-renderer.test.js` pina točan
+markup (slika, formula). Promjena klasa u datoteci koja je **sigurnosna granica** tražila je
+ručnu potvrdu — to je smisao te brane, ne smetnja. Ažuriran je samo dio s klasama.
+
+**DOKAZ.** Kroz `window.renderBlocks`, radno stablo vs `git worktree` reference, 36 svojstava po
+elementu: prvo pokrivenost (**9/9** migriranih klasa nacrtano — mjereno **prije** klika na fasadu
+videa i poslije njega, jer klik fasadu zamijeni iframeom), pa **58 elemenata × 3 širine = 174
+usporedbe, 0 razlika**. `preflight` EXIT 0, siročad **46 → 45**.
+
+**USPUT — CI je bio OTKAZAN, ne pao.** Job „Lint + verify + tests" istekao je na 20 min 16 s uz
+`timeout-minutes: 20`, bez ijednog palog testa. Izmjeren rast: **16.8 → 18.1 → 18.4 → 20.3 min**,
+uz 1.9 min margine na zadnjem zelenom runu. Granica podignuta na 30; sljedeći run: **19.4 min,
+zelen**. ⚠️ Ako opet priđe granici, sljedeći potez **nije** novo podizanje broja nego `workers`
+ili sharding — 533 testa u jednom procesu je uzrok.
+
+**SLIJEDI C5b/2** (`blind-map.css` — 35 od 51 pravila je naše, `index.html`), pa **C5b/3**
+(`learn.css` — prvo skidanje `#learn` uz `css:diff` = 0, pa migracija).
+
+---
+
 ## 2026-08-31 (OPUS) — C5b/1a: mjera je oborila redoslijed cigli prije nego je pisan ijedan redak
 
 Leon: *„Idemo na C5b/1"*. Prije koda je napravljena mjera koja u §12.4 nije postojala — i ona je

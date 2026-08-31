@@ -21,7 +21,6 @@
   ],
   "css/learn-blocks.css": [
     "lb-callout--tip",
-    "lb-color-amber",
     "lb-color-blue",
     "lb-color-cyan",
     "lb-color-indigo",

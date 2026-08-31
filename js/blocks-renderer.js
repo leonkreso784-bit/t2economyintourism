@@ -132,19 +132,19 @@
     const alt = esc(b.alt || '');
     const cap = (b.caption != null && String(b.caption) !== '')
       ? '<figcaption class="lb-figure__cap">' + renderInline(b.caption) + '</figcaption>' : '';
-    // U8.5e: kurirana širina u % (10–99; 100/nevaljano = bez stila → max-width:100% iz CSS-a).
+    // U8.5e: kurirana širina u % (10–99; 100/nevaljano = bez stila → `max-w-full` utility).
     // Ne-broj/izvan raspona se IGNORIRA (granica: u style ide isključivo naš računati broj).
     const w = Math.round(Number(b.width));
     const wStyle = (isFinite(w) && w >= 10 && w <= 99) ? ' style="width:' + w + '%"' : '';
-    return '<figure class="lb-figure"><img class="lb-figure__img" src="' + esc(src) +
+    return '<figure class="lb-figure my-[1.4em] text-center"><img class="lb-figure__img h-auto max-w-full" src="' + esc(src) +
       '" alt="' + alt + '" loading="lazy"' + wStyle + '>' + cap + '</figure>';
   }
   function renderVideo(b) {
     const id = youtubeId(b.videoId != null ? b.videoId : b.url);
     if (!id) return '';                                // nevaljan ID → izostavi
     // Facade: NULA poziva prema YouTubeu prije klika (consent-safe). Klik → iframe (nocookie).
-    return '<div class="lb-video">' +
-      '<button type="button" class="lb-video__play" data-lb-yt="' + esc(id) +
+    return '<div class="lb-video relative my-[1.4em] aspect-video overflow-hidden">' +
+      '<button type="button" class="lb-video__play absolute inset-0 flex h-full w-full flex-col items-center justify-center gap-2" data-lb-yt="' + esc(id) +
       '" aria-label="Load and play YouTube video">' +
       '<span class="lb-video__icon" aria-hidden="true">&#9658;</span>' +
       '<span class="lb-video__label">YouTube</span></button></div>';
@@ -152,7 +152,7 @@
   function renderTable(b) {
     const rows = Array.isArray(b.rows) ? b.rows : [];
     const header = Array.isArray(b.header) ? b.header : null;
-    let html = '<div class="lb-table-wrap"><table class="lb-table">';
+    let html = '<div class="lb-table-wrap my-[1.4em] overflow-x-auto"><table class="lb-table w-full border-collapse">';
     if (header) {
       html += '<thead><tr>' + header.map(function (c) { return '<th>' + renderInline(c) + '</th>'; }).join('') + '</tr></thead>';
     }
@@ -166,8 +166,8 @@
     // KaTeX: tex ide kao TEKST u delimiterima (esc → textContent dekodira natrag);
     // renderMath() (js/math.js, auto-render) ga obradi POSLIJE umetanja (poziva ga study/U7c).
     const tex = esc(b.tex);
-    if (b.display === false) return '<span class="lb-formula lb-formula--inline">\\(' + tex + '\\)</span>';
-    return '<div class="lb-formula">\\[' + tex + '\\]</div>';
+    if (b.display === false) return '<span class="lb-formula lb-formula--inline overflow-x-auto text-center">\\(' + tex + '\\)</span>';
+    return '<div class="lb-formula overflow-x-auto text-center">\\[' + tex + '\\]</div>';
   }
   /**
    * Omota svaku `<table>` u `.lb-table-wrap` — isti spremnik koji `renderTable` (v2) već koristi.
@@ -194,7 +194,7 @@
       if (t.parentNode && t.parentNode.classList
           && t.parentNode.classList.contains('lb-table-wrap')) continue;   // već omotana
       const wrap = body.ownerDocument.createElement('div');
-      wrap.className = 'lb-table-wrap';
+      wrap.className = 'lb-table-wrap my-[1.4em] overflow-x-auto';
       t.parentNode.insertBefore(wrap, t);
       wrap.appendChild(t);
     }
@@ -349,7 +349,7 @@
       const iframe = document.createElement('iframe');
       iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
       iframe.title = 'YouTube video';
-      iframe.className = 'lb-video__frame';
+      iframe.className = 'lb-video__frame h-full w-full border-0';
       iframe.setAttribute('frameborder', '0');
       iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
       iframe.setAttribute('allowfullscreen', '');

@@ -5,6 +5,42 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-31 (OPUS) — **C5b/1b: `learn-blocks.css` migriran; `math.css` izašao iz opsega mjerom**
+
+Spec **§12.10**. Time je **C5b/1 zatvoren**.
+
+**① `math.css` ne migrira, i to je nalaz.** Sva tri selektora (`.katex`, `.katex-display`,
+`.katex-error`) su **KaTeX-ov vlastiti izlaz** — te elemente ne emitiramo nigdje, pa nema markupa
+u koji bi utility išao. Od 5 pravila migrabilnih je **0**.
+
+**② `learn-blocks.css`.** Skela je otišla u `js/blocks-renderer.js` (**7 mjesta, isključivo
+klase**), uključujući `.lb-table-wrap` na **dva** puta — `renderTable` i runtime-omot legacy
+tablica. Tri pravila su ostala prazna i obrisana. Dva svojstva **namjerno ostaju** u CSS-u:
+`margin` na `.lb-formula` (pregazuje ga `.lb-formula--inline`, a utility bi tu bitku **dobio** i
+slomio inline formule) i `display: block` na `.lb-video__frame`.
+
+**③ Mjerač je bio prvi kvar dvanaesti put — i napisao sam ga ja.** Ključ elementa gradio se od
+**imena klasa**, a cigla mijenja upravo klase → **138 „razlika"** koje su bile isti element
+uspoređen sam sa sobom. Ključ mora biti strukturni položaj. *Mjerač ne smije ovisiti o onome što
+se mijenja.*
+
+**④ Dva prava nalaza koja je ispravljeni mjerač onda izbacio.** `display: block` se **nije
+generirao** — `block` je, kao i `flex-wrap` u /1a, na popisu isključenih imena, pa je iframe videa
+pao na `inline` (popis ovdje **nije** diran; ime je pregeneričko). I: tvrdnja da `text-align`/
+`overflow-x` na inline `<span>`-u „nemaju učinka" **oborena je mjerenjem** (`auto → visible`,
+`center → start`) — staro pravilo je vrijedilo za obje varijante, pa ih obje i dobivaju.
+
+**⑤ Dva unit-testa renderera su pala, i to je bilo ispravno.** `blocks-renderer.test.js` **pina
+točan markup**, pa je promjena klasa tražila ručnu potvrdu — smisao te brane nad datotekom koja
+je sigurnosna granica. Ažuriran je samo dio s klasama; tvrdnje o `esc`/`safeUrl` netaknute.
+
+**⑥ Dokaz** ide kroz `window.renderBlocks`, ne kroz kataloški `css:diff`: **9 od 9** migriranih
+klasa potvrđeno nacrtano, pa **58 elemenata × 3 širine = 174 usporedbe, 0 razlika**.
+`preflight` **EXIT 0** · siročad **46 → 45** · `check:tailwind` 122 utilityja, svi namjerni.
+
+**Slijedi C5b/2** (`blind-map.css`, 35 od 51 pravila je naše) pa **C5b/3** (`learn.css` — prvo
+skidanje `#learn`).
+
 ## 2026-08-31 (OPUS) — **C5b/1a: `exercises.css` migriran, uz otvaranje granice prema engineu**
 
 Spec **§12.8** (mjera + odluka) i **§12.9** (izvještaj).

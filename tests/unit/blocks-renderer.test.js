@@ -91,7 +91,9 @@ test('callout: nepoznat variant → info; title escapan', function () {
 // ── image + URL sanitizacija ──
 test('image: valjan src → <img>; alt escapan', function () {
   const out = R([{ type: 'image', src: 'https://x/y.png', alt: '"a"' }]);
-  assert.ok(out.indexOf('<img class="lb-figure__img" src="https://x/y.png" alt="&quot;a&quot;"') !== -1);
+  // ⚠️ Klase su od C5b/1b PREZENTACIJSKE + utility (`h-auto max-w-full`); tvrdnja pina markup,
+  // pa ju svaka seoba skele mora pratiti. Ono što se OVDJE dokazuje je escaping, ne izgled.
+  assert.ok(out.indexOf('<img class="lb-figure__img h-auto max-w-full" src="https://x/y.png" alt="&quot;a&quot;"') !== -1);
 });
 test('image: javascript:/data:svg src → blok IZOSTAVLJEN', function () {
   assert.strictEqual(R([{ type: 'image', src: 'javascript:alert(1)' }]), '');
@@ -126,7 +128,7 @@ test('table: header + redovi, ćelije escapane', function () {
 
 // ── formula (KaTeX) ──
 test('formula: display → \\[ \\], inline → \\( \\), tex escapan', function () {
-  assert.strictEqual(R([{ type: 'formula', tex: 'x^2' }]), '<div class="lb-formula">\\[x^2\\]</div>');
+  assert.strictEqual(R([{ type: 'formula', tex: 'x^2' }]), '<div class="lb-formula overflow-x-auto text-center">\\[x^2\\]</div>');
   assert.ok(R([{ type: 'formula', tex: 'x', display: false }]).indexOf('\\(x\\)') !== -1);
   assert.ok(R([{ type: 'formula', tex: 'a<b' }]).indexOf('a&lt;b') !== -1); // < escapan (KaTeX čita textContent)
 });

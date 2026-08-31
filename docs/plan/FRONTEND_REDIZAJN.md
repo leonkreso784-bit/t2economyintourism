@@ -4990,3 +4990,75 @@ svi namjerni** · `check:palette` **93** (osnovica spuštena s 94 — pad je iz 
 - **`.lb-imath` ostaje u CSS-u** iako je `display: inline` skela: `inline` je na popisu
   isključenih imena i ne vrijedi ga skidati zbog jednog pravila.
 
+### 12.10 ✅ C5b/1b — `learn-blocks.css`, i `math.css` koji je iz opsega izašao MJEROM (2026-08-31)
+
+Druga polovica C5b/1. Odvojena od /1a **po dokazu, ne po veličini**: kataloška ruta od ove
+datoteke iscrtava **2 od 44 pravila**, pa ondje `css:diff` mjeri prazno.
+
+#### `math.css` NE MIGRIRA — i to nije preskakanje nego nalaz
+
+Sva tri selektora (`.katex`, `.katex-display`, `.katex-error`) su **KaTeX-ov vlastiti izlaz**.
+Mi te elemente ne emitiramo ni na jednom mjestu, pa **nema markupa u koji bi utility išao** — i
+oba `@media` pravila gađaju isto to. Od 5 pravila migrabilnih je **0**. §12.5 je to već tvrdio
+(*„KaTeX-ov vlastiti CSS nije naš"*); ovdje je prvi put i izmjereno.
+
+#### Izvedeno u `learn-blocks.css`
+
+Skela je otišla u `js/blocks-renderer.js` (**7 mjesta, isključivo klase**): `.lb-figure`,
+`.lb-figure__img`, `.lb-video`, `.lb-video__play`, `.lb-table-wrap` (**dva puta** — `renderTable`
+i runtime-omot legacy tablica), `.lb-table`, `.lb-formula`. Tri pravila su time ostala prazna i
+**obrisana** (`.lb-figure`, `.lb-video__frame`\*, `.lb-table-wrap`).
+
+**Dva svojstva su NAMJERNO ostala u CSS-u:**
+
+| svojstvo | zašto |
+|---|---|
+| `margin` na `.lb-formula` | pregazuje ga `.lb-formula--inline`; utility bi tu bitku **dobio** (ista specifičnost, kasnije u bundleu) i slomio inline formule |
+| `display: block` na `.lb-video__frame` | `block` je na popisu isključenih imena → utility se **ne generira** |
+
+#### 🐞 Mjerač je bio prvi kvar DVANAESTI put — i napisao sam ga ja
+
+Prva verzija usporedbe gradila je ključ elementa od **imena klasa**, a cigla mijenja upravo
+klase. Ishod: **138 „razlika"** koje su bile isti element uspoređen sam sa sobom pod drugim
+imenom. Ključ mora biti **strukturni položaj** (`tag[index]`). *Mjerač ne smije ovisiti o onome
+što se mijenja.*
+
+#### 🐞 Dva prava nalaza koja je to mjerenje onda izbacilo
+
+**① `display: block` se nije generirao.** Isti razred kao `flex-wrap` u /1a: `block` je na
+popisu `@source not inline`, pa je iframe videa pao na `inline`. Ovdje popis **nije diran** —
+`block` je pregeneričko ime u skupnoj zabrani i ne vrijedi ju raspetljavati zbog jednog pravila.
+*Drugi put u jednoj cigli da tiho isključenje pojede živo pravilo; obje je uhvatio preglednik.*
+
+**② Vlastiti argument oboren mjerenjem.** Bilo je zapisano da `text-align` i `overflow-x` na
+inline `<span>`-u „nemaju učinka", pa su utilityji dani samo blok-varijanti formule. Izmjereno:
+izračunata vrijednost se **mijenja** (`auto → visible`, `center → start`). Staro pravilo je
+vrijedilo za **obje** varijante, pa ih obje i dobivaju. *Kad se tvrdnja da izmjeriti, ne brani se
+argumentom.*
+
+#### Dokaz
+
+Mjeri se ono što renderer **stvarno nacrta**, kroz `window.renderBlocks` (isti put kao
+`tests/learn-parity.spec.js`), radno stablo vs `git worktree` reference, 36 svojstava po
+elementu:
+
+| | |
+|---|---|
+| pokrivenost | **9 od 9** migriranih klasa nacrtano (`FALI: (ništa)`) — mjereno **prije** klika na fasadu videa i **poslije** njega, jer klik fasadu zamijeni iframeom |
+| usporedbe | 58 elemenata × 3 širine (375 · 768 · 1280) = **174** |
+| razlika | **0** |
+
+⚠️ **Dva unit-testa renderera su pala i to je bilo ispravno.**
+`tests/unit/blocks-renderer.test.js` **pina točan markup** (slika, formula), pa je promjena klasa
+tražila ručnu potvrdu — što je i smisao te brane nad datotekom koja je sigurnosna granica.
+Ažuriran je isključivo dio s klasama; tvrdnje o `esc`/`safeUrl` su netaknute.
+
+`preflight` **EXIT 0** · siročad **46 → 45** · `check:tailwind` **122 utilityja, svi namjerni**.
+
+#### Time je C5b/1 zatvoren
+
+Ostaje **C5b/2** (`blind-map.css` — 35 od 51 pravila je naše, `index.html`) pa **C5b/3**
+(`learn.css` — prvo skidanje `#learn` uz `css:diff` = 0, pa migracija).
+
+\* `.lb-video__frame` je obrisan kao pravilo pa **vraćen sa samo `display: block`** — v. tablicu gore.
+
