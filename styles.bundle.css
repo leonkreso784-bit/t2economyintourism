@@ -3557,20 +3557,12 @@ sokrat-modal.sokrat-confirm-modal > * {
   }
 }
 .ex-container {
-  max-width: 960px;
-  margin: 0 auto;
   padding: 1rem;
-}
-.ex-header {
-  margin-bottom: 1.25rem;
 }
 .ex-header h1 {
   font-size: 1.6rem;
   font-weight: 800;
   color: var(--text-primary);
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
 }
 .ex-header p {
   color: var(--text-muted);
@@ -3578,14 +3570,11 @@ sokrat-modal.sokrat-confirm-modal > * {
   font-size: 0.95rem;
 }
 .ex-modes {
-  display: inline-flex;
-  gap: 0.25rem;
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 0.25rem;
   margin-bottom: 1.25rem;
-  flex-wrap: wrap;
 }
 .ex-mode-btn {
   border: none;
@@ -3612,10 +3601,6 @@ sokrat-modal.sokrat-confirm-modal > * {
   line-height: 1.5;
   margin-bottom: 1.25rem;
 }
-.ex-list {
-  display: grid;
-  gap: 0.85rem;
-}
 .ex-list-head {
   font-size: 0.78rem;
   font-weight: 700;
@@ -3641,22 +3626,10 @@ sokrat-modal.sokrat-confirm-modal > * {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
-.ex-card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
 .ex-card-title {
   font-weight: 700;
   color: var(--text-primary);
   font-size: 1rem;
-}
-.ex-card-tags {
-  display: flex;
-  gap: 0.4rem;
-  flex-wrap: wrap;
-  margin-top: 0.5rem;
 }
 .ex-tag {
   font-size: 0.72rem;
@@ -3689,15 +3662,6 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: 1rem;
-}
-.ex-fields {
-  display: grid;
-  gap: 0.75rem;
-}
-.ex-field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
 }
 .ex-field label {
   font-size: 0.85rem;
@@ -3733,12 +3697,6 @@ sokrat-modal.sokrat-confirm-modal > * {
   font-size: 0.82rem;
   color: var(--text-muted);
   font-style: italic;
-}
-.ex-actions {
-  display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-  margin-top: 1.1rem;
 }
 .ex-btn {
   border: none;
@@ -3798,9 +3756,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   margin-bottom: 0.35rem;
 }
 .ex-table-wrap {
-  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  margin: 0 -0.25rem;
 }
 .ex-table {
   width: 100%;
@@ -3821,10 +3777,6 @@ sokrat-modal.sokrat-confirm-modal > * {
   font-size: 0.72rem;
   letter-spacing: 0.03em;
 }
-.ex-choice {
-  display: grid;
-  gap: 1.1rem;
-}
 .ex-choice-item {
   background: var(--bg-primary);
   border: 1px solid var(--border);
@@ -3836,11 +3788,6 @@ sokrat-modal.sokrat-confirm-modal > * {
   font-weight: 600;
   line-height: 1.5;
   margin-bottom: 0.7rem;
-}
-.ex-choice-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
 }
 .ex-opt {
   border: 1px solid var(--border);
@@ -9521,6 +9468,9 @@ body.mm-dragging {
 .z-\[1000\] {
   z-index: 1000;
 }
+.-mx-1 {
+  margin-inline: calc(var(--spacing) * -1);
+}
 .mx-auto {
   margin-inline: auto;
 }
@@ -9551,6 +9501,9 @@ body.mm-dragging {
 .mt-16 {
   margin-top: calc(var(--spacing) * 16);
 }
+.mt-\[1\.1rem\] {
+  margin-top: 1.1rem;
+}
 .mb-1\.5 {
   margin-bottom: calc(var(--spacing) * 1.5);
 }
@@ -9563,6 +9516,9 @@ body.mm-dragging {
 .mb-4 {
   margin-bottom: calc(var(--spacing) * 4);
 }
+.mb-5 {
+  margin-bottom: calc(var(--spacing) * 5);
+}
 .mb-6 {
   margin-bottom: calc(var(--spacing) * 6);
 }
@@ -9574,6 +9530,9 @@ body.mm-dragging {
 }
 .grid {
   display: grid;
+}
+.inline-flex {
+  display: inline-flex;
 }
 .h-1\.5 {
   height: calc(var(--spacing) * 1.5);
@@ -9596,6 +9555,9 @@ body.mm-dragging {
 .max-w-\[800px\] {
   max-width: 800px;
 }
+.max-w-\[960px\] {
+  max-width: 960px;
+}
 .max-w-xl {
   max-width: var(--container-xl);
 }
@@ -9614,6 +9576,9 @@ body.mm-dragging {
 .flex-row {
   flex-direction: row;
 }
+.flex-wrap {
+  flex-wrap: wrap;
+}
 .items-center {
   align-items: center;
 }
@@ -9622,6 +9587,9 @@ body.mm-dragging {
 }
 .justify-center {
   justify-content: center;
+}
+.gap-1 {
+  gap: var(--spacing);
 }
 .gap-2 {
   gap: calc(var(--spacing) * 2);
@@ -9640,6 +9608,21 @@ body.mm-dragging {
 }
 .gap-12 {
   gap: calc(var(--spacing) * 12);
+}
+.gap-\[0\.3rem\] {
+  gap: 0.3rem;
+}
+.gap-\[0\.4rem\] {
+  gap: 0.4rem;
+}
+.gap-\[0\.6rem\] {
+  gap: 0.6rem;
+}
+.gap-\[0\.85rem\] {
+  gap: 0.85rem;
+}
+.gap-\[1\.1rem\] {
+  gap: 1.1rem;
 }
 .overflow-hidden {
   overflow: hidden;
@@ -9719,6 +9702,9 @@ body.mm-dragging {
 }
 .text-\[1\.3rem\] {
   font-size: 1.3rem;
+}
+.text-\[1\.15rem\] {
+  font-size: 1.15rem;
 }
 .leading-\[1\.25\] {
   --tw-leading: 1.25;

@@ -72,6 +72,23 @@ const BUNDLE = 'styles.bundle.css';
  * održalo na životu.
  */
 const RUTE = (process.env.CSS_DIFF_RUTE || '').split(',').map((r) => r.trim()).filter(Boolean);
+
+/**
+ * `CSS_DIFF_KLIK` — selektor na koji se klikne NAKON ucitavanja, na OBJE strane.
+ *
+ * WARN ZASTO POSTOJI (C5b/1). Alat je dotad mjerio iskljucivo POCETNO stanje rute, pa je
+ * svaka povrsina koja nastaje tek na interakciju bila izvan dosega — a "0 razlika" na
+ * ekranu koji nije nacrtan nije dokaz nego prazan ekran (isti razred kao 11.3 `.quiz-game`
+ * iza `hidden` i 12.6 uvjetni tabovi). Konkretno: od 12 mjesta koja je C5b/1 migrirao u
+ * `js/exercises.js`, njih 7 postoji tek kad se vjezba OTVORI — `.ex-fields`, `.ex-field`,
+ * `.ex-choice`, `.ex-choice-options`, `.ex-actions`, `.ex-modes`, `.ex-table-wrap`.
+ *
+ * Klik ide kroz `locator().first()` uz cekanje na vidljivost: ako selektora nema, mjerenje
+ * PADA glasno umjesto da tiho izmjeri neotvorenu stranicu. Isti zahtjev koji ova skripta
+ * vec postavlja sebi ispisom opsega — mjerac koji ne moze izvesti ono sto tvrdi da mjeri
+ * mora pasti, ne izmjeriti nesto drugo.
+ */
+const KLIK = (process.env.CSS_DIFF_KLIK || '').trim();
 if (!RUTE.length) RUTE.push('');
 
 /**
@@ -323,6 +340,14 @@ async function measure(page, url, overrideCss) {
   }
   await page.goto(url, { waitUntil: 'load' });
   await smiri(page);
+  if (KLIK) {
+    // `.first()` jer se mjeri STANJE, ne konkretan element; `waitFor` pretvara
+    // "nema ga" u pad umjesto u tiho mjerenje neotvorene stranice.
+    const meta = page.locator(KLIK).first();
+    await meta.waitFor({ state: 'visible', timeout: 10000 });
+    await meta.click();
+    await smiri(page);
+  }
   return page.evaluate(COLLECT);
 }
 
@@ -394,7 +419,9 @@ async function smiri(page, maxMs = 8000) {
   } else {
     wt = napraviWorktree(nacin.arg);
     console.log('   referenca : ' + wt.label + '  (cijelo stablo: HTML + JS + CSS)');
-    console.log('   radno     : radno stablo\n');
+    console.log('   radno     : radno stablo');
+    console.log(KLIK ? ('   stanje    : NAKON klika na `' + KLIK + '`') : '   stanje    : pocetno (bez klika)');
+    console.log('');
   }
 
   const serveri = [];

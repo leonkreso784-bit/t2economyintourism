@@ -5,6 +5,45 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-31 (OPUS) — **C5b/1a: `exercises.css` migriran, uz otvaranje granice prema engineu**
+
+Spec **§12.8** (mjera + odluka) i **§12.9** (izvještaj).
+
+**① Mjera je oborila redoslijed cigli.** §12.4 je posao dijelio po broju pravila i ID-selektora, a
+propustio os koja o migraciji odlučuje: **tko smije pisati markup.** Metoda faze je *„utility u
+markup, pravilo obriši"*, a u projektu je **nula `@apply`** — pa datoteka čiji markup ne smijemo
+dirati nema čime migrirati. Izmjereno: `exercises.css` **108 od 119** pravila iza `js/exercises.js`,
+`learn-blocks.css` **33 od 44** iza `blocks-renderer.js`; a `blind-map.css` **35 od 51** i
+`learn.css` **96 od 112** su naši. **C5b/1 je bio najmanje migrabilna cigla, a stajao je prvi.**
+
+**② Odluka (Leon).** Granica se otvara **usko**: ta dva izvora smiju primiti **isključivo
+prezentacijske klase** — nula izmjena logike, ocjenjivanja, `esc`-a i sadržaja. Bez toga izlazni
+uvjet C7 (*„nema starog CSS-a"*) za njih ne bi mogao biti ispunjen nikada. ADR-018/024/028 i
+granica BUG-024/025 stoje netaknuti.
+
+**③ Izvedeno.** 12 mjesta u `js/exercises.js` + `index.html` nosi skelu kao utilityje. Dva
+svojstva su **namjerno ostala** u CSS-u jer ih još netko dira: `padding` na `.ex-container`
+(`@media 640`) i `margin-bottom` na `.ex-modes` (`:has(+ .ex-mode-desc)`). Nestala su i **dva
+inline `style` atributa** — inline stil je specifičnost koju ni utility ni CSS ne pregaze.
+
+**④ `flex-wrap` je bio tiho isključen.** Ime je u K2b ušlo na popis `@source not inline` kao **šum
+iz komentara**; sad ga vježbe stvarno pišu kao klasu. `check:tailwind` je javio „6/6 čisto" — jer
+isključenje je legitiman unos — a klasa se nije generirala. Uhvatio `css:diff`: **140 razlika,
+sve isto svojstvo.** Micanje s popisa slijedi put `grid` (C4b) i `fixed` (C5a).
+
+**⑤ Alat: `css:diff` je dobio `CSS_DIFF_KLIK`.** Sedam od 12 migriranih mjesta postoji tek kad se
+vježba **otvori**, a alat je mjerio samo početno stanje rute. Sad klikne na obje strane i **pada
+glasno** ako selektora nema. ⚠️ Usput, jedanaesti put u fazi: prvi `css:diff` je javio zeleno na
+**1131 elemenata** jer je MSYS rutu pretvorio u `#C:/Program Files/Git/…`; ispravna ima **8041**.
+
+**⑥ Dokaz.** Prvo sondom provjereno da je svih **13** migriranih klasa doista na ekranu
+(`FALI: (ništa)`), pa mjereno u **četiri stanja** (popis · otvorena vježba · `ex-choice` ·
+`ex-table-wrap`) i na širinama 375/640/768/1280 — **110 683 usporedbi, 0 razlika u prikazu**.
+Suita **533/533**, `preflight` **EXIT 0**, `check:palette` **94 → 93**.
+
+**Slijedi C5b/1b** (`learn-blocks.css` + `math.css`) — zaseban commit jer traži **drugi dokaz**:
+katalog od te datoteke iscrtava 2 od 44 pravila, pa `css:diff` ondje mjeri prazno.
+
 ## 2026-08-31 (OPUS) — **BUG-042: CI je pao na kontrastu koji na ekranu ne postoji**
 
 CI job „Lint + verify + tests" oborio je `tests/a11y.spec.js:70` (stranica lekcija) s tri

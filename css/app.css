@@ -180,11 +180,17 @@
    klase — vidi tekst.* Nas `.visible` zivi u `responsive/03-modes-a11y-print.css`. */
 @source not inline("{,!}visible");
 
-/* K2b: `flex-wrap` je usao u kandidate iz KOMENTARA — biljeska u `js/studio.js` objasnjava
-   zasto je mrvica Studija dizala traku na 41 % telefona i pritom doslovno pise
-   `flex-wrap:wrap`. Skener ne razlikuje objasnjenje od klase; vidi tekst. Isti razred kao
-   `.\!container` iz `if (!container)` gore — samo sto je ovaj put izvor bila PROZA. */
-@source not inline("{,!}flex-wrap");
+/* C5b/1: `flex-wrap` je OTISAO s popisa — istim putem kao `grid` (C4b) i `fixed` (C5a).
+   Na popis je usao u K2b kao SUM IZ PROZE: biljeska u `js/studio.js` doslovno pise
+   `flex-wrap:wrap`, a skener ne razlikuje objasnjenje od klase. Od C5b/1 ga vjezbe
+   stvarno PISU kao klasu (`js/exercises.js`, pet mjesta), pa isljucenje vise ne gasi sum
+   nego zivo pravilo. Provjereno prije micanja: u `css/**` nema nijednog pravila
+   `.flex-wrap` (za razliku od `hidden`/`text-danger`, koji ostaju jer JESU nase klase).
+   ⚠️ Kako se kvar ocitovao: iskljucenje je TIHO — `check:tailwind` je javio „6/6 cisto",
+   a `flex-wrap` se jednostavno nije primjenjivao. Uhvatio ga je `css:diff`
+   (35 elemenata × 4 sirine = 140 razlika, sve isto svojstvo), dakle preglednik, ne citanje.
+   Treci put vrijedi ista recenica iz zaglavlja ovog popisa: *popis se mijenja u ISTOM
+   koraku u kojem se pise klasa, nikad poslije.* */
 
 /* T3: `sticky` je usao u kandidate iz KOMENTARA — biljeska uz omotac `.chrome` objasnjava
    zasto je ljepljivost morala preseliti s trake na roditelja i pritom doslovno pise

@@ -5,6 +5,52 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-31 (OPUS) — C5b/1a: mjera je oborila redoslijed cigli prije nego je pisan ijedan redak
+
+Leon: *„Idemo na C5b/1"*. Prije koda je napravljena mjera koja u §12.4 nije postojala — i ona je
+promijenila opseg.
+
+**NALAZ.** Metoda ove faze je *„utility u markup, pravilo obriši"*; u projektu je **nula
+`@apply`**. Znači: **bez prava na markup nema migracije.** §12.4 je posao dijelio po broju
+pravila, medijskih upita i ID-selektora — nijedna od te tri osi ne mjeri tko markup posjeduje.
+Izmjereno po pravilu: `exercises.css` **108/119** iza `js/exercises.js`, `learn-blocks.css`
+**33/44** iza `blocks-renderer.js`, `math.css` 3/5 su KaTeX-ove; a `blind-map.css` **35/51** i
+`learn.css` **96/112** su naši. ⇒ **C5b/1 je bio najmanje migrabilna cigla od tri, a stajao je
+prvi.** *Brojanje pravila mjeri koliko posla ima; vlasništvo markupa mjeri smije li se posao
+uopće obaviti.*
+
+**ODLUKA (Leon).** Granica iz §12.5 otvara se **usko**: `js/exercises.js` i `js/blocks-renderer.js`
+smiju primiti **samo prezentacijske klase**, nula izmjena logike/ocjenjivanja/`esc`-a/sadržaja.
+Obrazloženje koje je odlučilo: granica ovako postavljena ne odgađa problem nego ga čini
+**nerješivim** — izlazni uvjet C7 za te dvije datoteke ne bi mogao biti ispunjen nikada.
+
+**IZVEDENO.** 12 mjesta nosi skelu kao utilityje; komponenta ostaje u CSS-u. Dva svojstva
+namjerno ostaju (`padding` na `.ex-container` zbog `@media 640`; `margin-bottom` na `.ex-modes`
+zbog `:has`). Nestala su dva inline `style` atributa.
+
+**TRI MJERAČA SU LAGALA PRIJE NEGO JE IJEDNO PRAVILO PALO:**
+① **`flex-wrap` je bio tiho isključen** (`@source not inline`, ušao u K2b kao šum iz komentara).
+`check:tailwind` javlja „6/6 čisto" jer je isključenje legitiman unos — a klasa se ne generira.
+Uhvatio `css:diff`: 140 razlika, sve isto svojstvo. Micanje slijedi put `grid`/`fixed`.
+② **Vodeća kosa crta, jedanaesti put.** Prvi `css:diff` javio zeleno na **1131 elemenata** jer je
+MSYS rutu pretvorio u `#C:/Program Files/Git/…`. Ispravna ruta: **8041**. Spasio brojač opsega.
+③ **„Nula razlika" na ekranu kojeg nema.** 7 od 12 mjesta postoji tek kad se vježba otvori.
+
+**ALAT.** `css:diff` je dobio **`CSS_DIFF_KLIK`** — klik na obje strane prije mjerenja, i **pad**
+ako selektora nema. Trebat će ga C5b/2 i /3 te svaka cigla s uvjetnom površinom.
+
+**DOKAZ.** Zasebna sonda prvo potvrdila da je svih 13 klasa na ekranu (`FALI: (ništa)`), pa četiri
+stanja × širine 375/640/768/1280 → **110 683 usporedbi, 0 razlika**. 640 je uključen jer
+`max-width: 640px` = Tailwindov `sm`, pa mobile-first pomiče granicu za 1 px. Suita **533/533**,
+`preflight` EXIT 0, paleta **94 → 93**.
+
+**SLIJEDI C5b/1b** (`learn-blocks.css` + `math.css`) — zaseban commit jer traži **drugi dokaz**:
+katalog od `learn-blocks.css` iscrtava 2 od 44 pravila, pa `css:diff` ondje mjeri prazno; ide
+kroz `window.renderBlocks`. Miješanje dviju vrsta dokaza u jedan commit značilo bi da polovica
+nema nijedan.
+
+---
+
 ## 2026-08-31 (OPUS) — BUG-042: pouka je bila zapisana u datoteci koju pali spec nije zvao
 
 Leon je javio pad CI-ja: *„Pao nam je lint test i verify na Error: 1) [iPhone-SE-375] ›

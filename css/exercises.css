@@ -8,23 +8,20 @@
    polja, feedback, prazno stanje, mobilni scroll-x za široke tablice.
    ===================================================== */
 
+/* ⚠️ `padding` NAMJERNO ostaje ovdje: mijenja ga @media (max-width: 640px) na dnu, a
+   utilityji stoje zadnji i neuslojeni — svojstvo koje preživjeli upit još dira ne smije
+   u utility (pravilo ② iz §11.1). Širina i centriranje su otišli u `index.html`. */
 .ex-container {
-    max-width: 960px;
-    margin: 0 auto;
     padding: 1rem;
 }
 
 /* ---- Header ---- */
-.ex-header {
-    margin-bottom: 1.25rem;
-}
+/* `.ex-header` je ostao bez ijednog svojstva (margina je utility) → pravilo obrisano.
+   ⚠️ `font-size` h1-a ostaje: mijenja ga @media (max-width: 640px). */
 .ex-header h1 {
     font-size: 1.6rem;
     font-weight: 800;
     color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
 }
 .ex-header p {
     color: var(--text-muted);
@@ -33,15 +30,15 @@
 }
 
 /* ---- Mode tabs (practice / exam / walkthrough) ---- */
+/* ⚠️ `margin-bottom` OSTAJE: mijenja ga `.ex-modes:has(+ .ex-mode-desc)` niže. Ta bi ga
+   bitka dobila i protiv utilityja (0-2-0 vs 0-1-0), ali pravilo ② ne pita tko pobjeđuje
+   nego dira li svojstvo itko drugi — a ovdje dira. */
 .ex-modes {
-    display: inline-flex;
-    gap: 0.25rem;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 0.25rem;
     margin-bottom: 1.25rem;
-    flex-wrap: wrap;
 }
 .ex-mode-btn {
     border: none;
@@ -70,10 +67,6 @@
 }
 
 /* ---- List of exercise cards ---- */
-.ex-list {
-    display: grid;
-    gap: 0.85rem;
-}
 .ex-list-head {
     font-size: 0.78rem;
     font-weight: 700;
@@ -97,22 +90,10 @@
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
 }
-.ex-card-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-}
 .ex-card-title {
     font-weight: 700;
     color: var(--text-primary);
     font-size: 1rem;
-}
-.ex-card-tags {
-    display: flex;
-    gap: 0.4rem;
-    flex-wrap: wrap;
-    margin-top: 0.5rem;
 }
 .ex-tag {
     font-size: 0.72rem;
@@ -143,15 +124,6 @@
     color: var(--text-secondary);
     line-height: 1.6;
     margin-bottom: 1rem;
-}
-.ex-fields {
-    display: grid;
-    gap: 0.75rem;
-}
-.ex-field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
 }
 .ex-field label {
     font-size: 0.85rem;
@@ -187,12 +159,6 @@
 }
 
 /* ---- Action buttons ---- */
-.ex-actions {
-    display: flex;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-    margin-top: 1.1rem;
-}
 .ex-btn {
     border: none;
     border-radius: var(--radius);
@@ -243,11 +209,8 @@
 .ex-solution li { margin-bottom: 0.35rem; }
 
 /* ---- Wide tables (statement / journal): horizontal scroll on small screens ---- */
-.ex-table-wrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin: 0 -0.25rem;
-}
+/* Ostaje samo ono za što utility ne postoji. */
+.ex-table-wrap { -webkit-overflow-scrolling: touch; }
 .ex-table {
     width: 100%;
     border-collapse: collapse;
@@ -270,7 +233,6 @@
 }
 
 /* ---- choice widget (True/False + Multiple Choice) ---- */
-.ex-choice { display: grid; gap: 1.1rem; }
 .ex-choice-item {
     background: var(--bg-primary);
     border: 1px solid var(--border);
@@ -282,11 +244,6 @@
     font-weight: 600;
     line-height: 1.5;
     margin-bottom: 0.7rem;
-}
-.ex-choice-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
 }
 .ex-opt {
     border: 1px solid var(--border);

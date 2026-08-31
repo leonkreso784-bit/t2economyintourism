@@ -51,13 +51,13 @@
         const done = !!(prog[ex.id] && prog[ex.id].done);
         return ''
             + '<div class="ex-card" data-ex-id="' + esc(ex.id) + '">'
-            + '  <div class="ex-card-top">'
+            + '  <div class="ex-card-top flex items-center justify-between gap-3">'
             + '    <span class="ex-card-title">' + esc(ex.title || ex.id) + '</span>'
             + '    <span class="ex-card-status ' + (done ? 'is-done' : 'is-todo') + '">'
             + '      <i class="fas ' + (done ? 'fa-circle-check' : 'fa-circle') + '"></i>'
             + '    </span>'
             + '  </div>'
-            + '  <div class="ex-card-tags"><span class="ex-tag">' + esc(ex.type) + '</span></div>'
+            + '  <div class="ex-card-tags mt-2 flex flex-wrap gap-[0.4rem]"><span class="ex-tag">' + esc(ex.type) + '</span></div>'
             + '</div>';
     }
 
@@ -76,7 +76,7 @@
             .map((o) => o.ex);
 
         // Grupiraj u sekcije s naslovom poglavlja ("Chapter N"); bez poglavlja → "Other".
-        let html = '<div class="ex-list">';
+        let html = '<div class="ex-list grid gap-[0.85rem]">';
         let lastCh;
         sorted.forEach((ex) => {
             const ch = chOf(ex);
@@ -104,7 +104,7 @@
             grader: 'gradeChoice',
             render(ex) {
                 const items = Array.isArray(ex.items) ? ex.items : [];
-                return '<div class="ex-choice">' + items.map((item, i) => {
+                return '<div class="ex-choice grid gap-[1.1rem]">' + items.map((item, i) => {
                     const opts = (item.kind === 'tf')
                         ? [['true', 'True'], ['false', 'False']]
                         : (item.options || []).map((o, idx) => [String(idx), o]);
@@ -113,7 +113,7 @@
                     ).join('');
                     return '<div class="ex-choice-item" data-item="' + i + '">'
                         + '<div class="ex-choice-q">' + (i + 1) + '. ' + esc(item.q) + '</div>'
-                        + '<div class="ex-choice-options">' + optsHtml + '</div>'
+                        + '<div class="ex-choice-options flex flex-wrap gap-2">' + optsHtml + '</div>'
                         + '</div>';
                 }).join('') + '</div>';
             },
@@ -153,9 +153,9 @@
                 const mode = (opts && opts.mode) || 'practice';
                 const showHints = mode !== 'exam'; // exam = bez hintova
                 const fields = Array.isArray(ex.fields) ? ex.fields : [];
-                return '<div class="ex-fields">' + fields.map((f) => {
+                return '<div class="ex-fields grid gap-3">' + fields.map((f) => {
                     const unit = f.unit ? ' <span class="ex-unit">(' + esc(f.unit) + ')</span>' : '';
-                    return '<div class="ex-field">'
+                    return '<div class="ex-field flex flex-col gap-[0.3rem]">'
                         + '<label for="exf-' + esc(f.key) + '">' + esc(f.label) + unit + '</label>'
                         + '<input class="ex-input" id="exf-' + esc(f.key) + '" data-key="' + esc(f.key) + '"'
                         + ' type="text" inputmode="decimal" autocomplete="off" spellcheck="false">'
@@ -510,7 +510,7 @@
     function givensTableHtml(ex, col1) {
         const rows = normalizeGivens(ex && ex.givens);
         if (!rows.length) return '';
-        return '<div class="ex-table-wrap"><table class="ex-table"><thead><tr><th>'
+        return '<div class="ex-table-wrap -mx-1 overflow-x-auto"><table class="ex-table"><thead><tr><th>'
             + esc(col1 || 'Given') + '</th><th>Value</th></tr></thead><tbody>'
             + rows.map((r) => '<tr><td>' + esc(r.label) + '</td><td>' + esc(formatGiven(r.value)) + '</td></tr>').join('')
             + '</tbody></table></div>';
@@ -544,7 +544,7 @@
     };
     function modeBar() {
         const desc = MODE_DESC[currentMode] || '';
-        return '<div class="ex-modes">' + MODES.map((m) =>
+        return '<div class="ex-modes inline-flex flex-wrap gap-1">' + MODES.map((m) =>
             '<button type="button" class="ex-mode-btn' + (m[0] === currentMode ? ' active' : '') + '" data-ex-mode="' + m[0] + '">'
             + esc(m[1]) + '</button>'
         ).join('') + '</div>'
@@ -576,15 +576,15 @@
         const interactive = !!widget && currentMode !== 'walkthrough';
         return ''
             + '<div class="ex-widget">'
-            + '  <div class="ex-actions" style="margin-top:0;margin-bottom:1rem;">'
+            + '  <div class="ex-actions mb-4 flex flex-wrap gap-[0.6rem]">'
             + '    <button type="button" class="ex-btn ex-btn-ghost" data-ex-back="1"><i class="fas fa-arrow-left"></i> Back</button>'
             + '  </div>'
-            + '  <h2 class="ex-card-title" style="font-size:1.15rem;margin-bottom:0.5rem;">' + esc(ex.title || ex.id) + '</h2>'
+            + '  <h2 class="ex-card-title mb-2 text-[1.15rem]">' + esc(ex.title || ex.id) + '</h2>'
             + (ex.prompt ? '<div class="ex-prompt">' + esc(ex.prompt) + '</div>' : '')
             + modeBar()
             + '  <div class="ex-body">' + openBody(ex) + '</div>'
             + (interactive
-                ? '<div class="ex-actions">'
+                ? '<div class="ex-actions mt-[1.1rem] flex flex-wrap gap-[0.6rem]">'
                     + '<button type="button" class="ex-btn ex-btn-primary" data-ex-check="1"><i class="fas fa-check"></i> Check</button>'
                     + (isRandomized(ex) ? '<button type="button" class="ex-btn ex-btn-ghost" data-ex-new="1"><i class="fas fa-dice"></i> New numbers</button>' : '')
                     + '</div>'

@@ -4854,3 +4854,139 @@ Oba puta je ispis opsega (`dotaknuto: 0`) spriječio da izmišljotina prođe kao
   nevidljiv; pripada ciglama koje te datoteke ionako otvaraju.
 - **`.map-clear-btn:hover`** (bijelo na `--danger`) ostaje: to je jedno od sedam pravila koja gasi
   **ADR-032**, ne ova cigla.
+
+### 12.8 ⚠️ MJERA JE OBORILA REDOSLIJED CIGLI — vlasništvo markupa nije bilo mjereno (2026-08-31)
+
+§12.4 je posao razdijelio po **broju pravila, medijskih upita i ID-selektora**. Ta je podjela
+propustila os koja o migraciji odlučuje više od svih triju: **tko smije pisati markup.** Metoda
+ove faze je *„utility u markup, pravilo obriši"* — a u projektu je **nula `@apply`**, pa datoteka
+čiji markup ne smijemo dirati **nema čime migrirati**.
+
+**Izmjereno** (za svako pravilo: koji izvori spominju bar jednu njegovu klasu):
+
+| datoteka | pravila | naša | ⛔ engine / renderer | vlasnik većine |
+|---|---|---|---|---|
+| `exercises.css` | 119 | **6** | **108** | `js/exercises.js` |
+| `learn-blocks.css` | 44 | 1 (+10 runtime `lb-color-*`) | **33** | `js/blocks-renderer.js` |
+| `math.css` | 5 | 2 | — (3 su KaTeX-ove, ne migriraju se) | KaTeX |
+| `blind-map.css` | 51 | **35** | ~9 | `index.html` |
+| `learn.css` | 112 | **96** | ~10 | `js/learn.js` + `index.html` |
+
+⚠️ **C5b/1 je time bio NAJMANJE migrabilna cigla od tri, a stajao je prvi.** C5b/2 i /3 su
+obrnuto — gotovo posve naši. *Brojanje pravila mjeri koliko posla ima; vlasništvo markupa mjeri
+smije li se posao uopće obaviti.*
+
+> ⚠️ Mjera je gruba u jednom smjeru i to je namjerno rečeno: pravilo se pripisuje svakom izvoru
+> koji spominje **bar jednu** njegovu klasu, pa generička imena (`show`, `active`) napuhuju
+> **miješane** stupce. Jednovlasnički stupci — 108, 33, 35, 96 — su pouzdani i nose zaključak.
+
+#### ✅ ODLUKA (Leon, 2026-08-31): granica se otvara USKO
+
+`js/exercises.js` i `js/blocks-renderer.js` smiju primiti **isključivo prezentacijske klase** —
+**nula izmjena logike, ocjenjivanja, `esc`-a i sadržaja.** Obrazloženje je da granica ovako
+postavljena ne odgađa problem nego ga čini **nerješivim**: izlazni uvjet C7 (*„u repozitoriju
+nema starog CSS-a"*) za te dvije datoteke ne bi mogao biti ispunjen nikada.
+
+**Što granica i dalje znači** (nepromijenjeno): engine se **ne mijenja za sadržaj**
+(`EXERCISES_ENGINE.md` §Slojevi, ADR-018) · prikaz blokova ide isključivo kroz
+`renderContentBlocks()`, a svaki tekst iz podatka kroz `SokratBlocks.esc` (BUG-024/025) ·
+**Tailwind nikad u `data/`** (ADR-028).
+
+**Brane koje tu odluku čuvaju:** `tests/unit/blocks-renderer.test.js` +
+`tests/unit/legacy-html-coverage.test.js` (renderer) · `test:unit` graderi (engine) ·
+`css:diff = 0` na rutama iz §12.6 · `check:tailwind` (dinamička imena klasa ostaju zabranjena).
+
+#### Rez po SVOJSTVU — što ostaje u CSS-u (pravilo ② iz §11.1)
+
+Izmjereno, jer utilityji stoje zadnji i neuslojeni pa svojstvo koje preživjeli upit još mijenja
+ne smije u utility:
+
+| datoteka | preživjeli upit | selektori | svojstva koja NE idu u utility |
+|---|---|---|---|
+| `exercises.css` | **jedan** — `(max-width: 640px)` | `.ex-container` · `.ex-header h1` · `.ex-actions .ex-btn` | `padding` · `font-size` · `flex` |
+| `math.css` | `(max-width: 767px)` | `.katex` · `.katex-display` | `font-size` |
+| `learn-blocks.css` | **nijedan** | — | — (sve je slobodno) |
+
+⚠️ **`640` nije ad-hoc prag nego točno Tailwindov `sm`** (§12.3 ga je vodio kao „ne postoji
+nigdje drugdje" jer je gledao samo `css/`, ne i ljestvicu tokena). Prelazak `max-width: 640px` →
+mobile-first `sm:` **pomiče granicu za 1 px**: staro pravilo vrijedi **na** 640, `sm:` vrijedi
+**od** 640. To je promjena prikaza, koliko god sitna — pa se mjeri na širini **640**, a ne samo
+na 375/768/1280.
+
+### 12.9 ✅ C5b/1a — `exercises.css`, i tri mjerača koja su lagala prije nego je pravilo palo (2026-08-31)
+
+Prva migrirana površina iza otvorene granice (§12.8). **Rez ide po SVOJSTVU** (pravilo ② iz
+§11.1): 12 mjesta u `js/exercises.js` i `index.html` dobilo je skelu kao utilityje, komponenta je
+ostala u CSS-u.
+
+**Dva svojstva su NAMJERNO ostala u CSS-u**, i oba iz istog razloga — nešto ih još dira:
+
+| svojstvo | tko ga dira | zašto ne u utility |
+|---|---|---|
+| `padding` na `.ex-container` | `@media (max-width: 640px)` | utilityji stoje zadnji i neuslojeni |
+| `margin-bottom` na `.ex-modes` | `.ex-modes:has(+ .ex-mode-desc)` | pravilo ② ne pita **tko pobjeđuje** (`:has` je 0-2-0 i dobio bi) nego **dira li svojstvo itko drugi** |
+
+Usput su nestala **dva inline `style` atributa** (`.ex-actions`, `.ex-card-title`) — inline stil
+je specifičnost koju ni utility ni CSS ne mogu pregaziti, pa je svaki od njih bio tiha iznimka.
+
+#### 🐞 Tri nalaza, i sva tri je uhvatio preglednik, ne čitanje
+
+**① `flex-wrap` je bio ISKLJUČEN, i to tiho.** Ime je na popis `@source not inline` ušlo u K2b
+kao **šum iz proze** — bilješka u `js/studio.js` doslovno piše `flex-wrap:wrap`. Od ove cigle ga
+vježbe **stvarno pišu kao klasu**, pa isključenje više nije gasilo šum nego živo pravilo.
+⚠️ Kvar je bio nevidljiv svakoj statičkoj brani: `check:tailwind` je javio **„6/6 čisto"**, jer
+isključenje je legitiman unos — a `.flex-wrap` se jednostavno nije generirao. Uhvatio ga je
+`css:diff`: **35 elemenata × 4 širine = 140 razlika, sve isto svojstvo.** Micanje s popisa slijedi
+put `grid` (C4b) i `fixed` (C5a), uz istu prethodnu provjeru: u `css/**` nema pravila `.flex-wrap`.
+*Rečenica iz zaglavlja tog popisa vrijedi treći put: popis se mijenja u ISTOM koraku u kojem se
+piše klasa, nikad poslije.*
+
+**② Vodeća kosa crta, jedanaesti put mjerač kao prvi kvar.** Prvi `css:diff` javio je uredno
+zeleno na **1131 elemenata** — MSYS je rutu pretvorio u `#C:/Program Files/Git/subject/…`.
+Ispravna ruta ima **8041**. Spasio je isključivo **brojač opsega u ispisu**; bez njega bi „0
+razlika" na krivoj stranici prošlo kao dokaz. Lijek je `MSYS_NO_PATHCONV=1`, ne druga ruta.
+
+**③ „Nula razlika" je bila tvrdnja o ekranu kojeg nema.** Od 12 migriranih mjesta njih **7**
+postoji tek kad se vježba **otvori** — `.ex-fields`, `.ex-field`, `.ex-choice`,
+`.ex-choice-options`, `.ex-actions`, `.ex-modes`, `.ex-table-wrap` — a `css:diff` je dotad mjerio
+isključivo početno stanje rute.
+
+#### 🔧 Alat: `css:diff` je dobio `CSS_DIFF_KLIK`
+
+Selektor na koji se klikne **nakon učitavanja, na obje strane**, pa se mjeri stanje. Ako
+selektora nema, mjerenje **pada glasno** umjesto da tiho izmjeri neotvorenu stranicu — isti
+zahtjev koji ta skripta već postavlja sebi ispisom opsega. Trebat će ga i C5b/2 (`blind-map`) i
+C5b/3, i svaka buduća cigla s uvjetnom površinom.
+
+#### Dokaz
+
+**Prije** mjerenja provjereno zasebnom sondom da je svih **13** migriranih klasa doista bilo na
+ekranu (`statistics`, `accounting`, `math`; do 6 vježbi po predmetu) — *`FALI: (ništa)`*. Bez toga
+bi „0 razlika" bila tvrdnja o nenacrtanom ekranu, dakle točno kvar ③.
+
+| stanje | širine | usporedbi | razlika |
+|---|---|---|---|
+| popis vježbi | 375 · 640 · 768 · 1280 | 32 164 | **0** |
+| otvorena vježba (`.ex-card`) | 375 · 640 · 768 · 1280 | 31 440 | **0** |
+| `ex-choice` (`t1-2-concepts`) | 375 · 640 · 1280 | 23 580 | **0** |
+| `ex-table-wrap` (`t2-iqr-1`) | 375 · 640 · 1280 | 23 499 | **0** |
+
+⚠️ **640 je u popisu širina namjerno:** `max-width: 640px` je točno Tailwindov `sm`, pa prelazak
+na mobile-first pomiče granicu za 1 px (staro vrijedi **na** 640, `sm:` **od** 640). Izmjereno —
+razlike nema, ali brojka nije smjela ostati nepokrivena.
+
+Puna suita **533 prošlo / 0 palo** · `preflight` **EXIT 0** · `check:tailwind` **114 utilityja,
+svi namjerni** · `check:palette` **93** (osnovica spuštena s 94 — pad je iz C5b/0, `blind-map`).
+
+#### ⛔ Što C5b/1a namjerno nije napravio
+
+- **`learn-blocks.css` i `math.css` ostaju za C5b/1b** — i to nije podjela po veličini nego po
+  **DOKAZU**: katalog od `learn-blocks.css` iscrtava **2 od 44 pravila** (gradivo je v1 HTML kroz
+  DOMPurify), pa `css:diff` na kataloškoj ruti mjeri **prazno**. Dokaz mora ići kroz
+  `window.renderBlocks`, kao u `tests/learn-blocks-contrast.spec.js`. Miješati te dvije vrste
+  dokaza u jedan commit značilo bi da polovica commita nema nijedan.
+- **Komponente vježbi nisu dirane** (`.ex-card`, `.ex-btn`, `.ex-opt`, `.ex-input`, T-konta,
+  journal) — one su vizualni jezik, ne skela; njihova sudbina ide s C7.
+- **`.lb-imath` ostaje u CSS-u** iako je `display: inline` skela: `inline` je na popisu
+  isključenih imena i ne vrijedi ga skidati zbog jednog pravila.
+
