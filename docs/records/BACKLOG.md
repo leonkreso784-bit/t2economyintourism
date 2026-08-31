@@ -3,6 +3,16 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](../plan/ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
+> ### 📌 2026-08-31 — SEDAM STAVKI ODAVDE JE PREUZEO SPEC, NE PLANIRATI IH IZNOVA
+> Faza **MREŽA** ([RJESAVANJE-PROBLEMA-9MJ.md](../plan/RJESAVANJE-PROBLEMA-9MJ.md)) nosi ih s
+> ciglom i izlaznim uvjetom: **CSP** (D1–D3) · **RLS `auth.uid()` po retku** (A1) ·
+> **`.lb-table-wrap` bez `tabindex`** (B3c) · **leaked password** (D4) · **EDITOR ① boja kartice**
+> (C2) · **EDITOR ② dopune** (E1) · **M5b zatezanje** (E2). Uz njih i `check:i18n` (B5) te osam
+> nemigriranih predmeta (E3).
+>
+> Njihovi zapisi ostaju **ovdje i nedirnuti** jer nose obrazloženje i mjerenja; spec nosi **redoslijed
+> i dokaz**. Kad cigla padne, ovdje se stavlja ✅ s brojkom — ne briše se.
+
 ## ✅ RIJEŠENO 2026-08-30 — semantičke ispune: **ODLUKA JE ① (tokeni), i preporuka je ODBIJENA**
 
 **Leon:** *„ne smije biti obruba uopće, uvijek mora biti potpuna ispuna. boja mora biti prilagođena

@@ -167,21 +167,14 @@ prepisuje** ovamo (ADR-027) — zna ih zadnji **🚀** redak CHANGELOG-a.
 **keširane stare skripte**, ne zbog urednosti sheme.
 ⚠️ **N2 je POLA:** polica pokazuje **skinuto**, ne uniju skinutog i onoga što se uči.
 
-**✅ ZATVORENO:** **POLICA** (P1–P4, §9.17–9.21) · **C4** (§10.1–10.3) · **C5a** (§11) · **C5b/0** (§12.7)
-· **C5b/1** (§12.9–12.10 — `exercises.css` + `learn-blocks.css`; `math.css` je KaTeX i NE migrira).
-**Slijedi C5b/2 → C6 → C7.** ⚠️ **C5b je DRUGA VRSTA posla — mjera je gotova (§12):**
-`responsive/*` je za nju **prazan**, ali `learn.css` je sagrađen na **`#learn`** (102 od 112
-pravila) pa **utility ne prolazi dok ID stoji**. Prvo skinuti ID uz `css:diff` = 0, pa migrirati;
-**obrnuti rizik je izmjeren i NULA** (§12.2).
-⚠️ **`exercises`/`blind-map` su uvjetni tabovi — `te2` ih NEMA**, mjeri na `statistics`/`geography`.
-⚠️ **Četiri pravila za preostale cigle** (zašto: §10.3, §11.1–11.4): ① prije nego pravilo postane
-utility **izmjeri tko ga danas tuče**; ② **rez ide po SVOJSTVU** — što neki preživjeli `@media` još
-mijenja ne smije u utility; ③ **mjerač je bio prvi kvar 12× u fazi**, i dvaput je vratio **uvjerljiv
-krivi broj umjesto da padne** (§11.4, §12.2) → svaki mjerač mora ispisati **i koliko je toga
-dotaknuo**; ④ **seljenje pravila iz `responsive/*` u datoteku
-komponente POMIČE GA UNAPRIJED u kaskadi** → sele se **sva** pravila za selektor ili nijedno,
-nijedna kasnija datoteka ne smije dirati te selektore, a **grupni selektor se SKRAĆUJE, ne briše**
-(u njemu žive tuđi stanari).
+**✅ ZATVORENO:** **POLICA** (P1–P4) · **C4** · **C5a** · **C5b/0** · **C5b/1** (§12.9–12.10).
+**Redizajn se nastavlja od C5b/2 — ali TEK nakon faze MREŽA** (niže).
+⚠️ **Sve što preostale cigle moraju znati stoji u SPECU, ne ovdje** (ADR-027): `learn.css` je na
+**`#learn`** (102/112) pa utility ne prolazi dok ID stoji (§12.2) · `math.css` je KaTeX i **ne
+migrira** · `exercises`/`blind-map` su uvjetni tabovi, **`te2` ih NEMA** · **četiri pravila za rez**
+(§10.3, §11.1–11.4), među njima ono koje se najskuplje plaća: **mjerač je bio prvi kvar 12× u fazi**
+i dvaput vratio **uvjerljiv krivi broj umjesto da padne** → svaki mjerač mora ispisati **i koliko je
+toga dotaknuo**.
 **K5** (editor dvojezično) čeka i ne blokira ništa.
 **A1 (Google-prijava) + A0 (prepravak dijaloga) idu ZAJEDNO** — `#authModal` je građen za jedan
 put, pa se inače prepravlja dvaput. **Oboje TEK POSLIJE SEOBE** (auth je Supabase-konfiguracija;
@@ -204,12 +197,19 @@ seoba krene** — ovdje su suvišne mjesec dana unaprijed. Jedina koja se tiče 
 ⚠️ **anon-ključ i URL su u `js/auth.js`, koji preglednik drži godinu dana** (ADR-017) → stari
 projekt mora živjeti **~2 tjedna nakon** seobe. **Testovi su uvjet, ne dodatak.**
 
-### 🎯 Tekuća faza = FRONTEND REDIZAJN NA TAILWIND (spec: `docs/plan/FRONTEND_REDIZAJN.md`, ADR-028)
+### 🎯 TEKUĆA FAZA = **MREŽA** (sanacija) — spec: `docs/plan/RJESAVANJE-PROBLEMA-9MJ.md`
 
-Opseg = cijela platforma **i** editor; cigle **C0–C7** (C5 razbijen na C5a/C5b). **Next.js
-razmotren i ODBIJEN** — obrazloženje u ADR-028, **ne otvarati iznova**.
+**Frontend redizajn je ⏸️ PAUZIRAN** (`FRONTEND_REDIZAJN.md`, ADR-028; **Next.js odbijen, ne
+otvarati iznova**) — nastavlja se od **C5b/2** tek kad MREŽA padne. Povod: revizija 2026-08-31 dala
+je **12 nalaza**, backlog uz njih drži **8 živih 🔥**; Leon: *„mora se riješit prije nego što
+nastavimo dalje"*. Blokovi: **A** baza/stroj · **B** brane koje ne mjere ono što tvrde · **C** boja
+(**fatalno 10 → 0, i to PRIJE migracije**) · **D** CSP + leaked-password · **E** sadržaj.
+**§8** prima nalaze Leonovih prijatelja koji prolaze stranicu. Osnovice, izlazni uvjet i **što
+svjesno NIJE unutra** — u specu, ne ovdje.
+⚠️ **`check:docs` od 2026-08-31 traži TOČNO jedan aktivni plan**; spec koji čeka nosi
+`**Status:** ⏸️ PAUZIRAN` (arhiva bi značila ISPUNJEN, a redizajn to nije).
 
-**Živa ograničenja koja su iz gotovih cigli ostala na snazi** (obrazloženje svakog je u specu):
+**Živa ograničenja redizajna — vrijede i za trajanja pauze** (obrazloženje svakog je u specu):
 
 - **Zadana tema je SVIJETLA — „Akademsko plavo"** (`academic`; ostale `paper`, `chalk`, `mint`).
   Dvije tamne palete zaredom pale su na živom ekranu. Smjer izgleda je **APPLE** (Leon: *„apple

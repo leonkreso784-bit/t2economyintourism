@@ -5,6 +5,33 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-31 (OPUS) — **Faza MREŽA: sanacija dobiva spec; frontend redizajn ⏸️ PAUZIRAN**
+
+Novi aktivni spec: **`docs/plan/RJESAVANJE-PROBLEMA-9MJ.md`**. Nosi **12 nalaza** revizije + **8
+živih 🔥** iz backloga u blokovima **A–E**, plus **§8 NALAZI IZVANA** za prijave onih koji stranicu
+prolaze izvana. Leon: *„Ovako nešto se mora riješit prije nego što nastavimo dalje."*
+
+**① `check:docs` je naučio treće stanje.** Poznavao je „aktivan" i „u arhivi" — a arhiva po pravilu
+1 znači **ISPUNJEN**, pa nedovršen redizajn ondje ne smije. Pravilo je brojalo **datoteke**, sada
+čita **`Status:` iz speca** i traži **TOČNO jedan** aktivni plan (prije je i prazan `plan/` prolazio).
+Obrnute provjere: dva aktivna → pad · nula aktivnih → pad · povratak → zeleno.
+
+**② Tri od dvanaest nalaza nisu bugovi nego rupe u mjerenju** — a11y prag po axe **težini** umjesto
+po **WCAG razini** · `--border-color` 11× korišten i **nigdje definiran** (rupa, ne pogodak, zato ga
+`check:palette` ne vidi) · kaskadno „kasniji gasi ranijeg" s četiri pojave i nijednom branom.
+
+**③ Boja ide PRIJE migracije.** Migrirati pravilo koje se ionako mijenja je posao dvaput; boja se ne
+seli u kaskadi. ⚠️ **Dokaz bloka C nije `css:diff` = 0** — razlika je namjerna, prvi put u fazi.
+
+**④ Dvije stavke backloga voze besplatno:** EDITOR ① (boja kartice) jer je čekao baš C5a koja je
+gotova, i **leaked password** jer CSP-u ionako dodaje `api.pwnedpasswords.com` na popis hostova.
+
+**⑤ Provjereno prije tvrdnje:** `handle_new_user` i `snapshot_content_version` vraćaju `trigger` →
+REVOKE je siguran; `is_admin` ostaje jer ga RLS zove kao pozivatelja. Grane **nisu** rascjepkane
+nego čine linearan niz — očekivan nalaz koji mjerenje nije potvrdilo.
+
+`preflight` EXIT 0 · `CLAUDE.md` 32 960/33 000 (prag **nije** podignut) · grana `feat/rjesavanje-9mj`.
+
 ## 2026-08-31 (OPUS) — **C5b/1b: `learn-blocks.css` migriran; `math.css` izašao iz opsega mjerom**
 
 Spec **§12.10**. Time je **C5b/1 zatvoren**.

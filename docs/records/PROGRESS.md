@@ -5,6 +5,54 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-31 (OPUS) — Revizija je dala 12 nalaza, a faza MREŽA je dobila spec i **pauzirala redizajn**
+
+Leon je tražio pregled *„problema i sranja koja trenutno imamo"*. Revizija je bila **infrastrukturna**
+— brane, git, advisori, ovisnosti, CSS-dug — i to se u nalazu kaže naglas: **nijedna stranica nije
+otvorena i pogledana.** Zato je Leon i uveo drugi prolaz: prijatelji prolaze stranicu i zapisuju.
+
+**DVANAEST NALAZA, i troje od njih nisu bugovi nego RUPE U MJERENJU** — što je i najvrjedniji dio:
+① a11y brana sudi po axe **težini** (`serious/critical`), a WCAG sudi po **razini**:
+`scrollable-region-focusable` nosi `wcag2a` + `wcag211` ali težinu `moderate`, pa `.lb-table-wrap`
+bez `tabindex` stoji od 2026-08-14 **uz zelenu branu**. ② `--border-color` se koristi **11× i nigdje
+nije definiran** — deset puta uz fallback `#334155`, dakle tamna paleta koja se na svijetlu temu
+prokrijumčarila kroz nedefiniranu varijablu; `check:palette` to ne vidi jer nije **pogodak** nego
+**rupa**. ③ kaskadni bug „kasniji gasi ranijeg" ima **četiri pojave** i nijednu branu.
+
+**PROVJERENO, NE PREPISANO.** Advisori su potvrdili 13 `auth_rls_initplan` + 2 neindeksirana FK-a,
+a katalog je pokazao da `handle_new_user` i `snapshot_content_version` vraćaju **`trigger`** → REVOKE
+im je siguran (okidači se izvršavaju kao vlasnik tablice, ne kroz GRANT), dok `is_admin` ostaje jer
+ga RLS zove kao pozivatelja. Isto tako: grane **nisu** rascjepkane nego čine čist linearan niz
+(`about ⊂ polica ⊂ c4 ⊂ c5a`) — očekivani nalaz koji **mjerenje nije potvrdilo**, pa nije ni prijavljen.
+
+**BRANA JE MORALA NAUČITI TREĆE STANJE.** Novi spec nije mogao ući u `docs/plan/` jer `check:docs`
+dopušta jedan — a redizajn ne smije u `archive/`, jer arhiva po pravilu 1 znači **ISPUNJEN**, i §2b
+bi tu laž odmah prijavila. Pravilo je brojalo **datoteke**; sada čita **`Status:` iz samog speca** i
+traži **TOČNO jedan** aktivni plan. *Svrha je netaknuta i zapravo pooštrena: prije je i prazan
+`plan/` prolazio.* Obrnute provjere: dva aktivna → pad, nula aktivnih → pad, povratak → zeleno.
+
+**REDOSLIJED KOJI JE NALAZ SAM NAMETNUO: boja ide PRIJE migracije.** Migrirati pravilo koje se
+ionako mijenja je posao dvaput, a boja se **ne seli** u kaskadi pa pravilo ④ iz §10.3 ovdje ne
+vrijedi. ⚠️ Zato **dokaz bloka C nije `css:diff` = 0** — razlika je namjerna, prvi put u cijeloj
+priči; to stoji naglas u specu da mjerač ne postane trinaesti kvar.
+
+**DVIJE STAVKE BACKLOGA VOZE BESPLATNO**, i to obrnutim argumentom od onoga koji ih je odgodio:
+EDITOR ① (boja kartice) čekao je C5a *„jer C5a prepisuje baš te tri datoteke"* — C5a je gotova, a
+blok C ionako prolazi kroz boju; **leaked password** ide uz CSP jer mu dodaje
+`api.pwnedpasswords.com` na popis hostova.
+
+**POŠTENO O DOSEGU.** Plan **ne** rješava sve: 6962 redaka CSS-a su **faza, ne kvar** (C5b/2 → C7),
+BUG-039/037 ostaju C7 po Leonovoj presudi (MREŽA im čini mehanizam vidljivim, odluku ne donosi), a
+MCP i recepti su izgradnja. To je zapisano u §10 speca da se opseg ne razlije.
+
+**Stanje:** `preflight` EXIT 0 · `check:docs` 51 dokument / 308 poveznica · `CLAUDE.md` **32 960/33 000**
+(prag **nije** podignut — rez je uzet iz C5b-detalja koji ionako živi u specu, ADR-027).
+Grana `feat/rjesavanje-9mj`, lokalna.
+
+**SLIJEDI A1** — migracija baze: staging → `test:authed` → **Leonov izričit OK** → prod.
+
+---
+
 ## 2026-08-31 (OPUS) — C5b/1b: dokaz je morao promijeniti alat, a mjerač sam ja pokvario
 
 Druga polovica C5b/1, odvojena **po dokazu a ne po veličini**: kataloška ruta od
