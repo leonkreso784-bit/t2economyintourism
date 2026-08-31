@@ -7,7 +7,17 @@ testirano, što slijedi.
 
 ## 2026-08-31 (OPUS) — A1: baza je popravljena na stagingu, i **plan je bio kriv na dva mjesta**
 
-Prva cigla faze MREŽA. Izvedena na **stagingu**; produkcija čeka Leonov izričit OK.
+Prva cigla faze MREŽA. Izvedena na **stagingu**, pa uz Leonov izričit OK i na **PRODUKCIJI**.
+
+**Produkcija — izmjereno poslije:** politike 14 omotane / 0 golih · performance **0 WARN** ·
+security **11 WARN** · `check:final` **16/16** · prijavljeni vlasnik čita svih pet tablica ·
+`is_admin()` **true** · **anon na `progress` dobiva 0 redaka** · broj redaka nepromijenjen.
+
+⚠️ **Provjera prod-čitanja pala je prvi put — i to je bila MOJA greška, ne politika:** pitao sam
+za stupac `progress.subject_id` koji ne postoji (tablica ima `user_id · key · data · updated_at`).
+HTTP 400 / 42703 je bio odgovor na krivo pitanje. Vrijedi zapisati jer je to točno onaj obrazac
+zbog kojeg spec traži da mjerač ispiše i koliko je toga dotaknuo: **crveno koje ne dolazi od
+promjene koju mjeriš.**
 
 **Ishod (staging):** politike bez `(select …)` **14 → 0** · advisor performance **14 WARN → 0** ·
 advisor security **15 → 11** · indeksi na `*_edited_by` **0 → 2** · `test:authed` **93/93** ·

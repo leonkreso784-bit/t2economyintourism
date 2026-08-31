@@ -32,6 +32,10 @@
 -- (ponašanje politika se ne smije promijeniti — samo plan); ③ `npm run test:storage` zelen.
 -- =====================================================================================
 
+-- ✅ PRIMIJENJENO 2026-08-31: staging (sokrat-staging) pa PRODUKCIJA, uz Leonov izričit OK.
+--    Datoteka od tada opisuje STANJE, ne namjeru. Ponovno pokretanje je bezopasno
+--    (ALTER POLICY je idempotentan, CREATE INDEX ima IF NOT EXISTS, REVOKE je no-op).
+
 begin;
 
 -- ── nodes (vlasništvo izravno na retku) ──────────────────────────────────────────────

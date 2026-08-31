@@ -72,7 +72,7 @@ Prvi jer nema nijedno preklapanje s frontend fazom, i jer nosi jedini nalaz koji
 - **Dokaz:** `auth_rls_initplan` 13 → 0 · `anon_security_definer` 3 → 1 (ostaje `is_admin`, namjerno) · `test:authed` zelen s obje strane.
 - **Obrnuta provjera:** pozvati `/rest/v1/rpc/handle_new_user` kao `anon` **prije** REVOKE-a i zabilježiti odgovor. Ako već puca, REVOKE gasi WARN a ne rupu — i to se **zapisuje**, ne pretpostavlja.
 
-#### A1 — ISHOD (2026-08-31) · ⏳ staging ✅, produkcija čeka Leonov OK
+#### A1 — ISHOD (2026-08-31) · ✅ **staging I PRODUKCIJA**
 
 | mjera | prije | poslije (staging) |
 |---|---|---|
@@ -82,6 +82,12 @@ Prvi jer nema nijedno preklapanje s frontend fazom, i jer nosi jedini nalaz koji
 | indeksi na `*_edited_by` | 0 | **2** |
 | `test:authed` | — | **93/93** |
 | `test:storage` | — | **8/8** |
+
+**Produkcija (Leonov OK, 2026-08-31).** Isti SQL, isti redoslijed. Izmjereno POSLIJE:
+politike **14 omotane / 0 golih** · advisor performance **0 WARN** · security **11 WARN** ·
+indeksi **2** · `is_admin` ACL **nedirnut** · broj redaka nepromijenjen (5 profila · 78
+napredaka · 9 čvorova) · `check:final` **16/16** (anon put) · prijavljeni vlasnik čita svih pet
+tablica (HTTP 200), `is_admin()` vraća **true**, **anon na `progress` dobiva 0 redaka**.
 
 **Obrnuta provjera je dala odgovor koji plan nije pretpostavljao.** Poziv obiju funkcija kao
 `anon` vraća **HTTP 404 / PGRST202** — i na produkciji i na stagingu. PostgREST funkcije koje
@@ -282,7 +288,7 @@ Pet predmeta (`accounting` · `math` · `statistics` · `academic-writing` · `m
 
 Faza pada kad **sve** stoji:
 
-- [ ] advisor performance **0 WARN** · security **15 → 11**
+- [x] advisor performance **0 WARN** · security **15 → 11** — ✅ **A1, 2026-08-31, na produkciji**
 - [ ] `check:node`, `check:tokens`, `check:cascade`, `check:i18n`, `check:csp` u preflightu, **svaka s obrnutom provjerom**
 - [ ] a11y brana sudi po **WCAG razini**, osnovica imenovana
 - [ ] `check:final` **imenuje** preskočene

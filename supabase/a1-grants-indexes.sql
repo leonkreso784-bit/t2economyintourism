@@ -43,6 +43,10 @@
 -- Leonov IZRICIT OK → produkcija. Ide zajedno s `c3-rls-initplan.sql`.
 -- =====================================================================================
 
+-- ✅ PRIMIJENJENO 2026-08-31: staging (sokrat-staging) pa PRODUKCIJA, uz Leonov izričit OK.
+--    Datoteka od tada opisuje STANJE, ne namjeru. Ponovno pokretanje je bezopasno
+--    (ALTER POLICY je idempotentan, CREATE INDEX ima IF NOT EXISTS, REVOKE je no-op).
+
 begin;
 
 create index if not exists content_versions_edited_by_idx

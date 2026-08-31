@@ -5,9 +5,9 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
-## 2026-08-31 (OPUS) — **MREŽA A1: RLS initplan, indeksi i grantovi — na STAGINGU**
+## 2026-08-31 (OPUS) — 🚀 **MREŽA A1: RLS initplan, indeksi i grantovi — NA PRODUKCIJI**
 
-### Promijenjeno (staging `sokrat-staging`; produkcija **čeka izričit OK**)
+### Promijenjeno (staging `sokrat-staging` → **produkcija `naxjubnedhrbhsuasayu`**, uz Leonov OK)
 - **14 RLS politika** omotano u `(select auth.uid())` → advisor `auth_rls_initplan` **14 → 0**.
   Semantika nedirnuta; mijenja se isključivo plan izvršavanja.
 - **2 indeksa** na `content_versions.edited_by` i `node_content_versions.edited_by`.
@@ -21,6 +21,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 ### Izmjereno
 `test:authed` **93/93** · `test:storage` **8/8** · advisor performance **0 WARN** ·
 advisor security **11 WARN** (svi preostali imenovani u specu).
+
+### Provjereno na produkciji poslije primjene
+performance **0 WARN** · security **11 WARN** · `check:final` **16/16** · prijavljeni vlasnik
+čita `profiles`/`progress`/`nodes`/`node_content`/`node_content_versions` (HTTP 200) ·
+`is_admin()` **true** · **anon na `progress` = 0 redaka** · broj redaka nepromijenjen.
+⚠️ Baza je promijenjena, **kod nije** — nema `?v=` bumpa jer ništa ne stiže u preglednik.
 
 ### Zabilježeno kao ishod, ne kao pretpostavka
 - `REVOKE` je morao ići i **`FROM PUBLIC`** — bez toga ne bi promijenio ništa.
