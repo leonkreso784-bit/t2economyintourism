@@ -5,6 +5,34 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-31 (FABLE) — **MREŽA B2: `check:final` imenuje preskočene**
+
+### Promijenjeno
+- **`scripts/check-final-drift.js`** — „preskočeno 8" postaje **8 imena s razlozima**, zakucanih
+  u `scripts/final-skip-baseline.json`: deveti preskočeni (ili promijenjen razlog) = **pad** dok
+  ga netko ne odobri s `--update`. Tiho ispadanje predmeta iz provjere više ne postoji.
+
+### Dodano
+- **`tests/unit/check-final-skips.test.js`** — 6 obrnutih provjera; bazu glumi lokalni HTTP
+  server kroz staging-mehanizam skripte, pa se „deveti pada" dokazuje bez mreže i bez baze.
+
+## 2026-08-31 (FABLE) — **MREŽA B1: `check:tokens` — `var()` bez definicije više ne prolazi**
+
+### Popravljeno
+- **`--border-color`: 11 upotreba, nula definicija** — deset puta s fallbackom `#334155`, pa je
+  profil/admin nosio **rub iz stare tamne palete na svijetloj temi**. Svih 11 preusmjereno na
+  postojeći `var(--border)` (po temi kroz `--color-line`); novi token NIJE uveden (ADR-027 —
+  drugo ime za istu činjenicu). Tablice gradiva (`learn-blocks.css`) sad prate temu.
+
+### Dodano
+- **`scripts/check-tokens.js`** (u preflightu) — svaka `var(--x)` u `css/**` mora imati
+  definiciju; čegrtaljka s imenovanom osnovicom (`scripts/tokens-baseline.json`: `--danger-bg` →
+  BLOK C · `--font-mono`/`--font-serif` → redizajn). Runtime-definicije (JS inline stil) ispisuje
+  odvojeno. Komentare i stringove skida prije brojanja — prvo mjerilo je lažno prijavilo tri
+  imena koja žive u komentarima kao povijest vlastitog popravka.
+- **`tests/unit/check-tokens-gate.test.js`** — 7 obrnutih provjera u lažnom stablu, uklj.
+  traženu iz speca: `var(--nepostojeci)` → pad.
+
 ## 2026-08-31 (OPUS) — **MREŽA A2 zatvoren: `npm audit` 15 → 0 · cijeli projekt na Node 24**
 
 ### Uklonjeno

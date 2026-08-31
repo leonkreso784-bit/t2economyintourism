@@ -5,6 +5,49 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-31 (FABLE) — B2: preskočeni finali imaju ime, razlog i zakucan popis
+
+Druga cigla BLOKA B, po specu §4·B2 („preskakanje je legitimno; tiho preskakanje nije").
+
+**①** Svaki skip u `check-final-drift.js` sada nosi `{ id, razlog }` i sudi se protiv
+`final-skip-baseline.json` — obrazac `check:orphan-css`. Osnovica: **8 imenovanih**
+(2 ne-3-dijelna + 6 HR file-served). Protiv produkcije: 16/16 bez drifta, EXIT 0.
+
+**②** 6 obrnutih provjera bez mreže: lokalni HTTP server glumi `subject_content`, katalog ide
+kroz `CATALOG_PATH`. Dokazano: deveti preskočeni pada · promijenjen razlog pada · drift pada.
+
+⚠️ **Mjerač prvi kvar, već treći put u fazi:** prva verzija provjere koristila je `spawnSync`,
+koji blokira event-loop u kojem živi lažni server → svih 6 slučajeva „dokazalo" uspavanu bazu.
+Asinkroni `spawn` + komentar u testu. Brojanje ovakvih zapisa nije ceremonija: BLOK B postoji
+jer mjerila lažu uvjerljivije od koda.
+
+---
+
+## 2026-08-31 (FABLE) — B1: brana `check:tokens` + `--border-color` 11 → 0
+
+Prva cigla BLOKA B (brane koje ne mjere ono što tvrde), točno po specu §4·B1.
+
+**① Popravak prije brane.** Spec kaže „token po temi" — mjerenje je pokazalo da taj token
+**već postoji**: `--border` u `variables.css`, po temi kroz `--color-line`. Uvesti
+`--border-color` kao alias bilo bi drugo ime za istu činjenicu (ADR-027), pa je svih 11
+upotreba preusmjereno na `var(--border)` i fallbackovi obrisani. Nuspojava: tablice u
+gradivu dobile rub po temi umjesto vječnog poluprozirnog škriljevca.
+
+**② Brana s imenovanom osnovicom.** 37 css + 49 js/html izvora, 97 različitih `var()` imena.
+Osnovica imenuje 3 svjesne iznimke (`--danger-bg` čeka BLOK C; `--font-mono`/`--font-serif`
+čekaju redizajn); 6 runtime-imena brana prepoznaje i ispisuje odvojeno, jer definicija na
+string-uzorku nije isti dokaz kao definicija u CSS-u.
+
+⚠️ **Mjerač je i OVDJE bio prvi kvar** — prvo mjerilo prijavilo je `--card-bg`, `--grad` i
+`--radius-xl`, a sva tri žive u KOMENTARIMA kao povijest starih popravaka. I obrnuto: grep bez
+razumijevanja `\s` „dokazao" je da `--danger-text` nema definiciju, a ima ju u
+`variables.css:35`. Oba kriva smjera uhvaćena provjerom prije upisa; brana skida komentare,
+a provjera ⑥ drži da tako i ostane.
+
+**Provjere:** 7/7 obrnutih · `check:tokens` EXIT 0 · `build:css` + `bump` odrađeni.
+
+---
+
 ## 2026-08-31 (OPUS) — A2 zatvoren: **`npm audit` 15 → 0**, i jedna nuspojava vrjednija od cigle
 
 Leon je donio sve tri odluke; ovo je što su dale.

@@ -202,9 +202,48 @@ Svaka `var(--x)` u `css/**` mora imati definiciju. Čegrtaljka s **imenovanom** 
 - Popravak: token po temi, pa brisanje svih 11 fallbackova.
 - **Obrnuta provjera:** `var(--nepostojeci)` → brana pada.
 
+#### B1 — ISHOD (2026-08-31) · ✅ **GOTOVO**
+
+**✅ Popravak PRIJE brane, mjerenjem:** token za rub **već postoji** — `--border` u
+`css/variables.css` (po temi kroz `--color-line`). Novi token bi bio drugo ime za istu
+činjenicu (ADR-027), pa je svih **11 upotreba preusmjereno na `var(--border)`**, fallbackovi
+obrisani: 10× `#334155` u `profile.css` + 1× rgba u `learn-blocks.css` (tablice sad prate temu).
+`--border-color` u `css/` = **0**.
+
+**✅ Brana `scripts/check-tokens.js`** — u preflightu, **7 obrnutih provjera**
+(`tests/unit/check-tokens-gate.test.js`), među njima i tražena: `var(--nepostojeci)` → pad.
+Osnovica (`scripts/tokens-baseline.json`) **imenuje 3** svjesne iznimke: `--danger-bg`
+(boja = presuda BLOKA C, ADR-032) · `--font-mono` / `--font-serif` (tipografija = redizajn).
+Runtime-imena (`--dot`, `--card-accent`, `--lb-acc`, `--sw`, `--item-acc`, `--st-acc`) brana
+prepoznaje iz JS/HTML izvora i **ispisuje odvojeno** — definicija na string-uzorku nije isto
+što i definicija u CSS-u, i to se vidi, ne pretpostavlja.
+
+⚠️ **Prvo mjerilo je lažno prijavilo `--card-bg`, `--grad` i `--radius-xl`** — sva tri žive u
+KOMENTARIMA (povijest vlastitog popravka). Brana zato skida komentare i stringove prije brojanja,
+a obrnuta provjera ⑥ drži da spomen u komentaru nikad ne postane nalaz.
+
 ### B2 · `check:final` prestaje šutjeti
 Danas kaže „preskočeno 8". Neka ih **imenuje**, i neka popis bude zakucan: pojavi li se deveti, brana pada dok ga netko ne odobri.
 *Preskakanje je legitimno; **tiho** preskakanje nije.* Isti obrazac kao `check:orphan-css`.
+
+#### B2 — ISHOD (2026-08-31) · ✅ **GOTOVO**
+
+**✅ Preskočeni su dobili ime, razlog i zakucan popis.** `check-final-drift.js` sada svaki skip
+gura u `{ id, razlog }` (razlozi: `ne-3-dijelni` · `nije u bazi` · `nepotpun payload`) i sudi ga
+protiv `scripts/final-skip-baseline.json`: **novi preskočeni ILI promijenjen razlog = pad.**
+Osnovica danas imenuje **8**: `business-informatics` + `-hr` (ne-3-dijelni) i šest HR predmeta
+(file-served, nisu u bazi). Graceful-skip na uspavanu bazu netaknut — osnovica se čita tek kad
+podaci stignu, pa brana o bazi koje nema i dalje ne sudi.
+
+**✅ 6 obrnutih provjera** (`tests/unit/check-final-skips.test.js`) — bazu **glumi lokalni HTTP
+server** kroz postojeći staging-mehanizam (`SUPABASE_TARGET` + `STAGING_SUPABASE_URL`), katalog
+kroz `CATALOG_PATH`; mjeri se ISTA skripta koja gađa produkciju, bez mreže i bez diranja baze.
+Pokrivaju: deveti preskočeni pada · promijenjen razlog pada · drift i dalje pada.
+
+⚠️ **Prva verzija provjere pala je svih 6/6 — na vlastitom dizajnu, ne na brani:** `spawnSync`
+blokira event-loop procesa u kojem živi lažni server, pa je svako dijete visjelo do 20 s aborta
+i „dokazalo" da baza spava. Mjerač je opet bio prvi kvar; popravak je asinkroni `spawn` i
+komentar koji to drži zapamćenim.
 
 ### B3 · a11y po WCAG **razini**, ne po axe **težini**
 `tests/helpers/axe-gate.js` filtrira `['serious','critical']`. Pravilo `scrollable-region-focusable` nosi tagove `wcag2a` + `wcag211` — dakle **razina A** — ali težinu `moderate`. Prag je izabran po *težini*, a WCAG sudi po *razini*: dvije ljestvice, i mi smo ih pobrkali. Zato `.lb-table-wrap` bez `tabindex` stoji u backlogu od 2026-08-14 uz zelenu branu.
@@ -361,7 +400,7 @@ Faza pada kad **sve** stoji:
 - [x] advisor performance **0 WARN** · security **15 → 11** — ✅ **A1, 2026-08-31, na produkciji**
 - [ ] `check:node`, `check:tokens`, `check:cascade`, `check:i18n`, `check:csp` u preflightu, **svaka s obrnutom provjerom**
 - [ ] a11y brana sudi po **WCAG razini**, osnovica imenovana
-- [ ] `check:final` **imenuje** preskočene
+- [x] `check:final` **imenuje** preskočene — ✅ **B2, 2026-08-31** (osnovica: 8 imenovanih)
 - [ ] `palette:breakdown` **fatalno 0** · `check:palette` osnovica **0**
 - [ ] CSP **enforce** na produkciji uz čist report
 - [ ] leaked-password provjera živa

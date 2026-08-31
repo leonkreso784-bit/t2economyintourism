@@ -11,10 +11,23 @@
 // NIJE u `npm run preflight` (mrežno/ovisno o stanju baze) — pokreni ručno nakon uređivanja sadržaja,
 // ili u secret-gated authed CI-jobu. Ishod: drift → exit 1 · nema drifta → exit 0 · baza spava → exit 0 (skip).
 //
+// ── PRESKOČENI SE IMENUJU (MREŽA B2, 2026-08-31) ─────────────────────────────
+// Do B2 je izvještaj glasio „preskočeno 8" — bez imena i bez razloga. Preskakanje je
+// legitimno (HR predmeti su file-served, ne-3-dijelni nemaju final), ali TIHO preskakanje
+// nije: da je propagacija na final pukla za predmet koji je u međuvremenu ispao iz baze,
+// brana bi ga prešutjela kao „preskočen" i ostala zelena. Zato svaki preskočeni predmet
+// dobiva IME i RAZLOG, a popis je zakucan u `scripts/final-skip-baseline.json`:
+// novi preskočeni (ili promijenjen razlog) = PAD dok ga netko ne odobri s `--update`.
+// Isti obrazac kao `check:orphan-css`. Osnovica se čita tek kad podaci stignu, pa
+// graceful-skip na uspavanu bazu ostaje exit 0 — brana o bazi koje nema ne sudi.
+//
+// RABLJENJE:  node scripts/check-final-drift.js [--update]
+//
 // Napomena (Windows libuv): jedan izlaz s kratkom odgodom pušta undici keep-alive socket da mirno zatvori.
 
 const util = require('util');
 const path = require('path');
+const fs = require('fs');
 try { require('dotenv').config(); } catch (e) { /* dotenv optional */ }
 
 // Default = PRODUKCIJA. SUPABASE_TARGET=staging + STAGING_* → gađaj staging (U1).
@@ -66,8 +79,9 @@ async function check() {
   }
   console.log(`Učitano ${sc.body.length} redova za ${Object.keys(db).length} predmeta iz baze.\n`);
 
-  let checked = 0, drifted = 0, skipped = 0;
+  let checked = 0, drifted = 0;
   const driftReports = [];
+  const preskoceno = []; // { id, razlog } — B2: preskočeni se imenuju, ne broje
 
   for (const s of SOKRAT_CATALOG.subjects) {
     const fv = resolveDataVar(s, 'final');
@@ -75,14 +89,23 @@ async function check() {
     const m2 = resolveDataVar(s, 'second-midterm');
 
     // Nije 3-dijelni (M1/M2/final) predmet → nema što provjeriti (wildcard/jedan sadržaj).
-    if (!fv || !m1 || !m2 || fv === m1 || fv === m2 || m1 === m2) { skipped++; continue; }
+    if (!fv || !m1 || !m2 || fv === m1 || fv === m2 || m1 === m2) {
+      preskoceno.push({ id: s.id, razlog: 'ne-3-dijelni' });
+      continue;
+    }
 
     const rows = db[s.id];
     // Predmet nije u bazi (HR file-served) ili nekompletan → preskoči (nije drift, samo nije migriran).
-    if (!rows || !rows[fv] || !rows[m1] || !rows[m2]) { skipped++; continue; }
+    if (!rows || !rows[fv] || !rows[m1] || !rows[m2]) {
+      preskoceno.push({ id: s.id, razlog: 'nije u bazi' });
+      continue;
+    }
 
     const F = rows[fv], M1 = rows[m1], M2 = rows[m2];
-    if (F == null || M1 == null || M2 == null || typeof F !== 'object') { skipped++; continue; }
+    if (F == null || M1 == null || M2 == null || typeof F !== 'object') {
+      preskoceno.push({ id: s.id, razlog: 'nepotpun payload' });
+      continue;
+    }
 
     // Očekivano = M1 ⊕ M2 (Object.assign; M2 pobjeđuje na koliziji ključa) — točno kako final.js gradi.
     const expected = Object.assign({}, M1, M2);
@@ -116,15 +139,45 @@ async function check() {
     }
   }
 
+  // ── B2: preskočeni poimence + zakucana osnovica ──
+  console.log('');
+  if (preskoceno.length) {
+    console.log(`  Preskočeno ${preskoceno.length} (poimence — tiho preskakanje nije legitimno):`);
+    for (const p of preskoceno) console.log(`    ⏭️  ${p.id.padEnd(28)} ${p.razlog}`);
+  }
+
+  const OSNOVICA = path.join(__dirname, 'final-skip-baseline.json');
+  if (process.argv.includes('--update')) {
+    const nova = {};
+    for (const p of preskoceno) nova[p.id] = p.razlog;
+    fs.writeFileSync(OSNOVICA, JSON.stringify(nova, null, 2) + '\n', 'utf8');
+    return { code: 0, kind: 'ok', msg: `osnovica prepisana — ${preskoceno.length} imenovanih preskočenih.` };
+  }
+  if (!fs.existsSync(OSNOVICA)) {
+    return { code: 2, kind: 'fail', msg: 'nema osnovice preskočenih — pokreni: node scripts/check-final-drift.js --update' };
+  }
+  const BASE = JSON.parse(fs.readFileSync(OSNOVICA, 'utf8'));
+  const noviSkipovi = preskoceno.filter((p) => BASE[p.id] !== p.razlog);
+  const zastarjelo = Object.keys(BASE).filter((id) => !preskoceno.some((p) => p.id === id));
+  for (const p of noviSkipovi) {
+    console.error(`  ✗ NOVI preskočeni: ${p.id} (${p.razlog})${BASE[p.id] ? ` — u osnovici je s razlogom "${BASE[p.id]}"` : ''}`);
+  }
+  for (const id of zastarjelo) {
+    console.log(`  ✅ ${id} više nije preskočen — makni ga iz osnovice (--update)`);
+  }
+
   console.log('');
   if (drifted) {
     for (const r of driftReports) {
       console.error(`  ✗ DRIFT: ${r.subject} (${r.finalVar})`);
       for (const d of r.diffs) console.error(`      • ${d}`);
     }
-    return { code: 1, kind: 'fail', msg: `${drifted} predmet(a) s DRIFT-om finala; provjereno ${checked}, preskočeno ${skipped}. Re-sync (migrate-content.js) ili ispravi propagaciju.` };
+    return { code: 1, kind: 'fail', msg: `${drifted} predmet(a) s DRIFT-om finala; provjereno ${checked}, preskočeno ${preskoceno.length}. Re-sync (migrate-content.js) ili ispravi propagaciju.` };
   }
-  return { code: 0, kind: 'ok', msg: `svih ${checked} provjerenih finala == M1⊕M2(+examPractice); preskočeno ${skipped} (nemigrirani/ne-3-dijelni).` };
+  if (noviSkipovi.length) {
+    return { code: 1, kind: 'fail', msg: `${noviSkipovi.length} preskočen(ih) IZVAN osnovice — predmet je ispao iz provjere a nitko to nije odobrio. Ako je namjerno: node scripts/check-final-drift.js --update` };
+  }
+  return { code: 0, kind: 'ok', msg: `svih ${checked} provjerenih finala == M1⊕M2(+examPractice); preskočeno ${preskoceno.length}, svi imenovani u osnovici${zastarjelo.length ? ` (${zastarjelo.length} zastarjelih u osnovici — spusti s --update)` : ''}.` };
 }
 
 check()
