@@ -89,6 +89,14 @@ if (npmCI && npmCI !== mojNpm) {
 } else if (!npmCI) {
   console.log('   ⚠️  Ne mogu pročitati `node-version` iz ci.yml — provjeravam samo lokalnim npm-om.');
   console.log('      Ako se verzije raziđu, CI može pasti ondje gdje je ovdje zeleno.\n');
+} else {
+  // ⚠️ MREŽA A2 (2026-08-31): otkad stroj i CI vrte isti Node (24 → npm 11), drugog
+  // razrješivača NEMA — pa se ni ne pokreće. To se MORA reći naglas: jedan zeleni
+  // redak ondje gdje su prije stajala dva izgleda kao izgubljen prolaz, a nije.
+  // Divergencija koja je dvaput oborila CI je uklonjena NA IZVORU (`check:node`), ne
+  // ovdje; ovaj gate ostaje kao osiguranje ako se verzije ikad opet raziđu.
+  console.log(`   ℹ️  Jedan npm u igri: stroj i CI (Node ${nodeCI}) oboje vrte npm ${mojNpm}.`);
+  console.log('      Drugi prolaz nije preskočen nego NE POSTOJI — v. `check:node`.\n');
 }
 
 for (const { ime, argv } of prolazi) {

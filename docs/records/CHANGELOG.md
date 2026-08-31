@@ -5,6 +5,24 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-31 (OPUS) — **MREŽA A2 zatvoren: `npm audit` 15 → 0 · cijeli projekt na Node 24**
+
+### Uklonjeno
+- **`@lhci/cli`**, `.lighthouserc.json` i CI job `lighthouse` (22 retka).
+  **`npm audit`: 15 → 0** (11 high, 1 moderate, 3 low — svi su visjeli na toj ovisnosti).
+- Lokalna grana `content/model-demo-management-hr` (`92a2498`). ⚠️ **Udaljena je NEDIRNUTA.**
+
+### Dodano
+- **`tests/web-vitals.spec.js`** — CLS i TBT, jedine dvije tvrdnje koje lighthouse nije dijelio
+  ni s kim. Izmjereno CLS **0.0000**, TBT **~140 ms**. Pragovi: CLS **≤ 0.05** (zategnuto ispod
+  lighthouseovih 0.1), TBT **≤ 400** (zadržano dok CI-hardver nije izmjeren).
+
+### Promijenjeno
+- **Node 22 → 24 svugdje:** `.nvmrc`, `engines.node` (`>=22` → **`"24.x"`**), tri CI joba,
+  `CLAUDE.md` pravilo #9. **`check:node` je u preflightu.**
+- `check:lockfile` sada **govori kad je u igri samo jedan npm** — poravnanjem Nodea nestala je
+  divergencija razrješivača koja je dvaput oborila CI, pa drugi prolaz ne postoji, nije izgubljen.
+
 ## 2026-08-31 (OPUS) — **MREŽA A2: `check:node`, `fast-uri` pin, arhiva demo-modela**
 
 ### Dodano

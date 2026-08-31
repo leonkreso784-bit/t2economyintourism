@@ -41,8 +41,8 @@ Izmjereno **2026-08-31**. Bez zapisane polazne brojke ne može se dokazati da je
 | `final == M1⊕M2` | **16 provjereno · 8 preskočeno** | `npm run check:final` |
 | budžet posjetitelja | **179.9 KiB / 200 KB** (37 skripti) | `npm run check:budget` |
 | CI, job „Lint + verify + tests" | **19.4 min / 30** (533 testa, 58 spec datoteka) | GitHub Actions |
-| ranjivosti | **runtime 0 · dev 15** (11 high — **10** kroz `@lhci/cli`, **1** kroz `ajv`) | `npm audit` |
-| Node | **stroj 24.11.1 · `.nvmrc` 22 · CI 22** | `node -v` |
+| ranjivosti | polazno **runtime 0 · dev 15** (11 high) → **0 / 0** (A2) | `npm audit` |
+| Node | polazno **stroj 24.11.1 · `.nvmrc` 22 · CI 22** → **sve 24** (A2) | `npm run check:node` |
 | `--border-color` | **11 upotreba · 0 definicija** | — |
 | a11y po WCAG **razini** | **nije izmjereno** — to je cigla B3a | — |
 
@@ -121,7 +121,7 @@ izlazni uvjet u §9 postaje 15 → 10 i mora se ispraviti ondje.
 
 ---
 
-#### A2 — ISHOD (2026-08-31) · ⏳ **dvije trećine; dvije odluke čekaju Leona**
+#### A2 — ISHOD (2026-08-31) · ✅ **GOTOVO** (sve tri odluke donesene)
 
 **✅ `fast-uri` — jedini high koji NE dolazi iz lighthousea.** Osnovica je tvrdila *„11 high, sve
 kroz `@lhci/cli`"*. Izmjereno: **10 kroz `@lhci/cli`, 1 kroz `ajv`** (`ajv → fast-uri@3.1.3`,
@@ -154,28 +154,42 @@ od `.nvmrc`-a · `engines` kao raspon uz točan major · nedostajući izvor (pad
 dakle **raspon** — istinit je i na Node 24, pa tvrdnja prolazi dok stanje ne valja. Pravilo #9
 traži točan pin; `engines` je bio jedino mjesto gdje to nije provedeno.
 
-**⏳ DVIJE ODLUKE ZA LEONA:**
-① **Koji broj pobjeđuje** — spustiti stroj na Node 22 (nvm nije instaliran, traži instalaciju),
-ili podići `.nvmrc` + `engines` + sva tri CI joba na 24. Brana radi s bilo kojim brojem;
-razilaženje je ono što ne smije stajati.
-② **`@lhci/cli`** — nosi preostalih **10 high**, a `npm` kao „popravak" nudi **spuštanje na
-`0.15.1 → 0.1.0`**, dakle pravog popravka nema. Mjerenje vrijednosti joba je niže.
+**ODLUKE (Leon, 2026-08-31) I ŠTO SU DALE:**
 
-**Vrijedi li lighthouse job išta — izmjereno, da odluka ne bude na osjećaj.**
-Job gađa **jednu rutu** (`http://localhost:5050/`, dakle landing) i tvrdi šest stvari. Od njih:
+**① Node → 24, projekt se diže stroju.** `.nvmrc` 24 · `engines.node` **`"24.x"`** (bio raspon
+`>=22`, što pravilo #9 zabranjuje) · sva tri CI joba 24 · `check:node` **u preflightu**, zeleno
+na svih 6 izvora. `CLAUDE.md` pravilo #9 ispravljeno (22 → 24).
 
-| tvrdnja | pokriva li je već netko drugi |
-|---|---|
-| `accessibility ≥ 0.95` | **da** — `a11y.spec.js` + `axe-gate` mjere **kroz sve teme**, strože |
-| `seo ≥ 0.95` | **da** — `check:seo` |
-| `best-practices ≥ 0.95` | djelomično — `check:cdn` (SRI) pokriva dio |
-| `performance ≥ 0.5` | **prag je mrtvo slovo** — komentar u `.lighthouserc.json` kaže *„PODIĆI prema 0.9 nakon F3"*; F3 je odavno gotov, prag i dalje stoji na 0.5 |
-| **`cumulative-layout-shift ≤ 0.1`** | **NE — nitko drugi** |
-| **`total-blocking-time ≤ 400ms`** | **NE — nitko drugi** |
+⚠️ **Nuspojava koju nitko nije tražio, a vrijedi više od same cigle:** `check:lockfile` je
+postojao jer su stroj (npm 11) i CI (npm 10) imali **različite razrješivače** — ta je razlika
+dvaput oborila CI prije ijednog testa. Poravnanjem Nodea **divergencija nestaje na izvoru**, pa
+gate sada vrti jedan npm umjesto dva. To je moralo biti **rečeno naglas u ispisu**: jedan zeleni
+redak ondje gdje su prije stajala dva izgleda kao izgubljen prolaz. Gate to sada objašnjava i
+ostaje kao osiguranje ako se verzije ikad opet raziđu.
 
-**Dakle:** četiri od šest tvrdnji su pokrivene ili mrtve; **dvije nisu ni od koga druge** — CLS i
-TBT su jedina mjera stvarnog doživljaja učitavanja koju projekt ima. To je cijena brisanja, i
-zato odluka nije očita.
+**② `@lhci/cli` izbačen, CLS i TBT preseljeni u Playwright.** Uklonjeni: ovisnost ·
+`.lighthouserc.json` · CI job `lighthouse` (22 retka). **`npm audit`: 15 → 0** — dakle i tri
+`low` i jedan `moderate` koji su također visjeli ondje; procjena je bila „~4 preostalih", a
+ostalo je **nula**.
+
+Zamjena je `tests/web-vitals.spec.js` (vrti se u `test:responsive` i CI-ju). **Izmjereno:
+CLS 0.0000 · TBT ~140 ms · 2–3 duga zadatka.** Pragovi nisu prepisani nego postavljeni:
+**CLS ≤ 0.05** — *zategnuto ispod* lighthouseovih 0.1, jer je CLS bezdimenzionalan i
+determinističan na statičnoj stranici; **TBT ≤ 400** — *zadržano*, jer hardver CI-runnera nije
+izmjeren, a prag postavljen na lokalnu brojku bio bi čegrtaljka koja pada zbog tuđeg procesora.
+⏳ **Zategnuti TBT nakon prvih CI prolaza.**
+
+⚠️ **Što zamjena NIJE — zapisano u zaglavlju samog speca da ne bi tvrdila više nego mjeri:**
+nema prigušivanja (lighthouse mjeri uz simulirani spori CPU/mrežu, ovo ne) → brojke su
+optimistične i **nisu usporedive** s lighthouseovima; **TBT je aproksimacija** (pravi se računa
+između FCP-a i TTI-ja, ovdje je prozor navigacija → smirena mreža). Hvata **katastrofalne
+regresije**, ne fine razlike — a to je i sve što je stari prag `performance ≥ 0.5` hvatao.
+
+**③ Grana `content/model-demo-management-hr` obrisana — ali SAMO LOKALNO.**
+⚠️ **Ispravak vlastite tvrdnje:** odluka je zatražena uz opis *„grana je samo lokalna"*, što
+**nije bilo točno** — postoji i na `origin`. Lokalna je obrisana (`92a2498`, dohvatljiva kroz
+reflog), **udaljena je nedirnuta**, jer je odobrenje dano na krivoj premisi. Brisanje udaljene
+grane traži zasebnu riječ.
 
 ## 4 · BLOK B — Brane koje ne mjere ono što tvrde
 

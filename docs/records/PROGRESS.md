@@ -5,6 +5,42 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-31 (OPUS) — A2 zatvoren: **`npm audit` 15 → 0**, i jedna nuspojava vrjednija od cigle
+
+Leon je donio sve tri odluke; ovo je što su dale.
+
+**① Node 24 — projekt se digao stroju, ne obrnuto.** `.nvmrc` · `engines` (`>=22` → **`"24.x"`**,
+jer je raspon istinit i na krivoj verziji) · tri CI joba · `check:node` u preflightu, zeleno na
+svih 6 izvora. `CLAUDE.md` pravilo #9 ispravljeno.
+
+⚠️ **Nuspojava koju nitko nije tražio.** `check:lockfile` je postojao jer su stroj (npm 11) i CI
+(npm 10) imali **različite razrješivače** — razlika koja je dvaput oborila CI **prije ijednog
+testa**. Poravnanjem Nodea ta razlika **nestaje na izvoru**. Gate sada vrti jedan npm umjesto
+dva, i to **mora govoriti naglas**: jedan zeleni redak ondje gdje su prije stajala dva izgleda
+kao izgubljen prolaz, a nije. Dopisano u sam gate.
+
+**② `@lhci/cli` van — i `npm audit` je pao na NULU.** Procjena je bila „~4 preostalih";
+ostalo je **0 od 15**, jer su i tri `low` i jedan `moderate` visjeli na istoj ovisnosti.
+Uklonjeni: ovisnost · `.lighthouserc.json` · CI job (22 retka).
+
+Zamjena `tests/web-vitals.spec.js` preuzima **jedine dvije tvrdnje koje nitko drugi nije mjerio**.
+Izmjereno: **CLS 0.0000 · TBT ~140 ms**. Pragovi su **postavljeni, ne prepisani**: CLS **≤ 0.05**
+(zategnuto ispod lighthouseovih 0.1 — bezdimenzionalan je i determinističan), TBT **≤ 400**
+(zadržano, jer hardver CI-runnera nije izmjeren — prag na lokalnoj brojci bio bi čegrtaljka koja
+pada zbog tuđeg procesora). ⏳ Zategnuti TBT nakon prvih CI prolaza.
+
+⚠️ **Zamjena u vlastitom zaglavlju piše što NIJE:** nema prigušivanja, pa brojke nisu usporedive
+s lighthouseovima; **TBT je aproksimacija** (prozor je navigacija → smirena mreža, ne FCP → TTI).
+Hvata katastrofalne regresije, ne fine razlike. **Mjerač koji ne kaže svoje granice je sljedeći
+kvar u nizu** — u ovoj je fazi to pravilo, ne stil.
+
+**③ Grana obrisana — ali samo lokalno, i tu sam pogriješio.** Odluku sam zatražio uz tvrdnju
+*„grana je samo lokalna"*. **Nije bila** — postoji i na `origin`. Lokalna je obrisana (`92a2498`,
+kroz reflog dohvatljiva), **udaljena nedirnuta**: odobrenje dano na krivoj premisi ne pokriva
+potez koji ta premisa nije opisala.
+
+---
+
 ## 2026-08-31 (OPUS) — A2: brana za Node napisana i dokazana, ali **namjerno još ne stoji na vratima**
 
 Druga cigla faze MREŽA. **Dvije trećine gotove; dvije odluke čekaju Leona.**

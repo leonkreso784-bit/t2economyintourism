@@ -4,7 +4,7 @@
   "description": "Sokrat Study — interactive exam-prep platform for FMTU Opatija (Hospitality Management): lessons, flashcards, quizzes, fill-in-the-blank and interactive exercises across Year 1 & 2 subjects (EN + HR).",
   "main": "index.html",
   "engines": {
-    "node": ">=22"
+    "node": "24.x"
   },
   "scripts": {
     "start": "npx serve .",
@@ -46,7 +46,7 @@
     "backup": "node scripts/backup-db.js",
     "backup:verify": "node scripts/backup-db.js --verify",
     "export:json": "node scripts/export-content-json.js",
-    "preflight": "npm run check:lockfile && npm run verify && npm run bump:check && npm run build:css -- --check && npm run check:tailwind && npm run check:cdn && npm run check:palette && npm run check:orphan-css && npm run check:safearea && npm run check:budget && npm run check:seo && npm run check:contrast && npm run typecheck && npm run validate:schema && npm run export:json -- --check && npm run check:docs && npm run check:state && npm run test:unit",
+    "preflight": "npm run check:lockfile && npm run check:node && npm run verify && npm run bump:check && npm run build:css -- --check && npm run check:tailwind && npm run check:cdn && npm run check:palette && npm run check:orphan-css && npm run check:safearea && npm run check:budget && npm run check:seo && npm run check:contrast && npm run typecheck && npm run validate:schema && npm run export:json -- --check && npm run check:docs && npm run check:state && npm run test:unit",
     "scaffold": "node scripts/scaffold-subject.js",
     "check:contrast": "node scripts/check-contrast.js",
     "check:safearea": "node scripts/check-safe-area.js",
@@ -73,7 +73,6 @@
   "homepage": "https://www.sokratstudy.com",
   "devDependencies": {
     "@axe-core/playwright": "4.12.1",
-    "@lhci/cli": "0.15.1",
     "@playwright/test": "1.60.0",
     "@tailwindcss/cli": "4.3.3",
     "ajv": "8.20.0",

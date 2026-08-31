@@ -36,7 +36,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install deps (clean)
@@ -118,7 +118,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
           cache: 'npm'
       - name: Install deps (clean)
         run: npm ci
@@ -144,24 +144,3 @@ jobs:
             playwright-report/
           retention-days: 7
           if-no-files-found: ignore
-
-  # Lighthouse TVRDI budžeti (FOUNDATION_PLAN F1 brick 1D.1, §7 nadogradnja #1). Zaseban job:
-  # vrti se na Linuxu (lokalni Windows ima EPERM s chrome-launcherom). Budžeti su KONZERVATIVNI
-  # tvrdi floorovi (hvataju katastrofalne regresije) — kalibriraju se naviše kad vidimo CI-brojeve
-  # (lhci uploada javni report URL u log). Ubuntu runner ima Google Chrome predinstaliran → lhci ga nađe.
-  lighthouse:
-    name: Lighthouse budgets
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: 'npm'
-      - name: Install deps (clean)
-        run: npm ci
-      - name: Lighthouse CI (collect + assert budgets)
-        run: npx lhci autorun
