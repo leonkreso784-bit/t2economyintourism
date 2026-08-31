@@ -1471,7 +1471,7 @@ Ostavljeno svjesno, ali zapisano da se ne izgubi:
 - Ostali WARN-ovi su naši owner-scoped `SECURITY DEFINER` RPC-ovi koje `authenticated` **mora** moći zvati
   (ADR-024: jedini put upisa) → očekivano, ne popravlja se.
 
-## 🔥 RLS ponovno računa `auth.uid()` za SVAKI redak — 13 politika — 2026-08-14
+## ✅ RLS ponovno računa `auth.uid()` za SVAKI redak — **14** politika — 2026-08-14 → **RIJEŠENO 2026-08-31 (MREŽA A1, na produkciji)**
 **Nalaz iz Supabaseovog PERFORMANCE-advisora**, koji dotad nitko nije pogledao — svi dosadašnji
 zapisi (§Advisori gore) tiču se **security**-advisora. Trinaest politika zove `auth.uid()`
 **po retku** umjesto `(select auth.uid())`, čime Postgres gubi mogućnost da poziv izračuna
@@ -1495,10 +1495,14 @@ Popravak je **jedna zagrada po politici** i ne mijenja semantiku (`(select auth.
 istu vrijednost). Uz to: dva **neindeksirana strana ključa** (`content_versions_edited_by`,
 `node_content_versions_edited_by`) — sitno, ali audit-tablice samo rastu, nikad se ne prazne.
 
-**Blokirano na:** SQL na PRODUKCIJI traži Leonov izričit OK (klasifikator blokira `apply_migration`).
-Migracija se piše i vrti **prvo na `sokrat-staging`**, pa tek onda na prod.
-**Provjera nakon:** advisor više ne javlja `auth_rls_initplan`; `npm run test:authed` zelen
-(politike se ne smiju promijeniti u ponašanju, samo u planu izvršavanja).
+**✅ ISHOD (2026-08-31, cigla MREŽA A1, staging pa PRODUKCIJA uz Leonov OK):** advisor
+`auth_rls_initplan` **14 → 0 WARN** · oba indeksa stvorena · `test:authed` **93/93** ·
+`test:storage` **8/8** · broj redaka nepromijenjen. Uz to je skinut `EXECUTE` s
+`handle_new_user` i `snapshot_content_version` → security **15 → 11 WARN**.
+Datoteke: `supabase/c3-rls-initplan.sql` + `supabase/a1-grants-indexes.sql`.
+⚠️ **Brojka je bila 14, ne 13** — SQL je oduvijek mijenjao svih 14; pogriješila je proza.
+⚠️ **`REVOKE` je morao ići i `FROM PUBLIC`** — ACL je nosio `=X/postgres`, pa bi revoke samo od
+`anon, authenticated` ostavio pravo netaknuto. Detalji: `docs/plan/RJESAVANJE-PROBLEMA-9MJ.md` §3.
 
 ## ➖ Broj pitanja na landingu ne pokriva sve predmete — 2026-08-09
 

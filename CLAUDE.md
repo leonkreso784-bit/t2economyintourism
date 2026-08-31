@@ -69,7 +69,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 
 ### `npm run preflight` — sve brze brane odjednom (pokreni PRIJE svakog main-pusha)
 
-`check:lockfile` · `verify` · `bump:check` · css-drift · `check:tailwind` · `check:cdn` ·
+`check:lockfile` · `check:node` · `verify` · `bump:check` · css-drift · `check:tailwind` · `check:cdn` ·
 `check:palette` · `check:orphan-css` · `check:safearea` · `check:budget` · `check:seo` · `check:contrast` ·
 `typecheck` · `validate:schema` · `export:json --check` · `check:docs` · `check:state` ·
 `test:unit`. Pre-push hook ga automatski vrti na `main`.
@@ -77,6 +77,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 | brana | što tvrdi |
 |---|---|
 | `check:lockfile` | bi li `npm ci` prošao — vrti **dva npm-a** (lokalni + onaj iz CI-ja), pada zatvoreno. Lock se popravlja s `npx npm@10 install` |
+| `check:node` | `.nvmrc` == `engines` == CI == proces koji vrti — **isti major**, inače pada zatvoreno |
 | `check:state` | tvrdnje o stanju se slažu s gitom (broj commita žive grane · **zapovijed koja je već izvršena**). Pokriva `CLAUDE.md`, `docs/plan/**`, `BACKLOG.md` |
 | `check:docs` | jedan aktivni plan · svaki `.md` u indeksu · nula mrtvih poveznica · **nula ćirilice** u kodu i sadržaju (popis datoteka se **čita s diska**, BUG-034) |
 | `check:tailwind` | 6 brana oko Tailwind sloja (dinamička imena klasa · sudar s legacy klasom · `@source` ugovor · klase bez bundlea · šum · **sudar `@keyframes`**) |
@@ -180,22 +181,15 @@ toga dotaknuo**.
 put, pa se inače prepravlja dvaput. **Oboje TEK POSLIJE SEOBE** (auth je Supabase-konfiguracija;
 seoba mijenja URL, a time i redirect URI). Redoslijed unutar para nije presuđen i nije važan.
 
-### 🚚 SEOBA — **ODGOĐENA ZA ~MJESEC DANA (Leon, 2026-08-31)** · SAMO Supabase; Vercel OSTAJE
+### 🚚 SEOBA — **ODGOĐENA ~MJESEC DANA (Leon, 2026-08-31)** · SAMO Supabase; Vercel OSTAJE
 
-⚠️ **NE PLANIRATI SEOBU U SLJEDEĆIM SESIJAMA.** Leon, 2026-08-31: *„to ću na kraju mjeseca, sada
-oću iskoristit vrijeme da što više gradim… na laptop moram skinut Linux i razne pizdarije
-pripremit; mijenjanje na laptop će ići za nekih mjesec dana otp."* ⇒ ciljano **~kraj rujna 2026**.
-**Nije odustajanje nego preraspodjela vremena:** ide na **vlastiti laptop** (8 GB, dosta za prod +
-staging), a priprema stroja je **Leonova ruka**, ne naš posao. Do tada **sve vrijeme ide u cigle.**
-⚠️ Kad seoba dođe na red, **provjeriti vrijedi li još njezin izvorni razlog** — *„prije nego faks
-krene"*; ako je prozor prošao, žurbe više nema i redoslijed se bira iznova.
-**Plaćeni VPS je otpao** (*„ne isplati se baš"*); ostaju **DVIJE instance**. Otvorena pitanja o
-laptopu (dostupnost izvana · 24/7 · backup izvan stroja) razložena su u `BACKLOG.md` §SELF-HOST.
-
-**Pet stvari koje se ne smiju zaboraviti stoje u `BACKLOG.md` §SELF-HOST** i čitaju se **tek kad
-seoba krene** — ovdje su suvišne mjesec dana unaprijed. Jedina koja se tiče rada DO tada:
+⚠️ **NE PLANIRATI U SLJEDEĆIM SESIJAMA** — ciljano **~kraj rujna 2026**, na Leonov laptop;
+priprema stroja je **njegova ruka**. Do tada sve vrijeme ide u cigle. **Obrazloženje, Leonovi
+citati, računica o VPS-u i pet stavki pred seobu: `BACKLOG.md` §SELF-HOST** — čitaju se tek kad
+seoba krene. Dva pravila koja vrijede **već sada**:
 ⚠️ **anon-ključ i URL su u `js/auth.js`, koji preglednik drži godinu dana** (ADR-017) → stari
 projekt mora živjeti **~2 tjedna nakon** seobe. **Testovi su uvjet, ne dodatak.**
+⚠️ Kad dođe na red, **provjeriti vrijedi li još izvorni razlog** (*„prije nego faks krene"*).
 
 ### 🎯 TEKUĆA FAZA = **MREŽA** (sanacija) — spec: `docs/plan/RJESAVANJE-PROBLEMA-9MJ.md`
 
@@ -284,8 +278,8 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
   li preživjele.
   ⚠️ **NE „popravljaj" `js/auth.js:343`** — tvrdnja o `WeakPasswordError` je **oborena**: u
   zakucanom `supabase-js@2.110.8` slaba lozinka dolazi kao `data.weakPassword` uz `error: null`.
-- **Sitni dug (ne blokira):** siročad u Storageu · advisor-WARN `snapshot_content_version` /
-  `handle_new_user` · staging poravnati s `supabase/f1-nodes.sql`. ⚠️ **`is_admin()` se NE smije
+- **Sitni dug (ne blokira):** siročad u Storageu · staging poravnati s `supabase/f1-nodes.sql` ·
+  `set_updated_at` ima promjenjiv `search_path` (jedini sigurnosni WARN koji nije namjeran). ⚠️ **`is_admin()` se NE smije
   revokeati `authenticated`-u** — zovu ga RLS politike kao pozivatelj.
 - **Napomene:** ⚠️ **Supabase org je `pro` do ~kraja rujna 2026** — dotad nema free-tier spavanja
   (~7 dana neaktivnosti); **istek se poklapa sa seobom**, to je ista računica · `content_versions`/`node_content_versions` = **append-only audit**,
