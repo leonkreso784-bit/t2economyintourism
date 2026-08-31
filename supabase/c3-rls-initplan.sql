@@ -2,7 +2,7 @@
 -- c3-rls-initplan.sql — `auth.uid()` se računa JEDNOM po upitu, ne po RETKU
 -- =====================================================================================
 --
--- POVOD (2026-08-14): Supabaseov **performance**-advisor javlja `auth_rls_initplan` na 13 politika.
+-- POVOD (2026-08-14): Supabaseov **performance**-advisor javlja `auth_rls_initplan` na 14 politika.
 -- Dotad su svi naši zapisi o advisorima bili o *security*-advisorima; performance nitko nije gledao.
 --
 -- ŠTO JE PROBLEM: `auth.uid()` je STABLE funkcija, ali kad stoji gola u RLS izrazu, planer je
@@ -93,8 +93,13 @@ alter policy profiles_select_own on public.profiles
 commit;
 
 -- =====================================================================================
--- SITNI DUG IZ ISTOG ADVISORA (namjerno IZVAN ove migracije):
--- dva neindeksirana strana ključa — `content_versions.edited_by` i
--- `node_content_versions.edited_by`. Audit-tablice samo rastu i nikad se ne prazne, pa će
--- postati skupe; ali indeks je zasebna odluka (pisanje se usporava), ne nuspojava ovog popravka.
+-- SITNI DUG IZ ISTOG ADVISORA — RIJEŠEN 2026-08-31 u `a1-grants-indexes.sql`:
+-- dva neindeksirana strana ključa (`content_versions.edited_by`,
+-- `node_content_versions.edited_by`). Ostao je u zasebnoj datoteci jer JEST zasebna odluka
+-- — indeks usporava pisanje — ali odluka je donesena i indeksi idu uz ovu migraciju.
+--
+-- ⚠️ BROJKA U ZAGLAVLJU JE BILA KRIVA: do 2026-08-31 je pisalo "13 politika". Advisor i
+-- `pg_policies` neovisno daju **14**, a datoteka ih je oduvijek mijenjala svih 14 — dakle
+-- pogriješila je PROZA, ne SQL. Točno onaj razred greške zbog kojeg postoji `check:state`,
+-- samo što ovu brojku nijedna brana ne gleda.
 -- =====================================================================================

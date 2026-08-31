@@ -36,7 +36,7 @@ Izmjereno **2026-08-31**. Bez zapisane polazne brojke ne može se dokazati da je
 | paleta — po posljedici | **10 fatalno · 21 blago · 46 stara** | `npm run palette:breakdown` |
 | siročad u CSS-u | **45 / 45** | `npm run check:orphan-css` |
 | CSS koji čeka migraciju | **6962 redaka · 34 `!important`** | `npm run css:debt` |
-| advisor — performance | **13 WARN** (`auth_rls_initplan`) + 3 INFO | Supabase |
+| advisor — performance | **14 WARN** (`auth_rls_initplan`) + 3 INFO | Supabase |
 | advisor — security | **15 WARN · 0 ERROR** | Supabase |
 | `final == M1⊕M2` | **16 provjereno · 8 preskočeno** | `npm run check:final` |
 | budžet posjetitelja | **179.9 KiB / 200 KB** (37 skripti) | `npm run check:budget` |
@@ -45,6 +45,11 @@ Izmjereno **2026-08-31**. Bez zapisane polazne brojke ne može se dokazati da je
 | Node | **stroj 24.11.1 · `.nvmrc` 22 · CI 22** | `node -v` |
 | `--border-color` | **11 upotreba · 0 definicija** | — |
 | a11y po WCAG **razini** | **nije izmjereno** — to je cigla B3a | — |
+
+> ⚠️ **Ispravak 2026-08-31 (A1):** performance-osnovica je ovdje prvo stajala kao **13 WARN**.
+> Prebrojano dvaput i neovisno — advisor i `pg_policies` oboje daju **14**. Nijedna brana ne
+> gleda brojku u prozi, pa ju je uhvatilo tek izvođenje cigle. Ista je greška stajala i u
+> zaglavlju `supabase/c3-rls-initplan.sql` od 14. kolovoza.
 
 > ⚠️ **93 i 77 nisu ista mjera.** `check:palette` broji **pogotke stare palete** (čegrtaljka),
 > `palette:breakdown` razlaže **posljedicu** (10+21+46). Ne zbrajati ih i ne uspoređivati.
@@ -66,6 +71,41 @@ Prvi jer nema nijedno preklapanje s frontend fazom, i jer nosi jedini nalaz koji
 - **Put:** migracija → **staging** → `npm run test:authed` zelen → **Leonov izričit OK** → prod.
 - **Dokaz:** `auth_rls_initplan` 13 → 0 · `anon_security_definer` 3 → 1 (ostaje `is_admin`, namjerno) · `test:authed` zelen s obje strane.
 - **Obrnuta provjera:** pozvati `/rest/v1/rpc/handle_new_user` kao `anon` **prije** REVOKE-a i zabilježiti odgovor. Ako već puca, REVOKE gasi WARN a ne rupu — i to se **zapisuje**, ne pretpostavlja.
+
+#### A1 — ISHOD (2026-08-31) · ⏳ staging ✅, produkcija čeka Leonov OK
+
+| mjera | prije | poslije (staging) |
+|---|---|---|
+| politike bez `(select …)` | **14** | **0** |
+| advisor performance | 14 WARN | **0 WARN** (ostaju 3 INFO) |
+| advisor security | 15 WARN | **11 WARN** |
+| indeksi na `*_edited_by` | 0 | **2** |
+| `test:authed` | — | **93/93** |
+| `test:storage` | — | **8/8** |
+
+**Obrnuta provjera je dala odgovor koji plan nije pretpostavljao.** Poziv obiju funkcija kao
+`anon` vraća **HTTP 404 / PGRST202** — i na produkciji i na stagingu. PostgREST funkcije koje
+vraćaju `trigger` uopće ne drži u schema cacheu, pa ruta koju advisor spominje nikad nije ni
+postojala. **REVOKE gasi upozorenje, ne rupu** — i to se zapisuje, kako §1 traži.
+
+⚠️ **Nalaz koji je zamalo učinio ciglu lažno ispunjenom.** Zatečeni ACL je glasio
+`{=X/postgres, postgres=…, anon=…, authenticated=…}`. Prvi član bez imena role je **PUBLIC**, i
+obje role izvršavanje nasljeđuju i preko njega. Planirano `REVOKE … FROM anon, authenticated`
+**ne bi promijenilo ništa**, a advisor bi i dalje javljao — pa bi izgledalo kao da brana laže.
+Izvedeno je `FROM public, anon, authenticated`.
+
+✅ **Okidači i dalje rade — izmjereno, ne pročitano.** Nakon REVOKE-a je na stagingu stvoren
+korisnik preko admin API-ja i redak u `public.profiles` je nastao. Time je tvrdnja *„okidač se
+izvršava kao vlasnik tablice, ne kroz GRANT"* prestala biti citat iz dokumentacije.
+
+**Preostalih 11 sigurnosnih WARN:** `is_admin` ×2 (namjerno — zovu ga RLS politike kao
+pozivatelj) · 8 node/publish RPC-ova (namjerno, ADR-024) · **`set_updated_at` ima promjenjiv
+`search_path`** — jedino koje nije ni namjerno ni pokriveno ovom ciglom. Nije SECURITY DEFINER,
+pa je domet manji; **nije popravljeno da se opseg cigle ne širi bez odluke.** Ako se popravi,
+izlazni uvjet u §9 postaje 15 → 10 i mora se ispraviti ondje.
+
+**Datoteke:** `supabase/c3-rls-initplan.sql` (napisana 14. 8., dotad neprimijenjena) +
+`supabase/a1-grants-indexes.sql` (nova).
 
 ### A2 · Stroj
 - **Node 22** na razvojnom stroju + nova brana **`check:node`** u preflightu: major iz `process.versions.node` == `.nvmrc`, pada zatvoreno.

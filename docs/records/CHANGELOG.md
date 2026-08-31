@@ -5,6 +5,28 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-31 (OPUS) — **MREŽA A1: RLS initplan, indeksi i grantovi — na STAGINGU**
+
+### Promijenjeno (staging `sokrat-staging`; produkcija **čeka izričit OK**)
+- **14 RLS politika** omotano u `(select auth.uid())` → advisor `auth_rls_initplan` **14 → 0**.
+  Semantika nedirnuta; mijenja se isključivo plan izvršavanja.
+- **2 indeksa** na `content_versions.edited_by` i `node_content_versions.edited_by`.
+- **`EXECUTE` skinut** s `handle_new_user()` i `snapshot_content_version()` → security **15 → 11**.
+  ⛔ `is_admin()` **nedirnut** — zovu ga RLS politike kao pozivatelj.
+
+### Ispravljeno u zapisima
+- Osnovica **13 → 14 politika** u `docs/plan/RJESAVANJE-PROBLEMA-9MJ.md` §2 i u zaglavlju
+  `supabase/c3-rls-initplan.sql`. SQL je oduvijek bio točan; brojka u prozi nije.
+
+### Izmjereno
+`test:authed` **93/93** · `test:storage` **8/8** · advisor performance **0 WARN** ·
+advisor security **11 WARN** (svi preostali imenovani u specu).
+
+### Zabilježeno kao ishod, ne kao pretpostavka
+- `REVOKE` je morao ići i **`FROM PUBLIC`** — bez toga ne bi promijenio ništa.
+- Poziv obiju funkcija kao `anon` već je vraćao **404/PGRST202** → REVOKE gasi **upozorenje**, ne rupu.
+- Okidač poslije REVOKE-a **dokazano radi** (novi korisnik → redak u `profiles`).
+
 ## 2026-08-31 (OPUS) — **Faza MREŽA: sanacija dobiva spec; frontend redizajn ⏸️ PAUZIRAN**
 
 Novi aktivni spec: **`docs/plan/RJESAVANJE-PROBLEMA-9MJ.md`**. Nosi **12 nalaza** revizije + **8

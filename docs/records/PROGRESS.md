@@ -5,6 +5,42 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-31 (OPUS) — A1: baza je popravljena na stagingu, i **plan je bio kriv na dva mjesta**
+
+Prva cigla faze MREŽA. Izvedena na **stagingu**; produkcija čeka Leonov izričit OK.
+
+**Ishod (staging):** politike bez `(select …)` **14 → 0** · advisor performance **14 WARN → 0** ·
+advisor security **15 → 11** · indeksi na `*_edited_by` **0 → 2** · `test:authed` **93/93** ·
+`test:storage` **8/8**.
+
+**Dva nalaza koja cigla ne bi imala da se plan izvršio doslovno:**
+
+**① `REVOKE … FROM anon, authenticated` ne bi promijenio ništa.** ACL je sadržavao `=X/postgres`
+— grant **PUBLIC-u** — a obje role pravo nasljeđuju i preko njega. Cigla bi „prošla", advisor bi
+i dalje javljao, i izgledalo bi kao da brana laže. Izvedeno `FROM public, anon, authenticated`.
+
+**② Osnovica je bila kriva za jedan.** I spec §2 i zaglavlje `c3-rls-initplan.sql` (od 14. 8.)
+govorili su **13 politika**; advisor i `pg_policies` neovisno daju **14**. SQL je oduvijek
+mijenjao svih 14 — pogriješila je **proza**. Ispravljeno na oba mjesta. Ovo je razred greške zbog
+kojeg postoji `check:state`, samo što tu brojku nijedna brana ne gleda.
+
+**Obrnuta provjera je oborila pretpostavku.** Poziv `handle_new_user` i `snapshot_content_version`
+kao `anon` vraća **404 / PGRST202** — na produkciji i na stagingu. PostgREST funkcije koje vraćaju
+`trigger` ne drži u schema cacheu. Dakle **REVOKE gasi upozorenje, ne rupu**; radi se svejedno, jer
+inače tuđa odluka (PostgREST-ova) služi kao naša zaštita.
+
+**Tvrdnja o okidačima je prestala biti citat.** Nakon REVOKE-a je na stagingu stvoren korisnik i
+redak u `profiles` je nastao → okidač se doista izvršava kao vlasnik tablice, ne kroz GRANT.
+Test-korisnik obrisan.
+
+**Zatečeno, ne dirano:** `supabase/c3-rls-initplan.sql` je napisan **14. kolovoza i nikad
+primijenjen** — bio je točan i pokrivao svih 14 politika. Cigla ga je izvršila, ne napisala.
+
+**Ostaje otvoreno:** `set_updated_at` ima promjenjiv `search_path` — jedini preostali sigurnosni
+WARN koji nije namjeran. Nije popravljen: opseg cigle se ne širi bez odluke.
+
+---
+
 ## 2026-08-31 (OPUS) — Revizija je dala 12 nalaza, a faza MREŽA je dobila spec i **pauzirala redizajn**
 
 Leon je tražio pregled *„problema i sranja koja trenutno imamo"*. Revizija je bila **infrastrukturna**
