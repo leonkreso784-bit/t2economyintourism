@@ -54,14 +54,32 @@ for (const abs of allMd) {
   }
 }
 
-// ── 2) najviše JEDAN aktivni spec u plan/ ───────────────────────────
+// ── 2) TOČNO JEDAN aktivni spec u plan/ ─────────────────────────────
 // ROADMAP.md je stalni stanovnik (pregled milestone-a), ne spec.
+//
+// ⚠️ PROŠIRENO 2026-08-31. Dotad je pravilo glasilo „najviše jedan spec" i brojalo DATOTEKE.
+// Povod proširenja: faza MREŽA (sanacija) morala je preuzeti prvenstvo dok frontend redizajn
+// NIJE ispunjen — a stara brana je poznavala samo dva stanja, „aktivan" i „u arhivi". Arhiva
+// znači ISPUNJEN (pravilo 1), pa bi seljenje nedovršenog speca ondje bila laž koju bi §2b
+// odmah i prijavila.
+//
+// Treće stanje — PAUZIRAN — sad se izriče u dokumentu, a ne pogađa iz broja datoteka. Svrha
+// pravila ostaje netaknuta i čak se pooštrava: nekad je zahtijevalo „ne više od jednog", sad
+// zahtijeva TOČNO jedan, pa ni prazan `plan/` ne prolazi. Pitanje „koji plan vrijedi?" i dalje
+// ima jedan odgovor, samo ga sada daje spec sam.
 const PLAN = path.join(DOCS, 'plan');
+const PAUZIRAN = /^\s*\*\*Status:\*\*\s*⏸️\s*PAUZIRAN\b/m;
 if (fs.existsSync(PLAN)) {
   const specs = fs.readdirSync(PLAN).filter((f) => f.endsWith('.md') && f !== 'ROADMAP.md');
-  if (specs.length > 1) {
-    problems.push('VIŠE AKTIVNIH PLANOVA u docs/plan/: ' + specs.join(', ') +
-      '\n      → ispunjen plan ide u docs/archive/ ISTI DAN (pravilo 1)');
+  const aktivni = specs.filter((f) => !PAUZIRAN.test(fs.readFileSync(path.join(PLAN, f), 'utf8')));
+  if (aktivni.length > 1) {
+    problems.push('VIŠE AKTIVNIH PLANOVA u docs/plan/: ' + aktivni.join(', ') +
+      '\n      → ispunjen plan ide u docs/archive/ ISTI DAN (pravilo 1)' +
+      '\n      → spec koji čeka dobiva `**Status:** ⏸️ PAUZIRAN` u zaglavlju');
+  }
+  if (specs.length && !aktivni.length) {
+    problems.push('NIJEDAN AKTIVAN PLAN u docs/plan/: svih ' + specs.length +
+      ' je označeno PAUZIRAN\n      → „što sada" mora imati odgovor; točno jedan spec nosi prvenstvo');
   }
 }
 
