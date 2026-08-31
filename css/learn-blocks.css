@@ -134,7 +134,7 @@ h4.lb-heading { font-size: 1.1rem; }
     font-size: 0.95rem;
 }
 .lb-table th, .lb-table td {
-    border: 1px solid var(--border-color, rgba(148, 163, 184, 0.25));
+    border: 1px solid var(--border);
     padding: 0.55em 0.8em;
     text-align: left;
 }

@@ -342,7 +342,7 @@
 .admin-card-list { list-style: none; margin: 0.75rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
 .admin-card {
     display: flex; align-items: flex-start; gap: 0.6rem;
-    border: 1px solid var(--border-color, #334155); border-radius: 10px;
+    border: 1px solid var(--border); border-radius: 10px;
     padding: 0.7rem 0.85rem; background: var(--bg-secondary);
 }
 .admin-card-body { flex: 1 1 auto; min-width: 0; }
@@ -373,7 +373,7 @@
 /* ===== F4.3c-1 Uredi karticu ===== */
 .admin-edit-btn {
     flex: 0 0 auto; width: 34px; height: 34px; border-radius: 8px;
-    border: 1px solid var(--border-color, #334155); background: var(--bg-tertiary);
+    border: 1px solid var(--border); background: var(--bg-tertiary);
     color: var(--text-secondary); cursor: pointer; font-size: 0.85rem;
     display: inline-flex; align-items: center; justify-content: center;
     transition: background 0.15s, color 0.15s, border-color 0.15s;
@@ -385,7 +385,7 @@
     margin-top: 0.6rem; display: inline-flex; align-items: center; gap: 0.4rem;
     padding: 0.45rem 0.85rem; border-radius: 8px; cursor: pointer;
     font-size: 0.85rem; font-weight: 600; font-family: inherit;
-    border: 1px dashed var(--border-color, #334155); background: transparent; color: var(--text-secondary);
+    border: 1px dashed var(--border); background: transparent; color: var(--text-secondary);
     transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 .admin-add-btn:hover { background: var(--bg-tertiary); color: var(--primary-light, #818cf8); border-color: var(--primary, #6366f1); }
@@ -398,13 +398,13 @@
 .admin-card-ctrls { flex: 0 0 auto; display: inline-flex; gap: 0.35rem; }
 .admin-cat-del:hover, .admin-del:hover { background: var(--danger-bg, #7f1d1d); color: #fff; border-color: var(--danger-text, #f87171); }
 .admin-edit-btn[disabled] { opacity: 0.35; cursor: not-allowed; }
-.admin-edit-btn[disabled]:hover { background: var(--bg-tertiary); color: var(--text-secondary); border-color: var(--border-color, #334155); }
+.admin-edit-btn[disabled]:hover { background: var(--bg-tertiary); color: var(--text-secondary); border-color: var(--border); }
 .admin-add-btn--cat { margin-top: 1rem; width: 100%; justify-content: center; padding: 0.6rem 0.85rem; font-size: 0.9rem; }
 
 /* Edit-modal (na <sokrat-modal> primitivu, light-DOM kartica) */
 .admin-edit .admin-edit__card {
     position: relative; width: min(92vw, 460px);
-    background: var(--bg-secondary); border: 1px solid var(--border-color, #334155);
+    background: var(--bg-secondary); border: 1px solid var(--border);
     border-radius: 14px; padding: 1.4rem 1.3rem 1.2rem;
     box-shadow: 0 18px 50px rgba(2, 6, 23, 0.55);
 }
@@ -421,7 +421,7 @@
 .admin-edit__input {
     width: 100%; box-sizing: border-box; resize: vertical;
     padding: 0.6rem 0.7rem; border-radius: 9px;
-    border: 1px solid var(--border-color, #334155);
+    border: 1px solid var(--border);
     background: var(--bg-primary); color: var(--text-primary);
     font-family: inherit; font-size: 0.95rem; line-height: 1.4;
 }
@@ -444,7 +444,7 @@
 .admin-edit__field--color { flex-direction: row; align-items: center; justify-content: space-between; }
 .admin-edit__color {
     width: 52px; height: 34px; padding: 2px; cursor: pointer; border-radius: 8px;
-    border: 1px solid var(--border-color, #334155); background: var(--bg-primary);
+    border: 1px solid var(--border); background: var(--bg-primary);
 }
 .admin-edit__note { font-size: 0.78rem; color: var(--text-secondary); margin: 0 0 0.5rem; }
 .admin-edit__status { font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 0.7rem; }
@@ -474,21 +474,21 @@
 .admin-quiz-optinput {
     flex: 1 1 auto; min-width: 0; box-sizing: border-box;
     padding: 0.5rem 0.6rem; border-radius: 8px;
-    border: 1px solid var(--border-color, #334155);
+    border: 1px solid var(--border);
     background: var(--bg-primary); color: var(--text-primary);
     font-size: 0.9rem; font-family: inherit;
 }
 .admin-quiz-optinput:focus { outline: none; border-color: var(--primary, #6366f1); }
 .admin-quiz-delopt {
     flex: 0 0 auto; width: 30px; height: 30px; border-radius: 7px;
-    border: 1px solid var(--border-color, #334155); background: var(--bg-tertiary);
+    border: 1px solid var(--border); background: var(--bg-tertiary);
     color: var(--text-secondary); cursor: pointer; font-size: 0.8rem;
     display: inline-flex; align-items: center; justify-content: center;
 }
 .admin-quiz-delopt:hover { background: var(--danger-text, #f87171); color: #fff; border-color: var(--danger-text, #f87171); }
 .admin-quiz-addopt {
     align-self: flex-start; margin-top: 0.55rem; padding: 0.35rem 0.7rem;
-    border: 1px dashed var(--border-color, #334155); border-radius: 8px;
+    border: 1px dashed var(--border); border-radius: 8px;
     background: transparent; color: var(--text-secondary); cursor: pointer;
     font-size: 0.82rem; font-family: inherit;
 }
