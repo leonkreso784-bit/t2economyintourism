@@ -7,8 +7,8 @@
 > Faza **MREŽA** ([RJESAVANJE-PROBLEMA-9MJ.md](../plan/RJESAVANJE-PROBLEMA-9MJ.md)) nosi ih s
 > ciglom i izlaznim uvjetom: **CSP** (D1–D3) · **RLS `auth.uid()` po retku** (A1) ·
 > **`.lb-table-wrap` bez `tabindex`** (B3c ✅ 2026-08-31) · **leaked password** (D4) · **EDITOR ① boja kartice**
-> (C2) · **EDITOR ② dopune** (E1) · **M5b zatezanje** (E2). Uz njih i `check:i18n` (B5) te osam
-> nemigriranih predmeta (E3).
+> (C2) · **EDITOR ② dopune** (E1) · **M5b zatezanje** (E2). Uz njih i `check:i18n` (B5 ✅ 2026-08-31,
+> 421 nalaz / 23 datoteke) te osam nemigriranih predmeta (E3).
 >
 > Njihovi zapisi ostaju **ovdje i nedirnuti** jer nose obrazloženje i mjerenja; spec nosi **redoslijed
 > i dokaz**. Kad cigla padne, ovdje se stavlja ✅ s brojkom — ne briše se.
@@ -281,6 +281,18 @@ odgovorio „ne kroz redizajn, nego kao svjesna migracija na vlastite zasluge".
 **SEM (plaćeno oglašavanje) je odvojeno i ide POSLIJE:** odluka o budžetu, ne o kodu. Dok su
 C4–C7 i POLICA nedovršeni, plaćeni promet dolazi na gradilište.
 
+## ✅ ~~Zakucan engleski nije bio JEDNA traka nego RAZRED — treba `check:i18n`~~ — ZATVORENO 2026-08-31 (MREŽA B5)
+
+> Brana postoji (`npm run check:i18n`, u preflightu) i brojka više nije nepoznata:
+> **421 nositelj teksta bez ključa u 23 datoteke** (`scripts/i18n-baseline.json`, brojač po
+> datoteci) — među njima **četiri cijele stranice** koje `js/i18n.js` ni ne učitavaju
+> (privacy 96 · terms 40 · faq 34 · contact 26). Presuda ③ („ključ bez rječnika") je
+> reproducirala K5 nalaz strojno: 31 `studio.*` + 2 `admin.*` poziva na nepostojeće ključeve.
+> **Presuda prevoditi-ili-gasiti dvojezičnost je Leonova i NIJE donesena** — donosi se nad
+> `node scripts/check-i18n.js --list` ispisom. Detalji: spec §4 B5 — ISHOD.
+
+<details><summary>izvorni zapis</summary>
+
 ## ➖ Zakucan engleski nije bio JEDNA traka nego RAZRED — treba `check:i18n` (2026-08-24)
 
 > Nađeno pri cigli `about`: cijela stranica „O nama" imala je **nula `data-i18n`** atributa,
@@ -302,6 +314,8 @@ odluči hoće li se prevoditi ili gasiti dvojezičnost, treba je izmjeriti — i
 ⚠️ **Nije isto što i K5** (editor dvojezično). K5 je mjeren i zna svoju brojku (28 od 48
 `studio.*` ključeva nedostaje, `block-editor.js` i `admin-editors.js` imaju **nula** `t()`
 poziva). Ovo je brana koja bi K5 uopće **našla** bez ručnog prebrojavanja.
+
+</details>
 
 ## ✅ ~~Tekst stranice `about` ne spominje UGC~~ — RIJEŠENO ISTI DAN (2026-08-24, spec §9.15)
 

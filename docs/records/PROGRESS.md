@@ -5,6 +5,22 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-31 (FABLE) — B5: anegdota „jedina traka" postala je brojka 421 — i brana je zamalo promašila vlastiti povod
+
+`check:i18n` sudi trima presudama, ali treća (**ključ bez rječnika**) nije bila u planu —
+došla je iz obrnute pat-provjere usred gradnje: `my-materials.js` je pokazivao samo
+askConfirm nalaze, a njegovi `mt('materials.newFolder', 'New folder')` fallbacki su
+konkatenacijom nevidljivi presudama nad HTML-om i sinkovima. Brana čiji je izričiti
+zadatak bio „našla bi K5 bez ručnog brojanja" K5 ne bi našla — dok nije dobila presudu
+koja pita rječnik postoji li ključ. S njom je K5 ispao strojno: 31 `studio.*` + 2
+`admin.*` poziva na nepostojeće ključeve, plus nalaz veći od svih pojedinačnih: četiri
+cijele stranice (privacy/terms/faq/contact) i18n sloj uopće ne učitavaju. Lažni pogoci
+su rezani na stvarnim oblicima (ključ kao argument `t()`-a; `'{name}'` u `.replace()`;
+konkatenirani ostatak taga sudi se kao atributi) — svaki rez ima obrnutu provjeru.
+Odluka prevoditi-ili-gasiti je namjerno OSTALA izvan cigle: brana mjeri, Leon presuđuje.
+
+---
+
 ## 2026-08-31 (FABLE) — B4: bug od tri godišnja doba postao je popis od 23 retka
 
 BUG-039/037 su živjeli kao „postoji negdje, četiri puta viđeno". `check:cascade` ih je

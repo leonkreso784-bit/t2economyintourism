@@ -5,6 +5,18 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-31 (FABLE) — **MREŽA B5: `check:i18n` — zakucani tekst postaje izmjeren razred (421 / 23 datoteke)**
+
+### Dodano
+- **`scripts/check-i18n.js`** (u preflightu): tri presude — HTML tekst/atributi bez
+  `data-i18n*` mehanizma · zakucan tekst u JS predlošcima i sinkovima (`${t(…)}` prolazi
+  prirodno) · **ključ bez rječnika** (t-poziv ili `data-i18n` na ključ kojeg nema u DICT-u).
+  Izmjereno **421 nositelj u 23 datoteke** (`scripts/i18n-baseline.json`, brojač po datoteci):
+  privacy 96 · terms 40 · faq 34 · contact 26 imaju NULA ključeva i ne učitavaju `js/i18n.js`;
+  K5 razred (31 `studio.*` + 2 `admin.*` nepostojeća ključa) reproduciran strojno.
+  Presuda prevoditi-ili-gasiti dvojezičnost NIJE donesena — čeka Leona nad `--list` ispisom.
+- **`tests/unit/check-i18n-gate.test.js`** — 20 obrnutih provjera (obje strane brane).
+
 ## 2026-08-31 (FABLE) — **MREŽA B4: `check:cascade` — tko koga gasi u `responsive/*` postaje izmjeren popis**
 
 ### Dodano

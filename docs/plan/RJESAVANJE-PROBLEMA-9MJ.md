@@ -336,6 +336,30 @@ ISTIM pragovima 01 vs 06; `.hero h1` ljestva iz `01` pod `02 @max-767`) i BUG-03
 ### B5 · `check:i18n`
 Zakucani engleski nije bila jedna traka nego **razred** (backlog, 2026-08-24). Brana: nijedan tekst vidljiv korisniku ne smije biti zakucan mimo `js/i18n.js`. Osnovica imenuje zatečeno.
 
+#### B5 — ISHOD (2026-08-31) · ✅ razred je IZMJEREN: 421 nositelj u 23 datoteke
+
+**`scripts/check-i18n.js`** (u preflightu) sudi trima presudama: ① HTML (korijenske
+`*.html`, samo `<body>`) — tekstni čvor sa slovom bez `data-i18n` na vlasniku + atributi
+`placeholder`/`aria-label`/`alt`/`title` bez `data-i18n-*` mehanizma; ② JS (`js/**` bez
+`i18n.js` — on JE rječnik) — HTML-nosivi literali suđeni istom presudom (`${…}` se
+neutralizira pa `t()` prirodno prolazi; konkatenirani ostatak taga sudi se kao ATRIBUTI)
++ poimence nabrojeni sinkovi (`.textContent=`, `showToast(`, `toast(`, `askConfirm(`,
+`setAttribute('aria-label'…)`); ③ **ključ bez rječnika** — literalni ključ u
+`t(`/`mt(`/`_adminT(` pozivu i svaki `data-i18n*` atribut mora POSTOJATI u DICT-u, jer
+`t()` za nepoznat ključ vrati SAM KLJUČ na ekran. Presuda ③ je dodana kad je obrnuta
+pat-provjera pokazala da bi bez nje brana PROMAŠILA VLASTITI POVOD: K5 fallbacke
+(`mt('materials.newFolder', 'New folder')`) konkatenacija skriva od presuda ①②.
+**Izmjereno: 6 html · 42 js · 6454 literala → 421 nositelj bez ključa u 23 datoteke**
+(`scripts/i18n-baseline.json`, brojač po datoteci — obrazac `check:palette` po izričitom
+zahtjevu backloga): 4 stranice s NULOM ključeva koje i18n ni ne učitavaju
+(privacy 96 · terms 40 · faq 34 · contact 26) + K5 razred REPRODUCIRAN presudom ③
+(31 `studio.*` + 2 `admin.*` poziva na nepostojeće ključeve — bez ručnog brojanja).
+**Presuda prevoditi-ili-gasiti dvojezičnost donosi se nad `--list` ispisom — Leonova,
+nije donesena i nije dio ove cigle.** Granice mjere u zaglavlju skripte (`<head>` je
+`check:seo`; `data/**` je jednojezično po ADR-012; dinamički ključevi i stringovi iz
+varijabli nevidljivi statici). 20 obrnutih provjera u lažnom stablu
+(`tests/unit/check-i18n-gate.test.js`) + crvena strana dokazana uživo na `editor.html`.
+
 ### B6 · CI shardanje
 19.4 od 30 min, **533 testa u jednom procesu**. Podizanje granice bilo je jednokratno; ovdje odbrojavanje prestaje. Potez su `workers` ili shardovi, ne veći broj.
 
@@ -474,7 +498,7 @@ Pet predmeta (`accounting` · `math` · `statistics` · `academic-writing` · `m
 Faza pada kad **sve** stoji:
 
 - [x] advisor performance **0 WARN** · security **15 → 11** — ✅ **A1, 2026-08-31, na produkciji**
-- [ ] `check:node`, `check:tokens`, `check:cascade`, `check:i18n`, `check:csp` u preflightu, **svaka s obrnutom provjerom**
+- [ ] `check:node`, `check:tokens`, `check:cascade`, `check:i18n`, `check:csp` u preflightu, **svaka s obrnutom provjerom** — ✅ node (A2) · tokens (B1) · cascade (B4) · i18n (B5, 2026-08-31); čeka još `check:csp` (D3)
 - [x] a11y brana sudi po **WCAG razini**, osnovica imenovana — ✅ **B3b+B3c, 2026-08-31** (razina ∪ težina; macro u površinama; 9× `.katex-display` popravljeno; osnovica prazna)
 - [x] `check:final` **imenuje** preskočene — ✅ **B2, 2026-08-31** (osnovica: 8 imenovanih)
 - [ ] `palette:breakdown` **fatalno 0** · `check:palette` osnovica **0**
