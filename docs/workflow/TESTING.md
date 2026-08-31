@@ -154,6 +154,10 @@ testa**, samo korak `-> cancelled`. Izmjereno 2026-08-31: job „Lint + verify +
 izvedbe* — kad postane ovo drugo, prestaje razlikovati kvar od sporog stroja. Granica je podignuta
 na 30; **sljedeći put nije novo podizanje broja** nego `workers` (danas 1, radi determinizma) ili
 sharding: 533 testa u jednom procesu je uzrok, a ne simptom.
+**Izvedeno u MREŽA B6 (2026-09-01):** Playwright je zaseban matrix-job s **2 sharda**
+(`workers: 1` unutar svakog = determinizam netaknut; `needs: build` = fail-fast ostaje). Prvi
+run: build **0.4 min** · shardovi **11.2 / 10.0 min** — stari job je bio 97 % Playwright.
+Rast suite se apsorbira **novim shardom** u matrici, nikad većim timeoutom.
 
 ## ⚠️ ZELENA BRANA NIJE DOKAZ AKO NE GLEDA (2026-08-31, C5b/0)
 

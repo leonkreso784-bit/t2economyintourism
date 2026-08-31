@@ -40,7 +40,7 @@ Izmjereno **2026-08-31**. Bez zapisane polazne brojke ne može se dokazati da je
 | advisor — security | **15 WARN · 0 ERROR** | Supabase |
 | `final == M1⊕M2` | **16 provjereno · 8 preskočeno** | `npm run check:final` |
 | budžet posjetitelja | **179.9 KiB / 200 KB** (37 skripti) | `npm run check:budget` |
-| CI, job „Lint + verify + tests" | **19.4 min / 30** (533 testa, 58 spec datoteka) | GitHub Actions |
+| CI, job „Lint + verify + tests" | polazno **19.4 min / 30** (533 testa u jednom procesu) → **B6: build 0.4 + 2 sharda 11.2/10.0 min** | GitHub Actions |
 | ranjivosti | polazno **runtime 0 · dev 15** (11 high) → **0 / 0** (A2) | `npm audit` |
 | Node | polazno **stroj 24.11.1 · `.nvmrc` 22 · CI 22** → **sve 24** (A2) | `npm run check:node` |
 | `--border-color` | **11 upotreba · 0 definicija** | — |
@@ -362,6 +362,21 @@ varijabli nevidljivi statici). 20 obrnutih provjera u lažnom stablu
 
 ### B6 · CI shardanje
 19.4 od 30 min, **533 testa u jednom procesu**. Podizanje granice bilo je jednokratno; ovdje odbrojavanje prestaje. Potez su `workers` ili shardovi, ne veći broj.
+
+**✅ ISHOD (2026-09-01).** Playwright je izašao iz `build` joba u **matrix-job s 2 sharda**
+(`--shard=i/2`); `workers: 1` unutar svakog sharda ostaje — determinizam zbog kojeg postoji
+nije žrtvovan. `needs: build` čuva „fail fast prije preglednika", `fail-fast: false` da pad
+jednog sharda ne guta dijagnostiku drugog; rast suite ubuduće apsorbira **novi shard**, nikad
+veći timeout (build 15 min · shard 20 min). **Prvi run (= prvi CI run Node 24 ikad):** build
+**0.4 min** · shardovi **11.2 / 10.0 min** · zid **11.8 min** umjesto 19.4 — izmjereno je da
+je stari job bio 97 % Playwright: brze brane traju sekunde, a fail-fast sada znači presudu u
+24 s. **Cigla je uzgred naplatila dva skrivena duga:** ① prvi push je pao na `npm ci` u 5 s —
+`@emnapi` bomba iz Kvara 1 (`check-lockfile.js` zaglavlje) opet se sama naoružala
+(`core`/`runtime@1.11.3` ispod Tailwindovih `bundleDependencies`); ② `check:lockfile` je to
+morao uhvatiti, a nije, jer je preskakao drugi npm kad se **majori** poklapaju — runner nosi
+najnoviji **minor** (11.19 vs lokalnih 11.6), a razrješivači se razlikuju već tu. Od sada se
+`npx npm@<major>` vrti **uvijek** (Kvar 3, dokumentiran u zaglavlju skripte); crvena strana
+dokazana lokalno prije popravka locka.
 
 ---
 

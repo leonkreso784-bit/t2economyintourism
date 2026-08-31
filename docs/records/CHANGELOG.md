@@ -5,6 +5,27 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **MREŽA B6: CI shardanje — blok B zatvoren** · **ADR-033: dvojezičnost se PREVODI**
+
+### Promijenjeno
+- **CI (`.github/workflows/ci.yml`):** Playwright izašao iz `build` joba u **matrix-job s 2
+  sharda** (`--shard=i/2`, `workers: 1` unutar svakog — determinizam netaknut); `build`
+  zadržava brze brane (`needs: build` = fail-fast, sada **24 s** do prve presude). Prvi run
+  (ujedno **prvi CI run Node 24**): build 0.4 min · shardovi 11.2/10.0 min · zid **11.8 min**
+  umjesto 19.4. Rast suite = novi shard, nikad veći timeout.
+
+### Popravljeno
+- **`@emnapi` bomba se opet naoružala** (`core`/`runtime@1.11.3` ispod Tailwindovih
+  `bundleDependencies`) — prvi push je oborio `npm ci` u 5 s; lock popravljen po receptu iz
+  zaglavlja (`npx npm@11 install`). **`check:lockfile` (Kvar 3):** drugi npm se sada vrti
+  **uvijek** — runner nosi najnoviji minor svog majora (11.19 vs lokalnih 11.6), a
+  razrješivači se razlikuju već po minoru; usporedba samo majora davala je lažnu sigurnost.
+
+### Odlučeno
+- **ADR-033 (Leon):** dvojezičnost se **prevodi, ne gasi** — sučelje HR/EN, cilj 421 → 0
+  (backlog, bez termina); **jezik sučelja NIKAD ne dira predmete** (jezik gradiva = svojstvo
+  programa, ADR-012).
+
 ## 2026-08-31 (FABLE) — **MREŽA B5: `check:i18n` — zakucani tekst postaje izmjeren razred (421 / 23 datoteke)**
 
 ### Dodano

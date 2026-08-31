@@ -5,6 +5,23 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-01 (FABLE) — B6: prvi push je bio dokaz za tri stvari odjednom — i naplatio dug star tri tjedna
+
+Blok B zatvoren. Sama cigla je bila mala (Playwright u matrix-job s 2 sharda, `workers: 1`
+unutar svakog, `needs: build` čuva fail-fast) — ali njezin dokaz je bio prvi CI run nakon
+mjesec dana lokalnog rada, prvi run Node 24 ikad, i prvi run novog locka. Pao je u **5
+sekundi**: `@emnapi` bomba iz Kvara 1 opet se sama naoružala (upstream objavio
+`core`/`runtime@1.11.3` ispod Tailwindovih `bundleDependencies`), a `check:lockfile` — brana
+čiji je to jedini posao — bila je zelena, jer preskače drugi npm kad se **majori** poklapaju.
+Runner međutim nosi najnoviji **minor** (11.19 vs lokalnih 11.6), i razrješivači se razlikuju
+već tu. Popravak na obje strane: lock po receptu iz zaglavlja, a gate od sada vrti
+`npx npm@<major>` **uvijek** (Kvar 3) — crvena strana dokazana lokalno prije popravka.
+Drugi run: sve zeleno, zid **11.8 min** umjesto 19.4, uz nalaz koji ruši staru pretpostavku:
+brze brane traju **24 sekunde**, stari job je bio 97 % Playwright. Uz ciglu: Leon presudio
+i18n pitanje iz B5 — **prevodi se** (ADR-033), jezik sučelja nikad ne dira predmete.
+
+---
+
 ## 2026-08-31 (FABLE) — B5: anegdota „jedina traka" postala je brojka 421 — i brana je zamalo promašila vlastiti povod
 
 `check:i18n` sudi trima presudama, ali treća (**ključ bez rječnika**) nije bila u planu —
