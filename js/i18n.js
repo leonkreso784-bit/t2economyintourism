@@ -26,6 +26,10 @@
     'nav.map': { en: 'Map', hr: 'Karta' },
     'nav.exercises': { en: 'Exercises', hr: 'Vježbe' },
 
+    // a11y imena skrolabilnih regija (MREŽA B3c) — čita ih čitač ekrana, ne ekran
+    'a11y.formula': { en: 'Mathematical formula', hr: 'Matematička formula' },
+    'a11y.table': { en: 'Table', hr: 'Tablica' },
+
     // Admin (F4 CRUD) — vidljivo samo adminu
     'admin.title': { en: 'Admin', hr: 'Admin' },
     'admin.openStudio': { en: 'Studio editor', hr: 'Studio editor' },

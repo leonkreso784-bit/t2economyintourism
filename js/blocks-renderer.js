@@ -149,10 +149,21 @@
       '<span class="lb-video__icon" aria-hidden="true">&#9658;</span>' +
       '<span class="lb-video__label">YouTube</span></button></div>';
   }
+  // MREŽA B3c: `.lb-table-wrap` je skrolabilna regija (overflow-x) → WCAG 2.1.1 traži
+  // dohvatljivost tipkovnicom (tabindex) + ime (role/aria-label). Isti recept kao
+  // `.katex-display` u js/math.js; backlog je ovaj kvar nosio od 2026-08-14 (latentan
+  // na 375 px jer tablice danas svugdje stanu — B3a mjerenje — ali okine se prvom širom).
+  // ⚠️ `role="group"`, ne `region` iz backloga: region je LANDMARK, a više tablica s istim
+  // imenom okida axeov `landmark-unique` (izmjereno na formulama u B3c) — group daje ime
+  // bez landmark-šuma. Backlogova skica je bila recept, mjerenje je presudilo detalj.
+  function a11yWrapAttrs() {
+    const label = typeof window.t === 'function' ? window.t('a11y.table') : 'Table';
+    return ' tabindex="0" role="group" aria-label="' + esc(label) + '"';
+  }
   function renderTable(b) {
     const rows = Array.isArray(b.rows) ? b.rows : [];
     const header = Array.isArray(b.header) ? b.header : null;
-    let html = '<div class="lb-table-wrap my-[1.4em] overflow-x-auto"><table class="lb-table w-full border-collapse">';
+    let html = '<div class="lb-table-wrap my-[1.4em] overflow-x-auto"' + a11yWrapAttrs() + '><table class="lb-table w-full border-collapse">';
     if (header) {
       html += '<thead><tr>' + header.map(function (c) { return '<th>' + renderInline(c) + '</th>'; }).join('') + '</tr></thead>';
     }
@@ -195,6 +206,10 @@
           && t.parentNode.classList.contains('lb-table-wrap')) continue;   // već omotana
       const wrap = body.ownerDocument.createElement('div');
       wrap.className = 'lb-table-wrap my-[1.4em] overflow-x-auto';
+      // B3c: isti a11y recept kao u renderTable — v1 tablice ne smiju biti građanin drugog reda.
+      wrap.setAttribute('tabindex', '0');
+      wrap.setAttribute('role', 'group');
+      wrap.setAttribute('aria-label', typeof window.t === 'function' ? window.t('a11y.table') : 'Table');
       t.parentNode.insertBefore(wrap, t);
       wrap.appendChild(t);
     }

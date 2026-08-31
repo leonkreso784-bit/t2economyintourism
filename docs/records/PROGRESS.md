@@ -5,6 +5,19 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-31 (FABLE) — B3c: popravak na jedinom mjestu kuda sve prolazi — i mjerenje presudilo detalj
+
+`.katex-display` je popravljen u `renderMath()` — jedinom mjestu kroz koje svaka formula
+prolazi (learn, kartice, kviz, Studio) — pa 9 prekršaja pada jednim mehanizmom i svaki
+budući put renderiranja ga dobiva besplatno. `.lb-table-wrap` isti recept na oba mjesta.
+Backlogova skica je rekla `role="region"`; probano, izmjereno da region (landmark) s
+ponovljenim imenima odmah okida `landmark-unique` — pa je otišao `group`: ime bez
+landmark-šuma. Skica je recept, mjerenje presuđuje detalj. Osnovica je prije pražnjenja
+GLASNO javila riješeni upis — puni ciklus čegrtaljke (crveno → imenovano → riješeno →
+prazno) dokazan uživo unutar jedne cigle.
+
+---
+
 ## 2026-08-31 (FABLE) — B3b: presuda po razini, ali kao unija — i površina prije ljestvice
 
 Dizajn je slijedio B3a nalaz: prvo je macro UŠAO u branu (bez njega bi nova ljestvica

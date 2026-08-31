@@ -298,6 +298,19 @@ osnovici test pada s **istih 9 nodeova** koje je B3a izmjerio (razina A, `.katex
 s imenovanim upisom prolazi uz glasan TOLERIRANO. Ostalih 6 javnih testova zeleno pod novom
 ljestvicom — potvrda B3a tvrdnje ①. 13 obrnutih provjera: `tests/unit/a11y-gate.test.js`.
 
+#### B3c — ISHOD (2026-08-31) · ✅ jeftini popravci spušteni; osnovica opet PRAZNA
+
+**Jedan mehanizam za sve formule:** `renderMath()` (js/math.js) nakon KaTeX-a svakom
+`.katex-display` daje `tabindex="0"` + `role` + `aria-label` (i18n: `a11y.formula`) — jedno
+mjesto kroz koje svaka formula prolazi, pa i svaki budući put renderiranja dobiva popravak
+besplatno. **Isti recept za `.lb-table-wrap`** na oba mjesta (v2 `renderTable` + v1
+`wrapLegacyTables`), i18n `a11y.table` — latentni slučaj iz backloga zatvoren istom rukom.
+**⚠️ `role="group"`, ne `region` iz backloga — presudilo je mjerenje:** region je landmark,
+pa je više formula s istim imenom odmah okinulo axeov `landmark-unique` (izmjereno prije
+prebacivanja); group daje ime bez landmark-šuma. Rezultat: `scrollable-region-focusable`
+**9 → 0** na STUDY-KVANT, svih 7 javnih a11y testova zeleno s **praznom** osnovicom
+(riješeni upis je prvo GLASNO javljen, pa uklonjen — puni ciklus čegrtaljke dokazan uživo).
+
 ### B4 · `check:cascade`
 BUG-039 i BUG-037 su **četiri pojave istog mehanizma**: kasnija datoteka gasi raniju, pa pravilo napisano za 1536 px ili za landscape nikad ne dođe na ekran. Leonova presuda *„nije toliki problem"* stoji.
 
@@ -445,7 +458,7 @@ Faza pada kad **sve** stoji:
 
 - [x] advisor performance **0 WARN** · security **15 → 11** — ✅ **A1, 2026-08-31, na produkciji**
 - [ ] `check:node`, `check:tokens`, `check:cascade`, `check:i18n`, `check:csp` u preflightu, **svaka s obrnutom provjerom**
-- [ ] a11y brana sudi po **WCAG razini**, osnovica imenovana
+- [x] a11y brana sudi po **WCAG razini**, osnovica imenovana — ✅ **B3b+B3c, 2026-08-31** (razina ∪ težina; macro u površinama; 9× `.katex-display` popravljeno; osnovica prazna)
 - [x] `check:final` **imenuje** preskočene — ✅ **B2, 2026-08-31** (osnovica: 8 imenovanih)
 - [ ] `palette:breakdown` **fatalno 0** · `check:palette` osnovica **0**
 - [ ] CSP **enforce** na produkciji uz čist report

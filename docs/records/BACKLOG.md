@@ -6,7 +6,7 @@
 > ### 📌 2026-08-31 — SEDAM STAVKI ODAVDE JE PREUZEO SPEC, NE PLANIRATI IH IZNOVA
 > Faza **MREŽA** ([RJESAVANJE-PROBLEMA-9MJ.md](../plan/RJESAVANJE-PROBLEMA-9MJ.md)) nosi ih s
 > ciglom i izlaznim uvjetom: **CSP** (D1–D3) · **RLS `auth.uid()` po retku** (A1) ·
-> **`.lb-table-wrap` bez `tabindex`** (B3c) · **leaked password** (D4) · **EDITOR ① boja kartice**
+> **`.lb-table-wrap` bez `tabindex`** (B3c ✅ 2026-08-31) · **leaked password** (D4) · **EDITOR ① boja kartice**
 > (C2) · **EDITOR ② dopune** (E1) · **M5b zatezanje** (E2). Uz njih i `check:i18n` (B5) te osam
 > nemigriranih predmeta (E3).
 >
@@ -1247,7 +1247,17 @@ obzir, inače „makni na telefonu" opet neće ništa napraviti.
 
 ---
 
-## 🔥 Skrolabilna ploha bez `tabindex` — `.lb-table-wrap` nije dostupan tipkovnicom — 2026-08-14
+## ✅ ~~Skrolabilna ploha bez `tabindex` — `.lb-table-wrap` nije dostupan tipkovnicom~~ — ZATVORENO 2026-08-31 (MREŽA B3c)
+**Riješeno:** `tabindex="0"` + `role` + `aria-label` na oba mjesta (v2 `renderTable` + v1
+`wrapLegacyTables` u `js/blocks-renderer.js`), i isti recept za AKTIVNOG nositelja —
+`.katex-display` u `renderMath()` (9× serious → 0). ⚠️ Dvije skice odavde je mjerenje oborilo:
+`role="region"` (landmark → `landmark-unique` šum s ponovljenim imenima; otišao `group`) i
+„uvjetan tabindex" (popravak je bezuvjetan — uvjetnost bi tražila resize-listener za kvar
+kojeg pri širem prikazu nema, a zaustavna točka na formuli/tablici ima ime pa nije šum).
+A11y brana od B3b sudi po WCAG razini i pokriva macro na 375 px; osnovica je prazna.
+Izvorni zapis (povijest):
+
+2026-08-14
 **WCAG 2.1.1:** ploha koja skrola mora biti operabilna tipkovnicom, inače korisnik koji ne rabi miš
 ne može doći do desnog dijela tablice. axe to pokriva pravilom `scrollable-region-focusable`
 (**serious**). `.lb-table-wrap` — i onaj iz v2, koji postoji **od U7** — nema `tabindex="0"`.

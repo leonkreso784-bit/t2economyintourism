@@ -5,6 +5,17 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-31 (FABLE) — **MREŽA B3c: skrolabilne formule i tablice dohvatljive tipkovnicom — a11y osnovica opet prazna**
+
+### Popravljeno
+- **`js/math.js`**: `renderMath()` svakom `.katex-display` daje `tabindex="0"` + `role="group"` +
+  `aria-label` (i18n `a11y.formula`) — jedan mehanizam, WCAG 2.1.1 (9→0 na STUDY-KVANT).
+- **`js/blocks-renderer.js`**: isti recept za `.lb-table-wrap` (v2 `renderTable` + v1
+  `wrapLegacyTables`, i18n `a11y.table`) — latentni backlog-slučaj iz 2026-08-14 zatvoren.
+- `role="group"` umjesto backlogovog `region`: region je landmark → izmjeren `landmark-unique`
+  šum kod ponovljenih imena; group daje ime bez landmarka.
+- **`tests/a11y-baseline.json`** ispražnjen — brana opet traži nulu.
+
 ## 2026-08-31 (FABLE) — **MREŽA B3b: a11y brana sudi po WCAG razini (∪ težini) + imenovana osnovica + macro u površinama**
 
 ### Promijenjeno

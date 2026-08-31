@@ -59,6 +59,32 @@
         } catch (e) {
             if (window.console && console.warn) console.warn('renderMath failed', e);
         }
+
+        // ── MREŽA B3c: display-formule su SKROLABILNE regije (css/math.css: overflow-x) ──
+        // WCAG 2.1.1 (razina A, axe `scrollable-region-focusable`): sadržaj do kojeg se
+        // dolazi samo skrolom mora biti dohvatljiv i tipkovnicom → tabindex. Mehanizam je
+        // NAMJERNO ovdje, na jedinom mjestu kroz koje svaka formula prolazi (learn, kartice,
+        // kviz, Studio-pregled…) — 9 izmjerenih prekršaja @ 375 px pada jednim popravkom,
+        // i svaki budući put renderiranja ga dobiva besplatno (B3a: mjerač je našao kvar
+        // upravo na površini koju nitko nije gledao).
+        // ⚠️ `role="group"`, NE `role="region"` — presudilo je MJERENJE, ne ukus: region je
+        // LANDMARK, pa je više formula s istim imenom na stranici odmah okinulo axeov
+        // `landmark-unique` (izmjereno na macro learnu). Group daje isto (ime + granice
+        // pri fokusu) bez landmark-statusa, tj. bez šuma u rotoru čitača ekrana.
+        try {
+            var formule = container.querySelectorAll('.katex-display');
+            for (var i = 0; i < formule.length; i++) {
+                var f = formule[i];
+                if (!f.hasAttribute('tabindex')) f.setAttribute('tabindex', '0');
+                if (!f.hasAttribute('role')) f.setAttribute('role', 'group');
+                if (!f.hasAttribute('aria-label')) {
+                    f.setAttribute('aria-label',
+                        typeof window.t === 'function' ? window.t('a11y.formula') : 'Mathematical formula');
+                }
+            }
+        } catch (e2) {
+            if (window.console && console.warn) console.warn('renderMath a11y attrs failed', e2);
+        }
     }
 
     window.renderMath = renderMath;
