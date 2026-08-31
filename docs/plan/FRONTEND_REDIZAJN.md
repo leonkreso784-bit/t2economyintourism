@@ -2595,7 +2595,8 @@ Tekst je pritom skraćen sa **171 na 100 znakova** i **prvi put preveden** — t
 bila jedina površina sa zakucanim engleskim, a to je pravni tekst, ne ukras.
 ⚠️ **Ta je tvrdnja OBORENA 2026-08-24** (cigla `about`, §9.14): traka nije bila jedina nego
 samo prva nađena — cijela stranica „O nama" imala je **nula `data-i18n`**. *Pouka zapisana kao
-anegdota o jednoj površini ne broji ostale.* Otud BACKLOG-stavka za `check:i18n`.
+anegdota o jednoj površini ne broji ostale.* Otud BACKLOG-stavka za `check:i18n`
+(ispunjena 2026-08-31, MREŽA B5 — brana je u preflightu, razred izmjeren: 421/23).
 Izostavljeno je
 obrazloženje („kako bismo razumjeli kako posjetitelji koriste…") koje u cijelosti stoji u
 Pravilima privatnosti, na koja traka vodi. Gumbi ostaju **36 px** visoki — visina se rezala na
