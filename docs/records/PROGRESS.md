@@ -5,6 +5,58 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-31 (OPUS) — BUG-042: pouka je bila zapisana u datoteci koju pali spec nije zvao
+
+Leon je javio pad CI-ja: *„Pao nam je lint test i verify na Error: 1) [iPhone-SE-375] ›
+tests/a11y.spec.js:70:3 … lekcije predmeta"*. `npm run verify` je lokalno bio **zelen**, kao i
+cijela suita — „lint test i verify" je **ime CI joba** (`Lint + verify + tests`), ne dvije brane.
+
+**KAKO JE NAĐEN UZROK.** Test prolazi izolirano, prolazi i s cijelom datotekom, prolazi i u punoj
+suiti — dakle reprodukcije lokalno nema. Poruka koju je Leon prenio nosila je samo ime testa.
+Umjesto pogađanja, nalaz je **dohvaćen iz CI-ja**: repozitorij je javan, pa
+`api.github.com/…/check-runs/<id>/annotations` vraća cijeli Playwrightov ispis bez prijave
+(zato u `playwright.config.js` i stoji `github` reporter). Iz njega su izašli izmjereni brojevi —
+i s njima uzrok.
+
+**NALAZ.** Pale su tri kontrole **kolačić-trake**, ne kontrola koju test čuva:
+`a[data-i18n="cookie.privacy"]` **4.05**, `#cookieReject` **3.54**, `#cookieAccept` **4.05**.
+
+**UZROK.** Isti tokeni na punoj neprozirnosti daju **6.35 / 5.67 / 6.35**, dakle paleta je
+ispravna. `.cookie-banner` ulazi fade-inom (0.28 s), a **axe-core u boju uračunava neprozirnost
+predaka** — na sporom CI-runneru ju je uhvatio na **78 %**. Dokaz da je prozirnost a ne boja:
+svih **šest** kanala daje istu alfu (0.780–0.787). Prozor je uzak s obje strane — pri `opacity: 0`
+axe element **preskoči**, a na 0.83 (izmjereno lokalno) omjer već prelazi prag. Otud „lokalno
+zeleno, CI crven".
+
+**ZAŠTO JE PROŠLO.** `tests/helpers/axe-gate.js` nosi tu pouku zapisanu **dvaput** (2026-08-13
+`#btnCorrect > span`; 2026-08-15 toast u Studiju) i rješava je funkcijom `smiri()`. Ali
+`a11y.spec.js` je iz njega uvozio **samo `gateViolations`** i zvao axe izravno. Prvi sken nije
+imao **nikakvo** smirivanje; drugi je imao točno onu jednokratnu `finish()` inačicu koju helper
+u komentaru opisuje kao dokazano nedovoljnu. Znanje je postojalo — nije bilo na putu izvršavanja.
+
+**IZVEDENO.**
+① Sva mjerenja u `a11y.spec.js` idu kroz `skeniraj()` — **svih 6 testova**, ne samo pali: ostali
+su prolazili slučajno, jer je `waitForTimeout(400)` slučajno duži od 280 ms animacije.
+② `smiri()` više ne nastavlja tiho — ako se konačna animacija ne smiri ni nakon 6 pokušaja +
+250 ms, **baca iznimku s njezinim imenom**. Mjerač koji ne uspije stabilizirati ekran mora pasti,
+ne izmjeriti ga takvog.
+③ Novi **`tests/unit/axe-gate-usage.test.js`** (u `test:unit` → preflight + CI): čita **s diska**
+svaki `tests/a11y*.spec.js` i traži da nijedan ne skenira mimo helpera. 11 tvrdnji, uključujući
+**obrnutu provjeru** na točno onom kodu koji je kvar pustio.
+
+**PROVJERENO.** Traka zamrznuta na `opacity: 0.78` reproducira **točno** CI-jeva tri nalaza i ista
+tri omjera (4.05 / 3.54 / 4.05); na punoj neprozirnosti nula. Nakon popravka, uz fade-in rastegnut
+na **30 s**, traka je u trenutku mjerenja na `opacity: 1` i nalaza nema. Prva verzija strukturne
+brane pala je na **vlastitom komentaru** — sad odstranjuje komentare prije provjere, jer brana
+koja ne razlikuje kod od proze mjeri tekst, ne ponašanje.
+
+**BEZ BUMPA.** Nijedna izmjena nije u `css/`, `js/` ni `data/` — pao je mjerač, ne proizvod.
+
+**SLIJEDI.** Nepromijenjeno: **C5b/1** (`exercises.css` + `math.css` + `learn-blocks.css` na
+Tailwind, spec §12).
+
+---
+
 ## 2026-08-31 (OPUS) — C5b/0: tinte gradiva su bile nevidljive, i tri brane su to propustile
 
 Sesija je počela kao **priprema** za C5b/1. Priprema je našla kvar, pa je Leon rekao neka se

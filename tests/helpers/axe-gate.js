@@ -56,17 +56,31 @@ async function smiri(page) {
       try { return (a.effect.getTiming().iterations || 1) !== Infinity; } catch (e) { return false; }
     };
     document.getAnimations().forEach((a) => { try { a.finish(); } catch (e) { /* beskonačne */ } });
-    return document.getAnimations().filter((a) => a.playState === 'running' && konacna(a)).length;
+    return document.getAnimations()
+      .filter((a) => a.playState === 'running' && konacna(a))
+      .map((a) => a.animationName || a.transitionProperty || '(bezimena)');
   });
 
-  for (let i = 0; i < 3; i++) {
-    if (!(await gurni())) break;
+  for (let i = 0; i < 6; i++) {
+    if (!(await gurni()).length) break;
     await page.waitForTimeout(60);
   }
   await page.waitForTimeout(250);
   // Ključni drugi poziv: sve što je krenulo TIJEKOM gornjeg čekanja mora biti gotovo prije
   // nego axe uzorkuje boje. Bez njega petlja gore ne pomaže — mjerenje je i dalje utrka.
-  await gurni();
+  const preostalo = await gurni();
+
+  // ⚠️ TREĆI PUT ISTI OBRAZAC (BUG-042) → mjerač koji ne uspije smiriti ekran mora PASTI,
+  // a ne izmjeriti ga takvog. Do 2026-08-31 se ovdje samo nastavljalo dalje, pa je axe
+  // uzorkovao boju usred prijelaza i prijavljivao pad koji na gotovoj stranici ne postoji.
+  // Ime animacije ide u poruku — bez njega se uzrok opet pogađa umjesto da se pročita.
+  if (preostalo.length) {
+    throw new Error(
+      'axe-gate: animacije se nisu smirile ni nakon 6 pokušaja + 250 ms — mjerenje bi bilo ' +
+      'utrka, ne nalaz. Još se vrti: ' + preostalo.join(', ') + '. ' +
+      'Ako je animacija namjerno beskonačna, mora to i deklarirati (iterations: Infinity).'
+    );
+  }
 }
 
 // Skenira trenutno stanje stranice i vraća gateane prekršaje (prazno = zeleno).

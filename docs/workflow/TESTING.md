@@ -177,6 +177,37 @@ u korisnikovim materijalima. Zato se ta datoteka **ne dokazuje kataloškom rutom
 kroz `window.renderBlocks` — globalno dostupan i bez prijave (v. i `learn-parity.spec.js`).
 
 
+## ⚠️ POUKA ZAPISANA U HELPERU ČUVA SAMO ONE KOJI HELPER ZOVU (2026-08-31, BUG-042)
+
+Prethodna dva poglavlja govore o brani koja mjeri **krivu stvar** i o brani koja **ne gleda**.
+Ovo je treća vrsta: brana koja gleda ispravno, ima popravak zapisan **u sebi** — a jedan njezin
+pozivatelj ide mimo nje.
+
+**Što se dogodilo.** CI je oborio `tests/a11y.spec.js:70` s tri `serious` color-contrast nalaza
+na kolačić-traci: **4.05 / 3.54 / 4.05**. Isti tokeni na punoj neprozirnosti daju
+**6.35 / 5.67 / 6.35**. Uzrok: `.cookie-banner` ulazi fade-inom, a **axe-core u boju uračunava
+neprozirnost predaka** — na sporom runneru ju je uhvatio na 78 % i izmjerio izmiješanu boju.
+`tests/helpers/axe-gate.js` tu pouku nosi **zapisanu dvaput** (2026-08-13, 2026-08-15) i rješava
+je funkcijom `smiri()`. Ali taj je spec uvozio **samo `gateViolations`** i skenirao izravno.
+
+**Četiri pravila iz toga:**
+
+- **Kad popravak glasi „radi to ovako", uz njega ide brana koja provjerava da se tako i radi.**
+  Inače je popravak bilješka (ADR-027). Ovdje je to `tests/unit/axe-gate-usage.test.js`: čita
+  **s diska** svaki `tests/a11y*.spec.js` i traži da nijedan ne skenira mimo helpera. Popis se
+  ne nabraja rukom — nabrojan popis ne pokriva spec koji tek nastane.
+- **Mjerač koji ne uspije stabilizirati ekran mora PASTI, ne izmjeriti ga takvog.** `smiri()` je
+  do sada tiho nastavljao; sad baca iznimku s **imenom** animacije koja se još vrti. Isti zahtjev
+  koji faza već postavlja `css:diff`-u i `check:contrast:live`-u.
+- **Prozirnost se prepoznaje po ARITMETICI, ne po dojmu.** Ako svi kanali daju **istu alfu**
+  (ovdje 0.780–0.787 na šest kanala), boja nije kriva nego prozirnost. Prije nego dirneš paletu,
+  izračunaj alfu — dvaput je to spasilo od „popravljanja" tokena koji je ispravan.
+- **Zeleno lokalno može biti sreća, a ne dokaz.** Prozor kvara bio je uzak s obje strane: pri
+  `opacity: 0` axe element **preskoči**, a na 0.83 (lokalna vrijednost) omjer već prelazi prag.
+  Zato: nakon popravka **rastegni uvjet** koji je kvar izazvao (fade-in 0.28 s → 30 s) i traži da
+  test i dalje prolazi. Zeleno pod normalnim uvjetima ne razlikuje popravljeno od sretnog.
+
+
 ## Smoke test (uvijek, ~2 min)
 - [ ] Stranica se učita bez greške u konzoli (F12 → Console).
 - [ ] Landing → "Start Studying" otvara **drill-down browse** (Fakultet→Smjer→Godina→Predmet).

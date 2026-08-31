@@ -5,6 +5,38 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-31 (OPUS) — **BUG-042: CI je pao na kontrastu koji na ekranu ne postoji**
+
+CI job „Lint + verify + tests" oborio je `tests/a11y.spec.js:70` (stranica lekcija) s tri
+`serious` color-contrast nalaza. Lokalno je ista suita bila **533/533 zelena**.
+
+**① Nalaz nije bio ondje gdje je test čuvao.** Pale su tri kontrole **kolačić-trake**:
+`a[data-i18n="cookie.privacy"]` **4.05**, `#cookieReject` **3.54**, `#cookieAccept` **4.05** —
+a ne kontrola „skini za offline" koju taj test pokriva.
+
+**② Paleta je bila ispravna.** Isti tokeni na punoj neprozirnosti daju **6.35 / 5.67 / 6.35**.
+`.cookie-banner` ulazi fade-inom `cookieSlideUp` (0.28 s), a **axe-core u boju uračunava
+neprozirnost predaka** — na sporom runneru ju je uzorkovao na **78 %**. Da je riječ o
+prozirnosti a ne o boji dokazuje aritmetika: svih **šest** kanala daje istu alfu (0.780–0.787).
+
+**③ Zašto je prošlo kroz branu koja to zna.** `tests/helpers/axe-gate.js` nosi tu pouku
+zapisanu **dvaput** (2026-08-13, 2026-08-15) i rješava je funkcijom `smiri()`. `a11y.spec.js` je
+uvozio **samo `gateViolations`** i skenirao izravno — prvi sken bez ikakvog smirivanja, drugi s
+onom jednokratnom inačicom koju helper opisuje kao dokazano nedovoljnu.
+
+**④ Popravak u tri sloja.** Sva mjerenja u `a11y.spec.js` idu kroz `skeniraj()` (svih 6 testova
+— ostali su prolazili slučajno). `smiri()` više **ne nastavlja tiho**: baca iznimku s imenom
+animacije koja se ne da smiriti. Novi **`tests/unit/axe-gate-usage.test.js`** čita s diska svaki
+`tests/a11y*.spec.js` i zabranjuje skeniranje mimo helpera (11 tvrdnji, uz obrnutu provjeru na
+kodu koji je kvar pustio). Ide u `test:unit`, dakle u preflight i CI.
+
+**⑤ Provjereno u oba smjera.** Traka zamrznuta na `opacity: 0.78` reproducira **točno** CI-jeva
+tri nalaza i ista tri omjera; na punoj neprozirnosti nula. Nakon popravka, uz fade-in rastegnut
+na **30 s** (107× gore od CI-ja), traka je u trenutku mjerenja na `opacity: 1` i nalaza nema.
+
+Bez izmjena u `css/`, `js/` i `data/` — dakle **bez `npm run bump`**; proizvod je netaknut, pala
+je mjera. Detaljno: `docs/records/BUGS.md` BUG-042 · pouka: `docs/workflow/TESTING.md`.
+
 ## 2026-08-31 (OPUS) — **C5b/0: tinte gradiva su bile nevidljive na zadanoj temi**
 
 Cigla ispred C5b/1, iz njegove pripreme. Spec **§12.7**. Migracija na Tailwind nije dirana.

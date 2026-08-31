@@ -120,6 +120,42 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Riješeni / Lekcije
 
+### BUG-042 — Kolačić-traka je oborila CI kontrastom koji na ekranu ne postoji (treći put ista utrka)
+
+- Status: ✅ **riješen** (2026-08-31) · Težina: **srednji** (lažni crveni CI, ne kvar proizvoda) ·
+  Našao: CI job „Lint + verify + tests" na `feat/c5a-modovi`; lokalno zeleno u 533/533
+- **Opis.** `tests/a11y.spec.js:70` (stranica lekcija) pao je na CI-ju s tri `serious`
+  color-contrast nalaza, a nijedan nije bio na kontroli koju taj test čuva:
+  `a[data-i18n="cookie.privacy"]` **4.05**, `#cookieReject` **3.54**, `#cookieAccept` **4.05**.
+  Isti tokeni na punoj neprozirnosti daju **6.35 / 5.67 / 6.35** — dakle prolaz s rezervom.
+- **Uzrok.** `.cookie-banner` ulazi animacijom `cookieSlideUp` (0.28 s, `opacity: 0 → 1`), a
+  **axe-core u boju uračunava neprozirnost PREDAKA**. Na sporom CI-runneru je uzorkovao traku
+  na **78 %** i izmjerio izmiješanu boju. Da je riječ o prozirnosti a ne o paleti dokazuje
+  aritmetika: svih **šest** kanala daje istu alfu (0.780–0.787).
+  ⚠️ Prozor je uzak u oba smjera — pri `opacity: 0` axe element **preskoči**, a već na 0.83
+  (izmjereno lokalno) omjer prijeđe prag. Zato je lokalno bilo zeleno, a CI crven.
+- **Zašto je prošlo kroz branu koja to već zna.** `tests/helpers/axe-gate.js` nosi ovu pouku
+  zapisanu **dvaput** (2026-08-13 i 2026-08-15) i ima `smiri()` koji je rješava. Ali
+  `a11y.spec.js` je uvozio **samo `gateViolations`** i zvao axe izravno — pa je smirivanje
+  zaobišao. Prvi sken (redak 76) nije imao **nikakvo** smirivanje, drugi (redak 81) je imao
+  točno onu jednokratnu `finish()` inačicu koju helper u komentaru opisuje kao **dokazano
+  nedovoljnu**. Znanje je postojalo; nije bilo na putu izvršavanja.
+- **Rješenje.** ① Sva mjerenja u `a11y.spec.js` idu kroz `skeniraj()` (svih 6 testova, ne samo
+  pali — ostali su prolazili slučajno, jer `waitForTimeout(400)` > 280 ms animacije).
+  ② `smiri()` više **ne nastavlja tiho**: ako se nakon 6 pokušaja + 250 ms neka **konačna**
+  animacija još vrti, baca iznimku s njezinim imenom. ③ `tests/unit/axe-gate-usage.test.js` —
+  strukturna brana koja čita s diska svaki `tests/a11y*.spec.js` i traži da nijedan ne skenira
+  mimo helpera (uz obrnutu provjeru na kodu koji je kvar pustio).
+- **Provjera.** Traka zamrznuta na `opacity: 0.78` reproducira **točno** CI-jeva tri nalaza i
+  ista tri omjera; na punoj neprozirnosti ih je nula. Nakon popravka, uz fade-in rastegnut na
+  **30 s** (107× gore od CI-ja), traka je u trenutku mjerenja na `opacity: 1` i nalaza nema.
+- **Lekcija.** **Pouka zapisana u helperu čuva samo one koji helper zovu.** Tri puta isti kvar,
+  tri puta popravak na jednom mjestu — a treći je put prošao kroz spec koji je iz tog istog
+  helpera uvezao sve osim onoga što ga rješava. Kad se popravak svede na „radi to ovako", uz
+  njega ide **brana koja provjerava da se tako i radi**, inače je to bilješka (ADR-027).
+  Drugo lice iste pouke: **mjerač koji ne uspije stabilizirati ekran mora pasti, ne izmjeriti
+  ga takvog** — to je isti zahtjev koji je faza već postavila `css:diff`-u i `check:contrast:live`-u.
+
 ### BUG-040 — Boje teksta u gradivu bile su nevidljive na zadanoj temi, a tri brane su to propustile
 
 - Status: ✅ **riješen** (2026-08-31, C5b/0) · Težina: **visok** — pogađa čitljivost sadržaja ·
