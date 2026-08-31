@@ -281,6 +281,24 @@ odgovorio „ne kroz redizajn, nego kao svjesna migracija na vlastite zasluge".
 **SEM (plaćeno oglašavanje) je odvojeno i ide POSLIJE:** odluka o budžetu, ne o kodu. Dok su
 C4–C7 i POLICA nedovršeni, plaćeni promet dolazi na gradilište.
 
+## ➖ PRIJEVOD SUČELJA — 421 nositelj bez ključa → 0 (odluka ADR-033, 2026-09-01)
+
+> Leon je presudio: **prevodi se** — *„jako je bitno da je stranica dvojezicna. eng i hrv."*
+> — uz tvrdo pravilo da **mijenjanje jezika NIKAD ne dira predmete** (jezik gradiva je
+> svojstvo programa, ADR-012). Ovo je red čekanja za taj posao, **bez termina** — nije dio
+> faze MREŽA i ne blokira je.
+
+**Opseg (izmjeren, `scripts/i18n-baseline.json` · pun popis: `node scripts/check-i18n.js --list`):**
+- **4 stranice bez mehanizma** — prvo učitati `js/i18n.js` + `data-i18n`, pa prevesti:
+  `privacy.html` 96 · `terms.html` 40 · `faq.html` 34 · `contact.html` 26.
+- **19 datoteka s mehanizmom, a zakucanim tekstom** — najveći: `index.html` 50 ·
+  `js/studio.js` 40 · `js/exercises.js` 29 · `js/block-editor.js` 23.
+- **K5 razred:** 31 `studio.*` + 2 `admin.*` ključa koji NE postoje u rječniku — smjer je
+  **upisati ih u rječnik**, ne brisati pozive.
+
+**Dokaz napretka = spuštanje osnovice** (`check-i18n.js --update` NAKON dodavanja ključeva),
+nikad procjena. Gotovo kad je osnovica prazna i brana traži nulu — obrazac phone-brane.
+
 ## ✅ ~~Zakucan engleski nije bio JEDNA traka nego RAZRED — treba `check:i18n`~~ — ZATVORENO 2026-08-31 (MREŽA B5)
 
 > Brana postoji (`npm run check:i18n`, u preflightu) i brojka više nije nepoznata:
@@ -288,8 +306,9 @@ C4–C7 i POLICA nedovršeni, plaćeni promet dolazi na gradilište.
 > datoteci) — među njima **četiri cijele stranice** koje `js/i18n.js` ni ne učitavaju
 > (privacy 96 · terms 40 · faq 34 · contact 26). Presuda ③ („ključ bez rječnika") je
 > reproducirala K5 nalaz strojno: 31 `studio.*` + 2 `admin.*` poziva na nepostojeće ključeve.
-> **Presuda prevoditi-ili-gasiti dvojezičnost je Leonova i NIJE donesena** — donosi se nad
-> `node scripts/check-i18n.js --list` ispisom. Detalji: spec §4 B5 — ISHOD.
+> **Presuda je donesena 2026-09-01: PREVODI SE (ADR-033)** — sučelje je dvojezično i dovršava
+> se, a jezik sučelja NIKAD ne dira predmete (jezik gradiva = svojstvo programa, ADR-012).
+> Sam prijevod je posao bez termina — vidi živu stavku niže. Detalji: spec §4 B5 — ISHOD.
 
 <details><summary>izvorni zapis</summary>
 

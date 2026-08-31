@@ -354,8 +354,8 @@ pat-provjera pokazala da bi bez nje brana PROMAŠILA VLASTITI POVOD: K5 fallback
 zahtjevu backloga): 4 stranice s NULOM ključeva koje i18n ni ne učitavaju
 (privacy 96 · terms 40 · faq 34 · contact 26) + K5 razred REPRODUCIRAN presudom ③
 (31 `studio.*` + 2 `admin.*` poziva na nepostojeće ključeve — bez ručnog brojanja).
-**Presuda prevoditi-ili-gasiti dvojezičnost donosi se nad `--list` ispisom — Leonova,
-nije donesena i nije dio ove cigle.** Granice mjere u zaglavlju skripte (`<head>` je
+**Presuda prevoditi-ili-gasiti dvojezičnost donesena je 2026-09-01: PREVODI SE (ADR-033);
+jezik sučelja nikad ne dira predmete. Sam prijevod nije dio MREŽE.** Granice mjere u zaglavlju skripte (`<head>` je
 `check:seo`; `data/**` je jednojezično po ADR-012; dinamički ključevi i stringovi iz
 varijabli nevidljivi statici). 20 obrnutih provjera u lažnom stablu
 (`tests/unit/check-i18n-gate.test.js`) + crvena strana dokazana uživo na `editor.html`.

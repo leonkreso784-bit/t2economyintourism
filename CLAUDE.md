@@ -291,7 +291,7 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
 
 ## Ključne odluke — samo one koje MIJENJAJU današnji rad
 
-> Puni tekst i sve starije: **`docs/records/DECISIONS.md` (ADR-001…031)**.
+> Puni tekst i sve starije: **`docs/records/DECISIONS.md` (ADR-001…033)**.
 > Ovdje su ADR-ovi koji su **živa ograničenja**, ne povijesno obrazloženje.
 
 - **ADR-031:** **MCP je CJEVOVOD, ne CRUD** (Leon, 2026-08-30): `Learn` je podloga svega → AI prvo prepozna lekcije/sekcije i napiše skriptu → iz nje kartice (**pojam/pitanje → objašnjenje**, boja po lekciji da se vidi kojoj pripada) → iz kartica dopune i kviz, uz **pokrivenost, ne uzorak**. **AI je KORISNIKOV** (ne plaćamo tokene → kvalitetu držimo samo branama), **materijal dolazi kroz chat** (datoteku nikad ne vidimo), **sve ide u NACRT**, doseg = **samo vlastito gradivo** (ni čitanje kataloga). **Četiri tvrde brane u write-putu:** duljina kartice · svaka kartica daje bar jedno pitanje · svaka lekcija dobiva boju · dopuna ima jednoznačan odgovor. **Radi se TEK NAKON FRONTENDA**, a konektor traži OAuth → **tek nakon seobe**.

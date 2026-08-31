@@ -4,6 +4,39 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-033 — Dvojezičnost se PREVODI, ne gasi; jezik sučelja NIKAD ne dira predmete
+**Datum:** 2026-09-01 · **Status:** ✅ ODLUČENO (Leon) · **Vezano:** [ADR-012](#) (sadržaj po programu), [ADR-027](#adr-027) (znanje u kod)
+
+**Kontekst.** Cigla MREŽA B5 je izmjerila ono što je dotad bila anegdota: **421 nositelj
+korisniku vidljivog teksta bez i18n ključa u 23 datoteke** (`scripts/i18n-baseline.json`),
+među njima četiri cijele stranice koje `js/i18n.js` ni ne učitavaju (privacy 96 · terms 40 ·
+faq 34 · contact 26). Brojka je otvorila pitanje: prevoditi sve, ili ugasiti dvojezičnost i
+prestati je plaćati.
+
+**Odluka (Leon):** *„moja odluka je prevoditi, jako je bitno da je stranica dvojezicna. eng
+i hrv. predmeti i materijali za ucenje moraju biti nepromjenjeni na temelju jezika. dakle
+mjenjanje jezika ne dira nikad predmete."*
+
+Dva dijela:
+1. **SUČELJE je dvojezično (HR/EN) i to se dovršava, ne gasi** — osnovica 421 je red čekanja
+   za prevođenje, cilj je **0**; 🌐 toggle ostaje.
+2. **SADRŽAJ predmeta je izvan dosega jezika sučelja** — predmet i materijali za učenje su
+   **nepromjenjivi na temelju jezika**; jezik gradiva je svojstvo PROGRAMA (ADR-012, HR =
+   klon-program), ne postavke sučelja. Ovo potvrđuje postojeću arhitekturu i pretvara je u
+   tvrdo pravilo: nijedna buduća cigla ne smije vezati prikaz gradiva uz `sokrat-ui-lang`.
+
+**Posljedice:**
+- Prevođenje 421 nositelja je **odlučen posao bez termina** — nije dio faze MREŽA; kada se
+  radi, čegrtaljka `check:i18n` mjeri silazak (spuštanje osnovice = dokaz, ne procjena).
+- Četiri stranice bez i18n-a moraju **prvo dobiti mehanizam** (učitati `js/i18n.js` +
+  `data-i18n`), tek onda prijevod.
+- **K5** (editor dvojezično; 31 `studio.*` + 2 `admin.*` ključa bez rječnika) dobiva smjer:
+  ključevi se **pišu u rječnik**, ne brišu iz koda.
+- `data/**` ostaje jednojezično po datoteci — granica mjere `check:i18n` („`data/**` je
+  ADR-012 domena") sada ima i odluku iza sebe, ne samo razgraničenje.
+
+---
+
 ## ADR-032 — Semantika je UVIJEK PUNA ISPUNA; prilagođava se TINTA, ne ispuna
 **Datum:** 2026-08-30 · **Status:** ✅ ODLUČENO (Leon) · **Vezano:** [ADR-028](#adr-028) (Tailwind/tokeni), [ADR-027](#adr-027) (jedna činjenica = jedno mjesto)
 
