@@ -80,6 +80,17 @@ const EKRANI_JAVNI = ['landing', 'browse', 'browse:dubina', 'lessons', 'about'];
  *  i jedini popis koji crta JavaScript iz sadržaja (`.category-bar`, boja iz kataloga). */
 const NACINI = ['learn', 'flashcards', 'quiz', 'fill', 'progress'];
 
+/** ⚠️ MREZA-E4 (2026-09-01): `exercises` i `blind-map` su UVJETNI tabovi (5 predmeta ima
+ *  vježbe, blind-map još manje) pa NISU u `NACINI` — study-predmet mjere je prvi iz
+ *  `subjectDataMap`, koji te tabove NEMA. Do E4 su to bila jedina dva načina učenja bez
+ *  mjere na telefonu — ista rupa kakvu je `check:contrast:live` imao s `te2` (ruta koju
+ *  brana ne imenuje je ruta koju brana ne vidi). Mjere se preko `idiNa('study@<feature>')`:
+ *  predmet se bira IZ KATALOGA po značajci, nikad zakucan. */
+const NACINI_UVJETNI = [
+    { ruta: 'study@exercises', tab: 'exercises' },
+    { ruta: 'study@blindMap', tab: 'blind-map' }
+];
+
 /** Prijavljene stranice — mjeri ih `phone.authed.spec.js`. `admin` je unutra jer kriterij
  *  faze glasi da korisnik *„ne naiđe ni na jedan ekran koji brana ne posjećuje"*, a
  *  admin-CRUD je ekran kao i svaki drugi (isti popis vozi i `reach-gate`). */
@@ -165,16 +176,28 @@ async function idiNa(page, ime, rub = RUB_PORTRET) {
                 await page.waitForFunction((p) => browseState.level !== p, prije, { timeout: 5000 });
             } catch (e) { break; }
         }
-    } else if (ime === 'lessons' || ime === 'study') {
-        await page.evaluate((p) => {
-            const s = Object.keys(subjectDataMap)[0];
-            const x = SokratCatalog.getSubject(s);
+    } else if (ime === 'lessons' || ime === 'study' || ime.indexOf('study@') === 0) {
+        // MREZA-E4: 'study@<feature>' bira PRVI predmet koji značajku ima (`features.exercises`
+        // / `features.blindMap`) — na prvom predmetu subjectDataMap uvjetni tab ne postoji,
+        // pa ga mjera bez ovoga ne bi vidjela NIKAD. Predmet i dalje dolazi iz kataloga.
+        const feature = ime.indexOf('study@') === 0 ? ime.slice('study@'.length) : null;
+        const stranica = feature ? 'study' : ime;
+        await page.evaluate((arg) => {
+            let s, x;
+            if (arg.feature) {
+                x = (SOKRAT_CATALOG.subjects || []).find((k) => k.features && k.features[arg.feature]);
+                if (!x) throw new Error('nijedan predmet nema features.' + arg.feature);
+                s = x.id;
+            } else {
+                s = Object.keys(subjectDataMap)[0];
+                x = SokratCatalog.getSubject(s);
+            }
             const l = (x && x.lessons && x.lessons[0]) ? x.lessons[0].id : null;
-            if (p === 'lessons' || !l) navigateTo('lessons', { subject: s });
+            if (arg.p === 'lessons' || !l) navigateTo('lessons', { subject: s });
             else navigateTo('study', { subject: s, lesson: l });
-        }, ime);
-        await page.waitForFunction((p) => AppState.nav.page === p, ime);
-        if (ime === 'study') {
+        }, { p: stranica, feature: feature });
+        await page.waitForFunction((p) => AppState.nav.page === p, stranica);
+        if (stranica === 'study') {
             // Sadržaj dolazi lijeno (DB → JSON → .js) iza zastora `#studyLoading` preko
             // cijelog ekrana. Mjeriti prije nego stigne znači izmjeriti zastor.
             // ⚠️ Uvjet NE SMIJE koristiti `offsetParent`: `.study-loading` je
@@ -801,6 +824,7 @@ function spremiOsnovicu(suita, nalazi) {
 
 module.exports = {
     OTOK, RUB_PORTRET, RUB_LANDSCAPE, EKRANI, EKRANI_JAVNI, EKRANI_PRIJAVLJENI, NACINI,
+    NACINI_UVJETNI,
     KROMO_BUDZET_PCT,
     spreman, postaviRub, idiNa, otvoriNacin, mjeriStranicu, mjeriRubove,
     usporediSOsnovicom, spremiOsnovicu, kljucNalaza

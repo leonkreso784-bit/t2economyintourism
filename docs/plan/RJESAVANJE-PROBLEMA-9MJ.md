@@ -633,6 +633,16 @@ Pet predmeta (`accounting` · `math` · `statistics` · `academic-writing` · `m
 > **Nije u ovoj fazi:** prelazak vježbi na **recepte** (ADR-018 nasljednik) — to je izgradnja, ne
 > sanacija, i po odluci se radi tek nakon cijelog frontenda.
 
+**✅ E4 ISHOD (2026-09-01) — Leon odabrao MALI OPSEG; mjera dodana, nalaza NULA.** Mjerenja za
+odluku: `exercises.css` je zdrav (470 redaka · 0 `!important` · 133 tokena · mobile `@media`),
+paleta 0 (C4), `contrast:live` pokriva exercises rutu — ali **phone-brana vježbe nije mjerila**
+(`NACINI` = 5 načina; exercises/blind-map su uvjetni tabovi kojih na prvom predmetu
+`subjectDataMap` nema). Isporučeno: `NACINI_UVJETNI` u `phone-gate.js` + `idiNa('study@<feature>')`
+— predmet se bira IZ KATALOGA po značajci, nikad zakucan; pokrivenost-tvrdnja raste 44 → **52
+mjerenja** (4 širine × 13 ekrana). Rezultat: **svih 8 tvrdnji prolazi na oba taba, sve 4 širine,
+uz PRAZNU osnovicu** — „čine se ok" je sada brojka. Prepravak interakcije ide u redizajn
+(C5b/2+), gdje mu je mjesto (§10 anti-razlijevanje); `generate()`/`answer()`/`type` nedirnuti.
+
 ---
 
 ## 8 · NALAZI IZVANA — što prijatelji nađu
@@ -672,7 +682,7 @@ Faza pada kad **sve** stoji:
 - [x] `palette:breakdown` **fatalno 0** · `check:palette` osnovica **0** — ✅ **C4, 2026-09-01** (osnovica 93 → 0; breakdown 0·0·0; kućica označena u E-prolazu — C4 ju je ispunio a nije označio)
 - [ ] CSP **enforce** na produkciji uz čist report
 - [x] leaked-password provjera živa (D4, 2026-09-01)
-- [ ] E1–E4 riješeni ili **obrazloženo odgođeni** (odgoda je ishod, prešućivanje nije) — ✅ E1 (verifikacijom) · ✅ E2 · ✅ E3 (16→17 provjerenih; 7 zaključano, 2026-09-01)
+- [x] E1–E4 riješeni ili **obrazloženo odgođeni** — ✅ E1 (verifikacijom) · ✅ E2 · ✅ E3 (16→17; 7 zaključano) · ✅ E4 (mali opseg po Leonovoj odluci: telefon-mjera 44→52, nalaza 0; interakcija → redizajn) — **sve 2026-09-01**
 - [ ] svi nalazi iz §8 triažirani
 - [ ] `npm run preflight` **EXIT 0**
 

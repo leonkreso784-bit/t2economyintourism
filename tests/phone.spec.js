@@ -96,6 +96,17 @@ test.beforeAll(async ({ browser }, testInfo) => {
             });
         }
 
+        // MREZA-E4: uvjetni tabovi (exercises · blind-map) — na predmetu koji ih IMA,
+        // biranom iz kataloga po značajci. Do E4 jedina dva načina učenja bez mjere.
+        for (const u of G.NACINI_UVJETNI) {
+            await G.idiNa(page, u.ruta, e.rub);
+            await G.otvoriNacin(page, u.tab, e.rub);
+            snimka.push({
+                e, ekran: 'study:' + u.tab,
+                m: await G.mjeriStranicu(page, e.rub), r: await G.mjeriRubove(page, e.rub)
+            });
+        }
+
         await ctx.close();
     }
 
@@ -205,6 +216,7 @@ test('⓪ pokrivenost: mjerač je stvarno obišao sve ekrane i sve širine', asy
     // Brana koja tiho preskoči ekran tvrdi nešto o njemu, a nije ga vidjela. Ovo je
     // izravna pouka BUG-017 („tvrdi gate vrijedi samo koliko pokriva") i K3
     // („broj u kriteriju koji nijedan test ne mjeri nije kriterij nego želja").
-    const ocekivano = G.EKRANI.length * (G.EKRANI_JAVNI.length + 1 + G.NACINI.length);
+    const ocekivano = G.EKRANI.length
+        * (G.EKRANI_JAVNI.length + 1 + G.NACINI.length + G.NACINI_UVJETNI.length);
     expect(izmjerenoEkrana, 'izmjerenih ekrana').toBe(ocekivano);
 });

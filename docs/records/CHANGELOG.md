@@ -5,6 +5,16 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **MREŽA-E4: vježbe i slijepa karta ušle u telefon-mjeru — „čine se ok" postao broj (0 nalaza)**
+
+### Dodano
+- `phone-gate.js`: `NACINI_UVJETNI` + `idiNa('study@<feature>')` — exercises/blind-map se mjere
+  na PRVOM predmetu koji značajku ima (iz kataloga, nikad zakucano); pokrivenost 44 → **52**.
+- Rezultat: svih 8 tvrdnji × 4 širine × oba taba **prolazi uz praznu osnovicu**.
+- Opseg = Leonova odluka (mali): prepravak interakcije ide u redizajn; `generate()`/`answer()`/
+  `type` nedirnuti. Time je **BLOK E zatvoren** (E1 verifikacija · E2 kartice+shema · E3 mjerač+
+  zaključano izuzeće · E4 mjera).
+
 ## 2026-09-01 (FABLE) — **MREŽA-E3: brana je jedan predmet preskakala s uvjerljivim krivim razlogom**
 
 ### Popravljeno

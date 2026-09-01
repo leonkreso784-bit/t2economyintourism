@@ -117,8 +117,8 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 - **`npm run test:authed`** — pozitivan admin-put (storageState; traži `TEST_ADMIN_EMAIL/PASSWORD`;
   gađa **STAGING** kad su `STAGING_*` u `.env`; u CI-ju zaseban secret-gated job).
 - **`tests/phone.spec.js` + `phone.authed.spec.js`** (mjera: `tests/helpers/phone-gate.js`) —
-  **telefon kao STRANICA**: 8 tvrdnji na 320/393/430 px i 852×393, + **pet** načina učenja
-  (`progress` dodan u C5a/4). ⚠️ **568×320 svjesno NIJE u brani** (22 tuđa nalaza; `BACKLOG.md`).
+  **telefon kao STRANICA**: 8 tvrdnji na 320/393/430 px i 852×393, + **sedam** načina učenja
+  (`progress` C5a/4 · `exercises`/`blind-map` MREŽA-E4, uvjetni — predmet iz kataloga po značajci). ⚠️ **568×320 svjesno NIJE u brani** (22 tuđa nalaza; `BACKLOG.md`).
   Osnovica je `tests/phone-baseline.json` (danas **prazna** → traži nulu);
   spuštanje = `PHONE_BASELINE_UPDATE=1 npx playwright test …`.
 - **`npm run test:storage`** — bucket `node-images` kroz HTTP (vlastiti upload · tuđi prefiks ·

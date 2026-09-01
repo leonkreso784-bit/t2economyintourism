@@ -5,6 +5,18 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-01 (FABLE) — MREZA-E4: dva nemjerena nacina ucenja usla u telefon-branu — i cist nalaz
+
+Leon presudio mali opseg. Kljucno mjerenje za odluku: exercises.css je zdrav i pokriven paletom i
+kontrastom, ali phone-brana vjezbe NIKAD nije mjerila — uvjetni tab ne postoji na predmetu koji
+mjera posjecuje, pa ga mjera ne vidi (ista logika zbog koje je contrast:live morao imenovati te2).
+Dodano study@<feature> biranje predmeta iz kataloga po znacajci; pokrivenost-tvrdnja 44 → 52 i
+pala bi da mjerac ista preskoci. Svih 8 tvrdnji prolazi uz praznu osnovicu — dojam je postao
+brojka, nula popravaka trebalo. BLOK E ZATVOREN u jednoj sesiji: analiza pojela E1, E2 ocistio
+25 kartica i zakljucao shemu, E3 popravio mjerac i obrazlozio 7 izuzetih, E4 dodao mjeru.
+
+---
+
 ## 2026-09-01 (FABLE) — MREZA-E3: "odluka o 8" se raspala na popravak mjerca + 7 obrazlozenih
 
 Cigla je trazila odluku migrirati-ili-zakljucati, a analiza je prvo oborila popis: business-informatics
