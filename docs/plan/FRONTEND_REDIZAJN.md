@@ -5329,3 +5329,33 @@ promijenio da bi se PRIKAZ očuvao.
 
 `responsive/*` **−223 retka** (96+60+7+16+44); `home-section.css` je sada jedina istina o
 home-ljestvi. Slijedi **C6/2** (sidebar).
+
+### 13.7 ✅ C6/2 — sidebar: ljestva skupljena, i NALAZ da je cijela površina NEDOSTIŽNA (2026-09-01)
+
+Winner-mapa (6 širina) i ovdje je oborila čitanje: `.sidebar-logo .logo-wrapper` je na 375 px
+**36 px** iz bloka za koji je §-komentar sugerirao coarse — a zapravo je `@media (max-width:
+480px)` u `06 §LOGO`; na 768 je **50 px** jer globalna `.logo-wrapper` ljestva (koja NIJE
+sidebarova) pobjeđuje **min/max-stegama, ne specifičnošću**. Ta globalna ljestva zato **ostaje u
+`06`** — dio je logo-površine (topbar/landing), ne sidebara.
+
+**Konsolidirano u `sidebar.css`:** mobilni pobjednici u bazu (mrtva baza `max-width: 400px`
+nikad nije vrijedila — ≤767 ju je gazio `04` sa 100 %, ≥768 `06` sa 450 px), tablet-blok iz `06`
+i `.sidebar-logo` ≤480 pravila kao mobile-first ljestva. **Obrisano mrtvo:** `.sidebar-header
+h2` (+ `i` + `04`-ov duplikat) — u zaglavlju NEMA h2 (stoje logo i gumb) — i cijela
+`.subject-option*` obitelj (4 pravila) koje nema ni u markupu ni u JS-u.
+
+#### 🔴 NALAZ za Leona: sidebar je NEDOSTIŽAN — `openSidebar()` nitko ne zove
+
+Panel se renderira (17 predmeta), ima gumb za zatvaranje, overlay i escape-put — ali
+**nijedan gumb, ruta ni `data-action` ga ne OTVARA**: `openSidebar` je exportan na `window` i
+nema nijednog pozivatelja. Otkad je browse drill-down (K1) preuzeo biranje predmeta, ovo je
+mrtva-ali-nacrtana površina. **Odluka je produktna, ne CSS-ova** (obrisati? vratiti kao brzi
+izbornik?) → `BACKLOG.md`. Za mjeru znači: „otvoreno stanje" korisnik ne može vidjeti, pa je
+zatvoreni `css:diff` potpun dokaz.
+
+#### Dokaz
+
+Winner-mapa prije/poslije **84 usporedbe, 0 razlika** · `css:diff` × 8 viewporta (uklj. granicu
+**480/481**) = **12 448 usporedbi, 0 razlika** · telefon **10/10** · `preflight` **EXIT 0**.
+`responsive/04` i `06` bez ijednog sidebar-pravila (print-sakrivanje u `05` ostaje — politika,
+ne ljestva). Slijedi **C6/3** (about).

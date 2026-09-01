@@ -200,8 +200,9 @@ projekt mora živjeti **~2 tjedna nakon** seobe. **Testovi su uvjet, ne dodatak.
 (`diff:db` → `migrate-content.js`; read-path preferira bazu — bez re-synca PROD služi stare duge
 kartice) · **§8** = živi sandučić nalaza. **C5b ✅ CIJELI** (2026-09-01: /2 `blind-map`
 §12.12 · /3a `#learn` pao §12.13 · /3b skela §12.14) · **C6 mjera + C6/1 home ✅** (§13 —
-pravne stranice NEMAJU bundle pa `legal/consent.css` ne migriraju) → sljedeća: **C6/2**
-(sidebar) · C6/3 (about) · C6/4 (profil+auth). **Next.js odbijen (ADR-028).**
+pravne NEMAJU bundle pa `legal/consent.css` ne migriraju; **C6/2 sidebar ✅** — NALAZ:
+sidebar je NEDOSTIŽAN, §13.7/BACKLOG) → sljedeća: **C6/3** (about) · C6/4 (profil+auth).
+**Next.js odbijen (ADR-028).**
 ⚠️ **`check:docs` traži TOČNO jedan aktivni plan**; spec koji čeka nosi `**Status:** ⏸️ PAUZIRAN`.
 
 **Živa ograničenja redizajna** (obrazloženje svakog je u specu):

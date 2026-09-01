@@ -14,6 +14,17 @@ Sljedeca cigla: C5b/2 (blind-map.css), pa C5b/3 (learn.css).
 
 ---
 
+## 2026-09-01 (FABLE) — C6/2: sidebar-ljestva skupljena — i nalaz da sidebar NITKO ne moze otvoriti
+
+Winner-mapa opet oborila citanje: logo 36px na telefonu dolazi iz max-480 bloka (ne coarse), a
+50px na tabletu iz GLOBALNE logo-ljestve koja pobjeduje min/max-stegama — ona ostaje u 06 jer
+nije sidebarova. Konsolidacija u sidebar.css, mrtvi h2 i subject-option* obitelj obrisani.
+GLAVNI NALAZ (produktni, za Leona): openSidebar() je exportan i NITKO ga ne zove — panel se
+renderira sa 17 predmeta a nedostizan je otkad browse drill-down bira predmete. U BACKLOG.
+Dokaz: mapa 84/0, css:diff 12448/0 (granica 480/481 pokrivena), telefon 10/10, preflight 0.
+
+---
+
 ## 2026-09-01 (FABLE) — C6 mjera + C6/1: home-ljestva iz pet datoteka — i pola ljestve bilo mrtvo
 
 Prvo mjera cijelog C6 (spec §13): kljucni nalaz — pravne stranice NE ucitavaju bundle, pa

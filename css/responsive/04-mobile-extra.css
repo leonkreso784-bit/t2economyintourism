@@ -12,43 +12,6 @@
         font-size: 0.8rem;
     }
     
-    /* Subjects Sidebar Full Mobile */
-    .subjects-sidebar {
-        max-width: 100%;
-        width: 100%;
-    }
-    
-    .sidebar-header {
-        padding: 1rem;
-        padding-top: calc(1rem + var(--safe-top));
-    }
-    
-    .sidebar-header h2 {
-        font-size: 1.1rem;
-    }
-    
-    .sidebar-content {
-        padding: 1rem;
-    }
-    
-    .subject-option {
-        padding: 1rem;
-        min-height: 60px;
-    }
-    
-    .subject-option-icon {
-        width: 45px;
-        height: 45px;
-        font-size: 1.25rem;
-    }
-    
-    .subject-option-info h3 {
-        font-size: 1rem;
-    }
-    
-    .subject-option-info p {
-        font-size: 0.8rem;
-    }
 }
 
 /* --- STUDY PAGE HOME SECTION MOBILE --- */

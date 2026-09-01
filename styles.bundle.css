@@ -965,7 +965,7 @@ section[id$="-page"] {
   top: 0;
   right: 0;
   width: 100%;
-  max-width: 400px;
+  max-width: 100%;
   height: 100%;
   background: var(--bg-secondary);
   z-index: 1000;
@@ -985,8 +985,8 @@ section[id$="-page"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem 1.5rem;
-  padding-top: calc(1.25rem + var(--safe-top));
+  padding: 1rem;
+  padding-top: calc(1rem + var(--safe-top));
   border-bottom: 1px solid var(--border);
 }
 .sidebar-logo {
@@ -1002,15 +1002,6 @@ section[id$="-page"] {
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--text-primary);
-}
-.sidebar-header h2 {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 1.25rem;
-}
-.sidebar-header h2 i {
-  color: var(--primary);
 }
 .close-sidebar-btn {
   width: 44px;
@@ -1103,6 +1094,42 @@ section[id$="-page"] {
 .subject-item:hover .subject-arrow {
   color: var(--primary);
   transform: translateX(3px);
+}
+@media (max-width: 480px) {
+  .sidebar-logo .logo-wrapper {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    max-width: 36px;
+    max-height: 36px;
+  }
+  .sidebar-logo span {
+    font-size: 1rem;
+  }
+}
+@media (min-width: 768px) {
+  .subjects-sidebar {
+    max-width: 450px;
+  }
+  .sidebar-header {
+    padding: 1.25rem 1.5rem;
+    padding-top: calc(1.25rem + var(--safe-top));
+  }
+  .subject-item {
+    padding: 1.25rem;
+  }
+  .subject-item-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+  .subject-item-info h3 {
+    font-size: 1.1rem;
+  }
+  .subject-item-info p {
+    font-size: 0.9rem;
+  }
 }
 .browse-card {
   position: relative;
@@ -4451,35 +4478,6 @@ sokrat-modal.sokrat-confirm-modal > * {
     padding-bottom: calc(1.25rem + var(--safe-bottom));
     font-size: 0.8rem;
   }
-  .subjects-sidebar {
-    max-width: 100%;
-    width: 100%;
-  }
-  .sidebar-header {
-    padding: 1rem;
-    padding-top: calc(1rem + var(--safe-top));
-  }
-  .sidebar-header h2 {
-    font-size: 1.1rem;
-  }
-  .sidebar-content {
-    padding: 1rem;
-  }
-  .subject-option {
-    padding: 1rem;
-    min-height: 60px;
-  }
-  .subject-option-icon {
-    width: 45px;
-    height: 45px;
-    font-size: 1.25rem;
-  }
-  .subject-option-info h3 {
-    font-size: 1rem;
-  }
-  .subject-option-info p {
-    font-size: 0.8rem;
-  }
   .study-home-header {
     padding: 1rem;
     flex-direction: column;
@@ -4669,23 +4667,6 @@ sokrat-modal.sokrat-confirm-modal > * {
     flex: 1;
     min-width: 200px;
   }
-  .subjects-sidebar {
-    max-width: 450px;
-  }
-  .subject-item {
-    padding: 1.25rem;
-  }
-  .subject-item-icon {
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
-  }
-  .subject-item-info h3 {
-    font-size: 1.1rem;
-  }
-  .subject-item-info p {
-    font-size: 0.9rem;
-  }
 }
 @media (max-width: 767px) and (hover: none) and (pointer: coarse) {
   .control-btn, .action-btn, .filter-btn, .category-btn {
@@ -4700,17 +4681,6 @@ sokrat-modal.sokrat-confirm-modal > * {
     min-height: 40px;
     max-width: 40px;
     max-height: 40px;
-  }
-  .sidebar-logo .logo-wrapper {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    min-height: 36px;
-    max-width: 36px;
-    max-height: 36px;
-  }
-  .sidebar-logo span {
-    font-size: 1rem;
   }
   .logo-wrapper-large {
     width: 100px;

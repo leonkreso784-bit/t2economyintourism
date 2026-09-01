@@ -11,31 +11,6 @@
     }
 }
 
-/* ===== SUBJECT SIDEBAR TABLET IMPROVEMENTS ===== */
-@media (min-width: 768px) {
-    .subjects-sidebar {
-        max-width: 450px;
-    }
-    
-    .subject-item {
-        padding: 1.25rem;
-    }
-    
-    .subject-item-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 1.5rem;
-    }
-    
-    .subject-item-info h3 {
-        font-size: 1.1rem;
-    }
-    
-    .subject-item-info p {
-        font-size: 0.9rem;
-    }
-}
-
 /* ===== IMPROVED TOUCH TARGETS FOR MOBILE ===== */
 @media (max-width: 767px) and (hover: none) and (pointer: coarse) {
     .control-btn,
@@ -65,19 +40,6 @@
        Isti obrazac kao pet `!important` u `studio.css` (spec §7.12): težina koja
        vodi bitku u koju ne bi trebala ući. Veličine sad žive u `landing.css`. */
 
-    .sidebar-logo .logo-wrapper {
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-        min-height: 36px;
-        max-width: 36px;
-        max-height: 36px;
-    }
-    
-    .sidebar-logo span {
-        font-size: 1rem;
-    }
-    
     .logo-wrapper-large {
         width: 100px;
         height: 100px;

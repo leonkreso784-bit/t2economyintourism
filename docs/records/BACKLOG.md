@@ -13,6 +13,14 @@
 > Njihovi zapisi ostaju **ovdje i nedirnuti** jer nose obrazloženje i mjerenja; spec nosi **redoslijed
 > i dokaz**. Kad cigla padne, ovdje se stavlja ✅ s brojkom — ne briše se.
 
+### 🔍 Sidebar predmeta je NEDOSTIŽAN — `openSidebar()` nitko ne zove (C6/2, 2026-09-01)
+
+Panel `#subjectsSidebar` se renderira (17 predmeta, i18n ga re-renderira), ima close-gumb,
+overlay i escape — ali nijedan gumb/ruta/`data-action` ga ne otvara; `window.openSidebar`
+nema nijednog pozivatelja. Vjerojatno zaostatak otkad browse drill-down (K1) bira predmete.
+**Produktna odluka:** obrisati (markup + `sidebar.css` + `renderSubjectsSidebar`) ili vratiti
+kao brzi izbornik. CSS mu je od C6/2 konsolidiran u `sidebar.css` pa je rez cist u oba smjera.
+
 ## ✅ RIJEŠENO 2026-08-30 — semantičke ispune: **ODLUKA JE ① (tokeni), i preporuka je ODBIJENA**
 
 **Leon:** *„ne smije biti obruba uopće, uvijek mora biti potpuna ispuna. boja mora biti prilagođena

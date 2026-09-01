@@ -19,12 +19,15 @@
     visibility: visible;
 }
 
+/* C6/2 (2026-09-01): ljestva skupljena iz responsive/04+06; baza = mobilni pobjednik.
+   Stara baza `max-width: 400px` NIKAD nije vrijedila (<=767 ju je gazio 04 sa 100%,
+   >=768 06 sa 450px) — mrtva vrijednost se ne uskrsava (§10.3). */
 .subjects-sidebar {
     position: fixed;
     top: 0;
     right: 0;
     width: 100%;
-    max-width: 400px;
+    max-width: 100%;
     height: 100%;
     background: var(--bg-secondary);
     z-index: 1000;
@@ -43,8 +46,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.25rem 1.5rem;
-    padding-top: calc(1.25rem + var(--safe-top));
+    padding: 1rem;
+    padding-top: calc(1rem + var(--safe-top));
     border-bottom: 1px solid var(--border);
 }
 
@@ -66,16 +69,6 @@
     color: var(--text-primary);
 }
 
-.sidebar-header h2 {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 1.25rem;
-}
-
-.sidebar-header h2 i {
-    color: var(--primary);
-}
 
 .close-sidebar-btn {
     width: 44px;
@@ -185,4 +178,55 @@
 .subject-item:hover .subject-arrow {
     color: var(--primary);
     transform: translateX(3px);
+}
+
+/* =====================================================
+   LJESTVA SIDEBARA — konsolidirana u C6/2 (2026-09-01)
+   Dotad: responsive/04 (mobilna) + 06 (tablet + logo <=480). Vrijednosti su izmjereni
+   pobjednici. Globalna `.logo-wrapper` ljestva (06 §LOGO) NIJE sidebarova i ostaje —
+   njene min/max stege i dalje sudjeluju (izmjereno: 50px na 768, 48px na >=1024).
+   ===================================================== */
+
+@media (max-width: 480px) {
+    .sidebar-logo .logo-wrapper {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+        max-width: 36px;
+        max-height: 36px;
+    }
+
+    .sidebar-logo span {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .subjects-sidebar {
+        max-width: 450px;
+    }
+
+    .sidebar-header {
+        padding: 1.25rem 1.5rem;
+        padding-top: calc(1.25rem + var(--safe-top));
+    }
+
+    .subject-item {
+        padding: 1.25rem;
+    }
+
+    .subject-item-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    .subject-item-info h3 {
+        font-size: 1.1rem;
+    }
+
+    .subject-item-info p {
+        font-size: 0.9rem;
+    }
 }

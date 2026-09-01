@@ -5,6 +5,24 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **C6/2: sidebar-ljestva skupljena + NALAZ da je cijeli sidebar nedostižan**
+
+### Promijenjeno
+- Sidebar-pravila iz `responsive/04+06` konsolidirana u `sidebar.css` (baza = mobilni
+  pobjednici; mrtva `max-width: 400px` nije uskrsnuta). Globalna `.logo-wrapper` ljestva
+  ostaje u `06` — logo-površina, ne sidebarova (pobjeđuje min/max-stegama, izmjereno).
+
+### Uklonjeno
+- Mrtvo: `.sidebar-header h2` (+`i`+duplikat) — u zaglavlju nema h2; `.subject-option*` (4).
+
+### Nalaz (produktna odluka → BACKLOG)
+- **Sidebar je NEDOSTIŽAN**: renderira se (17 predmeta), ali `openSidebar()` nema nijednog
+  pozivatelja otkad browse drill-down bira predmete.
+
+### Dokaz
+- Winner-mapa 84/0 · `css:diff` × 8 viewporta (uklj. 480/481) = **12 448 usporedbi, 0
+  razlika** · telefon 10/10 · preflight EXIT 0.
+
 ## 2026-09-01 (FABLE) — **C6/1: home-ljestva iz PET datoteka skupljena — pola je bilo mrtvo (0 razlika u 28 008 usporedbi)**
 
 ### Promijenjeno
