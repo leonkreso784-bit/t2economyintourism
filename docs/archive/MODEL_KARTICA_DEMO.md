@@ -115,4 +115,4 @@ index d9f41b1..b495899 100644
 ---
 
 **Poveznice:** [BACKLOG](../records/BACKLOG.md) · [stanje predmeta](../subjects/README.md) ·
-[aktivni spec MREŽA](../plan/RJESAVANJE-PROBLEMA-9MJ.md) (cigla E2 = zatezanje kartica)
+[aktivni spec MREŽA](../archive/RJESAVANJE-PROBLEMA-9MJ.md) (cigla E2 = zatezanje kartica)

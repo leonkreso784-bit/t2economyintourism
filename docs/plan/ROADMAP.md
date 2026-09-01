@@ -1,7 +1,7 @@
 # ROADMAP — Milestones
 
 > ## ⚠️ ČITAJ PRVO — SVE ISPOD PRVE CRTE JE POVIJESNI ZAPIS
-> **Tekući spec je [FRONTEND_REDIZAJN.md](./FRONTEND_REDIZAJN.md)** (otvoren 2026-08-09; Tailwind, ADR-028).
+> **[FRONTEND_REDIZAJN.md](../archive/FRONTEND_REDIZAJN.md) je ISPUNJEN i NA PRODUKCIJI (2026-09-01).** Tekući spec je **[RACUN.md](./RACUN.md)** — prva cigla kreće na Leonovu riječ.
 > Prethodne dvije faze su ispunjene i na produkciji → [MATERIJAL_FAZA.md](../archive/MATERIJAL_FAZA.md)
 > (2026-08-07) i [MJERA_I_ZABORAV.md](../archive/MJERA_I_ZABORAV.md) (2026-08-08).
 > Što proizvod jest piše u [product/UGC_SPEC.md](../product/UGC_SPEC.md).

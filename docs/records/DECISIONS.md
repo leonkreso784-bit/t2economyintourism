@@ -214,7 +214,7 @@ dotjera.** Editor se time smije **pojednostaviti** — smije IZGUBITI funkcije, 
 ---
 
 ## ADR-029 — UGC je glavni proizvod; javni katalog je JEDAN izvor gradiva, ne srce platforme
-**Datum:** 2026-08-09 · **Status:** ✅ ODLUČENO (Leon: *„to nam postaje glavna stvar, predmeti su samo jedna stvar"*) · **Plan:** [plan/FRONTEND_REDIZAJN.md](../plan/FRONTEND_REDIZAJN.md)
+**Datum:** 2026-08-09 · **Status:** ✅ ODLUČENO (Leon: *„to nam postaje glavna stvar, predmeti su samo jedna stvar"*) · **Plan:** [archive/FRONTEND_REDIZAJN.md](../archive/FRONTEND_REDIZAJN.md)
 
 **Kontekst.** `PRD.md` je od početka pisao *„zvijezda je UGC"*, ali proizvod to nikad nije odražavao.
 Provjereno u kodu, ne po dojmu: **„Moji materijali" nisu stranica** — montiraju se kao `<div class="mm">`
@@ -262,7 +262,7 @@ sadržaj.* Detalji i mjere: spec **§7.13**.
 ---
 
 ## ADR-028 — Frontend prelazi na Tailwind, ali SAMO preko CLI-ja; sadržaj ostaje bez utility-klasa
-**Datum:** 2026-08-09 · **Status:** ✅ ODLUČENO (Leon: *„koristio bi tailwind za front end"*) · **Plan:** [plan/FRONTEND_REDIZAJN.md](../plan/FRONTEND_REDIZAJN.md)
+**Datum:** 2026-08-09 · **Status:** ✅ ODLUČENO (Leon: *„koristio bi tailwind za front end"*) · **Plan:** [archive/FRONTEND_REDIZAJN.md](../archive/FRONTEND_REDIZAJN.md)
 
 **Kontekst — izmjereno prije odluke, ne po dojmu.** CSS je narastao na **10.568 redaka u 32 modula**, a
 `variables.css` ima **147 redaka i ~25 tokena**. Ostalo živi izvan sustava: **62 jedinstvene hex-boje**

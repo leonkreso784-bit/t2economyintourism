@@ -5,6 +5,20 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — 🚀 **FRONTEND REDIZAJN (C0–C7) + MREŽA (A–E) — NA PRODUKCIJI** (`f8bc5cb`)
+
+### Deployano (Leonov izričit OK, cijeli paket)
+- **103 commita s `feat/rjesavanje-9mj`** fast-forwardom na `main`: redizajn C5b/2–C7 cijeli
+  (responsive/* ne postoji · most→ugovor · cta-baza vraćena · profil/auth/pravne · learn u
+  bojama sekcija §15.1) + MREŽA A–E (brane s obrnutim provjerama · paleta 0 · a11y po WCAG
+  razini · D4 lozinke · E2/E3/E4).
+- **CSP enforce** aktivan — header potvrđen uživo; **E2 re-sync baze**: backup → 7 predmeta
+  migrirano → `diff:db` **0 razlika** → `check:final` **17/17**.
+- Vidljivo korisniku: cta-gumbi opet obojani (sivi od 13.8.) · rubovi tablica u gradivu
+  vraćeni · 11 boja gradiva vidljivo · learn zaglavlja/naslovi u boji sekcije · skraćene
+  kartice služe se iz baze.
+- **Oba speca arhivirana** (`docs/archive/`): MREŽA §9 kućice zatvorene deployem.
+
 ## 2026-09-01 (FABLE) — **Dorada iz pregleda: boja sekcije na zaglavlju i naslovima learna (spec §15.1)**
 
 ### Dodano
@@ -498,7 +512,7 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   ⛔ `is_admin()` **nedirnut** — zovu ga RLS politike kao pozivatelj.
 
 ### Ispravljeno u zapisima
-- Osnovica **13 → 14 politika** u `docs/plan/RJESAVANJE-PROBLEMA-9MJ.md` §2 i u zaglavlju
+- Osnovica **13 → 14 politika** u `docs/archive/RJESAVANJE-PROBLEMA-9MJ.md` §2 i u zaglavlju
   `supabase/c3-rls-initplan.sql`. SQL je oduvijek bio točan; brojka u prozi nije.
 
 ### Izmjereno
@@ -518,7 +532,7 @@ performance **0 WARN** · security **11 WARN** · `check:final` **16/16** · pri
 
 ## 2026-08-31 (OPUS) — **Faza MREŽA: sanacija dobiva spec; frontend redizajn ⏸️ PAUZIRAN**
 
-Novi aktivni spec: **`docs/plan/RJESAVANJE-PROBLEMA-9MJ.md`**. Nosi **12 nalaza** revizije + **8
+Novi aktivni spec: **`docs/archive/RJESAVANJE-PROBLEMA-9MJ.md`**. Nosi **12 nalaza** revizije + **8
 živih 🔥** iz backloga u blokovima **A–E**, plus **§8 NALAZI IZVANA** za prijave onih koji stranicu
 prolaze izvana. Leon: *„Ovako nešto se mora riješit prije nego što nastavimo dalje."*
 
@@ -1841,7 +1855,7 @@ provjeru nad rekonstruiranim starim `div`-om). Usput ispravljen `routeFor()`, ko
   animacija su globalna i ne poznaju slojeve (pobjeđivala je njegova, bez `from`).
   **Novo:** `npm run check:tailwind` (6 brana, u preflightu) · `npm run css:diff` (izračunati stilovi u pravom
   Chromiumu; nije u preflightu). **Gate:** `preflight` EXIT 0 · **`css:diff` 3438 usporedbi / 0 razlika u prikazu**
-  (obrnuto provjeren: `--radius` 12→13px daje 393 razlike). Detalji i četiri nalaza: `docs/plan/FRONTEND_REDIZAJN.md` §3.
+  (obrnuto provjeren: `--radius` 12→13px daje 393 razlike). Detalji i četiri nalaza: `docs/archive/FRONTEND_REDIZAJN.md` §3.
 
 > ⚠️ **Sve ispod je ISPORUČENO.** Ova sekcija je zaostala kao „Unreleased" iako su joj stavke otišle na
 > produkciju u tri vala: **`b79e053`** (2026-07-27, Studio + rizik-sprint) · **`a9bf52b`** (2026-08-06,

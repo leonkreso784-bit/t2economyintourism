@@ -152,7 +152,7 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 > | što je na produkciji | zadnji **🚀** redak u `docs/records/CHANGELOG.md` |
 > | grana · commiti · je li pushano | `git status -sb` · `git log --oneline -1 origin/main` |
 > | koliko predmeta | `npm run verify` |
-> | zašto je cigla izvedena baš tako | `docs/plan/FRONTEND_REDIZAJN.md` §7 (C0–C3, landing) · §8 (KOSTUR) · §9 (TELEFON, `about`, SEO) · §10 (C4) · §11 (C5a) · **§12 (C5b — mjera) · §12.7 (C5b/0)** |
+> | zašto je cigla izvedena baš tako | `docs/archive/FRONTEND_REDIZAJN.md` §7 (C0–C3, landing) · §8 (KOSTUR) · §9 (TELEFON, `about`, SEO) · §10 (C4) · §11 (C5a) · **§12 (C5b — mjera) · §12.7 (C5b/0)** |
 > | koji su bugovi bili i što su naučili | `docs/records/BUGS.md` |
 > | što je isporučeno i kada | `CHANGELOG.md` · dnevnik sesija: `PROGRESS.md` |
 >
@@ -163,26 +163,13 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 
 **✅ NA PRODUKCIJI:** zna zadnji **🚀** redak CHANGELOG-a (ADR-027; SHA/token se ne prepisuju ovamo).
 
-**✅ GOTOVO, NIJE DEPLOYANO** — popis grana zna `git branch --no-merged main`, ne ova datoteka
-(ADR-027). Ovdje ostaju samo **živa pravila** iz tog rada:
+**Živa pravila iz isporučenog rada** (sve ostalo znaju spec-arhiva i zapisi, ADR-027):
 ⚠️ **Iz D2:** `answer` je obavezan i drži **prvi** odgovor i kad postoji `answers` — zbog
 **keširane stare skripte**, ne zbog urednosti sheme.
 ⚠️ **N2 je POLA:** polica pokazuje **skinuto**, ne uniju skinutog i onoga što se uči.
-
-**✅ ZATVORENO:** **POLICA** (P1–P4) · **C4** · **C5a** · **C5b CIJELI** (§12.7–12.14).
-**Redizajn NASTAVLJEN od C5b/2** (2026-09-01, niže).
-⚠️ **Sve što preostale cigle moraju znati stoji u SPECU, ne ovdje** (ADR-027): `learn.css` je od
-C5b/3a na **`:where(#learn)`** (doseg čuva, specifičnost ne diže) · `math.css` je KaTeX i **ne
-migrira** · `exercises`/`blind-map` su uvjetni tabovi, **`te2` ih NEMA** · **četiri pravila za rez**
-(§10.3, §11.1–11.4), među njima ono koje se najskuplje plaća: **mjerač je bio prvi kvar 12× u fazi**
-i dvaput vratio **uvjerljiv krivi broj umjesto da padne** → svaki mjerač mora ispisati **i koliko je
-toga dotaknuo**.
+⚠️ **Mjerač mora ispisati i koliko je toga dotaknuo** — bio je prvi kvar 12× u fazi redizajna
+i dvaput vratio uvjerljiv krivi broj umjesto da padne.
 **K5** (editor dvojezično) čeka i ne blokira ništa.
-**A1 (Google-prijava) + A0 (prepravak dijaloga) idu ZAJEDNO** — `#authModal` je građen za
-jedan put, pa se inače prepravlja dvaput. **Blokada „poslije seobe" je PALA sa seobom**
-(2026-09-01, niže) → par ide **poslije deploya redizajna**, i **A0 nosi i UPITNIK pri
-registraciji** (tko si/faks + mail-pristanak — Leonove želje 2026-09-01, `BACKLOG.md` §RAČUN;
-inače se dijalog prepravlja TREĆI put).
 
 ### 🚚 SEOBA — **OTKAZANA (Leon, 2026-09-01: *„Nastavlja Supabase do daljnjeg"*)**
 
@@ -190,19 +177,21 @@ Supabase (i Vercel) ostaju; **Pro se nastavlja plaćati do daljnjeg** → nema f
 spavanja ni pada server-side lozinka-brana. `BACKLOG.md` §SELF-HOST je time **arhiviran
 zapis odluke**, ne plan. Posljedica: OAuth/redirect-URI više ništa ne čeka.
 
-### 🎯 TEKUĆA FAZA = **FRONTEND REDIZAJN** — spec: `docs/plan/FRONTEND_REDIZAJN.md`
+### 🎯 FRONTEND REDIZAJN + MREŽA = ✅ **NA PRODUKCIJI (2026-09-01)** — sljedeći blok: **RAČUN**
 
-**MREŽA: svi blokovi A–E ✅**; spec ⏸️ (izlaz §9 = deploy-gated, arhiva tek tada). **Uz deploy s
-CSP enforceom ide i E2 re-sync baze** (`diff:db` → `migrate-content.js`; read-path preferira
-bazu — bez re-synca PROD služi stare duge kartice) · **§8** = živi sandučić nalaza.
-**C5b ✅ CIJELI** (§12.7–12.14) · **C6 ✅ CIJELI** (§13 — pravne NEMAJU bundle pa
-`legal/consent.css` ne migriraju; NALAZ: sidebar NEDOSTIŽAN, §13.7/BACKLOG; authed
-prije/poslije sonda za profil §13.9) → **C7 u tijeku**: /1 mrtvo ✅ · /2 cta-baza vraćena ✅ (BUG: C2 ju obrisao; §14.2) ·
-**/3 `responsive/*` NE POSTOJI ✅** · **/4 components ✅** · **/5 most→ugovor ✅** —
-**C7 ZATVOREN (§14.5), faza čeka Leonov pregled.** **Next.js odbijen (ADR-028).**
-⚠️ **`check:docs` traži TOČNO jedan aktivni plan**; spec koji čeka nosi `**Status:** ⏸️ PAUZIRAN`.
+**Deploy `f8bc5cb`** (Leonov izričit OK, cijeli paket): C0–C7 + MREŽA A–E · **CSP enforce**
+potvrđen uživo · **E2 re-sync baze** odrađen (backup → 7 predmeta → `diff:db` 0 razlika →
+`check:final` 17/17) · §9 kućice zatvorene · **oba speca u `docs/archive/`**. Iz Leonovog
+pregleda ušla je i dorada **learn u bojama sekcija** (spec §15.1; CI je prvu verziju oborio
+na amberu 4.41 → mix izmjeren na 45 %). **Next.js odbijen (ADR-028).**
+Aktivni spec: **`docs/plan/RACUN.md`** (drži „što sada"; posao kreće na Leonovu riječ).
 
-**Živa ograničenja redizajna** (obrazloženje svakog je u specu):
+**Sljedeće = RAČUN blok** (`BACKLOG.md §RAČUN`, čeka Leonovu riječ za početak): **A0 prepravak
+`#authModal` + UPITNIK pri registraciji + Google-prijava u JEDNOM zahvatu** (dijalog je građen
+za jedan put — inače se prepravlja treći put) → profil (slika/uređivanje, bucket po
+`node-images` obrascu) → mail-obavijesti (Edge Function, ADR-016; pristanak iz upitnika).
+
+**Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 
 - **Zadana tema je SVIJETLA — „Akademsko plavo"** (`academic`; ostale `paper`, `chalk`, `mint`).
   Dvije tamne palete zaredom pale su na živom ekranu. Smjer izgleda je **APPLE** (Leon: *„apple
@@ -231,7 +220,7 @@ je potrošen 2026-08-24 i ne vrijedi više kao dopuštenje.
 NA PRODUKCIJU"*) — **ova stoji netaknuta.** Pravilo #2 time dobiva dopunu: ne samo da se ne smije
 pushati bez OK-a, nego se na to ne smije ni **nagovarati**. [[leon-decides-deploys]]
 
-### 🧪 VJEŽBE — smjer zaključan, radi se TEK nakon frontenda (§9.5)
+### 🧪 VJEŽBE — smjer zaključan; frontend je gotov pa SMIJU na red (prioritet uz RAČUN = Leonova odluka)
 
 *„Vježbe su KÔD"* je **oboreno mjerenjem** (65 % je podatak; kôd je samo **formula**). Smjer:
 formula → **imenovana knjižnica recepata**, vježba postaje 100 % podatak, **BUG-012 se umirovljuje**.

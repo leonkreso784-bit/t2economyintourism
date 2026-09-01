@@ -1,10 +1,9 @@
 # Rješavanje problema — 9. mjesec 2026
 
-**Status:** ⏸️ PAUZIRAN — **svi blokovi A–E ✅ (2026-09-01)**; preostali izlazni uvjeti (§9) su
-**deploy-gated** i zatvaraju se uz Leonov izričit OK o deployu (CSP enforce na produkciji + **E2
-re-sync baze**: `diff:db` → `migrate-content.js`), a **§8 je živi sandučić** koji se prazni kako
-nalazi stižu. **Nije ispunjen → ne ide u arhivu.** „Što sada" je opet
-[FRONTEND_REDIZAJN.md](./FRONTEND_REDIZAJN.md), od cigle **C5b/2** (Leonova riječ, 2026-09-01).
+**Status:** ✅ ISPUNJEN — **deploy 2026-09-01** (`f8bc5cb`) zatvorio je i deploy-gated izlazne
+uvjete (§9): CSP enforce potvrđen uživo na produkciji · E2 re-sync baze odrađen (`diff:db` = 0
+razlika, `check:final` 17/17, backup prije upisa). §8 je na dan deploya bio prazan. Arhivirano
+isti dan, zajedno s [FRONTEND_REDIZAJN.md](./FRONTEND_REDIZAJN.md).
 
 **Zašto postoji.** Revizija 2026-08-31 iznijela je dvanaest nalaza, a backlog uz njih drži još osam
 živih 🔥 stavki. Leon: *„Ovako nešto se mora riješit prije nego što nastavimo dalje."* Faza je
@@ -678,15 +677,15 @@ uz PRAZNU osnovicu** — „čine se ok" je sada brojka. Prepravak interakcije i
 Faza pada kad **sve** stoji:
 
 - [x] advisor performance **0 WARN** · security **15 → 11** — ✅ **A1, 2026-08-31, na produkciji**
-- [ ] `check:node`, `check:tokens`, `check:cascade`, `check:i18n`, `check:csp` u preflightu, **svaka s obrnutom provjerom** — ✅ node (A2) · tokens (B1) · cascade (B4) · i18n (B5, 2026-08-31) · csp (D3, 2026-09-01)
+- [x] `check:node`, `check:tokens`, `check:cascade`, `check:i18n`, `check:csp` u preflightu, **svaka s obrnutom provjerom** — ✅ node (A2) · tokens (B1) · cascade (B4; **umirovljen u C7/3** kad mu je predmet mjerenja umro — brana je svoj posao odradila) · i18n (B5, 2026-08-31) · csp (D3, 2026-09-01)
 - [x] a11y brana sudi po **WCAG razini**, osnovica imenovana — ✅ **B3b+B3c, 2026-08-31** (razina ∪ težina; macro u površinama; 9× `.katex-display` popravljeno; osnovica prazna)
 - [x] `check:final` **imenuje** preskočene — ✅ **B2, 2026-08-31** (osnovica: 8 imenovanih; E3 spustio na 7 — jedan je bio krivo klasificiran i sad se provjerava)
 - [x] `palette:breakdown` **fatalno 0** · `check:palette` osnovica **0** — ✅ **C4, 2026-09-01** (osnovica 93 → 0; breakdown 0·0·0; kućica označena u E-prolazu — C4 ju je ispunio a nije označio)
-- [ ] CSP **enforce** na produkciji uz čist report
+- [x] CSP **enforce** na produkciji uz čist report — ✅ **deploy 2026-09-01**, header potvrđen uživo na www.sokratstudy.com
 - [x] leaked-password provjera živa (D4, 2026-09-01)
 - [x] E1–E4 riješeni ili **obrazloženo odgođeni** — ✅ E1 (verifikacijom) · ✅ E2 · ✅ E3 (16→17; 7 zaključano) · ✅ E4 (mali opseg po Leonovoj odluci: telefon-mjera 44→52, nalaza 0; interakcija → redizajn) — **sve 2026-09-01**
-- [ ] svi nalazi iz §8 triažirani
-- [ ] `npm run preflight` **EXIT 0**
+- [x] svi nalazi iz §8 triažirani — ✅ sandučić na dan deploya **prazan**
+- [x] `npm run preflight` **EXIT 0** — ✅ na deploy-commitu `f8bc5cb`
 
 Tek tada [FRONTEND_REDIZAJN.md](./FRONTEND_REDIZAJN.md) prestaje biti pauziran i nastavlja se od **C5b/2**.
 

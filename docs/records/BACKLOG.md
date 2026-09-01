@@ -4,7 +4,7 @@
 > [ROADMAP.md](../plan/ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
 > ### 📌 2026-08-31 — SEDAM STAVKI ODAVDE JE PREUZEO SPEC, NE PLANIRATI IH IZNOVA
-> Faza **MREŽA** ([RJESAVANJE-PROBLEMA-9MJ.md](../plan/RJESAVANJE-PROBLEMA-9MJ.md)) nosi ih s
+> Faza **MREŽA** ([RJESAVANJE-PROBLEMA-9MJ.md](../archive/RJESAVANJE-PROBLEMA-9MJ.md)) nosi ih s
 > ciglom i izlaznim uvjetom: **CSP** (D1–D3) · **RLS `auth.uid()` po retku** (A1) ·
 > **`.lb-table-wrap` bez `tabindex`** (B3c ✅ 2026-08-31) · **leaked password** (D4) · **EDITOR ① boja kartice**
 > (C2 ✅ 2026-09-01) · **EDITOR ② dopune** (E1) · **M5b zatezanje** (E2). Uz njih i `check:i18n` (B5 ✅ 2026-08-31,
@@ -513,7 +513,7 @@ to pitanje: koliko je podvlaka postaje nevažno.
 > ➖ **Ostaje N2 (pola):** polica pokazuje *skinuto*, ne uniju skinutog i onoga što se uči.
 
 > **📐 RAZRAĐENO U DVIJE FAZE — radna specifikacija je
-> [`FRONTEND_REDIZAJN.md` §9](../plan/FRONTEND_REDIZAJN.md): faza „TELEFON" (T0–T6) i faza
+> [`FRONTEND_REDIZAJN.md` §9](../archive/FRONTEND_REDIZAJN.md): faza „TELEFON" (T0–T6) i faza
 > „POLICA" (P1–P4), obje PRIJE C4.** Ovdje ostaje samo nalaz; što se radi piše u specu.
 
 Leon: *„cijeli frontend na produkciji je apsolutno DNO DNA… puca mi kurac za cigla po ciglu,
@@ -549,7 +549,7 @@ STRANICA nikad nije bio mjerena površina** — zato faza počinje mjeračem (T0
 > ispod **ispunjena, ne otkazana**: uvjet je bio točan i dogodio se tim redom.
 
 > **📐 RAZRAĐENO U FAZU 2026-08-18 — radna specifikacija je
-> [`FRONTEND_REDIZAJN.md` §8](../plan/FRONTEND_REDIZAJN.md) („KOSTUR": K1 rute · K2 traka ·
+> [`FRONTEND_REDIZAJN.md` §8](../archive/FRONTEND_REDIZAJN.md) („KOSTUR": K1 rute · K2 traka ·
 > K3 brana · K4 materijali), ubačena između C3 i C4.** Ovaj odjeljak ostaje kao **nalaz i
 > obrazloženje**; što se radi i kojim redom piše u specu. ⚠️ Ondje je i mjerenje koje ovdje
 > nije bilo: **devet stranica dijeli jednu jedinu adresu** (`#/materials`), pa se traka bez
@@ -612,7 +612,7 @@ Katalog-predmeti s napretkom **i** vlastiti materijali na jednom mjestu.
 > što će skinuti** za učenje offline — a to je točno ono što N2 prikazuje. Polica time ima
 > **dvije vrste stvari: što je korisnik napisao i što je skinuo.** Ne gradi se nova površina
 > nego se puni ona koja je bila planirana i prazna. Cigle P1–P4 u
-> [`FRONTEND_REDIZAJN.md` §9.4](../plan/FRONTEND_REDIZAJN.md); **K4 se u P2 utapa** (ista
+> [`FRONTEND_REDIZAJN.md` §9.4](../archive/FRONTEND_REDIZAJN.md); **K4 se u P2 utapa** (ista
 > pločica, isti ekran — odvojeno bi se pisalo dvaput).
 
 ### N3 · Moji materijali u prikazu kvalitete kataloga — **➖ RIJEŠENO SAMO ZA SKINUTO**
@@ -1105,7 +1105,7 @@ stranici.
 ponavlja lov na duha iz §7.8.
 
 **Kad:** uz **C3**, jer C3 ionako prepisuje te površine i bez ovog gatea nema kako dokazati da ih
-nije razbio. **Veže se na** [FRONTEND_REDIZAJN §7.9](../plan/FRONTEND_REDIZAJN.md).
+nije razbio. **Veže se na** [FRONTEND_REDIZAJN §7.9](../archive/FRONTEND_REDIZAJN.md).
 
 </details>
 
@@ -1161,7 +1161,7 @@ mijenjati, `generate()`/`answer()`/`type` **ne**.
 
 > ### ⚠️ 2026-08-20 — „VJEŽBE SU KÔD" JE OBORENO MJERENJEM (smjer: **RECEPTI**)
 >
-> Puni zapis: [`FRONTEND_REDIZAJN.md` §9.5](../plan/FRONTEND_REDIZAJN.md). **Radi se TEK nakon
+> Puni zapis: [`FRONTEND_REDIZAJN.md` §9.5](../archive/FRONTEND_REDIZAJN.md). **Radi se TEK nakon
 > cijelog frontenda** (Leon, 2026-08-20) — ovdje stoji samo da se sljedeća sesija ne vrati na
 > početak.
 >
@@ -1332,7 +1332,7 @@ gdje tablica stane i ploha **ne skrola** — a pravilo se okida tek kad prelijev
 (gornja tvrdnja vrijedi još samo za authed projekt) — ali tablice i na 375 px svugdje STANU
 (0 preljeva od 9 wrapova), pa je ovaj zapis **latentan**. Aktivni nositelj istog prekršaja su
 **`.katex-display` formule** (9× serious/wcag2a na macro + entrepreneurship — površine koje se ne
-skeniraju). Brojke i posljedice za B3b/B3c: `docs/plan/RJESAVANJE-PROBLEMA-9MJ.md` §4·B3a.
+skeniraju). Brojke i posljedice za B3b/B3c: `docs/archive/RJESAVANJE-PROBLEMA-9MJ.md` §4·B3a.
 Novi `layout.authed.spec.js` mjeri prave širine, ali on ne vrti axe.
 **To je treći primjerak istog obrasca u tri cigle zaredom** (§7.9 boja · §7.10 teme · §7.11 širina):
 **gate koji mjeri jedno stanje tvrdi nešto o jednom stanju.**
@@ -1383,7 +1383,7 @@ zapisan kao posao koji ne ovisi ni o jednoj cigli i može se ubaciti kad god.
 **📏 PREMJERENO PONOVNO 2026-08-20: 744,6 KiB u 41 skripti · 38 bez `defer` · 238,2 KiB (32 %)
 editorsko u 6 datoteka.** Putanja je time **691 → 728 → 744,6** — brojka **nijednom nije pala**,
 i to bez ijedne namjerne izmjene. Budžet koji si je projekt sam zadao je 200 KB → **3,7×**.
-**Dobila je mjesto: cigla T6** ([§9.3](../plan/FRONTEND_REDIZAJN.md)), i ondje **nije čišćenje
+**Dobila je mjesto: cigla T6** ([§9.3](../archive/FRONTEND_REDIZAJN.md)), i ondje **nije čišćenje
 nego preduvjet faze „POLICA"** — offline ljuska ne smije nositi editor koji offline student
 nikad ne otvori.
 
@@ -1581,7 +1581,7 @@ istu vrijednost). Uz to: dva **neindeksirana strana ključa** (`content_versions
 Datoteke: `supabase/c3-rls-initplan.sql` + `supabase/a1-grants-indexes.sql`.
 ⚠️ **Brojka je bila 14, ne 13** — SQL je oduvijek mijenjao svih 14; pogriješila je proza.
 ⚠️ **`REVOKE` je morao ići i `FROM PUBLIC`** — ACL je nosio `=X/postgres`, pa bi revoke samo od
-`anon, authenticated` ostavio pravo netaknuto. Detalji: `docs/plan/RJESAVANJE-PROBLEMA-9MJ.md` §3.
+`anon, authenticated` ostavio pravo netaknuto. Detalji: `docs/archive/RJESAVANJE-PROBLEMA-9MJ.md` §3.
 
 ## ➖ Broj pitanja na landingu ne pokriva sve predmete — 2026-08-09
 

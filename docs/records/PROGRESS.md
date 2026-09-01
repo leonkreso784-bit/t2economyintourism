@@ -26,6 +26,17 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-01 (FABLE) — 🚀 DEPLOY: redizajn + MREZA na produkciji, faza formalno gotova
+
+Leon: "Moze idemo." Paket odvrten redom: FF push na main (f8bc5cb) -> Vercel READY ->
+CSP header potvrdjen uzivo -> backup -> E2 re-sync 7 predmeta -> diff:db 0 razlika ->
+check:final 17/17 -> kucice §9 -> 🚀 CHANGELOG -> oba speca u docs/archive/ + sve
+poveznice preusmjerene (check:docs nula mrtvih). CI verdikt na f8bc5cb neprovjeren
+(GitHub rate-limit oba puta) — lokalno preflight 0 + a11y SE 6/6 + telefon 11/0.
+Sljedece: RACUN blok (BACKLOG §RACUN), ceka Leonovu rijec.
+
+---
+
 ## 2026-09-01 (FABLE) — CI obara doradu: 4.41 na amberu — popravak izmjeren na 45%
 
 SE-shard pao na a11y (12 h3 u macroeconomicsu, 4.41 < 4.5): moj 55% mix na najsvjetlijim
@@ -3418,7 +3429,7 @@ nijedna nova površina ne može neprimjetno vratiti u zadani framework-izgled.
 
 **Slijedi:** **C2 (landing) — ali čeka Leonovu odluku o paleti.** Dijagnoza zašto današnji izgled čita
 kao strojni (mjereno: `#6366f1` = Tailwind `indigo-500` 25×, `#0f172a` = `slate-900`, 62 hex-boje ukupno)
-i pravila koja iz nje slijede zapisani su u **`docs/plan/FRONTEND_REDIZAJN.md` §7**. Novi identitet =
+i pravila koja iz nje slijede zapisani su u **`docs/archive/FRONTEND_REDIZAJN.md` §7**. Novi identitet =
 promjena vrijednosti u `css/tokens.css`; imena i sva pravila ostaju.
 
 ---
@@ -3628,7 +3639,7 @@ razred greške opet prošao između dvije uzorkovane širine.
 ## 2026-08-09 (OPUS) — **smjer: UGC je glavni proizvod; otvoren frontend redizajn; C0 isporučen**
 
 > Pisano po ADR-027 — **pokazuje, ne prepričava**. Odluke: [ADR-028](./DECISIONS.md) (Tailwind,
-> Next.js odbijen) i [ADR-029](./DECISIONS.md) (UGC je glavni proizvod) · plan: [plan/FRONTEND_REDIZAJN.md](../plan/FRONTEND_REDIZAJN.md).
+> Next.js odbijen) i [ADR-029](./DECISIONS.md) (UGC je glavni proizvod) · plan: [archive/FRONTEND_REDIZAJN.md](../archive/FRONTEND_REDIZAJN.md).
 
 **Deployano uz izričit OK:** `a7f1a64..5e31c31` + `..00e134b` (ćirilica + 7. provjera u `check:docs`).
 Verificirano pravilom #7 — Vercel `dpl_CRDx…` READY, token `20260809230135`, posluženi

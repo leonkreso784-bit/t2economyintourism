@@ -71,8 +71,7 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 
 | Dokument | Svrha |
 |---|---|
-| [RJESAVANJE-PROBLEMA-9MJ.md](./plan/RJESAVANJE-PROBLEMA-9MJ.md) | 🟩 **tekući spec** — faza **MREŽA**: sanacija prije daljnje izgradnje. Dvanaest nalaza revizije + osam živih 🔥 stavki backloga, u blokovima **A–E**, plus **§8 NALAZI IZVANA** gdje slijeću prijave onih koji stranicu prolaze izvana. ⚠️ Dok ova faza traje, redizajn je **⏸️ PAUZIRAN** — nije ispunjen i ne ide u arhivu. |
-| [FRONTEND_REDIZAJN.md](./plan/FRONTEND_REDIZAJN.md) | ⏸️ **PAUZIRAN** (2026-08-31) — prelazak frontenda na Tailwind (cijela platforma + editor), cigle **C0–C7**. Usput je primio i tri faze koje su se ubacile između cigli, svaka jer je mjerenje pokazalo da je hitnija: **„KOSTUR"** (§8, navigacija prije kozmetike) · **„TELEFON"** (§9) · **„POLICA"** (§9.17–9.21). ⚠️ **Koje su cigle ispunjene NE STOJI ovdje** — ovaj je redak nabrajao K1–K3 i ostario je; status zna `CLAUDE.md` §Gdje smo i tablica §3 u samom specu. |
+| [RACUN.md](./plan/RACUN.md) | 🟩 **tekući spec** — prijava/identitet/doseg: **R1** A0-dijalog + upitnik + Google u JEDNOM zahvatu · **R2** profil (slika/uređivanje) · **R3** mail-obavijesti; FB uvjetno. Otvoren deployem redizajna 2026-09-01; **prva cigla kreće na Leonovu riječ.** |
 | [ROADMAP.md](./plan/ROADMAP.md) | Milestones + status (**povijesni zapis**, ne plan rada) |
 
 > Prethodne dvije faze ispunjene su i deployane, pa su im planovi istog dana otišli u arhivu
@@ -125,6 +124,8 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 
 | Dokument | Status |
 |---|---|
+| [FRONTEND_REDIZAJN.md](./archive/FRONTEND_REDIZAJN.md) | Frontend redizajn (Tailwind, C0–C7 + KOSTUR/TELEFON/POLICA) — **ispunjen i NA PRODUKCIJI 2026-09-01** |
+| [RJESAVANJE-PROBLEMA-9MJ.md](./archive/RJESAVANJE-PROBLEMA-9MJ.md) | Faza MREŽA (blokovi A–E + deploy-gated izlaz) — **ispunjena deployem 2026-09-01** |
 | [MATERIJAL_FAZA.md](./archive/MATERIJAL_FAZA.md) | Faza „Materijal od nule do učenja" — **ispunjena i na produkciji 2026-08-07**; svih 5 kriterija iz `product/UGC_SPEC.md` |
 | [CREATE_BACKEND_SPEC.md](./archive/CREATE_BACKEND_SPEC.md) | Osobni UGC-graditelj — **instalacije F0–F5 isporučene** (prod 2026-08-06). ⚠️ Vizija iz §1 (kartice/kviz/fill u vlastitom gradivu) **NIJE dovršena** — v. `product/` |
 | [EDITOR_PLAN.md](./archive/EDITOR_PLAN.md) | Editor / admin CRUD — ispunjen 2026-07-28; §12 = povijest cigli U0–U9 |

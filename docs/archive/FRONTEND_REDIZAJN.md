@@ -1,6 +1,6 @@
 # Frontend redizajn — prelazak na Tailwind
 
-**Status:** 🟩 AKTIVAN (nastavljen 2026-09-01, od **C5b/2**) · **Otvoren:** 2026-08-09 · **Odluke:** [ADR-028](../records/DECISIONS.md) (Tailwind, Next.js odbijen) · [ADR-029](../records/DECISIONS.md) (UGC je glavni proizvod)
+**Status:** ✅ ISPUNJEN — **NA PRODUKCIJI 2026-09-01** (`f8bc5cb`; arhivirano isti dan) · **Otvoren:** 2026-08-09 · **Odluke:** [ADR-028](../records/DECISIONS.md) (Tailwind, Next.js odbijen) · [ADR-029](../records/DECISIONS.md) (UGC je glavni proizvod)
 **Opseg (Leon):** cijela platforma **i** editor · **UGC ide naprijed.**
 
 > ### 🔄 NASTAVLJEN 2026-09-01 — MREŽA je isporučila sve blokove (A–E ✅ u §9 njenog speca)
@@ -33,7 +33,7 @@
 popravci koji su bez tog temelja bili preskupi.
 
 **Nije:**
-- **nova funkcionalnost** — objava/dijeljenje i MCP dolaze **poslije** ove faze (sekvenca u [ROADMAP.md](./ROADMAP.md));
+- **nova funkcionalnost** — objava/dijeljenje i MCP dolaze **poslije** ove faze (sekvenca u [ROADMAP.md](../plan/ROADMAP.md));
 - **promjena ponašanja** — ako se usput rodi želja za drugačijim tokom, ide u [BACKLOG.md](../records/BACKLOG.md), ne ovdje;
 - **sadržajni rad** — M5b (skraćivanje 25 predugih kartica) ostaje u backlogu, nije preduvjet.
 
