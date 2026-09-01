@@ -30,14 +30,14 @@
     text-align: center;
     margin: 0 0 14px 0;
     padding: 14px 18px;
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-600));
     border-radius: 14px;
-    color: var(--on-primary);
+    color: var(--color-on-brand);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    box-shadow: 0 4px 15px color-mix(in srgb, var(--primary) 30%, transparent);
+    box-shadow: 0 4px 15px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
 }
 
 :where(#learn) .learn-container > h1 i {
@@ -58,7 +58,7 @@
     -webkit-overflow-scrolling: touch;
     /* Tanak vidljiv scrollbar = naznaka da se bar skrola (BUG-007). */
     scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
+    scrollbar-color: var(--color-line) transparent;
 }
 
 /* WebKit tanki scrollbar (naznaka skrola) */
@@ -69,11 +69,11 @@
     background: transparent;
 }
 :where(#learn) .learn-filter::-webkit-scrollbar-thumb {
-    background: var(--border);
+    background: var(--color-line);
     border-radius: 3px;
 }
 :where(#learn) .learn-filter::-webkit-scrollbar-thumb:hover {
-    background: var(--text-secondary, var(--border));
+    background: var(--color-ink-1, var(--color-line));
 }
 
 /* Rubni gradijent-fade — nagovještava da ima još čipova izvan vidljivog.
@@ -101,14 +101,14 @@
 
 :where(#learn) .filter-btn {
     padding: 10px 16px;
-    border: 2px solid var(--border);
-    background: var(--bg-secondary);
+    border: 2px solid var(--color-line);
+    background: var(--color-surface-1);
     border-radius: 22px;
     cursor: pointer;
     font-family: inherit;
     font-weight: 500;
     font-size: 0.85rem;
-    color: var(--text-primary);
+    color: var(--color-ink-0);
     transition: all 0.2s ease;
     white-space: nowrap;
     flex-shrink: 0;
@@ -118,10 +118,10 @@
 
 :where(#learn) .filter-btn:hover,
 :where(#learn) .filter-btn.active {
-    border-color: var(--primary);
-    background: var(--primary-dark);
-    color: var(--on-primary);
-    box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 40%, transparent);
+    border-color: var(--color-brand-500);
+    background: var(--color-brand-600);
+    color: var(--color-on-brand);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--color-brand-500) 40%, transparent);
 }
 
 :where(#learn) .filter-btn:active {
@@ -149,20 +149,20 @@
    Blok s VLASTITOM bojom je i prije radio (emitira `--lb-acc`); nasljeđivanje nije,
    jer neobojani blok nema omot koji bi se obojao — nosi ga zato kartica sekcije. */
 :where(#learn) .learn-card {
-    background: var(--bg-secondary);
+    background: var(--color-surface-1);
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 4px 12px color-mix(in srgb, var(--color-shadow) 8%, transparent);
-    border: 1px solid var(--border);
-    border-left: 4px solid var(--st-acc, var(--border));
+    border: 1px solid var(--color-line);
+    border-left: 4px solid var(--st-acc, var(--color-line));
     margin: 0;
 }
 
 /* Card Header */
 :where(#learn) .learn-card-header {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-600));
     padding: 14px 16px;
-    color: var(--on-primary);
+    color: var(--color-on-brand);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -195,7 +195,7 @@
     font-size: 0.8rem;
     /* puna ispuna tamnijim krajem gradijenta umjesto rgba-bijele: poluprozirni pill
        s bijelim tekstom pada u `paper` na 4.22; ovako 6.02–9.50 (MREŽA C1) */
-    background: var(--primary-dark);
+    background: var(--color-brand-600);
     color: inherit;
     padding: 4px 10px;
     border-radius: 12px;
@@ -210,7 +210,7 @@
     padding: 16px;
     font-size: 0.92rem;
     line-height: 1.7;
-    color: var(--text-primary);
+    color: var(--color-ink-0);
     word-wrap: break-word;
     overflow-wrap: break-word;
     overflow-x: hidden;
@@ -229,10 +229,10 @@
 /* Headings */
 :where(#learn) .learn-card-content h3 {
     font-size: 1.1rem;
-    color: var(--primary);
+    color: var(--color-brand-500);
     margin: 18px 0 10px 0;
     padding-bottom: 6px;
-    border-bottom: 2px solid var(--primary);
+    border-bottom: 2px solid var(--color-brand-500);
     font-weight: 600;
     line-height: 1.3;
 }
@@ -243,7 +243,7 @@
 
 :where(#learn) .learn-card-content h4 {
     font-size: 1rem;
-    color: var(--text-primary);
+    color: var(--color-ink-0);
     margin: 14px 0 8px 0;
     font-weight: 600;
     line-height: 1.3;
@@ -251,7 +251,7 @@
 
 :where(#learn) .learn-card-content h5 {
     font-size: 0.95rem;
-    color: var(--primary);
+    color: var(--color-brand-500);
     margin: 12px 0 6px 0;
     font-weight: 600;
     line-height: 1.3;
@@ -262,7 +262,7 @@
     font-size: 0.9rem;
     line-height: 1.7;
     margin: 0 0 10px 0;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
 }
 
 /* Lists */
@@ -277,14 +277,14 @@
     line-height: 1.6;
     padding: 5px 0 5px 22px;
     position: relative;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
 }
 
 :where(#learn) .learn-card-content ul li::before {
     content: '✓';
     position: absolute;
     left: 0;
-    color: var(--success);
+    color: var(--color-ok);
     font-weight: bold;
     font-size: 0.85rem;
 }
@@ -298,22 +298,22 @@
     font-size: 0.9rem;
     line-height: 1.6;
     padding: 4px 0;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
 }
 
 /* Highlight */
 :where(#learn) .learn-card-content .highlight {
-    background: color-mix(in srgb, var(--primary) 15%, transparent);
+    background: color-mix(in srgb, var(--color-brand-500) 15%, transparent);
     padding: 2px 6px;
     border-radius: 4px;
     font-weight: 500;
-    color: var(--primary);
+    color: var(--color-brand-500);
 }
 
 /* Horizontal Rule */
 :where(#learn) .learn-card-content hr {
     border: none;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--color-line);
     margin: 18px 0;
 }
 
@@ -344,25 +344,25 @@
 :where(#learn) .tip-box,
 :where(#learn) .learn-card-content .tip-box {
     background: rgba(16, 185, 129, 0.1);
-    border-left-color: var(--secondary);
+    border-left-color: var(--color-ok-strong);
 }
 
 :where(#learn) .warning-box,
 :where(#learn) .learn-card-content .warning-box {
     background: rgba(239, 68, 68, 0.1);
-    border-left-color: var(--danger);
+    border-left-color: var(--color-danger);
 }
 
 :where(#learn) .example-box,
 :where(#learn) .learn-card-content .example-box {
-    background: color-mix(in srgb, var(--primary) 10%, transparent);
-    border-left-color: var(--primary);
+    background: color-mix(in srgb, var(--color-brand-500) 10%, transparent);
+    border-left-color: var(--color-brand-500);
 }
 
 :where(#learn) .formula-box,
 :where(#learn) .learn-card-content .formula-box {
-    background: color-mix(in srgb, var(--primary) 6%, transparent);
-    border-left-color: var(--primary);
+    background: color-mix(in srgb, var(--color-brand-500) 6%, transparent);
+    border-left-color: var(--color-brand-500);
     font-family: inherit;
     font-size: 0.88rem;
     line-height: 1.6;
@@ -382,10 +382,10 @@
 
 :where(#learn) .tip-box h4,
 :where(#learn) .warning-box h4,
-:where(#learn) .example-box h4 { color: var(--text-primary); }
-:where(#learn) .tip-box h4 i { color: var(--secondary); }
-:where(#learn) .warning-box h4 i { color: var(--danger-text); }
-:where(#learn) .example-box h4 i { color: var(--primary); }
+:where(#learn) .example-box h4 { color: var(--color-ink-0); }
+:where(#learn) .tip-box h4 i { color: var(--color-ok-strong); }
+:where(#learn) .warning-box h4 i { color: var(--color-danger-ink); }
+:where(#learn) .example-box h4 i { color: var(--color-brand-500); }
 
 :where(#learn) .tip-box p,
 :where(#learn) .warning-box p,
@@ -403,7 +403,7 @@
 }
 
 :where(#learn) .formula-box strong {
-    color: var(--primary);
+    color: var(--color-brand-500);
     font-weight: 600;
 }
 
@@ -426,7 +426,7 @@
 :where(#learn) .learn-card-content td {
     padding: 8px 10px;
     text-align: left;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--color-line);
     white-space: nowrap;
 }
 
@@ -442,13 +442,13 @@
 }
 
 :where(#learn) .learn-card-content th {
-    background: var(--primary-dark);
-    color: var(--on-primary);
+    background: var(--color-brand-600);
+    color: var(--color-on-brand);
     font-weight: 600;
 }
 
 :where(#learn) .learn-card-content tr:nth-child(even) {
-    background: var(--bg-tertiary);
+    background: var(--color-surface-2);
 }
 
 /* =====================================================
@@ -553,7 +553,7 @@ sokrat-modal.image-modal > * {
 }
 
 .image-modal-close:focus-visible {
-    outline: 2px solid var(--primary-light);
+    outline: 2px solid var(--color-brand-400);
     outline-offset: 2px;
 }
 
@@ -838,6 +838,6 @@ sokrat-modal.image-modal > * {
     
     :where(#learn) .learn-card-content p,
     :where(#learn) .learn-card-content li {
-        color: var(--text-primary);
+        color: var(--color-ink-0);
     }
 }

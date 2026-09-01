@@ -30,12 +30,12 @@
    kao kviz i `.lb-tint`. Bez boje → `transparent` → zatečeni izgled. */
 .fill-card {
     --item-wash: color-mix(in srgb, var(--item-acc, transparent) 10%, transparent);
-    background-color: var(--bg-secondary);
+    background-color: var(--color-surface-1);
     background-image: linear-gradient(0deg, var(--item-wash), var(--item-wash));
     padding: 1.5rem;
     border-radius: var(--radius-lg);
     border-left: 4px solid var(--item-acc, transparent);
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-e1);
     margin-bottom: 1rem;
 }
 
@@ -58,13 +58,13 @@
 }
 /* `currentColor` gore je specifičniji od `is-ok`/`is-bad` (0-4-0 > 0-3-0) pa se
    semantika ODGOVORA mora ponovno izreći — inače bi obojena kartica pojela feedback */
-.fill-card[data-ink] .fill-sentence .fill-blank-input.is-ok { border-bottom-color: var(--success); }
-.fill-card[data-ink] .fill-sentence .fill-blank-input.is-bad { border-bottom-color: var(--danger-text); }
+.fill-card[data-ink] .fill-sentence .fill-blank-input.is-ok { border-bottom-color: var(--color-ok); }
+.fill-card[data-ink] .fill-sentence .fill-blank-input.is-bad { border-bottom-color: var(--color-danger-ink); }
 
 .fill-category {
     display: inline-block;
-    background: var(--accent);
-    color: var(--bg-primary);
+    background: var(--color-warn);
+    color: var(--color-surface-0);
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-size: 0.75rem;
@@ -76,15 +76,15 @@
     font-size: 1.1rem;
     line-height: 1.7;
     margin-bottom: 1.5rem;
-    color: var(--text-primary);
+    color: var(--color-ink-0);
 }
 
 .fill-sentence .blank {
     display: inline-block;
     min-width: 100px;
-    border-bottom: 3px dashed var(--primary);
+    border-bottom: 3px dashed var(--color-brand-500);
     margin: 0 0.25rem;
-    color: var(--primary);
+    color: var(--color-brand-500);
     font-weight: 600;
 }
 
@@ -97,18 +97,18 @@
     min-height: var(--touch-target);
     padding: 0.1rem 0.4rem;
     border: 0;
-    border-bottom: 3px dashed var(--primary);
+    border-bottom: 3px dashed var(--color-brand-500);
     border-radius: 0;
     background: transparent;
-    color: var(--text-primary);
+    color: var(--color-ink-0);
     font: inherit;
     text-align: center;
     vertical-align: baseline;
 }
 
 .fill-sentence .fill-blank-input:focus { outline: none; border-bottom-style: solid; }
-.fill-sentence .fill-blank-input.is-ok { border-bottom-color: var(--success); }
-.fill-sentence .fill-blank-input.is-bad { border-bottom-color: var(--danger-text); }
+.fill-sentence .fill-blank-input.is-ok { border-bottom-color: var(--color-ok); }
+.fill-sentence .fill-blank-input.is-bad { border-bottom-color: var(--color-danger-ink); }
 
 .fill-input-wrapper {
     display: flex;
@@ -121,25 +121,25 @@
     width: 100%;
     max-width: 100%;
     padding: 1rem;
-    border: 2px solid var(--border);
-    border-radius: var(--radius);
+    border: 2px solid var(--color-line);
+    border-radius: var(--radius-md);
     font-family: inherit;
     font-size: 1rem;
-    background: var(--bg-primary);
-    color: var(--text-primary);
+    background: var(--color-surface-0);
+    color: var(--color-ink-0);
     transition: var(--transition);
     min-height: var(--touch-target);
 }
 
-.fill-input-wrapper input:focus { outline: none; border-color: var(--primary); }
+.fill-input-wrapper input:focus { outline: none; border-color: var(--color-brand-500); }
 
 .check-btn {
     width: 100%;
     padding: 1rem 1.5rem;
-    background: var(--primary-dark);
-    color: var(--on-primary);
+    background: var(--color-brand-600);
+    color: var(--color-on-brand);
     border: none;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     font-family: inherit;
     font-weight: 600;
     cursor: pointer;
@@ -153,26 +153,26 @@
 
 /* Hover NE mijenja boju nego izdiže. Prije je ovdje bio `#4338ca` — „tamnije od baze da
    hover ostane vidljiv", što je bila istina samo dok su teme bile tamne. Tekst je
-   `var(--on-primary)`, koji se s temom OKRENE: na `chalk`/`mint` postane taman, pa bi
+   `var(--color-on-brand)`, koji se s temom OKRENE: na `chalk`/`mint` postane taman, pa bi
    tamniji indigo dao tamno na tamnom. Fiksna boja ne može zadovoljiti oba smjera. */
-.check-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+.check-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-e2); }
 
 .fill-feedback {
     margin-top: 1rem;
     padding: 0.75rem;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
 }
 
-.fill-feedback.correct { background: rgba(34, 197, 94, 0.1); border: 2px solid var(--success); }
-.fill-feedback.wrong { background: rgba(239, 68, 68, 0.1); border: 2px solid var(--danger); }
+.fill-feedback.correct { background: rgba(34, 197, 94, 0.1); border: 2px solid var(--color-ok); }
+.fill-feedback.wrong { background: rgba(239, 68, 68, 0.1); border: 2px solid var(--color-danger); }
 .fill-feedback p { margin-bottom: 0.35rem; font-size: 0.9rem; }
 
 .fill-hint {
     margin-top: 0.75rem;
     padding: 0.75rem;
     background: rgba(245, 158, 11, 0.1);
-    border-radius: var(--radius);
-    color: var(--accent);
+    border-radius: var(--radius-md);
+    color: var(--color-warn);
     font-size: 0.9rem;
 }
 
@@ -187,11 +187,11 @@
    ne mjeri, pa je na svijetloj temi „Savjet" pao ispod 4.5. Značenje nose obrub i tekst. */
 .control-btn.hint {
     background: transparent;
-    color: var(--accent);
-    border: 2px solid var(--accent);
+    color: var(--color-warn);
+    border: 2px solid var(--color-warn);
 }
 
-.control-btn.hint:hover { background: var(--accent); color: var(--on-primary); }
+.control-btn.hint:hover { background: var(--color-warn); color: var(--color-on-brand); }
 
 /* ── LJESTVA PRAGOVA ────────────────────────────────────────────────────────────
    Preseljeno iz `css/responsive/01/02/06` (C5a/2), redoslijed nepromijenjen.

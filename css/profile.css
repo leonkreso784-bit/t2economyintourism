@@ -5,7 +5,7 @@
 .profile-page {
     min-height: 100vh;
     min-height: 100dvh;
-    background: var(--bg-primary);
+    background: var(--color-surface-0);
 }
 
 .profile-header {
@@ -14,8 +14,8 @@
     justify-content: space-between;
     padding: 1rem 1.5rem;
     padding-top: calc(1rem + var(--safe-top));
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
+    background: var(--color-surface-1);
+    border-bottom: 1px solid var(--color-line);
 }
 
 .profile-header h1 { font-size: 1.25rem; }
@@ -41,8 +41,8 @@
 }
 
 .profile-card {
-    background: var(--bg-card, var(--bg-secondary));
-    border: 1px solid var(--border);
+    background: var(--color-surface-1);
+    border: 1px solid var(--color-line);
     border-radius: 16px;
     padding: 1.4rem 1.3rem;
     min-width: 0;
@@ -57,12 +57,12 @@
 }
 
 .profile-card--center h2 { margin: 0.75rem 0 0.5rem; }
-.profile-card--center p { color: var(--text-secondary); margin-bottom: 1.1rem; }
+.profile-card--center p { color: var(--color-ink-1); margin-bottom: 1.1rem; }
 .profile-card--center .cta-button { justify-content: center; }
 
 .profile-empty-icon {
     font-size: 2rem;
-    color: var(--primary);
+    color: var(--color-brand-500);
 }
 
 .profile-avatar {
@@ -72,8 +72,8 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: color-mix(in srgb, var(--primary) 15%, transparent);
-    color: var(--primary);
+    background: color-mix(in srgb, var(--color-brand-500) 15%, transparent);
+    color: var(--color-brand-500);
     font-size: 1.5rem;
     margin-bottom: 0.8rem;
 }
@@ -85,13 +85,13 @@
 }
 
 .profile-meta {
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     font-size: 0.88rem;
     line-height: 1.55;
     margin: 0 0 0.9rem;
 }
 
-.profile-meta a { color: var(--primary); }
+.profile-meta a { color: var(--color-brand-500); }
 
 /* Email odmah ispod imena (kad postoji display_name) — bez velikog razmaka */
 .profile-meta--sub { margin-bottom: 0.25rem; }
@@ -104,7 +104,7 @@
     gap: 0.6rem;
     margin-top: 0.9rem;
     padding-top: 0.9rem;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--color-line);
 }
 
 /* display:flex gore bi pregazio UA [hidden] { display:none } — vrati ga eksplicitno */
@@ -133,7 +133,7 @@
     margin: 0 0 0.7rem;
 }
 
-.profile-card-title i { color: var(--primary); }
+.profile-card-title i { color: var(--color-brand-500); }
 
 .profile-actions {
     display: flex;
@@ -151,8 +151,8 @@
 .profile-total {
     flex: 1;
     min-width: 120px;
-    background: color-mix(in srgb, var(--primary) 8%, transparent);
-    border: 1px solid color-mix(in srgb, var(--primary) 25%, transparent);
+    background: color-mix(in srgb, var(--color-brand-500) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-brand-500) 25%, transparent);
     border-radius: 12px;
     padding: 0.75rem 0.9rem;
     text-align: center;
@@ -161,12 +161,12 @@
 .profile-total strong {
     display: block;
     font-size: 1.35rem;
-    color: var(--primary);
+    color: var(--color-brand-500);
 }
 
 .profile-total span {
     font-size: 0.78rem;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
 }
 
 .profile-stat-row {
@@ -175,7 +175,7 @@
     justify-content: space-between;
     gap: 0.75rem;
     padding: 0.6rem 0.2rem;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--color-line);
     flex-wrap: wrap;
 }
 
@@ -190,7 +190,7 @@
     min-width: 0;
 }
 
-.profile-stat-subject i { color: var(--primary); }
+.profile-stat-subject i { color: var(--color-brand-500); }
 
 .profile-stat-vals {
     gap: 1rem;
@@ -248,9 +248,9 @@
 .profile-delete-status {
     margin: 0;
     font-size: 0.85rem;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
 }
-.profile-delete-status.is-error { color: var(--danger-text, #f87171); }
+.profile-delete-status.is-error { color: var(--color-danger-ink, #f87171); }
 
 /* ---------- Header auth gumb (browse/lessons/study) ---------- */
 
@@ -262,22 +262,22 @@
     align-items: center;
     justify-content: center;
     /* C3: bijelo staklo iz stare tamne ere — ploha sad iz teme */
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border);
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-line);
     border-radius: 50%;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     font-size: 1rem;
     cursor: pointer;
     transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
 .header-auth-btn:hover {
-    color: var(--text-primary);
-    border-color: color-mix(in srgb, var(--primary) 55%, transparent);
-    background: color-mix(in srgb, var(--primary) 12%, transparent);
+    color: var(--color-ink-0);
+    border-color: color-mix(in srgb, var(--color-brand-500) 55%, transparent);
+    background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
 }
 
-.header-auth-btn.is-signed-in { color: var(--primary); }
+.header-auth-btn.is-signed-in { color: var(--color-brand-500); }
 
 
 /* ---------- Mobile ---------- */
@@ -292,25 +292,25 @@
 /* ===== F4 Admin editor (read-only viewer, F4.3b) ===== */
 .admin-pickers { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.75rem; }
 .admin-field { display: flex; flex-direction: column; gap: 0.35rem; flex: 1 1 220px; }
-.admin-field span { font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; }
+.admin-field span { font-size: 0.8rem; color: var(--color-ink-1); font-weight: 600; }
 /* Native <select> popup poštuje dark temu (inače bijeli browser-default popup) */
 .admin-field select { color-scheme: dark; }
-.admin-field select option { background: var(--bg-secondary); color: var(--text-primary); }
+.admin-field select option { background: var(--color-surface-1); color: var(--color-ink-0); }
 .admin-cat { margin-top: 1rem; }
 .admin-count {
     display: inline-block; margin-left: 0.4rem; padding: 0.05rem 0.5rem;
     font-size: 0.75rem; border-radius: 999px;
-    background: var(--bg-tertiary); color: var(--text-secondary);
+    background: var(--color-surface-2); color: var(--color-ink-1);
 }
 .admin-card-list { list-style: none; margin: 0.75rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
 .admin-card {
     display: flex; align-items: flex-start; gap: 0.6rem;
-    border: 1px solid var(--border); border-radius: 10px;
-    padding: 0.7rem 0.85rem; background: var(--bg-secondary);
+    border: 1px solid var(--color-line); border-radius: 10px;
+    padding: 0.7rem 0.85rem; background: var(--color-surface-1);
 }
 .admin-card-body { flex: 1 1 auto; min-width: 0; }
-.admin-card-q { font-weight: 600; color: var(--text-primary); margin-bottom: 0.35rem; white-space: pre-wrap; }
-.admin-card-a { font-size: 0.9rem; color: var(--text-secondary); white-space: pre-wrap; }
+.admin-card-q { font-weight: 600; color: var(--color-ink-0); margin-bottom: 0.35rem; white-space: pre-wrap; }
+.admin-card-a { font-size: 0.9rem; color: var(--color-ink-1); white-space: pre-wrap; }
 
 /* ===== U3 — draft-mod traka (Uredi lekciju → Objavi/Odbaci) ===== */
 .admin-editbar {
@@ -320,14 +320,14 @@
 }
 .admin-editbar.is-active {
     justify-content: space-between;
-    border: 1px solid var(--primary);
+    border: 1px solid var(--color-brand-500);
 }
-.admin-editbar__status { color: var(--text-secondary); font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
-.admin-editbar__status i { color: var(--primary); }
+.admin-editbar__status { color: var(--color-ink-1); font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
+.admin-editbar__status i { color: var(--color-brand-500); }
 .admin-editbar__count {
     display: inline-block; min-width: 1.5rem; text-align: center;
     padding: 0.05rem 0.5rem; border-radius: 999px; font-size: 0.8rem;
-    background: var(--primary); color: var(--on-primary);
+    background: var(--color-brand-500); color: var(--color-on-brand);
 }
 .admin-editbar__actions { display: inline-flex; gap: 0.6rem; flex-wrap: wrap; }
 .admin-editbar .cta-button { padding: 0.55rem 1.1rem; font-size: 0.9rem; }
@@ -336,22 +336,22 @@
 /* ===== F4.3c-1 Uredi karticu ===== */
 .admin-edit-btn {
     flex: 0 0 auto; width: 34px; height: 34px; border-radius: 8px;
-    border: 1px solid var(--border); background: var(--bg-tertiary);
-    color: var(--text-secondary); cursor: pointer; font-size: 0.85rem;
+    border: 1px solid var(--color-line); background: var(--color-surface-2);
+    color: var(--color-ink-1); cursor: pointer; font-size: 0.85rem;
     display: inline-flex; align-items: center; justify-content: center;
     transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
-.admin-edit-btn:hover { background: var(--primary-dark); color: var(--on-primary); border-color: var(--primary); }
+.admin-edit-btn:hover { background: var(--color-brand-600); color: var(--color-on-brand); border-color: var(--color-brand-500); }
 
 /* „Dodaj stavku" gumb (U6c strukturne operacije) — dashed, diskretan dok se ne hoverne */
 .admin-add-btn {
     margin-top: 0.6rem; display: inline-flex; align-items: center; gap: 0.4rem;
     padding: 0.45rem 0.85rem; border-radius: 8px; cursor: pointer;
     font-size: 0.85rem; font-weight: 600; font-family: inherit;
-    border: 1px dashed var(--border); background: transparent; color: var(--text-secondary);
+    border: 1px dashed var(--color-line); background: transparent; color: var(--color-ink-1);
     transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
-.admin-add-btn:hover { background: var(--bg-tertiary); color: var(--primary); border-color: var(--primary); }
+.admin-add-btn:hover { background: var(--color-surface-2); color: var(--color-brand-500); border-color: var(--color-brand-500); }
 
 /* U6d — kategorije-UI: zaglavlje = naslov + kontrole (presloži ↑↓ / uredi / obriši) u flex-redu; „Dodaj kategoriju" (široki) */
 .admin-cat-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
@@ -359,47 +359,47 @@
 .admin-cat-ctrls { flex: 0 0 auto; display: inline-flex; gap: 0.35rem; }
 /* U6e — grupa kontrola stavke (uredi ✎ + obriši 🗑; U6e-2 doda ↑↓) */
 .admin-card-ctrls { flex: 0 0 auto; display: inline-flex; gap: 0.35rem; }
-.admin-cat-del:hover, .admin-del:hover { background: var(--danger); color: var(--on-danger); border-color: var(--danger); }
+.admin-cat-del:hover, .admin-del:hover { background: var(--color-danger); color: var(--color-on-danger); border-color: var(--color-danger); }
 .admin-edit-btn[disabled] { opacity: 0.35; cursor: not-allowed; }
-.admin-edit-btn[disabled]:hover { background: var(--bg-tertiary); color: var(--text-secondary); border-color: var(--border); }
+.admin-edit-btn[disabled]:hover { background: var(--color-surface-2); color: var(--color-ink-1); border-color: var(--color-line); }
 .admin-add-btn--cat { margin-top: 1rem; width: 100%; justify-content: center; padding: 0.6rem 0.85rem; font-size: 0.9rem; }
 
 /* Edit-modal (na <sokrat-modal> primitivu, light-DOM kartica) */
 .admin-edit .admin-edit__card {
     position: relative; width: min(92vw, 460px);
-    background: var(--bg-secondary); border: 1px solid var(--border);
+    background: var(--color-surface-1); border: 1px solid var(--color-line);
     border-radius: 14px; padding: 1.4rem 1.3rem 1.2rem;
     box-shadow: 0 18px 50px rgba(2, 6, 23, 0.55);
 }
 .admin-edit__close {
     position: absolute; top: 0.6rem; right: 0.7rem; width: 32px; height: 32px;
-    border: none; background: transparent; color: var(--text-secondary);
+    border: none; background: transparent; color: var(--color-ink-1);
     font-size: 1.5rem; line-height: 1; cursor: pointer; border-radius: 8px;
 }
-.admin-edit__close:hover { color: var(--text-primary); background: var(--bg-tertiary); }
-.admin-edit__title { margin: 0 0 1rem; font-size: 1.1rem; color: var(--text-primary); }
-.admin-edit__title i { color: var(--primary); margin-right: 0.4rem; }
+.admin-edit__close:hover { color: var(--color-ink-0); background: var(--color-surface-2); }
+.admin-edit__title { margin: 0 0 1rem; font-size: 1.1rem; color: var(--color-ink-0); }
+.admin-edit__title i { color: var(--color-brand-500); margin-right: 0.4rem; }
 .admin-edit__field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.9rem; }
-.admin-edit__field span { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); }
+.admin-edit__field span { font-size: 0.8rem; font-weight: 600; color: var(--color-ink-1); }
 .admin-edit__input {
     width: 100%; box-sizing: border-box; resize: vertical;
     padding: 0.6rem 0.7rem; border-radius: 9px;
-    border: 1px solid var(--border);
-    background: var(--bg-primary); color: var(--text-primary);
+    border: 1px solid var(--color-line);
+    background: var(--color-surface-0); color: var(--color-ink-0);
     font-family: inherit; font-size: 0.95rem; line-height: 1.4;
 }
-.admin-edit__input:focus { outline: none; border-color: var(--primary); }
+.admin-edit__input:focus { outline: none; border-color: var(--color-brand-500); }
 /* M5a — brojač duljine kartice. Neutralan dok se poštuje standard; žut na 200 (upozorenje,
    spremanje prolazi); crven preko 500 (tvrdi strop — „Spremi" je tad onemogućen). */
 .admin-edit__count {
     align-self: flex-end;
     font-size: 0.72rem; font-weight: 600;
     font-variant-numeric: tabular-nums;   /* broj ne poskakuje dok se tipka */
-    color: var(--text-secondary); opacity: 0.65;
+    color: var(--color-ink-1); opacity: 0.65;
     transition: color 0.15s ease, opacity 0.15s ease;
 }
-.admin-edit__count.is-warn { color: var(--warning-text, #fbbf24); opacity: 1; }
-.admin-edit__count.is-over { color: var(--danger-text, #f87171); opacity: 1; }
+.admin-edit__count.is-warn { color: var(--color-warn-ink, #fbbf24); opacity: 1; }
+.admin-edit__count.is-over { color: var(--color-danger-ink, #f87171); opacity: 1; }
 .admin-edit__actions .cta-button:disabled {
     opacity: 0.45; cursor: not-allowed; filter: grayscale(0.4);
 }
@@ -407,55 +407,55 @@
 .admin-edit__field--color { flex-direction: row; align-items: center; justify-content: space-between; }
 .admin-edit__color {
     width: 52px; height: 34px; padding: 2px; cursor: pointer; border-radius: 8px;
-    border: 1px solid var(--border); background: var(--bg-primary);
+    border: 1px solid var(--color-line); background: var(--color-surface-0);
 }
-.admin-edit__note { font-size: 0.78rem; color: var(--text-secondary); margin: 0 0 0.5rem; }
-.admin-edit__status { font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 0.7rem; }
-.admin-edit__status.is-error { color: var(--danger-text, #f87171); }
+.admin-edit__note { font-size: 0.78rem; color: var(--color-ink-1); margin: 0 0 0.5rem; }
+.admin-edit__status { font-size: 0.85rem; color: var(--color-ink-1); margin: 0 0 0.7rem; }
+.admin-edit__status.is-error { color: var(--color-danger-ink, #f87171); }
 .admin-edit__actions { display: flex; justify-content: flex-end; gap: 0.6rem; }
 /* D1 — traka za autorstvo praznine (gumb umjesto tipkanja podvlaka). */
 .admin-edit__tools { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin: -0.5rem 0 0.9rem; }
 .admin-edit__tool { padding: 0.35rem 0.7rem; font-size: 0.8rem; }
-.admin-edit__toolhint { font-size: 0.75rem; color: var(--text-secondary); }
+.admin-edit__toolhint { font-size: 0.75rem; color: var(--color-ink-1); }
 
 /* ===== F4.4 Quiz editing ===== */
 /* Podnaslov tipa unutar kategorije (Flashcards / Quiz) */
 .admin-subhead {
     margin: 1rem 0 0; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.03em;
-    text-transform: uppercase; color: var(--text-secondary);
+    text-transform: uppercase; color: var(--color-ink-1);
 }
 /* Read-only pregled opcija u vieweru */
 .admin-quiz-opts { list-style: none; margin: 0.35rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.2rem; }
-.admin-quiz-opts li { font-size: 0.88rem; color: var(--text-secondary); padding-left: 1.1rem; text-indent: -1.1rem; }
-.admin-quiz-opts li.is-correct { color: var(--text-primary); font-weight: 600; }
+.admin-quiz-opts li { font-size: 0.88rem; color: var(--color-ink-1); padding-left: 1.1rem; text-indent: -1.1rem; }
+.admin-quiz-opts li.is-correct { color: var(--color-ink-0); font-weight: 600; }
 .admin-quiz-opts li.is-correct i { color: #22c55e; margin-right: 0.15rem; }
 
 /* Editor: redovi opcija (radio „točan" + tekst + brisanje) */
 .admin-quiz-editopts { display: flex; flex-direction: column; gap: 0.45rem; }
 .admin-quiz-optrow { display: flex; align-items: center; gap: 0.5rem; }
-.admin-quiz-optrow input[type="radio"] { flex: 0 0 auto; width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
+.admin-quiz-optrow input[type="radio"] { flex: 0 0 auto; width: 18px; height: 18px; accent-color: var(--color-brand-500); cursor: pointer; }
 .admin-quiz-optinput {
     flex: 1 1 auto; min-width: 0; box-sizing: border-box;
     padding: 0.5rem 0.6rem; border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--bg-primary); color: var(--text-primary);
+    border: 1px solid var(--color-line);
+    background: var(--color-surface-0); color: var(--color-ink-0);
     font-size: 0.9rem; font-family: inherit;
 }
-.admin-quiz-optinput:focus { outline: none; border-color: var(--primary); }
+.admin-quiz-optinput:focus { outline: none; border-color: var(--color-brand-500); }
 .admin-quiz-delopt {
     flex: 0 0 auto; width: 30px; height: 30px; border-radius: 7px;
-    border: 1px solid var(--border); background: var(--bg-tertiary);
-    color: var(--text-secondary); cursor: pointer; font-size: 0.8rem;
+    border: 1px solid var(--color-line); background: var(--color-surface-2);
+    color: var(--color-ink-1); cursor: pointer; font-size: 0.8rem;
     display: inline-flex; align-items: center; justify-content: center;
 }
-.admin-quiz-delopt:hover { background: var(--danger); color: var(--on-danger); border-color: var(--danger); }
+.admin-quiz-delopt:hover { background: var(--color-danger); color: var(--color-on-danger); border-color: var(--color-danger); }
 .admin-quiz-addopt {
     align-self: flex-start; margin-top: 0.55rem; padding: 0.35rem 0.7rem;
-    border: 1px dashed var(--border); border-radius: 8px;
-    background: transparent; color: var(--text-secondary); cursor: pointer;
+    border: 1px dashed var(--color-line); border-radius: 8px;
+    background: transparent; color: var(--color-ink-1); cursor: pointer;
     font-size: 0.82rem; font-family: inherit;
 }
-.admin-quiz-addopt:hover { border-color: var(--primary); color: var(--text-primary); }
+.admin-quiz-addopt:hover { border-color: var(--color-brand-500); color: var(--color-ink-0); }
 
 /* ===== F4.4 Learn editing (širi modal + monospace HTML textarea) ===== */
 .admin-learn .admin-edit__card { width: min(94vw, 640px); }

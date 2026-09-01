@@ -27,10 +27,10 @@ sokrat-modal.auth-modal > * {
     width: 100%;
     max-width: 420px;
     padding: 1.75rem 1.6rem 1.6rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: var(--color-surface-1);
+    border: 1px solid var(--color-line);
     border-radius: 16px;
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-e2);
 }
 
 .auth-modal__close {
@@ -41,11 +41,11 @@ sokrat-modal.auth-modal > * {
     border: none;
     font-size: 1.6rem;
     line-height: 1;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     cursor: pointer;
 }
 
-.auth-modal__close:hover { color: var(--text-primary); }
+.auth-modal__close:hover { color: var(--color-ink-0); }
 
 .auth-modal__title {
     display: flex;
@@ -53,16 +53,16 @@ sokrat-modal.auth-modal > * {
     gap: 0.55rem;
     margin: 0 0 0.65rem;
     font-size: 1.2rem;
-    color: var(--text-primary);
+    color: var(--color-ink-0);
 }
 
-.auth-modal__title i { color: var(--primary); }
+.auth-modal__title i { color: var(--color-brand-500); }
 
 .auth-modal__text {
     margin: 0 0 1rem;
     font-size: 0.92rem;
     line-height: 1.55;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
 }
 
 /* ---------- Tabovi (Sign in / Create account) ---------- */
@@ -72,8 +72,8 @@ sokrat-modal.auth-modal > * {
     gap: 0.35rem;
     margin-bottom: 1rem;
     padding: 0.25rem;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border);
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-line);
     border-radius: 10px;
 }
 
@@ -86,16 +86,16 @@ sokrat-modal.auth-modal > * {
     font-family: inherit;
     font-size: 0.88rem;
     font-weight: 600;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     cursor: pointer;
     transition: background 0.2s ease, color 0.2s ease;
 }
 
-.auth-modal__tab:hover { color: var(--text-primary); }
+.auth-modal__tab:hover { color: var(--color-ink-0); }
 
 .auth-modal__tab.is-active {
-    background: color-mix(in srgb, var(--primary) 18%, transparent);
-    color: var(--primary);
+    background: color-mix(in srgb, var(--color-brand-500) 18%, transparent);
+    color: var(--color-brand-500);
 }
 
 /* ---------- Forme ---------- */
@@ -119,29 +119,29 @@ sokrat-modal.auth-modal > * {
     border: none;
     font-family: inherit;
     font-size: 0.82rem;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     text-decoration: underline;
     text-underline-offset: 2px;
     cursor: pointer;
     transition: color 0.2s ease;
 }
 
-.auth-modal__link:hover { color: var(--primary); }
+.auth-modal__link:hover { color: var(--color-brand-500); }
 
 .auth-modal__input {
     width: 100%;
     padding: 0.75rem 0.9rem;
-    background: var(--bg-primary);
-    border: 1px solid var(--border);
+    background: var(--color-surface-0);
+    border: 1px solid var(--color-line);
     border-radius: 10px;
     font-family: inherit;
     font-size: 0.95rem;
-    color: var(--text-primary);
+    color: var(--color-ink-0);
     outline: none;
     transition: border-color 0.2s ease;
 }
 
-.auth-modal__input:focus { border-color: color-mix(in srgb, var(--primary) 65%, transparent); }
+.auth-modal__input:focus { border-color: color-mix(in srgb, var(--color-brand-500) 65%, transparent); }
 
 /* ---------- Password polje s gumbom-okom ---------- */
 
@@ -162,13 +162,13 @@ sokrat-modal.auth-modal > * {
     background: none;
     border: none;
     border-radius: 8px;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     font-size: 0.95rem;
     cursor: pointer;
     transition: color 0.2s ease;
 }
 
-.auth-pass-toggle:hover { color: var(--text-primary); }
+.auth-pass-toggle:hover { color: var(--color-ink-0); }
 
 .auth-modal__submit { justify-content: center; }
 
@@ -187,11 +187,11 @@ sokrat-modal.auth-modal > * {
     margin: 0.9rem 0 0;
     font-size: 0.78rem;
     line-height: 1.5;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     opacity: 0.85;
 }
 
-.auth-modal__terms a { color: var(--primary); }
+.auth-modal__terms a { color: var(--color-brand-500); }
 
 /* ---------- Mobile ---------- */
 

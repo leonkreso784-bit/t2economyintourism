@@ -5,6 +5,22 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **C7/5: paleta-most mrtav (990 poziva → tokeni); GRADIVO čuva 2 imena kao ugovor — C7 ZATVOREN**
+
+### Promijenjeno
+- 990 `var(--legacy)` poziva u 24 css + 1 js preimenovano na `--color-*` tokene (čuvar:
+  `check:tokens`); `variables.css` most → ① ugovor prema sadržaju (`--primary`,
+  `--border-color`) + ② strukturne (`--transition`, `--safe-*`, `--touch-target*`, `--nav-h`).
+
+### Popravljeno
+- **`--border-color` u gradivu (72×) nikad nije bio definiran** → shorthand je padao cijeli
+  i tablice NISU imale rubove; definicija u ugovoru vraća 1 px liniju po temi.
+
+### Dokaz
+- `check:tokens` čist · `css:diff`: 0 paint-razlika na 4 rute (10 560 = definicijske);
+  geografija: jedina paint-promjena = border na 9 redaka tablica · telefon 21/0 ·
+  preflight EXIT 0. Faza-dug: 8 032 r./106 `!important` → **5 942 / 2**.
+
 ## 2026-09-01 (FABLE) — **C7/4: `components.css` raspušten — mobile-nav je stilizirao samo NEVIDLJIVO**
 
 ### Promijenjeno

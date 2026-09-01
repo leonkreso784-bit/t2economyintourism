@@ -12,12 +12,12 @@
 @media (hover: hover) and (pointer: fine) {
     .category-btn:hover {
         transform: translateY(-3px);
-        box-shadow: var(--shadow-lg);
+        box-shadow: var(--shadow-e2);
     }
 
     .action-btn.primary:hover {
         transform: translateY(-3px);
-        box-shadow: 0 10px 20px color-mix(in srgb, var(--primary) 30%, transparent);
+        box-shadow: 0 10px 20px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
     }
 
     .stat-card:hover {
@@ -56,12 +56,12 @@
 @media (prefers-contrast: high) {
     :root {
         --border: var(--color-line-strong);
-        --text-secondary: var(--text-primary);
+        --text-secondary: var(--color-ink-0);
     }
 
     .lesson-card,
     .flashcard {
-        border: 2px solid var(--text-primary);
+        border: 2px solid var(--color-ink-0);
     }
 }
 

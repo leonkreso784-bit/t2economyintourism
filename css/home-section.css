@@ -15,7 +15,7 @@
     font-size: 1.5rem;
     padding: 0 0.5rem;
     margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, var(--color-brand-500), var(--color-ok-strong));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -23,7 +23,7 @@
 }
 
 .subtitle {
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     font-size: 0.9rem;
     padding: 0 0.5rem;
     margin-bottom: 1.5rem;
@@ -38,32 +38,32 @@
 }
 
 .stat-card {
-    background: var(--bg-secondary);
+    background: var(--color-surface-1);
     padding: 1rem;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-e1);
     transition: var(--transition);
 }
 
 .stat-card:hover {
     transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-e2);
 }
 
-.stat-card i { font-size: 1.25rem; color: var(--primary); margin-bottom: 0.25rem; }
+.stat-card i { font-size: 1.25rem; color: var(--color-brand-500); margin-bottom: 0.25rem; }
 
 .stat-card h3,
 .stat-card .stat-number {
     font-size: 1.4rem;
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--color-ink-0);
     display: block;
 }
 
-.stat-card p { color: var(--text-muted); font-size: 0.7rem; }
+.stat-card p { color: var(--color-ink-2); font-size: 0.7rem; }
 
 .category-selector { margin-bottom: 2rem; }
-.category-selector h2 { margin-bottom: 1rem; color: var(--text-primary); font-size: 1.1rem; }
+.category-selector h2 { margin-bottom: 1rem; color: var(--color-ink-0); font-size: 1.1rem; }
 
 .categories {
     display: grid;
@@ -72,10 +72,10 @@
 }
 
 .category-btn {
-    background: var(--bg-secondary);
-    border: 2px solid var(--border);
+    background: var(--color-surface-1);
+    border: 2px solid var(--color-line);
     padding: 1rem;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     cursor: pointer;
     transition: var(--transition);
     display: flex;
@@ -88,24 +88,24 @@
 }
 
 .category-btn:hover {
-    border-color: var(--primary);
+    border-color: var(--color-brand-500);
     transform: translateY(-2px);
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-e1);
 }
 
 .category-btn.active {
-    border-color: var(--primary);
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: var(--on-primary);
+    border-color: var(--color-brand-500);
+    background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-600));
+    color: var(--color-on-brand);
 }
 
-.category-btn i { font-size: 1.25rem; color: var(--primary); width: 35px; text-align: center; flex-shrink: 0; }
+.category-btn i { font-size: 1.25rem; color: var(--color-brand-500); width: 35px; text-align: center; flex-shrink: 0; }
 /* ⚠️ `inherit`, NE zakucana bijela: roditelj vec odlucuje bojom teme (`--on-primary`),
    a dijete ju je do 2026-08-29 ponistavalo. Na kredi je to davalo kontrast 1.68. */
 .category-btn.active i { color: inherit; }
-.category-btn span { font-weight: 600; color: var(--text-primary); font-size: 0.9rem; flex: 1; }
+.category-btn span { font-weight: 600; color: var(--color-ink-0); font-size: 0.9rem; flex: 1; }
 .category-btn.active span { color: inherit; }
-.category-btn small { color: var(--text-muted); font-size: 0.75rem; flex-shrink: 0; }
+.category-btn small { color: var(--color-ink-2); font-size: 0.75rem; flex-shrink: 0; }
 /* `inherit`, NE zakucana bijela — isti razlog kao `span` iznad: roditelj bira tintu
    teme (`--on-primary`); izmjereno 5.65–9.87 kroz sve teme (MREŽA C1). */
 .category-btn.active small { color: inherit; }
@@ -122,7 +122,7 @@
 .action-btn {
     padding: 1rem 1.5rem;
     border: none;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     cursor: pointer;
     font-family: inherit;
     font-size: 1rem;
@@ -137,31 +137,31 @@
 }
 
 .action-btn.primary {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: var(--on-primary);
+    background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-600));
+    color: var(--color-on-brand);
 }
 
 .action-btn.primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 16px color-mix(in srgb, var(--primary) 30%, transparent);
+    box-shadow: 0 8px 16px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
 }
 
 .action-btn.secondary {
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    border: 2px solid var(--border);
+    background: var(--color-surface-1);
+    color: var(--color-ink-0);
+    border: 2px solid var(--color-line);
 }
 
 .action-btn.secondary:hover {
-    border-color: var(--primary);
-    color: var(--primary);
+    border-color: var(--color-brand-500);
+    color: var(--color-brand-500);
 }
 
 .action-btn.tertiary {
     /* oba kraja gradijenta iz ok-tokena (bio zakucan #059669), tinta po temi:
        najgori kraj 5.45 (academic), tamne teme 6.03+ (MREŽA C1) */
-    background: linear-gradient(135deg, var(--success), var(--secondary));
-    color: var(--on-success);
+    background: linear-gradient(135deg, var(--color-ok), var(--color-ok-strong));
+    color: var(--color-on-ok);
 }
 
 /* C7/3: ljestva .action-btn iz responsive/01+02+06 — uz bazu, mobile-first.

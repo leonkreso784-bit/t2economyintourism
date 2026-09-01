@@ -3,84 +3,44 @@
    Sokrat Study - CSS Variables, Reset, and Base Styles
    ===================================================== */
 
-/* ===== CSS VARIABLES =====
-   ⚠️ OVDJE VIŠE NEMA NIJEDNE VRIJEDNOSTI — SAMO MOST NA `css/tokens.css`  (cigla C2)
+/* ===== CSS VARIJABLE — od C7/5 (2026-09-01) SAMO DVA POPISA =====
 
-   ZAŠTO: mjerenjem je utvrđeno da 81 % boje u platformi već ide kroz ove varijable
-   (992 `var()` poziva naspram 226 tvrdih hexova, od kojih su 39 same definicije).
-   Bile su, međutim, zakucane na Tailwindove zadane vrijednosti (#6366f1 = indigo-500,
-   #0f172a = slate-900), pa promjena `tokens.css` sama ne bi obojila ništa: novi tokeni
-   žive samo u Tailwind-utilityjima, a njih legacy CSS ne koristi.
+   ① UGOVOR PREMA SADRŽAJU. Gradivo u bazi/`data/` u svojim inline stilovima zove
+      DVA imena i njih se ne smije preimenovati bez migracije SVIH redaka sadržaja
+      (uklj. korisničke materijale u `nodes`) — a to je zahvat s E2 re-syncom, ne
+      rename u kodu:
+        • `--primary` — 6 poziva (accounting, cash-control);
+        • `--border-color` — 72 poziva (geography/econ tablice). ⚠️ DOSAD NIJE BIO
+          DEFINIRAN NIGDJE: rub je padao na `currentColor` (boju teksta) — isti
+          razred kvara zbog kojeg postoji `check:tokens` (B1), samo u SADRŽAJU,
+          kamo brana ne gleda. Definicija ovdje je i POPRAVAK: rub postaje
+          tanka linija po temi umjesto pune boje tinte.
 
-   Ovaj most to spaja: STARA IMENA ostaju (da 992 poziva prežive nedirnuta), a
-   VRIJEDNOSTI dolaze iz jedinog popisa. Posljedica je da je cijela platforma
-   prebojana jednim editom, umjesto da mjesecima stoji pola nova pola stara dok
-   C3–C7 ne stignu do svake površine.
+   ② STRUKTURNE VRIJEDNOSTI koje nisu paleta i nemaju token-ekvivalent.
 
-   Ova datoteka umire u C7 zajedno s posljednjom legacy površinom; do tada je
-   prevoditelj, ne izvor. NE VRAĆAJ HEX OVDJE — jedini popis je `tokens.css`.
-
-   ⚠️ `--radius-lg` NAMJERNO NEDOSTAJE: token istog imena već postoji u `tokens.css`
-   (1.25rem = 20px, identično dosadašnjem). Da je ovdje napisano
-   `--radius-lg: var(--radius-lg)`, to bi bila kružna referenca → varijabla postaje
-   nevaljana i SVAKI `var(--radius-lg)` u 18 pravila tiho ostaje bez zaobljenja.
-   Ovako ga legacy CSS čita izravno iz tokena. */
+   Sve ostalo (23 palete-aliasa, ~990 poziva) preimenovano je u tokene IZ
+   `tokens.css` u C7/5 — jedina paleta je ondje. NE VRAĆAJ ALIASE: novi kod piše
+   `var(--color-*)` izravno. Povijest mosta (C2, zašto je postojao): git. */
 :root {
+    /* ① ugovor prema sadržaju */
     --primary: var(--color-brand-500);
-    --primary-dark: var(--color-brand-600);
-    --primary-light: var(--color-brand-400);
-    --secondary: var(--color-ok-strong);
-    --accent: var(--color-warn);
-    --danger: var(--color-danger);
-    --danger-text: var(--color-danger-ink);
-    --warning-text: var(--color-warn-ink);    /* isti obrazac kao --danger-text: jantar za TEKST upozorenja na tamnoj podlozi (M5a brojač na pragu 200) */
-    --success: var(--color-ok);
+    --border-color: var(--color-line);
 
-    /* ⚠️ Ispuna markom traži TAMAN tekst (mentol + bijelo = 2.04, pada). Stari indigo
-       je podnosio bijelo, novi ne — zato ovo ime postoji i mora se koristiti na svakom
-       gumbu koji je ispunjen bojom marke. Detalji i brojke: tokens.css. */
-    --on-primary: var(--color-on-brand);
-
-    /* Isti obrazac za semantičke ispune (ADR-032): točno/netočno je UVIJEK puna ispuna,
-       a tinta na njoj dolazi iz ovih imena — nikad zakucano `white`/`#fff`. */
-    --on-success: var(--color-on-ok);
-    --on-danger: var(--color-on-danger);
-
-    --bg-primary: var(--color-surface-0);
-    --bg-secondary: var(--color-surface-1);
-    --bg-tertiary: var(--color-surface-2);
-
-    /* ⚠️ `--bg-card` je do 2026-08-13 postojao SAMO u `css/legal.css`, koji aplikacija ne
-       učitava. U aplikaciji je zato uvijek gorio fallback — a fallback je bio `#0f172a`,
-       tamna škriljevac-ploha. Dok je tema bila tamna, poklapao se s podlogom i nitko ga
-       nije vidio; čim je zadana postala svijetla, kartica prijave i dijalog potvrde
-       ostali su tamne ploče s tamnim tekstom: **1.83** i **1.02**. Definicija ovdje gasi
-       oba fallbacka odjednom i drži jednu činjenicu na jednom mjestu (ADR-027). */
-    --bg-card: var(--color-surface-1);
-
-    --text-primary: var(--color-ink-0);
-    --text-secondary: var(--color-ink-1);
-    --text-muted: var(--color-ink-2);
-
-    --border: var(--color-line);
-    --shadow: var(--shadow-e1);
-    --shadow-lg: var(--shadow-e2);
-
-    --radius: var(--radius-md);
+    /* ② strukturne */
     --transition: all 0.3s ease;
-    
+
     /* Safe area insets for iPhone notch/Dynamic Island */
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
     --safe-left: env(safe-area-inset-left, 0px);
     --safe-right: env(safe-area-inset-right, 0px);
-    
+
     /* Touch-friendly sizes */
     --touch-target: 44px;
     --touch-target-large: 48px;
 
     /* Fixed landing nav height (bez safe-area) — jedinstveni izvor za hero offset
-       i scroll-margin sidrenih linkova. Drži ≥ stvarne visine trake (logo 50px + padding). */
+       i scroll-margin sidrenih linkova. Drži >= stvarne visine trake. */
     --nav-h: 72px;
 }
 
@@ -93,7 +53,7 @@
 
 /* Subject item meta needs higher contrast */
 .subject-item-meta span {
-    color: var(--text-primary);
+    color: var(--color-ink-0);
 }
 
 
@@ -149,8 +109,8 @@ body {
        promjena `--font-sans` ne bi napravila NIŠTA — token je postojao, ali ga nitko
        nije čitao. Jedna definicija, jedno mjesto (ADR-027). */
     font-family: var(--font-sans);
-    background: var(--bg-primary);
-    color: var(--text-primary);
+    background: var(--color-surface-0);
+    color: var(--color-ink-0);
     min-height: 100vh;
     min-height: 100dvh;
     transition: var(--transition);

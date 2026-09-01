@@ -119,7 +119,7 @@ function getAllFillQuestions() {
 function showFillQuestion() {
     const fill = AppState.fill;
     if (!fill.questions || fill.questions.length === 0) {
-        document.getElementById('fillSentence').innerHTML = '<p style="color: var(--text-muted);">No fill-in-the-blank questions available for this lesson.</p>';
+        document.getElementById('fillSentence').innerHTML = '<p style="color: var(--color-ink-2);">No fill-in-the-blank questions available for this lesson.</p>';
         document.getElementById('fillInput').disabled = true;
         document.getElementById('checkFill').disabled = true;
         return;

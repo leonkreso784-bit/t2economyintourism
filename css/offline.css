@@ -26,10 +26,10 @@
     gap: 0.5rem;
     min-height: var(--touch-target);
     padding: 0.5rem 1rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--color-line);
     border-radius: var(--radius-lg);
-    background: var(--bg-secondary);
-    color: var(--text-primary);
+    background: var(--color-surface-1);
+    color: var(--color-ink-0);
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
@@ -37,7 +37,7 @@
 }
 
 .offline-btn:hover:not(:disabled),
-.offline-refresh:hover:not(:disabled) { border-color: var(--primary); }
+.offline-refresh:hover:not(:disabled) { border-color: var(--color-brand-500); }
 .offline-btn:disabled,
 .offline-refresh:disabled { opacity: 0.6; cursor: default; }
 
@@ -46,15 +46,15 @@
    Vrijedi za svaki element kojem se ovdje postavi `display`. */
 .offline-refresh[hidden] { display: none; }
 
-.offline-icon { font-size: 0.85em; color: var(--primary); }
+.offline-icon { font-size: 0.85em; color: var(--color-brand-500); }
 
 /* Stanje „skinuto" nosi boju uspjeha na IKONI, ne na plohi: ploha u punoj tinti
    tražila bi zakucan tekst na sebi, a to je točno ono što `check:palette` brani. */
-[data-offline-state="ready"] .offline-icon { color: var(--success); }
+[data-offline-state="ready"] .offline-icon { color: var(--color-ok); }
 
 .offline-meta {
     font-size: 0.8rem;
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     font-variant-numeric: tabular-nums;
 }
 
@@ -95,9 +95,9 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--color-line);
     border-radius: var(--radius-lg);
-    background: var(--bg-secondary);
+    background: var(--color-surface-1);
 }
 
 .shelf-tile__icon {
@@ -105,7 +105,7 @@
     width: 2.25rem;
     text-align: center;
     font-size: 1.1rem;
-    color: var(--primary);
+    color: var(--color-brand-500);
 }
 
 /* `min-width: 0` je ono što dopušta rezanje dugog naziva unutar flexa — bez njega
@@ -115,17 +115,17 @@
 .shelf-tile__name {
     display: block;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--color-ink-0);
     text-decoration: none;
     overflow-wrap: anywhere;
 }
 
-.shelf-tile__name:hover { color: var(--primary); }
+.shelf-tile__name:hover { color: var(--color-brand-500); }
 
 .shelf-tile__meta {
     margin: 0.15rem 0 0;
     font-size: 0.8rem;
-    color: var(--text-muted);
+    color: var(--color-ink-2);
 }
 
 .shelf-tile__remove {
@@ -133,16 +133,16 @@
     min-width: var(--touch-target);
     min-height: var(--touch-target);
     border: 1px solid transparent;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     background: none;
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     cursor: pointer;
     transition: var(--transition);
 }
 
 .shelf-tile__remove:hover:not(:disabled) {
-    border-color: var(--danger);
-    color: var(--danger-text);
+    border-color: var(--color-danger);
+    color: var(--color-danger-ink);
 }
 
 .shelf-tile__remove:disabled { opacity: 0.5; cursor: default; }
@@ -160,8 +160,8 @@
    `check:palette`). Isti obrazac koji „ready" već koristi sa `--success`.
    ===================================================================== */
 
-[data-offline-state="stale"] .offline-icon { color: var(--warning-text); }
-[data-offline-state="stale"] .offline-meta { color: var(--warning-text); }
+[data-offline-state="stale"] .offline-icon { color: var(--color-warn-ink); }
+[data-offline-state="stale"] .offline-meta { color: var(--color-warn-ink); }
 
 /* Sporedna radnja uz glavnu: ista visina i meta na dodir, tiša ploha. Bez toga
    bi „Osvježi" i „Ukloni" izgledali jednako važno, a nisu. */
@@ -170,8 +170,8 @@
     font-weight: 500;
 }
 
-.shelf-tile[data-shelf-stale] .shelf-tile__icon { color: var(--warning-text); }
-.shelf-tile[data-shelf-stale] .shelf-tile__meta { color: var(--warning-text); }
+.shelf-tile[data-shelf-stale] .shelf-tile__icon { color: var(--color-warn-ink); }
+.shelf-tile[data-shelf-stale] .shelf-tile__meta { color: var(--color-warn-ink); }
 
 /* Isti kalup kao `__remove` (meta na dodir, prozirna ploha), druga boja ruba na
    pokazivač — radnja je popravak, ne brisanje. */
@@ -180,12 +180,12 @@
     min-width: var(--touch-target);
     min-height: var(--touch-target);
     border: 1px solid transparent;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     background: none;
-    color: var(--warning-text);
+    color: var(--color-warn-ink);
     cursor: pointer;
     transition: var(--transition);
 }
 
-.shelf-tile__refresh:hover:not(:disabled) { border-color: var(--primary); }
+.shelf-tile__refresh:hover:not(:disabled) { border-color: var(--color-brand-500); }
 .shelf-tile__refresh:disabled { opacity: 0.5; cursor: default; }

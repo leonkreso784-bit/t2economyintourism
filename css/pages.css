@@ -19,7 +19,7 @@
 .about-page {
     min-height: 100vh;
     min-height: 100dvh;
-    background: var(--bg-primary);
+    background: var(--color-surface-0);
 }
 
 /* ⚠️ `.about-header` je OBRISAN zajedno s markupom — v. komentar u `index.html`.
@@ -99,7 +99,7 @@
    razlog zbog kojeg je `.about-header` doživio pet dana nakon K2b. */
 
 .about-tagline {
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     font-size: 1.1rem;
 }
 
@@ -117,10 +117,10 @@
     max-width: 18rem;
     min-height: 44px;
     padding: 0.75rem 1.25rem;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    background: var(--bg-secondary);
-    color: var(--text-primary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-line);
+    background: var(--color-surface-1);
+    color: var(--color-ink-0);
     font: inherit;
     font-weight: 600;
     cursor: pointer;
@@ -130,24 +130,24 @@
 /* `:not([disabled])` je obrazac iz C3: pravilo za `:hover` koje ne izuzima svoju
    iznimku tjera iznimku da se brani `!important`-om. */
 .about-btn:hover:not([disabled]) {
-    background: var(--bg-tertiary);
+    background: var(--color-surface-2);
 }
 
 .about-btn--primary {
-    background: var(--primary);
-    border-color: var(--primary);
+    background: var(--color-brand-500);
+    border-color: var(--color-brand-500);
     /* TVRDA ZABRANA #1: tekst na ispuni marke NIKAD nije zakucan — marka je u
        „Akademskom plavom" svijetla kreda, na kojoj bijelo daje kontrast 1.68. */
-    color: var(--on-primary);
+    color: var(--color-on-brand);
 }
 
 .about-btn--primary:hover:not([disabled]) {
-    background: var(--primary-dark);
-    border-color: var(--primary-dark);
+    background: var(--color-brand-600);
+    border-color: var(--color-brand-600);
 }
 
 .about-btn:focus-visible {
-    outline: 3px solid var(--primary);
+    outline: 3px solid var(--color-brand-500);
     outline-offset: 2px;
 }
 
@@ -171,23 +171,23 @@
 }
 
 .about-card {
-    background: var(--bg-secondary);
+    background: var(--color-surface-1);
     border-radius: var(--radius-lg);
     padding: 1.25rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--color-line);
 }
 
 .about-card-icon {
     width: 45px;
     height: 45px;
-    background: var(--bg-tertiary);
+    background: var(--color-surface-2);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 1rem;
     font-size: 1.25rem;
-    color: var(--primary);
+    color: var(--color-brand-500);
 }
 
 .about-card h2 {
@@ -196,7 +196,7 @@
 }
 
 .about-card p {
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     font-size: 0.95rem;
     line-height: 1.6;
 }
@@ -206,14 +206,14 @@
     align-items: center;
     gap: 0.4rem;
     padding: 0.4rem 0.75rem;
-    background: var(--bg-tertiary);
+    background: var(--color-surface-2);
     border-radius: 20px;
     font-size: 0.8rem;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
 }
 
 .about-features span i {
-    color: var(--primary);
+    color: var(--color-brand-500);
 }
 
 .email-link {
@@ -222,17 +222,17 @@
     gap: 0.5rem;
     margin-top: 1rem;
     padding: 0.75rem 1rem;
-    background: var(--bg-tertiary);
-    border-radius: var(--radius);
-    color: var(--primary);
+    background: var(--color-surface-2);
+    border-radius: var(--radius-md);
+    color: var(--color-brand-500);
     text-decoration: none;
     font-weight: 500;
     transition: var(--transition);
 }
 
 .email-link:hover {
-    background: var(--primary);
-    color: var(--on-primary);
+    background: var(--color-brand-500);
+    color: var(--color-on-brand);
 }
 
 /* ⚠️ IZMJERENO naopako od ocekivanja: avatar je na telefonu VECI (70px, iz starog 02)
@@ -240,12 +240,12 @@
 .creator-avatar {
     width: 70px;
     height: 70px;
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-400));
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--on-primary);
+    color: var(--color-on-brand);
     font-size: 1.75rem;
     flex-shrink: 0;
 }
@@ -256,7 +256,7 @@
 }
 
 .creator-info p {
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     font-size: 0.9rem;
 }
 
@@ -292,9 +292,9 @@
     gap: 0.6rem;
     max-width: min(90vw, 420px);
     padding: 0.85rem 1.25rem;
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    border: 1px solid var(--border);
+    background: var(--color-surface-1);
+    color: var(--color-ink-0);
+    border: 1px solid var(--color-line);
     border-radius: 12px;
     box-shadow: 0 10px 28px color-mix(in srgb, var(--color-shadow) 35%, transparent);
     font-size: 0.9rem;
@@ -311,7 +311,7 @@
 }
 
 .toast i {
-    color: var(--primary);
+    color: var(--color-brand-500);
     flex-shrink: 0;
 }
 
@@ -347,9 +347,9 @@
        na SVIM sirinama — footer stoji iznad mobile-nava kad je ovaj vidljiv. */
     padding-bottom: calc(1rem + 65px + var(--safe-bottom));
     text-align: center;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     font-size: 0.85rem;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--color-line);
 }
 
 /* C7/3: mobilni oblik footera iz responsive/02. */

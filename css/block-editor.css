@@ -13,7 +13,7 @@
 .be-empty {
   border: 2px dashed var(--color-line-strong);
   border-radius: 14px; padding: 22px; text-align: center;
-  color: var(--text-muted); font-size: 13px; background: var(--bg-tertiary);
+  color: var(--color-ink-2); font-size: 13px; background: var(--color-surface-2);
 }
 
 /* ── blok-kartica (kvadratić) ── */
@@ -21,23 +21,23 @@
    drag-ručkom; hover pojača granicu + otkrije ↑↓✕. Blokovi i dalje „teku" (tanak chrome). */
 .be-block {
   position: relative;
-  border: 1px solid var(--border); border-radius: 12px;
-  background: color-mix(in srgb, var(--text-muted) 4%, transparent);
+  border: 1px solid var(--color-line); border-radius: 12px;
+  background: color-mix(in srgb, var(--color-ink-2) 4%, transparent);
   padding: 6px 12px 9px 34px; transition: background .14s, border-color .14s;
 }
 .be-block:hover, .be-block:focus-within {
-  background: color-mix(in srgb, var(--text-muted) 8%, transparent); border-color: var(--color-line-strong);
+  background: color-mix(in srgb, var(--color-ink-2) 8%, transparent); border-color: var(--color-line-strong);
 }
 
 /* Fix A: drag-ručka ⣿ = UVIJEK vidljiva u lijevom žlijebu (Notion-stil), jasan „grab". */
 .be-grip {
   position: absolute; left: 4px; top: 7px; width: 22px; height: 26px; padding: 0;
   display: grid; place-items: center; background: transparent; border: none;
-  color: var(--text-muted); font-size: 12px; opacity: .4; border-radius: 6px;
+  color: var(--color-ink-2); font-size: 12px; opacity: .4; border-radius: 6px;
   cursor: grab; touch-action: none; transition: opacity .13s, background .13s, color .13s;
 }
 .be-block:hover .be-grip { opacity: .85; }
-.be-grip:hover { opacity: 1; color: var(--primary); background: var(--bg-tertiary); }
+.be-grip:hover { opacity: 1; color: var(--color-brand-500); background: var(--color-surface-2); }
 .be-grip:active { cursor: grabbing; }
 
 @keyframes bePop { from { opacity: 0; transform: translateY(4px) scale(.99); } to { opacity: 1; transform: none; } }
@@ -46,42 +46,42 @@
 .be-n {
   min-width: 20px; height: 20px; padding: 0 5px; border-radius: 6px; flex-shrink: 0;
   display: grid; place-items: center; font-size: 10.5px; font-weight: 700;
-  color: var(--text-muted); background: var(--bg-tertiary);
-  border: 1px solid var(--border); transition: color .14s;
+  color: var(--color-ink-2); background: var(--color-surface-2);
+  border: 1px solid var(--color-line); transition: color .14s;
 }
-.be-block:hover .be-n, .be-block:focus-within .be-n { color: var(--primary); }
+.be-block:hover .be-n, .be-block:focus-within .be-n { color: var(--color-brand-500); }
 .be-ctrls { display: flex; gap: 3px; margin-left: auto; opacity: 0; transition: .15s; }
 .be-block:hover .be-ctrls, .be-block:focus-within .be-ctrls { opacity: 1; }
 .be-btn {
   width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center;
-  font-size: 13px; color: var(--text-muted); background: var(--bg-secondary);
-  border: 1px solid var(--border); cursor: pointer; transition: .13s;
+  font-size: 13px; color: var(--color-ink-2); background: var(--color-surface-1);
+  border: 1px solid var(--color-line); cursor: pointer; transition: .13s;
 }
-.be-btn:hover:not([disabled]) { color: var(--on-primary); border-color: var(--primary); background: var(--primary); }
+.be-btn:hover:not([disabled]) { color: var(--color-on-brand); border-color: var(--color-brand-500); background: var(--color-brand-500); }
 .be-btn[disabled] { opacity: .3; cursor: default; }
-.be-del:hover:not([disabled]) { color: var(--on-primary); border-color: var(--danger); background: var(--danger); }
+.be-del:hover:not([disabled]) { color: var(--color-on-brand); border-color: var(--color-danger); background: var(--color-danger); }
 
 /* K6 (F5/D4): drag-stanje + drop-linija (vanilla pointer-drag). */
-.be-block.be-dragging { opacity: .4; border-style: dashed; border-color: color-mix(in srgb, var(--primary) 50%, transparent); }
+.be-block.be-dragging { opacity: .4; border-style: dashed; border-color: color-mix(in srgb, var(--color-brand-500) 50%, transparent); }
 .be-dropline {
   position: fixed; height: 3px; border-radius: 3px; pointer-events: none; z-index: 1450;
-  background: var(--primary);
-  box-shadow: 0 0 8px 1px color-mix(in srgb, var(--primary) 60%, transparent);
+  background: var(--color-brand-500);
+  box-shadow: 0 0 8px 1px color-mix(in srgb, var(--color-brand-500) 60%, transparent);
 }
 /* Fix B: ghost = pilula koja prati kursor tijekom draga (blok I sekcija; globalno = na body). */
 .be-ghost {
   position: fixed; z-index: 1500; pointer-events: none;
   display: inline-flex; align-items: center; gap: 7px; max-width: 260px;
   padding: 6px 12px; border-radius: 9px; font-size: 12.5px; font-weight: 600;
-  color: var(--text-primary); background: var(--bg-secondary);
-  border: 1px solid color-mix(in srgb, var(--primary) 55%, transparent);
-  box-shadow: var(--shadow-lg);
+  color: var(--color-ink-0); background: var(--color-surface-1);
+  border: 1px solid color-mix(in srgb, var(--color-brand-500) 55%, transparent);
+  box-shadow: var(--shadow-e2);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .be-ghost i { opacity: .65; }
-.be-ghost b { color: var(--primary); }
+.be-ghost b { color: var(--color-brand-500); }
 
-.be-body { font-size: 14px; line-height: 1.6; color: var(--text-secondary); }
+.be-body { font-size: 14px; line-height: 1.6; color: var(--color-ink-1); }
 .be-body > *:first-child { margin-top: 0; }
 .be-body > *:last-child { margin-bottom: 0; }
 
@@ -91,25 +91,25 @@
 .be-adder:hover, .be-adder:focus-within { opacity: 1; }
 .be-adder::before {
   content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 2px; transform: translateY(-50%); border-radius: 2px;
-  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--primary) 40%, transparent) 18%, color-mix(in srgb, var(--primary) 40%, transparent) 82%, transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-brand-500) 40%, transparent) 18%, color-mix(in srgb, var(--color-brand-500) 40%, transparent) 82%, transparent);
 }
 .be-add {
   width: 28px; height: 28px; border-radius: 999px; z-index: 1; cursor: pointer;
   display: grid; place-items: center; font-size: 16px; line-height: 1;
-  color: var(--primary); background: var(--bg-secondary);
-  border: 1.5px solid color-mix(in srgb, var(--primary) 55%, transparent); box-shadow: var(--shadow); transition: .14s;
+  color: var(--color-brand-500); background: var(--color-surface-1);
+  border: 1.5px solid color-mix(in srgb, var(--color-brand-500) 55%, transparent); box-shadow: var(--shadow-e1); transition: .14s;
 }
-.be-add:hover { color: var(--on-primary); background: var(--primary); border-color: transparent; transform: scale(1.1); }
+.be-add:hover { color: var(--color-on-brand); background: var(--color-brand-500); border-color: transparent; transform: scale(1.1); }
 
 /* ── veliki „Dodaj blok" na dnu (K5/F1: primarna add-afordancija) ── */
 .be-bigplus {
   width: 100%; margin-top: 10px; padding: 13px; cursor: pointer;
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  border: 1.5px dashed color-mix(in srgb, var(--primary) 34%, transparent); border-radius: 14px;
-  color: var(--text-muted); font-size: 13.5px; font-weight: 600;
-  background: color-mix(in srgb, var(--primary) 5%, transparent); transition: .16s;
+  border: 1.5px dashed color-mix(in srgb, var(--color-brand-500) 34%, transparent); border-radius: 14px;
+  color: var(--color-ink-2); font-size: 13.5px; font-weight: 600;
+  background: color-mix(in srgb, var(--color-brand-500) 5%, transparent); transition: .16s;
 }
-.be-bigplus:hover { border-color: var(--primary); color: var(--primary); background: color-mix(in srgb, var(--primary) 12%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 9%, transparent); }
+.be-bigplus:hover { border-color: var(--color-brand-500); color: var(--color-brand-500); background: color-mix(in srgb, var(--color-brand-500) 12%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand-500) 9%, transparent); }
 
 /* ── tip-izbornik (na ＋) ── */
 .be-menu {
@@ -117,15 +117,15 @@
      konteksta kartica; z-index u rangu .be-toolbar (1400) da je UVIJEK iznad sadržaja */
   position: fixed; z-index: 1400; margin: 0;
   display: flex; flex-direction: column; min-width: 150px; padding: 5px;
-  background: var(--bg-secondary); border: 1px solid var(--border);
-  border-radius: 12px; box-shadow: var(--shadow-lg);
+  background: var(--color-surface-1); border: 1px solid var(--color-line);
+  border-radius: 12px; box-shadow: var(--shadow-e2);
   animation: bePop .16s ease;
 }
 .be-menu-item {
   text-align: left; padding: 8px 12px; border-radius: 8px; cursor: pointer;
-  font-size: 13px; color: var(--text-secondary); background: transparent; border: none; transition: .12s;
+  font-size: 13px; color: var(--color-ink-1); background: transparent; border: none; transition: .12s;
 }
-.be-menu-item:hover { background: var(--primary); color: var(--on-primary); }
+.be-menu-item:hover { background: var(--color-brand-500); color: var(--color-on-brand); }
 
 /* ── učini blok-editor uočljivim samo u draft-modu (host dodaje .be-mount) ── */
 .be-mount { margin-top: 8px; }
@@ -135,37 +135,37 @@
   outline: none; border-radius: 8px; padding: 4px 8px; margin: 0 -8px;
   transition: background .13s, box-shadow .13s; min-height: 1.4em; cursor: text;
 }
-.be-edit:hover { background: var(--bg-tertiary); }
-.be-edit:focus { background: color-mix(in srgb, var(--primary) 8%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) 45%, transparent); }
+.be-edit:hover { background: var(--color-surface-2); }
+.be-edit:focus { background: color-mix(in srgb, var(--color-brand-500) 8%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-brand-500) 45%, transparent); }
 /* placeholder u praznom polju */
-.be-edit:empty::before { content: attr(data-be-ph); color: var(--text-muted); opacity: .6; pointer-events: none; }
+.be-edit:empty::before { content: attr(data-be-ph); color: var(--color-ink-2); opacity: .6; pointer-events: none; }
 /* naslovna polja (veličine kao h2–h4) */
-.be-edit--h2 { font-size: 20px; font-weight: 700; color: var(--text-primary); }
-.be-edit--h3 { font-size: 17px; font-weight: 700; color: var(--text-primary); }
-.be-edit--h4 { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.be-edit--h2 { font-size: 20px; font-weight: 700; color: var(--color-ink-0); }
+.be-edit--h3 { font-size: 17px; font-weight: 700; color: var(--color-ink-0); }
+.be-edit--h4 { font-size: 15px; font-weight: 600; color: var(--color-ink-0); }
 /* editabilna lista */
 .be-editlist { margin: 0; padding-left: 22px; }
 .be-editlist .be-edit { display: list-item; margin: 2px -8px; }
 /* link u editoru = ne-navigabilan (uređuje se) */
-.be-edit a[data-be-link] { color: var(--primary); text-decoration: underline; cursor: text; }
+.be-edit a[data-be-link] { color: var(--color-brand-500); text-decoration: underline; cursor: text; }
 
 /* plutajuća tekst-traka (B/I; boja/link = U8.4b) */
 .be-toolbar {
   position: fixed; display: none; gap: 3px; z-index: 1400;
   padding: 4px; border-radius: 10px;
-  background: var(--bg-secondary); border: 1px solid var(--border);
-  box-shadow: var(--shadow-lg); backdrop-filter: blur(8px);
+  background: var(--color-surface-1); border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-e2); backdrop-filter: blur(8px);
   animation: bePop .13s ease;
 }
 .be-toolbar.on { display: flex; }
 .be-tb {
   min-width: 28px; height: 28px; padding: 0 7px; border-radius: 7px; cursor: pointer;
-  display: grid; place-items: center; font-size: 14px; color: var(--text-secondary);
+  display: grid; place-items: center; font-size: 14px; color: var(--color-ink-1);
   background: transparent; border: none; transition: .12s;
 }
-.be-tb:hover { background: var(--primary); color: var(--on-primary); }
+.be-tb:hover { background: var(--color-brand-500); color: var(--color-on-brand); }
 /* razdjelnik u traci */
-.be-tbsep { width: 1px; align-self: stretch; margin: 3px 2px; background: var(--border); }
+.be-tbsep { width: 1px; align-self: stretch; margin: 3px 2px; background: var(--color-line); }
 /* inline matematika: √x — kurziv na x da se čita kao varijabla, ne kao slovo u riječi */
 .be-tbmath { font-size: 13px; letter-spacing: .5px; }
 .be-tbmath i { font-family: var(--font-serif, Georgia, "Times New Roman", serif); font-style: italic; }
@@ -173,9 +173,9 @@
 .be-tbc { min-width: 24px; padding: 0 5px; }
 .be-tbc::after {
   content: ''; width: 15px; height: 15px; border-radius: 5px;
-  background: var(--sw, var(--text-muted)); box-shadow: inset 0 0 0 1px var(--border);
+  background: var(--sw, var(--color-ink-2)); box-shadow: inset 0 0 0 1px var(--color-line);
 }
-.be-tbc:hover::after { box-shadow: inset 0 0 0 1px var(--color-line-strong), 0 0 0 2px color-mix(in srgb, var(--primary) 40%, transparent); }
+.be-tbc:hover::after { box-shadow: inset 0 0 0 1px var(--color-line-strong), 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 40%, transparent); }
 
 /* ===== U8.5a — media blok (slika): forma polja + živi preview ===== */
 .be-media { display: flex; flex-direction: column; gap: 10px; }
@@ -192,79 +192,79 @@
 .be-imgresize {
   position: absolute; right: 8px; bottom: 8px; z-index: 2;
   width: 30px; height: 30px; border-radius: 8px; cursor: nwse-resize; touch-action: none;
-  color: var(--on-primary); font-size: 15px; line-height: 1; border: 1px solid var(--border);
-  background: var(--bg-tertiary); backdrop-filter: blur(3px); transition: .13s;
+  color: var(--color-on-brand); font-size: 15px; line-height: 1; border: 1px solid var(--color-line);
+  background: var(--color-surface-2); backdrop-filter: blur(3px); transition: .13s;
 }
-.be-imgresize:hover { background: var(--primary); }
+.be-imgresize:hover { background: var(--color-brand-500); }
 .be-imgw {
   position: absolute; left: 8px; bottom: 8px; z-index: 2; pointer-events: none;
   padding: 3px 8px; border-radius: 7px; font-size: 11.5px; font-weight: 700;
-  color: var(--text-primary); background: var(--bg-tertiary);
+  color: var(--color-ink-0); background: var(--color-surface-2);
 }
 
 /* U8.5e — callout kontrole (varijanta info/warning/tip + naslov) */
 .be-cvars { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 8px; }
 .be-cvar {
   padding: 6px 11px; border-radius: 8px; cursor: pointer; font-size: 12.5px; font-weight: 600;
-  color: var(--text-secondary); background: var(--bg-tertiary);
-  border: 1px solid var(--border); transition: .12s;
+  color: var(--color-ink-1); background: var(--color-surface-2);
+  border: 1px solid var(--color-line); transition: .12s;
 }
-.be-cvar:hover { color: var(--on-primary); border-color: color-mix(in srgb, var(--primary) 50%, transparent); }
-.be-cvar.on { color: var(--on-primary); background: var(--primary); border-color: var(--primary); }
+.be-cvar:hover { color: var(--color-on-brand); border-color: color-mix(in srgb, var(--color-brand-500) 50%, transparent); }
+.be-cvar.on { color: var(--color-on-brand); background: var(--color-brand-500); border-color: var(--color-brand-500); }
 .be-cvtitle { flex: 1; min-width: 160px; width: auto; }
 .be-media__ph {
   border: 2px dashed var(--color-line-strong); border-radius: 10px; padding: 22px;
-  text-align: center; color: var(--text-muted); font-size: 13px; background: var(--bg-tertiary);
+  text-align: center; color: var(--color-ink-2); font-size: 13px; background: var(--color-surface-2);
 }
 .be-media__fields { display: flex; flex-direction: column; gap: 6px; }
 .be-mfield {
   width: 100%; padding: 8px 10px; border-radius: 8px; font-size: 13px;
-  color: var(--text-primary); background: var(--bg-secondary);
-  border: 1px solid var(--border); outline: none; transition: .13s;
+  color: var(--color-ink-0); background: var(--color-surface-1);
+  border: 1px solid var(--color-line); outline: none; transition: .13s;
 }
-.be-mfield:focus { border-color: var(--primary-light); box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 20%, transparent); }
-.be-mfield::placeholder { color: var(--text-muted); }
+.be-mfield:focus { border-color: var(--color-brand-400); box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 20%, transparent); }
+.be-mfield::placeholder { color: var(--color-ink-2); }
 
 /* ===== U8.7 — upload slike (drop-zona + „📁 Odaberi" gumb + status) ===== */
 .be-upload {
   display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px;
   padding: 12px; margin-bottom: 2px;
   border: 2px dashed var(--color-line-strong); border-radius: 10px;
-  background: var(--bg-tertiary); transition: .13s;
+  background: var(--color-surface-2); transition: .13s;
 }
-.be-upload--over { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 14%, transparent); }
+.be-upload--over { border-color: var(--color-brand-500); background: color-mix(in srgb, var(--color-brand-500) 14%, transparent); }
 .be-upload__file { display: none; }
 .be-upload__btn {
   display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
   padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600;
-  color: var(--on-primary); border: 0;
-  background: var(--primary);
+  color: var(--color-on-brand); border: 0;
+  background: var(--color-brand-500);
   transition: .13s;
 }
 .be-upload__btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
-.be-upload__hint { font-size: 12px; color: var(--text-muted); }
+.be-upload__hint { font-size: 12px; color: var(--color-ink-2); }
 .be-upload__status { font-size: 12.5px; font-weight: 600; margin-left: auto; min-height: 1em; }
-.be-upload__status.is-busy { color: var(--text-muted); }
-.be-upload__status.is-ok { color: var(--success); }
-.be-upload__status.is-err { color: var(--danger-text); }
+.be-upload__status.is-busy { color: var(--color-ink-2); }
+.be-upload__status.is-ok { color: var(--color-ok); }
+.be-upload__status.is-err { color: var(--color-danger-ink); }
 
 /* ===== U8.5c — formula (KaTeX): tex-polje + „veliki blok" prekidač + centrirani živi preview ===== */
 .be-media--formula .be-media__preview { padding: 10px 4px; text-align: center; min-height: 2.2em; }
 .be-mcheck {
   display: flex; align-items: center; gap: 8px; cursor: pointer;
-  font-size: 12.5px; color: var(--text-muted); padding: 2px 1px; user-select: none;
+  font-size: 12.5px; color: var(--color-ink-2); padding: 2px 1px; user-select: none;
 }
-.be-mcheck input { accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
+.be-mcheck input { accent-color: var(--color-brand-500); cursor: pointer; flex-shrink: 0; }
 
 /* ===== U8.9a — MathLive math-field (autorski VIZUALNI unos formule; SAMO editor, student ne učita) ===== */
 .be-mathfield {
   display: block; width: 100%; padding: 10px 12px; border-radius: 8px;
-  font-size: 19px; color: var(--text-primary); background: var(--bg-secondary);
-  border: 1px solid var(--border); outline: none; transition: .13s;
-  --caret-color: var(--primary-light);
-  --selection-background-color: color-mix(in srgb, var(--primary) 35%, transparent);
+  font-size: 19px; color: var(--color-ink-0); background: var(--color-surface-1);
+  border: 1px solid var(--color-line); outline: none; transition: .13s;
+  --caret-color: var(--color-brand-400);
+  --selection-background-color: color-mix(in srgb, var(--color-brand-500) 35%, transparent);
 }
-.be-mathfield:focus-within { border-color: var(--primary-light); box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 20%, transparent); }
+.be-mathfield:focus-within { border-color: var(--color-brand-400); box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 20%, transparent); }
 /* Tvornička virtualna tipkovnica UGAŠENA (U8.9b = naša čista paleta) → sakrij MathLive ugrađene toggle-gumbe. */
 .be-mathfield::part(virtual-keyboard-toggle),
 .be-mathfield::part(menu-toggle) { display: none; }
@@ -273,19 +273,19 @@
 .be-mathpad { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; align-items: flex-start; }
 .be-mathpad__group {
   display: flex; flex-wrap: wrap; gap: 5px; padding: 6px; border-radius: 10px;
-  background: var(--bg-tertiary); border: 1px solid var(--border);
+  background: var(--color-surface-2); border: 1px solid var(--color-line);
 }
 /* broj-grupa = uredni 3-stupčani grid (kalkulator-osjećaj) */
 .be-mathpad__group[data-be-padgroup="Brojevi"] { display: grid; grid-template-columns: repeat(3, 40px); gap: 5px; }
 .be-mathkey {
   min-width: 42px; height: 44px; padding: 0 10px; border-radius: 8px; cursor: pointer;
-  font-size: 15px; line-height: 1; color: var(--text-primary);
+  font-size: 15px; line-height: 1; color: var(--color-ink-0);
   display: inline-flex; align-items: center; justify-content: center;
-  background: color-mix(in srgb, var(--primary) 12%, transparent); border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent); transition: .12s;
+  background: color-mix(in srgb, var(--color-brand-500) 12%, transparent); border: 1px solid color-mix(in srgb, var(--color-brand-500) 30%, transparent); transition: .12s;
 }
 .be-mathpad__group[data-be-padgroup="Brojevi"] { grid-template-columns: repeat(3, 44px); }
 .be-mathpad__group[data-be-padgroup="Brojevi"] .be-mathkey { min-width: 0; width: 100%; }
-.be-mathkey:hover { background: color-mix(in srgb, var(--primary) 26%, transparent); border-color: var(--primary-light); }
+.be-mathkey:hover { background: color-mix(in srgb, var(--color-brand-500) 26%, transparent); border-color: var(--color-brand-400); }
 .be-mathkey:active { transform: translateY(1px); }
 /* renderirane KaTeX-labele gumba (razlomak ▯/▯ itd.) — naslijedi svijetlu boju, stani u gumb */
 .be-mathkey .katex { font-size: 1.02em; color: inherit; }
@@ -297,12 +297,12 @@
 .be-tgrid td { padding: 0; }
 .be-tcell {
   min-width: 90px; padding: 7px 9px; border-radius: 7px; font-size: 13px;
-  color: var(--text-primary); background: var(--bg-secondary);
-  border: 1px solid var(--border); outline: none; transition: .13s;
+  color: var(--color-ink-0); background: var(--color-surface-1);
+  border: 1px solid var(--color-line); outline: none; transition: .13s;
 }
-.be-tcell:focus { border-color: var(--primary-light); box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 20%, transparent); }
-.be-tcell::placeholder { color: var(--text-muted); opacity: .5; }
-.be-tcell--h { font-weight: 700; background: color-mix(in srgb, var(--primary) 12%, transparent); border-color: color-mix(in srgb, var(--primary) 30%, transparent); }
+.be-tcell:focus { border-color: var(--color-brand-400); box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 20%, transparent); }
+.be-tcell::placeholder { color: var(--color-ink-2); opacity: .5; }
+.be-tcell--h { font-weight: 700; background: color-mix(in srgb, var(--color-brand-500) 12%, transparent); border-color: color-mix(in srgb, var(--color-brand-500) 30%, transparent); }
 .be-tgrid-rc { width: 30px; text-align: center; vertical-align: middle; }
 /* U8.10: ✕ kontrole SAMO na hover (manje vizualnog šuma) — red-delete na hover tog reda,
    stupac-delete na hover grida; +focus-within (tipkovnica) da ostanu dostupne bez miša. */
@@ -313,10 +313,10 @@
 .be-tgrid-add { display: flex; gap: 8px; margin-top: 8px; }
 .be-tbtn {
   padding: 7px 14px; border-radius: 8px; cursor: pointer; font-size: 12.5px; font-weight: 600;
-  color: var(--text-muted); background: color-mix(in srgb, var(--primary) 6%, transparent);
-  border: 1px dashed color-mix(in srgb, var(--primary) 32%, transparent); transition: .14s;
+  color: var(--color-ink-2); background: color-mix(in srgb, var(--color-brand-500) 6%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--color-brand-500) 32%, transparent); transition: .14s;
 }
-.be-tbtn:hover { border-color: var(--primary); color: var(--primary); background: color-mix(in srgb, var(--primary) 12%, transparent); }
+.be-tbtn:hover { border-color: var(--color-brand-500); color: var(--color-brand-500); background: color-mix(in srgb, var(--color-brand-500) 12%, transparent); }
 
 /* ── M3a — kvadratići AKCENTA po bloku (paritet s bojom sekcije, `.st-cdot`) ──────
    Isti vizualni jezik kao boja sekcije: korisnik uči JEDAN mehanizam, a nasljeđivanje
@@ -331,11 +331,11 @@
 
 .be-cdot {
   width: 15px; height: 15px; padding: 0; border-radius: 5px; cursor: pointer;
-  background: var(--dot, var(--text-muted)); border: 1px solid var(--border);
-  transition: .12s; font-size: 10px; line-height: 1; color: var(--text-muted);
+  background: var(--dot, var(--color-ink-2)); border: 1px solid var(--color-line);
+  transition: .12s; font-size: 10px; line-height: 1; color: var(--color-ink-2);
 }
-.be-cdot:hover { transform: scale(1.15); box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 40%, transparent); }
-.be-cdot.on    { box-shadow: 0 0 0 2px var(--bg-secondary) inset, 0 0 0 2px var(--dot, var(--text-muted)); }
+.be-cdot:hover { transform: scale(1.15); box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 40%, transparent); }
+.be-cdot.on    { box-shadow: 0 0 0 2px var(--color-surface-1) inset, 0 0 0 2px var(--dot, var(--color-ink-2)); }
 
 /* „⊘" = vrati na nasljeđivanje od sekcije (NIJE „bez boje"). */
 .be-cdot--none {

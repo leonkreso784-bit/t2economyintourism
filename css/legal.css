@@ -49,7 +49,7 @@ body {
        promjenu palete jer se hex-pretragom ne vidi u `rgba()` obliku. `color-mix` drži
        providnost, a boju uzima iz teme. */
     background: color-mix(in srgb, var(--color-surface-0) 85%, transparent);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--color-line);
 }
 
 .legal-logo {
@@ -65,7 +65,7 @@ body {
 .legal-logo img { width: 34px; height: 34px; border-radius: 8px; }
 
 .legal-back {
-    color: var(--primary);
+    color: var(--color-brand-500);
     text-decoration: none;
     font-size: 0.92rem;
     white-space: nowrap;
@@ -92,18 +92,18 @@ main.legal {
 .legal h2 {
     font-size: 1.2rem;
     margin: 1.8rem 0 0.6rem;
-    color: var(--primary);
+    color: var(--color-brand-500);
 }
 
 .legal p, .legal li { color: var(--text); font-size: 0.97rem; margin-bottom: 0.7rem; }
 
 .legal ul, .legal ol { padding-left: 1.4rem; margin-bottom: 0.9rem; }
 
-.legal a { color: var(--primary); }
+.legal a { color: var(--color-brand-500); }
 
 .legal .legal-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: var(--color-surface-1);
+    border: 1px solid var(--color-line);
     border-radius: 14px;
     padding: 1.3rem 1.4rem;
     margin: 1rem 0;
@@ -112,7 +112,7 @@ main.legal {
 .legal .legal-card h2 { margin-top: 0; }
 
 .legal-footer {
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--color-line);
     padding: 1.2rem 1.5rem;
     text-align: center;
     color: var(--text-dim);
@@ -128,7 +128,7 @@ main.legal {
 }
 
 .legal-footer a { color: var(--text-dim); text-decoration: none; }
-.legal-footer a:hover { color: var(--primary); }
+.legal-footer a:hover { color: var(--color-brand-500); }
 
 @media (max-width: 480px) {
     main.legal { padding: 1.8rem 1.1rem 2.2rem; }

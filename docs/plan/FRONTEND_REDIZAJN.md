@@ -5557,3 +5557,40 @@ komponenti. Raspušteno po pripadnosti:
 prijavljenih je pod `nav[1]` (skrivena traka) · telefon 21/0 · preflight EXIT 0.
 **Učinak:** `components.css` 210 → ~110 redaka · `!important` **3 → 2** · dug 6 066 → 5 982.
 Slijedi **C7/5** (smrt `variables.css` mosta — legacy imena → tokeni).
+
+### 14.5 ✅ C7/5 — smrt palete-mosta: 990 poziva preimenovano, most postao UGOVOR (2026-09-01) — **C7 ZATVOREN**
+
+**Preimenovano mehanički** (redoslijed od najdužih imena + terminator-guard, da `--primary` ne
+pojede `--primary-dark`): **990 `var()` poziva u 24 css datoteke + 1 u JS-u** s 23
+palete-aliasa na tokene iz `tokens.css`. Čuvar reza je **`check:tokens`** (B1): svaki
+promašen rename = nedefinirana varijabla = pad — zato je ova cigla smjela biti velika.
+Pravne stranice ušle u rename bez iznimke: `tokens.static.css` je izvadak `:root`-a iz
+bundlea, pa aliasi nestaju i njima — a `--color-*` tokeni ostaju.
+
+🔴 **NALAZ mjere — most NE SMIJE umrijeti do kraja: GRADIVO ga zove.** Inline stilovi u
+sadržaju (dakle i u BAZI, i u budućim korisničkim materijalima) koriste `--primary` (6×) i
+`--border-color` (**72×**, geografija/ekonomija tablice) — a **`--border-color` NIKAD NIJE
+BIO DEFINIRAN**: shorthand `border-bottom: 1px solid var(--border-color)` s nevaljanim
+var-om pada CIJELI na initial → **tablice u gradivu uopće nisu imale rubove** (izmjereno:
+`style: none, width: 0`). Isti razred kvara zbog kojeg postoji `check:tokens`, samo u
+sadržaju, kamo brana ne gleda. `variables.css` zato od C7/5 drži **① UGOVOR PREMA SADRŽAJU**
+(`--primary` + `--border-color` — definicija potonjeg je ujedno POPRAVAK: rubovi postali
+1 px linija po temi) i **② strukturne vrijednosti** (`--transition`, `--safe-*`,
+`--touch-target*`, `--nav-h`); paleta-aliasa više nema.
+
+**Dokaz:** `check:tokens` čist (nula nedefiniranih) · `css:diff` 4 rute × 2 širine:
+**0 paint-razlika, 0 promijenjenih elemenata** (svih 10 560 prijavljenih su definicijske —
+obrisani aliasi kao custom-svojstva) · geografija-learn: **jedina paint-promjena su
+border-svojstva na 9 redaka tablica** (nepostojeći rub → 1 px `--color-line`) · telefon
+21/0 · preflight EXIT 0.
+
+#### 🏁 C7 JE TIME ZATVOREN — i faza s njim čeka Leonov pregled
+
+Stanje protiv §3 retka „Gašenje": `responsive/*` **ne postoji** (14.3) · mrtva tema
+**izmjereno već bila mrtva**, ostatak (`.theme-toggle` CSS) obrisan (14.1) · most u
+`variables.css` **mrtav** (14.5; datoteka ostaje kao reset/baza/ugovor) · `components.css`
+**raspušten do slim doma dijeljenih komponenti** (14.4) — ne briše se radi slova ·
+`styles.bundle.css` **ostaje**: redak je pisan PRIJE ADR-028, a od njega je bundle upravo
+dogovoreni artefakt (Tailwind CLI, commitan). Kriterij prihvaćanja („nema starog CSS-a ni
+mrtvog koda teme") je ispunjen mjerom, ne slovom. Dug na kraju: **5 942 retka, 2 `!important`**
+(`.hidden` + iOS-input — oba namjerna) — na ulasku u fazu bilo je 8 032 / 106.

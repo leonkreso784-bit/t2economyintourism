@@ -21,10 +21,10 @@
 .ex-header h1 {
     font-size: 1.6rem;
     font-weight: 800;
-    color: var(--text-primary);
+    color: var(--color-ink-0);
 }
 .ex-header p {
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     margin-top: 0.35rem;
     font-size: 0.95rem;
 }
@@ -34,33 +34,33 @@
    bitka dobila i protiv utilityja (0-2-0 vs 0-1-0), ali pravilo ② ne pita tko pobjeđuje
    nego dira li svojstvo itko drugi — a ovdje dira. */
 .ex-modes {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    background: var(--color-surface-1);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
     padding: 0.25rem;
     margin-bottom: 1.25rem;
 }
 .ex-mode-btn {
     border: none;
     background: transparent;
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     font-weight: 600;
     font-size: 0.85rem;
     padding: 0.5rem 0.9rem;
-    border-radius: calc(var(--radius) - 4px);
+    border-radius: calc(var(--radius-md) - 4px);
     cursor: pointer;
     transition: var(--transition);
     min-height: var(--touch-target);
 }
 .ex-mode-btn.active {
-    background: var(--primary);
-    color: var(--on-primary);
+    background: var(--color-brand-500);
+    color: var(--color-on-brand);
 }
 
 /* Kratak opis aktivnog moda — čini razliku practice/exam/walkthrough vidljivom. */
 .ex-modes:has(+ .ex-mode-desc) { margin-bottom: 0.5rem; }
 .ex-mode-desc {
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     font-size: 0.8rem;
     line-height: 1.5;
     margin-bottom: 1.25rem;
@@ -72,34 +72,34 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     margin-top: 0.5rem;
 }
 .ex-list-head:first-child { margin-top: 0; }
 .ex-card {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-left: 4px solid var(--card-accent, var(--primary));
-    border-radius: var(--radius);
+    background: var(--color-surface-1);
+    border: 1px solid var(--color-line);
+    border-left: 4px solid var(--card-accent, var(--color-brand-500));
+    border-radius: var(--radius-md);
     padding: 1rem 1.1rem;
     cursor: pointer;
     transition: var(--transition);
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-e1);
 }
 .ex-card:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-e2);
 }
 .ex-card-title {
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--color-ink-0);
     font-size: 1rem;
 }
 .ex-tag {
     font-size: 0.72rem;
     font-weight: 600;
-    color: var(--text-muted);
-    background: var(--bg-tertiary);
+    color: var(--color-ink-2);
+    background: var(--color-surface-2);
     border-radius: 999px;
     padding: 0.15rem 0.6rem;
     text-transform: uppercase;
@@ -109,34 +109,34 @@
     font-size: 1.1rem;
     flex-shrink: 0;
 }
-.ex-card-status.is-done { color: var(--success); }
-.ex-card-status.is-todo { color: var(--text-muted); }
+.ex-card-status.is-done { color: var(--color-ok); }
+.ex-card-status.is-todo { color: var(--color-ink-2); }
 
 /* ---- Widget shell (open exercise) ---- */
 .ex-widget {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
+    background: var(--color-surface-1);
+    border: 1px solid var(--color-line);
     border-radius: var(--radius-lg);
     padding: 1.25rem;
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-e2);
 }
 .ex-prompt {
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     line-height: 1.6;
     margin-bottom: 1rem;
 }
 .ex-field label {
     font-size: 0.85rem;
     font-weight: 600;
-    color: var(--text-muted);
+    color: var(--color-ink-2);
 }
 .ex-unit { font-weight: 500; opacity: 0.8; }
 .ex-input,
 .ex-select {
-    background: var(--bg-primary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    color: var(--text-primary);
+    background: var(--color-surface-0);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    color: var(--color-ink-0);
     padding: 0.6rem 0.8rem;
     font-size: 1rem;
     min-height: var(--touch-target);
@@ -145,23 +145,23 @@
 .ex-input:focus,
 .ex-select:focus {
     outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent);
+    border-color: var(--color-brand-500);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand-500) 25%, transparent);
 }
-.ex-input.is-correct { border-color: var(--success); }
-.ex-input.is-incorrect { border-color: var(--danger); }
+.ex-input.is-correct { border-color: var(--color-ok); }
+.ex-input.is-incorrect { border-color: var(--color-danger); }
 
 /* ---- Hint ---- */
 .ex-hint {
     font-size: 0.82rem;
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     font-style: italic;
 }
 
 /* ---- Action buttons ---- */
 .ex-btn {
     border: none;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     font-weight: 700;
     font-size: 0.9rem;
     padding: 0.65rem 1.1rem;
@@ -169,40 +169,40 @@
     min-height: var(--touch-target);
     transition: var(--transition);
 }
-.ex-btn-primary { background: var(--primary); color: var(--on-primary); }
-.ex-btn-primary:hover { background: var(--primary-dark); }
+.ex-btn-primary { background: var(--color-brand-500); color: var(--color-on-brand); }
+.ex-btn-primary:hover { background: var(--color-brand-600); }
 .ex-btn-ghost {
     background: transparent;
-    color: var(--text-secondary);
-    border: 1px solid var(--border);
+    color: var(--color-ink-1);
+    border: 1px solid var(--color-line);
 }
-.ex-btn-ghost:hover { background: var(--bg-tertiary); }
+.ex-btn-ghost:hover { background: var(--color-surface-2); }
 
 /* ---- Feedback ---- */
 .ex-feedback {
     margin-top: 1rem;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     padding: 0.85rem 1rem;
     font-weight: 600;
     line-height: 1.5;
 }
 .ex-feedback.is-correct {
     background: rgba(34, 197, 94, 0.12);
-    border: 1px solid var(--success);
-    color: var(--success);
+    border: 1px solid var(--color-ok);
+    color: var(--color-ok);
 }
 .ex-feedback.is-incorrect {
     background: rgba(239, 68, 68, 0.12);
-    border: 1px solid var(--danger);
-    color: var(--danger);
+    border: 1px solid var(--color-danger);
+    color: var(--color-danger);
 }
 .ex-solution {
     margin-top: 1rem;
-    background: var(--bg-primary);
-    border: 1px dashed var(--border);
-    border-radius: var(--radius);
+    background: var(--color-surface-0);
+    border: 1px dashed var(--color-line);
+    border-radius: var(--radius-md);
     padding: 0.9rem 1rem;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     line-height: 1.6;
 }
 .ex-solution ol { margin: 0.4rem 0 0 1.2rem; }
@@ -218,14 +218,14 @@
 }
 .ex-table th,
 .ex-table td {
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--color-line);
     padding: 0.5rem 0.6rem;
     text-align: left;
     font-size: 0.9rem;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
 }
 .ex-table th {
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     font-weight: 700;
     text-transform: uppercase;
     font-size: 0.72rem;
@@ -234,22 +234,22 @@
 
 /* ---- choice widget (True/False + Multiple Choice) ---- */
 .ex-choice-item {
-    background: var(--bg-primary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    background: var(--color-surface-0);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
     padding: 0.9rem 1rem;
 }
 .ex-choice-q {
-    color: var(--text-primary);
+    color: var(--color-ink-0);
     font-weight: 600;
     line-height: 1.5;
     margin-bottom: 0.7rem;
 }
 .ex-opt {
-    border: 1px solid var(--border);
-    background: var(--bg-secondary);
-    color: var(--text-secondary);
-    border-radius: var(--radius);
+    border: 1px solid var(--color-line);
+    background: var(--color-surface-1);
+    color: var(--color-ink-1);
+    border-radius: var(--radius-md);
     padding: 0.55rem 1rem;
     font-size: 0.92rem;
     font-weight: 600;
@@ -257,30 +257,30 @@
     min-height: var(--touch-target);
     transition: var(--transition);
 }
-.ex-opt:hover { border-color: var(--primary); }
+.ex-opt:hover { border-color: var(--color-brand-500); }
 .ex-opt.selected {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: var(--on-primary);
+    background: var(--color-brand-500);
+    border-color: var(--color-brand-500);
+    color: var(--color-on-brand);
 }
 /* Marks after checking */
 .ex-opt.is-correct {
-    border-color: var(--success);
-    box-shadow: inset 0 0 0 1px var(--success);
+    border-color: var(--color-ok);
+    box-shadow: inset 0 0 0 1px var(--color-ok);
 }
-.ex-opt.selected.is-correct { background: var(--success); border-color: var(--success); }
+.ex-opt.selected.is-correct { background: var(--color-ok); border-color: var(--color-ok); }
 .ex-opt.is-incorrect {
     background: rgba(239, 68, 68, 0.18);
-    border-color: var(--danger);
-    color: var(--text-primary);
+    border-color: var(--color-danger);
+    color: var(--color-ink-0);
 }
 
 /* ---- statement widget (financial statement build) ---- */
 .ex-statement { display: grid; gap: 1rem; }
 .ex-st-section {
-    background: var(--bg-primary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    background: var(--color-surface-0);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
     padding: 0.5rem 0.9rem;
 }
 .ex-st-section-title {
@@ -288,9 +288,9 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     padding: 0.5rem 0 0.35rem;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--color-line);
     margin-bottom: 0.25rem;
 }
 .ex-st-row {
@@ -300,7 +300,7 @@
     gap: 0.75rem;
     padding: 0.4rem 0;
 }
-.ex-st-label { color: var(--text-secondary); font-size: 0.92rem; }
+.ex-st-label { color: var(--color-ink-1); font-size: 0.92rem; }
 .ex-st-input {
     width: 140px;
     max-width: 45%;
@@ -310,21 +310,21 @@
     min-height: 40px;
 }
 .ex-st-row.is-total {
-    border-top: 2px solid var(--border);
+    border-top: 2px solid var(--color-line);
     margin-top: 0.25rem;
     padding-top: 0.7rem;
 }
-.ex-st-row.is-total .ex-st-label { font-weight: 800; color: var(--text-primary); }
+.ex-st-row.is-total .ex-st-label { font-weight: 800; color: var(--color-ink-0); }
 
 /* ---- classify widget (account given → class + effect) ---- */
 .ex-classify { display: grid; gap: 1.1rem; }
 .ex-cl-row {
-    background: var(--bg-primary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    background: var(--color-surface-0);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
     padding: 0.9rem 1rem;
 }
-.ex-cl-text { color: var(--text-primary); font-weight: 600; line-height: 1.5; margin-bottom: 0.7rem; }
+.ex-cl-text { color: var(--color-ink-0); font-weight: 600; line-height: 1.5; margin-bottom: 0.7rem; }
 .ex-cl-entry {
     display: flex;
     align-items: center;
@@ -332,24 +332,24 @@
     flex-wrap: wrap;
     padding: 0.45rem 0.55rem;
     border: 1px solid transparent;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     margin-bottom: 0.4rem;
 }
-.ex-cl-account { flex: 1 1 140px; color: var(--text-secondary); font-weight: 600; font-size: 0.92rem; }
+.ex-cl-account { flex: 1 1 140px; color: var(--color-ink-1); font-weight: 600; font-size: 0.92rem; }
 .ex-cl-selects { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 .ex-cl-select { min-height: 40px; padding: 0.4rem 0.55rem; font-size: 0.9rem; }
-.ex-cl-entry.is-correct { border-color: var(--success); background: rgba(34, 197, 94, 0.08); }
-.ex-cl-entry.is-incorrect { border-color: var(--danger); background: rgba(239, 68, 68, 0.08); }
+.ex-cl-entry.is-correct { border-color: var(--color-ok); background: rgba(34, 197, 94, 0.08); }
+.ex-cl-entry.is-incorrect { border-color: var(--color-danger); background: rgba(239, 68, 68, 0.08); }
 
 /* ---- journal widget (double-entry) ---- */
 .ex-journal { display: grid; gap: 1.1rem; }
 .ex-jr-trans {
-    background: var(--bg-primary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    background: var(--color-surface-0);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
     padding: 0.9rem 1rem;
 }
-.ex-jr-text { color: var(--text-primary); font-weight: 600; line-height: 1.5; margin-bottom: 0.7rem; }
+.ex-jr-text { color: var(--color-ink-0); font-weight: 600; line-height: 1.5; margin-bottom: 0.7rem; }
 .ex-jr-lines { display: grid; gap: 0.5rem; }
 .ex-jr-line {
     display: flex;
@@ -361,61 +361,61 @@
 .ex-jr-side { flex: 0 0 auto; min-height: 40px; padding: 0.4rem 0.55rem; font-size: 0.9rem; }
 .ex-jr-amount { flex: 0 1 130px; text-align: right; min-height: 40px; padding: 0.45rem 0.6rem; }
 .ex-jr-status { margin-top: 0.55rem; font-size: 0.85rem; font-weight: 600; min-height: 1em; }
-.ex-jr-trans.is-correct { border-color: var(--success); }
-.ex-jr-trans.is-correct .ex-jr-status { color: var(--success); }
-.ex-jr-trans.is-incorrect { border-color: var(--danger); }
-.ex-jr-trans.is-incorrect .ex-jr-status { color: var(--danger); }
+.ex-jr-trans.is-correct { border-color: var(--color-ok); }
+.ex-jr-trans.is-correct .ex-jr-status { color: var(--color-ok); }
+.ex-jr-trans.is-incorrect { border-color: var(--color-danger); }
+.ex-jr-trans.is-incorrect .ex-jr-status { color: var(--color-danger); }
 
 /* free mode */
 .ex-jr-free-lines { display: grid; gap: 0.5rem; margin-bottom: 0.6rem; }
 .ex-jr-del {
     flex: 0 0 auto;
     width: 36px; min-height: 36px;
-    border: 1px solid var(--border);
-    background: var(--bg-secondary);
-    color: var(--text-muted);
-    border-radius: var(--radius);
+    border: 1px solid var(--color-line);
+    background: var(--color-surface-1);
+    color: var(--color-ink-2);
+    border-radius: var(--radius-md);
     font-size: 1.1rem;
     cursor: pointer;
     line-height: 1;
 }
-.ex-jr-del:hover { border-color: var(--danger); color: var(--danger); }
+.ex-jr-del:hover { border-color: var(--color-danger); color: var(--color-danger); }
 .ex-jr-add { margin-bottom: 1rem; }
 
 /* T-accounts panel + balance bar */
 .ex-jr-tpanel { margin-top: 0.75rem; }
 .ex-tpanel-title {
     font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
-    color: var(--text-muted); margin-bottom: 0.5rem;
+    color: var(--color-ink-2); margin-bottom: 0.5rem;
 }
 .ex-jr-bar {
     display: flex; flex-wrap: wrap; gap: 0.5rem 1.2rem; align-items: center;
-    padding: 0.6rem 0.9rem; border-radius: var(--radius);
-    background: var(--bg-primary); border: 1px solid var(--border);
+    padding: 0.6rem 0.9rem; border-radius: var(--radius-md);
+    background: var(--color-surface-0); border: 1px solid var(--color-line);
     font-weight: 700; font-size: 0.9rem; margin-bottom: 0.75rem;
 }
 .ex-jr-bar-flag { margin-left: auto; }
-.ex-jr-bar.is-balanced { border-color: var(--success); color: var(--success); }
-.ex-jr-bar.is-unbalanced { border-color: var(--danger); color: var(--danger); }
+.ex-jr-bar.is-balanced { border-color: var(--color-ok); color: var(--color-ok); }
+.ex-jr-bar.is-unbalanced { border-color: var(--color-danger); color: var(--color-danger); }
 .ex-tacc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.6rem; }
 .ex-tacc {
-    background: var(--bg-primary); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 0.6rem 0.7rem;
+    background: var(--color-surface-0); border: 1px solid var(--color-line);
+    border-radius: var(--radius-md); padding: 0.6rem 0.7rem;
 }
-.ex-tacc-name { font-weight: 700; color: var(--text-primary); font-size: 0.88rem; margin-bottom: 0.35rem; }
-.ex-tacc-cols { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-muted); }
+.ex-tacc-name { font-weight: 700; color: var(--color-ink-0); font-size: 0.88rem; margin-bottom: 0.35rem; }
+.ex-tacc-cols { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--color-ink-2); }
 /* Dugovna/potražna strana T-konta. Zakucane vrijednosti (#93c5fd / #fca5a5) mjerile su
    na bijelom **1.80 / 1.90** — pisane za tamnu podlogu. Nijedna brana ih nije uhvatila:
    `check:contrast:live` obilazi samo `te2`, a `te2` NEMA tab vježbi. */
 .ex-tacc-dr { color: var(--color-ink-blue); }
 .ex-tacc-cr { color: var(--color-ink-red); }
-.ex-tacc-bal { margin-top: 0.35rem; font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); border-top: 1px solid var(--border); padding-top: 0.3rem; }
-.ex-tacc-empty { color: var(--text-muted); font-size: 0.88rem; font-style: italic; }
+.ex-tacc-bal { margin-top: 0.35rem; font-size: 0.85rem; font-weight: 700; color: var(--color-ink-1); border-top: 1px solid var(--color-line); padding-top: 0.3rem; }
+.ex-tacc-empty { color: var(--color-ink-2); font-size: 0.88rem; font-style: italic; }
 
 /* ---- Empty state ---- */
 .ex-empty {
     text-align: center;
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     padding: 3rem 1rem;
 }
 .ex-empty i {
@@ -428,14 +428,14 @@
 /* ---- cite: write-the-citation (free text) ---- */
 .ex-cite-item { margin-bottom: 1.1rem; }
 .ex-cite-given {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--card-accent, var(--primary));
-    border-radius: calc(var(--radius) - 4px);
+    background: var(--color-surface-1);
+    border: 1px solid var(--color-line);
+    border-left: 3px solid var(--card-accent, var(--color-brand-500));
+    border-radius: calc(var(--radius-md) - 4px);
     padding: 0.6rem 0.75rem;
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
-    color: var(--text-primary);
+    color: var(--color-ink-0);
     line-height: 1.5;
 }
 .ex-cite-tag {
@@ -443,7 +443,7 @@
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     margin-bottom: 0.25rem;
 }
 .ex-cite-input {
@@ -458,9 +458,9 @@
     font-size: 0.86rem;
     line-height: 1.5;
 }
-.ex-cite-ok { color: var(--success); font-weight: 600; }
-.ex-cite-no { color: var(--danger); font-weight: 600; }
-.ex-cite-ans { color: var(--text-primary); }
+.ex-cite-ok { color: var(--color-ok); font-weight: 600; }
+.ex-cite-no { color: var(--color-danger); font-weight: 600; }
+.ex-cite-ans { color: var(--color-ink-0); }
 
 /* ---- Mobile ---- */
 @media (max-width: 640px) {

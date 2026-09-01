@@ -11,24 +11,24 @@ sokrat-modal.sokrat-confirm-modal > * {
 .sokrat-confirm__card {
     width: 100%;
     padding: 1.6rem 1.5rem 1.35rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: var(--color-surface-1);
+    border: 1px solid var(--color-line);
     border-radius: 16px;
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-e2);
 }
 
 .sokrat-confirm__title {
     margin: 0 0 0.55rem;
     font-size: 1.15rem;
     font-weight: 700;
-    color: var(--text-primary, #f8fafc);
+    color: var(--color-ink-0, #f8fafc);
 }
 
 .sokrat-confirm__msg {
     margin: 0 0 1.35rem;
     font-size: 0.95rem;
     line-height: 1.55;
-    color: var(--text-secondary, #cbd5e1);
+    color: var(--color-ink-1, #cbd5e1);
 }
 
 .sokrat-confirm__actions {
@@ -51,24 +51,24 @@ sokrat-modal.sokrat-confirm-modal > * {
 
 /* Cancel = tihi/sekundarni gumb */
 .sokrat-confirm__cancel {
-    background: var(--bg-tertiary);
-    border-color: var(--border);
-    color: var(--text-secondary, #cbd5e1);
+    background: var(--color-surface-2);
+    border-color: var(--color-line);
+    color: var(--color-ink-1, #cbd5e1);
 }
 
 .sokrat-confirm__cancel:hover {
-    color: var(--text-primary, #f8fafc);
+    color: var(--color-ink-0, #f8fafc);
     border-color: var(--color-line-strong);
 }
 
 /* Confirm = primarni (indigo brend) */
 .sokrat-confirm__ok {
-    background: var(--primary);
-    color: var(--on-primary);
+    background: var(--color-brand-500);
+    color: var(--color-on-brand);
 }
 
 .sokrat-confirm__ok:hover {
-    background: var(--primary-dark);
+    background: var(--color-brand-600);
 }
 
 /* Danger varijanta (destruktivne akcije: reset/delete).
@@ -80,16 +80,16 @@ sokrat-modal.sokrat-confirm-modal > * {
    kontrast ovisi o temi: na svijetlima tekst je bijel pa hover mora potamniti, na tamnima
    je tekst taman pa mora posvijetliti. Jedna fiksna crvena ne može oboje — elevacija može. */
 .sokrat-confirm__ok.is-danger {
-    background: var(--danger);
+    background: var(--color-danger);
 }
 
 .sokrat-confirm__ok.is-danger:hover {
     transform: translateY(-1px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-e2);
 }
 
 .sokrat-confirm__btn:focus-visible {
-    outline: 2px solid var(--primary-light);
+    outline: 2px solid var(--color-brand-400);
     outline-offset: 2px;
 }
 

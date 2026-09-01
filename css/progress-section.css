@@ -19,10 +19,10 @@
 }
 
 .progress-card {
-    background: var(--bg-secondary);
+    background: var(--color-surface-1);
     padding: 1.25rem;
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-e1);
 }
 
 /* ⚠️ `.progress-card.main` više NEMA osnovno pravilo — cijelo je otišlo u markup
@@ -42,7 +42,7 @@
 
 .circle-bg {
     fill: none;
-    stroke: var(--bg-tertiary);
+    stroke: var(--color-surface-2);
     stroke-width: 3;
 }
 
@@ -61,7 +61,7 @@
     transform: translate(-50%, -50%);
     font-size: 2rem;
     font-weight: 700;
-    color: var(--primary);
+    color: var(--color-brand-500);
 }
 
 .progress-card h3 {
@@ -69,12 +69,12 @@
 }
 
 .mini-progress {
-    background: var(--bg-tertiary);
+    background: var(--color-surface-2);
 }
 
 .mini-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    background: linear-gradient(90deg, var(--color-brand-500), var(--color-ok-strong));
     border-radius: 10px;
     width: 0%;
     transition: width 0.5s ease;
@@ -94,9 +94,9 @@
 }
 
 .category-bar {
-    background: var(--bg-secondary);
+    background: var(--color-surface-1);
     padding: 0.875rem 1rem;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
 }
 
 /* ⚠️ IKONA KATEGORIJE JE ČIP, NE OBOJANI GLIF (C5a/4) — i to je jedina namjerna promjena
@@ -125,7 +125,7 @@
     justify-content: center;
     border-radius: 10px;
     font-size: 1rem;
-    background: var(--primary);
+    background: var(--color-brand-500);
     color: var(--color-on-brand);
 }
 
@@ -150,8 +150,8 @@
 }
 
 .history-list {
-    background: var(--bg-secondary);
-    border-radius: var(--radius);
+    background: var(--color-surface-1);
+    border-radius: var(--radius-md);
     overflow: hidden;
 }
 
@@ -162,7 +162,7 @@
    bi buduću izvedbu tiho neoblikovanom. Nalaz je zapisan u `BACKLOG.md`. */
 .history-item {
     padding: 0.875rem 1rem;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--color-line);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -174,7 +174,7 @@
 }
 
 .history-item .date {
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     font-size: 0.8rem;
 }
 
@@ -184,9 +184,9 @@
 .reset-btn {
     padding: 0.875rem 1.5rem;
     background: transparent;
-    border: 2px solid var(--danger);
-    color: var(--danger-text);
-    border-radius: var(--radius);
+    border: 2px solid var(--color-danger);
+    color: var(--color-danger-ink);
+    border-radius: var(--radius-md);
     font-family: inherit;
     font-weight: 600;
     cursor: pointer;
@@ -195,8 +195,8 @@
 }
 
 .reset-btn:hover {
-    background: var(--danger);
-    color: var(--on-danger);
+    background: var(--color-danger);
+    color: var(--color-on-danger);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════

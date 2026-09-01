@@ -103,7 +103,7 @@ body.no-pathbar {
     background: color-mix(in srgb, var(--color-surface-0) 85%, transparent);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--color-line);
 }
 
 /* Znak je NEPROMJENJIV (spec §7.13, Leon izričito) — traka mu daje prostor, ne dira ga.
@@ -113,7 +113,7 @@ body.no-pathbar {
     align-items: center;
     gap: 0.5rem;
     text-decoration: none;
-    color: var(--text-primary);
+    color: var(--color-ink-0);
     font-weight: 700;
     font-size: 1rem;
     white-space: nowrap;
@@ -149,9 +149,9 @@ body.no-pathbar {
     height: 40px;
     padding: 0 0.75rem;
     border: none;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     background: none;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     font-family: inherit;
     font-size: 0.9rem;
     font-weight: 600;
@@ -161,14 +161,14 @@ body.no-pathbar {
 }
 
 .topbar-btn:hover:not(:disabled) {
-    background: var(--bg-tertiary);
-    color: var(--text-primary);
+    background: var(--color-surface-2);
+    color: var(--color-ink-0);
 }
 
 /* Stranica na kojoj već jesmo ne nudi se kao odredište — boji se markom, ne ispunom,
    jer bi ispuna tražila `--on-primary` i time novu površinu za tri tvrde zabrane. */
 .topbar-btn[aria-current="page"] {
-    color: var(--primary);
+    color: var(--color-brand-500);
 }
 
 .topbar-spacer {
@@ -232,17 +232,17 @@ body.on-landing .topbar-cta {
     align-items: center;
     justify-content: center;
     border: none;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     background: none;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     font-size: 1rem;
     cursor: pointer;
     transition: var(--transition);
 }
 
 .topbar-iconbtn:hover {
-    background: var(--bg-tertiary);
-    color: var(--text-primary);
+    background: var(--color-surface-2);
+    color: var(--color-ink-0);
 }
 
 /* ===== RED 2 — POLOŽAJ (natrag + mrvica) ===== */
@@ -254,8 +254,8 @@ body.on-landing .topbar-cta {
     height: var(--pathbar-h);
     padding-left: calc(0.75rem + var(--safe-left));
     padding-right: calc(0.75rem + var(--safe-right));
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
+    background: var(--color-surface-1);
+    border-bottom: 1px solid var(--color-line);
     overflow: hidden;
 }
 
@@ -271,16 +271,16 @@ body.no-pathbar .pathbar {
     align-items: center;
     justify-content: center;
     border: none;
-    border-radius: var(--radius);
-    background: var(--bg-tertiary);
-    color: var(--text-secondary);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-2);
+    color: var(--color-ink-1);
     font-size: 0.95rem;
     cursor: pointer;
     transition: var(--transition);
 }
 
 .pathbar-back:hover {
-    color: var(--text-primary);
+    color: var(--color-ink-0);
 }
 
 /* Mrvica je NAVIGACIJA, ne ukras — svaki predak osim zadnjeg je klikabilan.
@@ -315,7 +315,7 @@ body.no-pathbar .pathbar {
     background: none;
     padding: 0.25rem 0.35rem;
     border-radius: var(--radius-sm, 6px);
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     font-family: inherit;
     font-size: 0.85rem;
     font-weight: 600;
@@ -329,7 +329,7 @@ body.no-pathbar .pathbar {
 }
 
 .crumb:hover {
-    color: var(--text-primary);
+    color: var(--color-ink-0);
 }
 
 /* Zadnja mrvica = gdje jesmo. Nije gumb (nema kamo voditi) pa ni ne izgleda kao gumb.
@@ -338,7 +338,7 @@ body.no-pathbar .pathbar {
    razina vidljiva u svakom slučaju. Ellipsis ostaje kao posljednja mreža za naziv koji
    je sam po sebi dulji od cijelog retka. */
 .crumb-current {
-    color: var(--text-primary);
+    color: var(--color-ink-0);
     cursor: default;
     font-weight: 700;
     overflow: hidden;
@@ -348,11 +348,11 @@ body.no-pathbar .pathbar {
 }
 
 .crumb-current:hover {
-    color: var(--text-primary);
+    color: var(--color-ink-0);
 }
 
 .crumb-sep {
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     opacity: 0.5;
     flex-shrink: 0;
     font-size: 0.8rem;
@@ -520,7 +520,7 @@ body.no-pathbar .pathbar {
            U stupcu se to ne događa jer trake imaju zadanu visinu i `box-sizing: border-box`,
            pa je rub UNUTAR nje. `box-shadow` crta isti razdjelnik i **ne troši raspored**.
            Uhvatila ga je osnovica brane (prijavila 56 → 57), ne oko. */
-        box-shadow: 0 1px 0 var(--border);
+        box-shadow: 0 1px 0 var(--color-line);
     }
 
     .chrome .topbar {

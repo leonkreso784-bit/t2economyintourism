@@ -12,7 +12,7 @@
 .blind-map-header h1 {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, var(--color-brand-500), var(--color-ok-strong));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -27,7 +27,7 @@
 
 .map-diff-btn {
     padding: 0.6rem 1.2rem;
-    border: 2px solid var(--border);
+    border: 2px solid var(--color-line);
     border-radius: var(--radius-md, 12px);
     /* ⚠️ Bilo je `var(--card-bg, #fff)`, a `--card-bg` NIJE DEFINIRAN nigdje u `css/` —
        pa je uvijek pobjeđivao zakucani `#fff`. Tekst je pritom bio tematiziran, tako da
@@ -37,7 +37,7 @@
        Nijedna brana ga nije prijavila jer `check:contrast:live` do 2026-08-31 nije
        obilazio `blind-map` — `te2` taj tab nema. */
     background: var(--color-surface-1);
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
@@ -48,16 +48,16 @@
 }
 
 .map-diff-btn:hover {
-    border-color: var(--primary);
-    color: var(--primary);
+    border-color: var(--color-brand-500);
+    color: var(--color-brand-500);
     transform: translateY(-1px);
 }
 
 .map-diff-btn.active {
-    background: linear-gradient(135deg, var(--primary), var(--secondary, var(--primary)));
-    color: var(--on-primary);
+    background: linear-gradient(135deg, var(--color-brand-500), var(--color-ok-strong, var(--color-brand-500)));
+    color: var(--color-on-brand);
     border-color: transparent;
-    box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 30%, transparent);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
 }
 
 /* Map Canvas */
@@ -66,8 +66,8 @@
     margin-bottom: 1.5rem;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    box-shadow: var(--shadow-lg);
-    border: 2px solid var(--border);
+    box-shadow: var(--shadow-e2);
+    border: 2px solid var(--color-line);
     /* Force aspect ratio container for mobile */
     aspect-ratio: 10 / 7;
     background: #0f0d2e;
@@ -88,10 +88,10 @@
 
 /* Answer Section */
 .map-answer-section {
-    background: var(--bg-secondary);
+    background: var(--color-surface-1);
     border-radius: var(--radius-lg);
     padding: 1.5rem;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-e1);
     margin-bottom: 1rem;
 }
 
@@ -113,7 +113,7 @@
 .map-skip-btn {
     padding: 0.75rem 1rem;
     border: none;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     font-family: inherit;
     font-weight: 600;
     font-size: 0.9rem;
@@ -127,35 +127,35 @@
 }
 
 .map-submit-btn {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: var(--on-primary);
+    background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-600));
+    color: var(--color-on-brand);
 }
 
 .map-submit-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px color-mix(in srgb, var(--primary) 30%, transparent);
+    box-shadow: 0 6px 12px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
 }
 
 .map-clear-btn {
     background: rgba(239, 68, 68, 0.1);
-    color: var(--danger);
-    border: 2px solid var(--danger);
+    color: var(--color-danger);
+    border: 2px solid var(--color-danger);
 }
 
-.map-clear-btn:hover { background: var(--danger); color: var(--on-danger); }
+.map-clear-btn:hover { background: var(--color-danger); color: var(--color-on-danger); }
 
 .map-skip-btn {
-    background: var(--bg-tertiary);
-    color: var(--text-secondary);
+    background: var(--color-surface-2);
+    color: var(--color-ink-1);
 }
 
-.map-skip-btn:hover { background: var(--primary); color: var(--on-primary); }
+.map-skip-btn:hover { background: var(--color-brand-500); color: var(--color-on-brand); }
 
 /* Feedback */
 .map-feedback {
     display: none;
     padding: 1rem;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     margin-top: 1rem;
 }
 
@@ -163,29 +163,29 @@
 
 .map-feedback.correct {
     background: rgba(34, 197, 94, 0.1);
-    border: 2px solid var(--success);
+    border: 2px solid var(--color-ok);
 }
 
 .map-feedback.incorrect {
     background: rgba(239, 68, 68, 0.1);
-    border: 2px solid var(--danger);
+    border: 2px solid var(--color-danger);
 }
 
-.map-feedback.correct .map-feedback-icon { color: var(--success); }
-.map-feedback.incorrect .map-feedback-icon { color: var(--danger); }
+.map-feedback.correct .map-feedback-icon { color: var(--color-ok); }
+.map-feedback.incorrect .map-feedback-icon { color: var(--color-danger); }
 
 
 /* Progress */
 .map-progress-bar {
     height: 8px;
-    background: var(--bg-tertiary);
+    background: var(--color-surface-2);
     border-radius: 10px;
     overflow: hidden;
 }
 
 .map-progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    background: linear-gradient(90deg, var(--color-brand-500), var(--color-ok-strong));
     border-radius: 10px;
     transition: width 0.5s ease;
     width: 0%;

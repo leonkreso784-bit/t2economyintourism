@@ -200,8 +200,8 @@ bazu — bez re-synca PROD služi stare duge kartice) · **§8** = živi sanduč
 **C5b ✅ CIJELI** (§12.7–12.14) · **C6 ✅ CIJELI** (§13 — pravne NEMAJU bundle pa
 `legal/consent.css` ne migriraju; NALAZ: sidebar NEDOSTIŽAN, §13.7/BACKLOG; authed
 prije/poslije sonda za profil §13.9) → **C7 u tijeku**: /1 mrtvo ✅ · /2 cta-baza vraćena ✅ (BUG: C2 ju obrisao; §14.2) ·
-**/3 `responsive/*` NE POSTOJI ✅** (§14.3; ⚰️ `check:cascade`) · **/4 components
-raspušten ✅** (§14.4) → **/5** (variables-most). **Next.js odbijen (ADR-028).**
+**/3 `responsive/*` NE POSTOJI ✅** · **/4 components ✅** · **/5 most→ugovor ✅** —
+**C7 ZATVOREN (§14.5), faza čeka Leonov pregled.** **Next.js odbijen (ADR-028).**
 ⚠️ **`check:docs` traži TOČNO jedan aktivni plan**; spec koji čeka nosi `**Status:** ⏸️ PAUZIRAN`.
 
 **Živa ograničenja redizajna** (obrazloženje svakog je u specu):

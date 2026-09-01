@@ -137,7 +137,7 @@
    12 ne pogađa nijedan element (čisti šum), a 2 pogađaju — i to je gore od šuma.
 
    `hidden` i `text-danger` SU naše postojeće klase iz `css/*.css`. Utilityji stoje zadnji,
-   pa bi Tailwindova inačica pobijedila našu: `.text-danger` bi prešao s `var(--danger)` na
+   pa bi Tailwindova inačica pobijedila našu: `.text-danger` bi prešao s `var(--color-danger)` na
    `var(--color-danger)`. Danas su te dvije vrijednosti iste, pa se ništa ne vidi — ali čim
    C2 promijeni paletu, boja bi se promijenila na mjestu koje nitko nije dirao.
 

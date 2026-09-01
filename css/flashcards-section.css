@@ -21,14 +21,14 @@
 
 .flashcard-container h1 { font-size: 1.3rem; }
 
-.flashcard-progress span { color: var(--text-secondary); font-weight: 500; font-size: 0.9rem; }
+.flashcard-progress span { color: var(--color-ink-1); font-weight: 500; font-size: 0.9rem; }
 
 /* ⚠️ `.progress-bar`/`.progress-fill` koriste TRI načina učenja — kartice, kviz i
    dopune (`index.html`, tri mjesta). Datoteka im je ovdje samo zato što su
    ovdje prvi put napisane; C5a/3 ih zatječe, ne posjeduje. */
 .progress-bar {
     height: 6px;
-    background: var(--bg-tertiary);
+    background: var(--color-surface-2);
     border-radius: 10px;
     overflow: hidden;
     margin-top: 0.5rem;
@@ -36,7 +36,7 @@
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    background: linear-gradient(90deg, var(--color-brand-500), var(--color-ok-strong));
     border-radius: 10px;
     transition: width 0.5s ease;
     width: 0%;
@@ -88,7 +88,7 @@
     justify-content: center;
     align-items: center;
     padding: 1.25rem;
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-e2);
     overflow-y: auto;
 }
 
@@ -101,15 +101,15 @@
    Lice nosi gradijent, pa akcent ide kao unutarnji prsten; naličje već ima rub, pa mu
    se samo mijenja boja. */
 .flashcard-front {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: var(--on-primary);
-    box-shadow: inset 0 0 0 3px var(--item-acc, transparent), var(--shadow-lg);
+    background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-600));
+    color: var(--color-on-brand);
+    box-shadow: inset 0 0 0 3px var(--item-acc, transparent), var(--shadow-e2);
 }
 
 .flashcard-back {
-    background: var(--bg-secondary);
+    background: var(--color-surface-1);
     transform: rotateY(180deg);
-    border: 3px solid var(--item-acc, var(--secondary));
+    border: 3px solid var(--item-acc, var(--color-ok-strong));
 }
 
 /* ── MREŽA C2 (EDITOR ①): boja NIJE prsten nego CIJELA kartica ─────────────────
@@ -121,7 +121,7 @@
 .flashcard[data-ink] .flashcard-back {
     background: var(--item-acc);
 }
-.flashcard[data-ink] .flashcard-front { box-shadow: var(--shadow-lg); }
+.flashcard[data-ink] .flashcard-front { box-shadow: var(--shadow-e2); }
 .flashcard[data-ink] .flashcard-back { border-color: transparent; }
 .flashcard[data-ink="dark"] .flashcard-front,
 .flashcard[data-ink="dark"] .flashcard-back { color: var(--color-on-tint-dark); }
@@ -129,7 +129,7 @@
 .flashcard[data-ink="light"] .flashcard-back { color: var(--color-on-tint-light); }
 /* naličje: odgovor nasljeđuje tintu, a `.explanation` je ploha teme → tekst teme */
 .flashcard[data-ink] .flashcard-back p { color: inherit; }
-.flashcard[data-ink] .flashcard-back .explanation { color: var(--text-primary); }
+.flashcard[data-ink] .flashcard-back .explanation { color: var(--color-ink-0); }
 
 .card-category {
     position: absolute;
@@ -168,7 +168,7 @@
 
 .flashcard-back p {
     font-size: 0.85rem;
-    color: var(--text-primary);
+    color: var(--color-ink-0);
     line-height: 1.4;
     text-align: center;
     word-wrap: break-word;
@@ -179,10 +179,10 @@
 .flashcard-back .explanation {
     margin-top: 0.75rem;
     padding: 0.75rem;
-    background: var(--bg-tertiary);
-    border-radius: var(--radius);
+    background: var(--color-surface-2);
+    border-radius: var(--radius-md);
     font-size: 0.75rem;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
 }
 
 .flashcard-controls {
@@ -195,7 +195,7 @@
 .control-btn {
     padding: 0.75rem 1rem;
     border: none;
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     cursor: pointer;
     font-family: inherit;
     font-weight: 600;
@@ -209,7 +209,7 @@
 }
 
 /* ⚠️ TINTA JE NEVALIDIRANA PODLOGA — zato je otišla (C2, 2026-08-13).
-   Ovdje je stajalo `background: rgba(34,197,94,.1)` uz `color: var(--success)`. Problem
+   Ovdje je stajalo `background: rgba(34,197,94,.1)` uz `color: var(--color-ok)`. Problem
    nije bio token nego to što `check:contrast` mjeri boje na PLOHAMA koje poznaje
    (`surface-0/1/2`), a tinta je četvrta, izmišljena ploha koju nitko ne mjeri. Na tamnoj
    podlozi je razlika bila nevažna; na svijetloj je efektivna pozadina posvijetlila i
@@ -220,41 +220,41 @@
    To je usput i bliže Appleovoj disciplini — vlas-crta umjesto ispune. */
 .control-btn.wrong {
     background: transparent;
-    color: var(--danger-text);
-    border: 2px solid var(--danger);
+    color: var(--color-danger-ink);
+    border: 2px solid var(--color-danger);
 }
 
-.control-btn.wrong:hover { background: var(--danger); color: var(--on-primary); }
+.control-btn.wrong:hover { background: var(--color-danger); color: var(--color-on-brand); }
 
 /* `transparent`, ne `--bg-tertiary`: na tercijarnoj plohi je zelena davala **4.80** —
    prolazi, ali bez rezerve, pa je svaki idući pomak palete gura ispod praga. Ovako tekst
    sjedi na plohi sekcije, koju `check:contrast` mjeri izravno u svim temama. */
 .control-btn.correct {
     background: transparent;
-    color: var(--success);
-    border: 2px solid var(--success);
+    color: var(--color-ok);
+    border: 2px solid var(--color-ok);
 }
 
-.control-btn.correct:hover { background: var(--success); color: var(--on-primary); }
+.control-btn.correct:hover { background: var(--color-ok); color: var(--color-on-brand); }
 
 .control-btn.prev,
 .control-btn.next {
-    background: var(--bg-tertiary);
-    color: var(--text-secondary);
+    background: var(--color-surface-2);
+    color: var(--color-ink-1);
 }
 
 .control-btn.prev:hover,
 .control-btn.next:hover {
-    background: var(--primary);
-    color: var(--on-primary);
+    background: var(--color-brand-500);
+    color: var(--color-on-brand);
 }
 
 /* ⚠️ ZNAČENJE BROJKE, ne raspored — raspored je u markupu (utilityji).
    Selektor je namjerno `.stat`, a ne `.flashcard-stats .stat`: isti blok stoji i na
    ekranu dopuna, gdje dosad NIJE imao nijedno pravilo (BUG-038). `.stat` u dokumentu
    postoji samo na ta dva mjesta — kviz koristi `.result-stat`. */
-.stat.correct { color: var(--success); }
-.stat.wrong { color: var(--danger-text); }
+.stat.correct { color: var(--color-ok); }
+.stat.wrong { color: var(--color-danger-ink); }
 
 /* ── LJESTVA PRAGOVA ────────────────────────────────────────────────────────────
    Preseljeno iz `css/responsive/01..06` (C5a/2), redoslijed NEPROMIJENJEN.

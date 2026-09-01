@@ -223,28 +223,7 @@
 
 :root {
   --primary: var(--color-brand-500);
-  --primary-dark: var(--color-brand-600);
-  --primary-light: var(--color-brand-400);
-  --secondary: var(--color-ok-strong);
-  --accent: var(--color-warn);
-  --danger: var(--color-danger);
-  --danger-text: var(--color-danger-ink);
-  --warning-text: var(--color-warn-ink);
-  --success: var(--color-ok);
-  --on-primary: var(--color-on-brand);
-  --on-success: var(--color-on-ok);
-  --on-danger: var(--color-on-danger);
-  --bg-primary: var(--color-surface-0);
-  --bg-secondary: var(--color-surface-1);
-  --bg-tertiary: var(--color-surface-2);
-  --bg-card: var(--color-surface-1);
-  --text-primary: var(--color-ink-0);
-  --text-secondary: var(--color-ink-1);
-  --text-muted: var(--color-ink-2);
-  --border: var(--color-line);
-  --shadow: var(--shadow-e1);
-  --shadow-lg: var(--shadow-e2);
-  --radius: var(--radius-md);
+  --border-color: var(--color-line);
   --transition: all 0.3s ease;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);

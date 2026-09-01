@@ -14,6 +14,19 @@ Sljedeca cigla: C5b/2 (blind-map.css), pa C5b/3 (learn.css).
 
 ---
 
+## 2026-09-01 (FABLE) — C7/5: most mrtav, ali gradivo cuva dva imena — C7 ZATVOREN
+
+990 var() poziva preimenovano na tokene (redoslijed najduzi-prvi + terminator-guard; cuvar
+reza = check:tokens, zato je cigla smjela biti velika). NALAZ koji je oblikovao rez: GRADIVO
+u bazi zove --primary (6x) i --border-color (72x) — a --border-color NIKAD nije bio
+definiran, pa shorthand pada cijeli i tablice u gradivu UOPCE nisu imale rubove (izmjereno
+none/0px). Most zato ne umire nego postaje UGOVOR PREMA SADRZAJU (2 imena) + strukturne;
+definicija --border-color je ujedno popravak (rub = 1px linija po temi). Dokaz: 0
+paint-razlika na 4 rute (10560 definicijskih), geografija samo border na 9 redaka, telefon
+21/0, preflight 0. Faza-dug: 8032/106 na ulasku -> 5942/2. C7 gotov; faza ceka Leona.
+
+---
+
 ## 2026-09-01 (FABLE) — C7/4: components raspusten — mobile-nav je stilizirao samo nevidljivo
 
 Mjera pokazala da mobile-nav pravila u components NISU imala vidljivi ucinak: <768 sve gazi

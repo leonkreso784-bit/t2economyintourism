@@ -29,7 +29,7 @@
     width: 100%;
     max-width: 100%;
     height: 100%;
-    background: var(--bg-secondary);
+    background: var(--color-surface-1);
     z-index: 1000;
     transition: transform 0.3s ease;
     display: flex;
@@ -48,7 +48,7 @@
     align-items: center;
     padding: 1rem;
     padding-top: calc(1rem + var(--safe-top));
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--color-line);
 }
 
 /* Sidebar Logo */
@@ -66,7 +66,7 @@
 .sidebar-logo span {
     font-size: 1.1rem;
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--color-ink-0);
 }
 
 
@@ -75,16 +75,16 @@
     height: 44px;
     border-radius: 10px;
     border: none;
-    background: var(--bg-tertiary);
-    color: var(--text-secondary);
+    background: var(--color-surface-2);
+    color: var(--color-ink-1);
     font-size: 1.25rem;
     cursor: pointer;
     transition: var(--transition);
 }
 
 .close-sidebar-btn:hover {
-    background: var(--danger);
-    color: var(--on-danger);
+    background: var(--color-danger);
+    color: var(--color-on-danger);
 }
 
 .sidebar-content {
@@ -104,15 +104,15 @@
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background: var(--bg-tertiary);
-    border-radius: var(--radius);
+    background: var(--color-surface-2);
+    border-radius: var(--radius-md);
     cursor: pointer;
     transition: var(--transition);
     border: 2px solid transparent;
 }
 
 .subject-item:hover {
-    border-color: var(--primary);
+    border-color: var(--color-brand-500);
     transform: translateX(5px);
 }
 
@@ -124,7 +124,7 @@
     align-items: center;
     justify-content: center;
     /* ⚠️ Ovdje je do 2026-08-15 stajalo ZAKUCANO `color: white` na plohi koja dolazi iz
-       `data/catalog.js`. Tvrda zabrana #1 to nije uhvatila jer traži bijelo na `var(--primary)`,
+       `data/catalog.js`. Tvrda zabrana #1 to nije uhvatila jer traži bijelo na `var(--color-brand-500)`,
        a ova ploha nije token nego inline gradijent iz podatka — dakle rupa u brani, ne iznimka.
        Izmjereno: bijelo na `#f59e0b` (5 predmeta) = 2.15. Tinta se sad bira izračunom
        luminancije (`inkForTint()`), a `check:contrast` to mjeri za svaku boju u katalogu. */
@@ -150,7 +150,7 @@
 
 .subject-item-info p {
     font-size: 0.8rem;
-    color: var(--text-secondary);
+    color: var(--color-ink-1);
     margin-bottom: 0.5rem;
     white-space: nowrap;
     overflow: hidden;
@@ -161,7 +161,7 @@
     display: flex;
     gap: 1rem;
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: var(--color-ink-2);
 }
 
 .subject-item-meta span {
@@ -171,12 +171,12 @@
 }
 
 .subject-arrow {
-    color: var(--text-muted);
+    color: var(--color-ink-2);
     transition: var(--transition);
 }
 
 .subject-item:hover .subject-arrow {
-    color: var(--primary);
+    color: var(--color-brand-500);
     transform: translateX(3px);
 }
 
