@@ -198,7 +198,13 @@ if (failed) {
  * pa `var(--primary, #6366f1)` — dakle isti token S FALLBACKOM — nije bio pogodak.
  * `sokrat-confirm.css` je tako godinu dana držao `color:#fff` na ispuni marke, a gate je
  * javljao čisto. Pronađeno tek kad je zabrana #3 prijavila SUSJEDNO pravilo (2026-08-13). */
-const MARKA_BG = /background[^;]*(var\(--primary\s*[,)]|var\(--color-brand|var\(--primary-dark\s*[,)]|var\(--primary-light\s*[,)])/;
+/* ⚠️ Od 2026-09-01 (birač tema je IZAŠAO) zabrana pokriva i JAKE semantičke ispune
+ * (--color-ok/-strong, --color-danger, --color-warn): tinta na njima ovisi o temi
+ * (--color-on-ok/-danger, ADR-032), pa je zakucana bijela/crna isti razred kvara kao
+ * na marki — nevidljiv tekst u chalk/mint, do kojih korisnik od danas MOŽE doći.
+ * Obaveza zapisana u BACKLOG-u 2026-08-18 („istoga dana kad birač izađe").
+ * -soft/pale varijante NAMJERNO nisu tu: blijeda ploha s tamnim tekstom nije taj kvar. */
+const MARKA_BG = /background[^;]*(var\(--primary\s*[,)]|var\(--color-brand|var\(--primary-dark\s*[,)]|var\(--primary-light\s*[,)]|var\(--color-ok(-strong)?\s*[,)]|var\(--color-danger\s*[,)]|var\(--color-warn\s*[,)])/;
 const ZAKUCAN_TEKST = /(?<![-\w])color:\s*(?:#fff\b|#ffffff\b|white\b|#000\b|#000000\b|black\b)/i;
 
 const naIspuni = [];

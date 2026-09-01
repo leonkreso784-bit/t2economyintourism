@@ -464,3 +464,54 @@
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 0.82rem; line-height: 1.5;
 }
+
+/* ── BIRAČ TEMA (Leon, 2026-09-01: „u profilu") ─────────────────────────────
+   Mehanizam (localStorage + validacija popisa) je u js/theme.js — ovdje SAMO
+   izbor. Kartica se crta i NEPRIJAVLJENOM korisniku: tema je svojstvo
+   uređaja, ne računa. Krug pokazuje surface-0 + brand-500 CILJNE teme preko
+   --theme-swatch-* tokena (tokens.css) — var() aktivne teme tu ne pomaže. */
+.theme-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.theme-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: var(--touch-target, 44px);
+    padding: 8px 14px;
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    background: var(--color-surface-1);
+    color: var(--color-ink-0);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.theme-option[aria-pressed="true"] {
+    border-color: var(--color-brand-500);
+    box-shadow: inset 0 0 0 1px var(--color-brand-500);
+}
+
+.theme-option:focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+}
+
+.theme-option-swatch {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    flex: none;
+    border: 1px solid var(--color-line);
+    background: radial-gradient(circle at 30% 30%, var(--ts-acc) 0 36%, var(--ts-bg) 42%);
+}
+
+.theme-option-swatch--academic { --ts-bg: var(--theme-swatch-academic-bg); --ts-acc: var(--theme-swatch-academic-acc); }
+.theme-option-swatch--paper    { --ts-bg: var(--theme-swatch-paper-bg);    --ts-acc: var(--theme-swatch-paper-acc); }
+.theme-option-swatch--chalk    { --ts-bg: var(--theme-swatch-chalk-bg);    --ts-acc: var(--theme-swatch-chalk-acc); }
+.theme-option-swatch--mint     { --ts-bg: var(--theme-swatch-mint-bg);     --ts-acc: var(--theme-swatch-mint-acc); }

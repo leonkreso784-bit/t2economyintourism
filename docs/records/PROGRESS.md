@@ -26,6 +26,20 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-01 (FABLE) — Birač tema: mehanizam je cijelo vrijeme postojao, falio je samo UI
+
+Leon odmah nakon deploya: nemamo izbornik tema na telefonu; na pitanje gdje — „U profilu".
+js/theme.js je vec imao sve (localStorage, validacija, setTheme) pa je cigla samo kartica:
+themeCardHtml() u OBA grananja profila (tema je stvar uredjaja, ne racuna), aria-pressed,
+44px mete, pregled-krugovi kroz --theme-swatch-* tokene (var() aktivne teme ne moze
+pokazati CILJNU temu). Usput ispunjena zapisana obaveza iz BACKLOG-a: paleta-zabrana #1
+prosirena na jake semanticke ispune (0 zatecenih). Zamke puta: SW u test-pregledniku
+servirao stari index nakon bumpa (__swKill) i mjerenje kroz 0.3s tranziciju (procitao sam
+boju U LETU i skoro proglasio kvar). Dokaz: ziva sonda + SE 17/17 + preflight 0. Na grani
+feat/birac-tema — deploy ceka Leonov OK.
+
+---
+
 ## 2026-09-01 (FABLE) — 🚀 DEPLOY: redizajn + MREZA na produkciji, faza formalno gotova
 
 Leon: "Moze idemo." Paket odvrten redom: FF push na main (f8bc5cb) -> Vercel READY ->

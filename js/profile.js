@@ -13,6 +13,52 @@ function pt(key, fb) {
     return (v === key) ? fb : v;
 }
 
+// ── BIRAČ TEMA (Leon, 2026-09-01: „u profilu") ──────────────────────────────
+// Tema je svojstvo UREĐAJA (localStorage, js/theme.js) — zato se kartica crta
+// i neprijavljenom korisniku, a izbor ne ide ni u kakav profil na serveru.
+function themeCardHtml() {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const imena = {
+        academic: pt('profile.themeAcademic', 'Academic blue'),
+        paper: pt('profile.themePaper', 'Paper'),
+        chalk: pt('profile.themeChalk', 'Chalkboard'),
+        mint: pt('profile.themeMint', 'Mint')
+    };
+    // Imena klasa DOSLOVNO, ne sastavljena ('--' + ime): skener siročadi (check:orphan-css)
+    // čita izvor, ne runtime — ista logika zbog koje ADR-028 zabranjuje dinamičke klase.
+    const swatch = {
+        academic: 'theme-option-swatch--academic',
+        paper: 'theme-option-swatch--paper',
+        chalk: 'theme-option-swatch--chalk',
+        mint: 'theme-option-swatch--mint'
+    };
+    const teme = window.SOKRAT_THEMES || ['academic', 'paper', 'chalk', 'mint'];
+    let gumbi = '';
+    for (let i = 0; i < teme.length; i++) {
+        const ime = teme[i];
+        gumbi += '<button type="button" class="theme-option" data-theme-pick="' + ime + '"' +
+            ' aria-pressed="' + (ime === cur ? 'true' : 'false') + '">' +
+            '<span class="theme-option-swatch ' + (swatch[ime] || '') + '" aria-hidden="true"></span>' +
+            '<span>' + (imena[ime] || ime) + '</span></button>';
+    }
+    return '<div class="profile-card profile-card--wide">' +
+        '<h3 class="profile-card-title"><i class="fas fa-palette"></i> ' + pt('profile.appearance', 'Appearance') + '</h3>' +
+        '<p class="profile-meta">' + pt('profile.appearanceDesc', 'Pick a theme — it is saved on this device.') + '</p>' +
+        '<div class="theme-picker">' + gumbi + '</div>' +
+        '</div>';
+}
+
+function wireThemePicker(root) {
+    root.querySelectorAll('[data-theme-pick]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            if (!window.setTheme || !setTheme(btn.dataset.themePick)) return;
+            root.querySelectorAll('[data-theme-pick]').forEach(function (b) {
+                b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+            });
+        });
+    });
+}
+
 function renderProfilePage() {
     const root = document.getElementById('profileContent');
     if (!root) return;
@@ -26,9 +72,11 @@ function renderProfilePage() {
             '  <h2>' + pt('profile.notSignedIn', 'You are not signed in') + '</h2>' +
             '  <p>' + pt('profile.signInToBackup', 'Sign in to back up your progress and study on any device.') + '</p>' +
             '  <button type="button" class="cta-button primary" id="profileSignInBtn"><i class="fas fa-user"></i><span>' + pt('auth.signIn', 'Sign in') + '</span></button>' +
-            '</div>';
+            '</div>' +
+            themeCardHtml();
         const btn = document.getElementById('profileSignInBtn');
         if (btn) btn.addEventListener('click', function () { SokratAuth.openModal(); });
+        wireThemePicker(root);
         return;
     }
 
@@ -104,6 +152,8 @@ function renderProfilePage() {
         '    <div class="profile-stats" id="profileStats"></div>' +
         '  </div>' +
 
+        themeCardHtml() +
+
         '  <div class="profile-card profile-card--wide profile-card--danger">' +
         '    <h3 class="profile-card-title"><i class="fas fa-triangle-exclamation"></i> ' + pt('profile.privacyData', 'Privacy & data') + '</h3>' +
         '    <p class="profile-meta">' + pt('profile.deleteDesc', 'Delete all study progress stored in the cloud — progress saved on this device stays.') +
@@ -129,6 +179,7 @@ function renderProfilePage() {
         '</div>';
 
     renderProfileStats();
+    wireThemePicker(root);
     // Otkrij admin karticu samo adminu (RLS je prava zaštita; ovo je UX). Async re-check.
     if (window.SokratAdmin) SokratAdmin.refresh();
     // Moji materijali se od C0 montiraju na `#materials-page` (renderMaterialsPage), ne ovdje.

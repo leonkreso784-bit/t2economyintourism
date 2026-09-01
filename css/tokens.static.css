@@ -32,6 +32,14 @@
     --color-shadow: #0e1a2b;
     --color-on-tint-dark: #000000;
     --color-on-tint-light: #ffffff;
+    --theme-swatch-academic-bg: #f7f9fc;
+    --theme-swatch-academic-acc: #1657d0;
+    --theme-swatch-paper-bg: #faf9f6;
+    --theme-swatch-paper-acc: #2c5fd6;
+    --theme-swatch-chalk-bg: #1e1f1c;
+    --theme-swatch-chalk-acc: #f2c14e;
+    --theme-swatch-mint-bg: #0b1a1c;
+    --theme-swatch-mint-acc: #4fc9ab;
     --color-mark: #ffd24a;
     --color-ok: #10794a;
     --color-ok-strong: #0b5e39;

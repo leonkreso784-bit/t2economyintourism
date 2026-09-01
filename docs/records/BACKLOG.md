@@ -83,11 +83,12 @@ boje svijetle.
 `--on-danger` znači **proširiti sustav tokena kroz sve četiri teme**, a paleta je Leonova odluka
 (dvije tamne palete su već jednom pale na živom ekranu). **Ne dira se bez njegove riječi.**
 
-⚠️ **Nije hitno:** birač tema **ne postoji u markupu**, pa je `chalk` danas nedohvatljiv. Postaje
-hitno **istoga dana kad birač izađe** — a to je opisano kao „posao od jednog popodneva".
-
-**Kad se odluči:** zabrana #4 u `check:palette` proširuje se s `MARKA_BG` na semantičke tokene,
-i tada pokriva i ovo. Zapis: spec §10.2.
+✅ **RIJEŠENO 2026-09-01 — birač POSTOJI** (Leonova riječ, isti dan: „U profilu"): kartica
+„Izgled" na `#profile-page` (crta se i neprijavljenom — tema je stvar uređaja), 4 teme s
+pregled-krugovima (`--theme-swatch-*` u `tokens.css`), mehanizam = postojeći `js/theme.js`.
+**Zapisana obaveza ispunjena isti dan:** zabrana #1 u `check:palette` proširena na JAKE
+semantičke ispune (`--color-ok/-strong`, `--color-danger`, `--color-warn`) — pronađeno 0
+prekršaja (ADR-032 je teren već očistio); -soft varijante namjerno izvan.
 
 > ### ⚠️ PITANJE JE PRECIZIRANO 2026-08-30 — i još uvijek čeka Leona
 > Objašnjeno mu je i **nije odgovorio**. Pravo pitanje nije „koje tokene dodati" nego:
@@ -922,6 +923,10 @@ mjesto je **pred C4**, jer ondje počinje niz cigli koje bi bez toga sve morale 
 ---
 
 ## ➖ Birač tema je bliže nego što spec tvrdi — blokira ga JEDNA od tri skupine (2026-08-18)
+
+> ✅ **RIJEŠENO 2026-09-01:** FATALNO je pao na 0 još u MREŽA C4, a birač je isporučen
+> danas (profil, „Izgled"). Ostatak zapisa stoji kao obrazloženje zašto je blokada bila
+> samo prva od tri skupine.
 
 Leon je pitao kad dolaze druge boje cijele stranice. Nalaz je da agregatna brojka
 `check:palette` **mjeri točno, a savjetuje krivo**, jer u jedan zbroj trpa tri različite

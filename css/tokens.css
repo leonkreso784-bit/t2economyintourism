@@ -160,6 +160,16 @@
   --color-on-tint-dark: #000000;
   --color-on-tint-light: #ffffff;
 
+  /* ── BIRAČ TEMA — pregledi CILJNIH tema (profil, 2026-09-01) ──────────────
+     Namjerno THEME-NEOVISNI (u :root, ne u [data-theme] blokovima): krug za
+     „chalk" mora pokazivati chalk-boje i dok je aktivna academic, a var()
+     aktivne teme to ne može dati. Vrijednosti su surface-0 + brand-500
+     dotične teme — promijeniš li temu niže, promijeni i njen pregled ovdje. */
+  --theme-swatch-academic-bg: #f7f9fc;  --theme-swatch-academic-acc: #1657d0;
+  --theme-swatch-paper-bg: #faf9f6;     --theme-swatch-paper-acc: #2c5fd6;
+  --theme-swatch-chalk-bg: #1e1f1c;     --theme-swatch-chalk-acc: #f2c14e;
+  --theme-swatch-mint-bg: #0b1a1c;      --theme-swatch-mint-acc: #4fc9ab;
+
   /* MARKER — drugi posao akcenta. `brand` nosi akciju (gumb, poveznica), `mark`
      podvlači bitno u tekstu, kao pravi marker u skripti. Razdvojeni su jer nose
      različito značenje (§7.2.1); u svijetlim temama marker je puna žuta, u tamnima

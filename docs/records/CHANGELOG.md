@@ -5,6 +5,19 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **Birač tema u profilu — `chalk`/`mint`/`paper` prvi put dohvatljivi** (grana)
+
+### Dodano
+- Kartica „Izgled" na `#profile-page` (i za neprijavljene — tema je svojstvo uređaja):
+  4 teme s pregled-krugovima ciljnih boja (`--theme-swatch-*`, tokens.css); mehanizam =
+  postojeći `js/theme.js` (localStorage + validacija popisa). i18n EN/HR.
+- `check:palette` zabrana #1 proširena na jake semantičke ispune (obaveza iz BACKLOG-a
+  „istoga dana kad birač izađe"); 0 prekršaja zatečeno.
+
+### Dokaz
+- Živa sonda: klik chalk → `data-theme`+localStorage+`color-scheme` ↓, body tamna; gumbi
+  44 px · telefon+a11y na SE 17/17 · proširena paleta zelena · preflight EXIT 0.
+
 ## 2026-09-01 (FABLE) — 🚀 **FRONTEND REDIZAJN (C0–C7) + MREŽA (A–E) — NA PRODUKCIJI** (`f8bc5cb`)
 
 ### Deployano (Leonov izričit OK, cijeli paket)
