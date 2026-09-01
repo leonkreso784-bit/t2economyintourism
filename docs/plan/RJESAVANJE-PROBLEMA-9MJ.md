@@ -549,6 +549,18 @@ Raditi CSP bez toga znači raditi CSP dvaput.
 ⚠️ Pošteno o dosegu: naša izvedba je **klijentska**, kao i `minlength` — zaustavlja korisnika koji
 upiše `password123`, ne onoga tko zaobiđe formu (a taj šteti samo sebi). ~90 % vrijednosti, ne 100 %.
 
+**✅ D4 ISHOD (2026-09-01).** `isPasswordPwned()` u `js/auth.js` (`f62ef4c`): SHA-1 kroz
+`crypto.subtle`, odlazi **samo prvih 5 heks znakova** (range API, k-anonimnost), `Add-Padding`
+izjednačava veličinu odgovora, usporedba lokalna — lozinka nikad ne napušta preglednik.
+**FAIL-OPEN** namjerno: mrežna greška ne blokira registraciju (provjera je dodatak, ne vrata;
+server-side dvojnik na Pro planu ostaje do seobe — poslije nje je ovo jedina). Pozvano na **sva
+tri mjesta** gdje se lozinka postavlja: signup · recovery · promjena na profilu
+(`window.checkPwnedPassword` + typeof-guard). Poruka = postojeći ključ `auth.st.weakPwned`
+(HR prijevod već postojao). `api.pwnedpasswords.com` dodan u `connect-src` — razlog zašto D4
+ide uz D3. Dokazi: `password123` → true, jak nasumičan → false (živi API) · UI: signup s
+`password123` staje **prije** Supabase poziva (0 novih `/auth/v1/signup` zahtjeva) s prevedenom
+porukom · ista provjera radi i na preview-u pod ENFORCE policyjem · preflight EXIT=0.
+
 ---
 
 ## 7 · BLOK E — Sadržaj i proizvod
@@ -625,7 +637,7 @@ Faza pada kad **sve** stoji:
 - [x] `check:final` **imenuje** preskočene — ✅ **B2, 2026-08-31** (osnovica: 8 imenovanih)
 - [ ] `palette:breakdown` **fatalno 0** · `check:palette` osnovica **0**
 - [ ] CSP **enforce** na produkciji uz čist report
-- [ ] leaked-password provjera živa
+- [x] leaked-password provjera živa (D4, 2026-09-01)
 - [ ] E1–E4 riješeni ili **obrazloženo odgođeni** (odgoda je ishod, prešućivanje nije)
 - [ ] svi nalazi iz §8 triažirani
 - [ ] `npm run preflight` **EXIT 0**

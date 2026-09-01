@@ -5,6 +5,16 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **MREŽA D4: procurjela lozinka pada u pregledniku — 0 € umjesto Pro plana**
+
+### Dodano
+- **HaveIBeenPwned provjera s k-anonimnošću** u `js/auth.js` — odlazi samo 5 heks znakova
+  SHA-1 sažetka, usporedba lokalna, `Add-Padding`; **fail-open** (mrežna greška ne blokira).
+  Pozvana na sva tri mjesta postavljanja lozinke (signup · recovery · profil).
+- `api.pwnedpasswords.com` u `connect-src` (zato D4 ide uz D3 — CSP se ne radi dvaput).
+- Dokazi: `password123` → odbijena PRIJE Supabase poziva s prevedenom porukom; jaka lozinka
+  prolazi; radi i pod enforce CSP-om na preview-u.
+
 ## 2026-09-01 (FABLE) — **MREŽA D3: CSP enforce + `check:csp` — prva iduća inline skripta pada kod nas, ne kod korisnika**
 
 ### Dodano

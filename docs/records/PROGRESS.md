@@ -5,6 +5,16 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-01 (FABLE) — D4: lozinka koja je procurila staje u pregledniku, prije servera
+
+HIBP range API s k-anonimnoscu: odlazi samo 5 heks znakova SHA-1, usporedba je lokalna,
+fail-open (dodatak, ne vrata). Tri mjesta postavljanja lozinke, jedna funkcija. Vrijednost
+nije u danasnjem stanju (server-side dvojnik na Pro planu vec radi) nego u SEOBI: poslije nje
+Pro zastita otpada, a klijentska provjera ostaje — D4 je napisan danas bas zato da tada ne
+bude rupe. I zato ide uz D3: dodaje host u connect-src, pa se CSP ne radi dvaput.
+
+---
+
 ## 2026-09-01 (FABLE) — D3: enforce — i brana je u prvom dahu nasla pravu iznimku
 
 Header na enforce, ista setnja pod blokirajucim policyjem: nula Refused, sve radi. Brana
