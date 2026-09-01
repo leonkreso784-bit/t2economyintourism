@@ -1,22 +1,26 @@
 /* =====================================================
    LEARN SECTION - FINAL RESPONSIVE STYLES
    
-   This file is loaded LAST to override any conflicts
-   from responsive.css. Uses #learn prefix for specificity.
+   C5b/3a (2026-09-01): `#learn` je svugdje postao `:where(#learn)` - DOSEG je identican
+   (nista ne curi izvan sekcije; `.filter-btn` postoji i drugdje), ali ID vise ne nosi
+   specificnost (1-1-0 -> 0-1-0). Razlog: utility u markupu (0-1-0) protiv ID-a NE MOZE
+   pobijediti ni kad stoji zadnji (spec 12.1, izmjereno); protiv :where() odlucuje
+   redoslijed u snopu - a datoteka i dalje stoji IZA responsive/* (i dalje se ucitava
+   LAST), pa pobjeduje sve sto je pobjedivala (obrnuti rizik izmjeren kao NULA, 12.2).
    ===================================================== */
 
 /* =====================================================
    BASE STYLES - MOBILE FIRST
    ===================================================== */
 
-#learn {
+:where(#learn) {
     width: 100%;
     min-width: 0;
     padding: 0;
     overflow-x: hidden;
 }
 
-#learn .learn-container {
+:where(#learn) .learn-container {
     width: 100%;
     max-width: 100%;
     min-width: 0;
@@ -29,7 +33,7 @@
 }
 
 /* Page Title - Always visible with text */
-#learn .learn-container > h1 {
+:where(#learn) .learn-container > h1 {
     font-size: 1.15rem;
     text-align: center;
     margin: 0 0 14px 0;
@@ -44,7 +48,7 @@
     box-shadow: 0 4px 15px color-mix(in srgb, var(--primary) 30%, transparent);
 }
 
-#learn .learn-container > h1 i {
+:where(#learn) .learn-container > h1 i {
     font-size: 1.2rem;
     /* naslijedi `--on-primary` s roditelja; zakucana bijela ga je ponistavala */
     color: inherit;
@@ -54,7 +58,7 @@
    FILTER BUTTONS
    ===================================================== */
 
-#learn .learn-filter {
+:where(#learn) .learn-filter {
     display: flex;
     gap: 10px;
     margin-bottom: 14px;
@@ -67,17 +71,17 @@
 }
 
 /* WebKit tanki scrollbar (naznaka skrola) */
-#learn .learn-filter::-webkit-scrollbar {
+:where(#learn) .learn-filter::-webkit-scrollbar {
     height: 6px;
 }
-#learn .learn-filter::-webkit-scrollbar-track {
+:where(#learn) .learn-filter::-webkit-scrollbar-track {
     background: transparent;
 }
-#learn .learn-filter::-webkit-scrollbar-thumb {
+:where(#learn) .learn-filter::-webkit-scrollbar-thumb {
     background: var(--border);
     border-radius: 3px;
 }
-#learn .learn-filter::-webkit-scrollbar-thumb:hover {
+:where(#learn) .learn-filter::-webkit-scrollbar-thumb:hover {
     background: var(--text-secondary, var(--border));
 }
 
@@ -85,26 +89,26 @@
    JS (updateLearnFilterScrollHints) dodaje can-scroll-left/right ovisno o poziciji skrola. */
 /* C4: maska cita samo ALFU — currentColor je tu "bilo koja neprozirna boja",
    ne odluka o nijansi (zato nije token teme) */
-#learn .learn-filter.can-scroll-right {
+:where(#learn) .learn-filter.can-scroll-right {
     -webkit-mask-image: linear-gradient(to right, currentColor calc(100% - 36px), transparent);
             mask-image: linear-gradient(to right, currentColor calc(100% - 36px), transparent);
 }
-#learn .learn-filter.can-scroll-left {
+:where(#learn) .learn-filter.can-scroll-left {
     -webkit-mask-image: linear-gradient(to right, transparent, currentColor 36px);
             mask-image: linear-gradient(to right, transparent, currentColor 36px);
 }
-#learn .learn-filter.can-scroll-left.can-scroll-right {
+:where(#learn) .learn-filter.can-scroll-left.can-scroll-right {
     -webkit-mask-image: linear-gradient(to right, transparent, currentColor 36px, currentColor calc(100% - 36px), transparent);
             mask-image: linear-gradient(to right, transparent, currentColor 36px, currentColor calc(100% - 36px), transparent);
 }
 
 /* Kad sadržaj prelazi širinu, poravnaj lijevo da prvi čip NE bude odrezan
    (gazi justify-content:center iz @media >=1024px — uzrok BUG-007 lijevog reza). */
-#learn .learn-filter.is-scrollable {
+:where(#learn) .learn-filter.is-scrollable {
     justify-content: flex-start;
 }
 
-#learn .filter-btn {
+:where(#learn) .filter-btn {
     padding: 10px 16px;
     border: 2px solid var(--border);
     background: var(--bg-secondary);
@@ -121,15 +125,15 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-#learn .filter-btn:hover,
-#learn .filter-btn.active {
+:where(#learn) .filter-btn:hover,
+:where(#learn) .filter-btn.active {
     border-color: var(--primary);
     background: var(--primary-dark);
     color: var(--on-primary);
     box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 40%, transparent);
 }
 
-#learn .filter-btn:active {
+:where(#learn) .filter-btn:active {
     transform: scale(0.96);
 }
 
@@ -137,7 +141,7 @@
    LEARN CONTENT CONTAINER
    ===================================================== */
 
-#learn .learn-content {
+:where(#learn) .learn-content {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -155,7 +159,7 @@
    tko UČI bila nevidljiva — a kriterij 4 traži da se vidi „na blokovima i karticama".
    Blok s VLASTITOM bojom je i prije radio (emitira `--lb-acc`); nasljeđivanje nije,
    jer neobojani blok nema omot koji bi se obojao — nosi ga zato kartica sekcije. */
-#learn .learn-card {
+:where(#learn) .learn-card {
     background: var(--bg-secondary);
     border-radius: 16px;
     overflow: hidden;
@@ -166,7 +170,7 @@
 }
 
 /* Card Header */
-#learn .learn-card-header {
+:where(#learn) .learn-card-header {
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     padding: 14px 16px;
     color: var(--on-primary);
@@ -177,9 +181,9 @@
     gap: 8px;
 }
 
-#learn .learn-card-header h2,
-#learn .learn-card-header h3,
-#learn .learn-card-title {
+:where(#learn) .learn-card-header h2,
+:where(#learn) .learn-card-header h3,
+:where(#learn) .learn-card-title {
     font-size: 1rem;
     font-weight: 600;
     margin: 0;
@@ -192,13 +196,13 @@
     min-width: 0;
 }
 
-#learn .learn-card-header i {
+:where(#learn) .learn-card-header i {
     font-size: 1.1rem;
     flex-shrink: 0;
     color: inherit;
 }
 
-#learn .learn-card-header span {
+:where(#learn) .learn-card-header span {
     font-size: 0.8rem;
     /* puna ispuna tamnijim krajem gradijenta umjesto rgba-bijele: poluprozirni pill
        s bijelim tekstom pada u `paper` na 4.22; ovako 6.02–9.50 (MREŽA C1) */
@@ -213,7 +217,7 @@
    CARD CONTENT - THE MAIN READING AREA
    ===================================================== */
 
-#learn .learn-card-content {
+:where(#learn) .learn-card-content {
     padding: 16px;
     font-size: 0.92rem;
     line-height: 1.7;
@@ -226,7 +230,7 @@
 }
 
 /* Force all content to fit */
-#learn .learn-card-content * {
+:where(#learn) .learn-card-content * {
     max-width: 100%;
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -234,7 +238,7 @@
 }
 
 /* Headings */
-#learn .learn-card-content h3 {
+:where(#learn) .learn-card-content h3 {
     font-size: 1.1rem;
     color: var(--primary);
     margin: 18px 0 10px 0;
@@ -244,11 +248,11 @@
     line-height: 1.3;
 }
 
-#learn .learn-card-content h3:first-child {
+:where(#learn) .learn-card-content h3:first-child {
     margin-top: 0;
 }
 
-#learn .learn-card-content h4 {
+:where(#learn) .learn-card-content h4 {
     font-size: 1rem;
     color: var(--text-primary);
     margin: 14px 0 8px 0;
@@ -256,7 +260,7 @@
     line-height: 1.3;
 }
 
-#learn .learn-card-content h5 {
+:where(#learn) .learn-card-content h5 {
     font-size: 0.95rem;
     color: var(--primary);
     margin: 12px 0 6px 0;
@@ -265,7 +269,7 @@
 }
 
 /* Paragraphs */
-#learn .learn-card-content p {
+:where(#learn) .learn-card-content p {
     font-size: 0.9rem;
     line-height: 1.7;
     margin: 0 0 10px 0;
@@ -273,13 +277,13 @@
 }
 
 /* Lists */
-#learn .learn-card-content ul {
+:where(#learn) .learn-card-content ul {
     list-style: none;
     margin: 10px 0;
     padding-left: 0;
 }
 
-#learn .learn-card-content ul li {
+:where(#learn) .learn-card-content ul li {
     font-size: 0.9rem;
     line-height: 1.6;
     padding: 5px 0 5px 22px;
@@ -287,7 +291,7 @@
     color: var(--text-secondary);
 }
 
-#learn .learn-card-content ul li::before {
+:where(#learn) .learn-card-content ul li::before {
     content: '✓';
     position: absolute;
     left: 0;
@@ -296,12 +300,12 @@
     font-size: 0.85rem;
 }
 
-#learn .learn-card-content ol {
+:where(#learn) .learn-card-content ol {
     margin: 10px 0;
     padding-left: 20px;
 }
 
-#learn .learn-card-content ol li {
+:where(#learn) .learn-card-content ol li {
     font-size: 0.9rem;
     line-height: 1.6;
     padding: 4px 0;
@@ -309,7 +313,7 @@
 }
 
 /* Highlight */
-#learn .learn-card-content .highlight {
+:where(#learn) .learn-card-content .highlight {
     background: color-mix(in srgb, var(--primary) 15%, transparent);
     padding: 2px 6px;
     border-radius: 4px;
@@ -318,7 +322,7 @@
 }
 
 /* Horizontal Rule */
-#learn .learn-card-content hr {
+:where(#learn) .learn-card-content hr {
     border: none;
     border-top: 1px solid var(--border);
     margin: 18px 0;
@@ -328,14 +332,14 @@
    INFO BOXES (Tip, Warning, Example, Formula)
    ===================================================== */
 
-#learn .tip-box,
-#learn .warning-box,
-#learn .example-box,
-#learn .formula-box,
-#learn .learn-card-content .tip-box,
-#learn .learn-card-content .warning-box,
-#learn .learn-card-content .example-box,
-#learn .learn-card-content .formula-box {
+:where(#learn) .tip-box,
+:where(#learn) .warning-box,
+:where(#learn) .example-box,
+:where(#learn) .formula-box,
+:where(#learn) .learn-card-content .tip-box,
+:where(#learn) .learn-card-content .warning-box,
+:where(#learn) .learn-card-content .example-box,
+:where(#learn) .learn-card-content .formula-box {
     display: block;
     width: 100%;
     max-width: 100%;
@@ -348,26 +352,26 @@
     word-wrap: break-word;
 }
 
-#learn .tip-box,
-#learn .learn-card-content .tip-box {
+:where(#learn) .tip-box,
+:where(#learn) .learn-card-content .tip-box {
     background: rgba(16, 185, 129, 0.1);
     border-left-color: var(--secondary);
 }
 
-#learn .warning-box,
-#learn .learn-card-content .warning-box {
+:where(#learn) .warning-box,
+:where(#learn) .learn-card-content .warning-box {
     background: rgba(239, 68, 68, 0.1);
     border-left-color: var(--danger);
 }
 
-#learn .example-box,
-#learn .learn-card-content .example-box {
+:where(#learn) .example-box,
+:where(#learn) .learn-card-content .example-box {
     background: color-mix(in srgb, var(--primary) 10%, transparent);
     border-left-color: var(--primary);
 }
 
-#learn .formula-box,
-#learn .learn-card-content .formula-box {
+:where(#learn) .formula-box,
+:where(#learn) .learn-card-content .formula-box {
     background: color-mix(in srgb, var(--primary) 6%, transparent);
     border-left-color: var(--primary);
     font-family: inherit;
@@ -376,9 +380,9 @@
     white-space: normal;
 }
 
-#learn .tip-box h4,
-#learn .warning-box h4,
-#learn .example-box h4 {
+:where(#learn) .tip-box h4,
+:where(#learn) .warning-box h4,
+:where(#learn) .example-box h4 {
     font-size: 0.9rem;
     margin: 0 0 6px 0;
     display: flex;
@@ -387,29 +391,29 @@
 }
 
 
-#learn .tip-box h4,
-#learn .warning-box h4,
-#learn .example-box h4 { color: var(--text-primary); }
-#learn .tip-box h4 i { color: var(--secondary); }
-#learn .warning-box h4 i { color: var(--danger-text); }
-#learn .example-box h4 i { color: var(--primary); }
+:where(#learn) .tip-box h4,
+:where(#learn) .warning-box h4,
+:where(#learn) .example-box h4 { color: var(--text-primary); }
+:where(#learn) .tip-box h4 i { color: var(--secondary); }
+:where(#learn) .warning-box h4 i { color: var(--danger-text); }
+:where(#learn) .example-box h4 i { color: var(--primary); }
 
-#learn .tip-box p,
-#learn .warning-box p,
-#learn .example-box p,
-#learn .formula-box p {
+:where(#learn) .tip-box p,
+:where(#learn) .warning-box p,
+:where(#learn) .example-box p,
+:where(#learn) .formula-box p {
     font-size: 0.88rem;
     margin: 4px 0;
     line-height: 1.55;
 }
 
-#learn .tip-box ul,
-#learn .warning-box ul,
-#learn .example-box ul {
+:where(#learn) .tip-box ul,
+:where(#learn) .warning-box ul,
+:where(#learn) .example-box ul {
     margin: 6px 0 0 0;
 }
 
-#learn .formula-box strong {
+:where(#learn) .formula-box strong {
     color: var(--primary);
     font-weight: 600;
 }
@@ -418,7 +422,7 @@
    TABLES
    ===================================================== */
 
-#learn .learn-card-content table {
+:where(#learn) .learn-card-content table {
     width: max-content;
     min-width: 100%;
     border-collapse: collapse;
@@ -429,8 +433,8 @@
     -webkit-overflow-scrolling: touch;
 }
 
-#learn .learn-card-content th,
-#learn .learn-card-content td {
+:where(#learn) .learn-card-content th,
+:where(#learn) .learn-card-content td {
     padding: 8px 10px;
     text-align: left;
     border-bottom: 1px solid var(--border);
@@ -438,23 +442,23 @@
 }
 
 /* Long tokens like formulas/URLs can otherwise overflow on smaller phones. */
-#learn .learn-card-content code,
-#learn .learn-card-content pre,
-#learn .learn-card-content .formula,
-#learn .learn-card-content .equation {
+:where(#learn) .learn-card-content code,
+:where(#learn) .learn-card-content pre,
+:where(#learn) .learn-card-content .formula,
+:where(#learn) .learn-card-content .equation {
     max-width: 100%;
     overflow-x: auto;
     white-space: pre-wrap;
     word-break: break-word;
 }
 
-#learn .learn-card-content th {
+:where(#learn) .learn-card-content th {
     background: var(--primary-dark);
     color: var(--on-primary);
     font-weight: 600;
 }
 
-#learn .learn-card-content tr:nth-child(even) {
+:where(#learn) .learn-card-content tr:nth-child(even) {
     background: var(--bg-tertiary);
 }
 
@@ -462,7 +466,7 @@
    IMAGES
    ===================================================== */
 
-#learn .learn-image {
+:where(#learn) .learn-image {
     width: 100%;
     max-width: 100%;
     height: auto;
@@ -471,13 +475,13 @@
     box-shadow: 0 4px 18px color-mix(in srgb, var(--color-shadow) 20%, transparent);
 }
 
-#learn .learn-zoomable {
+:where(#learn) .learn-zoomable {
     cursor: zoom-in;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-#learn .learn-zoomable:hover,
-#learn .learn-zoomable:focus-visible {
+:where(#learn) .learn-zoomable:hover,
+:where(#learn) .learn-zoomable:focus-visible {
     transform: translateY(-1px);
     box-shadow: 0 8px 24px color-mix(in srgb, var(--color-shadow) 28%, transparent);
     outline: none;
@@ -569,71 +573,71 @@ sokrat-modal.image-modal > * {
    ===================================================== */
 
 @media screen and (min-width: 768px) {
-    #learn .learn-container {
+    :where(#learn) .learn-container {
         padding: 24px;
         max-width: 850px;
         margin: 0 auto;
     }
     
-    #learn .learn-container > h1 {
+    :where(#learn) .learn-container > h1 {
         font-size: 1.35rem;
         padding: 18px 26px;
     }
     
-    #learn .learn-filter {
+    :where(#learn) .learn-filter {
         gap: 12px;
         margin-bottom: 20px;
     }
     
-    #learn .filter-btn {
+    :where(#learn) .filter-btn {
         padding: 12px 20px;
         font-size: 0.92rem;
     }
     
-    #learn .learn-content {
+    :where(#learn) .learn-content {
         gap: 24px;
     }
     
-    #learn .learn-card-header {
+    :where(#learn) .learn-card-header {
         padding: 18px 24px;
     }
     
-    #learn .learn-card-header h2,
-    #learn .learn-card-header h3,
-    #learn .learn-card-title {
+    :where(#learn) .learn-card-header h2,
+    :where(#learn) .learn-card-header h3,
+    :where(#learn) .learn-card-title {
         font-size: 1.1rem;
     }
     
-    #learn .learn-card-content {
+    :where(#learn) .learn-card-content {
         padding: 26px;
         font-size: 1rem;
         line-height: 1.8;
     }
     
-    #learn .learn-card-content h3 {
+    :where(#learn) .learn-card-content h3 {
         font-size: 1.25rem;
         margin: 24px 0 14px 0;
     }
     
-    #learn .learn-card-content h4 {
+    :where(#learn) .learn-card-content h4 {
         font-size: 1.12rem;
     }
     
-    #learn .learn-card-content p,
-    #learn .learn-card-content ul li,
-    #learn .learn-card-content ol li {
+    :where(#learn) .learn-card-content p,
+    :where(#learn) .learn-card-content ul li,
+    :where(#learn) .learn-card-content ol li {
         font-size: 0.98rem;
     }
     
-    #learn .tip-box,
-    #learn .warning-box,
-    #learn .example-box,
-    #learn .formula-box {
+    :where(#learn) .tip-box,
+    :where(#learn) .warning-box,
+    :where(#learn) .example-box,
+    :where(#learn) .formula-box {
         padding: 18px 20px;
         margin: 20px 0;
     }
     
-    #learn .learn-image {
+    :where(#learn) .learn-image {
         max-width: 760px;
         margin: 20px auto;
         display: block;
@@ -645,49 +649,49 @@ sokrat-modal.image-modal > * {
    ===================================================== */
 
 @media screen and (min-width: 1024px) {
-    #learn .learn-container {
+    :where(#learn) .learn-container {
         padding: 28px;
         max-width: 950px;
     }
     
-    #learn .learn-container > h1 {
+    :where(#learn) .learn-container > h1 {
         font-size: 1.45rem;
         padding: 20px 30px;
         margin-bottom: 24px;
     }
     
-    #learn .learn-filter {
+    :where(#learn) .learn-filter {
         gap: 14px;
         margin-bottom: 26px;
         justify-content: center;
     }
     
-    #learn .filter-btn {
+    :where(#learn) .filter-btn {
         padding: 14px 26px;
         font-size: 0.98rem;
     }
     
-    #learn .learn-card-header {
+    :where(#learn) .learn-card-header {
         padding: 20px 28px;
     }
     
-    #learn .learn-card-header h2,
-    #learn .learn-card-header h3,
-    #learn .learn-card-title {
+    :where(#learn) .learn-card-header h2,
+    :where(#learn) .learn-card-header h3,
+    :where(#learn) .learn-card-title {
         font-size: 1.2rem;
     }
     
-    #learn .learn-card-content {
+    :where(#learn) .learn-card-content {
         padding: 34px;
         font-size: 1.02rem;
         line-height: 1.85;
     }
     
-    #learn .learn-card-content h3 {
+    :where(#learn) .learn-card-content h3 {
         font-size: 1.4rem;
     }
     
-    #learn .learn-card-content h4 {
+    :where(#learn) .learn-card-content h4 {
         font-size: 1.2rem;
     }
 }
@@ -697,91 +701,91 @@ sokrat-modal.image-modal > * {
    ===================================================== */
 
 @media screen and (max-width: 380px) {
-    #learn .learn-container {
+    :where(#learn) .learn-container {
         padding: 10px;
     }
     
-    #learn .learn-container > h1 {
+    :where(#learn) .learn-container > h1 {
         font-size: 1rem;
         padding: 12px 14px;
     }
     
-    #learn .filter-btn {
+    :where(#learn) .filter-btn {
         padding: 6px 10px;
         font-size: 0.78rem;
         min-height: 44px;
     }
     
-    #learn .learn-card-header {
+    :where(#learn) .learn-card-header {
         padding: 12px 14px;
     }
     
-    #learn .learn-card-header h2,
-    #learn .learn-card-header h3,
-    #learn .learn-card-title {
+    :where(#learn) .learn-card-header h2,
+    :where(#learn) .learn-card-header h3,
+    :where(#learn) .learn-card-title {
         font-size: 0.92rem;
     }
     
-    #learn .learn-card-content {
+    :where(#learn) .learn-card-content {
         padding: 14px;
         font-size: 0.88rem;
     }
     
-    #learn .learn-card-content h3 {
+    :where(#learn) .learn-card-content h3 {
         font-size: 1.02rem;
     }
     
-    #learn .learn-card-content h4 {
+    :where(#learn) .learn-card-content h4 {
         font-size: 0.94rem;
     }
     
-    #learn .learn-card-content p,
-    #learn .learn-card-content ul li,
-    #learn .learn-card-content ol li {
+    :where(#learn) .learn-card-content p,
+    :where(#learn) .learn-card-content ul li,
+    :where(#learn) .learn-card-content ol li {
         font-size: 0.86rem;
     }
 
-    #learn .learn-card-header {
+    :where(#learn) .learn-card-header {
         align-items: flex-start;
     }
 
-    #learn .learn-card-header h2,
-    #learn .learn-card-header h3,
-    #learn .learn-card-title {
+    :where(#learn) .learn-card-header h2,
+    :where(#learn) .learn-card-header h3,
+    :where(#learn) .learn-card-title {
         line-height: 1.35;
     }
 
-    #learn .tip-box,
-    #learn .warning-box,
-    #learn .example-box,
-    #learn .formula-box {
+    :where(#learn) .tip-box,
+    :where(#learn) .warning-box,
+    :where(#learn) .example-box,
+    :where(#learn) .formula-box {
         padding: 10px 12px;
     }
 }
 
 @media screen and (max-width: 767px) {
-    #learn .learn-filter {
+    :where(#learn) .learn-filter {
         scroll-snap-type: x proximity;
     }
 
-    #learn .filter-btn {
+    :where(#learn) .filter-btn {
         scroll-snap-align: start;
     }
 
-    #learn .learn-card-content table {
+    :where(#learn) .learn-card-content table {
         font-size: 0.82rem;
     }
 }
 
 @media screen and (max-width: 430px) {
-    #learn .learn-card-header span {
+    :where(#learn) .learn-card-header span {
         font-size: 0.74rem;
         padding: 3px 8px;
     }
 
-    #learn .learn-card-header h2,
-    #learn .learn-card-header h3,
-    #learn .learn-card-title {
+    :where(#learn) .learn-card-header h2,
+    :where(#learn) .learn-card-header h3,
+    :where(#learn) .learn-card-title {
         font-size: 0.94rem;
     }
 
@@ -800,12 +804,12 @@ sokrat-modal.image-modal > * {
    ===================================================== */
 
 @supports (-webkit-touch-callout: none) {
-    #learn .learn-container {
+    :where(#learn) .learn-container {
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
     }
     
-    #learn .learn-card-content {
+    :where(#learn) .learn-card-content {
         -webkit-overflow-scrolling: touch;
         -webkit-text-size-adjust: 100%;
         text-size-adjust: 100%;
@@ -819,7 +823,7 @@ sokrat-modal.image-modal > * {
    ===================================================== */
 
 @media (orientation: landscape) {
-    #learn .learn-container {
+    :where(#learn) .learn-container {
         padding-left: max(14px, var(--safe-left));
         padding-right: max(14px, var(--safe-right));
     }
@@ -832,19 +836,19 @@ sokrat-modal.image-modal > * {
    ===================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-    #learn .learn-card,
-    #learn .filter-btn {
+    :where(#learn) .learn-card,
+    :where(#learn) .filter-btn {
         transition: none;
     }
 }
 
 @media (prefers-contrast: high) {
-    #learn .learn-card {
+    :where(#learn) .learn-card {
         border-width: 2px;
     }
     
-    #learn .learn-card-content p,
-    #learn .learn-card-content li {
+    :where(#learn) .learn-card-content p,
+    :where(#learn) .learn-card-content li {
         color: var(--text-primary);
     }
 }

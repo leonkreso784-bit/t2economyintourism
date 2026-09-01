@@ -5,6 +5,19 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **C5b/3a: `#learn` je pao — 153× `:where(#learn)`, 0 razlika u 7780 usporedbi**
+
+### Promijenjeno
+- `css/learn.css`: svih 153 `#learn` → `:where(#learn)` — doseg identičan, specifičnost ID-a
+  na nulu; utility u markupu od sada MOŽE pobijediti (dokazano obrnutom sondom: `p-6` na
+  `.learn-container` 10 → 24 px, u §12.1 speca isti utility nije prolazio).
+- Zaglavlje datoteke prepisano: staro je objašnjavalo ZAŠTO ID postoji, novo zašto ga NEMA.
+
+### Dokaz
+- `css:diff` learn-ruta × 5 širina (320·374·375·768·1280) = **7780 usporedbi, 0 razlika**;
+  `.filter-btn` ostaje 44 px (kandidati iz `responsive/*` i dalje gube — redoslijedom);
+  telefon-brana 10/10; `preflight` EXIT 0. Migracija pravila = C5b/3b.
+
 ## 2026-09-01 (FABLE) — **C5b/2: `blind-map.css` — skela u utilityje, 4 mrtva pravila van (0 razlika u 5952 usporedbe)**
 
 ### Promijenjeno

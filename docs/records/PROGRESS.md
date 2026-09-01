@@ -14,6 +14,17 @@ Sljedeca cigla: C5b/2 (blind-map.css), pa C5b/3 (learn.css).
 
 ---
 
+## 2026-09-01 (FABLE) — C5b/3a: #learn razoruzan — :where() cuva doseg, a utility prvi put prolazi
+
+Korak "prvo razoruzaj specificnost" iz §12.4. Golo skidanje prefiksa nije bilo opcija jer bi
+promijenilo DOSEG (.filter-btn postoji i izvan learna) — :where(#learn) cuva doseg a specificnost
+ID-a pada na nulu; datoteka ionako stoji iza responsive/* pa iste bitke dobiva redoslijedom
+(§12.2 je to izmjerio unaprijed, rizik nula). Dokaz u OBA smjera: css:diff 7780 usporedbi kroz
+5 sirina = 0 razlika (nista se nije promijenilo) + obrnuta sonda: p-6 na .learn-container sada
+prolazi 10→24 px (u §12.1 isti utility izmjeren kao nemocan — to je bila cijela poanta).
+
+---
+
 ## 2026-09-01 (FABLE) — C5b/2: blind-map skela u utilityje — i cetiri pravila koja su cekala igraca kojeg nema
 
 Prva cigla nastavka redizajna. Rez po svojstvu (§11.1 ②): skela u utilityje, komponente za C7,

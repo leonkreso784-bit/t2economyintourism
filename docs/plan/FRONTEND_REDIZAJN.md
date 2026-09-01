@@ -5147,6 +5147,31 @@ u DOM-u **nema**. Ruta predana s `MSYS_NO_PATHCONV=1` (§12.11 brana ju sad i sa
 | telefon-brana (od MREŽA-E4 mjeri `blind-map` tab) | **10 prošlo / 0 palo**, prazna osnovica |
 | `preflight` | **EXIT 0** · paleta **0** · `check:tailwind` **129 utilityja, svi namjerni** |
 
+### 12.13 ✅ C5b/3a — `#learn` je PAO, bez ijedne promjene u prikazu (2026-09-01)
+
+Prvi od dva koraka C5b/3, točno kako je §12.4 predložio: **prvo razoružati specifičnost, pa
+migrirati.** Svih **153 pojavljivanja** `#learn` postalo je **`:where(#learn)`** — doseg je
+IDENTIČAN (ništa ne curi izvan sekcije; `.filter-btn` postoji i drugdje, pa golo skidanje
+prefiksa NIJE bilo opcija), ali ID više ne nosi specifičnost (1-1-0 → 0-1-0). Datoteka i dalje
+stoji iza `responsive/*` u snopu, pa dobiva iste bitke koje je dobivala — sada redoslijedom,
+kao što je §12.2 izmjerio unaprijed.
+
+Goli `#learn { width; min-width; padding; overflow-x }` provjeren zasebno: na tom elementu
+(`section#learn.section`) ta svojstva ne dira **nitko drugi** u `css/**`, pa ni pad na 0-0-0
+ne mijenja ishod nijedne bitke.
+
+#### Dokaz — u oba smjera
+
+- **Ništa se nije promijenilo:** `css:diff` na `#/subject/te2/first-midterm/learn`,
+  **5 širina** (320 · 374 · 375 · 768 · 1280) × 1556 elemenata = **7780 usporedbi, 0 razlika**.
+- **A ono zbog čega se radilo — SAD RADI:** obrnuta sonda na 375 px — `p-6` na
+  `.learn-container` **10 px → 24 px** (isti utility je u §12.1 bio izmjeren kao nemoćan),
+  skidanjem klase vraća se 10 px, a `.filter-btn` zadržava svojih **44 px** (kandidati iz
+  `responsive/04+06` i dalje gube, sad redoslijedom). Telefon-brana **10/10**, `preflight`
+  **EXIT 0**.
+
+Migracija pravila u utilityje = **C5b/3b** (sljedeći korak).
+
 ⚠️ **Ostaje svjesno otvoreno:** ~~`--border-color`~~ (**✅ riješen u MREŽI B1, 2026-08-31** —
 `var(--border)` + brana `check:tokens`) · kolačić-traka je ~280 ms ispod AA **dok ulazi**
 (WCAG sudi konačno stanje, `prefers-reduced-motion` to gasi — čeka Leonovu odluku).
