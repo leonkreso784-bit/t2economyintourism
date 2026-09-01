@@ -198,8 +198,8 @@ projekt mora živjeti **~2 tjedna nakon** seobe. **Testovi su uvjet, ne dodatak.
 **Frontend redizajn je ⏸️ PAUZIRAN** (`FRONTEND_REDIZAJN.md`, ADR-028; **Next.js odbijen, ne
 otvarati iznova**) — nastavlja se od **C5b/2** tek kad MREŽA padne. Povod: revizija 2026-08-31 dala
 je **12 nalaza**, backlog uz njih drži **8 živih 🔥**; Leon: *„mora se riješit prije nego što
-nastavimo dalje"*. Blokovi: **A** baza/stroj · **B** brane koje ne mjere ono što tvrde · **C** boja
-(**fatalno 10 → 0, i to PRIJE migracije**) · **D** CSP + leaked-password · **E** sadržaj.
+nastavimo dalje"*. Blokovi: **A ✅ B ✅ C ✅** (paleta 93→0) **D ✅** (CSP ENFORCE + `check:csp` +
+leaked-password; **produkcijski enforce ide tek s deployem**) · **E** = tekuće.
 **§8** prima nalaze Leonovih prijatelja koji prolaze stranicu. Osnovice, izlazni uvjet i **što
 svjesno NIJE unutra** — u specu, ne ovdje.
 ⚠️ **`check:docs` od 2026-08-31 traži TOČNO jedan aktivni plan**; spec koji čeka nosi
@@ -276,8 +276,8 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
 - **HR-ekspanzija:** HR 1. god × 3 smjera FMTU dijele vezne predmete (ADR-022). Kad HR program
   bude potpun → **HR u Supabase** (Leon/Claude `migrate-content.js`, ne Saša). [[hrv-program]]
 - **PAUZIRANO za nas:** 3. godina · novi EN sadržaj (ADR-018: student uploada PODATKE, nikad KOD).
-- ⚠️ **Min. lozinka 8 + leaked-password zaštita ovise o Pro planu** — poslije seobe provjeri jesu
-  li preživjele.
+- ⚠️ **Min. lozinka 8 (server-side) ovisi o Pro planu** — poslije seobe provjeri; leaked-password
+  ima klijentski dvojnik (D4, `js/auth.js`) koji seobu preživljava.
   ⚠️ **NE „popravljaj" `js/auth.js:343`** — tvrdnja o `WeakPasswordError` je **oborena**: u
   zakucanom `supabase-js@2.110.8` slaba lozinka dolazi kao `data.weakPassword` uz `error: null`.
 - **Sitni dug (ne blokira):** siročad u Storageu · staging poravnati s `supabase/f1-nodes.sql` ·
