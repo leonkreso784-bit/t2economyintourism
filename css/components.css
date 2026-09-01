@@ -18,137 +18,22 @@
    - Responsive Styles (line ~2350+)
    ===================================================== */
 
-/* ===== HEADER ===== */
-.header {
-    background: var(--bg-secondary);
-    padding: 0.75rem 1rem;
-    padding-left: calc(1rem + var(--safe-left));
-    padding-right: calc(1rem + var(--safe-right));
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: var(--shadow);
-    position: sticky;
-    top: var(--safe-top);
-    z-index: 100;
-    gap: 0.5rem;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--primary);
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-.logo-img {
-    height: 36px !important;
-    max-height: 36px !important;
-    max-width: 60px !important;
-    width: auto !important;
-    object-fit: contain !important;
-    flex-shrink: 0;
-}
-
-.logo i {
-    font-size: 1.5rem;
-}
-
-/* Desktop navigation - ALWAYS hidden on mobile */
-.nav-menu {
-    display: none;
-    gap: 0.5rem;
-}
-
 /* Mobile navigation - hidden by default */
 .mobile-nav {
     display: none;
 }
 
-/* MOBILE: Hide desktop nav ALWAYS, show mobile nav when visible */
-@media (max-width: 767px) {
-    .nav-menu,
-    .nav-menu.nav-visible,
-    #mainNav {
-        display: none !important;
-        visibility: hidden !important;
-        width: 0 !important;
-        height: 0 !important;
-        overflow: hidden !important;
-        position: absolute !important;
-        pointer-events: none !important;
-    }
-    
-    .mobile-nav.nav-visible {
-        display: flex !important;
-        visibility: visible !important;
-        width: auto !important;
-        height: auto !important;
-        position: fixed !important;
-        pointer-events: auto !important;
-    }
-}
-
-/* DESKTOP: Show desktop nav when visible, hide mobile nav */
+/* C7/1 (2026-09-01): stara nav-masinerija (.header/.logo/.nav-menu/.nav-btn/
+   .nav-visible/#mainNav/.theme-toggle) obrisana — K2b traka (.topbar) i utilityji na
+   .mobile-nav su je zamijenili, a nijedan od tih selektora vise ne matcha NISTA u DOM-u
+   (selektor-sonda + css:diff). .theme-toggle JS-vezanje u init.js NAMJERNO ostaje —
+   ceka buduci birac tema; gumb ce donijeti svoje stilove.
+   Jedino ZIVO pravilo stare masinerije: sakrij studijski mobile-nav na sirokom
+   (markupov `md:hidden` tvrdi isto — konsolidacija je C7/2 posao s winner-mapom). */
 @media (min-width: 768px) {
-    .nav-menu.nav-visible {
-        display: flex !important;
-    }
-    
-    .mobile-nav,
-    .mobile-nav.nav-visible {
+    .mobile-nav {
         display: none !important;
     }
-}
-
-.nav-btn {
-    background: transparent;
-    border: none;
-    padding: 0.75rem 1.25rem;
-    border-radius: var(--radius);
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    min-height: var(--touch-target);
-}
-
-.nav-btn:hover {
-    background: var(--bg-tertiary);
-    color: var(--primary);
-}
-
-.nav-btn.active {
-    background: #312e81;
-    color: #e0e7ff;
-}
-
-.theme-toggle {
-    background: var(--bg-tertiary);
-    border: none;
-    width: var(--touch-target);
-    height: var(--touch-target);
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: var(--text-secondary);
-    transition: var(--transition);
-    flex-shrink: 0;
-}
-
-.theme-toggle:hover {
-    background: var(--primary);
-    color: var(--on-primary);
-    transform: rotate(20deg);
 }
 
 /* ===== MOBILE BOTTOM NAVIGATION ===== */
@@ -217,14 +102,6 @@
 }
 
 /* ===== MAIN CONTENT ===== */
-.main-content {
-    padding: 1rem;
-    padding-left: calc(1rem + var(--safe-left));
-    padding-right: calc(1rem + var(--safe-right));
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
 .section {
     display: none;
     animation: fadeIn 0.5s ease;

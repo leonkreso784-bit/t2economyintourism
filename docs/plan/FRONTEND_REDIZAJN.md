@@ -5412,3 +5412,52 @@ promaklo) · `.profile-grid` (kolone ostaju, `@640` ih dira) · `.profile-stat-t
 `#/about`) = **18 120 / 0** · telefon 21 passed / 0 failed · `preflight` EXIT 0 (20/20).
 **C6 je time CIJELI zatvoren** (mjera §13.0–13.5 + četiri cigle §13.6–13.9). Slijedi **C7**
 (§3): smrt `responsive/*`, komponente na tokene/utilityje, jedan skup pragova.
+
+## 14 · C7 — GAŠENJE: mjera pa cigle (od 2026-09-01)
+
+### 14.0 Mjera prije podjele
+
+`css:debt` na ulasku: `responsive/*` **720 redaka / 13 `!important`** (6 datoteka) ·
+`components.css` **242 / 20** · `variables.css` **220 / 1**. Tri nalaza mjere koja su odredila
+podjelu:
+
+1. **Tvrdnja §„Mrtva tema" iz vremena pisanja plana je ZASTARJELA** — tema je u međuvremenu
+   pregrađena (`js/theme.js`, 4 palete, provjera prema popisu) i `[data-theme="dark"]` u CSS-u
+   postoji još samo u **komentarima**. Od „mrtve teme" je ostao samo `.theme-toggle` **CSS** za
+   gumb kojeg nema; **JS-vezanje u `init.js` NAMJERNO ostaje** (čeka Leonov birač tema).
+2. **Cijela stara HEADER & NAV sekcija `components.css`-a je selektorski mrtva** — K2b traka
+   (`.topbar`) i utilityji na `.mobile-nav` su je zamijenili. Gate `check:orphan-css` to NIJE
+   vidio jer matcha podstring (`header` u `profile-header`, `logo` u `logo-wrapper`);
+   `querySelector` sonda matcha TOČNU klasu i presudila je.
+3. **Podjela po vrsti smrti:** selektorski mrtvo (selektor ne matcha ništa u DOM-u — dokazivo
+   sondom) ide PRVO i zasebno; **kaskadno mrtvo** (pravilo matcha, ali uvijek gubi — npr.
+   `.mobile-nav { display:none }` baza koju markupov `flex` utility trajno gazi) traži
+   winner-mapu i ide s konsolidacijom.
+
+**Cigle:** /1 selektorski mrtvo van · /2 žive ljestve kući + smrt `responsive/*` ·
+/3 raspuštanje `components.css` · /4 smrt `variables.css` (legacy imena → tokeni).
+`sokratSpin` @keyframes pri gašenju `03` MORA preseliti — koristi ga `css/offline.css`.
+JS-zaostatak za /2+: `navigation.js:1488` querya `.nav-btn` koji ne postoji (prazan skup, bezopasan).
+
+### 14.1 ✅ C7/1 — selektorski mrtvo van (2026-09-01)
+
+**Obrisano** (svaki selektor dokazano matcha 0 elemenata): stara traka `.header`/`.logo`/
+`.logo-img`/`.logo i` · `.nav-menu`/`.nav-visible`/`#mainNav` masinerija (13 `!important`
+odjednom) · `.nav-btn` obitelj (s njom i zakucani `#312e81`) · `.theme-toggle` CSS ×5 ·
+`.main-content` ×7 (markup ga je izgubio u redizajnu, pravila su ostala u ČETIRI datoteke) ·
+`.swipe-indicator`+`swipeHint` · `.pull-indicator` („if implemented" — nikad implementiran) ·
+`.subjects-grid` ×6 · `.bottom-nav` ×5 · `04`-ov mrtvi study-home blok (13 pravila:
+`category-card`/`quick-action-card`/`study-stats`/`stat-value`…) · goli `.btn`.
+
+**Jedino preživjelo pravilo stare nav-masinerije:** `@media (min-width:768px) .mobile-nav
+{ display:none !important }` — AKTIVNO je (markupov `md:hidden` tvrdi isto); konsolidacija
+s utilityjem je /2 posao s winner-mapom, ne rez po grep-u.
+
+**Dokaz:** selektor-sonda (novi alat: `querySelectorAll` za svaki obrisani selektor × 6 ruta +
+prijavljeni profil + `editor.html?view=admin`, s force-open sekcijama kao `css:diff`) =
+**184 provjere, 0 pogodaka** · `css:diff` 6 ruta × 8 širina = **48 992 + 4 524 usporedbi,
+0 razlika** · telefon 21/0 · preflight 20/20.
+
+**Učinak:** `!important` **34 → 11** · `responsive/*` **720 → 417** redaka · `components.css`
+**242 → 119** · ukupni dug **6 713 → 6 287** · orphan-osnovica **38 → 12** (ostalo je samo
+imenovano-legitimno). Slijedi **C7/2**.

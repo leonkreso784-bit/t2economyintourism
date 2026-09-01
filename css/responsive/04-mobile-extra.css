@@ -14,100 +14,10 @@
     
 }
 
-/* --- STUDY PAGE HOME SECTION MOBILE --- */
-@media (max-width: 767px) {
-    .study-home-header {
-        padding: 1rem;
-        flex-direction: column;
-        gap: 0.75rem;
-        text-align: center;
-    }
-    
-    .study-home-header h2 {
-        font-size: 1.1rem;
-    }
-    
-    .study-home-actions {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.5rem;
-    }
-    
-    .study-home-actions .btn {
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
-    }
-    
-    /* Categories Grid Mobile */
-    .categories-grid {
-        grid-template-columns: 1fr !important;
-        gap: 0.75rem;
-        padding: 0.5rem;
-    }
-    
-    .category-card {
-        padding: 1rem;
-    }
-    
-    .category-icon {
-        width: 45px;
-        height: 45px;
-        font-size: 1.25rem;
-    }
-    
-    .category-info h3 {
-        font-size: 0.95rem;
-    }
-    
-    .category-info p {
-        font-size: 0.8rem;
-    }
-    
-    .quick-action-card {
-        flex-direction: row;
-        padding: 1rem;
-        gap: 1rem;
-        text-align: left;
-    }
-    
-    .quick-action-card .action-icon {
-        width: 50px;
-        height: 50px;
-        flex-shrink: 0;
-    }
-    
-    .quick-action-card .action-content {
-        flex: 1;
-    }
-    
-    /* Stats Section Mobile */
-    .study-stats {
-        flex-direction: column;
-        gap: 0.75rem;
-        padding: 1rem;
-    }
-    
-    .stat-value {
-        font-size: 1.5rem;
-    }
-
-
-}
-
-
-    
-    /* (removed orphaned .topic-* rules + stray brace — dead/malformed CSS) */
+/* (removed orphaned .topic-* rules + stray brace — dead/malformed CSS) */
 
 /* --- EXTRA SMALL SCREENS (iPhone SE, older phones) --- */
 @media (max-width: 374px) {
-    
-    .btn {
-        padding: 0.5rem 0.75rem;
-        font-size: 0.8rem;
-    }
-    
-    
     
     .filter-btn {
         padding: 0.5rem 0.75rem;

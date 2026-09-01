@@ -5,6 +5,21 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **C7/1: selektorski mrtvo van — `!important` 34 → 11, orphan-osnovica 38 → 12**
+
+### Uklonjeno
+- Stara traka i nav-masinerija iz `components.css` (`.header`/`.logo`/`.nav-menu`/
+  `.nav-visible`/`#mainNav`/`.nav-btn`/`.theme-toggle` CSS — K2b `.topbar` ih je zamijenio) i
+  mrtve obitelji iz `responsive/*`: `.main-content` ×7, `.swipe-indicator`, `.pull-indicator`,
+  `.subjects-grid` ×6, `.bottom-nav` ×5, `04`-ov study-home blok, goli `.btn`.
+  `check:orphan-css` pola toga nije vidio — matcha podstring; sonda matcha točnu klasu.
+
+### Dokaz
+- **Nova selektor-sonda**: 184 provjere (23 selektora × 6 ruta + authed profil + editor),
+  **0 pogodaka** · `css:diff` **53 516 usporedbi, 0 razlika** · telefon 21/0 · preflight 20/20.
+- Spec §14 (C7 mjera): tvrdnja o „mrtvoj temi" zastarjela — od nje je ostao samo
+  `.theme-toggle` CSS; JS-vezanje namjerno ostaje za budući birač.
+
 ## 2026-09-01 (FABLE) — **C6/4: profil + auth — authed dokaz (0 razlika u 1 166 880 usporedbi); C6 ZATVOREN**
 
 ### Promijenjeno

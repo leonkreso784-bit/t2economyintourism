@@ -13,30 +13,6 @@
         padding-bottom: 0;
     }
     
-    .header {
-        padding: 1rem 2rem;
-    }
-    
-    .logo {
-        font-size: 1.5rem;
-    }
-    
-    .logo-img {
-        height: 42px !important;
-        max-height: 42px !important;
-        max-width: 80px !important;
-    }
-    
-    .logo i {
-        font-size: 2rem;
-    }
-    
-    /* Desktop/mobile nav visibility is now controlled via nav-visible class */
-    
-    .main-content {
-        padding: 2rem;
-    }
-    
     .action-btn {
         width: auto;
     }
@@ -50,12 +26,6 @@
 @media (min-width: 1024px) {
 }
 
-/* ===== RESPONSIVE - LARGE DESKTOP (1200px+) ===== */
-@media (min-width: 1200px) {
-    .main-content {
-        padding: 2rem 3rem;
-    }
-}
 
 /* ===== SMALL PHONES (320px-374px) - iPhone SE, older devices ===== */
 @media (max-width: 374px) {

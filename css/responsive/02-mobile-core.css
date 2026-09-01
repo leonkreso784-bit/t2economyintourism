@@ -14,12 +14,6 @@
         width: 100%;
     }
 
-    /* ===== GENERAL MOBILE FIXES ===== */
-    .main-content {
-        padding: 0.75rem;
-        padding-bottom: calc(0.75rem + 70px + var(--safe-bottom));
-    }
-    
     .action-btn {
         padding: 0.875rem 1rem;
         font-size: 0.9rem;

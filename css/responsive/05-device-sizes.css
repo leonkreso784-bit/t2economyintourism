@@ -12,107 +12,6 @@
     }
 }
 
-/* ===== LARGE PHONES (iPhone Pro Max, Galaxy Ultra) ===== */
-@media screen and (min-width: 480px) and (max-width: 599px) {
-
-    
-    .subjects-grid {
-        gap: 16px;
-    }
-}
-
-/* ===== SMALL TABLETS (iPad Mini, small Android tablets) ===== */
-@media screen and (min-width: 600px) and (max-width: 767px) {
-
-    
-    .subjects-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-    
-}
-
-/* ===== TABLETS (iPad, Android tablets) ===== */
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-
-    
-    .subjects-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
-        max-width: 700px;
-        margin: 0 auto;
-    }
-    
-    
-    .bottom-nav {
-        max-width: 600px;
-        left: 50%;
-        transform: translateX(-50%);
-        border-radius: 20px 20px 0 0;
-    }
-}
-
-/* ===== LARGE TABLETS & SMALL LAPTOPS ===== */
-@media screen and (min-width: 1024px) and (max-width: 1279px) {
-
-    
-    .subjects-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-        max-width: 900px;
-        margin: 0 auto;
-    }
-    
-    
-    .bottom-nav {
-        max-width: 700px;
-        left: 50%;
-        transform: translateX(-50%);
-        border-radius: 20px 20px 0 0;
-    }
-}
-
-/* ===== DESKTOPS ===== */
-@media screen and (min-width: 1280px) and (max-width: 1535px) {
-
-    
-    .subjects-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 28px;
-        max-width: 1000px;
-        margin: 0 auto;
-    }
-    
-    
-    .bottom-nav {
-        max-width: 800px;
-        left: 50%;
-        transform: translateX(-50%);
-        border-radius: 24px 24px 0 0;
-    }
-}
-
-/* ===== LARGE DESKTOPS ===== */
-@media screen and (min-width: 1536px) {
-
-    
-    .subjects-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 32px;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-    
-    
-    .bottom-nav {
-        max-width: 900px;
-        left: 50%;
-        transform: translateX(-50%);
-        border-radius: 28px 28px 0 0;
-        box-shadow: 0 -4px 30px color-mix(in srgb, var(--color-shadow) 15%, transparent);
-    }
-}
-
 /* ===== LANDSCAPE MODE - PHONES ===== */
 @media screen and (max-height: 500px) and (orientation: landscape) {
 
@@ -121,13 +20,6 @@
         padding: 10px 20px;
     }
     
-    .bottom-nav {
-        padding: 8px 16px;
-    }
-    
-    .nav-btn {
-        padding: 6px 10px;
-    }
 }
 
 /* ===== REDUCED MOTION ===== */
@@ -162,10 +54,8 @@
 /* ===== PRINT STYLES ===== */
 @media print {
     .landing-page,
-    .bottom-nav,
     .subjects-sidebar,
-    .subjects-overlay,
-    .theme-toggle {
+    .subjects-overlay {
         display: none !important;
     }
     

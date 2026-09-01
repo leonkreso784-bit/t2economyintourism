@@ -14,6 +14,19 @@ Sljedeca cigla: C5b/2 (blind-map.css), pa C5b/3 (learn.css).
 
 ---
 
+## 2026-09-01 (FABLE) — C7/1: selektorski mrtvo van — pola mrtvih gate nije ni vidio
+
+C7 otvoren mjerom (spec 14.0): tvrdnja plana o "mrtvoj temi" je zastarjela (tema pregradjena,
+ostao samo .theme-toggle CSS), a cijela stara HEADER & NAV sekcija components.css-a je mrtva —
+orphan-gate to nije vidio jer matcha PODSTRING (header u profile-header). Novi alat:
+selektor-sonda (querySelectorAll po tocnoj klasi, 6 ruta + authed profil + editor) = 184
+provjere, 0 pogodaka. Obrisano: nav-masinerija (13 !important), .main-content x7,
+swipe/pull-indicator, .subjects-grid x6, .bottom-nav x5, study-home blok, .theme-toggle CSS.
+Ucinak: !important 34->11, responsive/* 720->417, osnovica 38->12. css:diff 53516/0,
+telefon 21/0, preflight 20/20. Slijedi C7/2 (zive ljestve kuci + smrt responsive/*).
+
+---
+
 ## 2026-09-01 (FABLE) — C6/4: profil + auth — dokaz koji css:diff ne moze dati; C6 ZATVOREN
 
 Profil crta tek prijava, pa je cigla dobila NOVI ALAT: authed prije/poslije sonda (STAGING
