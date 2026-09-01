@@ -18,103 +18,14 @@
    - Responsive Styles (line ~2350+)
    ===================================================== */
 
-/* Mobile navigation - hidden by default */
-.mobile-nav {
-    display: none;
-}
-
-/* C7/1 (2026-09-01): stara nav-masinerija (.header/.logo/.nav-menu/.nav-btn/
-   .nav-visible/#mainNav/.theme-toggle) obrisana — K2b traka (.topbar) i utilityji na
-   .mobile-nav su je zamijenili, a nijedan od tih selektora vise ne matcha NISTA u DOM-u
-   (selektor-sonda + css:diff). .theme-toggle JS-vezanje u init.js NAMJERNO ostaje —
-   ceka buduci birac tema; gumb ce donijeti svoje stilove.
-   Jedino ZIVO pravilo stare masinerije: sakrij studijski mobile-nav na sirokom
-   (markupov `md:hidden` tvrdi isto — konsolidacija je C7/2 posao s winner-mapom). */
-@media (min-width: 768px) {
-    .mobile-nav {
-        display: none !important;
-    }
-}
-
-/* ===== MOBILE BOTTOM NAVIGATION ===== */
-.mobile-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--bg-secondary);
-    box-shadow: 0 -4px 20px color-mix(in srgb, var(--color-shadow) 10%, transparent);
-    z-index: 1000;
-    padding-bottom: var(--safe-bottom);
-    border-top: 1px solid var(--border);
-}
-
-.mobile-nav-btn {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 0.25rem;
-    min-height: 60px;
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-family: inherit;
-    font-size: 0.65rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-    gap: 0.25rem;
-    position: relative;
-}
-
-.mobile-nav-btn i {
-    font-size: 1.25rem;
-    transition: var(--transition);
-}
-
-.mobile-nav-btn.active {
-    color: #312e81;
-}
+/* C7/4 (2026-09-01): mobile-nav je otisao SVOJOJ povrsini (study-chrome.css).
+   Vidljivost trake vise ne vodi nijedno pravilo ovdje nego markup sam:
+   `flex` + `md:hidden` utilityji (utilityji su zadnji u kaskadi). Stara baza
+   `display:none` bila je trajni gubitnik utilityju, a `@768 display:none
+   !important` duplikat `md:hidden`-a — oba obrisana, jedan !important manje.
+   (Povijest starije nav-masinerije: C7/1, spec §14.1.) */
 
 
-
-.mobile-nav-btn.active i {
-    transform: scale(1.1);
-}
-
-.mobile-nav-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%) scaleX(0);
-    width: 50%;
-    height: 3px;
-    background: var(--primary);
-    border-radius: 0 0 3px 3px;
-    transition: transform 0.3s ease;
-}
-
-.mobile-nav-btn.active::before {
-    transform: translateX(-50%) scaleX(1);
-}
-
-/* ===== MAIN CONTENT ===== */
-.section {
-    display: none;
-    animation: fadeIn 0.5s ease;
-}
-
-.section.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
 
 
 /* ===== CTA BUTTON (C7/2, 2026-09-01) =====

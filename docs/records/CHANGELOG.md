@@ -5,6 +5,21 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **C7/4: `components.css` raspušten — mobile-nav je stilizirao samo NEVIDLJIVO**
+
+### Promijenjeno
+- `.mobile-nav*` pravila obrisana: <768 ih je `study-chrome` (C5a) ionako gazio, ≥768 je
+  traka `md:hidden` — stilizirala su isključivo nevidljivi element (s njima umro i zakucani
+  `#312e81`). Sjena plohe → `study-chrome` (jedino što je živjelo samo tu). Vidljivost trake
+  vode `flex`/`md:hidden` utilityji (stara baza + `@768 !important` hide obrisani).
+  `.section`+`fadeIn` → `variables.css` uz masineriju stranica. `components.css` ostaje slim
+  (cta-button, `.hidden`, landscape-body). Srezan zastarjeli DARK-THEME komentar u variables.
+
+### Dokaz
+- Winner-mapa: vidljive širine **0 razlika**; svih 270/480 promjena pod `display:none`
+  roditeljem (css:diff: 20/20 mobilnih mjerenja čisto) · telefon 21/0 · preflight EXIT 0 ·
+  `!important` 3 → 2.
+
 ## 2026-09-01 (FABLE) — **C7/3: `css/responsive/*` NE POSTOJI — žive ljestve doseljene svojim bazama (0 razlika u 188 340 usporedbi)**
 
 ### Promijenjeno

@@ -16,11 +16,10 @@
 
    Kad C7 ugasi `css/responsive/*`, i ti paddingi smiju u utilityje — ne prije.
 
-   ⚠️ ZAŠTO SE UVOZI POSLIJE `responsive/*`, A NE UZ OSTALE KOMPONENTE:
-   `.study-mobile-nav` nosi i klasu `.mobile-nav`, koju `css/components.css`
-   (uvezen POSLIJE `pages.css`) gasi s `display: none`. Do C5a se ta bitka dobivala
-   **`!important`**-om, i to na dva mjesta; sada se dobiva REDOSLIJEDOM. Isti
-   postupak koji `learn.css` i `studio.css` već koriste.
+   (Do C7/4 je polozaj u manifestu bio i BITKA: `components.css` je gasio
+   `.mobile-nav` s `display:none`, pa je ova datoteka morala doci POSLIJE njega.
+   Ta su pravila mrtva — vidljivost trake vode `flex`/`md:hidden` utilityji u
+   markupu — ali polozaj ostaje gdje jest: nista se ne dobiva preslagivanjem.)
 
    ⚠ CACHE: pri izmjeni pokreni `npm run bump`.
    ===================================================== */
@@ -148,14 +147,13 @@
    bezuvjetnog `.mobile-nav { padding-bottom: var(--safe-bottom) }` na kraju
    `responsive`-a, a ne iz `pages.css`.
 
-   ⚠️ SJENA SE NAMJERNO NE SELI OVAMO. `components.css` je već ima na `.mobile-nav`
-   (`0 -4px 20px rgba(0,0,0,0.1)`), a to je ISTI element — traka nosi obje klase. Prva
-   verzija ju je prepisala „radi potpunosti" i `check:palette` je pao: zakucana crna
-   nije narasla u zbroju (103/103), ali je stigla u datoteku koje nema u osnovici.
-   Brana je bila u pravu, i popravak je bio BRISANJE duplikata, a ne spuštanje osnovice.
-   *Preseliti zakucanu vrijednost znači potpisati je.* Tokenizira ju C7, gdje i živi. */
+   Sjena je do C7/4 zivjela u `components.css` (i ondje vec bila tokenizirana kroz
+   `--color-shadow`); doselila je OVAMO kad je mobile-nav postao iskljucivo
+   study-chromeova povrsina. Pouka o duplikatu (check:palette pad, 2026-08-25)
+   ostaje: jedna sjena, jedno mjesto. */
 .study-mobile-nav {
     padding-bottom: var(--safe-bottom);
+    box-shadow: 0 -4px 20px color-mix(in srgb, var(--color-shadow) 10%, transparent);
 }
 
 /* ⚠️ KOMPONENTA JE POD PRAGOM, i to nije ukras. U `pages.css` je cijeli ovaj blok

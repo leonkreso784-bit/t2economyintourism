@@ -14,6 +14,19 @@ Sljedeca cigla: C5b/2 (blind-map.css), pa C5b/3 (learn.css).
 
 ---
 
+## 2026-09-01 (FABLE) — C7/4: components raspusten — mobile-nav je stilizirao samo nevidljivo
+
+Mjera pokazala da mobile-nav pravila u components NISU imala vidljivi ucinak: <768 sve gazi
+study-chrome visom specificnoscu, >=768 je traka md:hidden. Obrisana (s njima i zakucani
+indigo #312e81 — bojio je samo nevidljivo stanje); sjena plohe preseljena u study-chrome
+("tokenizira ju C7" iz C5a komentara ispunjeno). Vidljivost trake predana markupu
+(flex/md:hidden); !important 3->2. .section masinerija u variables uz stranice.
+components.css OSTAJE slim (cta/hidden/landscape) — brisanje imena radi slova tablice bio bi
+churn (mjera nosi, ne naredba). Dokaz: vidljive sirine 0 razlika, sve promjene pod
+display:none roditeljem; telefon 21/0; preflight 0.
+
+---
+
 ## 2026-09-01 (FABLE) — C7/3: css/responsive/* NE POSTOJI
 
 Winner-mapa (9 komponenti x 13 viewporta) presudila svakom preostalom pravilu: action-btn u

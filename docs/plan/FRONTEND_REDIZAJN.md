@@ -5525,3 +5525,35 @@ skupom („nema što mjeriti i to NIJE zeleno").
 **Učinak:** `css/responsive/` **NE POSTOJI** (411 → 0 redaka) · `!important` **11 → 3**
 (2 komponente + 1 iOS-input) · ukupni dug **6 287 → 6 066**. Slijedi **C7/4**
 (raspuštanje `components.css`).
+
+### 14.4 ✅ C7/4 — raspuštanje `components.css`: mobile-nav svojoj površini, sekcije bazi (2026-09-01)
+
+**Mjera je preimenovala i „gašenje":** `components.css` iz §3 bio je monolit od 2 350 redaka;
+ono što je do ove cigle preostalo (210) bilo je pola mrtve nav-ere, pola živih dijeljenih
+komponenti. Raspušteno po pripadnosti:
+
+- **`.mobile-nav` ploha + gumbi → NIKAMO, jer su već imali dom:** `study-chrome.css` (C5a)
+  <768 gazi SVE (viša specifičnost), a ≥768 je traka `md:hidden` — pravila u `components` su
+  dakle stilizirala **isključivo nevidljivi element**. Obrisana; jedino što je stvarno živjelo
+  samo ondje — **sjena plohe** — doselila je u `study-chrome` (već tokenizirana kroz
+  `--color-shadow`; „tokenizira ju C7" iz C5a-komentara time je ispunjeno). S gumbima je
+  **umro i zakucani indigo `#312e81`** na `.active` — bojio je samo nevidljivo stanje.
+- **Vidljivost trake predana markupu:** stara baza `display: none` bila je trajni gubitnik
+  utilityju `flex`, a `@768 display: none !important` **duplikat `md:hidden`-a** — oba
+  obrisana (`!important` 3 → 2); manifest-ovisnost „study-chrome MORA poslije components"
+  time je prestala biti bitka (komentari ažurirani, redoslijed ostaje — ništa se ne dobiva
+  preslagivanjem).
+- **`.section`/`.active`/`fadeIn` → `variables.css`**, uz masineriju stranica: isti
+  mehanizam, jedno mjesto. **`components.css` ostaje** kao slim dom dijeljenih komponenti
+  (`.cta-button` obitelj, `.hidden`, landscape-body) — brisanje imena radi slova tablice
+  bilo bi churn bez dobiti (*mjera nosi, ne naredba*, §13.4).
+- Usput srezan i **zastarjeli DARK-THEME komentar u `variables.css`** (tvrdio troje što je
+  mjera oborila — isti zapis koji je `tokens.css` već demantirao).
+
+**Dokaz:** winner-mapa: na **vidljivim** širinama (320–767 + 740×420) **0 razlika**; svih
+**270** promjena computed-vrijednosti je na gumbima **unutar `display:none` roditelja**
+(≥768) — isti razred koji je C5a dokumentirao kao „25 razlika po širini na nevidljivom".
+`css:diff` × 5 ruta × 8 širina: **20/20 mobilnih mjerenja = 0 razlika**, a svaka od 480
+prijavljenih je pod `nav[1]` (skrivena traka) · telefon 21/0 · preflight EXIT 0.
+**Učinak:** `components.css` 210 → ~110 redaka · `!important` **3 → 2** · dug 6 066 → 5 982.
+Slijedi **C7/5** (smrt `variables.css` mosta — legacy imena → tokeni).

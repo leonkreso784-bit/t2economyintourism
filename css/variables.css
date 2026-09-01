@@ -84,21 +84,12 @@
     --nav-h: 72px;
 }
 
-/* ===== DARK THEME =====
-   Blok koji je ovdje stajao PONOVNO je deklarirao istih pet varijabli koje `:root`
-   već daje — `[data-theme="dark"]` je, naime, jedina tema koju aplikacija ikad
-   postavi (`initTheme()` je zakuca na 'dark' pri svakom učitavanju). Dvije od tih
-   deklaracija bile su se usput RAZIŠLE od `:root` (`--text-muted` #d1d5db umjesto
-   #94a3b8, `--border` #475569 umjesto #334155), pa je stvarna boja prigušenog teksta
-   ovisila o tome koje je pravilo netko zadnje dirao. Jedna činjenica = jedno mjesto
-   (ADR-027) → duplikat se briše, ne sinkronizira.
-
-   ⚠️ ATRIBUT `data-theme` OSTAJE i dalje se postavlja: `components.css` i `learn.css`
-   selektiraju po njemu (`[data-theme="dark"] #learn .learn-card`, …). Brisanje atributa
-   srušilo bi te površine; briše se samo ovaj popis varijabli.
-
-   Sama tema (prekidač u `init.js` koji nikamo ne vodi jer `[data-theme="light"]` ne
-   postoji) gasi se u C7, zajedno s posljednjom legacy površinom. */
+/* ===== DARK THEME — komentar SREZAN u C7/4 (2026-09-01) =====
+   Stari je zapis ovdje tvrdio troje sto je mjera u medjuvremenu oborila:
+   `initTheme()` odavno NE zakucava `dark` (js/theme.js provjerava prema popisu 4
+   prave teme), `[data-theme="dark"]` selektora u CSS-u vise NEMA (izmjereno: nula,
+   samo komentari), a "prekidac koji nikamo ne vodi" je postao ispravan `setTheme()`.
+   Atribut `data-theme` je ziv i nosi 4 teme (tokens.css). */
 
 /* Subject item meta needs higher contrast */
 .subject-item-meta span {
@@ -189,6 +180,22 @@ body {
 .admin-page.active {
     display: flex;
     flex-direction: column;
+}
+
+/* C7/4: masinerija SEKCIJA (nacini ucenja unutar study-stranice) — doseljena iz
+   components.css uz masineriju stranica gore: isti mehanizam, jedno mjesto. */
+.section {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* ═══ T1 · SIGURNA ZONA PO VODORAVNOJ OSI — jedno pravilo za svih devet stranica ═══
