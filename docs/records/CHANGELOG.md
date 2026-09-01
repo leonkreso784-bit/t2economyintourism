@@ -5,6 +5,15 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **MREŽA D2: CSP Report-Only — report pročitan na svim rutama, 0 naših povreda**
+
+### Dodano
+- `Content-Security-Policy-Report-Only` u `vercel.json` — policy iz izmjerene karte izvora
+  (jsdelivr · cdnjs · sentry · googletagmanager/GA · supabase https+wss · youtube-nocookie).
+- Šetnja svih ruta na preview-deployu pravim preglednikom (uklj. editor/Studio, KaTeX render,
+  Accept privole → GA+Sentry): **nula povreda iz aplikacije**; jedine povrede su
+  preview-infrastruktura (vercel.live, SSO manifest) koje na produkciji ne postoje.
+
 ## 2026-09-01 (FABLE) — **MREŽA D1: inline van — 0 inline `<script>` i 0 `on*` atributa u svih 6 stranica**
 
 ### Promijenjeno

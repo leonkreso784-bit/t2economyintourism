@@ -503,6 +503,17 @@ Playwright 66/0.
 Na preview-deployu, pa **proći sve rute** — poimence editor i Studio, najveći kandidat za
 iznenađenje. Report se čita, ne pretpostavlja.
 
+**✅ D2 ISHOD (2026-09-01).** Report-Only header na preview-deployu (20828ec), pa šetnja SVIM
+rutama pravim preglednikom uz čitanje konzole (report-only svaku povredu ispiše): landing ·
+katalog · math svih 6 tabova (**203 KaTeX formule** = cdnjs skripte+css+fontovi pod policyjem) ·
+geography exercises/blind-map/learn · privacy · **editor.html** · materials · about · **Accept
+privole** (pali gtag.js + Sentry loader — oba prošla) · Supabase REST read (DB read-path). Nalaz:
+**nula povreda iz naše aplikacije.** Sve prijavljene povrede su PREVIEW-infrastruktura koje na
+produkciji nema: vercel.live feedback-toolbar i SSO-redirect manifesta (zaštita previewa).
+Svjesno nevježbano i zašto je u redu: youtube-nocookie iframe (katalog trenutno nema video-blok
+dostupan anonimno; host je na listi) · MathLive lazy-load (admin-gated; jsdelivr host i fontovi
+dokazani kroz supabase-js/KaTeX) · Sentry ingest beacon (nije bilo greške; wildcard host).
+
 ### D3 · Enforce + `check:csp`
 Pravi `Content-Security-Policy` tek kad je report čist. Brana: **nijedan `<script>` bez `src`,
 nijedan `on*` atribut u `*.html`**. Bez nje se prva iduća inline skripta tiho vrati i CSP počne

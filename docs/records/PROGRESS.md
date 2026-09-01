@@ -5,6 +5,16 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-01 (FABLE) — D2: report se cita, ne pretpostavlja — i bio je cist
+
+Report-Only CSP na preview, pa setnja svim rutama s citanjem konzole. Nula povreda iz nase
+aplikacije; sve prijavljeno je preview-infrastruktura (vercel.live toolbar, SSO manifest) koje
+na produkciji nema. Najvazniji dio dokaza: Accept privole uzivo pali gtag.js i Sentry loader —
+bas taj put (consent-gated vanjske skripte) je najlaksi za promasiti grep-om jer se ucitava tek
+na klik. KaTeX je pod policyjem iscrtao 203 formule (skripte+css+fontovi s cdnjs-a).
+
+---
+
 ## 2026-09-01 (FABLE) — D1: inline van — a krivi zaključak je srušio klik, ne grep
 
 Svih šest stranica na nuli inline skripti i `on*` atributa; opseg 5× veći od opisa cigle
