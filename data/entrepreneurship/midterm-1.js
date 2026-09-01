@@ -384,13 +384,13 @@ const entrepreneurshipM1 = {
             {
                 id: "c61aj1",
                 question: "What are LIFESTYLE BUSINESSES?",
-                answer: "Small (tourism) firms run for consciously selected LIFESTYLE MOTIVES — they represent 'forms of CONSUMPTION as much as production' (Shaw & Williams, 1987).\n\nNon-economic motives: being your own boss, doing interesting/enjoyable work, living in a specific area, supporting leisure interests, enjoying a good lifestyle.\n\n'Profitability will be only ONE of these goals' (Morrison et al., 2001) — success is measured by 'a continuing ability to PERPETUATE THE CHOSEN LIFESTYLE' (Dewhurst & Horobin, 1998).",
+                answer: "Small (tourism) firms run for consciously selected LIFESTYLE MOTIVES — 'forms of CONSUMPTION as much as production'.\n\nNon-economic motives: being your own boss, interesting/enjoyable work, living in a specific area, leisure interests.\n\nProfitability is only ONE of the goals — success is measured by the ability to PERPETUATE THE CHOSEN LIFESTYLE.",
                 explanation: "Most small tourism firms can be described as lifestyle enterprises."
             },
             {
                 id: "3cns1d",
                 question: "What are the TWO VIEWS on lifestyle entrepreneurs' impact?",
-                answer: "CRITICAL view (Dewhurst & Horobin; Shaw & Williams): long-term survival problems can 'jeopardise seriously' the economic health and social fabric of tourism-reliant communities; may not respond to policy initiatives for development or competitiveness.\n\nPOSITIVE view (Ateljevic & Doorne, 2000, New Zealand 7-year study): rejecting growth does NOT mean financial suicide — lifestyle entrepreneurs engage 'niche' market consumers with shared values, and are INSTRUMENTAL in creating innovative products and stimulating niche market development.",
+                answer: "CRITICAL view: long-term survival problems can 'jeopardise seriously' the economic health and social fabric of tourism-reliant communities; may not respond to policy initiatives.\n\nPOSITIVE view (Ateljevic & Doorne): rejecting growth does NOT mean financial suicide — lifestyle entrepreneurs engage 'niche' consumers with shared values and stimulate niche market development.",
                 explanation: "Threat to communities vs source of niche innovation."
             },
             {
@@ -618,6 +618,21 @@ const entrepreneurshipM1 = {
                 <h4>Linear Entrepreneurship Process</h4>
                 <div class="formula-box">
                     <strong>IDEA</strong> → <strong>BUSINESS PLAN</strong> → <strong>EXECUTION</strong>
+                </div>
+
+                <h4>Lifestyle Entrepreneurship</h4>
+                <div class="example-box">
+                    <p><strong>Lifestyle businesses</strong> (Shaw & Williams, 1987): small tourism firms as
+                    'forms of consumption as much as production'. <em>'Profitability will be only ONE of these
+                    goals'</em> (Morrison et al., 2001); success = <em>'a continuing ability to perpetuate the
+                    chosen lifestyle'</em> (Dewhurst & Horobin, 1998). Motives: independence, enjoyable work,
+                    living in a chosen area, supporting leisure interests.</p>
+                    <p><strong>Critical view</strong> (Dewhurst & Horobin; Shaw & Williams): long-term survival
+                    problems can jeopardise the economic health and social fabric of tourism-reliant communities;
+                    may not respond to policy initiatives for development or competitiveness.<br>
+                    <strong>Positive view</strong> (Ateljevic & Doorne, 2000 — New Zealand 7-year study):
+                    lifestyle entrepreneurs are INSTRUMENTAL in creating innovative products and stimulating
+                    niche market development.</p>
                 </div>
             `
         }
@@ -944,13 +959,13 @@ const entrepreneurshipM1 = {
             {
                 id: "67h54u",
                 question: "What is innovation NOT? (6 misconceptions)",
-                answer: "1. NOT the same as invention (Segway: technically innovative but solved no real problem)\n2. NOT just new products — also organizational forms, strategies, processes (Coca-Cola 'Share a Coke'; Toyota lean production)\n3. Does NOT require wholly original ideas — 'a good new idea is often two old ideas meeting for the first time' (iPhone combined existing touchscreens, mobile internet, apps)\n4. NOT always one-off inspiration — often years of patient work (Edison: 'I've just found 10,000 ways that won't work')\n5. NOT the same as creativity — innovation is determined only AFTER the event, when its value becomes manifest (Post-it Notes)\n6. NOT just technology (BlackBerry had cutting-edge tech but failed; Apple won on user experience)",
+                answer: "1. NOT the same as invention\n2. NOT just new products — also organizational forms, strategies, processes\n3. Does NOT require wholly original ideas — 'a good new idea is often two old ideas meeting for the first time'\n4. NOT always one-off inspiration — often years of patient work\n5. NOT the same as creativity — value is determined only AFTER the event\n6. NOT just technology — tech alone doesn't win the user",
                 explanation: "Six 'innovation is not' statements with lecture examples."
             },
             {
                 id: "msarl6",
                 question: "What are the 4 KEY TASKS of the INNOVATION JOURNEY?",
-                answer: "(Rodriguez-Sanchez et al., 2019)\n\n1. IDEA GENERATION — formulating new concepts/solutions (Tesla: a car without fossil fuels)\n2. COALITION BUILDING — attracting stakeholders, investors, team; gathering human and financial resources (Bezos and Amazon's early investors)\n3. IDEA REALIZATION — turning the idea into a tangible product: prototypes, pilot testing, trial-and-error learning, capital mobilisation (Dyson: thousands of prototypes)\n4. TRANSFER or DIFFUSION — spreading the innovation to the market: scaling, marketing, expansion",
+                answer: "(Rodriguez-Sanchez et al., 2019)\n\n1. IDEA GENERATION — formulating new concepts/solutions\n2. COALITION BUILDING — attracting stakeholders, investors and the team; gathering human and financial resources\n3. IDEA REALIZATION — turning the idea into a tangible product: prototypes, pilot testing, trial-and-error learning\n4. TRANSFER or DIFFUSION — spreading the innovation to the market: scaling, marketing, expansion",
                 explanation: "Idea generation → coalition building → idea realization → transfer/diffusion."
             },
             {
@@ -1206,6 +1221,8 @@ const entrepreneurshipM1 = {
                 <div class="formula-box">
                     <strong>THE INNOVATION JOURNEY</strong> (Rodriguez-Sanchez et al., 2019):<br>
                     1. Idea generation → 2. Coalition building → 3. Idea realization → 4. Transfer/diffusion<br>
+                    Examples: Tesla, a car without fossil fuels (idea) · Bezos & Amazon's early investors
+                    (coalition) · Dyson's thousands of prototypes (realization)<br>
                     Scenarios: rejection · postponement · re-start from failure · growth & exit by acquisition
                 </div>
                 
@@ -1545,7 +1562,7 @@ const entrepreneurshipM1 = {
             {
                 id: "3m5n0t",
                 question: "What is FRANCHISING?",
-                answer: "Selling the RIGHT to conduct a business.\n\nA form of cooperation in which one company (the FRANCHISOR, e.g. a hotel chain) grants another (the FRANCHISEE, e.g. an independent hotel) the right to commercialise certain products/services in exchange for a FEE.\n\nBFA (2001): franchisor grants a LICENCE to use commercial methods he developed; franchisee contributes capital, effort and motivation and agrees to be CONTROLLED by the franchisor; franchisor contributes training, operating procedures and managerial expertise.",
+                answer: "Selling the RIGHT to conduct a business.\n\nOne company (the FRANCHISOR, e.g. a hotel chain) grants another (the FRANCHISEE) the right to commercialise certain products/services in exchange for a FEE.\n\nBFA: franchisor grants a LICENCE to his commercial methods and contributes training and expertise; franchisee contributes capital and effort and agrees to be CONTROLLED.",
                 explanation: "Two parties: franchisor sells the right, franchisee buys it."
             },
             {
@@ -1587,7 +1604,7 @@ const entrepreneurshipM1 = {
             {
                 id: "uwb8we",
                 question: "Advantages and disadvantages for the FRANCHISEE?",
-                answer: "ADVANTAGES:\n• IMMEDIATE entry into business\n• Assistance with layouts, shop-fitting, planning\n• Internationally recognised BRAND identity\n• National advertising\n• Economies of scale (centralised purchasing)\n\nDISADVANTAGES:\n• HIGH FEES + royalties (% of sales monthly) + marketing-fund contributions\n• Must maintain all franchisor standards (strict rules, no wiggle room)\n• Considerable initial investment\n• NOT an independent entrepreneur (sale requires franchisor approval; competition from other franchisees)",
+                answer: "ADVANTAGES:\n• IMMEDIATE entry into business\n• Assistance with layouts and planning\n• Recognised BRAND identity + national advertising\n• Economies of scale (centralised purchasing)\n\nDISADVANTAGES:\n• HIGH FEES + royalties + marketing-fund contributions\n• Must maintain ALL franchisor standards\n• Considerable initial investment\n• NOT an independent entrepreneur",
                 explanation: "Proven system in exchange for independence and fees."
             },
             {
@@ -1731,7 +1748,10 @@ const entrepreneurshipM1 = {
                 <div class="formula-box">
                     <strong>FRANCHISING</strong> = selling the right to conduct a business<br>
                     <strong>FRANCHISOR</strong> (e.g. hotel chain) grants → <strong>FRANCHISEE</strong>
-                    (e.g. independent hotel) the right to commercialise products/services for a <strong>fee</strong>
+                    (e.g. independent hotel) the right to commercialise products/services for a <strong>fee</strong><br>
+                    <strong>BFA (2001):</strong> franchisor grants a licence to commercial methods he developed and
+                    contributes training, operating procedures and managerial expertise; franchisee contributes
+                    capital, effort and motivation and agrees to be controlled by the franchisor
                 </div>
                 <div class="warning-box">
                     <p>⚠️ From entrepreneurship theory: a franchisee is <strong>NOT an entrepreneur but an

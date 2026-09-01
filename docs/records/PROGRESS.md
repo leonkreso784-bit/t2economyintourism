@@ -5,6 +5,18 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-01 (FABLE) — MREZA-E2: kartice ispod stropa, strop u shemi
+
+25 jedinstvenih kartica (48 s final-kopijama) skraceno; prije svake selidbe procitao sam learn —
+vecina detalja je VEC bila ondje (kartica je duplicirala learn), pa je selidba cesto bila brisanje
+duplikata, ne pisanje. Gdje learn detalj nije imao, dobio ga je istim idiomom. Redoslijed iz speca
+postovan: sadrzaj prvo, maxLength:500 tek na kraju — i obrnuto dokazan ajv-om (501 pada s tocnom
+putanjom). Broj 500 sada zivi na dva mjesta (card-limits + shema) pa novi unit test drzi da su
+isti. Deploy-napomena: baza je zrcalo i pobjeduje u read-pathu → uz deploy ide diff:db +
+migrate-content.js.
+
+---
+
 ## 2026-09-01 (FABLE) — MREZA-E1: mina je vec bila razminirana — analiza je nasla isporuku, ne posao
 
 Cigla je nalozila analizu prije koda i analiza je pojela ciglu: EDITOR ② (dopune) isporucen je

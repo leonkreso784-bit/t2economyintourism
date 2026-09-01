@@ -592,6 +592,19 @@ pisanju (2026-08-31) nije provjerio. Dokazi danas: `fill-blank-format.test.js` *
 ⚠️ **Obrnut redoslijed = `validate:schema` crven = CI blokiran.** M5a (vođenje u editoru) je na
 produkciji od 2026-08-08; ovo je druga polovica.
 
+**✅ E2 ISHOD (2026-09-01).** Svih **25 jedinstvenih kartica** (48 s kopijama u `final`; mjeri
+`validate:content`) skraćeno na ≤500 uz selidbu detalja — s pravilom: **prije svake selidbe
+pročitati learn**. Većina detalja je VEĆ bila ondje (kartica je duplicirala learn), pa je posao
+često bio brisanje duplikata; gdje learn detalj nije imao (lifestyle-poduzetništvo, tablica
+poduzetnik–menadžer, D&I brojke, 3 oblika migrantskog poduzetništva, primjeri uz Stoneovih 7,
+BFA definicija…), dopunjen je istim idiomom (example/tip/formula-box). Zatim `maxLength: 500` na
+`question`+`answer` u shemi; **obrnuto dokazano ajv-om** (501 pada s točnom putanjom, 500 prolazi).
+Broj 500 sada postoji na dva mjesta → novi unit u `card-limits.test.js` veže shemu na
+`SokratCardLimits.HARD` (ADR-027: kopija smije postojati samo s testom koji je drži). Dokazi:
+`validate:content` **0 preko stropa** · `validate:schema` 72/72 · `export:json` round-trip 72/72 ·
+preflight EXIT 0 · phone-brana 10/10. ⚠️ **Uz deploy ide i re-sync baze** (`diff:db` pa
+`migrate-content.js`) — read-path preferira bazu, pa bi PROD inače dalje služio duge kartice.
+
 ### E3 · Osam nemigriranih predmeta
 `check:final` ih preskače, dakle **trećina kataloga nema jamstvo da je `final == M1⊕M2`**. Svjesno
 po ADR-015, ali brojka je veća nego što zvuči. B2 ih imenuje; ovdje se odlučuje migriraju li se ili
@@ -647,7 +660,7 @@ Faza pada kad **sve** stoji:
 - [ ] `palette:breakdown` **fatalno 0** · `check:palette` osnovica **0**
 - [ ] CSP **enforce** na produkciji uz čist report
 - [x] leaked-password provjera živa (D4, 2026-09-01)
-- [ ] E1–E4 riješeni ili **obrazloženo odgođeni** (odgoda je ishod, prešućivanje nije) — ✅ E1 (verifikacijom, 2026-09-01)
+- [ ] E1–E4 riješeni ili **obrazloženo odgođeni** (odgoda je ishod, prešućivanje nije) — ✅ E1 (verifikacijom) · ✅ E2 (2026-09-01)
 - [ ] svi nalazi iz §8 triažirani
 - [ ] `npm run preflight` **EXIT 0**
 

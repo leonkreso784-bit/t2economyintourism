@@ -1424,7 +1424,7 @@ redoslijed je bitan:
   vrijedi u oba svijeta jednom promjenom (Studio nema vlastiti editor kartica). Politika = `js/card-limits.js`
   (jedna definicija za editor i validator). `validate:content` dobio raspodjelu duljina. Detalji:
   [archive/MJERA_I_ZABORAV.md](../archive/MJERA_I_ZABORAV.md).
-- **M5b — zatezanje** *(sadržaj, poslije)*: skratiti **25 zatečenih** kartica (detalj → learn, po standardu
+- ~~**M5b — zatezanje**~~ ✅ **IZVRŠENO 2026-09-01 (MREŽA-E2)** — 25/25 skraćeno, `maxLength: 500` u shemi, unit veže broj na `HARD`. Izvorni zadatak: skratiti **25 zatečenih** kartica (detalj → learn, po standardu
   kartice: `entrepreneurship` 28 · `traffic` 6 · `food-nutrition` 4 · `sit` 4 · `ebusiness` 2 · `math` 2 ·
   `te2` 2) → **tek tada** `maxLength: 500` u `schema/subject-content.schema.json`.
   ⚠️ **Obrnut redoslijed = `validate:schema` crven = CI blokiran.**

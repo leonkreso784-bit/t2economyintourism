@@ -225,7 +225,7 @@ const trafficM2 = {
             {
                 id: "5l489z",
                 question: "Within COMMERCIAL air traffic, contrast LINE (scheduled) carriers — traditional vs LOW-COST.",
-                answer: "Line carriers publish a flight schedule and must maintain routes/frequencies. Two camps:\n• LARGE TRADITIONAL airlines — long-term dominance, government support, complex systems, agencies, big airports;\n• LOW-COST carriers (LCC) — cut prices by: no free food/drinks, max passenger numbers, opening new markets/connecting smaller cities, several flights/day, fast turnarounds, SECONDARY airports, direct online ticket sales, fluctuating (dynamic) prices.\nLCC ≠ charter! LCC carry ~30% of ~9 bn annual air passengers.",
+                answer: "Line carriers publish a flight schedule and must maintain routes/frequencies. Two camps:\n• LARGE TRADITIONAL airlines — long-term dominance, government support, complex systems, big airports;\n• LOW-COST carriers (LCC) — no free food/drinks, SECONDARY airports, fast turnarounds, direct online sales, dynamic prices, new markets/smaller cities.\nLCC ≠ charter! LCC carry ~30% of air passengers.",
                 explanation: "By choosing small airports, LCC bring tourists to areas outside main streams and create NEW destinations."
             },
             {
@@ -237,7 +237,7 @@ const trafficM2 = {
             {
                 id: "9u5vge",
                 question: "Beyond scheduled & charter: private aircraft, special-needs flights and SPACE TOURISM.",
-                answer: "• PRIVATE aircraft — symbolic market share; greater mobility/flexibility; company or individual owned.\n• SPECIAL-NEEDS small-aircraft flights in a destination — panoramic (sightseeing), photography/filming/nature, sports/recreation (skydiving; + paragliding/hang-gliding without aircraft).\n• SPACE TOURISM (since 2000): orbital, suborbital, lunar; first space tourist Dennis Tito (2001, ISS, ~$20 m); spaceflight's carbon footprint is ~100× a long-haul flight; demand exceeds supply despite high prices.",
+                answer: "• PRIVATE aircraft — symbolic market share; greater mobility/flexibility.\n• SPECIAL-NEEDS small-aircraft flights — panoramic (sightseeing), photography/filming, sports (skydiving; paragliding/hang-gliding without aircraft).\n• SPACE TOURISM (since 2000): orbital, suborbital, lunar; first space tourist Dennis Tito (2001); carbon footprint ~100× a long-haul flight.",
                 explanation: "Companies: Blue Origin (Bezos), Virgin Galactic (Branson) — suborbital tourist flights since July 2021."
             }
         ],
@@ -339,14 +339,15 @@ const trafficM2 = {
                 <h4>Commercial air traffic</h4>
                 <ul>
                     <li><strong>Line (scheduled):</strong> large traditional airlines vs <strong>low-cost carriers</strong>
-                    (LCC) — LCC cut cost via no frills, secondary airports, fast turnarounds, online sales, dynamic pricing;
+                    (LCC) — LCC cut cost via no frills, max passenger numbers, several flights/day, secondary airports, fast turnarounds, online sales, dynamic pricing;
                     LCC ≠ charter; LCC carry ~30% of ~9 bn annual air passengers and <strong>create new destinations</strong>.</li>
                     <li><strong>Charter:</strong> high occupancy (80–90%), lower quality/price, by contract (airline = transport,
                     agency = sales). Types: whole · part/split · ad hoc · series · <strong>time</strong> (whole season, most
                     economical).</li>
                     <li><strong>Private aircraft</strong>, <strong>special-needs small-aircraft</strong> flights (panoramic,
                     sports/skydiving) and <strong>space tourism</strong> (orbital/suborbital/lunar; first tourist Dennis Tito,
-                    2001; ~100× the carbon footprint of a long-haul flight).</li>
+                    2001, ISS, ~$20 m; ~100× the carbon footprint of a long-haul flight; demand exceeds supply
+                    despite high prices).</li>
                 </ul>
 
                 <h4>Air ≠ airplane only</h4>
@@ -724,7 +725,7 @@ const trafficM2 = {
             {
                 id: "m99lbs",
                 question: "What are the key SAFETY features by sector (rail, air, maritime)?",
-                answer: "• RAIL — very safe (signalling & line control); fewer but sometimes severe accidents.\n• AIR — safety from subsystem elements (communication/navigation, flight control, airports, aircraft) + security against unforeseen events (terrorism: passenger/baggage control, biometrics, explosive-detection dogs).\n• MARITIME — passenger shipping adopted the ISM Code (safety procedures); risks: ferry construction (no transverse partitions), high-speed-ship behaviour in rough seas, high automation eroding manual skills.",
+                answer: "• RAIL — very safe (signalling & line control); fewer but sometimes severe accidents.\n• AIR — subsystem safety (communication/navigation, flight control, airports, aircraft) + security against terrorism (passenger/baggage control, biometrics).\n• MARITIME — the ISM Code (safety procedures); risks: ferry construction, high-speed ships in rough seas, automation eroding manual skills.",
                 explanation: "Each mode's safety system reflects its specific technology and risks."
             },
             {
@@ -828,7 +829,9 @@ const trafficM2 = {
                 <div class="tip-box">
                     <p>Safety is <strong>lowest in road</strong> (and air) — the busiest modes; rail &amp; maritime are
                     comparatively safe (rail ~1.8 deaths/million in 2022; road ~46/million in 2022). Air relies on subsystem
-                    safety + security (biometrics, screening); maritime on the <strong>ISM Code</strong>. From a tourism
+                    safety + security (biometrics, screening, explosive-detection dogs); maritime on the
+                    <strong>ISM Code</strong> (risks: ferries without transverse partitions, high-speed ships in
+                    rough seas, automation eroding manual skills). From a tourism
                     view, the heavy road share exposes tourists to risk, and fatalities <strong>peak in the tourist
                     season</strong> — countered by traffic-information and vehicle-monitoring systems.</p>
                 </div>

@@ -113,5 +113,14 @@ test('editor ne drzi vlastitu kopiju brojeva 200/500', function () {
     'admin-editors.js ne smije usporedjivati s golim pragom — pragovi zive u card-limits.js');
 });
 
+// ── E2 (M5b): shema nosi maxLength — mora biti ISTI broj kao HARD, inace su dvije istine ──
+test('schema maxLength za question/answer == SokratCardLimits.HARD', function () {
+  const schema = JSON.parse(fs.readFileSync(
+    path.join(__dirname, '..', '..', 'schema', 'subject-content.schema.json'), 'utf8'));
+  const fc = schema.definitions.flashcard.properties;
+  assert.strictEqual(fc.question.maxLength, L.HARD, 'question.maxLength mora biti HARD');
+  assert.strictEqual(fc.answer.maxLength, L.HARD, 'answer.maxLength mora biti HARD');
+});
+
 console.log('\n' + passed + ' prošlo, ' + failed + ' palo');
 process.exit(failed ? 1 : 0);

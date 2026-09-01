@@ -5,6 +5,17 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **MREŽA-E2: nijedna kartica preko 500 znakova — i shema to sada jamči**
+
+### Promijenjeno
+- **25 jedinstvenih kartica >500 znakova** (48 s kopijama u `final`) skraćeno po kartica-standardu;
+  detalj koji learnu nedostaje (lifestyle-poduzetništvo, poduzetnik–menadžer tablica, D&I brojke,
+  oblici migrantskog poduzetništva, primjeri uz Stoneovih 7, BFA…) preseljen u learn istim idiomom.
+- `maxLength: 500` na `question`/`answer` u `schema/subject-content.schema.json` — obrnuto dokazano
+  ajv-om (501 pada, 500 prolazi); novi unit veže broj na `SokratCardLimits.HARD` (jedna istina).
+- Re-export JSON zrcala (72/72 round-trip) + bump; preflight EXIT 0; phone-brana 10/10.
+- ⚠️ Uz deploy ide re-sync baze (`diff:db` → `migrate-content.js`) — read-path preferira bazu.
+
 ## 2026-09-01 (FABLE) — **MREŽA D4: procurjela lozinka pada u pregledniku — 0 € umjesto Pro plana**
 
 ### Dodano

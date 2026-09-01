@@ -1484,7 +1484,7 @@ const ebusinessM2 = {
             {
                 id: "2tlmx0",
                 question: "What are the 10 e-commerce security tips to protect a business?",
-                answer: "1. Suggest STRONG PASSWORDS (unique per login)\n2. Implement MULTILAYER security\n3. Use a FIREWALL (blocks DDoS, SQL injection)\n4. Use a PAYMENT PROVIDER — never store customer financial data on company servers\n5. Install an SSL certificate (HTTPS) — 64% of users leave a site on a 'Not secure' warning\n6. UPDATE software and hardware (patches fix vulnerabilities)\n7. Follow PCI-DSS requirements\n8. BACK UP data routinely\n9. Establish best practices — educate employees and customers\n10. Choose the right HOSTING provider",
+                answer: "1. Suggest STRONG PASSWORDS (unique per login)\n2. MULTILAYER security\n3. FIREWALL\n4. PAYMENT PROVIDER — never store customer financial data\n5. SSL certificate (HTTPS)\n6. UPDATE software and hardware\n7. Follow PCI-DSS requirements\n8. BACK UP data routinely\n9. Educate employees and customers\n10. The right HOSTING provider",
                 explanation: "The complete 10-tip checklist from Unit 14."
             }
         ],
@@ -1637,11 +1637,14 @@ const ebusinessM2 = {
                 <div class="tip-box">
                     <h4><i class="fas fa-lock"></i> Protection Methods</h4>
                     <ul>
-                        <li>SSL/HTTPS encryption</li>
+                        <li>SSL/HTTPS encryption — 64% of users leave a site on a 'Not secure' warning</li>
                         <li>Strong, unique passwords</li>
-                        <li>Firewalls</li>
+                        <li>Firewalls — block DDoS and SQL injection</li>
+                        <li>Payment provider — never store customer financial data on company servers</li>
+                        <li>Updates — patches fix vulnerabilities</li>
                         <li>PCI-DSS compliance</li>
                         <li>Regular backups</li>
+                        <li>Best practices — educate employees and customers; choose the hosting provider well</li>
                     </ul>
                 </div>
             `

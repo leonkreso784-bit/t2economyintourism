@@ -908,7 +908,7 @@ const te2M2 = {
             {
                 id: "3rn6hy",
                 question: "What are the COSTS of tourism growth (3 dimensions)?",
-                answer: "Economic: higher prices/cost of living/property taxes, demands on public services, deindustrialisation (crowding out), dependency on one industry, low-quality seasonal employment, leakages.\nSocio-cultural: hectic lifestyle, immigrant-workforce problems, tourist–resident conflict, loss of identity, commodification & loss of authenticity, congestion ('overtourism').\nEnvironmental: water-quality damage, coastal erosion, habitat destruction, biodiversity loss, landscape degradation, rising carbon footprint.",
+                answer: "Economic: higher prices/cost of living, demands on public services, deindustrialisation, dependency on one industry, low-quality seasonal employment, leakages.\nSocio-cultural: hectic lifestyle, tourist–resident conflict, loss of identity and authenticity, congestion ('overtourism').\nEnvironmental: water-quality damage, coastal erosion, biodiversity loss, rising carbon footprint.",
                 explanation: "'Overtourism' is now seen as a challenge facing all destinations."
             },
             {
@@ -1093,7 +1093,7 @@ const te2M2 = {
                 <div class="tip-box">
                     <h4><i class="fas fa-scale-balanced"></i> Benefits vs Costs (same 3 dimensions)</h4>
                     <p><strong>Benefits:</strong> Economic (jobs, income, tax revenue, remote-area development) · Socio-cultural (civic & cultural pride, understanding) · Environmental (conservation, revitalisation).<br>
-                    <strong>Costs:</strong> Economic (↑ prices/cost of living, deindustrialisation, dependency, leakages) · Socio-cultural (hectic lifestyle, loss of authenticity, overtourism) · Environmental (water/coastal damage, biodiversity loss, carbon footprint).</p>
+                    <strong>Costs:</strong> Economic (↑ prices/cost of living, property taxes, demands on public services, deindustrialisation/crowding out, dependency, low-quality seasonal jobs, leakages) · Socio-cultural (hectic lifestyle, immigrant-workforce problems, tourist–resident conflict, loss of identity, commodification & loss of authenticity, overtourism) · Environmental (water/coastal damage, habitat destruction, biodiversity loss, landscape degradation, carbon footprint).</p>
                 </div>
 
                 <h3>♻️ Sustainable Tourism</h3>

@@ -1582,7 +1582,7 @@
       {
         "id": "zonfe4",
         "question": "What is the difference between the GAUSS method and the GAUSS-JORDAN method?",
-        "answer": "Both use the same elementary row operations on the augmented matrix \\([A\\mid b]\\); they differ in HOW FAR they reduce:\n• GAUSS (elimination): reduce only to an UPPER-TRIANGULAR form (row echelon — zeros below the diagonal), then finish with BACK-SUBSTITUTION (solve the last variable, substitute upward).\n\\[\\left[\\begin{array}{ccc|c}1&*&*&*\\\\0&1&*&*\\\\0&0&1&*\\end{array}\\right]\\]\n• GAUSS-JORDAN: keep going until the left block is the FULL IDENTITY (zeros above AND below the diagonal) — no back-substitution needed; the solution is read straight off the last column.",
+        "answer": "Both use the same elementary row operations on the augmented matrix \\([A\\mid b]\\); they differ in HOW FAR they reduce:\n• GAUSS (elimination): reduce only to an UPPER-TRIANGULAR form (row echelon — zeros below the diagonal), then finish with BACK-SUBSTITUTION (solve the last variable, substitute upward).\n• GAUSS-JORDAN: keep going until the left block is the FULL IDENTITY (zeros above AND below the diagonal) — no back-substitution; the solution is read straight off the last column.",
         "explanation": "Gauss = upper triangle + back-substitution; Gauss-Jordan = full identity (reduced row echelon), answer read directly. Same operations, Gauss-Jordan just does more of them."
       },
       {

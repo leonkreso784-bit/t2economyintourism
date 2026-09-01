@@ -579,13 +579,13 @@ const sitM2 = {
             {
                 id: "2gmhuw",
                 question: "What are Stone's 7 dark tourism 'suppliers' (light → dark)?",
-                answer: "1. DARK FUN FACTORIES — entertainment focus (e.g. the Dungeons; haunted houses)\n2. DARK EXHIBITIONS — education/commemoration (e.g. WWII museums)\n3. DARK DUNGEONS — former prisons/courthouses (Alcatraz, Clink Prison)\n4. DARK RESTING PLACES — cemeteries (Père Lachaise, New Orleans)\n5. DARK SHRINES — places of remembrance near the death (e.g. Queen Elizabeth II tributes; George Floyd Square)\n6. DARK CONFLICT SITES — wars/battlefields (Normandy D-Day, the Alamo)\n7. DARK CAMPS OF GENOCIDE — the darkest end (Auschwitz-Birkenau)",
+                answer: "1. DARK FUN FACTORIES — entertainment focus\n2. DARK EXHIBITIONS — education/commemoration\n3. DARK DUNGEONS — former prisons/courthouses\n4. DARK RESTING PLACES — cemeteries\n5. DARK SHRINES — places of remembrance near the death\n6. DARK CONFLICT SITES — wars/battlefields\n7. DARK CAMPS OF GENOCIDE — the darkest end",
                 explanation: "Fun factories → exhibitions → dungeons → resting places → shrines → conflict → genocide."
             },
             {
                 id: "a9w07p",
                 question: "Compare ALCATRAZ and ROBBEN ISLAND as dark dungeons.",
-                answer: "Both are island prisons that held famous inmates, but their tourist interpretation differs greatly:\n• ALCATRAZ (USA) — associated with ENTERTAINMENT (the 'Hollywood' image, famous criminals & escape attempts); visitors may pose for fun photos in cells.\n• ROBBEN ISLAND (South Africa) — more EDUCATIONAL and CONTEMPLATIVE; guides are former apartheid-era prisoners; visitors come to learn about Nelson Mandela and South Africa's history.\n\nLesson: how a site is INTERPRETED shapes the visitor experience.",
+                answer: "Both are island prisons with famous inmates, but their tourist interpretation differs:\n• ALCATRAZ (USA) — ENTERTAINMENT: the 'Hollywood' image, famous criminals, escape attempts.\n• ROBBEN ISLAND (South Africa) — EDUCATIONAL and CONTEMPLATIVE: guides are former apartheid-era prisoners; visitors learn about Nelson Mandela.\n\nLesson: how a site is INTERPRETED shapes the visitor experience.",
                 explanation: "Entertainment (Alcatraz) vs education/contemplation (Robben Island)."
             }
         ],
@@ -711,12 +711,16 @@ const sitM2 = {
                 <div class="tip-box">
                     <p>1. Dark fun factories → 2. Dark exhibitions → 3. Dark dungeons → 4. Dark resting places →
                     5. Dark shrines → 6. Dark conflict sites → 7. Dark camps of genocide</p>
+                    <p>Examples (light → dark): the Dungeons, haunted houses · WWII museums · Alcatraz, Clink
+                    Prison · Père Lachaise, New Orleans cemeteries · Queen Elizabeth II tributes, George Floyd
+                    Square · Normandy D-Day, the Alamo · Auschwitz-Birkenau</p>
                 </div>
 
                 <h4>Interpretation Matters</h4>
                 <div class="example-box">
-                    <p><strong>Alcatraz</strong> = entertainment/'Hollywood' image vs <strong>Robben Island</strong> =
-                    educational/contemplative (Mandela). How a site is interpreted shapes the experience.</p>
+                    <p><strong>Alcatraz</strong> = entertainment/'Hollywood' image (fun photos in the cells) vs
+                    <strong>Robben Island</strong> = educational/contemplative — guides are former apartheid-era
+                    prisoners (Mandela). How a site is interpreted shapes the experience.</p>
                 </div>
             `
         }

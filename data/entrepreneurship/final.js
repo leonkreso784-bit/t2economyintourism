@@ -27,13 +27,13 @@ const entrepreneurshipExamPractice = {
         {
             id: "3bogz4",
             question: "EXAM REVIEW: Critical numbers across the course.",
-            answer: "• 1755 — Cantillon coins 'entrepreneur'\n• 5 — Schumpeter's productive combinations\n• 7 — Drucker's sources of opportunity; 7 value-measurement dimensions\n• 9 — Business Model Canvas blocks\n• 4 — types of social entrepreneurs; 4 crowdfunding types; 4 knowledge/skill types\n• 98% — startups starting without formal investment\n• 95% — VC applications rejected; £2M+ VC investments vs £10k–250k angels\n• 5× — franchisee more likely to succeed (10% vs 52% failure)\n• ~90% — long-run startup failure; 70% fail in years 2–5\n• 3:1 — men vs women in business ownership; 2.3% of VC to women\n• 45% — Fortune 500 founded by migrants or their children\n• 7% — social innovation's share of global GDP",
+            answer: "• 1755 — Cantillon coins 'entrepreneur'\n• 5 — Schumpeter's productive combinations\n• 7 — Drucker's sources of opportunity\n• 9 — Business Model Canvas blocks\n• 98% — startups starting without formal investment\n• 95% — VC applications rejected\n• 5× — franchisee more likely to succeed\n• ~90% — long-run startup failure\n• 3:1 — men vs women in ownership; 2.3% of VC to women\n• 45% — Fortune 500 founded by migrants or their children\n• 7% — social innovation's share of global GDP",
             explanation: "Numbers are the fastest exam points."
         },
         {
             id: "2yfej6",
             question: "Connect CREATIVITY → INNOVATION → ENTREPRENEURSHIP → ECONOMY in one chain.",
-            answer: "CREATIVITY produces new ideas (no need required) → ideas that are useful AND valuable become OPPORTUNITIES (finding vs building) → INNOVATION takes them effectively and profitably to satisfied customers (Kanter) → the ENTREPRENEUR acts on the innovation, financing it (bootstrapping → crowdfunding → angels/VC) and planning it (BMC → feasibility → pitch deck → business plan) → at MACRO level this raises capital formation, employment, technological progress; at MICRO level it creates new entities, jobs, goods and niche markets.",
+            answer: "CREATIVITY produces new ideas (no need required) → useful AND valuable ideas become OPPORTUNITIES → INNOVATION takes them effectively and profitably to satisfied customers (Kanter) → the ENTREPRENEUR acts on the innovation, financing and planning it → MACRO: capital formation, employment, technological progress; MICRO: new entities, jobs, goods, niche markets.",
             explanation: "The whole course as one storyline."
         },
         {
@@ -213,8 +213,11 @@ const entrepreneurshipExamPractice = {
                 <ul>
                     <li>Theorist line-up: Cantillon → Smith → Say → Mises → Kirzner → Schumpeter → Marshall → Menger</li>
                     <li>Finding vs building opportunities; growth vs fixed mindset</li>
-                    <li>Kickstarter all-or-nothing; angels vs VCs (numbers!)</li>
-                    <li>Franchisee = intrapreneur; resource scarcity vs agency theory</li>
+                    <li>Kickstarter all-or-nothing; angels (£10k–250k) vs VCs (£2M+);
+                        98% start without formal investment, 95% of VC applications rejected</li>
+                    <li>Financing ladder: bootstrapping → crowdfunding (4 types) → angels → VC</li>
+                    <li>Franchisee = intrapreneur (5× more likely to succeed: 10% vs 52% failure);
+                        resource scarcity vs agency theory</li>
                     <li>Planning order: idea → BMC → feasibility → pitch deck → business plan</li>
                     <li>Failure stats (90% / 70% / 1-in-5) + fear-of-failure consequences</li>
                     <li>4 social-entrepreneur types + 7 value dimensions + case lessons (mission drift!)</li>

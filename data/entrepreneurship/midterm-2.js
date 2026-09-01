@@ -306,7 +306,7 @@ const entrepreneurshipM2 = {
             {
                 id: "wed31b",
                 question: "Compare the ENTREPRENEUR vs the MANAGER (orientation table).",
-                answer: "ENTREPRENEUR: uses OPPORTUNITIES; creates new visions; creates/combines/adapts resources; sees uncertainty and change as an OPPORTUNITY; uses INTUITION; FUTURE-oriented (long-term); open to change; RISK TAKER; focused on innovation and commercialization; goal- and action-oriented; seeks challenges; problem-solving oriented.\n\nMANAGER: exploits former successes; uses only INTERNAL resources; sees uncertainty and change as a THREAT; uses DATA and estimates (realistic); oriented to the PRESENT and the past; avoids change; RISK AVERSE; focused on rules and efficiency; prefers formal information; seeks comfort and avoids conflict.",
+                answer: "ENTREPRENEUR: uses OPPORTUNITIES; creates new visions; combines/adapts resources; sees uncertainty as an OPPORTUNITY; uses INTUITION; FUTURE-oriented; RISK TAKER; focused on innovation and commercialization.\n\nMANAGER: exploits former successes; uses only INTERNAL resources; sees uncertainty as a THREAT; uses DATA and estimates; oriented to the PRESENT and the past; RISK AVERSE; focused on rules and efficiency.",
                 explanation: "Opposite orientations toward change, risk and time."
             },
             {
@@ -483,6 +483,19 @@ const entrepreneurshipM2 = {
                     INCREMENTAL = gradual, small-scale<br>
                     RADICAL = disruptive, game-changing
                 </div>
+
+                <h4>Entrepreneur vs Manager — Orientation</h4>
+                <div class="example-box">
+                    <p><strong>ENTREPRENEUR:</strong> uses opportunities · creates new visions ·
+                    creates/combines/adapts resources · uncertainty and change = OPPORTUNITY · intuition ·
+                    future-oriented (long-term) · open to change · risk taker · innovation and
+                    commercialization · goal- and action-oriented · seeks challenges · problem-solving
+                    oriented</p>
+                    <p><strong>MANAGER:</strong> exploits former successes · only internal resources ·
+                    uncertainty and change = THREAT · data and realistic estimates · oriented to the present
+                    and the past · avoids change · risk averse · rules and efficiency · prefers formal
+                    information · seeks comfort and avoids conflict</p>
+                </div>
             `
         }
     },
@@ -552,7 +565,7 @@ const entrepreneurshipM2 = {
             {
                 id: "z5z1v4",
                 question: "How did ICT change the structure of tourism & hospitality?",
-                answer: "• FLEXIBILITY (365×7×24)\n• DISINTERMEDIATION — direct access of clients to the supplier\n• RE-INTERMEDIATION — new ONLINE intermediaries\n• Real-time convenience; YIELD/REVENUE management\n• Transparency (rate comparison); instant accurate information\n• Personalisation & value-added services\n• Decreased organisational & distribution costs; productivity improvements\n• Diminished barriers of spatial distance\n• BUT: the threat of NEW ENTRANTS has increased\n\nInnovation as opportunity: AI/ML, robots, chatbots, VR/AR, metaverse, blockchain, drones, P2P accommodation, big data, recommender systems, smart cities, contactless service…",
+                answer: "• FLEXIBILITY (365×7×24)\n• DISINTERMEDIATION — direct client–supplier access\n• RE-INTERMEDIATION — new ONLINE intermediaries\n• YIELD/REVENUE management; transparency (rate comparison)\n• Personalisation & value-added services\n• Lower organisational & distribution costs\n• Diminished barriers of spatial distance\n• BUT: the threat of NEW ENTRANTS has increased",
                 explanation: "ICT reshaped the whole industry structure."
             },
             {
@@ -749,6 +762,9 @@ const entrepreneurshipM2 = {
                     <h4>ICT Changed the Industry</h4>
                     <p>Disintermediation · Re-intermediation (online) · Yield/Revenue management ·
                     Transparency · Personalisation · Lower costs · More new entrants</p>
+                    <p><strong>Innovation as opportunity:</strong> AI/ML, robots, chatbots, VR/AR, metaverse,
+                    blockchain, drones, P2P accommodation, big data, recommender systems, smart cities,
+                    contactless service…</p>
                     <h4>Sectors</h4>
                     <p><strong>Private:</strong> profitable capacities, minimize risk ·
                     <strong>Public:</strong> infrastructure, often non-profitable</p>
@@ -1281,7 +1297,7 @@ const entrepreneurshipM2 = {
             {
                 id: "iw1d10",
                 question: "What does DIVERSITY & INCLUSION mean in entrepreneurship (beyond gender)?",
-                answer: "DIMENSIONS: race/ethnicity, age, people with disabilities (visible/invisible), sexuality, diversity of thought.\n\nBENEFITS: wide range of perspectives and experiences, more creativity and innovation, better morale, higher job satisfaction, lower turnover, higher productivity.\n\nCHALLENGES: lack of representation, lack of data and understanding, DIGITAL DIVIDE.\n\nExample: Black U.S. leisure travelers spent $109.4bn on domestic + $129.6bn on international travel; diverse travel bloggers/influencers become entrepreneurs themselves.",
+                answer: "DIMENSIONS: race/ethnicity, age, disability (visible/invisible), sexuality, diversity of thought.\n\nBENEFITS: wider perspectives, more creativity and innovation, better morale, higher job satisfaction, lower turnover, higher productivity.\n\nCHALLENGES: lack of representation, lack of data and understanding, DIGITAL DIVIDE.",
                 explanation: "D&I as a contemporary entrepreneurship issue."
             },
             {
@@ -1293,7 +1309,7 @@ const entrepreneurshipM2 = {
             {
                 id: "1960a2",
                 question: "What FORMS of migrant entrepreneurship exist?",
-                answer: "1. REFUGEE entrepreneurship — forcibly displaced (conflict, disaster, persecution); often low-skilled, easy-access enterprises (groceries, snack bars, taxi, flower shops); independent refugee experience can foster entrepreneurial intentions\n\n2. ETHNIC / 'ENCLAVE' entrepreneurship — spatial clustering of migrants (real-estate discrimination + desire for kin proximity) → segregated markets and business opportunities; linked to chain migration (e.g. Indian diaspora in the UK)\n\n3. TRANSNATIONAL migrant entrepreneurship — actors enacting networks, ideas and practices across MULTIPLE social fields (e.g. Sapa, 'Prague's Little Hanoi'); shaped by cultural repertoires, legal & regulatory regimes, power relations, social networks",
+                answer: "1. REFUGEE entrepreneurship — forcibly displaced (conflict, disaster, persecution); often low-skilled, easy-access enterprises\n\n2. ETHNIC / 'ENCLAVE' entrepreneurship — spatial clustering of migrants → segregated markets and business opportunities; linked to chain migration\n\n3. TRANSNATIONAL migrant entrepreneurship — actors enacting networks, ideas and practices across MULTIPLE social fields",
                 explanation: "Refugee / enclave / transnational forms."
             }
         ],
@@ -1462,6 +1478,21 @@ const entrepreneurshipM2 = {
                 
                 <h4>Influencer = Entrepreneur?</h4>
                 <p>Yes! Lower costs, personality branding, profit from ads/sponsors/products.</p>
+
+                <h4>Diversity & Inclusion — the Numbers</h4>
+                <p>Black U.S. leisure travelers spent <strong>$109.4bn</strong> on domestic +
+                <strong>$129.6bn</strong> on international travel; diverse travel bloggers and influencers
+                become entrepreneurs themselves.</p>
+
+                <h4>Forms of Migrant Entrepreneurship — Detail</h4>
+                <div class="example-box">
+                    <p><strong>1. REFUGEE:</strong> groceries, snack bars, taxi, flower shops; independent
+                    refugee experience can foster entrepreneurial intentions.</p>
+                    <p><strong>2. ETHNIC / 'ENCLAVE':</strong> real-estate discrimination + desire for kin
+                    proximity drive the clustering (e.g. Indian diaspora in the UK).</p>
+                    <p><strong>3. TRANSNATIONAL:</strong> shaped by cultural repertoires, legal & regulatory
+                    regimes, power relations, social networks (e.g. Sapa, 'Prague's Little Hanoi').</p>
+                </div>
             `
         }
     },
@@ -1489,7 +1520,7 @@ const entrepreneurshipM2 = {
             {
                 id: "uig5ku",
                 question: "What are the THREE PREVALENT NOTIONS of social innovation?",
-                answer: "1. GOVERNANCE mechanism — changing governance processes to improve PARTICIPATION; 'social experimentation' that revitalizes policy; must have measurable outcomes\n\n2. MARKET-BASED mechanism — 'creative recombination of existing assets into new business models' to address pressing social problems; ECONOMIC value is a MEANS to the END of creating SOCIAL value; individual entrepreneur as social change agent\n\n3. COLLABORATIVE mechanism — innovation benefits from NETWORKS, co-operation and CO-PRODUCTION; communities create local solutions using local experience, knowledge and values; innovation as a knowledge problem, not a political one",
+                answer: "1. GOVERNANCE mechanism — changing governance processes to improve PARTICIPATION; 'social experimentation' that revitalizes policy; measurable outcomes\n\n2. MARKET-BASED mechanism — 'creative recombination of existing assets into new business models'; ECONOMIC value is a MEANS to the END of SOCIAL value\n\n3. COLLABORATIVE mechanism — NETWORKS, co-operation and CO-PRODUCTION; local solutions from local knowledge and values",
                 explanation: "Governance / market-based / collaborative."
             },
             {
@@ -1501,7 +1532,7 @@ const entrepreneurshipM2 = {
             {
                 id: "uqxgzn",
                 question: "What is the SOCIAL-SPATIAL IMPACT of Airbnb?",
-                answer: "• Owners rent out entire apartments PERMANENTLY via short-term rental platforms\n• INVESTORS replace local property owners; long-term tenants replaced by TOURISTS\n• Residents sell and move out (buy-to-let pressure + daily disruptions)\n• Residential areas convert into TOURIST DISTRICTS (central Berlin streets; Ibiza housing shortage blocks teachers/doctors)\n• 78% of Airbnb landlords are FOREIGN INVESTORS and professional developers\n• Only 1% of Airbnb supply is residents sharing their homes (Alfama, Lisbon)",
+                answer: "• Owners rent out entire apartments PERMANENTLY via short-term rental platforms\n• INVESTORS replace local owners; long-term tenants replaced by TOURISTS\n• Residents sell and move out\n• Residential areas convert into TOURIST DISTRICTS (Berlin; Ibiza)\n• 78% of Airbnb landlords are FOREIGN INVESTORS; only 1% is residents sharing their homes",
                 explanation: "The 'sharing economy' model can harm local communities — hence regulations."
             },
             {
@@ -1543,7 +1574,7 @@ const entrepreneurshipM2 = {
             {
                 id: "7ug4eu",
                 question: "Case: 'Mageires' the social restaurant — what are its key features?",
-                answer: "Thessaloniki, Greece: healthy, good-quality GREEK food at reasonable prices, sustainably, during the economic crisis. Free delivery to people with mobility problems.\n\n• 60% OF PROFITS REINVESTED for community benefits → operates under a 'DOUBLE BOTTOM LINE' of economic AND social goals\n\nSigala (2019): 3 MARKET CAPABILITIES for generating social value:\n1. NETWORK STRUCTURE (institutions, suppliers, nutritionist, Facebook community)\n2. MARKET PRACTICES (exchange, normalized, representational)\n3. MARKET PICTURES (workshops, eat-and-learn, dialogues)",
+                answer: "Thessaloniki: healthy Greek food at reasonable prices, sustainably, during the economic crisis; free delivery to people with mobility problems.\n\n• 60% OF PROFITS REINVESTED → 'DOUBLE BOTTOM LINE' of economic AND social goals\n\nSigala (2019): 3 MARKET CAPABILITIES — NETWORK STRUCTURE, MARKET PRACTICES, MARKET PICTURES",
                 explanation: "60% reinvested + 3 market capabilities."
             }
         ],
@@ -1699,7 +1730,9 @@ const entrepreneurshipM2 = {
                     <p><strong>Eco-pads (India):</strong> 4 strategies vs institutional complexity — appropriation,
                     integration, differentiation, working-through (Cherrier et al., 2018)</p>
                     <p><strong>Mageires (Thessaloniki):</strong> 60% profits reinvested, double bottom line;
-                    3 market capabilities — network structure, market practices, market pictures (Sigala, 2019)</p>
+                    3 market capabilities — network structure (institutions, suppliers, nutritionist, Facebook
+                    community), market practices (exchange, normalized, representational), market pictures
+                    (workshops, eat-and-learn, dialogues) (Sigala, 2019)</p>
                 </div>
             `
         }

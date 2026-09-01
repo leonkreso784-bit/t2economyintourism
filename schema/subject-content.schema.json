@@ -37,8 +37,8 @@
       "additionalProperties": false,
       "properties": {
         "id":          { "type": "string", "minLength": 1 },
-        "question":    { "type": "string", "minLength": 1 },
-        "answer":      { "type": "string", "minLength": 1 },
+        "question":    { "type": "string", "minLength": 1, "maxLength": 500 },
+        "answer":      { "type": "string", "minLength": 1, "maxLength": 500 },
         "explanation": { "type": "string" },
         "color":       { "$ref": "#/definitions/accent" }
       }

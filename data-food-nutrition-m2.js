@@ -326,7 +326,7 @@ const foodNutritionM2Data = {
             {
                 id: "nrijvg",
                 question: "How are tequila, whisky, gin and vodka produced?",
-                answer: "Tequila: distillation of fermented agave juice; protected origin of Mexico; agave matures ~8 years, the 'heart' (piña) is heated; distilled in copper stills.\nWhisky/whiskey: from cereals ('uisce beatha' = water of life); matured ≥3 years in wooden casks. Bourbon (American) = ≥51% corn, aged in burnt American oak.\nGin: cereal spirit flavoured with juniper berries (Juniperus communis). London gin (dry, 42 vol%).\nVodka: clear, neutral; from potato or grain ethyl alcohol distilled to 96 vol%; final 35-50 vol%.",
+                answer: "Tequila: distillation of fermented agave juice; protected origin of Mexico; the agave 'heart' (piña) is heated; copper stills.\nWhisky: from cereals ('water of life'); matured ≥3 years in wooden casks; Bourbon = ≥51% corn.\nGin: cereal spirit flavoured with juniper berries; London gin (dry, 42 vol%).\nVodka: clear, neutral; potato or grain alcohol distilled to 96 vol%; final 35-50 vol%.",
                 explanation: "Irish whiskey is triple-distilled for a milder taste; Kentucky Bourbon is a protected designation."
             },
             {
@@ -497,7 +497,7 @@ const foodNutritionM2Data = {
                 <tr><td><strong>Rum</strong></td><td>Sugar cane molasses</td><td>Caribbean; grog = rum + water; aged in ex-whiskey barrels</td></tr>
                 <tr><td><strong>Tequila</strong></td><td>Agave juice</td><td>Mexico protected; agave matures ~8 yrs; piña heated; copper stills</td></tr>
                 <tr><td><strong>Whisky</strong></td><td>Cereals</td><td>'water of life'; ≥3 yrs in oak; Bourbon = ≥51% corn, burnt American oak</td></tr>
-                <tr><td><strong>Gin</strong></td><td>Cereals + juniper</td><td>London dry gin 42 vol%</td></tr>
+                <tr><td><strong>Gin</strong></td><td>Cereals + juniper (Juniperus communis)</td><td>London dry gin 42 vol%</td></tr>
                 <tr><td><strong>Vodka</strong></td><td>Potato/grain</td><td>Neutral; distilled to 96 vol% → final 35-50 vol%</td></tr></table>
 
                 <h3>🍒 Liqueurs</h3>
@@ -1543,7 +1543,7 @@ const foodNutritionM2Data = {
             {
                 id: "j1z75e",
                 question: "What are the MIND and Nordic diets, and food/health claims?",
-                answer: "MIND diet (Mediterranean-DASH for Neurodegenerative Delay): prevents cognitive decline; emphasizes dark leafy greens, nuts, berries, whole grains, fish, poultry, olive oil; avoids red meat, cheese, butter, fried food.\nNordic diet: Nordic foods — green vegetables, berries, fish, whole grains (barley, rye, oats), almonds, β-glucan foods, canola oil; little red meat.\nClaims: a nutrition claim states beneficial nutrient content; a health claim links a food/component to health. Front-of-package labels (FoPL) are voluntary.",
+                answer: "MIND diet (Mediterranean-DASH for Neurodegenerative Delay): prevents cognitive decline; dark leafy greens, nuts, berries, whole grains, fish, olive oil; avoids red meat, butter, fried food.\nNordic diet: green vegetables, berries, fish, whole grains (barley, rye, oats), β-glucan foods, canola oil; little red meat.\nClaims: a nutrition claim states beneficial nutrient content; a health claim links a food to health; FoPL labels are voluntary.",
                 explanation: "The MIND diet specifically targets brain health and slowing age-related cognitive decline."
             }
         ],
@@ -1716,7 +1716,7 @@ const foodNutritionM2Data = {
                 <table><tr><th>Diet</th><th>Focus</th></tr>
                 <tr><td>Mediterranean</td><td>Whole grains, olive oil, fish, legumes, moderate red wine with meals</td></tr>
                 <tr><td>DASH</td><td>Stop hypertension; sodium &lt;2300 mg/day</td></tr>
-                <tr><td>MIND</td><td>Brain health; greens, berries, nuts, fish, olive oil</td></tr>
+                <tr><td>MIND</td><td>Brain health (prevents cognitive decline); greens, berries, nuts, whole grains, fish, poultry, olive oil; avoids red meat, cheese, butter, fried food</td></tr>
                 <tr><td>Nordic</td><td>Nordic foods; berries, oats/barley (β-glucan), canola oil</td></tr></table>
                 <p><strong>Claims:</strong> nutrition claim (nutrient content) · health claim (food–health link) · FoPL (voluntary front-of-package label).</p>
             `
