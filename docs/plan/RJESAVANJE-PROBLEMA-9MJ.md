@@ -575,6 +575,15 @@ podvlakom"*, **slomio postojeće gradivo**. Bio je označen 🟢 *„odabrano za
 
 **Cigla počinje analizom, ne kodom.** Prvo izmjeriti što bi se slomilo, pa tek onda predložiti put.
 
+**✅ E1 ISHOD (2026-09-01) — analiza je pokazala da je mina RAZMINIRANA JOŠ 2026-08-25.**
+Rečenica iznad („nikad nije izveden“) bila je kriva već kad je napisana: editorske cigle
+`d6d437a` (D1: gumb „Ubaci prazninu“ — označena riječ → praznina+odgovor; normalizacija dira
+SAMO 3+ podvlake jer su jedna i dvije LaTeX) i `48565ae` (D2: `answers` u shemi, polja U rečenici,
+ocjena PO praznini) na ovoj su grani, backlog nosi ✅ anotacije od 2026-08-25 — spec ih pri
+pisanju (2026-08-31) nije provjerio. Dokazi danas: `fill-blank-format.test.js` **20/0** ·
+`fill-multi.spec.js` u default suiti · CI na `3a1f374` zelen. Nula novog koda — ishod cigle je
+**verifikacija**, i pouka: cigla prepisana iz backloga u plan mora prepisati i njegov STATUS.
+
 ### E2 · M5b — zatezanje
 25 jedinstvenih kartica preko 500 znakova (`entrepreneurship` 28 · `traffic` 6 · `food-nutrition` 4
 · `sit` 4 · `ebusiness` 2 · `math` 2 · `te2` 2 — brojevi uključuju kopije u `final`) → detalj seli u
@@ -638,7 +647,7 @@ Faza pada kad **sve** stoji:
 - [ ] `palette:breakdown` **fatalno 0** · `check:palette` osnovica **0**
 - [ ] CSP **enforce** na produkciji uz čist report
 - [x] leaked-password provjera živa (D4, 2026-09-01)
-- [ ] E1–E4 riješeni ili **obrazloženo odgođeni** (odgoda je ishod, prešućivanje nije)
+- [ ] E1–E4 riješeni ili **obrazloženo odgođeni** (odgoda je ishod, prešućivanje nije) — ✅ E1 (verifikacijom, 2026-09-01)
 - [ ] svi nalazi iz §8 triažirani
 - [ ] `npm run preflight` **EXIT 0**
 

@@ -5,6 +5,16 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-01 (FABLE) — MREZA-E1: mina je vec bila razminirana — analiza je nasla isporuku, ne posao
+
+Cigla je nalozila analizu prije koda i analiza je pojela ciglu: EDITOR ② (dopune) isporucen je
+2026-08-25 (d6d437a + 48565ae), s objema branama zivima (fill-blank-format 20/0; fill-multi u
+default suiti koju zeleni CI pokriva). Spec je 2026-08-31 prepisao backlog-stavku bez njezinih
+✅ anotacija — prepisivanje zadatka mora prepisati i status. Usput zatvoreno: CI verdikt na vrhu
+grane (nepoznat od rate-limita prosle sesije) = ZELEN, jednim pozivom, bez petlje.
+
+---
+
 ## 2026-09-01 (FABLE) — D4: lozinka koja je procurila staje u pregledniku, prije servera
 
 HIBP range API s k-anonimnoscu: odlazi samo 5 heks znakova SHA-1, usporedba je lokalna,
