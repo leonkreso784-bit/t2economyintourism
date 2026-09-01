@@ -26,6 +26,18 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-01 (FABLE) — CI obara doradu: 4.41 na amberu — popravak izmjeren na 45%
+
+SE-shard pao na a11y (12 h3 u macroeconomicsu, 4.41 < 4.5): moj 55% mix na najsvjetlijim
+bojama kataloga. contrast:live to nema kako vidjeti (mjeri te2, cije boje prolaze) — zato
+obje brane postoje. Leon htio "maknut SE"; izmjereno da prekrsaj NE ovisi o sirini — SE
+je glasnik, ne uzrok. Popravak: mjera 36 boja x 4 teme x 2 plohe -> 45% drzi najgori
+slucaj na 5.31. Svjesna granica: UGC picker prima bilo koji hex, tvrda garancija pripada
+write-putu (ADR-030). Pouka u BUGS-stilu: brana koja mjeri UZORAK (13 ruta) ne pokriva
+branu koja mjeri POVRSINU — razlicit doseg je razlog postojanja, ne redundancija.
+
+---
+
 ## 2026-09-01 (FABLE) — Dorada iz Leonovog pregleda: learn u bojama sekcija
 
 Leon na pregledu (snimkom): traka sekcije i naslovi u learnu uvijek indigo, a boja sekcije

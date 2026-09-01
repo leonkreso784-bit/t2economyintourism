@@ -14,6 +14,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   kraju od tinte, naslov = mješavina akcenta s tintom teme (goli akcent kao tekst = razred
   kvara iz C5b/0); sekcija bez boje ostaje bajt-identična.
 
+### Popravljeno
+- **CI je prvu verziju oborio** (axe: 12× h3 na 4.41 < 4.5 za `#f59e0b`/`#fbbf24`) →
+  mix **55 % → 45 %**, izmjereno nad 36 boja × 4 teme × 2 plohe (najgori slučaj 5.31).
+  Prekršaj ne ovisi o širini — SE-shard je bio glasnik, ne uzrok (spec §15.1).
+
 ### Dokaz
 - `check:contrast:live` 0 ispod praga (13 ruta × 4 teme) · živa sonda: 7 sekcija
   poduzetništva, svaka svoj akcent · telefon-brana 0 nalaza · preflight EXIT 0.

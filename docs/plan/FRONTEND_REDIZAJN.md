@@ -5621,3 +5621,15 @@ brand-pravilima **bajt-identična**, bez fallback-truka u svakom pravilu. Tri od
 **Dokaz:** `check:contrast:live` **0 ispod praga na 13 ruta × 4 teme** (learn ruta mjeri nova
 zaglavlja) · živa sonda na 7 sekcija poduzetništva: svaka nosi svoj akcent, tinta po formuli ·
 telefon-brana i preflight u zapisu CHANGELOG-a.
+
+**🔴 CI je prvu verziju OBORIO — i to je brana radila svoj posao (2026-09-01).** Mix od
+55 % akcenta na najsvjetlijim bojama kataloga (`#f59e0b`, `#fbbf24`) daje **4.41 < 4.5**
+(axe, 12 naslova u macroeconomicsu). `contrast:live` to NIJE vidio jer njegovih 13 ruta
+mjeri `te2`, čije boje prolaze — **a11y-brana mjeri predmet koji contrast:live ne imenuje**,
+zato postoje obje. Pao je SE-shard, ali prekršaj **ne ovisi o širini ekrana** — SE je bio
+glasnik, ne uzrok; micanje profila ne bi spasilo ništa. **Popravak izmjeren, ne pogođen**
+(`mjera-h3-mix.js`): 36 različitih boja kataloga × 4 teme × 2 plohe → **45 %** akcenta
+drži najgori slučaj na **5.31**. ⚠️ **Svjesna granica:** Studio color-picker
+(`studio.js:447`) prima bilo koji hex — mješavina svaki odabir POPRAVLJA za 55 % prema
+tinti, ali čisto bijelu digne tek na 3.7; tvrda garancija za korisnikov odabir pripada
+**write-putu** (ADR-030), ne rendereru, i ide s MCP/RAČUN radovima.

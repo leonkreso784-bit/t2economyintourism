@@ -285,12 +285,12 @@
 }
 
 :where(#learn) .learn-card[data-ink] .learn-card-content h3 {
-    color: color-mix(in srgb, var(--st-acc) 55%, var(--color-ink-0));
+    color: color-mix(in srgb, var(--st-acc) 45%, var(--color-ink-0));
     border-bottom-color: var(--st-acc);
 }
 
 :where(#learn) .learn-card[data-ink] .learn-card-content h5 {
-    color: color-mix(in srgb, var(--st-acc) 55%, var(--color-ink-0));
+    color: color-mix(in srgb, var(--st-acc) 45%, var(--color-ink-0));
 }
 
 /* Paragraphs */
