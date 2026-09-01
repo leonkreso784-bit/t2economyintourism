@@ -5,6 +5,16 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **MREŽA-E3: brana je jedan predmet preskakala s uvjerljivim krivim razlogom**
+
+### Popravljeno
+- `check:final` sad razumije **obje konvencije imena kolokvija** (`first-midterm` i `midterm-1`) —
+  `business-informatics` nije bio „ne-3-dijelni" nego žrtva resolvera; u bazi je bio cijelo
+  vrijeme i sada se **provjerava (16 → 17 finala)**. Čegrtaljka je pad na promjeni razloga odradila.
+- **Izuzeće preostalih 7 (svi HR, „nije u bazi") TRAJNO ZAKLJUČANO** — obrazloženje u zaglavlju
+  brane: file-final ne može driftati po konstrukciji · HR u Supabase tek s potpunim programom ·
+  izuzeće se samo zacjeljuje ulaskom u bazu. Obrnuti testovi 6/6.
+
 ## 2026-09-01 (FABLE) — **MREŽA-E2: nijedna kartica preko 500 znakova — i shema to sada jamči**
 
 ### Promijenjeno

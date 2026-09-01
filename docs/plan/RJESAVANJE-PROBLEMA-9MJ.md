@@ -610,6 +610,18 @@ preflight EXIT 0 · phone-brana 10/10. ⚠️ **Uz deploy ide i re-sync baze** (
 po ADR-015, ali brojka je veća nego što zvuči. B2 ih imenuje; ovdje se odlučuje migriraju li se ili
 se izuzeće trajno zaključava uz obrazloženje.
 
+**✅ E3 ISHOD (2026-09-01) — jedan je bio KRIVO preskočen, sedam je zaključano s obrazloženjem.**
+Analiza je oborila premisu za četvrtinu popisa: `business-informatics` (+hr) nije „ne-3-dijelni" —
+brana je znala samo jednu od **dvije konvencije imena kolokvija** u katalogu
+(`first-midterm`/`second-midterm`, 44 mjesta vs `midterm-1`/`midterm-2`, 25 mjesta) pa je davala
+**uvjerljiv krivi razlog** — ista klasa kvara kao mjerač iz §10.3. Resolver sad razumije obje;
+EN predmet je u bazi bio cijelo vrijeme i sada se **provjerava (16 → 17)**, čegrtaljka je pad na
+promjeni razloga uredno odradila (`--update` uz zapis). **Preostalih 7 = svi HR, „nije u bazi" —
+izuzeće TRAJNO ZAKLJUČANO** (obrazloženje u zaglavlju `check-final-drift.js`, ADR-027): file-final
+je runtime `Object.assign` pa ne može driftati po konstrukciji · HR ide u Supabase tek s potpunim
+HR programom (postojeća odluka) · izuzeće se samo zacjeljuje ulaskom u bazu. Migracija sada radi
+brane = rep maše psom. Obrnuti testovi brane 6/6.
+
 ### E4 · Vježbe — frontend
 Pet predmeta (`accounting` · `math` · `statistics` · `academic-writing` · `macroeconomics`) =
 **petina kataloga**, a vježbe nemaju **nijedan vizualni gate** i nisu bile ni u jednoj cigli C0–C7.
@@ -656,11 +668,11 @@ Faza pada kad **sve** stoji:
 - [x] advisor performance **0 WARN** · security **15 → 11** — ✅ **A1, 2026-08-31, na produkciji**
 - [ ] `check:node`, `check:tokens`, `check:cascade`, `check:i18n`, `check:csp` u preflightu, **svaka s obrnutom provjerom** — ✅ node (A2) · tokens (B1) · cascade (B4) · i18n (B5, 2026-08-31) · csp (D3, 2026-09-01)
 - [x] a11y brana sudi po **WCAG razini**, osnovica imenovana — ✅ **B3b+B3c, 2026-08-31** (razina ∪ težina; macro u površinama; 9× `.katex-display` popravljeno; osnovica prazna)
-- [x] `check:final` **imenuje** preskočene — ✅ **B2, 2026-08-31** (osnovica: 8 imenovanih)
+- [x] `check:final` **imenuje** preskočene — ✅ **B2, 2026-08-31** (osnovica: 8 imenovanih; E3 spustio na 7 — jedan je bio krivo klasificiran i sad se provjerava)
 - [ ] `palette:breakdown` **fatalno 0** · `check:palette` osnovica **0**
 - [ ] CSP **enforce** na produkciji uz čist report
 - [x] leaked-password provjera živa (D4, 2026-09-01)
-- [ ] E1–E4 riješeni ili **obrazloženo odgođeni** (odgoda je ishod, prešućivanje nije) — ✅ E1 (verifikacijom) · ✅ E2 (2026-09-01)
+- [ ] E1–E4 riješeni ili **obrazloženo odgođeni** (odgoda je ishod, prešućivanje nije) — ✅ E1 (verifikacijom) · ✅ E2 · ✅ E3 (16→17 provjerenih; 7 zaključano, 2026-09-01)
 - [ ] svi nalazi iz §8 triažirani
 - [ ] `npm run preflight` **EXIT 0**
 

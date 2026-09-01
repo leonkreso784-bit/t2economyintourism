@@ -5,6 +5,19 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-01 (FABLE) — MREZA-E3: "odluka o 8" se raspala na popravak mjerca + 7 obrazlozenih
+
+Cigla je trazila odluku migrirati-ili-zakljucati, a analiza je prvo oborila popis: business-informatics
+nikad nije bio "ne-3-dijelni" — resolver brane znao je samo jednu od dvije konvencije imena kolokvija
+u katalogu, pa je predmet koji je u bazi cijelo vrijeme dobivao uvjerljiv kriv razlog preskakanja.
+Ista klasa kvara kao mjerac koji je u fazi TELEFON dvaput vratio kriv broj umjesto da padne. Popravak
+resolvera = 17 provjerenih (bilo 16); cegrtaljka je pad na promjeni razloga odradila kako je B2
+zamislio. Preostalih 7 su svi HR "nije u bazi" i izuzece je trajno zakljucano u zaglavlju brane:
+file-final ne moze driftati po konstrukciji, HR migracija je vec presudjena drugom odlukom, a
+izuzece se samo zacjeljuje. Migrirati ih sada radi brane bio bi rep koji mase psom.
+
+---
+
 ## 2026-09-01 (FABLE) — MREZA-E2: kartice ispod stropa, strop u shemi
 
 25 jedinstvenih kartica (48 s final-kopijama) skraceno; prije svake selidbe procitao sam learn —

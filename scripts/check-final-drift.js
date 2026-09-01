@@ -21,6 +21,18 @@
 // Isti obrazac kao `check:orphan-css`. Osnovica se čita tek kad podaci stignu, pa
 // graceful-skip na uspavanu bazu ostaje exit 0 — brana o bazi koje nema ne sudi.
 //
+// ── MREZA-E3 (2026-09-01): PRESUDA O PRESKOCENIMA ───────────────────────────
+// business-informatics je IZASAO iz osnovice — bio je krivo klasificiran "ne-3-dijelni" jer je
+// resolver znao samo jednu od dvije konvencije imena kolokvija (komentar uz resolveDataVar poziv);
+// u bazi je bio cijelo vrijeme i od E3 se PROVJERAVA (16 -> 17 provjerenih).
+// Preostalih 7 su SVI HR predmeti "nije u bazi" i izuzece je TRAJNO ZAKLJUCANO uz tri razloga:
+//   1) file-served final je runtime Object.assign(M1, M2) -> ne moze driftati PO KONSTRUKCIJI
+//      (provjereno u te2-hr/ebusiness-hr/management-hr final.js);
+//   2) HR ide u Supabase tek kad HR program bude potpun (postojeca odluka, ADR-022 kontekst) —
+//      migrirati ih sada radi brane znacilo bi obrnuti rep i psa;
+//   3) izuzece se SAMO ZACJELJUJE: ulaskom u bazu predmet prestaje biti preskocen automatski,
+//      a zastarjeli red osnovice postane glasan (--update).
+//
 // RABLJENJE:  node scripts/check-final-drift.js [--update]
 //
 // Napomena (Windows libuv): jedan izlaz s kratkom odgodom pušta undici keep-alive socket da mirno zatvori.
@@ -84,9 +96,14 @@ async function check() {
   const preskoceno = []; // { id, razlog } — B2: preskočeni se imenuju, ne broje
 
   for (const s of SOKRAT_CATALOG.subjects) {
+    // Katalog nosi DVIJE konvencije imena kolokvija: 'first-midterm'/'second-midterm' (starija,
+    // 44 mjesta) i 'midterm-1'/'midterm-2' (novija/scaffold, 25 mjesta). Do MREZA-E3 je ovdje
+    // stajala samo prva -> business-informatics (+hr) je bio krivo klasificiran kao "ne-3-dijelni"
+    // iako je uredno trodijelan; mjerac je davao KRIVI RAZLOG, ne samo preskakao. Wildcard '*'
+    // ostaje pokriven: oba imena tada padnu na isti var pa m1 === m2 i dalje znaci ne-3-dijelni.
     const fv = resolveDataVar(s, 'final');
-    const m1 = resolveDataVar(s, 'first-midterm');
-    const m2 = resolveDataVar(s, 'second-midterm');
+    const m1 = resolveDataVar(s, 'first-midterm') || resolveDataVar(s, 'midterm-1');
+    const m2 = resolveDataVar(s, 'second-midterm') || resolveDataVar(s, 'midterm-2');
 
     // Nije 3-dijelni (M1/M2/final) predmet → nema što provjeriti (wildcard/jedan sadržaj).
     if (!fv || !m1 || !m2 || fv === m1 || fv === m2 || m1 === m2) {
