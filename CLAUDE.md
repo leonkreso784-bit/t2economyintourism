@@ -193,16 +193,14 @@ seoba krene. Dva pravila koja vrijede **već sada**:
 projekt mora živjeti **~2 tjedna nakon** seobe. **Testovi su uvjet, ne dodatak.**
 ⚠️ Kad dođe na red, **provjeriti vrijedi li još izvorni razlog** (*„prije nego faks krene"*).
 
-### 🎯 TEKUĆA FAZA = **FRONTEND REDIZAJN od C5b/2** — spec: `docs/plan/FRONTEND_REDIZAJN.md`
+### 🎯 TEKUĆA FAZA = **FRONTEND REDIZAJN** — spec: `docs/plan/FRONTEND_REDIZAJN.md`
 
-**MREŽA: svi blokovi A–E ✅ (2026-09-01)**; njen spec je ⏸️ (nije ispunjen — izlazni uvjeti §9 su
-**deploy-gated**, arhiva tek kad padnu). **Uz deploy s CSP enforceom ide i E2 re-sync baze**
-(`diff:db` → `migrate-content.js`; read-path preferira bazu — bez re-synca PROD služi stare duge
-kartice) · **§8** = živi sandučić nalaza. **C5b ✅ CIJELI** (2026-09-01: /2 `blind-map`
-§12.12 · /3a `#learn` pao §12.13 · /3b skela §12.14) · **C6 mjera + C6/1 home ✅** (§13 —
-pravne NEMAJU bundle pa `legal/consent.css` ne migriraju; **C6/2 sidebar ✅** — NALAZ:
-sidebar je NEDOSTIŽAN, §13.7/BACKLOG) → sljedeća: **C6/3** (about) · C6/4 (profil+auth).
-**Next.js odbijen (ADR-028).**
+**MREŽA: svi blokovi A–E ✅**; spec ⏸️ (izlaz §9 = deploy-gated, arhiva tek tada). **Uz deploy s
+CSP enforceom ide i E2 re-sync baze** (`diff:db` → `migrate-content.js`; read-path preferira
+bazu — bez re-synca PROD služi stare duge kartice) · **§8** = živi sandučić nalaza.
+**C5b ✅ CIJELI** (§12.7–12.14) · **C6: mjera + /1 home + /2 sidebar ✅** (§13 — pravne NEMAJU
+bundle pa `legal/consent.css` ne migriraju; NALAZ: sidebar NEDOSTIŽAN, §13.7/BACKLOG) →
+sljedeća: **C6/3** (about) · C6/4 (profil+auth). **Next.js odbijen (ADR-028).**
 ⚠️ **`check:docs` traži TOČNO jedan aktivni plan**; spec koji čeka nosi `**Status:** ⏸️ PAUZIRAN`.
 
 **Živa ograničenja redizajna** (obrazloženje svakog je u specu):
