@@ -200,7 +200,8 @@ CSP enforceom ide i E2 re-sync baze** (`diff:db` → `migrate-content.js`; read-
 bazu — bez re-synca PROD služi stare duge kartice) · **§8** = živi sandučić nalaza.
 **C5b ✅ CIJELI** (§12.7–12.14) · **C6 ✅ CIJELI** (§13 — pravne NEMAJU bundle pa
 `legal/consent.css` ne migriraju; NALAZ: sidebar NEDOSTIŽAN, §13.7/BACKLOG; authed
-prije/poslije sonda za profil §13.9) → **C7 u tijeku**: /1 mrtvo ✅ §14.1; dalje **/2**. **Next.js odbijen (ADR-028).**
+prije/poslije sonda za profil §13.9) → **C7 u tijeku**: /1 mrtvo ✅ · /2 cta-baza vraćena ✅ (BUG: C2 ju obrisao, 7 površina
+sivo od 13.8.; §14.2) → **/3**. **Next.js odbijen (ADR-028).**
 ⚠️ **`check:docs` traži TOČNO jedan aktivni plan**; spec koji čeka nosi `**Status:** ⏸️ PAUZIRAN`.
 
 **Živa ograničenja redizajna** (obrazloženje svakog je u specu):

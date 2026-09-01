@@ -1,19 +1,5 @@
 /* ===== COMPREHENSIVE MOBILE FIXES (max-width: 767px) ===== */
 @media (max-width: 767px) {
-    /* ===== LANDING PAGE MOBILE =====
-       C2: obrisano. `.landing-hero`, `.hero-content`, `.hero-badge`, `.hero-subtitle`,
-       `.hero-actions`, `.hero-visual` i `.float-card` VIŠE NE POSTOJE u markupu, a
-       `.hero-title` je sad na skali (`text-4xl`/`md:text-5xl`/`lg:text-6xl`).
-       Pravilo koje se tuče s utilityjem se BRIŠE, nikad ne nadglašava (spec §3, C1 nalaz 1).
-       ⚠️ `.cta-button` je OSTAO: landing ga više ne koristi, ali koriste ga admin-editori,
-       auth-modal i `#materialsSignInBtn`. Brisanje bi ih na mobitelu suzilo — to su tuđe
-       cigle (C3/C6), ne ova. */
-    .cta-button {
-        padding: 0.875rem 1.5rem;
-        font-size: 0.95rem;
-        width: 100%;
-    }
-
     .action-btn {
         padding: 0.875rem 1rem;
         font-size: 0.9rem;

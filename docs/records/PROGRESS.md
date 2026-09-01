@@ -14,6 +14,18 @@ Sljedeca cigla: C5b/2 (blind-map.css), pa C5b/3 (learn.css).
 
 ---
 
+## 2026-09-01 (FABLE) — C7/2: cta-ljestva dosla kuci i zatekla da kuce NEMA
+
+Plan je bio konsolidacija, mjera je nasla BUG: C2 je s mrtvim landingom obrisao i bazu
+.cta-button koju koristi 7 zivih povrsina — od 13.8. su svi ti gumbi (auth-modal Sign in,
+profil, admin Objavi...) bili browserov sivi default, i NIJEDAN gate to nije vidio (css:diff
+usporedjuje dvije verzije bez baze; kontrast mjeri tokene, ne odsustvo pravila). Baza napisana
+ponovno danasnjim jezikom (ispuna marke + --on-primary, ADR-032; bez tamne ere). Dokaz je
+namjeran diff: svih 191 razlika = cta-gumbi + tinta potomaka + 1px odjek. Telefon 21/0,
+preflight 20/20. Leon dobio screenshot modala.
+
+---
+
 ## 2026-09-01 (FABLE) — C7/1: selektorski mrtvo van — pola mrtvih gate nije ni vidio
 
 C7 otvoren mjerom (spec 14.0): tvrdnja plana o "mrtvoj temi" je zastarjela (tema pregradjena,

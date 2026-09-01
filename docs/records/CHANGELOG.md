@@ -5,6 +5,19 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **C7/2: `.cta-button` — C2 je s mrtvim landingom obrisao i ŽIVU bazu; 7 površina gumba bilo sivo od 13.8.**
+
+### Popravljeno
+- Baza `.cta-button` + `.primary`/`.secondary` napisana ponovno današnjim jezikom (puna
+  ispuna marke + `--on-primary`, ADR-032; secondary po C3 obrascu; bez gradijenta) u
+  `components.css`, s ljestvom iz `responsive/02+05` (mobile-first). Auth-modal, profil,
+  admin editbar, edit-modali, mm-retry, `#materialsSignInBtn` i editor-guard opet imaju gumbe.
+
+### Dokaz
+- Namjeran diff: svih 191 razlika = cta-gumbi + naslijeđena tinta + 1-px odjek (nestao
+  default rub); sonda: ispuna `#1657d0`/bijelo, ljestva 12/14/16 px · telefon 21/0 ·
+  preflight 20/20. Nijedan gate rupu nije vidio — „klasa bez ijednog pravila" je nova vrsta.
+
 ## 2026-09-01 (FABLE) — **C7/1: selektorski mrtvo van — `!important` 34 → 11, orphan-osnovica 38 → 12**
 
 ### Uklonjeno

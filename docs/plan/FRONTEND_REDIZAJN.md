@@ -5461,3 +5461,28 @@ prijavljeni profil + `editor.html?view=admin`, s force-open sekcijama kao `css:d
 **Učinak:** `!important` **34 → 11** · `responsive/*` **720 → 417** redaka · `components.css`
 **242 → 119** · ukupni dug **6 713 → 6 287** · orphan-osnovica **38 → 12** (ostalo je samo
 imenovano-legitimno). Slijedi **C7/2**.
+
+### 14.2 ✅ C7/2 — `.cta-button`: ljestva je došla kući i zatekla da KUĆE NEMA (2026-09-01)
+
+🔴 **NALAZ (razred BUG-a, ne konsolidacije):** planirano „skupi cta-ljestvu uz bazu" oborilo se
+na činjenici da **baza ne postoji** — **C2 ju je obrisao zajedno s mrtvim landing-markupom**
+(jedina definicija živjela je u `landing.css`), a klasu koristi **sedam živih površina**:
+auth-modal (svi submiti), profil (sve akcije), admin editbar (Objavi/Odbaci), admin
+edit-modali, my-materials retry, `#materialsSignInBtn`, editorov guard. **Od 2026-08-13 su svi
+ti gumbi bili browserov sivi default** (izmjereno: `rgb(240,240,240)`, `outset 2px`, crna
+tinta) — jedino ruho davala im je mobilna ljestva iz `responsive/02+05`. Nijedan gate to nije
+vidio: `css:diff` uspoređuje dvije verzije (obje bez baze), telefon mjeri geometriju, kontrast
+mjeri tokene. **Klasa u markupu bez ijednog pravila u bundleu = nova vrsta rupe.**
+
+**Popravak:** baza + `.primary`/`.secondary` **napisani ponovno današnjim jezikom**, ne vraćeni
+doslovno — stara je bila iz tamne ere (bijelo staklo za secondary, zakucani indigo u sjenama,
+gradijent). Sad: puna ispuna marke + `--on-primary` (ADR-032), secondary po C3 obrascu
+`.header-auth-btn`, bez gradijenta (Apple smjer). Dom = `components.css`, s ljestvom iz
+`02`+`05` kao mobile-first (@374 · landscape · @768).
+
+**Dokaz (namjeran diff, ne nula):** sonda vrijednosti — modal submit na 320/393/1024 =
+ispuna `#1657d0` + bijela tinta + ljestva 12/14/16 px paddinga ✓ · `css:diff` **svih 191
+razlika na 26 elemenata = cta-gumbi, njihovi `i`/`span` potomci (naslijeđena tinta) i
+1-px geometrijski odjek na precima** (nestao default `outset 2px` rub) · telefon 21/0 ·
+preflight 20/20. `responsive/05` je ostao samo s politikama (reduced-motion, high-contrast,
+print). Slijedi **C7/3** (preostale žive ljestve kući + smrt `responsive/*`).

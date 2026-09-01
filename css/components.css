@@ -116,3 +116,78 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
+
+/* ===== CTA BUTTON (C7/2, 2026-09-01) =====
+   ⚠️ POVIJEST KOJU OVA SEKCIJA ISPRAVLJA: bazu `.cta-button` (+ .primary/.secondary)
+   obrisao je C2 zajedno s mrtvim landing-markupom — ali klasu koristi SEDAM zivih
+   povrsina (auth-modal, profil, admin editbar, admin edit-modali, my-materials retry,
+   `#materialsSignInBtn`, editorov guard). Od 2026-08-13 su svi ti gumbi zato bili
+   browserov sivi default; jedino sto ih je oblikovalo bila je mobilna ljestva u
+   responsive/02+05, koja je sad skupljena OVDJE (mobile-first: baza = mobilni
+   pobjednik, @768 vraca siroki oblik).
+   Stara baza NIJE vracena doslovno — bila je iz tamne ere (bijelo staklo, zakucani
+   indigo u sjenama). Ovo je ista obitelj pisana danasnjim jezikom: puna ispuna marke
+   s `--on-primary` tintom (ADR-032), sekundarni kao `.header-auth-btn` (C3 obrazac). */
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    border: none;
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    min-height: var(--touch-target-large);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.cta-button.primary {
+    background: var(--primary);
+    color: var(--on-primary);
+}
+
+.cta-button.primary:hover {
+    background: var(--primary-dark);
+}
+
+.cta-button.secondary {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+}
+
+.cta-button.secondary:hover {
+    border-color: color-mix(in srgb, var(--primary) 55%, transparent);
+    background: color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+.cta-button:disabled,
+.cta-button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 374px) {
+    .cta-button {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    .cta-button {
+        padding: 10px 20px;
+    }
+}
+
+@media (min-width: 768px) {
+    .cta-button {
+        width: auto;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
+}

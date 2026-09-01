@@ -2,26 +2,6 @@
    COMPREHENSIVE RESPONSIVE DESIGN - ALL DEVICES
    ===================================================== */
 
-/* ===== EXTRA SMALL DEVICES (iPhone SE, small phones) ===== */
-@media screen and (max-width: 374px) {
-
-    
-    .cta-button {
-        padding: 12px 20px;
-        font-size: 0.9rem;
-    }
-}
-
-/* ===== LANDSCAPE MODE - PHONES ===== */
-@media screen and (max-height: 500px) and (orientation: landscape) {
-
-    
-    .cta-button {
-        padding: 10px 20px;
-    }
-    
-}
-
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
     *,
