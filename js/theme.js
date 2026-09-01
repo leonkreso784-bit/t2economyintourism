@@ -21,7 +21,8 @@
 // iz localStoragea nekog starog posjetitelja) ne bi pogodio nijedan token-blok, ali BI
 // aktivirao 21 legacy pravilo koje selektira `[data-theme="dark"]` → bijeli tekst na
 // svijetloj podlozi. Zato se nepoznata vrijednost odbacuje, a ne propušta.
-const SOKRAT_THEMES = ['academic', 'paper', 'chalk', 'mint'];
+// 'paper' maknut na Leonovu rijec (2026-09-01) — spremljeni 'paper' pada na academic.
+const SOKRAT_THEMES = ['academic', 'chalk', 'mint'];
 const SOKRAT_THEME_DEFAULT = 'academic';
 
 function initTheme() {

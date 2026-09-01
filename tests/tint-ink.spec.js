@@ -14,7 +14,7 @@
 const { test, expect } = require('@playwright/test');
 
 const UI_MIN = 3.0;  // WCAG 1.4.11 — glif je grafički element, ne tekst
-const TEME = ['academic', 'paper', 'chalk', 'mint'];
+const TEME = ['academic', 'chalk', 'mint'];
 
 /** Kontrast iz dva `rgb(...)` stringa koje vraća `getComputedStyle`. */
 function kontrastIzCss(a, b) {

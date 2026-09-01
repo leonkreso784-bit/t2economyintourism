@@ -24,7 +24,7 @@
 
 const { test, expect } = require('@playwright/test');
 
-const TEME = ['paper', 'chalk', 'academic', 'mint'];
+const TEME = ['chalk', 'academic', 'mint'];
 const TONOVI = ['red', 'amber', 'green', 'cyan', 'blue', 'indigo', 'violet', 'pink'];
 const AA = 4.5;
 

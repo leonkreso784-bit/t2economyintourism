@@ -166,7 +166,6 @@
      aktivne teme to ne može dati. Vrijednosti su surface-0 + brand-500
      dotične teme — promijeniš li temu niže, promijeni i njen pregled ovdje. */
   --theme-swatch-academic-bg: #f7f9fc;  --theme-swatch-academic-acc: #1657d0;
-  --theme-swatch-paper-bg: #faf9f6;     --theme-swatch-paper-acc: #2c5fd6;
   --theme-swatch-chalk-bg: #1e1f1c;     --theme-swatch-chalk-acc: #f2c14e;
   --theme-swatch-mint-bg: #0b1a1c;      --theme-swatch-mint-acc: #4fc9ab;
 
@@ -317,29 +316,6 @@
    po POSLJEDICI i dalje: `npm run palette:breakdown`.
    ═════════════════════════════════════════════════════════════════════ */
 
-/* ── PAPIR I MARKER (svijetlo) — topli papir, crna tinta, plava akcija, žuti marker.
-      Akcent je podijeljen na dva posla: `brand` nosi akciju, `mark` je marker kojim
-      se podvlači bitno. To je jedina paleta u kojoj je „šareno" doslovno alat za učenje. */
-:root[data-theme="paper"] {
-  --color-surface-0: #faf9f6;  --color-surface-1: #ffffff;  --color-surface-2: #f0eee8;
-  --color-line: #e3e0d8;      --color-line-strong: #8c887e;
-  --color-ink-0: #1b1a17;      --color-ink-1: #45423c;      --color-ink-2: #6f6b62;
-  --color-brand-400: #5a86e4;  --color-brand-500: #2c5fd6;  --color-brand-600: #1f47a8;
-  --color-on-brand: #ffffff;
-  --color-mark: #ffd24a;
-  --color-on-ok: #ffffff;      --color-on-danger: #ffffff;
-  --color-shadow: #1b1a17;
-  /* potamnjeno zbog kontrasta: zelena je s 3.77 na 5.6, jantar s 3.28 na 5.5 */
-  --color-ok: #15703c;         --color-ok-strong: #0f5c30;
-  --color-warn: #8a5a00;       --color-warn-ink: #7a4f00;
-  --color-danger: #c6362c;     --color-danger-ink: #a82a22;
-  --color-ink-red: #c61c1c;      --color-ink-amber: #7e6012;
-  --color-ink-green: #197151;    --color-ink-cyan: #126e7c;
-  --color-ink-blue: #1b64bd;     --color-ink-indigo: #4352e4;
-  --color-ink-violet: #8931e2;   --color-ink-pink: #bf1b71;
-  --shadow-e1: 0 1px 2px rgb(28 26 23 / 0.06), 0 4px 12px -4px rgb(28 26 23 / 0.10);
-  --shadow-e2: 0 2px 4px rgb(28 26 23 / 0.06), 0 12px 28px -8px rgb(28 26 23 / 0.16);
-}
 
 /* ── KREDA I TABLA (tamno) — bivša ZADANA tema, do 2026-08-13.
       Ne briše se: raspored, tipografija i tokeni su isti, pa je paleta samo popis

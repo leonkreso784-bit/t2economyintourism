@@ -20,7 +20,6 @@ function themeCardHtml() {
     const cur = document.documentElement.getAttribute('data-theme');
     const imena = {
         academic: pt('profile.themeAcademic', 'Academic blue'),
-        paper: pt('profile.themePaper', 'Paper'),
         chalk: pt('profile.themeChalk', 'Chalkboard'),
         mint: pt('profile.themeMint', 'Mint')
     };
@@ -28,11 +27,10 @@ function themeCardHtml() {
     // čita izvor, ne runtime — ista logika zbog koje ADR-028 zabranjuje dinamičke klase.
     const swatch = {
         academic: 'theme-option-swatch--academic',
-        paper: 'theme-option-swatch--paper',
         chalk: 'theme-option-swatch--chalk',
         mint: 'theme-option-swatch--mint'
     };
-    const teme = window.SOKRAT_THEMES || ['academic', 'paper', 'chalk', 'mint'];
+    const teme = window.SOKRAT_THEMES || ['academic', 'chalk', 'mint'];
     let gumbi = '';
     for (let i = 0; i < teme.length; i++) {
         const ime = teme[i];

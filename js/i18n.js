@@ -514,7 +514,6 @@
     'profile.appearance': { en: 'Appearance', hr: 'Izgled' },
     'profile.appearanceDesc': { en: 'Pick a theme — it is saved on this device.', hr: 'Odaberi temu — pamti se na ovom uređaju.' },
     'profile.themeAcademic': { en: 'Academic blue', hr: 'Akademsko plavo' },
-    'profile.themePaper': { en: 'Paper', hr: 'Papir' },
     'profile.themeChalk': { en: 'Chalkboard', hr: 'Ploča' },
     'profile.themeMint': { en: 'Mint', hr: 'Menta' },
     'profile.newPassPlaceholder': { en: 'New password (min. 8 characters)', hr: 'Nova lozinka (min. 8 znakova)' },

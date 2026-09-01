@@ -512,6 +512,5 @@
 }
 
 .theme-option-swatch--academic { --ts-bg: var(--theme-swatch-academic-bg); --ts-acc: var(--theme-swatch-academic-acc); }
-.theme-option-swatch--paper    { --ts-bg: var(--theme-swatch-paper-bg);    --ts-acc: var(--theme-swatch-paper-acc); }
 .theme-option-swatch--chalk    { --ts-bg: var(--theme-swatch-chalk-bg);    --ts-acc: var(--theme-swatch-chalk-acc); }
 .theme-option-swatch--mint     { --ts-bg: var(--theme-swatch-mint-bg);     --ts-acc: var(--theme-swatch-mint-acc); }

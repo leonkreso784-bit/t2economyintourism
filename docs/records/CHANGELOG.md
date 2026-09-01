@@ -5,6 +5,20 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **Tema `paper` maknuta (Leon uz pregled birača)** (grana)
+
+### Uklonjeno
+- Tema `paper` s SVIH 10 mjesta (popis u theme.js · mape u profile.js · i18n ključ ·
+  `[data-theme="paper"]` blok i swatch-tokeni u tokens.css · profile.css pravilo · popisi u
+  `check:contrast:live`, `tint-ink.spec`, `learn-blocks-contrast.spec` · CLAUDE.md).
+  Spremljeni `paper` u localStorageu pada na `academic` kroz postojeću validaciju
+  (provjereno uživo). Ostale teme: academic (zadana) · chalk · mint.
+
+### Dokaz
+- `check:contrast` (sada 3 teme, čita tokens.css pa se sam prilagodio) ✅ · tint-ink +
+  learn-blocks-contrast 20/20 · živa sonda: 3 gumba, stale-`paper` → academic ·
+  preflight EXIT 0.
+
 ## 2026-09-01 (FABLE) — **Birač tema u profilu — `chalk`/`mint`/`paper` prvi put dohvatljivi** (grana)
 
 ### Dodano

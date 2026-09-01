@@ -36,7 +36,7 @@
  */
 const { chromium } = require('@playwright/test');
 
-const TEME = ['academic', 'paper', 'chalk', 'mint'];
+const TEME = ['academic', 'chalk', 'mint'];
 const BAZA = process.env.BAZA || 'http://localhost:5050';
 
 const MJERA = function () {

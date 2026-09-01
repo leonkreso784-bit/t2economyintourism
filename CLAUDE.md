@@ -193,7 +193,7 @@ za jedan put — inače se prepravlja treći put) → profil (slika/uređivanje,
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 
-- **Zadana tema je SVIJETLA — „Akademsko plavo"** (`academic`; ostale `paper`, `chalk`, `mint`).
+- **Zadana tema je SVIJETLA — „Akademsko plavo"** (`academic`; ostale `chalk`, `mint` — `paper` maknut na Leonovu riječ 2026-09-01).
   Dvije tamne palete zaredom pale su na živom ekranu. Smjer izgleda je **APPLE** (Leon: *„apple
   smjer, naravno"*): grotesk svugdje (**serif nadglašen**), praznina, tipografija nosi, monokrom
   + jedan akcent. Spec §7.3–7.8.

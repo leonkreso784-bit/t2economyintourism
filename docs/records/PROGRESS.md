@@ -26,6 +26,17 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-01 (FABLE) — Paper van: 10 mjesta, nula drame
+
+Leon uz pregled biraca: "Mozes maknut paper, ovo ostalo je sve ok." Tema zivi na 10
+mjesta (JS popis+mape, i18n, tokens blok+swatchevi, css pravilo, DVIJE brane i DVA testa
+koji teme nabrajaju, CLAUDE.md) — sve u jednoj skripti s sidrenim zamjenama. Validacija
+u theme.js je otprije gradjena za nepoznate vrijednosti pa stari localStorage 'paper'
+pada na academic bez ijedne nove linije (provjereno uzivo). check:contrast se sam
+prilagodio (cita tokens.css, ne drzi kopiju). Dokaz: 20/20 + preflight 0.
+
+---
+
 ## 2026-09-01 (FABLE) — Birač tema: mehanizam je cijelo vrijeme postojao, falio je samo UI
 
 Leon odmah nakon deploya: nemamo izbornik tema na telefonu; na pitanje gdje — „U profilu".
