@@ -5013,20 +5013,10 @@ sokrat-modal.sokrat-confirm-modal > * {
     padding-bottom: calc(60px + var(--safe-bottom));
   }
 }
-:where(#learn) {
-  width: 100%;
-  min-width: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
 :where(#learn) .learn-container {
-  width: 100%;
   max-width: 100%;
-  min-width: 0;
-  margin: 0;
   padding: 14px;
   padding-bottom: 24px;
-  box-sizing: border-box;
 }
 :where(#learn) .learn-container > h1 {
   font-size: 1.15rem;
@@ -5050,11 +5040,8 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: inherit;
 }
 :where(#learn) .learn-filter {
-  display: flex;
   gap: 10px;
   margin-bottom: 14px;
-  padding: 4px 0 10px;
-  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
@@ -5116,11 +5103,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   transform: scale(0.96);
 }
 :where(#learn) .learn-content {
-  display: flex;
-  flex-direction: column;
   gap: 16px;
-  min-width: 0;
-  padding: 0;
 }
 :where(#learn) .learn-card {
   background: var(--bg-secondary);
@@ -9722,6 +9705,9 @@ body.mm-dragging {
 .overflow-x-auto {
   overflow-x: auto;
 }
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
 .rounded-\[10px\] {
   border-radius: 10px;
 }
@@ -9763,6 +9749,12 @@ body.mm-dragging {
 }
 .pt-5 {
   padding-top: calc(var(--spacing) * 5);
+}
+.pt-\[4px\] {
+  padding-top: 4px;
+}
+.pb-\[10px\] {
+  padding-bottom: 10px;
 }
 .pb-\[calc\(1\.25rem\+var\(--safe-bottom\)\)\] {
   padding-bottom: calc(1.25rem + var(--safe-bottom));

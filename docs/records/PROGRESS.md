@@ -14,6 +14,18 @@ Sljedeca cigla: C5b/2 (blind-map.css), pa C5b/3 (learn.css).
 
 ---
 
+## 2026-09-01 (FABLE) — C5b/3b: learn skela u utilityje — mjera prije koda srezala opseg na cetvrtinu
+
+Prije koda izmjereno STO SMIJE migrirati: 43 pravila su tipografija nad markupom iz podataka
+(ADR-028 — utility nema markup u koji bi isao), ~60 su komponente (C7), a svojstva skele veze
+6 zivih pragova (pravilo ②). Ostala je skela od 4 elementa u index.html — i 4 duplikata
+univerzalnog reseta koja su pala usput. Dokaz: css:diff 9336 usporedbi kroz 6 viewporta
+(1024 zbog margin:auto upita, 852x393 zbog safe-area upita) = 0 razlika; display dolazi iz
+utilityja (pravila obrisana). Time je C5b ZATVOREN cijeli: /0 boje, /1a exercises, /1b
+learn-blocks+math, /2 blind-map, /3a #learn pao, /3b skela. Slijedi C6.
+
+---
+
 ## 2026-09-01 (FABLE) — C5b/3a: #learn razoruzan — :where() cuva doseg, a utility prvi put prolazi
 
 Korak "prvo razoruzaj specificnost" iz §12.4. Golo skidanje prefiksa nije bilo opcija jer bi

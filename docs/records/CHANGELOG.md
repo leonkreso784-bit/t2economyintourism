@@ -5,6 +5,20 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **C5b/3b: skela `learn.css` u utilityje — mjera srezala opseg, C5b time CIJELI zatvoren**
+
+### Promijenjeno
+- 4 elementa skele (`index.html`): sekcija `w-full min-w-0 overflow-x-hidden` (golo pravilo
+  obrisano) · kontejner `w-full min-w-0` · filter `flex overflow-x-auto pt-[4px] pb-[10px]` ·
+  sadržaj `flex flex-col min-w-0`. Pala i 4 duplikata univerzalnog reseta.
+- Ostatak NE migrira s razlogom po skupini (spec §12.14): **43 pravila** nad markupom IZ
+  PODATAKA (ADR-028) · ~60 komponente (C7) · svojstva prikovana sa **6 pragova** (C7, §12.3).
+
+### Dokaz
+- `css:diff` learn-ruta × 6 viewporta (320·375·768·1024·1280·852×393) = **9336 usporedbi,
+  0 razlika**; pokrivenost: `display` iz utilityja, 5 kartica; telefon 10/10; preflight EXIT 0;
+  utilityji 129 → 132. **C5b: svih 5 datoteka §12.4 obrađeno** → slijedi C6.
+
 ## 2026-09-01 (FABLE) — **C5b/3a: `#learn` je pao — 153× `:where(#learn)`, 0 razlika u 7780 usporedbi**
 
 ### Promijenjeno

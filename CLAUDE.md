@@ -170,10 +170,10 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 **keširane stare skripte**, ne zbog urednosti sheme.
 ⚠️ **N2 je POLA:** polica pokazuje **skinuto**, ne uniju skinutog i onoga što se uči.
 
-**✅ ZATVORENO:** **POLICA** (P1–P4) · **C4** · **C5a** · **C5b/0** · **C5b/1** (§12.9–12.10).
+**✅ ZATVORENO:** **POLICA** (P1–P4) · **C4** · **C5a** · **C5b CIJELI** (§12.7–12.14).
 **Redizajn NASTAVLJEN od C5b/2** (2026-09-01, niže).
-⚠️ **Sve što preostale cigle moraju znati stoji u SPECU, ne ovdje** (ADR-027): `learn.css` je na
-**`#learn`** (102/112) pa utility ne prolazi dok ID stoji (§12.2) · `math.css` je KaTeX i **ne
+⚠️ **Sve što preostale cigle moraju znati stoji u SPECU, ne ovdje** (ADR-027): `learn.css` je od
+C5b/3a na **`:where(#learn)`** (doseg čuva, specifičnost ne diže) · `math.css` je KaTeX i **ne
 migrira** · `exercises`/`blind-map` su uvjetni tabovi, **`te2` ih NEMA** · **četiri pravila za rez**
 (§10.3, §11.1–11.4), među njima ono koje se najskuplje plaća: **mjerač je bio prvi kvar 12× u fazi**
 i dvaput vratio **uvjerljiv krivi broj umjesto da padne** → svaki mjerač mora ispisati **i koliko je
@@ -198,9 +198,10 @@ projekt mora živjeti **~2 tjedna nakon** seobe. **Testovi su uvjet, ne dodatak.
 **MREŽA: svi blokovi A–E ✅ (2026-09-01)**; njen spec je ⏸️ (nije ispunjen — izlazni uvjeti §9 su
 **deploy-gated**, arhiva tek kad padnu). **Uz deploy s CSP enforceom ide i E2 re-sync baze**
 (`diff:db` → `migrate-content.js`; read-path preferira bazu — bez re-synca PROD služi stare duge
-kartice) · **§8** = živi sandučić nalaza. **C5b/2 ✅** (`blind-map.css`, §12.12) → sljedeća
-cigla: **C5b/3** (`learn.css` — prvo skidanje `#learn` uz `css:diff` = 0, pa migracija).
-**Next.js odbijen (ADR-028), ne otvarati iznova.**
+kartice) · **§8** = živi sandučić nalaza. **C5b ✅ CIJELI** (2026-09-01: /2 `blind-map`
+§12.12 · /3a `#learn` pao §12.13 · /3b skela `learn.css` §12.14) → sljedeća cigla: **C6**
+(§3 tablica; `pages.css`/`about` je najveći stanar). **Next.js odbijen (ADR-028), ne otvarati
+iznova.**
 ⚠️ **`check:docs` traži TOČNO jedan aktivni plan**; spec koji čeka nosi `**Status:** ⏸️ PAUZIRAN`.
 
 **Živa ograničenja redizajna** (obrazloženje svakog je u specu):

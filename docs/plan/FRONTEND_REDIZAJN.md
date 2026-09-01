@@ -5172,6 +5172,35 @@ ne mijenja ishod nijedne bitke.
 
 Migracija pravila u utilityje = **C5b/3b** (sljedeći korak).
 
+### 12.14 ✅ C5b/3b — migracija `learn.css`, i mjera koja je OPSEG srezala na četvrtinu stranice (2026-09-01)
+
+Drugi korak C5b/3. Prije koda je izmjereno **što uopće smije migrirati**, i odgovor je srezao
+posao na **skelu od 4 elementa** (`index.html`): sekcija · `.learn-container` · `.learn-filter` ·
+`.learn-content`. Ostatak datoteke NE migrira, i svaki razlog je jedna od tri poznate granice:
+
+| skupina | pravila | zašto ne migrira |
+|---|---|---|
+| tipografija nad markupom **IZ PODATAKA** (`.learn-card-content` potomci, `tip/warning/example/formula-box`, `.highlight`) | **43** | **ADR-028: Tailwind nikad u `data/`** — te klase i elementi dolaze iz gradiva (v1 legacy-html kroz DOMPurify), utility nema markup u koji bi išao |
+| komponente (`.learn-card*`, `.filter-btn*`, `h1` s gradijentom, `.learn-image`, image-modal, scrollbar/mask pseudo) | ~60 | vizualni jezik — ista odluka kao `.ex-*` u /1a i tipke u /2: **C7** |
+| svojstva skele koja diraju preživjeli upiti (`padding`/`max-width` kontejnera · `gap`/`margin-bottom` filtera i sadržaja) | — | pravilo ② iz §11.1 — **6 pragova** živi u ovoj datoteci (768 · 1024 · 380 · 767 · 430 · landscape), njihovu sudbinu presuđuje C7 („jedan skup breakpointa", §12.3) |
+
+Migrirano je ono što nijedan upit ne dira: `w-full min-w-0 overflow-x-hidden` (sekcija — cijelo
+golo pravilo obrisano) · `w-full min-w-0` (kontejner) · `flex overflow-x-auto pt-[4px] pb-[10px]`
+(filter) · `flex flex-col min-w-0` (sadržaj). Usput su pala **četiri duplikata univerzalnog
+reseta** (`margin: 0` · `box-sizing` · dva `padding: 0` — `variables.css * {}` ih ionako daje).
+
+#### Dokaz
+
+Pokrivenost: sekcija vidljiva, `display: flex` na filteru i sadržaju dolazi **iz utilityja**
+(pravila obrisana), `padding-top: 4px` iz utilityja, 5 kartica nacrtano. `css:diff` na learn-ruti
+× **6 viewporta** (320 · 375 · 768 · **1024** — zbog `margin: 0 auto` upita · 1280 · **852×393**
+landscape — zbog safe-area upita) = **9336 usporedbi, 0 razlika**. Telefon-brana **10/10** ·
+`preflight` **EXIT 0** · utilityji **129 → 132, svi namjerni**.
+
+**Time je C5b ZATVOREN** — svih 5 datoteka §12.4 obrađeno: /0 boje · /1a `exercises` · /1b
+`learn-blocks` + `math` (mjerom van) · /2 `blind-map` · /3 `learn` (ID pao, skela migrirala).
+Slijedi **C6** po §3 tablici.
+
 ⚠️ **Ostaje svjesno otvoreno:** ~~`--border-color`~~ (**✅ riješen u MREŽI B1, 2026-08-31** —
 `var(--border)` + brana `check:tokens`) · kolačić-traka je ~280 ms ispod AA **dok ulazi**
 (WCAG sudi konačno stanje, `prefers-reduced-motion` to gasi — čeka Leonovu odluku).

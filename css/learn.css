@@ -13,23 +13,15 @@
    BASE STYLES - MOBILE FIRST
    ===================================================== */
 
-:where(#learn) {
-    width: 100%;
-    min-width: 0;
-    padding: 0;
-    overflow-x: hidden;
-}
-
+/* C5b/3b: width/min-width su u utilityjima (index.html); `margin: 0` i `box-sizing` su bili
+   duplikati univerzalnog reseta (`variables.css * {}`). `padding` i `max-width` OSTAJU —
+   diraju ih upiti 768/1024/380 i landscape (pravilo ② iz §11.1). */
 :where(#learn) .learn-container {
-    width: 100%;
     max-width: 100%;
-    min-width: 0;
-    margin: 0;
     padding: 14px;
     /* Bottom clearance for the fixed mobile nav is provided by .study-content /
        .study-page; keep this modest to avoid a large empty gap below content. */
     padding-bottom: 24px;
-    box-sizing: border-box;
 }
 
 /* Page Title - Always visible with text */
@@ -58,12 +50,11 @@
    FILTER BUTTONS
    ===================================================== */
 
+/* C5b/3b: display/overflow/padding su u utilityjima (index.html); `gap` i `margin-bottom`
+   OSTAJU — diraju ih upiti 768/1024 (pravilo ②). */
 :where(#learn) .learn-filter {
-    display: flex;
     gap: 10px;
     margin-bottom: 14px;
-    padding: 4px 0 10px;
-    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     /* Tanak vidljiv scrollbar = naznaka da se bar skrola (BUG-007). */
     scrollbar-width: thin;
@@ -141,12 +132,10 @@
    LEARN CONTENT CONTAINER
    ===================================================== */
 
+/* C5b/3b: display/flex-direction/min-width su u utilityjima; `gap` OSTAJE (768-upit);
+   `padding: 0` je bio duplikat univerzalnog reseta. */
 :where(#learn) .learn-content {
-    display: flex;
-    flex-direction: column;
     gap: 16px;
-    min-width: 0;
-    padding: 0;
 }
 
 /* =====================================================
