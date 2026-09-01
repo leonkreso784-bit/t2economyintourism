@@ -141,7 +141,7 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 
 > **„F4", „U8", „K6" u starim zapisima = ZATVORENE oznake faza** (temelj F1–F6 · graditelj F0–F5 · editor U/F7/K). Sve tri serije su ispunjene i žive samo kao povijest u `docs/archive/` i `docs/plan/ROADMAP.md`. **Nova faza dobiva ime, ne slovo.**
 
-## Stanje — TRENUTNO (2026-08-25)
+## Stanje — TRENUTNO (2026-09-01)
 
 > **Ovdje stoji samo ono što vrijedi SAD** (ADR-027). **Povijest cigli je IZAŠLA odavde**
 > (2026-08-25): mjere, pouke i obrnute provjere svake cigle žive u specu i zapisima, a ova je
@@ -171,7 +171,7 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 ⚠️ **N2 je POLA:** polica pokazuje **skinuto**, ne uniju skinutog i onoga što se uči.
 
 **✅ ZATVORENO:** **POLICA** (P1–P4) · **C4** · **C5a** · **C5b/0** · **C5b/1** (§12.9–12.10).
-**Redizajn se nastavlja od C5b/2 — ali TEK nakon faze MREŽA** (niže).
+**Redizajn NASTAVLJEN od C5b/2** (2026-09-01, niže).
 ⚠️ **Sve što preostale cigle moraju znati stoji u SPECU, ne ovdje** (ADR-027): `learn.css` je na
 **`#learn`** (102/112) pa utility ne prolazi dok ID stoji (§12.2) · `math.css` je KaTeX i **ne
 migrira** · `exercises`/`blind-map` su uvjetni tabovi, **`te2` ih NEMA** · **četiri pravila za rez**
@@ -193,19 +193,16 @@ seoba krene. Dva pravila koja vrijede **već sada**:
 projekt mora živjeti **~2 tjedna nakon** seobe. **Testovi su uvjet, ne dodatak.**
 ⚠️ Kad dođe na red, **provjeriti vrijedi li još izvorni razlog** (*„prije nego faks krene"*).
 
-### 🎯 TEKUĆA FAZA = **MREŽA** (sanacija) — spec: `docs/plan/RJESAVANJE-PROBLEMA-9MJ.md`
+### 🎯 TEKUĆA FAZA = **FRONTEND REDIZAJN od C5b/2** — spec: `docs/plan/FRONTEND_REDIZAJN.md`
 
-**Frontend redizajn je ⏸️ PAUZIRAN** (`FRONTEND_REDIZAJN.md`, ADR-028; **Next.js odbijen, ne
-otvarati iznova**) — nastavlja se od **C5b/2** tek kad MREŽA padne. Povod: revizija 2026-08-31 dala
-je **12 nalaza**, backlog uz njih drži **8 živih 🔥**; Leon: *„mora se riješit prije nego što
-nastavimo dalje"*. Blokovi: **A ✅ B ✅ C ✅** (paleta 93→0) **D ✅** (CSP ENFORCE + `check:csp` +
-leaked-password; **produkcijski enforce ide tek s deployem**) · **E** = tekuće.
-**§8** prima nalaze Leonovih prijatelja koji prolaze stranicu. Osnovice, izlazni uvjet i **što
-svjesno NIJE unutra** — u specu, ne ovdje.
-⚠️ **`check:docs` od 2026-08-31 traži TOČNO jedan aktivni plan**; spec koji čeka nosi
-`**Status:** ⏸️ PAUZIRAN` (arhiva bi značila ISPUNJEN, a redizajn to nije).
+**MREŽA: svi blokovi A–E ✅ (2026-09-01)**; njen spec je ⏸️ (nije ispunjen — izlazni uvjeti §9 su
+**deploy-gated**, arhiva tek kad padnu). **Uz deploy s CSP enforceom ide i E2 re-sync baze**
+(`diff:db` → `migrate-content.js`; read-path preferira bazu — bez re-synca PROD služi stare duge
+kartice) · **§8** = živi sandučić nalaza. Sljedeće cigle: **C5b/2** (`blind-map.css`) → C5b/3
+(`learn.css`). **Next.js odbijen (ADR-028), ne otvarati iznova.**
+⚠️ **`check:docs` traži TOČNO jedan aktivni plan**; spec koji čeka nosi `**Status:** ⏸️ PAUZIRAN`.
 
-**Živa ograničenja redizajna — vrijede i za trajanja pauze** (obrazloženje svakog je u specu):
+**Živa ograničenja redizajna** (obrazloženje svakog je u specu):
 
 - **Zadana tema je SVIJETLA — „Akademsko plavo"** (`academic`; ostale `paper`, `chalk`, `mint`).
   Dvije tamne palete zaredom pale su na živom ekranu. Smjer izgleda je **APPLE** (Leon: *„apple

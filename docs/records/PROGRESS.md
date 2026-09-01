@@ -5,6 +5,15 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-01 (FABLE) — Tracnice prebacene: MREZA je isporucila sve blokove, "sto sada" je opet redizajn (C5b/2)
+
+Leonova rijec nakon zatvaranja bloka E. MREZA spec nosi ⏸️ uz obrazlozenje (izlazni uvjeti su
+deploy-gated, arhiva tek kad padnu — uz deploy ide CSP enforce I E2 re-sync baze), redizajn-spec
+opet aktivan s napomenom NASTAVLJEN. check:docs (jedan aktivni plan) i check:state zeleni.
+Sljedeca cigla: C5b/2 (blind-map.css), pa C5b/3 (learn.css).
+
+---
+
 ## 2026-09-01 (FABLE) — MREZA-E4: dva nemjerena nacina ucenja usla u telefon-branu — i cist nalaz
 
 Leon presudio mali opseg. Kljucno mjerenje za odluku: exercises.css je zdrav i pokriven paletom i

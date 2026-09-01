@@ -1,9 +1,15 @@
 # Frontend redizajn — prelazak na Tailwind
 
-**Status:** ⏸️ PAUZIRAN · **Otvoren:** 2026-08-09 · **Odluke:** [ADR-028](../records/DECISIONS.md) (Tailwind, Next.js odbijen) · [ADR-029](../records/DECISIONS.md) (UGC je glavni proizvod)
+**Status:** 🟩 AKTIVAN (nastavljen 2026-09-01, od **C5b/2**) · **Otvoren:** 2026-08-09 · **Odluke:** [ADR-028](../records/DECISIONS.md) (Tailwind, Next.js odbijen) · [ADR-029](../records/DECISIONS.md) (UGC je glavni proizvod)
 **Opseg (Leon):** cijela platforma **i** editor · **UGC ide naprijed.**
 
-> ### ⏸️ PAUZIRAN 2026-08-31 — vrijedi [RJESAVANJE-PROBLEMA-9MJ.md](./RJESAVANJE-PROBLEMA-9MJ.md)
+> ### 🔄 NASTAVLJEN 2026-09-01 — MREŽA je isporučila sve blokove (A–E ✅ u §9 njenog speca)
+> Preostali izlazni uvjeti MREŽE su **deploy-gated** (CSP enforce + E2 re-sync baze uz Leonov OK
+> o deployu) i **ne blokiraju cigle redizajna** — Leonova riječ, 2026-09-01. Sljedeća cigla:
+> **C5b/2** (`blind-map.css`), pa C5b/3 (`learn.css`). Zapis pauze ostaje ispod jer objašnjava
+> ZAŠTO je stanka postojala:
+>
+> ### ⏸️ PAUZIRAN 2026-08-31 — vrijedilo je [RJESAVANJE-PROBLEMA-9MJ.md](./RJESAVANJE-PROBLEMA-9MJ.md)
 > Revizija je iznijela dvanaest nalaza, a backlog uz njih osam živih 🔥 stavki. Leon:
 > *„Ovako nešto se mora riješit prije nego što nastavimo dalje."* Ovaj spec **nije ispunjen** i ne
 > ide u arhivu — samo ne vrijedi kao „što sada". Nastavlja se od cigle **C5b/2** kad faza MREŽA padne.

@@ -1,8 +1,10 @@
 # Rješavanje problema — 9. mjesec 2026
 
-> 🟩 **AKTIVNI SPEC.** [FRONTEND_REDIZAJN.md](./FRONTEND_REDIZAJN.md) je za trajanja ove faze
-> **⏸️ PAUZIRAN** — nije ispunjen i ne ide u arhivu, samo ne vrijedi kao „što sada".
-> Kad ova faza padne, redizajn se nastavlja od cigle **C5b/2** bez ijedne izgubljene odluke.
+**Status:** ⏸️ PAUZIRAN — **svi blokovi A–E ✅ (2026-09-01)**; preostali izlazni uvjeti (§9) su
+**deploy-gated** i zatvaraju se uz Leonov izričit OK o deployu (CSP enforce na produkciji + **E2
+re-sync baze**: `diff:db` → `migrate-content.js`), a **§8 je živi sandučić** koji se prazni kako
+nalazi stižu. **Nije ispunjen → ne ide u arhivu.** „Što sada" je opet
+[FRONTEND_REDIZAJN.md](./FRONTEND_REDIZAJN.md), od cigle **C5b/2** (Leonova riječ, 2026-09-01).
 
 **Zašto postoji.** Revizija 2026-08-31 iznijela je dvanaest nalaza, a backlog uz njih drži još osam
 živih 🔥 stavki. Leon: *„Ovako nešto se mora riješit prije nego što nastavimo dalje."* Faza je
