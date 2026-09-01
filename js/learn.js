@@ -77,7 +77,15 @@ function renderLearnContent() {
         // kroz istu jednu definiciju kao za kartice/kviz/dopune.
         if (window.SokratBlocks && typeof SokratBlocks.accentFrom === 'function') {
             const acc = SokratBlocks.accentFrom([data.color]);
-            if (acc) card.style.setProperty('--st-acc', acc);
+            if (acc) {
+                card.style.setProperty('--st-acc', acc);
+                // Zaglavlje sekcije nosi PUNU ispunu akcenta (Leon, pregled 2026-09-01) → tinta
+                // se RAČUNA, ne pogađa: bijela na npr. #f59e0b daje 2.15 (MREŽA C2). Bez boje
+                // nema atributa, pa sekcija zadrži brand-izgled — odsutno znači „naslijedi".
+                if (typeof SokratBlocks.inkForTint === 'function') {
+                    card.setAttribute('data-ink', SokratBlocks.inkForTint(acc));
+                }
+            }
         }
         
         card.innerHTML = `

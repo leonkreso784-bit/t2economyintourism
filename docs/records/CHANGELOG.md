@@ -5,6 +5,19 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **Dorada iz pregleda: boja sekcije na zaglavlju i naslovima learna (spec §15.1)**
+
+### Dodano
+- Learn: zaglavlje sekcije i naslovi (h3/h5) nose **boju svoje sekcije** iz podataka
+  (Leonov nalaz na pregledu; boja je već postojala kao `--st-acc`, trošio ju je samo rub).
+  Sve iza `[data-ink]` grane: tinta IZRAČUNATA (`inkForTint`), pill miješan prema suprotnom
+  kraju od tinte, naslov = mješavina akcenta s tintom teme (goli akcent kao tekst = razred
+  kvara iz C5b/0); sekcija bez boje ostaje bajt-identična.
+
+### Dokaz
+- `check:contrast:live` 0 ispod praga (13 ruta × 4 teme) · živa sonda: 7 sekcija
+  poduzetništva, svaka svoj akcent · telefon-brana 0 nalaza · preflight EXIT 0.
+
 ## 2026-09-01 (FABLE) — **C7/5: paleta-most mrtav (990 poziva → tokeni); GRADIVO čuva 2 imena kao ugovor — C7 ZATVOREN**
 
 ### Promijenjeno

@@ -257,6 +257,42 @@
     line-height: 1.3;
 }
 
+/* ── BOJA SEKCIJE NA ZAGLAVLJU I NASLOVIMA (Leon, pregled 2026-09-01) ─────────
+   Sve iza `[data-ink]`: atribut postavlja `js/learn.js` SAMO uz validiran akcent,
+   pa sekcija bez boje ostaje na brand-pravilima iznad — bajt-identična.
+   Tinta na punoj ispuni je IZRAČUNATA (`inkForTint`, ADR-032 ④); pill se miješa
+   prema SUPROTNOM kraju od tinte, pa mu kontrast raste monotono u oba slučaja.
+   Naslov NE nosi goli akcent kao tekst (razred kvara iz C5b/0: #f59e0b na bijelom
+   = 2.15) nego mješavinu s tintom teme; podcrta smije puni akcent — nije tekst. */
+:where(#learn) .learn-card[data-ink] .learn-card-header {
+    background: var(--st-acc);
+}
+
+:where(#learn) .learn-card[data-ink="light"] .learn-card-header {
+    color: var(--color-on-tint-light);
+}
+
+:where(#learn) .learn-card[data-ink="dark"] .learn-card-header {
+    color: var(--color-on-tint-dark);
+}
+
+:where(#learn) .learn-card[data-ink="light"] .learn-card-header span {
+    background: color-mix(in srgb, var(--st-acc) 72%, var(--color-on-tint-dark));
+}
+
+:where(#learn) .learn-card[data-ink="dark"] .learn-card-header span {
+    background: color-mix(in srgb, var(--st-acc) 72%, var(--color-on-tint-light));
+}
+
+:where(#learn) .learn-card[data-ink] .learn-card-content h3 {
+    color: color-mix(in srgb, var(--st-acc) 55%, var(--color-ink-0));
+    border-bottom-color: var(--st-acc);
+}
+
+:where(#learn) .learn-card[data-ink] .learn-card-content h5 {
+    color: color-mix(in srgb, var(--st-acc) 55%, var(--color-ink-0));
+}
+
 /* Paragraphs */
 :where(#learn) .learn-card-content p {
     font-size: 0.9rem;

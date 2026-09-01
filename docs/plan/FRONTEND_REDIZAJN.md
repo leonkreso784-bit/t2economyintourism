@@ -5595,3 +5595,29 @@ Stanje protiv §3 retka „Gašenje": `responsive/*` **ne postoji** (14.3) · mr
 dogovoreni artefakt (Tailwind CLI, commitan). Kriterij prihvaćanja („nema starog CSS-a ni
 mrtvog koda teme") je ispunjen mjerom, ne slovom. Dug na kraju: **5 942 retka, 2 `!important`**
 (`.hidden` + iOS-input — oba namjerna) — na ulasku u fazu bilo je 8 032 / 106.
+
+---
+
+## 15 · Dorade iz Leonovog pregleda — nalazi ispravljeni na grani prije deploya
+
+### 15.1 ✅ Boja sekcije na zaglavlju i naslovima learna (2026-09-01)
+
+**Leonov nalaz** (pregled preview-a, snimkom): traka sekcije („Creativity & Business Idea ·
+13 terms") i naslovi u sadržaju bili su **uvijek indigo** — a boja sekcije je već postojala
+u podacima (svih **207 sekcija kataloga** ima svoj hex) i već stizala do kartice kao
+`--st-acc` (M3b), gdje ju je trošio samo lijevi rub od 4 px. Leon: *„trebali bi u learnu
+stavit da se boje ovih označenih mijenjaju po lekcijama isto"*.
+
+**Rez** (~1 redak JS + 8 pravila CSS): sve iza **`[data-ink]`** grane — `js/learn.js` postavlja
+atribut SAMO uz validiran akcent, pa sekcija bez boje (mogući osobni materijali) ostaje na
+brand-pravilima **bajt-identična**, bez fallback-truka u svakom pravilu. Tri odluke koje nose rez:
+- **zaglavlje = puna ispuna akcenta + IZRAČUNATA tinta** (`inkForTint`, ADR-032 ④ — bijela na
+  `#f59e0b` daje 2.15, pa se tinta ne pogađa);
+- **pill „N terms" se miješa prema SUPROTNOM kraju od tinte** (`color-mix` s `--color-on-tint-*`):
+  svijetla tinta → tamniji pill, tamna → svjetliji — kontrast raste **monotono** u oba slučaja;
+- **naslov NE nosi goli akcent kao tekst** (razred kvara iz C5b/0) nego mješavinu 55 % akcenta
+  s `--color-ink-0` (po temi!), a **puna boja smije na podcrtu** — podcrta nije tekst.
+
+**Dokaz:** `check:contrast:live` **0 ispod praga na 13 ruta × 4 teme** (learn ruta mjeri nova
+zaglavlja) · živa sonda na 7 sekcija poduzetništva: svaka nosi svoj akcent, tinta po formuli ·
+telefon-brana i preflight u zapisu CHANGELOG-a.

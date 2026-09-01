@@ -26,6 +26,18 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-01 (FABLE) — Dorada iz Leonovog pregleda: learn u bojama sekcija
+
+Leon na pregledu (snimkom): traka sekcije i naslovi u learnu uvijek indigo, a boja sekcije
+postoji u podacima (207/207) i vec stize do kartice kao --st-acc — trosio ju je samo rub.
+Rez sve iza [data-ink] grane (bez boje = bajt-identicno): zaglavlje puna ispuna + izracunata
+tinta (inkForTint; bijela na #f59e0b = 2.15), pill color-mix prema SUPROTNOM kraju od tinte
+(kontrast raste monotono), naslov 55% akcenta + ink-0 po temi (goli akcent kao tekst = C5b/0
+razred kvara), puna boja samo na podcrti. Dokaz: contrast:live 0/13x4, ziva sonda 7 sekcija,
+telefon 0 nalaza, preflight 0. Spec §15.1.
+
+---
+
 ## 2026-09-01 (FABLE) — C7/5: most mrtav, ali gradivo cuva dva imena — C7 ZATVOREN
 
 990 var() poziva preimenovano na tokene (redoslijed najduzi-prvi + terminator-guard; cuvar
