@@ -5,6 +5,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-02 (FABLE) — 🚀 **BIRAČ TEMA NA PRODUKCIJI** (`6c5a5d8`, Leonov OK)
+
+Dva zapisa niže (birač u profilu + `paper` van) deployana fast-forwardom na `main`.
+Korisnik od danas bira: **Akademsko plavo · Ploča · Menta.**
+
 ## 2026-09-01 (FABLE) — **Tema `paper` maknuta (Leon uz pregled birača)** (grana)
 
 ### Uklonjeno

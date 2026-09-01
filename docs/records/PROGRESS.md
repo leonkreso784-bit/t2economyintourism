@@ -26,6 +26,13 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-02 (FABLE) — 🚀 Birac tema deployan (Leon: "Ok")
+
+FF push feat/birac-tema -> main (6c5a5d8), Vercel production READY. Tri teme zive:
+academic/chalk/mint. Zapis kratak jer je sav dokaz u dva jucerasnja zapisa.
+
+---
+
 ## 2026-09-01 (FABLE) — Paper van: 10 mjesta, nula drame
 
 Leon uz pregled biraca: "Mozes maknut paper, ovo ostalo je sve ok." Tema zivi na 10
