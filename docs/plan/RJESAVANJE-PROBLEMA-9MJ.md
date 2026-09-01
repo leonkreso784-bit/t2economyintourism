@@ -412,6 +412,19 @@ Usput: `--danger-bg`/`--danger-text` kao pozadine u `profile.css` (var s fallbac
 `check:contrast:live` 0 elemenata ispod praga na 13 ruta × 4 teme ✅ · osnovica `check:palette`
 **93 → 77** (usput blago 21 → 20 — pill više nije rgba ploha).
 
+**✅ C2 ISHOD (2026-09-01).** Tri moda više ne troše `--item-acc` različito: kartice (bio SAMO
+prsten), kviz i dopune (bio rub + 10 %) sad svi crtaju **PUNU ispunu** (ADR-032 ④), a tintu bira
+`SokratBlocks.applyAccent` → `data-ink` → `--color-on-tint-dark/-light` — isti alat kao pločice
+predmeta. **`inkForTint` je pritom PRESELJEN** iz `js/navigation.js` u `js/blocks-renderer.js`
+(SokratBlocks.inkForTint): od C2 tintu troše i study-modovi i editorov pretpregled, a editor.html
+navigation.js ne učitava — navigation drži samo prečac; `check:contrast` prag sada čita iz novog
+doma. Bez boje `data-ink` atributa NEMA pa vrijedi zatečeni izgled (fallback-ugovor M3b netaknut).
+Sitni rub presuđen svjesno: `currentColor` na prazninama dopuna specifičnošću gazi `is-ok`/`is-bad`
+pa je semantika odgovora ponovno izrečena. Novi rub = novi test (ADR-027): `data-ink` u
+`blocks-renderer.test.js` (postavljanje, curenje, luminancija). Dokaz: `check:contrast:live`
+0 ispod praga, uz **14 mjerenja manje preskočeno** — lica kartica više nisu gradijent, pa ih brana
+sad STVARNO mjeri, ne preskače.
+
 **Zašto sve četiri, a ne samo fatalne.** Kad čegrtaljka padne na nulu, osnovica se zakuca ondje i
 **C5b/2, C5b/3, C6 i C7 više nikad ne moraju misliti o boji** — jedna cijela dimenzija ispada iz
 svake preostale cigle redizajna.

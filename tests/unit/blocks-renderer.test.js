@@ -302,6 +302,33 @@ test('M3b: applyAccent ne baca na null/besmislenom elementu', function () {
   assert.strictEqual(B.applyAccent({}, ['#10b981']), '#10b981');
 });
 
+// C2: element koji zna i za atribute — `data-ink` ide kroz setAttribute, ne kroz style.
+function fakeElAttr() {
+  const el = fakeEl();
+  el._a = {};
+  el.setAttribute = function (k, v) { this._a[k] = String(v); };
+  el.removeAttribute = function (k) { delete this._a[k]; };
+  return el;
+}
+
+test('C2: inkForTint je izvezen i bira tintu po luminanciji (ne pogađa)', function () {
+  assert.strictEqual(typeof B.inkForTint, 'function');
+  assert.strictEqual(B.inkForTint('#ffffff'), 'dark', 'svijetla ploha traži tamnu tintu');
+  assert.strictEqual(B.inkForTint('#000000'), 'light', 'tamna ploha traži svijetlu tintu');
+  // slučaj koji je i motivirao alat: bijela na #f59e0b daje 2.15 — tinta MORA biti tamna
+  assert.strictEqual(B.inkForTint('#f59e0b'), 'dark');
+  assert.strictEqual(B.inkForTint('nije-boja'), 'light', 'nepoznat oblik → stari izgled');
+});
+
+test('C2: applyAccent postavlja `data-ink` uz boju, a odsutnost boje ga UKLANJA', function () {
+  const el = fakeElAttr();
+  B.applyAccent(el, ['#f59e0b']);
+  assert.strictEqual(el._a['data-ink'], 'dark', 'puna ispuna bez tinte je C1 razred greške');
+  // bez boje se atribut čisti — inače tinta CURI na sljedeću stavku istog DOM-a
+  B.applyAccent(el, [undefined, undefined]);
+  assert.ok(!('data-ink' in el._a), 'data-ink je ostao: ' + JSON.stringify(el._a));
+});
+
 test('M3b: injekcija kroz boju stavke se ODBIJA (isti skup kao M3a)', function () {
   const zli = [
     'red', 'rgb(1,2,3)', '#fff', '#12345', '#1234567', 'var(--x)',

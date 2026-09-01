@@ -112,6 +112,25 @@
     border: 3px solid var(--item-acc, var(--secondary));
 }
 
+/* ── MREŽA C2 (EDITOR ①): boja NIJE prsten nego CIJELA kartica ─────────────────
+   Leon (2026-08-24): tri moda su istu boju trošila različito — ovdje prsten, u kvizu
+   i dopunama rub + 10 %. Od C2 sva tri crtaju PUNU ispunu (ADR-032 ④), a tintu bira
+   `SokratBlocks.applyAccent` → `data-ink` → token (isti alat kao pločice predmeta).
+   Bez boje atributa NEMA, pa vrijedi zatečeni izgled iznad — fallback-ugovor M3b. */
+.flashcard[data-ink] .flashcard-front,
+.flashcard[data-ink] .flashcard-back {
+    background: var(--item-acc);
+}
+.flashcard[data-ink] .flashcard-front { box-shadow: var(--shadow-lg); }
+.flashcard[data-ink] .flashcard-back { border-color: transparent; }
+.flashcard[data-ink="dark"] .flashcard-front,
+.flashcard[data-ink="dark"] .flashcard-back { color: var(--color-on-tint-dark); }
+.flashcard[data-ink="light"] .flashcard-front,
+.flashcard[data-ink="light"] .flashcard-back { color: var(--color-on-tint-light); }
+/* naličje: odgovor nasljeđuje tintu, a `.explanation` je ploha teme → tekst teme */
+.flashcard[data-ink] .flashcard-back p { color: inherit; }
+.flashcard[data-ink] .flashcard-back .explanation { color: var(--text-primary); }
+
 .card-category {
     position: absolute;
     top: 0.75rem;

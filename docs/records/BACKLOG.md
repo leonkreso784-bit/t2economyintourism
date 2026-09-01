@@ -7,7 +7,7 @@
 > Faza **MREŽA** ([RJESAVANJE-PROBLEMA-9MJ.md](../plan/RJESAVANJE-PROBLEMA-9MJ.md)) nosi ih s
 > ciglom i izlaznim uvjetom: **CSP** (D1–D3) · **RLS `auth.uid()` po retku** (A1) ·
 > **`.lb-table-wrap` bez `tabindex`** (B3c ✅ 2026-08-31) · **leaked password** (D4) · **EDITOR ① boja kartice**
-> (C2) · **EDITOR ② dopune** (E1) · **M5b zatezanje** (E2). Uz njih i `check:i18n` (B5 ✅ 2026-08-31,
+> (C2 ✅ 2026-09-01) · **EDITOR ② dopune** (E1) · **M5b zatezanje** (E2). Uz njih i `check:i18n` (B5 ✅ 2026-08-31,
 > 421 nalaz / 23 datoteke) te osam nemigriranih predmeta (E3).
 >
 > Njihovi zapisi ostaju **ovdje i nedirnuti** jer nose obrazloženje i mjerenja; spec nosi **redoslijed
@@ -397,6 +397,10 @@ obrazac, ne kvar — razlika se vidi tek čitanjem.*
 > je taj zadatak smjestilo.* Dakle: **② se radi, ① čeka C5a.**
 
 ### ① Boja mijenja samo rub, a treba obojiti CIJELU karticu
+
+> **✅ ISPORUČENO 2026-09-01 (MREŽA C2).** Sva tri moda crtaju punu ispunu s tintom preko
+> `data-ink` (`inkForTint` preseljen u `blocks-renderer.js` — editor ne učitava navigation.js).
+> Tablica ispod ostaje kao mjerenje koje je ciglu smjestilo.
 
 Boja se svugdje postavlja isto (`SokratBlocks.applyAccent` → `--item-acc`), ali je **tri moda
 troše različito**, i to nitko dosad nije primijetio jer se gleda mod po mod:

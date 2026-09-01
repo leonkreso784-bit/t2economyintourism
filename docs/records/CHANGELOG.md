@@ -5,6 +5,18 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **MREŽA C2: boja kartice = CIJELA kartica — tri moda poravnata (EDITOR ①)**
+
+### Promijenjeno
+- **Study-kartice s bojom crtaju PUNU ispunu** (ADR-032 ④): kartice su imale samo prsten, kviz i
+  dopune rub + 10 % tinte — sad sva tri moda troše `--item-acc` isto, a tintu bira
+  `applyAccent` → `data-ink` → `--color-on-tint-*`. Bez boje zatečeni izgled (M3b fallback).
+- **`inkForTint` preseljen** `js/navigation.js` → `js/blocks-renderer.js` (editor ne učitava
+  navigation.js; jedan izbor tinte za pločice, study-kartice i pretpregled); `check:contrast`
+  prag čita iz novog doma; novi unit-testovi za `data-ink` (postavljanje/curenje/luminancija).
+- Dokaz: `check:contrast:live` 0 ispod praga — i 14 mjerenja manje preskočeno (puna ispuna
+  se mjeri, gradijent se preskakao).
+
 ## 2026-09-01 (FABLE) — **MREŽA C1: fatalno 10 → 0 — nevidljivog teksta više nema ni u jednoj temi**
 
 ### Promijenjeno

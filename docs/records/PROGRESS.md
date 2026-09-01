@@ -5,6 +5,20 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-01 (FABLE) — C2: Leonov dojam iz kolovoza bio je točan opis koda — i brana sad mjeri ono što je prije preskakala
+
+EDITOR ① pao: boja kartice je CIJELA kartica. Mjerenje iz backloga je stajalo netaknuto — tri
+moda su istu boju trošila na tri načina (prsten · rub+10 % · rub+10 %) i nitko to nije vidio jer
+se gleda mod po mod. Izvedba je spajanje dva postojeća alata: `applyAccent` (jedno mjesto za
+valjanost boje) sad uz `--item-acc` postavlja i `data-ink`, a tintu bira `inkForTint` — koji je
+zbog toga PRESELJEN u `blocks-renderer.js`, jer editorov pretpregled ne učitava navigation.js.
+Lijep nusprodukt u brani: `check:contrast:live` sad preskače 14 mjerenja MANJE — lice kartice
+više nije gradijent (koje brana ne sudi) nego puna ispuna koju stvarno izmjeri. Jedan rub
+presuđen svjesno: `currentColor` na prazninama dopuna gazi `is-ok`/`is-bad` specifičnošću, pa
+je semantika odgovora ponovno izrečena — i to piše u samom CSS-u, uz pravilo.
+
+---
+
 ## 2026-09-01 (FABLE) — C1: odluka iz kolovoza čekala je izvedbu — i mjera je srušila jedno „zadrži izgled"
 
 MREŽA blok C otvoren ciglom C1: **fatalno 10 → 0**. Sedam pravila palo je čistom zamjenom

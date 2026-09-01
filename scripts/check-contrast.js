@@ -241,18 +241,19 @@ for (const [name, t] of Object.entries(themes)) {
   if (!dark || !light) {
     problems.push('--color-on-tint-dark/-light nedostaju u @theme static — pločice predmeta nemaju definiranu tintu');
   } else {
-    // (a) SJECIŠTE mora pratiti tokene. `inkForTint()` u js/navigation.js bira tintu po
+    // (a) SJECIŠTE mora pratiti tokene. `inkForTint()` (od MREŽA C2 u js/blocks-renderer.js —
+    //     jedan izbor tinte za pločice, study-kartice i editorov pretpregled) bira tintu po
     //     pragu luminancije; taj prag je funkcija ove dvije vrijednosti i mora se PRERAČUNATI,
     //     ne prepisati. Prva verzija praga bila je napisana napamet i promašena za 0.013.
     //     Gate ga izvodi iz same definicije kontrasta i traži da se poklopi s kodom.
     const krizanje = Math.sqrt((lum(dark) + 0.05) * (lum(light) + 0.05)) - 0.05;
-    const nav = fs.readFileSync(path.resolve(__dirname, '..', 'js', 'navigation.js'), 'utf8');
+    const nav = fs.readFileSync(path.resolve(__dirname, '..', 'js', 'blocks-renderer.js'), 'utf8');
     const m = nav.match(/const TINT_INK_CROSSOVER\s*=\s*([0-9.]+)\s*;/);
     checks++;
     if (!m) {
-      problems.push('js/navigation.js nema TINT_INK_CROSSOVER — tinta pločice se bira nepoznatim pragom');
+      problems.push('js/blocks-renderer.js nema TINT_INK_CROSSOVER — tinta pločice se bira nepoznatim pragom');
     } else if (Math.abs(parseFloat(m[1]) - krizanje) > 0.0005) {
-      problems.push(`TINT_INK_CROSSOVER je ${m[1]}, a iz tokena izlazi ${krizanje.toFixed(4)} — postavi ${krizanje.toFixed(4)} u js/navigation.js`);
+      problems.push(`TINT_INK_CROSSOVER je ${m[1]}, a iz tokena izlazi ${krizanje.toFixed(4)} — postavi ${krizanje.toFixed(4)} u js/blocks-renderer.js`);
     }
 
     // (b) Za svaku boju predmeta: tinta koju kod STVARNO odabere mora prelaziti 3:1.

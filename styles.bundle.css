@@ -2069,6 +2069,27 @@ sokrat-modal.sokrat-confirm-modal > * {
   transform: rotateY(180deg);
   border: 3px solid var(--item-acc, var(--secondary));
 }
+.flashcard[data-ink] .flashcard-front, .flashcard[data-ink] .flashcard-back {
+  background: var(--item-acc);
+}
+.flashcard[data-ink] .flashcard-front {
+  box-shadow: var(--shadow-lg);
+}
+.flashcard[data-ink] .flashcard-back {
+  border-color: transparent;
+}
+.flashcard[data-ink="dark"] .flashcard-front, .flashcard[data-ink="dark"] .flashcard-back {
+  color: var(--color-on-tint-dark);
+}
+.flashcard[data-ink="light"] .flashcard-front, .flashcard[data-ink="light"] .flashcard-back {
+  color: var(--color-on-tint-light);
+}
+.flashcard[data-ink] .flashcard-back p {
+  color: inherit;
+}
+.flashcard[data-ink] .flashcard-back .explanation {
+  color: var(--text-primary);
+}
 .card-category {
   position: absolute;
   top: 0.75rem;
@@ -2444,6 +2465,17 @@ sokrat-modal.sokrat-confirm-modal > * {
   border-left: 4px solid var(--item-acc, transparent);
   box-shadow: var(--shadow);
   margin-bottom: 1rem;
+}
+.question-card[data-ink] {
+  background-color: var(--item-acc);
+  background-image: none;
+  border-left-color: transparent;
+}
+.question-card[data-ink="dark"] {
+  color: var(--color-on-tint-dark);
+}
+.question-card[data-ink="light"] {
+  color: var(--color-on-tint-light);
 }
 .question-category {
   display: inline-block;
@@ -2865,6 +2897,30 @@ sokrat-modal.sokrat-confirm-modal > * {
   border-left: 4px solid var(--item-acc, transparent);
   box-shadow: var(--shadow);
   margin-bottom: 1rem;
+}
+.fill-card[data-ink] {
+  background-color: var(--item-acc);
+  background-image: none;
+  border-left-color: transparent;
+}
+.fill-card[data-ink="dark"] {
+  color: var(--color-on-tint-dark);
+}
+.fill-card[data-ink="light"] {
+  color: var(--color-on-tint-light);
+}
+.fill-card[data-ink] .fill-sentence {
+  color: inherit;
+}
+.fill-card[data-ink] .fill-sentence .blank, .fill-card[data-ink] .fill-sentence .fill-blank-input {
+  color: inherit;
+  border-bottom-color: currentColor;
+}
+.fill-card[data-ink] .fill-sentence .fill-blank-input.is-ok {
+  border-bottom-color: var(--success);
+}
+.fill-card[data-ink] .fill-sentence .fill-blank-input.is-bad {
+  border-bottom-color: var(--danger-text);
 }
 .fill-category {
   display: inline-block;

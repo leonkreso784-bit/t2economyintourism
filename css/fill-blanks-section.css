@@ -39,6 +39,28 @@
     margin-bottom: 1rem;
 }
 
+/* MREŽA C2 (EDITOR ①): s bojom je kartica CIJELA obojana, ne rub + 10 % (ADR-032 ④;
+   detaljan zašto: flashcards-section.css). Tinta: `data-ink` s `applyAccent`.
+   Rečenica i praznine su imale vlastitu boju → na ispuni prelaze na tintu kartice
+   (praznina kroz `currentColor`, da crta ne nestane na akcentu sličnom marki). */
+.fill-card[data-ink] {
+    background-color: var(--item-acc);
+    background-image: none;
+    border-left-color: transparent;
+}
+.fill-card[data-ink="dark"] { color: var(--color-on-tint-dark); }
+.fill-card[data-ink="light"] { color: var(--color-on-tint-light); }
+.fill-card[data-ink] .fill-sentence { color: inherit; }
+.fill-card[data-ink] .fill-sentence .blank,
+.fill-card[data-ink] .fill-sentence .fill-blank-input {
+    color: inherit;
+    border-bottom-color: currentColor;
+}
+/* `currentColor` gore je specifičniji od `is-ok`/`is-bad` (0-4-0 > 0-3-0) pa se
+   semantika ODGOVORA mora ponovno izreći — inače bi obojena kartica pojela feedback */
+.fill-card[data-ink] .fill-sentence .fill-blank-input.is-ok { border-bottom-color: var(--success); }
+.fill-card[data-ink] .fill-sentence .fill-blank-input.is-bad { border-bottom-color: var(--danger-text); }
+
 .fill-category {
     display: inline-block;
     background: var(--accent);

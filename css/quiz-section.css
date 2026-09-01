@@ -107,6 +107,17 @@
     margin-bottom: 1rem;
 }
 
+/* MREŽA C2 (EDITOR ①): s bojom je kartica CIJELA obojana, ne rub + 10 % (ADR-032 ④;
+   detaljan zašto: flashcards-section.css). Tinta: `data-ink` s `applyAccent`.
+   Odgovori i chip kategorije nose vlastite plohe pa ostaju svoji. */
+.question-card[data-ink] {
+    background-color: var(--item-acc);
+    background-image: none;
+    border-left-color: transparent;
+}
+.question-card[data-ink="dark"] { color: var(--color-on-tint-dark); }
+.question-card[data-ink="light"] { color: var(--color-on-tint-light); }
+
 .question-category {
     display: inline-block;
     background: var(--primary);

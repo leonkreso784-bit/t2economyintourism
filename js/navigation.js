@@ -1061,39 +1061,11 @@ function renderLandingMeta() {
 }
 
 // ========== LANDING SUBJECTS SHOWCASE (rendered from catalog) ==========
-// Koja tinta ide NA pločicu u boji predmeta — računato, ne pogođeno.
-//
-// Boja pločice dolazi iz kataloga i s temom se ne mijenja, pa ni tinta ne smije. Do
-// 2026-08-15 je glif nosio `--color-on-brand` — token izračunat za boju MARKE — koji na
-// 11 boja predmeta nitko nikad nije izmjerio: bijela na `#f59e0b` daje **2.15**, a tu boju
-// nosi 5 predmeta. Ukupno je 10 od 24 predmeta bilo ispod praga 3:1 u ZADANOJ temi.
-//
-// Vraća 'dark' | 'light' → CSS bira token. NE vraća boju: kad bi ova funkcija pisala
-// vrijednost u `style`, u CSS bi ušla proizvoljna boja iz podatka i `check:palette` bi
-// izgubio pregled. Dvije vrijednosti su ujedno jedini mogući ishodi, pa ni `data-ink`
-// nije dinamički sastavljeno ime (ADR-028).
-/** @param {string} boja hex iz `data/catalog.js` @returns {'dark'|'light'} */
-function inkForTint(boja) {
-    const m = String(boja || '').trim().match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
-    if (!m) return 'light';                       // nepoznat oblik → stari izgled, bez iznenađenja
-    let h = m[1];
-    if (h.length === 3) h = h.split('').map((c) => c + c).join('');
-    const kanal = [0, 2, 4].map((i) => {
-        const v = parseInt(h.slice(i, i + 2), 16) / 255;
-        return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
-    });
-    const L = 0.2126 * kanal[0] + 0.7152 * kanal[1] + 0.0722 * kanal[2];
-    return L > TINT_INK_CROSSOVER ? 'dark' : 'light';
-}
-
-// SJECIŠTE dviju tinti: luminancija na kojoj su `--color-on-tint-dark` i `-light` jednako
-// čitljivi. IZVEDENO iz same definicije WCAG kontrasta, nije pogođeno:
-//     (L*+0.05)² = (L_dark+0.05)(L_light+0.05)  →  L* = √((L_d+0.05)(L_l+0.05)) − 0.05
-// Za današnje tokene (#14161a / #ffffff) daje 0.1967.
-// ⚠️ Prva verzija je imala 0.1833 — napisano napamet, i krivo. Zato ovaj broj od
-// 2026-08-15 NE stoji sam: `npm run check:contrast` ga preračuna iz `css/tokens.css`
-// i padne ako se raziđu. Promijeniš li tokene, gate ti kaže novu vrijednost.
-const TINT_INK_CROSSOVER = 0.1967;
+// `inkForTint` + TINT_INK_CROSSOVER su od MREŽA C2 u `js/blocks-renderer.js`
+// (SokratBlocks.inkForTint): tintu troše i study-modovi i editorov pretpregled, a
+// editor.html navigation.js NE učitava. Ovdje ostaje samo prečac — povijest, izvod
+// praga i brana koja ga preračunava (`check:contrast`) žive uz definiciju.
+const inkForTint = (boja) => window.SokratBlocks.inkForTint(boja);
 
 // Stanje filtra vitrine. Živi ovdje, a ne u `AppState`, jer ne preživljava odlazak s
 // landinga: vrati li se posjetitelj, katalog počinje otvoren — to je namjerno.
