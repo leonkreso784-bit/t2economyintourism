@@ -300,12 +300,11 @@
    **četiri** pojave, i to u `tokens.css` i `variables.css` — u te dvije datoteke
    nijedna). Zapis se ne popravlja u hodu nego se briše kad ga mjera obori.
 
-   ⚠️ ŠTO JOŠ DIJELI BIRAČ TEMA OD UKLJUČENJA: `npm run check:palette` još nije na
-   nuli. FATALNO (tekst koji na svijetloj podlozi nestaje) je na NULI od MREŽA-C1
-   (ADR-032: semantičke ispune + tinte autora `--color-ink-*`); MREŽA-C3 je ugasio
-   BLAGO (zakucane bijele/crne plohe, rubove i sjene — `--color-shadow` dolje).
-   Preostaje STARA paleta (indigo/slate literali) — gasi ih MREŽA-C4, do nule po
-   `check:palette`; razlaganje po POSLJEDICI: `npm run palette:breakdown`.
+   ✅ PALETA VIŠE NE DIJELI BIRAČ TEMA OD UKLJUČENJA: `npm run check:palette` je na
+   NULI od MREŽA-C4 (2026-09-01; fatalno je palo u C1, blago u C3 — `--color-shadow`
+   dolje, stara u C4), i to je čegrtaljka pa na nuli i OSTAJE. Birač sad čeka samo
+   nastavak redizajna (C5b/2+, spec FRONTEND_REDIZAJN.md), ne paletu; razlaganje
+   po POSLJEDICI i dalje: `npm run palette:breakdown`.
    ═════════════════════════════════════════════════════════════════════ */
 
 /* ── PAPIR I MARKER (svijetlo) — topli papir, crna tinta, plava akcija, žuti marker.
