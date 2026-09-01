@@ -5,6 +5,22 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **C6/4: profil + auth — authed dokaz (0 razlika u 1 166 880 usporedbi); C6 ZATVOREN**
+
+### Promijenjeno
+- Skela profila u utilityje po pravilu ② (`.profile-content` na sva TRI mjesta — uklj.
+  `editor.html` `#adminContent`; `.profile-grid`/`.profile-stat-totals`/`.profile-stat-vals`).
+  Ulov mjere: `--text-secondary` = `ink-1`, ne ink-2.
+
+### Uklonjeno
+- Mrtvi od K2b (spajanje traka): `.nav-auth-btn` obitelj i `.header-materials-btn`;
+  orphan-osnovica 40 → 38.
+
+### Dokaz
+- **Nova authed prije/poslije sonda** (STAGING prijava u stranici; profil 161 el. + modal 68 +
+  materials 24 + editor, 8 viewporta): **1 166 880 usporedbi, 0 razlika** · `css:diff` 2 rute
+  × 8 viewporta = 18 120 / 0 · telefon 21/0 · preflight 20/20.
+
 ## 2026-09-01 (FABLE) — **C6/3: about — mobilna pravila kući, skela u utilityje (0 razlika u 9056 usporedbi)**
 
 ### Promijenjeno

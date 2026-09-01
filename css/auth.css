@@ -1,38 +1,7 @@
 /* =====================================================
-   SOKRAT STUDY — AUTH (Sign-in gumb + email+lozinka modal)
+   SOKRAT STUDY — AUTH (email+lozinka modal; nav-gumb je od K2b .header-auth-btn u profile.css)
    ===================================================== */
 
-/* ---------- Nav gumb ---------- */
-
-.nav-auth-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    padding: 0.55rem 1rem;
-    /* C3: bijelo staklo je pisano za staru tamnu zadanu temu — na svijetlima je
-       bilo nevidljivo; ploha i rub sad dolaze iz teme */
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    font-family: inherit;
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-    white-space: nowrap;
-}
-
-.nav-auth-btn:hover {
-    color: var(--text-primary);
-    border-color: color-mix(in srgb, var(--primary) 55%, transparent);
-    background: color-mix(in srgb, var(--primary) 12%, transparent);
-}
-
-.nav-auth-btn.is-signed-in {
-    color: var(--primary);
-    border-color: color-mix(in srgb, var(--primary) 45%, transparent);
-}
 
 /* ---------- Modal ---------- */
 
@@ -227,7 +196,5 @@ sokrat-modal.auth-modal > * {
 /* ---------- Mobile ---------- */
 
 @media (max-width: 640px) {
-    .nav-auth-btn { padding: 0.5rem 0.65rem; }
-    .nav-auth-btn span { display: none; } /* samo ikona, da nav ne pretrpa */
     .auth-modal__card { padding: 1.4rem 1.15rem 1.25rem; }
 }

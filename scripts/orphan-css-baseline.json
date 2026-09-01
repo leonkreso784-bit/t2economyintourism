@@ -1,7 +1,4 @@
 {
-  "css/auth.css": [
-    "nav-auth-btn"
-  ],
   "css/block-editor.css": [
     "be-edit--h3",
     "be-edit--h4",
@@ -21,9 +18,6 @@
     "lb-color-pink",
     "lb-color-red",
     "lb-color-violet"
-  ],
-  "css/profile.css": [
-    "header-materials-btn"
   ],
   "css/progress-section.css": [
     "history-item"

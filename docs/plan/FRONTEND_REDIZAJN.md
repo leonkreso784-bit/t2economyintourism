@@ -5381,3 +5381,34 @@ pobjeđuje **min/max-stegama**; preseljen na položaj 66 gubio bi od stega na 96
 **9056 usporedbi, 0 razlika** · telefon **10/10** · `preflight` **EXIT 0**.
 U `pages.css` su od about-a sada ostale samo komponente (kartice, gumbi, avatar, pill-ovi) —
 one idu s C7, zajedno s toastom i footerom (§10.3). Slijedi **C6/4** (profil + auth).
+
+### 13.9 ✅ C6/4 — profil + auth: authed dokaz, dva mrtva gumba iz K2b, skela u utilityje (2026-09-01) — **C6 ZATVOREN**
+
+**Mjera je potvrdila §13.0:** nijedno `profile-*`/`auth-*` pravilo ne živi u `responsive/*`
+(jedini pogodak grepa je komentar u `02` o dijeljenom `.cta-button` — a on je komponenta kao
+toast, ide s C7). Ljestve su ovdje oduvijek kod kuće; posao cigle bio je mrtvi kod, skela i —
+najvažnije — **dokaz koji `css:diff` ne može dati**, jer `#profileContent` crta tek prijava.
+
+**Novi alat: authed prije/poslije sonda** (STAGING admin, isti mehanizam kao `tests/auth.setup.js`:
+override + `signInWithPassword` u stranici — radi na svakom portu, bez storageState-ovog vezanja
+na origin). Snima SVA izračunata svojstva CIJELOG podstabla: prijavljeni profil (161 element,
+s otvorenom pass-formom), otvoren auth-modal (68), `#materials-page` svjež-neprijavljen (24,
+deterministički: polica je PODATAK — pouka iz T4) i `editor.html?view=admin` `#adminContent`,
+kroz 8 viewporta. **1 166 880 usporedbi svojstava, 0 razlika, 0 nestalih elemenata.**
+
+**Obrisano mrtvo (oba iz K2b — spajanje gornjih traka im je namjerno uzelo markup):**
+`.nav-auth-btn` obitelj (3 pravila + 2 u `@640`; nasljednik je `.header-auth-btn`) i
+`.header-materials-btn` (2 pravila). Oboje su bili IMENOVANI u orphan-osnovici → osnovica
+**40 → 38**. A0-ograda nije dirnuta: A0 prepravlja MODAL, a mrtvi nav-gumb nije ni u kakvom
+živom obliku.
+
+**Skela → utilityji (rez po SVOJSTVU, pravilo ②):** `.profile-content` na **SVA TRI** mjesta
+(profil + materials u `index.html`, `#adminContent` u `editor.html` — treće mjesto bi bez mjere
+promaklo) · `.profile-grid` (kolone ostaju, `@640` ih dira) · `.profile-stat-totals` (cijeli) ·
+`.profile-stat-vals` (`gap` ostaje). ⚠️ Ulov mjere: `--text-secondary` = `var(--color-ink-1)`,
+**ne** ink-2 — utility po sluhu bi promijenio boju.
+
+**Dokaz:** authed sonda **1 166 880 / 0** · `css:diff` × 8 viewporta × 2 rute (`#/materials`,
+`#/about`) = **18 120 / 0** · telefon 21 passed / 0 failed · `preflight` EXIT 0 (20/20).
+**C6 je time CIJELI zatvoren** (mjera §13.0–13.5 + četiri cigle §13.6–13.9). Slijedi **C7**
+(§3): smrt `responsive/*`, komponente na tokene/utilityje, jedan skup pragova.

@@ -41,7 +41,7 @@ function renderProfilePage() {
         ? String(user.user_metadata.display_name).trim() : '';
 
     root.innerHTML =
-        '<div class="profile-grid">' +
+        '<div class="profile-grid grid gap-4">' +
 
         '  <div class="profile-card">' +
         '    <div class="profile-avatar"><i class="fas fa-user-graduate"></i></div>' +
@@ -184,7 +184,7 @@ function renderProfileStats() {
             // BUG-025: ikona osobnog materijala dolazi iz korisnikovog retka → provjeri je (ide u
             // `class`, gdje escape nije dovoljan). Naziv je već escapan.
             '  <span class="profile-stat-subject"><i class="fas ' + profileIcon(meta.icon) + '"></i> ' + escapeHtmlProfile(meta.shortName || meta.name) + '</span>' +
-            '  <span class="profile-stat-vals">' +
+            '  <span class="profile-stat-vals flex flex-wrap text-[0.85rem] text-ink-1">' +
             '    <span title="' + pt('profile.tip.cards', 'Flashcards learned') + '"><i class="fas fa-clone"></i> ' + cards + '</span>' +
             '    <span title="' + pt('profile.tip.quizzes', 'Quizzes taken') + '"><i class="fas fa-question-circle"></i> ' + quizzes + (avg !== null ? ' (' + pt('profile.avg', 'avg') + ' ' + avg + '%)' : '') + '</span>' +
             '    <span title="' + pt('profile.tip.fill', 'Fill-in exercises solved') + '"><i class="fas fa-pen"></i> ' + fill + '</span>' +
@@ -198,7 +198,7 @@ function renderProfileStats() {
     }
 
     holder.innerHTML =
-        '<div class="profile-stat-totals">' +
+        '<div class="profile-stat-totals flex flex-wrap gap-4 mb-4">' +
         '  <div class="profile-total"><strong>' + totalCards + '</strong><span>' + pt('profile.cardsLearned', 'cards learned') + '</span></div>' +
         '  <div class="profile-total"><strong>' + totalQuizzes + '</strong><span>' + pt('profile.quizzesTaken', 'quizzes taken') + '</span></div>' +
         '  <div class="profile-total"><strong>' + totalFill + '</strong><span>' + pt('profile.fillSolved', 'fill-ins solved') + '</span></div>' +

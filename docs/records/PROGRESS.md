@@ -14,6 +14,19 @@ Sljedeca cigla: C5b/2 (blind-map.css), pa C5b/3 (learn.css).
 
 ---
 
+## 2026-09-01 (FABLE) — C6/4: profil + auth — dokaz koji css:diff ne moze dati; C6 ZATVOREN
+
+Profil crta tek prijava, pa je cigla dobila NOVI ALAT: authed prije/poslije sonda (STAGING
+admin, prijava u stranici kao auth.setup — radi na svakom portu). Snimljeno SVE: prijavljeni
+profil sa 161 elementom (i otvorenom pass-formom), otvoren modal, materials svjez, editor
+?view=admin — 1 166 880 usporedbi svojstava, 0 razlika. Obrisana dva mrtva gumba iz K2b
+(nav-auth-btn, header-materials-btn; oba su bila imenovana sirocad -> osnovica 40->38).
+Skela u utilityje na SVA TRI .profile-content mjesta (trece, editor.html, bi po sluhu
+promaklo). Ulov: --text-secondary = ink-1, NE ink-2 — utility po sluhu bi promijenio boju.
+css:diff 18120/0, telefon 21/0, preflight 20/20. Slijedi C7.
+
+---
+
 ## 2026-09-01 (FABLE) — C6/3: about — najmirnija C6 cigla, s jednom naopakom istinom
 
 Tri pravila iz 02 preseljena u pages.css kao mobile-first; creator-avatar je na telefonu VECI
