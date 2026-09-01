@@ -221,6 +221,13 @@ async function changePassword(e) {
     }
     status.classList.remove('is-error');
     status.textContent = window.t ? t('msg.saving') : 'Saving…';
+    // D4: procurjela lozinka se odbija i ovdje — ista provjera kao signup/recovery
+    // (živi u auth.js: k-anonimnost, fail-open; typeof-guard za slučaj da auth nije učitan).
+    if (typeof window.checkPwnedPassword === 'function' && await window.checkPwnedPassword(input.value)) {
+        status.classList.add('is-error');
+        status.textContent = window.t ? t('auth.st.weakPwned') : 'This password has appeared in a known data breach — please pick a different one.';
+        return;
+    }
     const { error } = await client.auth.updateUser({ password: input.value });
     if (error) {
         status.classList.add('is-error');

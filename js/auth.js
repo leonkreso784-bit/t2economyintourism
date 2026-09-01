@@ -388,6 +388,43 @@ const SokratAuth = (function () {
 
     // ---------- Akcije ----------
 
+    /**
+     * D4 (MREŽA): provjera procurjele lozinke — HaveIBeenPwned range API, k-anonimnost.
+     *
+     * Lozinka NIKAD ne napušta preglednik: šalje se SAMO prvih 5 heks znakova njezina
+     * SHA-1 sažetka, odgovor je popis ~800-1000 sufiksa, usporedba je lokalna. SHA-1 je
+     * ovdje u redu jer ne štiti ništa — služi kao KLJUČ u tuđi javni popis, a k-anonimnost
+     * čuva i sam upit. `Add-Padding` izjednačava veličinu odgovora (mrežni promatrač ne
+     * može ni iz duljine zaključiti prefiks); padding-redci nose broj 0 pa se odbacuju.
+     *
+     * FAIL-OPEN, namjerno: mrežna greška NE blokira registraciju — provjera je dodatak,
+     * ne vrata. Server-side dvojnik (Supabase Pro) ostaje; ovaj klijentski radi neovisno
+     * o planu (⚠️ poslije seobe server-side pada — tada je ovo jedina provjera).
+     * Doseg pošteno: zaustavlja korisnika koji upiše procurjelu lozinku, ne napadača
+     * koji zaobiđe formu (taj šteti samo sebi) — isti razred kao `minlength`.
+     */
+    async function isPasswordPwned(password) {
+        try {
+            const buf = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(password));
+            const hex = Array.prototype.map.call(new Uint8Array(buf),
+                function (b) { return b.toString(16).padStart(2, '0'); }).join('').toUpperCase();
+            const res = await fetch('https://api.pwnedpasswords.com/range/' + hex.slice(0, 5),
+                { headers: { 'Add-Padding': 'true' } });
+            if (!res.ok) return false;
+            const suffix = hex.slice(5);
+            const text = await res.text();
+            return text.split('\n').some(function (line) {
+                const i = line.indexOf(':');
+                return i > 0 && line.slice(0, i).trim() === suffix
+                    && parseInt(line.slice(i + 1), 10) > 0;
+            });
+        } catch (e) {
+            return false;
+        }
+    }
+    // Na window za profile.js (promjena lozinke) — isti razlog kao refreshAuthNav gore.
+    window.checkPwnedPassword = isPasswordPwned;
+
     async function handleSignIn(e) {
         e.preventDefault();
         if (!client) return;
@@ -408,6 +445,10 @@ const SokratAuth = (function () {
         const password = document.getElementById('authSignUpPassword').value;
         if (!name || !email || !password) return;
         setStatus(at('auth.st.creating', 'Creating account…'));
+        if (await isPasswordPwned(password)) {
+            setStatus(at('auth.st.weakPwned', 'This password has appeared in a known data breach — please pick a different one.'), true);
+            return;
+        }
         const { data, error } = await client.auth.signUp({
             email: email,
             password: password,
@@ -457,6 +498,10 @@ const SokratAuth = (function () {
             return;
         }
         setRecoveryStatus(at('msg.saving', 'Saving…'));
+        if (await isPasswordPwned(password)) {
+            setRecoveryStatus(at('auth.st.weakPwned', 'This password has appeared in a known data breach — please pick a different one.'), true);
+            return;
+        }
         const { error } = await client.auth.updateUser({ password: password });
         if (error) {
             setRecoveryStatus(authError(error), true);
