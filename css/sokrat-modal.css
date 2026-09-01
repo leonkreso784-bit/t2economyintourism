@@ -11,7 +11,7 @@ sokrat-modal.sokrat-modal {
     align-items: center;
     justify-content: center;
     padding: 1.25rem;
-    background: rgba(0, 0, 0, 0.62);
+    background: color-mix(in srgb, var(--color-shadow) 62%, transparent);
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
 

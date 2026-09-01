@@ -68,7 +68,7 @@
     background: linear-gradient(135deg, var(--primary), var(--secondary, var(--primary)));
     color: var(--on-primary);
     border-color: transparent;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 30%, transparent);
 }
 
 /* Map Canvas */
@@ -204,7 +204,7 @@
 
 .map-submit-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 6px 12px color-mix(in srgb, var(--primary) 30%, transparent);
 }
 
 .map-clear-btn {

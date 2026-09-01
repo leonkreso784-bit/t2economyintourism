@@ -135,7 +135,9 @@
     position: absolute;
     top: 0.75rem;
     left: 0.75rem;
-    background: rgba(255,255,255,0.2);
+    /* C3: chip prati TINTU podloge (currentColor), ne zakucanu bijelu — od C2 podloga
+       može biti i svijetla puna ispuna s tamnom tintom */
+    background: color-mix(in srgb, currentColor 20%, transparent);
     padding: 0.25rem 0.6rem;
     border-radius: 20px;
     font-size: 0.65rem;
@@ -158,6 +160,11 @@
     font-size: 0.75rem;
     opacity: 0.8;
 }
+
+/* Na OBOJENOJ ispuni (C2) prozirnost je porez na kontrast koji tinta ne može platiti:
+   crna kroz 0.8 na indigu = 4.01 (živi gate), a već na pragu tinti rezerva je samo 4.58.
+   Legacy kartice (bez boje) zadržavaju prigušeni hint. */
+.flashcard[data-ink] .flip-hint { opacity: 1; }
 
 .flashcard-back p {
     font-size: 0.85rem;

@@ -306,7 +306,7 @@
 }
 #editor-page .st-cdot:hover{ transform:scale(1.15); box-shadow:0 0 0 2px color-mix(in srgb, var(--primary) 40%, transparent); }
 #editor-page .st-cdot.on{ box-shadow:0 0 0 2px var(--bg-secondary) inset, 0 0 0 2px var(--dot,var(--text-muted)); }
-#editor-page .st-cdot--custom{ background:conic-gradient(#ef4444,#f59e0b,#10b981,#06b6d4,#6366f1,#a855f7,#ef4444); }
+#editor-page .st-cdot--custom{ background:conic-gradient(#ef4444,#f59e0b,#10b981,#06b6d4,var(--color-ink-indigo),#a855f7,#ef4444); }
 #editor-page .st-cdot--custom::-webkit-color-swatch-wrapper{ padding:0; opacity:0; }
 #editor-page .st-cdot--custom::-webkit-color-swatch{ border:none; opacity:0; }
 #editor-page .st-legacy-note{ font-size:12px; color:var(--text-muted); margin:12px 0 8px; }

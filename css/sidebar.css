@@ -7,7 +7,7 @@
 .subjects-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: color-mix(in srgb, var(--color-shadow) 50%, transparent);
     z-index: 999;
     opacity: 0;
     visibility: hidden;
@@ -31,7 +31,7 @@
     transition: transform 0.3s ease;
     display: flex;
     flex-direction: column;
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    box-shadow: -10px 0 30px color-mix(in srgb, var(--color-shadow) 10%, transparent);
     transform: translateX(100%);
 }
 

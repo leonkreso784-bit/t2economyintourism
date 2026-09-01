@@ -5,6 +5,40 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **MREŽA C4: stara paleta → 0 — `check:palette` na nuli (93 → 0 od uvođenja)**
+
+### Promijenjeno
+- **Indigo-sjajevi/ispune `rgba(99,102,241,α)` → `color-mix` nad `var(--primary)`** — efekti sad
+  prate živu marku teme, ne zamrznuti indigo-500.
+- **Ukrasni fallbackovi skinuti** (`var(--primary, #6366f1)` i sl.); `--accent` u learn-blocks
+  zadržava fallback, ali kao `var(--primary)`. Skidanje je razotkrilo 2× `--primary-light` kao
+  TEKST (tvrda zabrana) → `var(--primary)`.
+- Maske skrola → `currentColor` (maska čita samo alfu) · lightbox → `--color-on-tint-light`/
+  `--color-shadow` · Studio conic-kotač → `--color-ink-indigo` · `.lb-table th` slate-400
+  (rgba-oblik) → rub-token.
+
+### Popravljeno
+- **Rupa iz C2 koju je suite stvarno pogodio:** na violet-500 ispuni ni bijela ni `#14161a` ne
+  dosežu AA (axe: 4.27). `--color-on-tint-dark` → **čista crna**, `TINT_INK_CROSSOVER` → 0.1791
+  (izveden; `check:contrast` drži sinkronizaciju) — najgori slučaj sad 4.58 po konstrukciji.
+  Uz to `.flip-hint` na obojenim ispunama gubi `opacity: 0.8` (crna kroz 0.8 na indigu = 4.01).
+- Dokaz bloka: `palette:breakdown` **0 · 0 · 0** · `check:contrast:live` 0 ispod praga ·
+  suite 535/0.
+
+## 2026-09-01 (FABLE) — **MREŽA C3: blago 20 → 0 — zakucane bijele/crne plohe, rubovi i sjene ugašeni**
+
+### Promijenjeno
+- **Novi token `--color-shadow`** (opakna baza sjene/scrima po temi); prozirnost se izriče na
+  mjestu upotrebe kroz `color-mix` (alfe 0.08–0.62 su legitimno različite).
+- **„Bijelo staklo" auth-modala, confirm-dijaloga i header-auth gumba** (pisano za staru tamnu
+  zadanu temu) → plohe teme (`--bg-tertiary`/`--border`/`--color-line-strong`).
+- **Chipovi na obojenim ispunama** (kategorija kartice, slovo odgovora) → `color-mix(currentColor)`
+  — od C2 tinta podloge više nije nužno bijela.
+- **Lightbox** (namjerno fiksno taman) → rubovi iz `--color-on-tint-light`.
+- Osnovica `check:palette` spuštena 77 → 53; zastarjeli komentar u `tokens.css` ažuriran.
+- Dokaz: `palette:breakdown` fatalno 0 · **blago 0** · stara 36 (→ C4); `check:contrast:live`
+  0 ispod praga.
+
 ## 2026-09-01 (FABLE) — **MREŽA C2: boja kartice = CIJELA kartica — tri moda poravnata (EDITOR ①)**
 
 ### Promijenjeno

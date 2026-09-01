@@ -135,6 +135,12 @@
   --color-on-ok: #ffffff;
   --color-on-danger: #ffffff;
 
+  /* SJENA I SCRIM (MREŽA C3): opakna BAZA po temi — prozirnost se izriče NA MJESTU
+     upotrebe kroz color-mix, jer alfe legitimno variraju (0.08–0.62), a jedna zajednička
+     bi ili utopila kartice ili istanjila scrim. Tamne teme trebaju CRNJU sjenu od
+     tinte svijetlih — isto pravilo po kojem žive --shadow-e1/e2. */
+  --color-shadow: #0e1a2b;
+
   /* TINTA NA PLOČICI PREDMETA — namjerno NEOVISNA O TEMI, i to je cijela poanta.
      Pločica predmeta nosi boju iz `data/catalog.js`, koja se s temom NE mijenja (predmet
      je isti predmet u svakoj temi). Kad bi tinta na njoj dolazila iz teme, tema bi okrenula
@@ -147,7 +153,11 @@
      Mjerenje: bijela na `#f59e0b` = **2.15** (5 predmeta), na `#14b8a6` = 2.49 (3),
      na `#0ea5e9` = 2.77 (2) — dakle 10 od 24 predmeta ispod praga 3:1 za grafički element,
      u ZADANOJ temi. Brana: `npm run check:contrast`, provjera „glif na pločici predmeta". */
-  --color-on-tint-dark: #14161a;
+  /* ⚠️ MORA biti čista crna, ne "gotovo crna": s #14161a je najgori slučaj na sjecištu
+     tinti bio 4.26 (ispod AA) i violet-500 ispuna ga je STVARNO pogodila (axe, fill 4.27).
+     S #000 je najgori slučaj po konstrukciji 4.58 — prag u blocks-renderer.js je izveden
+     iz OVOG para i `check:contrast` ih drži usklađenima. */
+  --color-on-tint-dark: #000000;
   --color-on-tint-light: #ffffff;
 
   /* MARKER — drugi posao akcenta. `brand` nosi akciju (gumb, poveznica), `mark`
@@ -291,10 +301,11 @@
    nijedna). Zapis se ne popravlja u hodu nego se briše kad ga mjera obori.
 
    ⚠️ ŠTO JOŠ DIJELI BIRAČ TEMA OD UKLJUČENJA: `npm run check:palette` još nije na
-   nuli. Preostalo je razloženo po POSLJEDICI (`npm run palette:breakdown`) — jedini
-   broj koji stvarno blokira svijetle teme je FATALNO, dakle tekst koji na svijetloj
-   podlozi nestaje. ADR-032 ih je gasio kroz semantičke ispune, a tinte autora
-   (`--color-ink-*` gore) kroz ovu ciglu.
+   nuli. FATALNO (tekst koji na svijetloj podlozi nestaje) je na NULI od MREŽA-C1
+   (ADR-032: semantičke ispune + tinte autora `--color-ink-*`); MREŽA-C3 je ugasio
+   BLAGO (zakucane bijele/crne plohe, rubove i sjene — `--color-shadow` dolje).
+   Preostaje STARA paleta (indigo/slate literali) — gasi ih MREŽA-C4, do nule po
+   `check:palette`; razlaganje po POSLJEDICI: `npm run palette:breakdown`.
    ═════════════════════════════════════════════════════════════════════ */
 
 /* ── PAPIR I MARKER (svijetlo) — topli papir, crna tinta, plava akcija, žuti marker.
@@ -308,6 +319,7 @@
   --color-on-brand: #ffffff;
   --color-mark: #ffd24a;
   --color-on-ok: #ffffff;      --color-on-danger: #ffffff;
+  --color-shadow: #1b1a17;
   /* potamnjeno zbog kontrasta: zelena je s 3.77 na 5.6, jantar s 3.28 na 5.5 */
   --color-ok: #15703c;         --color-ok-strong: #0f5c30;
   --color-warn: #8a5a00;       --color-warn-ink: #7a4f00;
@@ -332,6 +344,7 @@
   --color-on-brand: #1e1f1c;
   --color-mark: rgb(242 193 78 / 0.30);
   --color-on-ok: #14161a;      --color-on-danger: #14161a;
+  --color-shadow: #000000;
   --color-ok: #8fbf6b;         --color-ok-strong: #6da34d;
   --color-warn: #e3a93c;       --color-warn-ink: #edbe63;
   --color-danger: #e3705c;     --color-danger-ink: #ee8b78;
@@ -357,6 +370,7 @@
   --color-on-brand: #ffffff;
   --color-mark: #ffd24a;
   --color-on-ok: #ffffff;      --color-on-danger: #ffffff;
+  --color-shadow: #0e1a2b;
   --color-ok: #10794a;         --color-ok-strong: #0b5e39;
   --color-warn: #8a5800;       --color-warn-ink: #7a4d00;
   --color-danger: #c0332b;     --color-danger-ink: #a32821;
@@ -377,6 +391,7 @@
   --color-on-brand: #0b1a1c;
   --color-mark: rgb(79 201 171 / 0.30);
   --color-on-ok: #14161a;      --color-on-danger: #14161a;
+  --color-shadow: #030c0d;
   --color-ok: #6bcb77;         --color-ok-strong: #46b36a;
   --color-warn: #e2b53f;       --color-warn-ink: #efc762;
   --color-danger: #e2725f;     --color-danger-ink: #e8836f;

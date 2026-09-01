@@ -22,7 +22,7 @@
     
     .action-btn.primary:hover {
         transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        box-shadow: 0 10px 20px color-mix(in srgb, var(--primary) 30%, transparent);
     }
     
     .stat-card:hover {

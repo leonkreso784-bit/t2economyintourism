@@ -146,7 +146,7 @@
 .ex-select:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent);
 }
 .ex-input.is-correct { border-color: var(--success); }
 .ex-input.is-incorrect { border-color: var(--danger); }

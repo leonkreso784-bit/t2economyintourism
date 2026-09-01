@@ -82,7 +82,7 @@
 
 .start-quiz-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 8px 16px color-mix(in srgb, var(--primary) 30%, transparent);
 }
 
 .quiz-game { animation: fadeIn 0.5s ease; }
@@ -167,7 +167,7 @@
 
 .answer-btn:hover:not(.disabled) {
     border-color: var(--primary);
-    background: rgba(99, 102, 241, 0.1);
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
 }
 
 .answer-btn.selected { border-color: var(--primary); background: var(--primary); color: var(--on-primary); }
@@ -191,7 +191,8 @@
 .answer-btn.selected .answer-letter,
 .answer-btn.correct .answer-letter,
 .answer-btn.wrong .answer-letter {
-    background: rgba(255,255,255,0.3);
+    /* C3: tinta na ovim ispunama više nije nužno bijela (C1) → chip iz currentColor */
+    background: color-mix(in srgb, currentColor 30%, transparent);
 }
 
 /* `display` i `justify-content` su u markupu; `gap` i `font-size` mijenja upit ≤ 767 px. */
@@ -229,7 +230,7 @@
 
 .quiz-nav-btn:hover {
     border-color: var(--primary);
-    background: rgba(99, 102, 241, 0.1);
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
 }
 
 .quiz-nav-btn:active {

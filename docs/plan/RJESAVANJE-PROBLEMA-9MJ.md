@@ -425,6 +425,45 @@ pa je semantika odgovora ponovno izrečena. Novi rub = novi test (ADR-027): `dat
 0 ispod praga, uz **14 mjerenja manje preskočeno** — lica kartica više nisu gradijent, pa ih brana
 sad STVARNO mjeri, ne preskače.
 
+**✅ C3 ISHOD (2026-09-01).** Blago **20 → 0**: zakucane bijele/crne plohe, rubovi i sjene su
+nestali iz `css/**`. Mehanizam: novi token **`--color-shadow`** — OPAKNA baza sjene/scrima po temi
+(academic/paper tamna tinta teme, chalk čista crna, mint `#030c0d`), a prozirnost se izriče **na
+mjestu upotrebe** kroz `color-mix`, jer alfe legitimno variraju 0.08–0.62 pa bi jedan zajednički
+token ili utopio kartice ili istanjio scrim. Ostale kategorije: „bijelo staklo" auth/confirm/profila
+(pisano za staru TAMNU zadanu temu — na svijetlima nevidljivo) → plohe teme (`--bg-tertiary` +
+`--border`); chipovi na obojenim ispunama → `color-mix(currentColor N%)` jer od C2 tinta podloge
+više nije nužno bijela; lightbox (namjerno fiksno taman) → `--color-on-tint-light` miksovi.
+Usput ažuriran zastarjeli komentar u `tokens.css` („jedini broj koji blokira svijetle teme je
+FATALNO" — fatalno je na nuli od C1). Osnovica `check:palette` spuštena **77 → 53**. Dokazi:
+`palette:breakdown` FATALNO 0 · blago 0 · stara 36 · `check:contrast` 358 ✅ · `check:contrast:live`
+0 ispod praga ✅ · preflight EXIT=0 · suite 535/0.
+
+**✅ MEĐUNALAZ IZMEĐU C3 I C4 (2026-09-01) — suite je uhvatio pravu rupu iz C2.** Axe je na
+STUDY/fill izmjerio 4.27 na violet-500 ispuni (`#8b5cf6`): na toj boji NI bijela (4.23) NI
+`#14161a` (4.28) ne dosežu AA — par tinti je na svom sjecištu davao samo 4.26, ispod praga, i
+prošao je dotad samo zato što fill rotira stavke. Sistemski popravak, ne symptomski:
+**`--color-on-tint-dark` je otišao na ČISTU CRNU** (`#000`), čime sjecište (izvedeno, ne pogođeno:
+√(0.05·1.05)−0.05) pada na **0.1791** i najgori slučaj postaje **4.58 ≥ 4.5 po konstrukciji**;
+`TINT_INK_CROSSOVER` ažuriran, `check:contrast` ih drži usklađenima (pao bi da nisu). Drugi dio
+istog razreda: `.flip-hint` s `opacity: 0.8` — na obojenoj ispuni prozirnost je porez na kontrast
+koji tinta ne može platiti (crna kroz 0.8 na indigu = 4.01), pa na `[data-ink]` karticama hint ide
+na punu tintu; legacy kartice zadržavaju prigušeni.
+
+**✅ C4 ISHOD (2026-09-01).** Stara paleta **→ 0 po `check:palette`** — osnovica **53 → 0** (od
+uvođenja gatea: 93 → 0), `palette:breakdown` sad glasi **0 · 0 · 0**. Potezi: indigo-sjajevi i
+ispune `rgba(99,102,241,α)` → `color-mix(in srgb, var(--primary) α%, transparent)` (efekt sad
+prati ŽIVU marku teme, ne zamrznuti indigo); ukrasni fallbackovi `var(--primary, #6366f1)` /
+`var(--primary-light, #818cf8)` skinuti (definicije postoje; `--accent` u learn-blocks dolazi
+runtime pa fallback OSTAJE, ali kao `var(--primary)`); maske skrola u `learn.css` → `currentColor`
+(maska čita samo ALFU — nijansa nije odluka teme); lightbox (namjerno fiksno taman) →
+`--color-on-tint-light`/`--color-shadow`; conic-kotač u Studiju → `--color-ink-indigo`. Skidanje
+fallbacka je razotkrilo i dva `--primary-light`-kao-TEKST (tvrda zabrana, ~3.2 na svijetloj) →
+`var(--primary)`. Zadnji pogodak nije bio hex nego **rgba-oblik slate-400** u `.lb-table th` —
+hex-grep ga ne vidi, brana (koja broji i rgb-oblike) jest: pouka da se ostatak broji NJEZINIM
+mjerilom, ne vlastitim grepom. Dokaz cijelog bloka: `check:contrast` 358 ✅ · `check:contrast:live`
+0 ispod praga (13 ruta × 4 teme) ✅ · `check:palette` **0/0** · preflight EXIT=0 · suite 535/0
+nad završnim stablom.
+
 **Zašto sve četiri, a ne samo fatalne.** Kad čegrtaljka padne na nulu, osnovica se zakuca ondje i
 **C5b/2, C5b/3, C6 i C7 više nikad ne moraju misliti o boji** — jedna cijela dimenzija ispada iz
 svake preostale cigle redizajna.

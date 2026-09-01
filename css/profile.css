@@ -74,7 +74,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: rgba(99, 102, 241, 0.15);
+    background: color-mix(in srgb, var(--primary) 15%, transparent);
     color: var(--primary);
     font-size: 1.5rem;
     margin-bottom: 0.8rem;
@@ -160,8 +160,8 @@
 .profile-total {
     flex: 1;
     min-width: 120px;
-    background: rgba(99, 102, 241, 0.08);
-    border: 1px solid rgba(99, 102, 241, 0.25);
+    background: color-mix(in srgb, var(--primary) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--primary) 25%, transparent);
     border-radius: 12px;
     padding: 0.75rem 0.9rem;
     text-align: center;
@@ -274,7 +274,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.06);
+    /* C3: bijelo staklo iz stare tamne ere — ploha sad iz teme */
+    background: var(--bg-tertiary);
     border: 1px solid var(--border);
     border-radius: 50%;
     color: var(--text-secondary);
@@ -285,8 +286,8 @@
 
 .header-auth-btn:hover {
     color: var(--text-primary);
-    border-color: rgba(99, 102, 241, 0.55);
-    background: rgba(99, 102, 241, 0.12);
+    border-color: color-mix(in srgb, var(--primary) 55%, transparent);
+    background: color-mix(in srgb, var(--primary) 12%, transparent);
 }
 
 .header-auth-btn.is-signed-in { color: var(--primary); }
@@ -302,8 +303,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: rgba(99, 102, 241, 0.14);
-    border: 1px solid rgba(99, 102, 241, 0.45);
+    background: color-mix(in srgb, var(--primary) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--primary) 45%, transparent);
     border-radius: 50%;
     color: var(--primary);
     font-size: 1rem;
@@ -314,7 +315,7 @@
 .header-materials-btn:hover {
     color: var(--text-primary);
     border-color: var(--primary-light);
-    background: rgba(99, 102, 241, 0.24);
+    background: color-mix(in srgb, var(--primary) 24%, transparent);
 }
 
 /* ---------- Mobile ---------- */
@@ -357,10 +358,10 @@
 }
 .admin-editbar.is-active {
     justify-content: space-between;
-    border: 1px solid var(--primary, #6366f1);
+    border: 1px solid var(--primary);
 }
 .admin-editbar__status { color: var(--text-secondary); font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
-.admin-editbar__status i { color: var(--primary, #6366f1); }
+.admin-editbar__status i { color: var(--primary); }
 .admin-editbar__count {
     display: inline-block; min-width: 1.5rem; text-align: center;
     padding: 0.05rem 0.5rem; border-radius: 999px; font-size: 0.8rem;
@@ -388,7 +389,7 @@
     border: 1px dashed var(--border); background: transparent; color: var(--text-secondary);
     transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
-.admin-add-btn:hover { background: var(--bg-tertiary); color: var(--primary-light, #818cf8); border-color: var(--primary, #6366f1); }
+.admin-add-btn:hover { background: var(--bg-tertiary); color: var(--primary); border-color: var(--primary); }
 
 /* U6d — kategorije-UI: zaglavlje = naslov + kontrole (presloži ↑↓ / uredi / obriši) u flex-redu; „Dodaj kategoriju" (široki) */
 .admin-cat-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
@@ -415,7 +416,7 @@
 }
 .admin-edit__close:hover { color: var(--text-primary); background: var(--bg-tertiary); }
 .admin-edit__title { margin: 0 0 1rem; font-size: 1.1rem; color: var(--text-primary); }
-.admin-edit__title i { color: var(--primary-light, #818cf8); margin-right: 0.4rem; }
+.admin-edit__title i { color: var(--primary); margin-right: 0.4rem; }
 .admin-edit__field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.9rem; }
 .admin-edit__field span { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); }
 .admin-edit__input {
@@ -425,7 +426,7 @@
     background: var(--bg-primary); color: var(--text-primary);
     font-family: inherit; font-size: 0.95rem; line-height: 1.4;
 }
-.admin-edit__input:focus { outline: none; border-color: var(--primary, #6366f1); }
+.admin-edit__input:focus { outline: none; border-color: var(--primary); }
 /* M5a — brojač duljine kartice. Neutralan dok se poštuje standard; žut na 200 (upozorenje,
    spremanje prolazi); crven preko 500 (tvrdi strop — „Spremi" je tad onemogućen). */
 .admin-edit__count {
@@ -470,7 +471,7 @@
 /* Editor: redovi opcija (radio „točan" + tekst + brisanje) */
 .admin-quiz-editopts { display: flex; flex-direction: column; gap: 0.45rem; }
 .admin-quiz-optrow { display: flex; align-items: center; gap: 0.5rem; }
-.admin-quiz-optrow input[type="radio"] { flex: 0 0 auto; width: 18px; height: 18px; accent-color: var(--primary, #6366f1); cursor: pointer; }
+.admin-quiz-optrow input[type="radio"] { flex: 0 0 auto; width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
 .admin-quiz-optinput {
     flex: 1 1 auto; min-width: 0; box-sizing: border-box;
     padding: 0.5rem 0.6rem; border-radius: 8px;
@@ -478,7 +479,7 @@
     background: var(--bg-primary); color: var(--text-primary);
     font-size: 0.9rem; font-family: inherit;
 }
-.admin-quiz-optinput:focus { outline: none; border-color: var(--primary, #6366f1); }
+.admin-quiz-optinput:focus { outline: none; border-color: var(--primary); }
 .admin-quiz-delopt {
     flex: 0 0 auto; width: 30px; height: 30px; border-radius: 7px;
     border: 1px solid var(--border); background: var(--bg-tertiary);
@@ -492,7 +493,7 @@
     background: transparent; color: var(--text-secondary); cursor: pointer;
     font-size: 0.82rem; font-family: inherit;
 }
-.admin-quiz-addopt:hover { border-color: var(--primary, #6366f1); color: var(--text-primary); }
+.admin-quiz-addopt:hover { border-color: var(--primary); color: var(--text-primary); }
 
 /* ===== F4.4 Learn editing (širi modal + monospace HTML textarea) ===== */
 .admin-learn .admin-edit__card { width: min(94vw, 640px); }

@@ -5,6 +5,35 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-01 (FABLE) — C4: paleta na nuli — a najvredniji nalaz donio je pali suite, ne skripta
+
+`check:palette` je na **nuli** (93 → 0 od uvođenja; breakdown 0 · 0 · 0). No priča sesije je pad
+suita IZMEĐU C3 i C4: axe je na fill kartici izmjerio 4.27 — violet-500 je boja na kojoj NI
+bijela NI `#14161a` ne dosežu AA. To nije bila greška u C2 izvedbi nego u KONSTANTAMA: par tinti
+je na vlastitom sjecištu davao 4.26, i C2-ov zeleni suite ga je promašio samo zato što fill
+rotira stavke. Popravak je sistemski — tamna tinta na čistu crnu, prag preračunan (0.1791), pa
+je najgori slučaj 4.58 po konstrukciji, a `check:contrast` sinkronizaciju čuva i dalje. Ista
+lekcija drugi put: `.flip-hint` kroz `opacity: 0.8` na obojenoj ispuni = 4.01. I treći put, u
+malom: zadnji ostatak stare palete bio je rgba-oblik slate-400 koji hex-grep ne vidi — ostatak
+se broji braninim mjerilom, ne vlastitim. Blok C je time cijel: fatalno/blago/stara = 0/0/0,
+sve četiri cigle isporučene.
+
+---
+
+## 2026-09-01 (FABLE) — C3: jedna sjena nije jedna boja — opakna baza po temi, alfa na mjestu upotrebe
+
+Blago 20 → 0. Najveći komad nije bio zamjena nego ODLUKA o obliku tokena: sjene i scrimovi dijele
+boju, ali ne i prozirnost (0.08 na kartici, 0.62 na scrimu) — pa je token `--color-shadow` OPAKNA
+baza po temi, a alfa se izriče na mjestu upotrebe kroz `color-mix`. Drugi razred nalaza je
+arheologija: „bijelo staklo" auth-modala i confirma pisano je za staru tamnu zadanu temu — na
+svijetlim temama bilo je nevidljivo ukrašavanje; sad su to plohe teme. Treći razred je posljedica
+C2: chip na obojenoj ispuni ne smije pretpostavljati bijelu tintu, pa prati `currentColor`.
+Skripta pripremljena prošlu sesiju pokrila je 19/20; dvadeseti (staklo header-auth gumba u
+`profile.css`) nađen mjerom nakon primjene i ugašen istim potezom. Osnovica palette 77 → 53;
+preostaje samo STARA paleta (36) — to je C4.
+
+---
+
 ## 2026-09-01 (FABLE) — C2: Leonov dojam iz kolovoza bio je točan opis koda — i brana sad mjeri ono što je prije preskakala
 
 EDITOR ① pao: boja kartice je CIJELA kartica. Mjerenje iz backloga je stajalo netaknuto — tri

@@ -41,7 +41,7 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 15px color-mix(in srgb, var(--primary) 30%, transparent);
 }
 
 #learn .learn-container > h1 i {
@@ -83,17 +83,19 @@
 
 /* Rubni gradijent-fade — nagovještava da ima još čipova izvan vidljivog.
    JS (updateLearnFilterScrollHints) dodaje can-scroll-left/right ovisno o poziciji skrola. */
+/* C4: maska cita samo ALFU — currentColor je tu "bilo koja neprozirna boja",
+   ne odluka o nijansi (zato nije token teme) */
 #learn .learn-filter.can-scroll-right {
-    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent);
-            mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent);
+    -webkit-mask-image: linear-gradient(to right, currentColor calc(100% - 36px), transparent);
+            mask-image: linear-gradient(to right, currentColor calc(100% - 36px), transparent);
 }
 #learn .learn-filter.can-scroll-left {
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 36px);
-            mask-image: linear-gradient(to right, transparent, #000 36px);
+    -webkit-mask-image: linear-gradient(to right, transparent, currentColor 36px);
+            mask-image: linear-gradient(to right, transparent, currentColor 36px);
 }
 #learn .learn-filter.can-scroll-left.can-scroll-right {
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 36px, #000 calc(100% - 36px), transparent);
-            mask-image: linear-gradient(to right, transparent, #000 36px, #000 calc(100% - 36px), transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, currentColor 36px, currentColor calc(100% - 36px), transparent);
+            mask-image: linear-gradient(to right, transparent, currentColor 36px, currentColor calc(100% - 36px), transparent);
 }
 
 /* Kad sadržaj prelazi širinu, poravnaj lijevo da prvi čip NE bude odrezan
@@ -124,7 +126,7 @@
     border-color: var(--primary);
     background: var(--primary-dark);
     color: var(--on-primary);
-    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 40%, transparent);
 }
 
 #learn .filter-btn:active {
@@ -157,7 +159,7 @@
     background: var(--bg-secondary);
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--color-shadow) 8%, transparent);
     border: 1px solid var(--border);
     border-left: 4px solid var(--st-acc, var(--border));
     margin: 0;
@@ -308,7 +310,7 @@
 
 /* Highlight */
 #learn .learn-card-content .highlight {
-    background: rgba(99, 102, 241, 0.15);
+    background: color-mix(in srgb, var(--primary) 15%, transparent);
     padding: 2px 6px;
     border-radius: 4px;
     font-weight: 500;
@@ -360,13 +362,13 @@
 
 #learn .example-box,
 #learn .learn-card-content .example-box {
-    background: rgba(99, 102, 241, 0.1);
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
     border-left-color: var(--primary);
 }
 
 #learn .formula-box,
 #learn .learn-card-content .formula-box {
-    background: rgba(99, 102, 241, 0.06);
+    background: color-mix(in srgb, var(--primary) 6%, transparent);
     border-left-color: var(--primary);
     font-family: inherit;
     font-size: 0.88rem;
@@ -466,7 +468,7 @@
     height: auto;
     margin: 14px 0;
     border-radius: 10px;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 18px color-mix(in srgb, var(--color-shadow) 20%, transparent);
 }
 
 #learn .learn-zoomable {
@@ -477,7 +479,7 @@
 #learn .learn-zoomable:hover,
 #learn .learn-zoomable:focus-visible {
     transform: translateY(-1px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--color-shadow) 28%, transparent);
     outline: none;
 }
 
@@ -528,12 +530,13 @@ sokrat-modal.image-modal > * {
     max-height: calc(100dvh - (var(--safe-top) + var(--safe-bottom) + 110px));
     object-fit: contain;
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid color-mix(in srgb, var(--color-on-tint-light) 15%, transparent);
     background: #020617;
 }
 
 .image-modal-content figcaption {
-    color: #e2e8f0;
+    /* C4: lightbox je namjerno fiksno taman → tinta iz tokena tinte-na-tamnom */
+    color: var(--color-on-tint-light);
     text-align: center;
     font-size: 0.9rem;
     line-height: 1.4;
@@ -546,10 +549,10 @@ sokrat-modal.image-modal > * {
     z-index: 3;
     width: 42px;
     height: 42px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid color-mix(in srgb, var(--color-on-tint-light) 20%, transparent);
     border-radius: 999px;
-    background: rgba(15, 23, 42, 0.75);
-    color: #f8fafc;
+    background: color-mix(in srgb, var(--color-shadow) 75%, transparent);
+    color: var(--color-on-tint-light);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -557,7 +560,7 @@ sokrat-modal.image-modal > * {
 }
 
 .image-modal-close:focus-visible {
-    outline: 2px solid #818cf8;
+    outline: 2px solid var(--primary-light);
     outline-offset: 2px;
 }
 

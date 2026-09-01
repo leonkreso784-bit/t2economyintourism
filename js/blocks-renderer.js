@@ -312,11 +312,14 @@
   // SJECIŠTE dviju tinti: luminancija na kojoj su `--color-on-tint-dark` i `-light` jednako
   // čitljivi. IZVEDENO iz same definicije WCAG kontrasta, nije pogođeno:
   //     (L*+0.05)² = (L_dark+0.05)(L_light+0.05)  →  L* = √((L_d+0.05)(L_l+0.05)) − 0.05
-  // Za današnje tokene (#14161a / #ffffff) daje 0.1967.
+  // Za današnje tokene (#000000 / #ffffff) daje 0.1791.
   // ⚠️ Prva verzija je imala 0.1833 — napisano napamet, i krivo. Zato ovaj broj od
   // 2026-08-15 NE stoji sam: `npm run check:contrast` ga preračuna iz `css/tokens.css`
   // i padne ako se raziđu. Promijeniš li tokene, gate ti kaže novu vrijednost.
-  const TINT_INK_CROSSOVER = 0.1967;
+  // ⚠️ 2026-09-01: tamna tinta je s #14161a otišla na ČISTU CRNU — par (#14161a, bijela)
+  // je na svom sjecištu davao 4.26, ISPOD AA, i violet-500 (#8b5cf6, L=0.198) je tu rupu
+  // stvarno pogodio (axe na fill kartici: 4.27). S crnom je najgori slučaj 4.58.
+  const TINT_INK_CROSSOVER = 0.1791;
 
   function applyAccent(el, values) {
     const acc = accentFrom(values);

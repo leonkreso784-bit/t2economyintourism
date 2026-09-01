@@ -51,14 +51,14 @@ sokrat-modal.sokrat-confirm-modal > * {
 
 /* Cancel = tihi/sekundarni gumb */
 .sokrat-confirm__cancel {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.14);
+    background: var(--bg-tertiary);
+    border-color: var(--border);
     color: var(--text-secondary, #cbd5e1);
 }
 
 .sokrat-confirm__cancel:hover {
     color: var(--text-primary, #f8fafc);
-    border-color: rgba(255, 255, 255, 0.28);
+    border-color: var(--color-line-strong);
 }
 
 /* Confirm = primarni (indigo brend) */
@@ -89,7 +89,7 @@ sokrat-modal.sokrat-confirm-modal > * {
 }
 
 .sokrat-confirm__btn:focus-visible {
-    outline: 2px solid var(--primary-light, #818cf8);
+    outline: 2px solid var(--primary-light);
     outline-offset: 2px;
 }
 

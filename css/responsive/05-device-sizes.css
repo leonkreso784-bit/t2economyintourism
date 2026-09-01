@@ -109,7 +109,7 @@
         left: 50%;
         transform: translateX(-50%);
         border-radius: 28px 28px 0 0;
-        box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 -4px 30px color-mix(in srgb, var(--color-shadow) 15%, transparent);
     }
 }
 

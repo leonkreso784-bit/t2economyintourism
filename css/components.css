@@ -158,7 +158,7 @@
     left: 0;
     right: 0;
     background: var(--bg-secondary);
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -4px 20px color-mix(in srgb, var(--color-shadow) 10%, transparent);
     z-index: 1000;
     padding-bottom: var(--safe-bottom);
     border-top: 1px solid var(--border);
@@ -238,4 +238,4 @@
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
+
