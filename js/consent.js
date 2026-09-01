@@ -13,10 +13,19 @@
     var GA_MEASUREMENT_ID = 'G-ME0V58NJ1Z'; // GA4 Measurement ID for www.sokratstudy.com
     var STORAGE_KEY = 'sokrat-cookie-consent'; // 'granted' | 'denied'
 
-    // Ensure gtag exists even if the inline <head> snippet was missed.
     window.dataLayer = window.dataLayer || [];
     function gtag() { window.dataLayer.push(arguments); }
     window.gtag = window.gtag || gtag;
+
+    // Consent Mode v2 default = DENIED. Do bloka D je ovaj push živio kao inline <script>
+    // u <head>-u svake stranice; CSP zabranjuje inline, a redoslijed ostaje ispravan jer
+    // gtag.js učitava ISKLJUČIVO ova datoteka (loadGoogleAnalytics), dakle uvijek POSLIJE
+    // ovog defaulta.
+    window.gtag('consent', 'default', {
+        ad_storage: 'denied', ad_user_data: 'denied',
+        ad_personalization: 'denied', analytics_storage: 'denied',
+        wait_for_update: 500
+    });
 
     var gaLoaded = false;
     function hasRealId() {
@@ -293,6 +302,16 @@
         gaLoaded = false;
         showBanner();
     };
+
+    // "Cookie settings" linkovi su nosili onclick atribut; CSP (blok D) ga zabranjuje,
+    // pa ih veže delegirani listener. Ovdje (a ne u navigation.js) jer pravne stranice
+    // učitavaju SAMO consent.js — a privola je njegova domena.
+    document.addEventListener('click', function (e) {
+        var link = e.target instanceof Element ? e.target.closest('[data-consent-settings]') : null;
+        if (!link) return;
+        e.preventDefault();
+        window.openCookieSettings();
+    });
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);

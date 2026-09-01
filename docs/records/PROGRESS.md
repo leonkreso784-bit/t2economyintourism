@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-01 (FABLE) — D1: inline van — a krivi zaključak je srušio klik, ne grep
+
+Svih šest stranica na nuli inline skripti i `on*` atributa; opseg 5× veći od opisa cigle
+(25 `onclick` povrh gtag-bloka i KaTeX `onload`). Pouka sesije: grep je rekao da editor.html
+ima `navigation.js` — a pogodio je KOMENTAR koji objašnjava zašto ga NEMA. Jezični gumb vezan
+na temelju tog nalaza nije radio, i to je otkrio tek klik u pravom pregledniku, ne mjera
+teksta. Delegat je zatvorena bijela lista, ne most do `window[ime]` — inače bi `data-action`
+u korisničkom sadržaju postao poziv proizvoljne funkcije (klasa BUG-025).
+
+---
+
 ## 2026-09-01 (FABLE) — C4: paleta na nuli — a najvredniji nalaz donio je pali suite, ne skripta
 
 `check:palette` je na **nuli** (93 → 0 od uvođenja; breakdown 0 · 0 · 0). No priča sesije je pad

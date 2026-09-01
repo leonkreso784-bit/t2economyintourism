@@ -5,6 +5,18 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **MREŽA D1: inline van — 0 inline `<script>` i 0 `on*` atributa u svih 6 stranica**
+
+### Promijenjeno
+- **Consent-default (gtag) push** seli iz `<head>` inline bloka u vrh `js/consent.js` —
+  redoslijed očuvan jer gtag.js učitava isključivo consent.js.
+- **Novi `js/boot.js`** (jedina sinkrona skripta): pathbar-odluka za duboke rute (K1) +
+  KaTeX `media="print"` → `all` swap (bivši `onload` atribut; link sad nosi `data-media-swap`).
+- **25 `onclick` atributa** → `data-action` (+ `data-arg`) sa zatvorenom bijelom listom:
+  app-akcije u `navigation.js`, `toggleUiLang` u `i18n.js` (editor nema navigation.js),
+  cookie-linkovi (`data-consent-settings`) u `consent.js`.
+- Sve je priprema za CSP (D2/D3): stranica više nema nijedan inline izvršni komad.
+
 ## 2026-09-01 (FABLE) — **MREŽA C4: stara paleta → 0 — `check:palette` na nuli (93 → 0 od uvođenja)**
 
 ### Promijenjeno

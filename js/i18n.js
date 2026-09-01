@@ -778,6 +778,15 @@
     document.addEventListener('DOMContentLoaded', primijeniSpremljeni);
   } else { primijeniSpremljeni(); }
 
+  // Jezični gumb je nosio onclick atribut; CSP (D1) ga zabranjuje. Vezan OVDJE (ne u
+  // navigation.js) jer editor.html nema navigation.js, a i18n.js je na objema stranicama.
+  document.addEventListener('click', function (e) {
+    var btn = e.target instanceof Element ? e.target.closest('[data-action="toggleUiLang"]') : null;
+    if (!btn) return;
+    e.preventDefault();
+    toggleUiLang();
+  });
+
   // Globalno
   window.t = t;
   window.applyTranslations = applyTranslations;

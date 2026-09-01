@@ -482,6 +482,23 @@ ne prije i ne na oko.
 `gtag` blok → vanjska datoteka (ionako pripada domeni `js/consent.js`) · `onload` atribut na
 KaTeX-linku → učitavanje bez atributa. ⚠️ **GA ponašanje se mijenja SAMO u `js/consent.js`.**
 
+**✅ D1 ISHOD (2026-09-01).** Svih 6 `*.html` na **nula inline `<script>` i nula `on*`
+atributa** — opseg je bio veći od opisa cigle (uz gtag-blok i KaTeX `onload` još **25 `onclick`**
+i inline body-skripta iz K1). Potezi: consent-default push → vrh `js/consent.js` (njegova domena;
+redoslijed očuvan jer gtag.js učitava isključivo ta datoteka) · pathbar-odluka + KaTeX
+`media`-swap → novi **`js/boot.js`**, jedina sinkrona skripta (blokira parser = isto jamstvo
+„prije prvog crtanja" koje je davao inline blok) · `onclick` → `data-action` sa **zatvorenom
+bijelom listom** u `navigation.js` (delegat NIJE generički most do `window[ime]` — inače bi
+ubačeni atribut u sadržaju postao poziv proizvoljne globalne funkcije, ista klasa rupe kao
+BUG-025) · cookie-linkovi → `data-consent-settings` u `consent.js` (pravne stranice učitavaju
+samo njega) · `toggleUiLang` → `i18n.js`, jer **editor.html NEMA `navigation.js`** — grep koji
+je tvrdio suprotno pogodio je KOMENTAR koji baš to objašnjava; da je gumb vezan na oba mjesta,
+klik na indexu bi togglao dvaput = neto ništa. Uhvaćeno klikom u pravom pregledniku, ne mjerom
+teksta. Dokazi: svih 15 `data-action` imena razrješava u funkciju + 5 map-gumba nosi `data-arg`
+(provjereno na živoj stranici) · klik-dokaz za sva tri delegata · duboka ruta skida `no-pathbar`
+prije crtanja, `#/` ga zadržava · KaTeX `media` završi na `all` · preflight EXIT=0 · ciljani
+Playwright 66/0.
+
 ### D2 · `Content-Security-Policy-Report-Only`
 Na preview-deployu, pa **proći sve rute** — poimence editor i Studio, najveći kandidat za
 iznenađenje. Report se čita, ne pretpostavlja.

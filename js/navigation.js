@@ -1458,6 +1458,32 @@ async function initStudyPage(subjectId, lessonId, targetSection) {
 }
 
 // ========== SECTION SWITCHING ==========
+/* Gumbi koji su nosili `onclick="fn()"` atribut sad nose `data-action="fn"` (+ `data-arg`
+   za jedini parametrizirani slučaj, težinu slijepe karte): CSP (blok D) zabranjuje on*
+   atribute. Bijela lista je ZATVOREN skup — `data-action` NIJE generički most do
+   `window[ime]`, inače bi svaki ubačeni atribut u sadržaju postao poziv proizvoljne
+   globalne funkcije (ista klasa rupe kao BUG-025). Delegirano na `document` jer se dio
+   gumba (npr. quiz-setup) renderira `innerHTML`-om nakon što bi izravno vezivanje prošlo. */
+const INLINE_ACTIONS = new Set([
+    'startQuiz', 'startQuickQuiz', 'startFlashcards', 'startLearning', 'showQuizSetup',
+    'showAboutUs', 'retryQuiz', 'resetProgress', 'quizPrev', 'quizNext',
+    'submitMapAnswer', 'skipMapQuestion', 'clearMapSelection', 'setBlindMapDifficulty'
+]);
+/* toggleUiLang NIJE ovdje: editor.html nema navigation.js (ruter pripada aplikaciji),
+   pa jezični gumb veže i18n.js — koji je na objema stranicama. Da stoji na oba mjesta,
+   klik na indexu bi togglao dvaput = neto ništa. */
+document.addEventListener('click', function (e) {
+    const el = e.target instanceof Element ? e.target.closest('[data-action]') : null;
+    if (!el) return;
+    const name = el.getAttribute('data-action');
+    if (!INLINE_ACTIONS.has(name)) return;
+    const fn = window[name];
+    if (typeof fn !== 'function') return;
+    e.preventDefault();
+    const arg = el.getAttribute('data-arg');
+    if (arg !== null) fn(arg); else fn();
+});
+
 function initNavigation() {
     const navBtns = document.querySelectorAll('.nav-btn');
     navBtns.forEach(btn => {

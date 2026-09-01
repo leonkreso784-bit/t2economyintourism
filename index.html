@@ -19,11 +19,11 @@
     <meta name="format-detection" content="telephone=no">
     
     <!-- Favicon & App Icons -->
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260901032616">
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260901032616">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260901032616">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260901032616">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260901032616">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260901041032">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260901041032">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260901041032">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260901041032">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260901041032">
     <link rel="manifest" href="manifest.json">
     
     <!-- SEO & Social -->
@@ -97,7 +97,7 @@
     <!-- Preconnect for faster loading -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <link rel="stylesheet" href="styles.bundle.css?v=20260901032616">
+    <link rel="stylesheet" href="styles.bundle.css?v=20260901041032">
 
     <!-- C2: GOOGLE FONTS SU OTIŠLI. Inter + Space Grotesk = 2 obitelji, 11 težina, dva
          `preconnect`-a i treći poslužitelj na kritičnom putu — a §7.1 ih je imenovao kao
@@ -113,7 +113,7 @@
          prije je bio render-blocking unatoč komentaru — samo JS je bio `defer`). KaTeX se NE koristi na
          landingu; math se renderira tek nakon `defer` JS-a, pa async CSS nema FOUC. js/math.js = tihi
          fallback ako CDN padne. Autorska konvencija: \( \) inline, \[ \] / $$ $$ display. -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" media="print" onload="this.media='all'"
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" media="print" data-media-swap
           integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
     <noscript>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css"
@@ -133,19 +133,10 @@
     <!-- Learn styles are managed in css/learn.css to avoid inline conflicts on mobile. -->
 
     <!-- Cookie consent + Google Analytics (Consent Mode v2; analytics loads only after Accept) -->
-    <link rel="stylesheet" href="css/consent.css?v=20260901032616">
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('consent', 'default', {
-            'ad_storage': 'denied', 'ad_user_data': 'denied',
-            'ad_personalization': 'denied', 'analytics_storage': 'denied',
-            'wait_for_update': 500
-        });
-    </script>
+    <link rel="stylesheet" href="css/consent.css?v=20260901041032">
     <!-- Praćenje grešaka (Faza 2, 2E): učita se prije consent.js; consent-gated + no-op bez DSN-a. -->
-    <script src="js/monitoring.js?v=20260901032616" defer></script>
-    <script src="js/consent.js?v=20260901032616" defer></script>
+    <script src="js/monitoring.js?v=20260901041032" defer></script>
+    <script src="js/consent.js?v=20260901041032" defer></script>
 </head>
 <!-- ⚠️ `no-pathbar` STOJI U MARKUPU, NE ČEKA JS (CLS, 2026-08-24).
      `#landing-page` je u markupu već `active`, a landing NEMA drugi red trake — pa je `<body>`
@@ -157,15 +148,10 @@
      učinio točnom i time mjerljivom. *Dvije tvrdnje o istoj stvari razilaze se i kad je
      jedna od njih CSS varijabla.* -->
 <body class="no-pathbar">
-<script>
-    /* Dijeljiva ruta (K1) znači da posjetitelj smije ući RAVNO na browse ili lekciju, gdje
-       drugi red POSTOJI. Odluka se zato mora donijeti prije prvog crtanja, a ne u `navigateTo`.
-       Inline i na vrhu `<body>`: vanjska skripta bi stigla nakon crtanja i vratila isti skok.
-       ⚠️ CSP (C6) mora pokriti OVU skriptu kao i postojeću consent-inline iznad. */
-    if (location.hash.indexOf('#/') === 0 && location.hash !== '#/') {
-        document.body.classList.remove('no-pathbar');
-    }
-</script>
+<!-- boot.js je SINKRON (bez defer) pa blokira parser i izvrši se prije prvog crtanja —
+     isto jamstvo koje je davao inline blok koji je tu živio do D1 (CSP); zašto odluka
+     mora pasti prije crtanja piše u js/boot.js. -->
+<script src="js/boot.js?v=20260901041032"></script>
     
     <!-- ==================== LANDING PAGE ==================== -->
     <!-- ====================================================================
@@ -204,7 +190,7 @@
     <div class="chrome" id="chrome">
     <header class="topbar" id="top" role="banner">
         <a class="topbar-logo" href="#/" id="topbarHome" aria-label="Sokrat Study">
-            <img src="assets/logo.svg?v=20260901032616" alt="" class="logo-image">
+            <img src="assets/logo.svg?v=20260901041032" alt="" class="logo-image">
             <span class="logo-text">Sokrat Study</span>
         </a>
 
@@ -221,7 +207,7 @@
         <div class="topbar-spacer"></div>
 
         <div class="topbar-actions">
-            <button type="button" class="topbar-btn topbar-lang" onclick="toggleUiLang()" aria-label="Language / Jezik" title="Language / Jezik">
+            <button type="button" class="topbar-btn topbar-lang" data-action="toggleUiLang" aria-label="Language / Jezik" title="Language / Jezik">
                 <i class="fas fa-globe" aria-hidden="true"></i>
                 <span class="lang-toggle-label">EN</span>
             </button>
@@ -470,7 +456,7 @@
                 <div class="footer-cols">
                     <div class="footer-brand">
                         <div class="landing-logo">
-                            <img src="assets/logo.svg?v=20260901032616" alt="" class="logo-image">
+                            <img src="assets/logo.svg?v=20260901041032" alt="" class="logo-image">
                             <span class="logo-text">Sokrat Study</span>
                         </div>
                         <p data-i18n="footer.tagline">Write your own study material, or use one that's ready. Free for everyone.</p>
@@ -483,7 +469,7 @@
                     </nav>
                     <nav class="footer-col" aria-label="About">
                         <h3 data-i18n="footer.about">About</h3>
-                        <button type="button" class="footer-link-btn" onclick="showAboutUs()" data-i18n="footer.aboutUs">About us</button>
+                        <button type="button" class="footer-link-btn" data-action="showAboutUs" data-i18n="footer.aboutUs">About us</button>
                         <a href="contact.html" data-i18n="footer.contact">Contact</a>
                         <a href="faq.html" data-i18n="footer.faq">FAQ</a>
                     </nav>
@@ -491,7 +477,7 @@
                         <h3 data-i18n="footer.legal">Legal</h3>
                         <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
                         <a href="terms.html" data-i18n="footer.terms">Terms of Use</a>
-                        <a href="#" onclick="if(window.openCookieSettings){openCookieSettings();}return false;" data-i18n="footer.cookies">Cookie settings</a>
+                        <a href="#" data-consent-settings data-i18n="footer.cookies">Cookie settings</a>
                     </nav>
                 </div>
                 <div class="footer-bottom">
@@ -506,7 +492,7 @@
     <aside class="subjects-sidebar" id="subjectsSidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260901032616" alt="Sokrat Study" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260901041032" alt="Sokrat Study" class="logo-image"></div>
                 <span data-i18n="sidebar.choose">Choose Subject</span>
             </div>
             <button class="close-sidebar-btn" id="closeSidebar" aria-label="Close sidebar">
@@ -682,15 +668,15 @@
                 <div class="quick-start">
                     <h2 data-i18n="home.quickStart">🚀 Quick Start</h2>
                     <div class="quick-actions">
-                        <button class="action-btn primary" onclick="startQuickQuiz()">
+                        <button class="action-btn primary" data-action="startQuickQuiz">
                             <i class="fas fa-bolt"></i>
                             <span data-i18n="home.quickQuiz">Quick Quiz (10 questions)</span>
                         </button>
-                        <button class="action-btn secondary" onclick="startFlashcards()">
+                        <button class="action-btn secondary" data-action="startFlashcards">
                             <i class="fas fa-clone"></i>
                             <span data-i18n="home.allFlashcards">All Flashcards</span>
                         </button>
-                        <button class="action-btn tertiary" onclick="startLearning()">
+                        <button class="action-btn tertiary" data-action="startLearning">
                             <i class="fas fa-book-reader"></i>
                             <span data-i18n="home.startLearning">Start Learning</span>
                         </button>
@@ -803,7 +789,7 @@
                         </div>
                     </div>
 
-                    <button class="start-quiz-btn" onclick="startQuiz()">
+                    <button class="start-quiz-btn" data-action="startQuiz">
                         <i class="fas fa-play"></i> <span data-i18n="quiz.start">Start Quiz</span>
                     </button>
                 </div>
@@ -832,13 +818,13 @@
                     </div>
 
                     <div class="quiz-nav-buttons flex justify-between mt-4 gap-3">
-                        <button class="quiz-nav-btn" id="quizPrevBtn" onclick="quizPrev()" style="display:none">
+                        <button class="quiz-nav-btn" id="quizPrevBtn" data-action="quizPrev" style="display:none">
                             <i class="fas fa-arrow-left"></i> <span data-i18n="common.previous">Previous</span>
                         </button>
-                        <button class="quiz-nav-btn quiz-restart-btn" onclick="showQuizSetup()">
+                        <button class="quiz-nav-btn quiz-restart-btn" data-action="showQuizSetup">
                             <i class="fas fa-redo"></i> <span data-i18n="common.restart">Restart</span>
                         </button>
-                        <button class="quiz-nav-btn" id="quizNextBtn" onclick="quizNext()" style="display:none">
+                        <button class="quiz-nav-btn" id="quizNextBtn" data-action="quizNext" style="display:none">
                             <span data-i18n="common.next">Next</span> <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
@@ -877,10 +863,10 @@
                         </div>
 
                         <div class="results-actions">
-                            <button class="action-btn primary" onclick="retryQuiz()">
+                            <button class="action-btn primary" data-action="retryQuiz">
                                 <i class="fas fa-redo"></i> <span data-i18n="quiz.tryAgain">Try Again</span>
                             </button>
-                            <button class="action-btn secondary" onclick="showQuizSetup()">
+                            <button class="action-btn secondary" data-action="showQuizSetup">
                                 <i class="fas fa-cog"></i> <span data-i18n="quiz.newQuiz">New Quiz</span>
                             </button>
                         </div>
@@ -1023,7 +1009,7 @@
                     </div>
                 </div>
 
-                <button class="reset-btn w-full mt-6" onclick="resetProgress()">
+                <button class="reset-btn w-full mt-6" data-action="resetProgress">
                     <i class="fas fa-trash-alt"></i> <span data-i18n="prog.reset">Reset Progress</span>
                 </button>
             </div>
@@ -1038,19 +1024,19 @@
                 </div>
 
                 <div class="map-difficulty-selector">
-                    <button class="map-diff-btn active" onclick="setBlindMapDifficulty('cities')" data-level="cities">
+                    <button class="map-diff-btn active" data-action="setBlindMapDifficulty" data-arg="cities" data-level="cities">
                         <i class="fas fa-city"></i> Cities
                     </button>
-                    <button class="map-diff-btn" onclick="setBlindMapDifficulty('islands')" data-level="islands">
+                    <button class="map-diff-btn" data-action="setBlindMapDifficulty" data-arg="islands" data-level="islands">
                         <i class="fas fa-water"></i> Islands
                     </button>
-                    <button class="map-diff-btn" onclick="setBlindMapDifficulty('nationalParks')" data-level="nationalParks">
+                    <button class="map-diff-btn" data-action="setBlindMapDifficulty" data-arg="nationalParks" data-level="nationalParks">
                         <i class="fas fa-tree"></i> National Parks
                     </button>
-                    <button class="map-diff-btn" onclick="setBlindMapDifficulty('natureParks')" data-level="natureParks">
+                    <button class="map-diff-btn" data-action="setBlindMapDifficulty" data-arg="natureParks" data-level="natureParks">
                         <i class="fas fa-leaf"></i> Nature Parks
                     </button>
-                    <button class="map-diff-btn" onclick="setBlindMapDifficulty('regions')" data-level="regions">
+                    <button class="map-diff-btn" data-action="setBlindMapDifficulty" data-arg="regions" data-level="regions">
                         <i class="fas fa-map"></i> Regions
                     </button>
                 </div>
@@ -1069,13 +1055,13 @@
                     </div>
 
                     <div class="map-action-buttons">
-                        <button class="map-submit-btn" id="mapSubmitBtn" onclick="submitMapAnswer()">
+                        <button class="map-submit-btn" id="mapSubmitBtn" data-action="submitMapAnswer">
                             <i class="fas fa-check"></i> Submit
                         </button>
-                        <button class="map-clear-btn" id="mapClearBtn" onclick="clearMapSelection()">
+                        <button class="map-clear-btn" id="mapClearBtn" data-action="clearMapSelection">
                             <i class="fas fa-times"></i> Clear
                         </button>
-                        <button class="map-skip-btn" id="mapSkipBtn" onclick="skipMapQuestion()">
+                        <button class="map-skip-btn" id="mapSkipBtn" data-action="skipMapQuestion">
                             <i class="fas fa-forward"></i> Skip
                         </button>
                     </div>
@@ -1174,7 +1160,7 @@
         <main class="about-content">
             <h1 class="visually-hidden" data-i18n="about.title">About Sokrat Study</h1>
             <div class="about-hero-section">
-                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260901032616" alt="Sokrat Study Logo" class="logo-image"></div>
+                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260901041032" alt="Sokrat Study Logo" class="logo-image"></div>
                 <p class="about-tagline" data-i18n="about.tagline">Created by students, for students</p>
 
                 <!-- ⚠️ IZLAZ. Izmjereno prije popravka: cijela stranica imala je TOČNO JEDNU
@@ -1323,54 +1309,54 @@
          (Blok B): loadSubjectContent() later becomes fetch('/api/subject/...'). -->
 
     <!-- Catalog: single source of truth for subjects (must load before js/config.js) -->
-    <script src="data/catalog.js?v=20260901032616"></script>
+    <script src="data/catalog.js?v=20260901041032"></script>
     <!-- Autogeneriran landing broj pitanja (npm run stats). Eager + sitan; čita ga renderLandingMeta(). -->
-    <script src="data/landing-stats.js?v=20260901032616"></script>
+    <script src="data/landing-stats.js?v=20260901041032"></script>
 
     <!-- App modules (split from app.js) -->
     <!-- T6: tema je izrezana iz init.js jer ju treba i editor.html, koji boot aplikacije NE ucitava. -->
-    <script src="js/theme.js?v=20260901032616"></script>
-    <script src="js/i18n.js?v=20260901032616"></script>
+    <script src="js/theme.js?v=20260901041032"></script>
+    <script src="js/i18n.js?v=20260901041032"></script>
     <!-- AppState (S3, Faza 2C): namespace runtime stanja — MORA prije config.js (grupe migriraju iz njega). -->
-    <script src="js/app-state.js?v=20260901032616"></script>
-    <script src="js/config.js?v=20260901032616"></script>
-    <script src="js/content-loader.js?v=20260901032616"></script>
+    <script src="js/app-state.js?v=20260901041032"></script>
+    <script src="js/config.js?v=20260901041032"></script>
+    <script src="js/content-loader.js?v=20260901041032"></script>
     <!-- ContentRepository (S1, Faza 2): jedinstveni šav za dohvat sadržaja (nakon catalog+config+loader). -->
-    <script src="js/content-repo.js?v=20260901032616"></script>
+    <script src="js/content-repo.js?v=20260901041032"></script>
     <!-- P1 (POLICA): skidanje predmeta na uredaj. Poslije loadera - cita isti
          izvor istine (content.resolve / codeScripts) da bi skinuo TOCNO ono
          sto ce loader poslije traziti. -->
-    <script src="js/offline-store.js?v=20260901032616"></script>
-    <script src="js/components/sokrat-toast.js?v=20260901032616"></script>
-    <script src="js/components/sokrat-modal.js?v=20260901032616"></script>
+    <script src="js/offline-store.js?v=20260901041032"></script>
+    <script src="js/components/sokrat-toast.js?v=20260901041032"></script>
+    <script src="js/components/sokrat-modal.js?v=20260901041032"></script>
     <!-- <sokrat-confirm> (2D.3) — nakon sokrat-modal.js (gradi se na njemu). -->
-    <script src="js/components/sokrat-confirm.js?v=20260901032616"></script>
-    <script src="js/utils.js?v=20260901032616"></script>
-    <script src="js/storage.js?v=20260901032616"></script>
-    <script src="js/analytics.js?v=20260901032616"></script>
-    <script src="js/navigation.js?v=20260901032616"></script>
-    <script src="js/math.js?v=20260901032616"></script>
-    <script src="js/blocks-renderer.js?v=20260901032616"></script>
-    <script src="js/flashcards.js?v=20260901032616"></script>
-    <script src="js/quiz.js?v=20260901032616"></script>
-    <script src="js/fill-blanks.js?v=20260901032616"></script>
-    <script src="js/learn.js?v=20260901032616"></script>
-    <script src="js/progress.js?v=20260901032616"></script>
-    <script src="js/blind-map.js?v=20260901032616"></script>
-    <script src="js/exercises-core.js?v=20260901032616"></script>
-    <script src="js/acc-kernel.js?v=20260901032616"></script>
-    <script src="js/exercises.js?v=20260901032616"></script>
-    <script src="js/auth.js?v=20260901032616"></script>
+    <script src="js/components/sokrat-confirm.js?v=20260901041032"></script>
+    <script src="js/utils.js?v=20260901041032"></script>
+    <script src="js/storage.js?v=20260901041032"></script>
+    <script src="js/analytics.js?v=20260901041032"></script>
+    <script src="js/navigation.js?v=20260901041032"></script>
+    <script src="js/math.js?v=20260901041032"></script>
+    <script src="js/blocks-renderer.js?v=20260901041032"></script>
+    <script src="js/flashcards.js?v=20260901041032"></script>
+    <script src="js/quiz.js?v=20260901041032"></script>
+    <script src="js/fill-blanks.js?v=20260901041032"></script>
+    <script src="js/learn.js?v=20260901041032"></script>
+    <script src="js/progress.js?v=20260901041032"></script>
+    <script src="js/blind-map.js?v=20260901041032"></script>
+    <script src="js/exercises-core.js?v=20260901041032"></script>
+    <script src="js/acc-kernel.js?v=20260901041032"></script>
+    <script src="js/exercises.js?v=20260901041032"></script>
+    <script src="js/auth.js?v=20260901041032"></script>
     <!-- F4: privatne slike osobnog gradiva (`node-img:` oznaka ↔ potpisani URL). Prije block-editora. -->
-    <script src="js/node-images.js?v=20260901032616"></script>
+    <script src="js/node-images.js?v=20260901041032"></script>
     <!-- T6: otkrivanje admina je izrezano iz admin.js i MORA ici prije njega (studioBridge se veze pri parsiranju). -->
-    <script src="js/admin-reveal.js?v=20260901032616"></script>
-    <script src="js/cloud-sync.js?v=20260901032616"></script>
+    <script src="js/admin-reveal.js?v=20260901041032"></script>
+    <script src="js/cloud-sync.js?v=20260901041032"></script>
     <!-- „Moji materijali" (F2) — mora prije profile.js (renderProfilePage ga montira). -->
-    <script src="js/my-materials.js?v=20260901032616"></script>
-    <script src="js/profile.js?v=20260901032616"></script>
-    <script src="js/init.js?v=20260901032616"></script>
+    <script src="js/my-materials.js?v=20260901041032"></script>
+    <script src="js/profile.js?v=20260901041032"></script>
+    <script src="js/init.js?v=20260901041032"></script>
     <!-- Service Worker (F3 3A): offline app-shell; registrira se na load, fail-safe. -->
-    <script src="js/sw-register.js?v=20260901032616" defer></script>
+    <script src="js/sw-register.js?v=20260901041032" defer></script>
 </body>
 </html>
