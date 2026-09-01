@@ -3292,8 +3292,9 @@ i u `BACKLOG.md`.
 > poslijepodne ukinuo (*„krenimo sa daljnjom C radnjom za frontend… VPS ću ja sutra setupat"*).
 > **Seoba i cigle teku USPOREDO** — ne dijele nijednu datoteku. **② birač tema** → ide s
 > ciglama, najranije **nakon C6** (10 fatalnih pravila — od C5b/0; razlaganje u `BACKLOG.md`).
-> **③ A0+A1** → **poslije seobe**, jer je auth Supabase-konfiguracija. Ostaje neodlučeno:
-> **treba li OAuth uopće**, i prave adrese/SEM.
+> **③ A0+A1** → ~~poslije seobe~~ **seoba je OTKAZANA (2026-09-01)** → poslije deploya
+> redizajna, kao RAČUN blok (`BACKLOG.md`). Pitanje „treba li OAuth uopće" Leon je
+> 2026-09-01 presudio željom za Google-prijavom.
 
 ### 9.17 ✅ FAZA „POLICA" JE OTVORENA — mjerenje joj je promijenilo prvu ciglu (2026-08-26)
 
@@ -5274,8 +5275,8 @@ jedan ekran.
 
 - **Birač tema** — Leonova otvorena odluka („ne planira se prešutno", §9.17); C6 ga samo
   ODBLOKIRAVA (fatalna pravila su ionako pala u C4 na 0).
-- **A0 (prepravak auth-dijaloga)** — ide s A1 poslije seobe; C6/4 mijenja jezik postojećeg
-  dijaloga, ne njegov oblik.
+- **A0 (prepravak auth-dijaloga)** — ide s A1 u RAČUN bloku (seoba otkazana 2026-09-01);
+  C6/4 mijenja jezik postojećeg dijaloga, ne njegov oblik.
 - Pitanja pri registraciji (shema → SQL = Leonova ruka, §5 C6-odgode).
 
 ### 13.6 ✅ C6/1 — home-sekcija: ljestva iz PET datoteka skupljena, i pola stare ljestve bilo je MRTVO (2026-09-01)

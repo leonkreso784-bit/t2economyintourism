@@ -19,8 +19,8 @@
 > („kako korisnikov AI dokaže tko je") stajalo otvoreno **17 dana** i blokiralo sve ostalo.
 > Korisnik **jednom doda naš konektor** kod svog AI-ja (OAuth nad našim MCP poslužiteljem);
 > poslije je gumb u aplikaciji samo prečac. Usput je presuđen i OBLIK: MCP je **CJEVOVOD**
-> `Learn → kartice → dopune/kviz`, **ne skup CRUD-alata**. ⚠️ Konektor ovisi o Supabase Authu →
-> **radi se tek nakon seobe**; MCP u cjelini **tek nakon frontenda**.
+> `Learn → kartice → dopune/kviz`, **ne skup CRUD-alata**. ⚠️ Konektor ovisi o Supabase Authu (OAuth) →
+> čeka **RAČUN blok** (`BACKLOG.md`; seoba OTKAZANA 2026-09-01); MCP u cjelini **tek nakon frontenda**.
 > **Matura = IZBAČENA.** SRS nije otkazan, samo više nije sljedeći.
 > Doseg dijeljenja je presuđen unaprijed: **link s tajnim tokenom, bez javne biblioteke** u prvoj fazi.
 >

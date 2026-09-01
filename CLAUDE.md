@@ -178,19 +178,17 @@ migrira** · `exercises`/`blind-map` su uvjetni tabovi, **`te2` ih NEMA** · **�
 i dvaput vratio **uvjerljiv krivi broj umjesto da padne** → svaki mjerač mora ispisati **i koliko je
 toga dotaknuo**.
 **K5** (editor dvojezično) čeka i ne blokira ništa.
-**A1 (Google-prijava) + A0 (prepravak dijaloga) idu ZAJEDNO** — `#authModal` je građen za jedan
-put, pa se inače prepravlja dvaput. **Oboje TEK POSLIJE SEOBE** (auth je Supabase-konfiguracija;
-seoba mijenja URL, a time i redirect URI). Redoslijed unutar para nije presuđen i nije važan.
+**A1 (Google-prijava) + A0 (prepravak dijaloga) idu ZAJEDNO** — `#authModal` je građen za
+jedan put, pa se inače prepravlja dvaput. **Blokada „poslije seobe" je PALA sa seobom**
+(2026-09-01, niže) → par ide **poslije deploya redizajna**, i **A0 nosi i UPITNIK pri
+registraciji** (tko si/faks + mail-pristanak — Leonove želje 2026-09-01, `BACKLOG.md` §RAČUN;
+inače se dijalog prepravlja TREĆI put).
 
-### 🚚 SEOBA — **ODGOĐENA ~MJESEC DANA (Leon, 2026-08-31)** · SAMO Supabase; Vercel OSTAJE
+### 🚚 SEOBA — **OTKAZANA (Leon, 2026-09-01: *„Nastavlja Supabase do daljnjeg"*)**
 
-⚠️ **NE PLANIRATI U SLJEDEĆIM SESIJAMA** — ciljano **~kraj rujna 2026**, na Leonov laptop;
-priprema stroja je **njegova ruka**. Do tada sve vrijeme ide u cigle. **Obrazloženje, Leonovi
-citati, računica o VPS-u i pet stavki pred seobu: `BACKLOG.md` §SELF-HOST** — čitaju se tek kad
-seoba krene. Dva pravila koja vrijede **već sada**:
-⚠️ **anon-ključ i URL su u `js/auth.js`, koji preglednik drži godinu dana** (ADR-017) → stari
-projekt mora živjeti **~2 tjedna nakon** seobe. **Testovi su uvjet, ne dodatak.**
-⚠️ Kad dođe na red, **provjeriti vrijedi li još izvorni razlog** (*„prije nego faks krene"*).
+Supabase (i Vercel) ostaju; **Pro se nastavlja plaćati do daljnjeg** → nema free-tier
+spavanja ni pada server-side lozinka-brana. `BACKLOG.md` §SELF-HOST je time **arhiviran
+zapis odluke**, ne plan. Posljedica: OAuth/redirect-URI više ništa ne čeka.
 
 ### 🎯 TEKUĆA FAZA = **FRONTEND REDIZAJN** — spec: `docs/plan/FRONTEND_REDIZAJN.md`
 
@@ -275,15 +273,15 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
 - **HR-ekspanzija:** HR 1. god × 3 smjera FMTU dijele vezne predmete (ADR-022). Kad HR program
   bude potpun → **HR u Supabase** (Leon/Claude `migrate-content.js`, ne Saša). [[hrv-program]]
 - **PAUZIRANO za nas:** 3. godina · novi EN sadržaj (ADR-018: student uploada PODATKE, nikad KOD).
-- ⚠️ **Min. lozinka 8 (server-side) ovisi o Pro planu** — poslije seobe provjeri; leaked-password
-  ima klijentski dvojnik (D4, `js/auth.js`) koji seobu preživljava.
+- **Min. lozinka 8 (server-side) + leaked-password** vrijede dok je Pro (odluka 2026-09-01:
+  ostaje); klijentski dvojnik (D4, `js/auth.js`) svejedno stoji.
   ⚠️ **NE „popravljaj" `js/auth.js:343`** — tvrdnja o `WeakPasswordError` je **oborena**: u
   zakucanom `supabase-js@2.110.8` slaba lozinka dolazi kao `data.weakPassword` uz `error: null`.
 - **Sitni dug (ne blokira):** siročad u Storageu · staging poravnati s `supabase/f1-nodes.sql` ·
   `set_updated_at` ima promjenjiv `search_path` (jedini sigurnosni WARN koji nije namjeran). ⚠️ **`is_admin()` se NE smije
   revokeati `authenticated`-u** — zovu ga RLS politike kao pozivatelj.
-- **Napomene:** ⚠️ **Supabase org je `pro` do ~kraja rujna 2026** — dotad nema free-tier spavanja
-  (~7 dana neaktivnosti); **istek se poklapa sa seobom**, to je ista računica · `content_versions`/`node_content_versions` = **append-only audit**,
+- **Napomene:** **Supabase org je `pro` i NASTAVLJA SE PLAĆATI do daljnjeg** (Leon,
+  2026-09-01) — free-tier spavanje nije prijetnja dok se plaća · `content_versions`/`node_content_versions` = **append-only audit**,
   brisanje **samo uz izričit OK** · PWA drži staru ikonu do reinstalacije (nije bug) ·
   `mcp-admin/` = untracked read-only spike [[mcp-admin-spike]].
 
@@ -292,7 +290,7 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
 > Puni tekst i sve starije: **`docs/records/DECISIONS.md` (ADR-001…033)**.
 > Ovdje su ADR-ovi koji su **živa ograničenja**, ne povijesno obrazloženje.
 
-- **ADR-031:** **MCP je CJEVOVOD, ne CRUD** (Leon, 2026-08-30): `Learn` je podloga svega → AI prvo prepozna lekcije/sekcije i napiše skriptu → iz nje kartice (**pojam/pitanje → objašnjenje**, boja po lekciji da se vidi kojoj pripada) → iz kartica dopune i kviz, uz **pokrivenost, ne uzorak**. **AI je KORISNIKOV** (ne plaćamo tokene → kvalitetu držimo samo branama), **materijal dolazi kroz chat** (datoteku nikad ne vidimo), **sve ide u NACRT**, doseg = **samo vlastito gradivo** (ni čitanje kataloga). **Četiri tvrde brane u write-putu:** duljina kartice · svaka kartica daje bar jedno pitanje · svaka lekcija dobiva boju · dopuna ima jednoznačan odgovor. **Radi se TEK NAKON FRONTENDA**, a konektor traži OAuth → **tek nakon seobe**.
+- **ADR-031:** **MCP je CJEVOVOD, ne CRUD** (Leon, 2026-08-30): `Learn` je podloga svega → AI prvo prepozna lekcije/sekcije i napiše skriptu → iz nje kartice (**pojam/pitanje → objašnjenje**, boja po lekciji da se vidi kojoj pripada) → iz kartica dopune i kviz, uz **pokrivenost, ne uzorak**. **AI je KORISNIKOV** (ne plaćamo tokene → kvalitetu držimo samo branama), **materijal dolazi kroz chat** (datoteku nikad ne vidimo), **sve ide u NACRT**, doseg = **samo vlastito gradivo** (ni čitanje kataloga). **Četiri tvrde brane u write-putu:** duljina kartice · svaka kartica daje bar jedno pitanje · svaka lekcija dobiva boju · dopuna ima jednoznačan odgovor. **Radi se TEK NAKON FRONTENDA**, a konektor traži OAuth → čeka **RAČUN blok** (seoba otkazana 2026-09-01, OAuth više ne čeka nju).
 - **ADR-030:** **AI kroz MCP je GLAVNI put stvaranja; editor je DORADA** (Leon, 2026-08-13) — smije IZGUBITI funkcije, ne dobiti ih. MCP je proizvod, ne spike (danas untracked read-only pokus), i najveći neriješeni komad plana; **kontrola kvalitete seli s ekrana u write-put** (`js/card-limits.js` = **treći čitatelj, nikad treća kopija**); nikad katalog/`is_admin()`/`service_role`; **vježbe izvan MCP-a** (ADR-018).
 
 - **ADR-029:** **UGC je GLAVNI proizvod**, javni katalog (24 predmeta) je **jedan izvor gradiva**, ne srce platforme. „Moji materijali" prestaju biti pododjeljak profila i postaju **ravnopravno odredište** (stranica + ulaz u navigaciji i na landingu). **Ne popušta ništa sigurnosno** — ADR-024/025/018 stoje netaknuti; ovo je odluka o **istaknutosti**. **➕ Dopuna 2026-08-14:** *„UGC PRIJE kataloga"* ublaženo u **„ravnopravno, i to u herou"** — doslovna primjena skrivala je jedini dokaz da sadržaja ima. **Ublažavanje, ne ispunjenje.**

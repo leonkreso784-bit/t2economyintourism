@@ -13,6 +13,25 @@
 > Njihovi zapisi ostaju **ovdje i nedirnuti** jer nose obrazloženje i mjerenja; spec nosi **redoslijed
 > i dokaz**. Kad cigla padne, ovdje se stavlja ✅ s brojkom — ne briše se.
 
+### 🔐 RAČUN blok — Leonove želje 2026-09-01 (poslije deploya redizajna; seoba otkazana pa ništa ne čeka rujan)
+
+Leon (2026-09-01): Google prijava · Facebook prijava · *„povećanje cijelog profila"* (profilna
+slika, uređivanje profila i izgleda) · slanje mejlova korisnicima · *„pri registraciji korisnik
+dobije neki upitnik da znamo tko je"* · FMTU-korisnici dobivaju obavijesti o novim predmetima.
+
+**Dogovoreni redoslijed (razgovor 2026-09-01):**
+1. **A0 + upitnik + Google (A1)** — jedan prepravak `#authModal` nosi SVE TROJE (dijalog je
+   građen za jedan put; upitnik = i temelj segmentacije i mail-pristanka). Redirect URI na
+   postojećem projektu (seoba otkazana).
+2. **Profil**: avatar (bucket po obrascu `node-images` — vlasnički prefiks + RLS), bio,
+   uređivanje; `display_name` već postoji. Podloga je svježa (C6/4).
+3. **Mail-obavijesti**: vanjski provider + Edge Function (ADR-016: ključ NIKAD u klijent) +
+   izričit pristanak iz upitnika; segment „FMTU" → obavijest o novom predmetu.
+- **Facebook**: uvjetno — isti Supabase posao kao Google, ali traži Metin app-review; radi se
+  tek ako ga stvarni korisnici zatraže (Google im je zadani).
+⚠️ Napomena uz zapisanu odluku „OAuth: NE zasad" (2026-08-30, razlog: nula vanjskih
+korisnika): Leon ju je 2026-09-01 OVIM željama otvorio — okidač ostaje deploy + prvi korisnici.
+
 ### 🔍 Sidebar predmeta je NEDOSTIŽAN — `openSidebar()` nitko ne zove (C6/2, 2026-09-01)
 
 Panel `#subjectsSidebar` se renderira (17 predmeta, i18n ga re-renderira), ima close-gumb,
@@ -720,7 +739,7 @@ provedba **ne može** dobiti bez proxyja — to nije propust izvedbe nego svojst
 
 ---
 
-## 🚚 SELF-HOST SUPABASE — **ODGOĐENO ZA ~MJESEC DANA (Leon, 2026-08-31)** · SAMO backend
+## 🚚 SELF-HOST SUPABASE — **⚰️ OTKAZANO (Leon, 2026-09-01: „Nastavlja Supabase do daljnjeg!")** — zapis ispod je ARHIVA odluke, ne plan; Pro se nastavlja plaćati
 
 > ### ⛔ NE PLANIRATI U SLJEDEĆIM SESIJAMA — ovo više NIJE „radi se odmah"
 > **Leon, 2026-08-31:** *„ma ne, to ću na kraju mjeseca, sada oću iskoristit vrijeme da što više

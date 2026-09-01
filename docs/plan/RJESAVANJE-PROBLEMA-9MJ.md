@@ -704,15 +704,13 @@ Da se opseg ne razlije — a razlijevanje je ovdje najveći rizik:
 | **Katalog nevidljiv tražilici** (hash-rute) | traži prelazak na prave URL-ove — dira SW i navigaciju. **Odluka, ne popravak**; ne planira se ovdje |
 | **Birač tema** | ➖ backlog |
 | **MCP** (ADR-030/031) · **recepti za vježbe** | izgradnja, tek nakon frontenda |
-| **A1 Google-prijava + A0 dijalog** | tek **nakon seobe** (mijenja redirect URI) |
+| **A1 Google-prijava + A0 dijalog** | RAČUN blok poslije deploya redizajna (seoba otkazana 2026-09-01) |
 
 ---
 
 ## 11 · Rokovi koji ne čekaju plan
 
-⚠️ **Supabase Pro istječe ~kraj rujna 2026, a seoba je odgođena na ~kraj rujna 2026.** To je isti
-tjedan. Istekne li Pro prije seobe: vraća se free-tier spavanje (~7 dana neaktivnosti), a serverska
-minimalna duljina lozinke i Supabaseova leaked-password zaštita padaju.
-
-**D4 to djelomično amortizira** (klijentska provjera radi bez obzira na plan), ali ne u cijelosti.
-**Odluka je Leonova i traži se prije nego rujan istekne**, ne poslije.
+~~⚠️ Supabase Pro istječe ~kraj rujna 2026, a seoba je odgođena na ~kraj rujna 2026…~~
+**ODGOVORENO 2026-09-01 (Leon): seoba OTKAZANA, Pro se NASTAVLJA plaćati do daljnjeg** —
+free-tier spavanje nije prijetnja, server-side lozinka-brane ostaju. (D4 klijentski dvojnik
+svejedno stoji.)

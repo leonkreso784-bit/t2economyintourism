@@ -14,6 +14,18 @@ Sljedeca cigla: C5b/2 (blind-map.css), pa C5b/3 (learn.css).
 
 ---
 
+## 2026-09-01 (FABLE) — ODLUKE: seoba OTKAZANA (Pro ostaje), RACUN blok zapisan
+
+Leon: "Nastavlja Supabase do daljnjeg!" — seoba otkazana, Pro se placa dalje (nema free-tier
+rizika, server-brane lozinke ostaju). Time je pala i JEDINA blokada za A0+A1. Leonove zelje
+istog dana (Google/FB prijava, profil s avatarom i uredjivanjem, mejlovi, upitnik pri
+registraciji, FMTU obavijesti) zapisane kao BACKLOG §RACUN s dogovorenim redoslijedom:
+A0+upitnik+Google u JEDNOM prepravku dijaloga -> profil -> mail; FB uvjetno. Azurirano 6
+dokumenata koji su tvrdili "poslije seobe". Sljedeca sesija: ZAVRSITI FRONTEND (Leonov
+pregled + deploy-paket).
+
+---
+
 ## 2026-09-01 (FABLE) — C7/5: most mrtav, ali gradivo cuva dva imena — C7 ZATVOREN
 
 990 var() poziva preimenovano na tokene (redoslijed najduzi-prvi + terminator-guard; cuvar
