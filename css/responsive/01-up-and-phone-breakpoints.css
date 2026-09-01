@@ -37,56 +37,6 @@
         padding: 2rem;
     }
     
-    .hero h1 {
-        font-size: 2rem;
-    }
-    
-    .subtitle {
-        font-size: 1.1rem;
-    }
-    
-    .stats-overview {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1.5rem;
-    }
-    
-    .stat-card {
-        padding: 1.5rem;
-    }
-    
-    .stat-card i {
-        font-size: 2rem;
-    }
-    
-    .stat-card h3,
-    .stat-card .stat-number {
-        font-size: 2rem;
-    }
-    
-    .stat-card p {
-        font-size: 0.9rem;
-    }
-    
-    .categories {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .category-btn {
-        flex-direction: column;
-        text-align: center;
-        padding: 1.5rem;
-    }
-    
-    .category-btn i {
-        font-size: 2rem;
-        width: auto;
-    }
-    
-    .quick-actions {
-        flex-direction: row;
-        justify-content: center;
-    }
-    
     .action-btn {
         width: auto;
     }
@@ -98,17 +48,6 @@
 
 /* ===== RESPONSIVE - DESKTOP (1024px+) ===== */
 @media (min-width: 1024px) {
-    .hero h1 {
-        font-size: 2.5rem;
-    }
-    
-    .subtitle {
-        font-size: 1.2rem;
-    }
-    
-    .categories {
-        grid-template-columns: repeat(3, 1fr);
-    }
 }
 
 /* ===== RESPONSIVE - LARGE DESKTOP (1200px+) ===== */
@@ -120,41 +59,6 @@
 
 /* ===== SMALL PHONES (320px-374px) - iPhone SE, older devices ===== */
 @media (max-width: 374px) {
-    .hero h1 {
-        font-size: 1.3rem;
-    }
     
-    .stat-card h3,
-    .stat-card .stat-number {
-        font-size: 1.25rem;
-    }
-    
-    .category-btn span {
-        font-size: 0.8rem;
-    }
-    
-    
-}
-
-/* ===== iPhone 14/15/16 (390px) ===== */
-@media (min-width: 390px) and (max-width: 427px) {
-    .hero h1 {
-        font-size: 1.6rem;
-    }
-}
-
-/* ===== iPhone 14/15/16 Pro Max & Plus (428px+) ===== */
-@media (min-width: 428px) and (max-width: 767px) {
-    .stats-overview {
-        gap: 1rem;
-    }
-    
-    .stat-card {
-        padding: 1.25rem;
-    }
-    
-    .hero h1 {
-        font-size: 1.75rem;
-    }
 }
 

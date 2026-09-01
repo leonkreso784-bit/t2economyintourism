@@ -4,13 +4,6 @@
         padding-bottom: calc(var(--safe-bottom) + 60px);
     }
     
-    .hero {
-        padding: 0.5rem 0;
-    }
-    
-    .stats-overview {
-        grid-template-columns: repeat(4, 1fr);
-    }
 }
 
 /* ===== HOVER STATES - Only for devices that support hover ===== */

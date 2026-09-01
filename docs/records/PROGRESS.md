@@ -14,6 +14,20 @@ Sljedeca cigla: C5b/2 (blind-map.css), pa C5b/3 (learn.css).
 
 ---
 
+## 2026-09-01 (FABLE) — C6 mjera + C6/1: home-ljestva iz pet datoteka — i pola ljestve bilo mrtvo
+
+Prvo mjera cijelog C6 (spec §13): kljucni nalaz — pravne stranice NE ucitavaju bundle, pa
+legal/consent.css NE migriraju (utility bi na index radio a na pravnima tiho pao; jedna
+datoteka, dva svijeta). Onda C6/1: winner-mapa u pregledniku PRIJE koda pokazala da je home
+zapravo dva rezima + jedna stepenica — cijela iPhone-gradacija (374/390-427/428-767) mrtva od
+prvog dana, a #home ID iz 06 gazio je 01-ovu 1024-stepenicu. Tri pouke: mjerac je 13. put bio
+prvi kvar (snimao usred transition-animacije koju okine resize); brisanje pobjednika uskrsava
+gubitnika (04 quick-actions -> 02 bi ozivio); landscape-guard <=767 je izmjerena istina jer je
+ID tukao landscape na sirokima. Dokaz: winner-mapa 2548/0, css:diff home+kviz 28008/0 (kviz =
+cuvar za dijeljeni .action-btn koji NAMJERNO nije seljen), telefon 10/10, preflight 0.
+
+---
+
 ## 2026-09-01 (FABLE) — C5b/3b: learn skela u utilityje — mjera prije koda srezala opseg na cetvrtinu
 
 Prije koda izmjereno STO SMIJE migrirati: 43 pravila su tipografija nad markupom iz podataka

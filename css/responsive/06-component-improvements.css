@@ -3,36 +3,11 @@
    Added for better tablet and large phone support
    ===================================================== */
 
-/* ===== CATEGORIES RESPONSIVE GRID ===== */
-@media (min-width: 480px) {
-    .categories {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
+/* ===== ACTION BUTTONS (dijeli ih i ekran rezultata kviza — NE selimo u home, C6/1) ===== */
 @media (min-width: 768px) {
-    .categories {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .stats-overview {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    
-    .quick-actions {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-    
     .action-btn {
         flex: 1;
         min-width: 200px;
-    }
-}
-
-@media (min-width: 1024px) {
-    .categories {
-        grid-template-columns: repeat(4, 1fr);
     }
 }
 
@@ -58,17 +33,6 @@
     
     .subject-item-info p {
         font-size: 0.9rem;
-    }
-}
-
-/* ===== STUDY PAGE CONTENT CENTERING ===== */
-@media (min-width: 768px) {
-    #home .hero {
-        padding: 2rem;
-    }
-    
-    #home .hero h1 {
-        font-size: 2rem;
     }
 }
 

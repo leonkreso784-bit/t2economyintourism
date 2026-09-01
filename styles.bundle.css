@@ -1857,10 +1857,11 @@ sokrat-modal.sokrat-confirm-modal > * {
 }
 .hero {
   text-align: center;
-  padding: 1rem 0;
+  padding: 0.75rem 0;
 }
 .hero h1 {
   font-size: 1.5rem;
+  padding: 0 0.5rem;
   margin-bottom: 0.5rem;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
   -webkit-background-clip: text;
@@ -1870,13 +1871,15 @@ sokrat-modal.sokrat-confirm-modal > * {
 }
 .subtitle {
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  padding: 0 0.5rem;
   margin-bottom: 1.5rem;
 }
 .stats-overview {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem;
+  gap: 0.6rem;
+  padding: 0 0.25rem;
   margin-bottom: 2rem;
 }
 .stat-card {
@@ -1891,19 +1894,19 @@ sokrat-modal.sokrat-confirm-modal > * {
   box-shadow: var(--shadow-lg);
 }
 .stat-card i {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: var(--primary);
   margin-bottom: 0.25rem;
 }
 .stat-card h3, .stat-card .stat-number {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: var(--text-primary);
   display: block;
 }
 .stat-card p {
   color: var(--text-muted);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
 }
 .category-selector {
   margin-bottom: 2rem;
@@ -1944,9 +1947,9 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--on-primary);
 }
 .category-btn i {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: var(--primary);
-  width: 40px;
+  width: 35px;
   text-align: center;
   flex-shrink: 0;
 }
@@ -1978,6 +1981,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  padding: 1rem;
 }
 .action-btn {
   padding: 1rem 1.5rem;
@@ -2018,6 +2022,85 @@ sokrat-modal.sokrat-confirm-modal > * {
 .action-btn.tertiary {
   background: linear-gradient(135deg, var(--success), var(--secondary));
   color: var(--on-success);
+}
+@media (max-width: 767px) {
+  .stat-card {
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+  .category-btn {
+    min-height: 70px;
+  }
+}
+@media (max-height: 500px) and (orientation: landscape) and (max-width: 767px) {
+  .hero {
+    padding: 0.5rem 0;
+  }
+  .stats-overview {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (min-width: 480px) {
+  .categories {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 768px) {
+  .hero {
+    padding: 2rem;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    padding: 0;
+  }
+  .subtitle {
+    font-size: 1.1rem;
+    padding: 0;
+  }
+  .stats-overview {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding: 0;
+  }
+  .stat-card {
+    padding: 1.5rem;
+  }
+  .stat-card i {
+    font-size: 2rem;
+  }
+  .stat-card h3, .stat-card .stat-number {
+    font-size: 2rem;
+  }
+  .stat-card p {
+    font-size: 0.9rem;
+  }
+  .categories {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .category-btn {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+  }
+  .category-btn i {
+    font-size: 2rem;
+    width: auto;
+  }
+  .quick-actions {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .subtitle {
+    font-size: 1.2rem;
+  }
+  .categories {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 .flashcard-container h1 {
   font-size: 1.3rem;
@@ -4179,44 +4262,6 @@ sokrat-modal.sokrat-confirm-modal > * {
   .main-content {
     padding: 2rem;
   }
-  .hero h1 {
-    font-size: 2rem;
-  }
-  .subtitle {
-    font-size: 1.1rem;
-  }
-  .stats-overview {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-  }
-  .stat-card {
-    padding: 1.5rem;
-  }
-  .stat-card i {
-    font-size: 2rem;
-  }
-  .stat-card h3, .stat-card .stat-number {
-    font-size: 2rem;
-  }
-  .stat-card p {
-    font-size: 0.9rem;
-  }
-  .categories {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .category-btn {
-    flex-direction: column;
-    text-align: center;
-    padding: 1.5rem;
-  }
-  .category-btn i {
-    font-size: 2rem;
-    width: auto;
-  }
-  .quick-actions {
-    flex-direction: row;
-    justify-content: center;
-  }
   .action-btn {
     width: auto;
   }
@@ -4224,47 +4269,9 @@ sokrat-modal.sokrat-confirm-modal > * {
     bottom: 2rem;
   }
 }
-@media (min-width: 1024px) {
-  .hero h1 {
-    font-size: 2.5rem;
-  }
-  .subtitle {
-    font-size: 1.2rem;
-  }
-  .categories {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
 @media (min-width: 1200px) {
   .main-content {
     padding: 2rem 3rem;
-  }
-}
-@media (max-width: 374px) {
-  .hero h1 {
-    font-size: 1.3rem;
-  }
-  .stat-card h3, .stat-card .stat-number {
-    font-size: 1.25rem;
-  }
-  .category-btn span {
-    font-size: 0.8rem;
-  }
-}
-@media (min-width: 390px) and (max-width: 427px) {
-  .hero h1 {
-    font-size: 1.6rem;
-  }
-}
-@media (min-width: 428px) and (max-width: 767px) {
-  .stats-overview {
-    gap: 1rem;
-  }
-  .stat-card {
-    padding: 1.25rem;
-  }
-  .hero h1 {
-    font-size: 1.75rem;
   }
 }
 @media (max-width: 767px) {
@@ -4272,20 +4279,6 @@ sokrat-modal.sokrat-confirm-modal > * {
     padding: 0.875rem 1.5rem;
     font-size: 0.95rem;
     width: 100%;
-  }
-  .categories {
-    gap: 0.75rem;
-  }
-  .category-btn {
-    padding: 1rem;
-    min-height: 70px;
-  }
-  .category-btn i {
-    font-size: 1.25rem;
-    width: 35px;
-  }
-  .category-btn span {
-    font-size: 0.9rem;
   }
   .about-content {
     padding: 1rem;
@@ -4301,37 +4294,6 @@ sokrat-modal.sokrat-confirm-modal > * {
   .main-content {
     padding: 0.75rem;
     padding-bottom: calc(0.75rem + 70px + var(--safe-bottom));
-  }
-  .hero {
-    padding: 0.75rem 0;
-  }
-  .hero h1 {
-    font-size: 1.5rem;
-    padding: 0 0.5rem;
-  }
-  .subtitle {
-    padding: 0 0.5rem;
-    font-size: 0.9rem;
-  }
-  .stats-overview {
-    padding: 0 0.25rem;
-    gap: 0.6rem;
-  }
-  .stat-card {
-    padding: 0.875rem;
-  }
-  .stat-card i {
-    font-size: 1.25rem;
-  }
-  .stat-card h3, .stat-card .stat-number {
-    font-size: 1.4rem;
-  }
-  .stat-card p {
-    font-size: 0.7rem;
-  }
-  .quick-actions {
-    padding: 0 0.25rem;
-    gap: 0.6rem;
   }
   .action-btn {
     padding: 0.875rem 1rem;
@@ -4356,12 +4318,6 @@ sokrat-modal.sokrat-confirm-modal > * {
 @media (max-height: 500px) and (orientation: landscape) {
   body {
     padding-bottom: calc(var(--safe-bottom) + 60px);
-  }
-  .hero {
-    padding: 0.5rem 0;
-  }
-  .stats-overview {
-    grid-template-columns: repeat(4, 1fr);
   }
 }
 @media (hover: hover) and (pointer: fine) {
@@ -4562,12 +4518,6 @@ sokrat-modal.sokrat-confirm-modal > * {
   .category-info p {
     font-size: 0.8rem;
   }
-  .quick-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 1rem;
-  }
   .quick-action-card {
     flex-direction: row;
     padding: 1rem;
@@ -4586,13 +4536,6 @@ sokrat-modal.sokrat-confirm-modal > * {
     flex-direction: column;
     gap: 0.75rem;
     padding: 1rem;
-  }
-  .stat-card {
-    padding: 1rem;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
   }
   .stat-value {
     font-size: 1.5rem;
@@ -4721,33 +4664,11 @@ sokrat-modal.sokrat-confirm-modal > * {
     padding: 0;
   }
 }
-@media (min-width: 480px) {
-  .categories {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 @media (min-width: 768px) {
-  .categories {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .stats-overview {
-    grid-template-columns: repeat(4, 1fr);
-  }
-  .quick-actions {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
   .action-btn {
     flex: 1;
     min-width: 200px;
   }
-}
-@media (min-width: 1024px) {
-  .categories {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-@media (min-width: 768px) {
   .subjects-sidebar {
     max-width: 450px;
   }
@@ -4764,12 +4685,6 @@ sokrat-modal.sokrat-confirm-modal > * {
   }
   .subject-item-info p {
     font-size: 0.9rem;
-  }
-  #home .hero {
-    padding: 2rem;
-  }
-  #home .hero h1 {
-    font-size: 2rem;
   }
 }
 @media (max-width: 767px) and (hover: none) and (pointer: coarse) {

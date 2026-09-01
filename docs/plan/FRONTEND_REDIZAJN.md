@@ -5204,3 +5204,128 @@ Slijedi **C6** po §3 tablici.
 ⚠️ **Ostaje svjesno otvoreno:** ~~`--border-color`~~ (**✅ riješen u MREŽI B1, 2026-08-31** —
 `var(--border)` + brana `check:tokens`) · kolačić-traka je ~280 ms ispod AA **dok ulazi**
 (WCAG sudi konačno stanje, `prefers-reduced-motion` to gasi — čeka Leonovu odluku).
+
+## 13 · C6 — profil, auth, pravne, consent, about, home, sidebar (mjera napravljena 2026-09-01)
+
+> **Mjera prije koda, kao §12 za C5b.** Sve brojke su izmjerene; ništa nije dirano.
+
+### 13.0 Što C6 stvarno drži
+
+| datoteka | redaka | blokova | `!important` | vlastiti pragovi | pravila o njoj u `responsive/*` |
+|---|---|---|---|---|---|
+| `profile.css` | 504 | 130 | 0 | `640` | 1 |
+| `auth.css` | 233 | 37 | 0 | `640` | 1 |
+| `legal.css` | 136 | 24 | 0 | `480` | 0 |
+| `consent.css` | 155 | 23 | 0 | `560` + reduced-motion | 0 |
+| `pages.css` (about) | 321 | 35 | 0\* | **`max-height: 700`** | 3 |
+| `home-section.css` | 157 | 29 | 0 | **nijedan** | **32 — u PET datoteka** |
+| `sidebar.css` | 188 | 25 | 0 | nijedan | 8 |
+
+\* jedini „pogodak" je riječ u komentaru. Paleta je na **0** u svih sedam (C4), pa rizik nije
+boja nego **kaskada i doseg** — kao u C5a.
+
+### 13.1 🔴 GLAVNI NALAZ: pravne stranice NE UČITAVAJU bundle — utility ondje NE POSTOJI
+
+`privacy/terms/faq/contact.html` učitavaju **samo** `tokens.static.css` + `legal.css` +
+`consent.css`. Tailwind bundle ondje nema, pa utility napisan u tom markupu **ne radi ništa** —
+isti razred tihog promašaja kao `#learn` u §12.1, samo iz suprotnog smjera (klasa bez definicije
+umjesto definicije koju tuče ID). **Posljedica, mjerena a ne pretpostavljena:**
+
+- **`legal.css` NE MIGRIRA na utilityje** — nema bundlea koji bi ih dao. Sudbina = C7 (tokeni su
+  već čisti).
+- **`consent.css` NE MIGRIRA** iz jačeg razloga: banner živi u **OBA svijeta** (aplikacija s
+  bundleom + pravne stranice bez njega), a markup mu crta `js/consent.js` — jedan izvor. Utility
+  bi radio na `index.html` i **tiho pao na pravnima**. Jedna datoteka, dva svijeta → ostaje CSS.
+- Dovući bundle na pravne stranice NIJE lijek nego regresija (216 KB CSS-a za stranicu teksta) —
+  i odluka o performansama koju nitko nije tražio.
+
+### 13.2 Home-sekcija je C5a-klasa posla: ljestvu drži PET datoteka, i dvije su u ratu
+
+`home-section.css` nema **nijedan** vlastiti upit — cijelu responzivnost drže `responsive/01–04`
+i `06`: pragovi **768 · 1024 · ≤374 · 390–427 · 428–767 · ≤767 · max-height 500 landscape ·
+hover/pointer**. Uz to `06` piše **`#home .hero`** (ID, 1-1-0) preko golih `.hero` pravila iz
+`01`/`02` — **isti rat dviju ljestvi kao lekcije u C4b (NALAZ 2)**, gdje je na svakoj širini
+pobjeđivala mješavina koju nijedna ljestva nije opisivala. ⚠️ Izmjereno i razgraničeno: golu
+`.hero` klasu ima SAMO `#home` tab (landing koristi `hero-*` prefikse iz C2) — doseg rata je
+jedan ekran.
+
+### 13.3 Dokazi po površini — tko se kako mjeri
+
+| površina | ruta/put | napomena |
+|---|---|---|
+| home (tab studija) | `#/subject/te2/first-midterm` | anon; tab `home` je zadani |
+| about | `#/about` | anon |
+| sidebar | bilo koja ruta + **`CSS_DIFF_KLIK`** na gumb koji ga otvara | overlay/panel postoje statički, ali `active` stanje nastaje klikom (§12.9 kvar ③) |
+| auth-modal | landing + **`CSS_DIFF_KLIK`** na login | modal je statički markup u `index.html` |
+| profil | ⚠️ **auth-gated** — `css:diff` ga anon otvori prisilno (markup je statički), ali podataka nema; ponašajni dokaz ide kroz `phone.authed.spec.js` / `layout.authed.spec.js` | |
+| pravne | zaseban HTML, **bez bundlea** (§13.1) | ne migriraju |
+
+### 13.4 Predložena podjela na cigle (mjera je nosi, ne naredba)
+
+- **C6/1 — home-sekcija**: skupi ljestvu iz 5 datoteka uz komponentu, razriješi rat `#home .hero`
+  vs `.hero` (izmjeri TKO danas pobjeđuje na svakoj širini PRIJE reza — pouka C5a/1 ①).
+- **C6/2 — sidebar**: 8 pravila iz `responsive/04–06`; klik-stanje u dokaz.
+- **C6/3 — about** (`pages.css`): najveći stanar; `max-height: 700` upit ostaje po pravilu ②;
+  toast + footer u datoteci NISU C6 (C7, §10.3).
+- **C6/4 — profil + auth**: vlastiti `640` upiti ostaju (pravilo ②); dokaz za profil authed.
+- **legal + consent: NE MIGRIRAJU** (§13.1) — izlaz C6 ih imenuje kao mjerom isključene.
+
+### 13.5 Što C6 NE dira
+
+- **Birač tema** — Leonova otvorena odluka („ne planira se prešutno", §9.17); C6 ga samo
+  ODBLOKIRAVA (fatalna pravila su ionako pala u C4 na 0).
+- **A0 (prepravak auth-dijaloga)** — ide s A1 poslije seobe; C6/4 mijenja jezik postojećeg
+  dijaloga, ne njegov oblik.
+- Pitanja pri registraciji (shema → SQL = Leonova ruka, §5 C6-odgode).
+
+### 13.6 ✅ C6/1 — home-sekcija: ljestva iz PET datoteka skupljena, i pola stare ljestve bilo je MRTVO (2026-09-01)
+
+**Winner-mapa PRIJE koda** (14 viewporta × 13 elemenata × 14 svojstava, u pregledniku): istina se
+pokazala jednostavnom — **dva režima** (≤767 i ≥768) + jedna 1024-stepenica (`subtitle`,
+`categories`) + kratki landscape. Sav ostali „raspon" bio je privid:
+
+- **Cijela iPhone-gradacija u `01`** (≤374 · 390–427 · 428–767) **MRTVA od prvog dana** — `02`
+  ju je tukao redoslijedom na svakoj širini. Isti razred kao C4b NALAZ 2.
+- `01` @1024 `hero h1 { 2.5rem }` mrtav — `#home .hero h1` **ID iz `06`** držao 2 rem na svim
+  širinama ≥768. `04` je tukao `02` za `.stat-card`/`.quick-actions` (1 rem, ne 0.875).
+- ⚠️ §13.2 je brojao **32 pravila** — pregruba mreža: pobjeglo joj je `.categories`
+  (vlastita ljestva 480/768/1024 u `06`!) i `.quick-actions`. Stvarno obrisano:
+  **50 blokova, −223 retka** kroz 5 datoteka.
+
+**Rez:** sve home-jedinstveno (hero · subtitle · stats · stat-card · categories · category-btn ·
+quick-actions) sada živi u `home-section.css` — baze prepisane na **mobilne pobjednike** (mrtve
+bazne vrijednosti tipa `hero padding 1rem 0` nisu uskrsavane), ljestva kao mobile-first blokovi.
+**`.action-btn` NAMJERNO ostaje razasut** — dijeli ga ekran rezultata kviza (izmjereno), pa bi
+selidba mijenjala tuđu površinu; njegova konsolidacija ide s C7. Hover-politika (`03`) i coarse
+touch-target (`06`) ostaju gdje jesu — stoje IZA `home-section.css` u snopu pa dobivaju iste
+bitke kao dosad.
+
+#### 🐞 Tri nalaza — mjerač, uskrsnuće i ID-zamka
+
+**① Mjerač je bio prvi kvar TRINAESTI put:** prva winner-mapa pokazala je „fluidne" vrijednosti
+(20.6034 px…) kojih NEMA ni u jednom pravilu — snimka je hvatala stilove **usred
+`transition: all 0.3s`** animacije koju okine resize viewporta. Lijek = zamrznuti tranzicije
+prije mjerenja (isto što `css:diff` već radi). *Mjerač koji dijeli animacijski sat s onim što
+mjeri, mjeri animaciju.*
+
+**② Brisanje pobjednika uskrsava gubitnika:** `04` `.quick-actions { padding: 1rem }` obrisan →
+`02` `.quick-actions { padding: 0 0.25rem }`, mrtav godinama, počeo bi POBJEĐIVATI. Uhvaćeno
+prije builda; obrisana su oba. *Obrnuta strana C4b NALAZA 1 — popis onoga što brišeš mora
+uključiti i sve što je od toga GUBILO.*
+
+**③ Landscape-guard je izmjerena istina, ne ukras:** `03`-ov kratki landscape vrijedio je na
+svim širinama, ali ga je ≥768 tukao `#home` ID iz `06`. Bez ID-a to reproducira jedino
+`(max-height: 500px) and (orientation: landscape) and (max-width: 767px)` — media-uvjet se
+promijenio da bi se PRIKAZ očuvao.
+
+#### Dokaz
+
+| mjera | rezultat |
+|---|---|
+| winner-mapa prije/poslije (14 viewporta, tranzicije zamrznute) | **2548 usporedbi, 0 razlika** |
+| `css:diff` — home ruta **+ kviz ruta** (čuvar za `.action-btn`) × 9 viewporta (uklj. **480** granicu i **900×420** široki-kratki landscape) | **28 008 usporedbi, 0 razlika** |
+| telefon-brana (coarse pointer — `06` touch-target rat) | **10/10**, prazna osnovica |
+| `preflight` | **EXIT 0** |
+
+`responsive/*` **−223 retka** (96+60+7+16+44); `home-section.css` je sada jedina istina o
+home-ljestvi. Slijedi **C6/2** (sidebar).

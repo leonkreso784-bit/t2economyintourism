@@ -2,13 +2,18 @@
    HOME SECTION
    ===================================================== */
 
+/* C6/1 (2026-09-01): ljestva skupljena iz responsive/01+02+03+04+06 — vrijednosti su
+   IZMJERENI pobjednici po sirini (winner-mapa u specu §13), ne prepisana pravila:
+   dobar dio stare ljestve (cijela iPhone-gradacija 374/390-427/428-767 iz 01) bio je
+   MRTAV jer ga je 02 tukao redoslijedom. Mrtvi gubitnici se NE uskrsavaju (§10.3). */
 .hero {
     text-align: center;
-    padding: 1rem 0;
+    padding: 0.75rem 0;
 }
 
 .hero h1 {
     font-size: 1.5rem;
+    padding: 0 0.5rem;
     margin-bottom: 0.5rem;
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     -webkit-background-clip: text;
@@ -19,14 +24,16 @@
 
 .subtitle {
     color: var(--text-secondary);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    padding: 0 0.5rem;
     margin-bottom: 1.5rem;
 }
 
 .stats-overview {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+    gap: 0.6rem;
+    padding: 0 0.25rem;
     margin-bottom: 2rem;
 }
 
@@ -43,17 +50,17 @@
     box-shadow: var(--shadow-lg);
 }
 
-.stat-card i { font-size: 1.5rem; color: var(--primary); margin-bottom: 0.25rem; }
+.stat-card i { font-size: 1.25rem; color: var(--primary); margin-bottom: 0.25rem; }
 
 .stat-card h3,
 .stat-card .stat-number {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 700;
     color: var(--text-primary);
     display: block;
 }
 
-.stat-card p { color: var(--text-muted); font-size: 0.75rem; }
+.stat-card p { color: var(--text-muted); font-size: 0.7rem; }
 
 .category-selector { margin-bottom: 2rem; }
 .category-selector h2 { margin-bottom: 1rem; color: var(--text-primary); font-size: 1.1rem; }
@@ -92,7 +99,7 @@
     color: var(--on-primary);
 }
 
-.category-btn i { font-size: 1.5rem; color: var(--primary); width: 40px; text-align: center; flex-shrink: 0; }
+.category-btn i { font-size: 1.25rem; color: var(--primary); width: 35px; text-align: center; flex-shrink: 0; }
 /* ⚠️ `inherit`, NE zakucana bijela: roditelj vec odlucuje bojom teme (`--on-primary`),
    a dijete ju je do 2026-08-29 ponistavalo. Na kredi je to davalo kontrast 1.68. */
 .category-btn.active i { color: inherit; }
@@ -109,6 +116,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    padding: 1rem;
 }
 
 .action-btn {
@@ -154,4 +162,117 @@
        najgori kraj 5.45 (academic), tamne teme 6.03+ (MREŽA C1) */
     background: linear-gradient(135deg, var(--success), var(--secondary));
     color: var(--on-success);
+}
+
+
+/* =====================================================
+   LJESTVA HOME-SEKCIJE — konsolidirana u C6/1 (2026-09-01)
+   Dotad ju je drzalo PET responsive datoteka (01-04, 06) + jedan #home ID-blok;
+   na svakoj sirini je pobjedjivala mjesavina (C4b NALAZ 2 klasa). Vrijednosti ispod su
+   IZMJERENI pobjednici. `.action-btn` NAMJERNO nije ovdje: dijeli ga ekran rezultata
+   kviza, pa njegova pravila ostaju gdje jesu do C7.
+   ===================================================== */
+
+@media (max-width: 767px) {
+    .stat-card {
+        /* justify/align su INERTNI (kartica nije flex) ali se zadrzavaju: izracunata
+           vrijednost im je vidljiva mjeracu, a cigla mijenja jezik, ne izgled. */
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+    }
+
+    .category-btn {
+        min-height: 70px;
+    }
+}
+
+/* Kratki landscape (telefon polozeno). ⚠️ Guard ≤767 je IZMJERENA istina, ne ukras:
+   stari zapis u 03 vrijedio je na svim sirinama, ali ga je na ≥768 tukao #home ID-blok
+   iz 06 — pa je ovo jedini oblik bez ID-a koji reproducira i siroki i uski slucaj. */
+@media (max-height: 500px) and (orientation: landscape) and (max-width: 767px) {
+    .hero {
+        padding: 0.5rem 0;
+    }
+
+    .stats-overview {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 480px) {
+    .categories {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .hero {
+        padding: 2rem;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+        padding: 0;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+        padding: 0;
+    }
+
+    .stats-overview {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+        padding: 0;
+    }
+
+    .stat-card {
+        padding: 1.5rem;
+    }
+
+    .stat-card i {
+        font-size: 2rem;
+    }
+
+    .stat-card h3,
+    .stat-card .stat-number {
+        font-size: 2rem;
+    }
+
+    .stat-card p {
+        font-size: 0.9rem;
+    }
+
+    .categories {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .category-btn {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
+    }
+
+    .category-btn i {
+        font-size: 2rem;
+        width: auto;
+    }
+
+    .quick-actions {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding: 0;
+    }
+}
+
+@media (min-width: 1024px) {
+    .subtitle {
+        font-size: 1.2rem;
+    }
+
+    .categories {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }

@@ -101,14 +101,6 @@
         font-size: 0.8rem;
     }
     
-    /* Quick Actions Mobile */
-    .quick-actions {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-        padding: 1rem;
-    }
-    
     .quick-action-card {
         flex-direction: row;
         padding: 1rem;
@@ -131,14 +123,6 @@
         flex-direction: column;
         gap: 0.75rem;
         padding: 1rem;
-    }
-    
-    .stat-card {
-        padding: 1rem;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        text-align: left;
     }
     
     .stat-value {

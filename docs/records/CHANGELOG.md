@@ -5,6 +5,21 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **C6/1: home-ljestva iz PET datoteka skupljena — pola je bilo mrtvo (0 razlika u 28 008 usporedbi)**
+
+### Promijenjeno
+- Sve home-jedinstveno sada u `home-section.css` (baze = mobilni pobjednici + mobile-first
+  ljestva); `responsive/01–04,06` **−223 retka / 50 blokova**. Cijela iPhone-gradacija u `01`
+  bila je MRTVA (02 ju je tukao redoslijedom); `#home .hero` ID-blok iz `06` razriješen
+  izmjerenim landscape-guardom. `.action-btn` namjerno ostaje (dijeli ga kviz — mjereno).
+- Prije C6/1 napisana **mjera cijelog C6** (spec §13): pravne stranice NE učitavaju bundle →
+  `legal.css`/`consent.css` NE migriraju (jedna datoteka, dva svijeta).
+
+### Dokaz
+- Winner-mapa prije/poslije (14 viewporta, tranzicije zamrznute — mjerač je 13. put bio prvi
+  kvar: snimao je stilove usred `transition: all`) = **2548 usporedbi, 0 razlika**; `css:diff`
+  home+kviz × 9 viewporta = **28 008, 0 razlika**; telefon 10/10; preflight EXIT 0.
+
 ## 2026-09-01 (FABLE) — **C5b/3b: skela `learn.css` u utilityje — mjera srezala opseg, C5b time CIJELI zatvoren**
 
 ### Promijenjeno
