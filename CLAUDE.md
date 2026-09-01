@@ -199,8 +199,8 @@ projekt mora živjeti **~2 tjedna nakon** seobe. **Testovi su uvjet, ne dodatak.
 CSP enforceom ide i E2 re-sync baze** (`diff:db` → `migrate-content.js`; read-path preferira
 bazu — bez re-synca PROD služi stare duge kartice) · **§8** = živi sandučić nalaza.
 **C5b ✅ CIJELI** (§12.7–12.14) · **C6: mjera + /1 home + /2 sidebar ✅** (§13 — pravne NEMAJU
-bundle pa `legal/consent.css` ne migriraju; NALAZ: sidebar NEDOSTIŽAN, §13.7/BACKLOG) →
-sljedeća: **C6/3** (about) · C6/4 (profil+auth). **Next.js odbijen (ADR-028).**
+bundle pa `legal/consent.css` ne migriraju; NALAZ: sidebar NEDOSTIŽAN, §13.7/BACKLOG;
+**/3 about ✅** §13.8) → sljedeća: **C6/4** (profil+auth). **Next.js odbijen (ADR-028).**
 ⚠️ **`check:docs` traži TOČNO jedan aktivni plan**; spec koji čeka nosi `**Status:** ⏸️ PAUZIRAN`.
 
 **Živa ograničenja redizajna** (obrazloženje svakog je u specu):

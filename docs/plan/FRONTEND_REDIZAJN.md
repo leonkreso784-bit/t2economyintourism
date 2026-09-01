@@ -5359,3 +5359,25 @@ Winner-mapa prije/poslije **84 usporedbe, 0 razlika** · `css:diff` × 8 viewpor
 **480/481**) = **12 448 usporedbi, 0 razlika** · telefon **10/10** · `preflight` **EXIT 0**.
 `responsive/04` i `06` bez ijednog sidebar-pravila (print-sakrivanje u `05` ostaje — politika,
 ne ljestva). Slijedi **C6/3** (about).
+
+### 13.8 ✅ C6/3 — about: mobilna pravila kući, skela u utilityje (2026-09-01)
+
+Najmirnija C6 cigla — konkurencija su bila samo **tri pravila u `responsive/02`**, preseljena u
+`pages.css` kao mobile-first (baza = mobilni pobjednik, `@768` vraća stolni oblik). Jedno od
+njih čuva **izmjereno-naopaku istinu**: `.creator-avatar` je na telefonu **veći** (70 px) nego
+na stolnom (60 px) — zapisano uz pravilo da ga nitko „ne popravi" po osjećaju.
+
+**Skela → utilityji** (6 mjesta u `index.html`): `about-content` (`max-w-[600px] mx-auto`;
+`padding` ostaje — pravilo ②) · `about-hero-section` · `about-actions` · `about-cards` ·
+`about-features` · `creator`-varijanta — pet pravila obrisano u cijelosti.
+
+**Dvije granice, obje izmjerene:** ① `.logo-wrapper-large` NE SELI u `pages.css` iako mu je
+jedini korisnik about — element nosi i klasu `.logo-wrapper`, a globalna logo-ljestva u `06`
+pobjeđuje **min/max-stegama**; preseljen na položaj 66 gubio bi od stega na 96 (logo bi pao na
+50 px). LOGO ljestva je svoja površina, kao `.action-btn`. ② `max-height: 700` upit s
+`#about-page` ID-om ostaje — komentar u kodu već objašnjava zašto ID nosi bitku protiv `06`.
+
+**Dokaz:** `css:diff` × 8 viewporta (uklj. **852×393**, koji aktivira i `max-height: 700`) =
+**9056 usporedbi, 0 razlika** · telefon **10/10** · `preflight` **EXIT 0**.
+U `pages.css` su od about-a sada ostale samo komponente (kartice, gumbi, avatar, pill-ovi) —
+one idu s C7, zajedno s toastom i footerom (§10.3). Slijedi **C6/4** (profil + auth).

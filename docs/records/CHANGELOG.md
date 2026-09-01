@@ -5,6 +5,18 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **C6/3: about — mobilna pravila kući, skela u utilityje (0 razlika u 9056 usporedbi)**
+
+### Promijenjeno
+- Tri pravila iz `responsive/02` u `pages.css` kao mobile-first; `.creator-avatar` čuva
+  izmjereno-naopaku istinu (telefon 70 px > stolni 60 px). Skela about-a (6 mjesta) u
+  utilityje, 5 pravila obrisano. `.logo-wrapper-large` NE seli — globalna logo-ljestva u `06`
+  pobjeđuje min/max-stegama (izmjereno); LOGO je svoja površina kao `.action-btn`.
+
+### Dokaz
+- `css:diff` × 8 viewporta (uklj. 852×393 za `max-height: 700`) = **9056, 0 razlika** ·
+  telefon 10/10 · preflight EXIT 0.
+
 ## 2026-09-01 (FABLE) — **C6/2: sidebar-ljestva skupljena + NALAZ da je cijeli sidebar nedostižan**
 
 ### Promijenjeno

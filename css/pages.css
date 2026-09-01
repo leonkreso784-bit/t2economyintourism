@@ -25,16 +25,13 @@
 /* ⚠️ `.about-header` je OBRISAN zajedno s markupom — v. komentar u `index.html`.
    Bio je zadnje preživjelo zaglavlje razine nakon K2b i čisti duplikat mrvice. */
 
+/* C6/3 (2026-09-01): mobilna pravila iz responsive/02 preseljena OVAMO kao mobile-first
+   (baza = mobilni pobjednik, @768 vraca stolni oblik). max-width/margin su u utilityjima
+   (index.html); `padding` ostaje — dira ga @768 nize (pravilo ② iz §11.1). */
 .about-content {
-    padding: 1.5rem;
-    max-width: 600px;
-    margin: 0 auto;
+    padding: 1rem;
 }
 
-.about-hero-section {
-    text-align: center;
-    margin-bottom: 2rem;
-}
 
 /* About Page Logo */
 .logo-wrapper-large {
@@ -78,13 +75,6 @@
    pri basisu od 10rem bi na 393 px preostalo 15 px zaliha = 4 % širine, a projekt
    je već platio pouku da tvrdnja s ~4 % rezerve mjeri sreću, ne ispravnost (Linux
    crta ista slova ~4 px šire od Windowsa). */
-.about-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.625rem;
-    justify-content: center;
-    margin-top: 1.25rem;
-}
 
 .about-btn {
     flex: 1 1 12rem;
@@ -144,16 +134,10 @@
     }
 }
 
-.about-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
 .about-card {
     background: var(--bg-secondary);
     border-radius: var(--radius-lg);
-    padding: 1.5rem;
+    padding: 1.25rem;
     border: 1px solid var(--border);
 }
 
@@ -179,13 +163,6 @@
     color: var(--text-secondary);
     font-size: 0.95rem;
     line-height: 1.6;
-}
-
-.about-features {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1rem;
 }
 
 .about-features span {
@@ -222,22 +199,18 @@
     color: var(--on-primary);
 }
 
-.about-card.creator {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
+/* ⚠️ IZMJERENO naopako od ocekivanja: avatar je na telefonu VECI (70px, iz starog 02)
+   nego na stolnom (60px). Mobile-first zapis to cuva; ne "popravljati" bez mjere. */
 .creator-avatar {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--on-primary);
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     flex-shrink: 0;
 }
 
@@ -249,6 +222,24 @@
 .creator-info p {
     color: var(--text-secondary);
     font-size: 0.9rem;
+}
+
+/* C6/3: stolni oblik about-a — vrijednosti koje je do sada nosila baza, a mobilne je
+   gazio responsive/02. Mobile-first: baza = telefon, ovo = povratak na >=768. */
+@media (min-width: 768px) {
+    .about-content {
+        padding: 1.5rem;
+    }
+
+    .about-card {
+        padding: 1.5rem;
+    }
+
+    .creator-avatar {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
 }
 
 /* ===== TOAST NOTIFICATION =====

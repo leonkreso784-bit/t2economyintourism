@@ -14,6 +14,17 @@ Sljedeca cigla: C5b/2 (blind-map.css), pa C5b/3 (learn.css).
 
 ---
 
+## 2026-09-01 (FABLE) — C6/3: about — najmirnija C6 cigla, s jednom naopakom istinom
+
+Tri pravila iz 02 preseljena u pages.css kao mobile-first; creator-avatar je na telefonu VECI
+(70px) nego na stolnom (60px) — izmjereno, zapisano uz pravilo da se ne "popravi" po osjecaju.
+Skela u utilityje (6 mjesta, 5 pravila obrisano). Granica: .logo-wrapper-large NE seli iako mu
+je about jedini korisnik — element nosi i .logo-wrapper, a globalna logo-ljestva pobjeduje
+min/max-stegama pa bi na polozaju 66 logo pao na 50px. Dokaz: css:diff 9056/0 (852x393 pokriva
+i max-height:700 upit), telefon 10/10, preflight 0.
+
+---
+
 ## 2026-09-01 (FABLE) — C6/2: sidebar-ljestva skupljena — i nalaz da sidebar NITKO ne moze otvoriti
 
 Winner-mapa opet oborila citanje: logo 36px na telefonu dolazi iz max-480 bloka (ne coarse), a
