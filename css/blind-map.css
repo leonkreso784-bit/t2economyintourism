@@ -2,15 +2,11 @@
    BLIND MAP SECTION (Geography Interactive Map)
    ===================================================== */
 
+/* C5b/2: skela (max-width, margin) je u utilityjima u index.html; `padding` OSTAJE —
+   diraju ga oba preživjela upita (640/768), a utilityji stoje zadnji i neuslojeni
+   (pravilo ② iz §11.1 speca). */
 .blind-map-container {
-    max-width: 900px;
-    margin: 0 auto;
     padding: 1rem;
-}
-
-.blind-map-header {
-    text-align: center;
-    margin-bottom: 1.5rem;
 }
 
 .blind-map-header h1 {
@@ -22,18 +18,11 @@
     background-clip: text;
 }
 
-.blind-map-header p {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-}
 
 /* Difficulty Selector */
+/* C5b/2: raspored je u utilityjima; `gap` OSTAJE — mijenja ga 640-upit (pravilo ②). */
 .map-difficulty-selector {
-    display: flex;
     gap: 0.5rem;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
 }
 
 .map-diff-btn {
@@ -97,29 +86,6 @@
     user-select: none;
 }
 
-/* Map Marker */
-.map-marker {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    z-index: 10;
-}
-
-.map-marker.correct {
-    background: radial-gradient(circle, var(--success), #059669);
-    box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
-    animation: correctMarkerPulse 1s ease;
-}
-
-.map-marker.incorrect {
-    background: radial-gradient(circle, var(--danger), #dc2626);
-    box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
-    animation: incorrectMarkerShake 0.5s ease;
-}
-
 /* Answer Section */
 .map-answer-section {
     background: var(--bg-secondary);
@@ -129,54 +95,17 @@
     margin-bottom: 1rem;
 }
 
+/* C5b/2: mb/boja su u utilityjima; `font-size` OSTAJE — mijenja ga 640-upit (pravilo ②). */
 .map-question {
     font-size: 1.1rem;
-    margin-bottom: 1rem;
-    color: var(--text-primary);
 }
 
-.map-coordinates {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-bottom: 1rem;
-    font-family: monospace;
-}
-
-.map-input-group {
-    margin-bottom: 1rem;
-}
-
-.map-input-label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
-}
-
-.map-location-input {
-    width: 100%;
-    padding: 0.875rem 1rem;
-    border: 2px solid var(--border);
-    border-radius: var(--radius);
-    font-family: inherit;
-    font-size: 1rem;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    transition: var(--transition);
-}
-
-.map-location-input:focus {
-    outline: none;
-    border-color: var(--primary);
-}
 
 /* Action Buttons */
+/* C5b/2: display/gap/mb su u utilityjima; `grid-template-columns` OSTAJE — 640-upit ga
+   ruši na 1 stupac (pravilo ②). */
 .map-action-buttons {
-    display: grid;
     grid-template-columns: 2fr 1fr 1fr;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
 }
 
 .map-submit-btn,
@@ -242,29 +171,11 @@
     border: 2px solid var(--danger);
 }
 
-.map-feedback-content {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.map-feedback-icon { font-size: 1.5rem; }
 .map-feedback.correct .map-feedback-icon { color: var(--success); }
 .map-feedback.incorrect .map-feedback-icon { color: var(--danger); }
 
-.map-feedback-message { font-weight: 600; font-size: 1rem; }
-.map-feedback-details { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem; }
 
 /* Progress */
-.map-progress {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-}
-
 .map-progress-bar {
     height: 8px;
     background: var(--bg-tertiary);
@@ -278,18 +189,6 @@
     border-radius: 10px;
     transition: width 0.5s ease;
     width: 0%;
-}
-
-/* Animations */
-@keyframes correctMarkerPulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); }
-    50% { transform: translate(-50%, -50%) scale(1.3); box-shadow: 0 0 25px rgba(34, 197, 94, 0.6); }
-}
-
-@keyframes incorrectMarkerShake {
-    0%, 100% { transform: translate(-50%, -50%); }
-    25% { transform: translate(calc(-50% + 3px), -50%); }
-    75% { transform: translate(calc(-50% - 3px), -50%); }
 }
 
 /* Responsive */

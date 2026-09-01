@@ -2,12 +2,6 @@
   "css/auth.css": [
     "nav-auth-btn"
   ],
-  "css/blind-map.css": [
-    "map-input-group",
-    "map-input-label",
-    "map-location-input",
-    "map-marker"
-  ],
   "css/block-editor.css": [
     "be-edit--h3",
     "be-edit--h4",
@@ -27,9 +21,6 @@
     "lb-color-pink",
     "lb-color-red",
     "lb-color-violet"
-  ],
-  "css/math.css": [
-    "katex-display"
   ],
   "css/profile.css": [
     "header-materials-btn"

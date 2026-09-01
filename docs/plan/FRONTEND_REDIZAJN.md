@@ -5077,7 +5077,7 @@ Ažuriran je isključivo dio s klasama; tvrdnje o `esc`/`safeUrl` su netaknute.
 
 #### Time je C5b/1 zatvoren
 
-Ostaje **C5b/2** (`blind-map.css` — 35 od 51 pravila je naše, `index.html`) pa **C5b/3**
+~~Ostaje **C5b/2**~~ (**✅ 2026-09-01, §12.12**) — ostaje **C5b/3**
 (`learn.css` — prvo skidanje `#learn` uz `css:diff` = 0, pa migracija).
 
 \* `.lb-video__frame` je obrisan kao pravilo pa **vraćen sa samo `display: block`** — v. tablicu gore.
@@ -5108,6 +5108,44 @@ fasadu) i `.lb-video__frame` (samo POSLIJE). Obrnuta provjera: umetnuta nepostoj
 mjerenje (`NIJE NACRTANO: lb-NE-POSTOJI`, izlaz 1).
 
 Izmjereno nakon uvođenja: **20/20 klasa nacrtano, 174 usporedbe × 36 svojstava, 0 razlika.**
+
+### 12.12 ✅ C5b/2 — `blind-map.css`, i četiri mrtva pravila koja su čekala igrača kojeg nema (2026-09-01)
+
+Prva cigla nastavka nakon MREŽE. Površina je bila najlakša od tri (§12.8: 35 od 51 pravila naše,
+markup u `index.html`, nula ID-selektora) i ishod je čist: **60 → 38 blokova** u datoteci
+(315 → 214 redaka), utilityji **122 → 129**, `css:diff` **0 razlika u 5952 usporedbe**.
+
+**Rez po SVOJSTVU** (pravilo ② iz §11.1), oba upita (640/768) ostaju u CSS-u — cigla mijenja
+jezik, ne izgled, pa se ni granica 640↔`sm:` ne pomiče. U CSS-u su zato ostali: `padding`
+kontejnera i answer-sekcije · `gap` selektora težine · `font-size` pitanja i h1 ·
+`grid-template-columns` gumba. Sva četiri okrnjena pravila nose komentar s razlogom.
+**Komponente ostaju za C7** (isti stav kao /1a za `.ex-*`): tipke, wrapper karte, canvas,
+feedback-stanja, progress-bar — vizualni jezik, ne skela.
+
+#### 🐞 Nalaz: `.map-marker` + `.map-input-*` su MRTVA PRAVILA — 8 pravila + 2 `@keyframes`
+
+Markere od početka crta **canvas** (`js/blind-map.js`, `ctx.arc`), DOM-marker ne stvara nitko;
+tekstualni input za lokaciju ne postoji ni u markupu ni u JS-u — odgovor JE klik na kartu.
+Osnovica `check:orphan-css` ih je sve četvero **imenovala od prvog dana** — ovo je cigla koja ih
+je napokon i pročitala. Uz njih je pala i `.map-marker.incorrect` iznimka u `check:palette`
+(mrtva referenca) i **zastarjeli unos `katex-display`**: `js/math.js` ga od MREŽE (a11y-popravak)
+stvarno dira, pa više nije siroče. Siročad **45 → 40**.
+
+Usput je nestao i **inline `style="width: 0%"`** na progress-fillu — doslovni duplikat
+deklaracije koja već stoji u CSS-u (ista pouka kao dva inline stila u /1a).
+
+#### Dokaz
+
+Pokrivenost PRIJE tvrdnje (pouka ③ iz §12.9): sonda na ruti potvrdila da je sekcija
+`#blind-map` **aktivna**, svih **12 migriranih klasa nacrtano** (`FALI: (ništa)`), `display`
+dolazi iz utilityja (`flex`/`grid`), 640-upit radi (1 stupac gumba na 375 px), `.map-marker`
+u DOM-u **nema**. Ruta predana s `MSYS_NO_PATHCONV=1` (§12.11 brana ju sad i sama čuva).
+
+| mjera | rezultat |
+|---|---|
+| `css:diff`, ruta `#/subject/geography/first-midterm/blind-map` | **4 širine** (375 · **640** · 768 · 1280) × 1488 elemenata = **5952 usporedbi, 0 razlika** |
+| telefon-brana (od MREŽA-E4 mjeri `blind-map` tab) | **10 prošlo / 0 palo**, prazna osnovica |
+| `preflight` | **EXIT 0** · paleta **0** · `check:tailwind` **129 utilityja, svi namjerni** |
 
 ⚠️ **Ostaje svjesno otvoreno:** ~~`--border-color`~~ (**✅ riješen u MREŽI B1, 2026-08-31** —
 `var(--border)` + brana `check:tokens`) · kolačić-traka je ~280 ms ispod AA **dok ulazi**

@@ -5,6 +5,26 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **C5b/2: `blind-map.css` — skela u utilityje, 4 mrtva pravila van (0 razlika u 5952 usporedbe)**
+
+### Promijenjeno
+- Skela slijepe karte (raspored, razmaci, tipografske sitnice) migrirana u Tailwind utilityje
+  u `index.html`; **komponente** (tipke, wrapper karte, canvas, feedback-stanja, progress-bar)
+  ostaju u CSS-u za C7. Rez po SVOJSTVU: `padding`/`gap`/`font-size`/`grid-template-columns`
+  koje diraju preživjeli upiti (640/768) **ostaju u CSS-u** s komentarom.
+- `css/blind-map.css` 315 → 214 redaka (60 → 38 blokova); utilityji 122 → 129.
+
+### Uklonjeno
+- **8 mrtvih pravila + 2 `@keyframes`**: `.map-marker*` (markere crta canvas, DOM-marker ne
+  stvara nitko) i `.map-input-*` (odgovor je klik na kartu, input ne postoji). Siročad 45 → 40
+  (uklj. zastarjeli `katex-display` — `js/math.js` ga od MREŽE stvarno dira).
+- Mrtva iznimka `.map-marker.incorrect` u `check:palette` · inline `style="width: 0%"` duplikat.
+
+### Dokaz
+- Pokrivenost prije tvrdnje: sekcija aktivna, 12/12 klasa nacrtano, `display` iz utilityja,
+  640-upit radi. `css:diff` 4 širine (375·640·768·1280) = **5952 usporedbi, 0 razlika**;
+  telefon-brana 10/10; `preflight` EXIT 0.
+
 ## 2026-09-01 (FABLE) — **MREŽA-E4: vježbe i slijepa karta ušle u telefon-mjeru — „čine se ok" postao broj (0 nalaza)**
 
 ### Dodano

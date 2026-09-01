@@ -198,8 +198,9 @@ projekt mora živjeti **~2 tjedna nakon** seobe. **Testovi su uvjet, ne dodatak.
 **MREŽA: svi blokovi A–E ✅ (2026-09-01)**; njen spec je ⏸️ (nije ispunjen — izlazni uvjeti §9 su
 **deploy-gated**, arhiva tek kad padnu). **Uz deploy s CSP enforceom ide i E2 re-sync baze**
 (`diff:db` → `migrate-content.js`; read-path preferira bazu — bez re-synca PROD služi stare duge
-kartice) · **§8** = živi sandučić nalaza. Sljedeće cigle: **C5b/2** (`blind-map.css`) → C5b/3
-(`learn.css`). **Next.js odbijen (ADR-028), ne otvarati iznova.**
+kartice) · **§8** = živi sandučić nalaza. **C5b/2 ✅** (`blind-map.css`, §12.12) → sljedeća
+cigla: **C5b/3** (`learn.css` — prvo skidanje `#learn` uz `css:diff` = 0, pa migracija).
+**Next.js odbijen (ADR-028), ne otvarati iznova.**
 ⚠️ **`check:docs` traži TOČNO jedan aktivni plan**; spec koji čeka nosi `**Status:** ⏸️ PAUZIRAN`.
 
 **Živa ograničenja redizajna** (obrazloženje svakog je u specu):

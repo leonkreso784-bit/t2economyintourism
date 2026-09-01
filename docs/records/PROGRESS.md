@@ -14,6 +14,19 @@ Sljedeca cigla: C5b/2 (blind-map.css), pa C5b/3 (learn.css).
 
 ---
 
+## 2026-09-01 (FABLE) — C5b/2: blind-map skela u utilityje — i cetiri pravila koja su cekala igraca kojeg nema
+
+Prva cigla nastavka redizajna. Rez po svojstvu (§11.1 ②): skela u utilityje, komponente za C7,
+svojstva koja diraju preziveli upiti ostaju u CSS-u s komentarom. Glavni nalaz: .map-marker* i
+.map-input-* su MRTVA pravila (markere crta canvas, input ne postoji — odgovor je klik na kartu);
+osnovica sirocadi ih je imenovala od prvog dana, ova cigla ih je napokon procitala. Usput pao
+zastarjeli katex-display unos (js/math.js ga od MREZE dira) i mrtva iznimka u check:palette.
+Dokaz redom iz pouka §12.9: prvo pokrivenost (sekcija aktivna, 12/12 klasa nacrtano, display iz
+utilityja), tek onda tvrdnja — css:diff 5952 usporedbe kroz 4 sirine (640 obavezno) = 0 razlika;
+telefon-brana 10/10; preflight EXIT 0. Sljedece: C5b/3 (learn.css — prvo #learn dolje uz dokaz).
+
+---
+
 ## 2026-09-01 (FABLE) — MREZA-E4: dva nemjerena nacina ucenja usla u telefon-branu — i cist nalaz
 
 Leon presudio mali opseg. Kljucno mjerenje za odluku: exercises.css je zdrav i pokriven paletom i

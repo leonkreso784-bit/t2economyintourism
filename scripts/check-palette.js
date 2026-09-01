@@ -297,10 +297,11 @@ const IZNIMKE = [
   // ── matirane podloge za MEDIJ: slika i video se čitaju na tamnom u svakoj temi ──
   '.image-modal-content img',     // css/learn.css — matiranje iza prozirne slike
   '.lb-video',                    // css/learn-blocks.css — poster-ploha videa
-  // ── platno igre „slijepa karta": tamno je SADRŽAJ, ne tema; markeri, nula teksta ──
+  // ── platno igre „slijepa karta": tamno je SADRŽAJ, ne tema; nula teksta.
+  //    (`.map-marker.incorrect` je bio treći član: pravilo je MRTVO obrisano u C5b/2 —
+  //    markere od početka crta canvas, DOM-marker nije stvarao nitko.) ──
   '.map-wrapper',
   '.blank-map-canvas',
-  '.map-marker.incorrect',
   // ── pločice ikona predmeta: bijeli glif živi u SUSJEDNOM pravilu (`color: white
   //    !important`), pa ih blok-analiza ne može povezati. Nisu slomljene — stara paleta,
   //    koju čegrtaljka i dalje broji; nestaju s C4. ──
