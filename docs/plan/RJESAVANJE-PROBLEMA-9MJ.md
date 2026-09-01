@@ -669,7 +669,7 @@ Faza pada kad **sve** stoji:
 - [ ] `check:node`, `check:tokens`, `check:cascade`, `check:i18n`, `check:csp` u preflightu, **svaka s obrnutom provjerom** — ✅ node (A2) · tokens (B1) · cascade (B4) · i18n (B5, 2026-08-31) · csp (D3, 2026-09-01)
 - [x] a11y brana sudi po **WCAG razini**, osnovica imenovana — ✅ **B3b+B3c, 2026-08-31** (razina ∪ težina; macro u površinama; 9× `.katex-display` popravljeno; osnovica prazna)
 - [x] `check:final` **imenuje** preskočene — ✅ **B2, 2026-08-31** (osnovica: 8 imenovanih; E3 spustio na 7 — jedan je bio krivo klasificiran i sad se provjerava)
-- [ ] `palette:breakdown` **fatalno 0** · `check:palette` osnovica **0**
+- [x] `palette:breakdown` **fatalno 0** · `check:palette` osnovica **0** — ✅ **C4, 2026-09-01** (osnovica 93 → 0; breakdown 0·0·0; kućica označena u E-prolazu — C4 ju je ispunio a nije označio)
 - [ ] CSP **enforce** na produkciji uz čist report
 - [x] leaked-password provjera živa (D4, 2026-09-01)
 - [ ] E1–E4 riješeni ili **obrazloženo odgođeni** (odgoda je ishod, prešućivanje nije) — ✅ E1 (verifikacijom) · ✅ E2 · ✅ E3 (16→17 provjerenih; 7 zaključano, 2026-09-01)
