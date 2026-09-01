@@ -1,0 +1,95 @@
+/* =====================================================
+   POLITIKE UREDJAJA I MEDIJA — C7/3 (2026-09-01)
+   Sve sto ne pripada nijednoj povrsini nego NACINU koristenja: hover/touch,
+   prefers-contrast, prefers-reduced-motion, print, touch-target minimumi.
+   Doseljeno iz responsive/03+05+06 pri njihovu gasenju; duplikati (03 vs 05
+   reduced-motion i high-contrast) su spojeni u JEDNU verziju — uzeta je bogatija
+   (05), jer je 03-ova bila podskup istih vrijednosti.
+   ===================================================== */
+
+/* Hover-efekti samo gdje hover POSTOJI (misevi, trackpadi) — na dodiru bi se
+   "zalijepili" nakon tapa. */
+@media (hover: hover) and (pointer: fine) {
+    .category-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .action-btn.primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px color-mix(in srgb, var(--primary) 30%, transparent);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+}
+
+@media (hover: none) {
+    .category-btn:hover,
+    .action-btn:hover,
+    .stat-card:hover {
+        transform: none;
+    }
+
+    .category-btn:active,
+    .action-btn:active,
+    .cta-button:active {
+        transform: scale(0.98);
+        opacity: 0.9;
+    }
+}
+
+/* Touch-target minimum (iz 06): 48px na dodirnim ekranima. */
+@media (max-width: 767px) and (hover: none) and (pointer: coarse) {
+    .control-btn,
+    .action-btn,
+    .filter-btn,
+    .category-btn {
+        min-height: 48px;
+    }
+}
+
+/* ===== HIGH CONTRAST =====
+   Tokeni, ne fiksne boje: fiksni #000/#374151 su na tamnim temama kontrast
+   SMANJIVALI (nevidljiv rub na tamnoj podlozi) — pouka 2026-08-13. */
+@media (prefers-contrast: high) {
+    :root {
+        --border: var(--color-line-strong);
+        --text-secondary: var(--text-primary);
+    }
+
+    .lesson-card,
+    .flashcard {
+        border: 2px solid var(--text-primary);
+    }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ===== PRINT ===== */
+@media print {
+    .mobile-nav,
+    .landing-page,
+    .subjects-sidebar,
+    .subjects-overlay {
+        display: none !important;
+    }
+
+    body {
+        padding: 0;
+    }
+
+    .study-page {
+        padding: 0;
+    }
+}

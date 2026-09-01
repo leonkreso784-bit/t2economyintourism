@@ -5434,8 +5434,9 @@ podjelu:
    `.mobile-nav { display:none }` baza koju markupov `flex` utility trajno gazi) traži
    winner-mapu i ide s konsolidacijom.
 
-**Cigle:** /1 selektorski mrtvo van · /2 žive ljestve kući + smrt `responsive/*` ·
-/3 raspuštanje `components.css` · /4 smrt `variables.css` (legacy imena → tokeni).
+**Cigle:** /1 selektorski mrtvo van · /2 cta-baza (mjera preimenovala: ljestva zatekla
+da kuće nema, §14.2) · /3 žive ljestve kući + smrt `responsive/*` ·
+/4 raspuštanje `components.css` · /5 smrt `variables.css` (legacy imena → tokeni).
 `sokratSpin` @keyframes pri gašenju `03` MORA preseliti — koristi ga `css/offline.css`.
 JS-zaostatak za /2+: `navigation.js:1488` querya `.nav-btn` koji ne postoji (prazan skup, bezopasan).
 
@@ -5486,3 +5487,41 @@ razlika na 26 elemenata = cta-gumbi, njihovi `i`/`span` potomci (naslijeđena ti
 1-px geometrijski odjek na precima** (nestao default `outset 2px` rub) · telefon 21/0 ·
 preflight 20/20. `responsive/05` je ostao samo s politikama (reduced-motion, high-contrast,
 print). Slijedi **C7/3** (preostale žive ljestve kući + smrt `responsive/*`).
+
+### 14.3 ✅ C7/3 — žive ljestve kući i **SMRT `css/responsive/*`** (2026-09-01)
+
+Winner-mapa (9 komponenti × 4 rute × 13 viewporta) je prvo presudila SVAKOM preostalom
+pravilu, pa su se selila **verbatim, s min/max stegama** (stege su dio izračunatog stanja —
+sixpack bez njih mijenja computed skup i mjerač bi to vidio):
+
+- **`.action-btn`** (01+02+06) → `home-section.css` uz svoju bazu; kviz-rezultati i dalje
+  pobjeđuju specifičnošću (`.results-actions .action-btn`), pa raniji položaj ne mijenja ništa.
+- **`.toast`** (02+03) → `pages.css` uz bazu; `01`-ov `@768 bottom: 2rem` bio je **duplikat
+  baze** (obrisan), a `03`-ov mobilni bottom **duplikat `02`-a** (spojen u jednu kopiju).
+- **`.footer`** (02+03) → `pages.css`: bezuvjetni safe-bottom ušao u BAZU (ista računica),
+  mobilni oblik kao `@767`. **`.landing-footer`** (04) → `landing.css`.
+- **LOGO ljestva iz `06` je bila „globalna" samo po imenu:** `.logo-wrapper` u markupu postoji
+  **na dva mjesta** (sidebar + aboutov `-large`). Goli `@480` sixpack (40 px) **gubio je
+  svugdje** (od sidebarova 36 specifičnošću, od `-large` redoslijedom) → obrisan kao mrtav;
+  `@768/@1024` → `sidebar.css` (scopeano), `-large` sixpacki → `pages.css` uz bazu.
+- **`04`-ov `@374 .filter-btn` bio je kaskadno mrtav** — `learn.css` (`:where(#learn)`, ista
+  specifičnost, kasnija datoteka) ga je gazio na svakoj širini → umro s datotekom.
+- **`body` `@768 padding-bottom: 0` (01) bio je no-op** (padding-bottom je 0 i bez njega;
+  landscape-pravilo ga je ionako gazilo redoslijedom) → obrisan. Landscape-body → `components.css`.
+- **`.hidden`** (01) → `components.css` (Tailwindov istoimeni utility i dalje isključen
+  `@source not inline`). **`sokratSpin`** (03) → `offline.css`, svom jedinom korisniku.
+- **Politike → NOVA `css/policies.css`** na mjestu bivšeg responsive-bloka: hover/touch,
+  touch-target 48, high-contrast, reduced-motion, print — **duplikati 03 vs 05 spojeni**
+  (03-ova verzija bila podskup 05-ine u oba slučaja).
+
+**⚰️ Uz datoteke je umrla i brana `check:cascade`** (MREŽA B4): mjerila je gašenje **među
+`responsive/*` datotekama**, a bez njih taj razred buga ne može postojati. Umirovljena
+(skripta + osnovica + unit-test + preflight ožičenje), uz zapis u `BUGS.md` — to nije
+slabljenje gatea (§4.4) nego smrt izmjerene površine; sama je odbila raditi nad praznim
+skupom („nema što mjeriti i to NIJE zeleno").
+
+**Dokaz:** winner-mapa prije/poslije **111 540 usporedbi, 0 razlika** · `css:diff` 7 ruta ×
+10 širina = **76 800 + 4 524 usporedbi, 0 razlika** · telefon 21/0 · preflight EXIT 0.
+**Učinak:** `css/responsive/` **NE POSTOJI** (411 → 0 redaka) · `!important` **11 → 3**
+(2 komponente + 1 iOS-input) · ukupni dug **6 287 → 6 066**. Slijedi **C7/4**
+(raspuštanje `components.css`).

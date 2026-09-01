@@ -86,14 +86,11 @@
 @import "./blind-map.css";
 @import "./exercises.css";
 
-/* Media queryji — ⚠ učitavaju se PRED learn.css i namjerno gaze module iznad.
-   Konkatenacija 01→06 = bivši responsive.css (1:1). Ne presložuj dijelove. */
-@import "./responsive/01-up-and-phone-breakpoints.css";
-@import "./responsive/02-mobile-core.css";
-@import "./responsive/03-modes-a11y-print.css";
-@import "./responsive/04-mobile-extra.css";
-@import "./responsive/05-device-sizes.css";
-@import "./responsive/06-component-improvements.css";
+/* Politike uredjaja i medija (hover/touch, kontrast, reduced-motion, print) —
+   C7/3: jedino sto je prezivjelo gasenje responsive/* (komponente su otisle
+   svaka svojoj bazi). Stoji na mjestu bivseg responsive-bloka da print/contrast
+   i dalje nadglasavaju module iznad. */
+@import "./policies.css";
 
 /* Kromo ekrana za učenje (C5a) — POSLIJE responsivea I POSLIJE `components.css`,
    i to je jedini razlog zašto stoji ovdje a ne uz ostale komponente: donja traka

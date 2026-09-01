@@ -164,13 +164,31 @@
     color: var(--on-success);
 }
 
+/* C7/3: ljestva .action-btn iz responsive/01+02+06 — uz bazu, mobile-first.
+   Kviz-rezultati i dalje pobjedjuju svojim `.results-actions .action-btn`
+   (quiz-section @768) SPECIFICNOSCU, pa je svejedno sto ovo sad stoji ranije. */
+@media (max-width: 767px) {
+    .action-btn {
+        padding: 0.875rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .action-btn {
+        width: auto;
+        flex: 1;
+        min-width: 200px;
+    }
+}
+
 
 /* =====================================================
    LJESTVA HOME-SEKCIJE — konsolidirana u C6/1 (2026-09-01)
    Dotad ju je drzalo PET responsive datoteka (01-04, 06) + jedan #home ID-blok;
    na svakoj sirini je pobjedjivala mjesavina (C4b NALAZ 2 klasa). Vrijednosti ispod su
-   IZMJERENI pobjednici. `.action-btn` NAMJERNO nije ovdje: dijeli ga ekran rezultata
-   kviza, pa njegova pravila ostaju gdje jesu do C7.
+   IZMJERENI pobjednici. `.action-btn` (dijeljen s kviz-rezultatima) je od C7/3
+   konsolidiran UZ SVOJU BAZU gore — kviz i dalje pobjedjuje specificnoscu.
    ===================================================== */
 
 @media (max-width: 767px) {

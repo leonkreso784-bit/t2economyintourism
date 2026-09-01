@@ -313,7 +313,7 @@ prebacivanja); group daje ime bez landmark-šuma. Rezultat: `scrollable-region-f
 **9 → 0** na STUDY-KVANT, svih 7 javnih a11y testova zeleno s **praznom** osnovicom
 (riješeni upis je prvo GLASNO javljen, pa uklonjen — puni ciklus čegrtaljke dokazan uživo).
 
-### B4 · `check:cascade`
+### B4 · `check:cascade` — ⚰️ UMIROVLJEN u C7/3 (2026-09-01): `responsive/*` je obrisan, predmet mjere ne postoji (FRONTEND_REDIZAJN §14.3)
 BUG-039 i BUG-037 su **četiri pojave istog mehanizma**: kasnija datoteka gasi raniju, pa pravilo napisano za 1536 px ili za landscape nikad ne dođe na ekran. Leonova presuda *„nije toliki problem"* stoji.
 
 Zato ovdje **ne odlučujemo širine.** Brana mehanički nalazi selektore koji se pojavljuju u više `responsive/*` datoteka s preklapajućim uvjetima i prijavljuje **tko koga gasi**. Bug time prelazi iz *„postoji negdje"* u **izmjeren popis**, a odluka o izgledu ostaje C7 — samo s punim podacima.

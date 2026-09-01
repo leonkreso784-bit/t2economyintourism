@@ -730,6 +730,15 @@
     color: var(--color-ink-2);
 }
 
+/* C7/3: mobilni oblik iz responsive/04. */
+@media (max-width: 767px) {
+    .landing-footer {
+        padding: 1.25rem 1rem;
+        padding-bottom: calc(1.25rem + var(--safe-bottom));
+        font-size: 0.8rem;
+    }
+}
+
 .footer-cols {
     display: grid;
     gap: 2rem;

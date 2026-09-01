@@ -5,6 +5,23 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **C7/3: `css/responsive/*` NE POSTOJI — žive ljestve doseljene svojim bazama (0 razlika u 188 340 usporedbi)**
+
+### Promijenjeno
+- Zadnje žive ljestve verbatim (s min/max stegama) u svoje domove: `.action-btn` →
+  `home-section` · `.toast`/`.footer` → `pages` · `.landing-footer` → `landing` · LOGO →
+  `sidebar`+`pages` (goli `@480` sixpack gubio svugdje → mrtav) · `.hidden`+landscape-body →
+  `components` · `sokratSpin` → `offline` · politike → **nova `css/policies.css`**
+  (duplikati 03/05 spojeni). `04 @374 .filter-btn` bio kaskadno mrtav (learn.css gazi).
+
+### Uklonjeno
+- **Šest `responsive/*` datoteka (411 redaka)** i s njima brana **`check:cascade`**
+  (mjerila gašenje MEĐU tim datotekama; predmet mjere umro — zapis u `BUGS.md`).
+
+### Dokaz
+- Winner-mapa 111 540/0 · `css:diff` 7 ruta × 10 širina = 81 324/0 · telefon 21/0 ·
+  preflight EXIT 0 · `!important` 11 → 3.
+
 ## 2026-09-01 (FABLE) — **C7/2: `.cta-button` — C2 je s mrtvim landingom obrisao i ŽIVU bazu; 7 površina gumba bilo sivo od 13.8.**
 
 ### Popravljeno

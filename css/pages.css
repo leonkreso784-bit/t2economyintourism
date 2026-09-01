@@ -58,6 +58,42 @@
     transform: scale(1.05);
 }
 
+/* C7/3: ljestva -large iz responsive/06 — VERBATIM sixpacki (min/max stege su dio
+   izmjerenog stanja; bez njih bi se izracunata svojstva promijenila). Redoslijed
+   nakon baze u ISTOJ datoteci cuva pobjednika po svojstvu. */
+@media (max-width: 480px) {
+    .logo-wrapper-large {
+        width: 100px;
+        height: 100px;
+        min-width: 100px;
+        min-height: 100px;
+        max-width: 100px;
+        max-height: 100px;
+    }
+}
+
+@media (min-width: 768px) {
+    .logo-wrapper-large {
+        width: 150px;
+        height: 150px;
+        min-width: 150px;
+        min-height: 150px;
+        max-width: 150px;
+        max-height: 150px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .logo-wrapper-large {
+        width: 140px;
+        height: 140px;
+        min-width: 140px;
+        min-height: 140px;
+        max-width: 140px;
+        max-height: 140px;
+    }
+}
+
 /* `.about-icon-large` je obrisan 2026-08-24: nijedan `.html` ni `.js` ga ne spominje.
    Mrtvo pravilo je preživjelo jer ga nitko nije brisao kad je markup otišao — isti
    razlog zbog kojeg je `.about-header` doživio pet dana nakon K2b. */
@@ -284,6 +320,22 @@
     cursor: pointer;
 }
 
+/* C7/3: mobilni polozaj toasta iz responsive/02 (03 je drzao DUPLIKAT bottoma) —
+   iznad donje trake ucenja + safe-area; preko cijele sirine. */
+@media (max-width: 767px) {
+    .toast {
+        bottom: calc(70px + var(--safe-bottom) + 10px);
+        left: 1rem;
+        right: 1rem;
+        transform: translateX(0) translateY(100px);
+        max-width: none;
+    }
+
+    .toast.show {
+        transform: translateX(0) translateY(0);
+    }
+}
+
 /* ===== GLOBAL FOOTER =====
    Bazni stil je nedostajao → copyright se prikazivao kao goli blok lijevo-dolje, gazeći
    sadržaj (BUG-008). Sada: uredan, centriran, suptilan footer u normalnom toku na dnu.
@@ -291,10 +343,22 @@
 .footer {
     margin-top: auto;
     padding: 1.75rem 1rem;
+    /* C7/3 (iz responsive/03, bezuvjetno): dno racuna donju traku + safe-areu
+       na SVIM sirinama — footer stoji iznad mobile-nava kad je ovaj vidljiv. */
+    padding-bottom: calc(1rem + 65px + var(--safe-bottom));
     text-align: center;
     color: var(--text-secondary);
     font-size: 0.85rem;
     border-top: 1px solid var(--border);
+}
+
+/* C7/3: mobilni oblik footera iz responsive/02. */
+@media (max-width: 767px) {
+    .footer {
+        padding: 1rem;
+        padding-bottom: calc(1rem + 65px + var(--safe-bottom));
+        font-size: 0.8rem;
+    }
 }
 
 .footer p {

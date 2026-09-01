@@ -229,4 +229,27 @@
     .subject-item-info p {
         font-size: 0.9rem;
     }
+
+    /* C7/3: iz 06-ove "globalne" logo-ljestve — u markupu je .logo-wrapper SAMO
+       ovdje i na aboutovom -large, pa je "globalno" zapravo bilo sidebarovo.
+       Sixpack VERBATIM: dosad je pobjedjivao min/max stegama nad bazom (40px). */
+    .sidebar-logo .logo-wrapper {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+        min-height: 50px;
+        max-width: 50px;
+        max-height: 50px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .sidebar-logo .logo-wrapper {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        min-height: 48px;
+        max-width: 48px;
+        max-height: 48px;
+    }
 }

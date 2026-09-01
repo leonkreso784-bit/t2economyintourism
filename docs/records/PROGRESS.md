@@ -14,6 +14,19 @@ Sljedeca cigla: C5b/2 (blind-map.css), pa C5b/3 (learn.css).
 
 ---
 
+## 2026-09-01 (FABLE) — C7/3: css/responsive/* NE POSTOJI
+
+Winner-mapa (9 komponenti x 13 viewporta) presudila svakom preostalom pravilu: action-btn u
+home-section (kviz pobjedjuje specificnoscu, redoslijed nevazan), toast/footer u pages
+(01-ov bottom bio duplikat baze, 03-ov duplikat 02-a), LOGO "globalna" ljestva bila globalna
+samo po imenu (markup ima .logo-wrapper na DVA mjesta) — goli @480 sixpack gubio svugdje pa
+umro; @374 filter-btn kaskadno mrtav (learn.css gazi istom specificnoscu kasnije). Politike u
+NOVU policies.css (duplikati 03/05 spojeni). Sa smrcu datoteka umirovljena i brana
+check:cascade — predmet mjere ne postoji; sama je odbila raditi nad praznim skupom. Dokaz:
+mapa 111540/0, css:diff 81324/0, telefon 21/0, preflight 0. !important 11->3.
+
+---
+
 ## 2026-09-01 (FABLE) — C7/2: cta-ljestva dosla kuci i zatekla da kuce NEMA
 
 Plan je bio konsolidacija, mjera je nasla BUG: C2 je s mrtvim landingom obrisao i bazu

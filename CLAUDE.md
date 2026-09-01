@@ -70,7 +70,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 ### `npm run preflight` — sve brze brane odjednom (pokreni PRIJE svakog main-pusha)
 
 `check:lockfile` · `check:node` · `verify` · `bump:check` · css-drift · `check:tailwind` · `check:cdn` ·
-`check:palette` · `check:tokens` · `check:cascade` · `check:i18n` · `check:orphan-css` · `check:safearea` · `check:csp` · `check:budget` · `check:seo` · `check:contrast` ·
+`check:palette` · `check:tokens` · `check:i18n` · `check:orphan-css` · `check:safearea` · `check:csp` · `check:budget` · `check:seo` · `check:contrast` ·
 `typecheck` · `validate:schema` · `export:json --check` · `check:docs` · `check:state` ·
 `test:unit`. Pre-push hook ga automatski vrti na `main`.
 
@@ -84,7 +84,6 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 | `check:cdn` | vanjski podresursi imaju **SRI + `crossorigin` + verzioniran URL**; `check:cdn:live --verify` uspoređuje bajtove s izdavačevim hashem (mrežno) |
 | `check:palette` | **čegrtaljka**: broj ostataka stare palete ne smije **porasti** (`--update` spušta osnovicu). Uz nju **četiri tvrde zabrane**: zakucan tekst na ispuni marke · isto to na **POTOMKU** ispune · `--primary-light` kao tekst · **zakucana tamna ploha** |
 | `check:tokens` | svaka `var(--x)` u `css/**` ima definiciju (CSS ili runtime u JS-u) — `var()` s fallbackom bez definicije je **zakucana vrijednost s ukrasom**. Osnovica **imenuje** svjesne iznimke |
-| `check:cascade` | kasnija `responsive/*` datoteka ne smije GASITI raniju (isti selektor+svojstvo, preklopljeni upiti); osnovica **imenuje** zatečene; izgled sudi C7 |
 | `check:i18n` | nijedan korisniku vidljiv tekst zakucan mimo `js/i18n.js` (HTML · JS sinkovi · ključ bez rječnika); osnovica = brojač po datoteci |
 | `check:orphan-css` | **čegrtaljka**: klasa u `css/**` koju ne spominje ni markup, ni JS, ni gradivo, ni test. Osnovica ih **imenuje** — dio je legitiman |
 | `check:safearea` | `env(safe-area-inset-*)` samo u `css/variables.css`, drugdje `var(--safe-*)` |
@@ -200,8 +199,9 @@ CSP enforceom ide i E2 re-sync baze** (`diff:db` → `migrate-content.js`; read-
 bazu — bez re-synca PROD služi stare duge kartice) · **§8** = živi sandučić nalaza.
 **C5b ✅ CIJELI** (§12.7–12.14) · **C6 ✅ CIJELI** (§13 — pravne NEMAJU bundle pa
 `legal/consent.css` ne migriraju; NALAZ: sidebar NEDOSTIŽAN, §13.7/BACKLOG; authed
-prije/poslije sonda za profil §13.9) → **C7 u tijeku**: /1 mrtvo ✅ · /2 cta-baza vraćena ✅ (BUG: C2 ju obrisao, 7 površina
-sivo od 13.8.; §14.2) → **/3**. **Next.js odbijen (ADR-028).**
+prije/poslije sonda za profil §13.9) → **C7 u tijeku**: /1 mrtvo ✅ · /2 cta-baza vraćena ✅ (BUG: C2 ju obrisao; §14.2) ·
+**/3 `responsive/*` NE POSTOJI ✅** (§14.3; s njim ⚰️ `check:cascade`) → **/4**
+(components). **Next.js odbijen (ADR-028).**
 ⚠️ **`check:docs` traži TOČNO jedan aktivni plan**; spec koji čeka nosi `**Status:** ⏸️ PAUZIRAN`.
 
 **Živa ograničenja redizajna** (obrazloženje svakog je u specu):

@@ -191,3 +191,19 @@
         font-size: 1rem;
     }
 }
+
+/* ===== GLOBALNI POMAGACI (C7/3, iz responsive/01+03) =====
+   `.hidden` toggla JS (fill-blanks, kviz...); Tailwindov istoimeni utility je
+   NAMJERNO iskljucen iz bundlea (`@source not inline` u app.css) bas zbog ovog
+   pravila — nas nosi !important jer gazi i inline stilove. */
+.hidden {
+    display: none !important;
+}
+
+/* Polegnut telefon: tijelo ostavlja prostor donjoj traci ucenja (mobile-nav gore)
+   i safe-arei — vrijednost iz responsive/03, primjenjuje se po VISINI, ne sirini. */
+@media (max-height: 500px) and (orientation: landscape) {
+    body {
+        padding-bottom: calc(var(--safe-bottom) + 60px);
+    }
+}
