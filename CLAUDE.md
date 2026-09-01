@@ -70,7 +70,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 ### `npm run preflight` — sve brze brane odjednom (pokreni PRIJE svakog main-pusha)
 
 `check:lockfile` · `check:node` · `verify` · `bump:check` · css-drift · `check:tailwind` · `check:cdn` ·
-`check:palette` · `check:tokens` · `check:cascade` · `check:i18n` · `check:orphan-css` · `check:safearea` · `check:budget` · `check:seo` · `check:contrast` ·
+`check:palette` · `check:tokens` · `check:cascade` · `check:i18n` · `check:orphan-css` · `check:safearea` · `check:csp` · `check:budget` · `check:seo` · `check:contrast` ·
 `typecheck` · `validate:schema` · `export:json --check` · `check:docs` · `check:state` ·
 `test:unit`. Pre-push hook ga automatski vrti na `main`.
 
@@ -88,6 +88,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 | `check:i18n` | nijedan korisniku vidljiv tekst zakucan mimo `js/i18n.js` (HTML · JS sinkovi · ključ bez rječnika); osnovica = brojač po datoteci |
 | `check:orphan-css` | **čegrtaljka**: klasa u `css/**` koju ne spominje ni markup, ni JS, ni gradivo, ni test. Osnovica ih **imenuje** — dio je legitiman |
 | `check:safearea` | `env(safe-area-inset-*)` samo u `css/variables.css`, drugdje `var(--safe-*)` |
+| `check:csp` | 0 inline `<script>` (iznimka ld+json) i 0 `on*` atributa u `*.html` + enforce header bez `unsafe-inline` za skripte |
 | `check:budget` | posjetiteljev put: **nijedna editorska datoteka** + **≤ 200 KB prenesenih** skripti (mjeri PRENESENE bajtove, ne disk) |
 | `check:seo` | ono što tražilica i pretpregled VIDE: sitemap == disk · robots ne `Disallow`-a `noindex` stranicu · jedan tekst u `<title>`/`og:`/`twitter:` · `og:image` **1200×630** · JSON-LD **parsira**. `--write` regenerira sitemap |
 | `check:contrast` | WCAG **po temi** — 358 provjera kroz sve teme; parsira `css/tokens.css`, ne drži kopiju vrijednosti |
@@ -161,9 +162,7 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 
 ### Gdje smo
 
-**✅ NA PRODUKCIJI** (2026-08-24): faza **TELEFON (T0–T6)** · **BUG-032** · **KOSTUR (K1–K4a)** ·
-**landing C+D** · prije toga C0–C3 i sve starije. Točan SHA/token/Vercel-ref se **namjerno ne
-prepisuje** ovamo (ADR-027) — zna ih zadnji **🚀** redak CHANGELOG-a.
+**✅ NA PRODUKCIJI:** zna zadnji **🚀** redak CHANGELOG-a (ADR-027; SHA/token se ne prepisuju ovamo).
 
 **✅ GOTOVO, NIJE DEPLOYANO** — popis grana zna `git branch --no-merged main`, ne ova datoteka
 (ADR-027). Ovdje ostaju samo **živa pravila** iz tog rada:

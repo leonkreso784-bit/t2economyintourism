@@ -526,6 +526,19 @@ a **jednom već jest**, BUG-025, godinu dana neopaženo — ubačena `<script sr
 pročita JWT i piše u bazu kao taj korisnik. SRI kaže *„ova datoteka je točno ta"*; CSP kaže
 *„nijedna druga se ne smije ni učitati"*. SRI ne vidi skript koji nikad nije bio u našem HTML-u.
 
+**✅ D3 ISHOD (2026-09-01).** Header **Report-Only → enforce** (`ac741c2`), pa ista šetnja
+preview-em pod BLOKIRAJUĆIM policyjem: math svih 5 modova (KaTeX 203 formule + fontovi s cdnjs),
+GA + Sentry učitani nakon privole, Supabase REST read, editor.html, geography blind-map —
+**nula `Refused` u konzoli, sve funkcionalno.** Brana `check:csp` na vratima (preflight) tvrdi
+tri stvari i pada zatvoreno: 0 inline `<script>` · 0 `on*` atributa u tagovima · vercel.json
+šalje ENFORCE header bez `'unsafe-inline'` u script-src (bez treće bi prve dvije čuvale header
+koji je netko razvodnio). Iznimka SAMO `application/ld+json` — inertan podatkovni blok koji CSP
+ne izvršava (D2 empirijski: landing ga nosi, report čist); komentari se skidaju prije mjerenja
+(naš komentar je već jednom ušao u tuđe brojanje kao „37. skripta"); ispisuje dotaknuto
+(6 datoteka, 1095 tagova). Obrnuto dokazana: pala na Report-Only stanju i na podmetnutim
+inline/`on*` povredama. ⚠️ Nuspojava na PREVIEW-ima: enforce blokira vercel.live
+feedback-toolbar (preview-only injekcija) — na produkciji ne postoji, svjesno prihvaćeno.
+
 ### D4 · Leaked password protection
 ~30 redaka u `js/auth.js`: HaveIBeenPwned `range` API, k-anonimnost (odlazi **pet** heks-znakova
 SHA-1, lozinka nikad ne napusti preglednik), `crypto.subtle` je ugrađen. **0 €** umjesto ~300 €/god.
@@ -607,7 +620,7 @@ Pet predmeta (`accounting` · `math` · `statistics` · `academic-writing` · `m
 Faza pada kad **sve** stoji:
 
 - [x] advisor performance **0 WARN** · security **15 → 11** — ✅ **A1, 2026-08-31, na produkciji**
-- [ ] `check:node`, `check:tokens`, `check:cascade`, `check:i18n`, `check:csp` u preflightu, **svaka s obrnutom provjerom** — ✅ node (A2) · tokens (B1) · cascade (B4) · i18n (B5, 2026-08-31); čeka još `check:csp` (D3)
+- [ ] `check:node`, `check:tokens`, `check:cascade`, `check:i18n`, `check:csp` u preflightu, **svaka s obrnutom provjerom** — ✅ node (A2) · tokens (B1) · cascade (B4) · i18n (B5, 2026-08-31) · csp (D3, 2026-09-01)
 - [x] a11y brana sudi po **WCAG razini**, osnovica imenovana — ✅ **B3b+B3c, 2026-08-31** (razina ∪ težina; macro u površinama; 9× `.katex-display` popravljeno; osnovica prazna)
 - [x] `check:final` **imenuje** preskočene — ✅ **B2, 2026-08-31** (osnovica: 8 imenovanih)
 - [ ] `palette:breakdown` **fatalno 0** · `check:palette` osnovica **0**

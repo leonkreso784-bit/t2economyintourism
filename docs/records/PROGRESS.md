@@ -5,6 +5,18 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-01 (FABLE) — D3: enforce — i brana je u prvom dahu nasla pravu iznimku
+
+Header na enforce, ista setnja pod blokirajucim policyjem: nula Refused, sve radi. Brana
+check:csp je na prvom pokretanju pala na <script type="application/ld+json"> — i to je bio
+ISPRAVAN pad krive tvrdnje: JSON-LD je inertan podatkovni blok koji CSP ne izvrsava, sto je
+D2 vec empirijski dokazao (landing ga nosi, report cist). Iznimka je uska (bas taj type),
+a treca tvrdnja brane (enforce header bez unsafe-inline) postoji da prve dvije ne cuvaju
+header koji je netko u meduvremenu razvodnio — brana koja mjeri stranicu a ne header mjerila
+bi krivu stvar.
+
+---
+
 ## 2026-09-01 (FABLE) — D2: report se cita, ne pretpostavlja — i bio je cist
 
 Report-Only CSP na preview, pa setnja svim rutama s citanjem konzole. Nula povreda iz nase

@@ -5,6 +5,16 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-01 (FABLE) — **MREŽA D3: CSP enforce + `check:csp` — prva iduća inline skripta pada kod nas, ne kod korisnika**
+
+### Dodano
+- **`Content-Security-Policy` ENFORCE** (Report-Only iz D2 potrošen čistim reportom); šetnja
+  preview-em pod blokirajućim policyjem: KaTeX/GA/Sentry/Supabase/editor/blind-map — nula
+  `Refused`, sve funkcionalno.
+- **Nova brana `check:csp` u preflightu**: 0 inline `<script>` (iznimka ld+json — inertan blok)
+  · 0 `on*` atributa · enforce header bez `unsafe-inline` za skripte. Komentari se skidaju
+  prije mjerenja; ispisuje dotaknuto; obrnuto dokazana (Report-Only stanje + podmetnute povrede).
+
 ## 2026-09-01 (FABLE) — **MREŽA D2: CSP Report-Only — report pročitan na svim rutama, 0 naših povreda**
 
 ### Dodano
