@@ -27,8 +27,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 - 2 nova Playwright testa (struktura + tok panela · buildQuestData kroz evaluate);
   auth+components 52/52 · puna responsive suita zelena · preflight 20/20 · živa proba na
   393 px: oba koraka + OAuth-greška u hashu → prevedena poruka i očišćen URL.
-- ⏳ Google/FB ključevi = Leonov dio (Google Cloud + Meta konzola → Supabase Auth Providers);
-  kod je građen da radi i prije njih (gumb → jasna poruka umjesto sirove greške).
+- **Google ključevi UPISANI i krug potvrđen UŽIVO** (Leon, 2026-09-02: novi GCP projekt
+  „Sokrat Study" + consent screen + web client → Supabase Providers; probe: `/authorize` 302
+  na accounts.google.com s našim client ID-em; Leonova prava prijava: *„super radi odlično"*).
+- ⏳ **Facebook ključevi još čekaju** (Meta konzola); gumb dotad daje jasnu poruku
+  „još nije dostupno" umjesto sirove greške — kod je građen da radi i prije ključeva.
 
 ## 2026-09-02 (FABLE) — 🚀 **BIRAČ TEMA NA PRODUKCIJI** (`6c5a5d8`, Leonov OK)
 

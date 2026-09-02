@@ -26,6 +26,17 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-02 (FABLE) — R1: Google OAuth UZIVO potvrdjen (Leonov krug)
+
+Leon proveden kroz konzole (novi GCP projekt "Sokrat Study" — stari MOBIX bi se korisnicima
+pokazivao imenom na consent ekranu; consent screen; web client s tocnim callbackom; kljucevi
+u Supabase Providers). Vanjska sonda: /authorize 302 na accounts.google.com s nasim client
+ID-em (prije toga 400 "provider is not enabled" = tocna dijagnoza da kljucevi jos nisu bili
+spremljeni). Klik na gumb u pravom pregledniku odveo do Googlea s redirect_to=localhost:5050;
+Leonova prava prijava: "super radi odlicno". Facebook jos ceka Metine kljuceve — kod spreman.
+
+---
+
 ## 2026-09-02 (FABLE) — RACUN R1 pocet: OAuth + upitnik + novi dijalog (grana feat/racun-r1)
 
 Leon otvorio blok ("poboljsati cijeli UX + Google i Facebook prijava") i PROSIRIO spec:

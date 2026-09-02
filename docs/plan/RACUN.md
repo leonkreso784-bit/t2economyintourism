@@ -27,10 +27,10 @@ Google), inače se dijalog prepravlja treći put.
 | **R3** | **Mail-obavijesti** — provider + Edge Function (ADR-016), pristanak iz upitnika; prvi segment = FMTU (obavijest o novim predmetima) | …primiti mail o novom predmetu SAMO ako je pristao, i odjaviti se jednim klikom iz samog maila |
 | — | ~~Facebook = uvjetno~~ **Leon 2026-09-02: Facebook ide u R1 uz Google.** Supabase posao je isti; ⚠️ Metin **app-review** znači da FB-gumb radi ODMAH samo za testere Meta-appa, javno tek kad review prođe — Google nema tu prepreku | — |
 
-**Leonov dio R1 (samo on može, konzole):** ① Google Cloud → OAuth client ID+secret; ② Meta
-developers → app + Facebook Login; ③ oboje upisati u Supabase Dashboard → Auth → Providers
-(+ redirect URI koji dashboard pokaže). Claude daje točne korake kad dođe red; kod se gradi
-i prije toga (provider-gumbi rade čim ključevi sjednu).
+**Leonov dio R1:** ① ✅ **Google GOTOV i potvrđen uživo** (2026-09-02: GCP projekt „Sokrat
+Study" → client → Supabase Providers → Leonova prava prijava prošla); ② ⏳ **Meta/Facebook
+čeka** (developers.facebook.com → app + Facebook Login → App ID+Secret u Supabase Providers;
+redirect URI isti kao za Google). Kod radi i prije ključeva (gumb → jasna poruka).
 
 ## 3 · Tvrde granice (ne popuštaju ni ovdje)
 
