@@ -13,6 +13,32 @@
 > Njihovi zapisi ostaju **ovdje i nedirnuti** jer nose obrazloženje i mjerenja; spec nosi **redoslijed
 > i dokaz**. Kad cigla padne, ovdje se stavlja ✅ s brojkom — ne briše se.
 
+### 🔴 R1-UX NALAZI (Leon uzivo, 2026-09-02) — "velika sranja, dno dna" → razrada ODMAH
+
+Leon testirao R1 krug i nasao cetiri problema (redoslijed = prioritet razrade):
+
+1. **U2 — „Obrisi povijest" NE brise (najveci):** gumb obrise cloud-retke pa te ODJAVI, ali
+   lokalni podaci ostaju → sljedeca prijava ih pull+merge UNIJOM vrati u cloud. Sve se vrati.
+   Uzrok NIJE bug u brisanju nego DIZAJN: „obrisi cloud, uredjaj ostaje" je samoporazan uz
+   union-merge sync (profile.js deleteCloudData + cloud-sync.js merge). Fix: brisati cloud
+   I lokalno I sync-snapshot, BEZ odjave; iskren tekst potvrde. Gotovo kad: nakon brisanja
+   i ponovne prijave povijest je prazna.
+2. **U1 — STUDIO: korisnik zarobljen u jednoj sekciji (Learn):** Leon nije mogao dodavati
+   blokove/sekcije — sve radi u istom. „+ Nova sekcija" postoji SAMO u st-metas retku
+   (studio.js F3 K3 „jedina afordancija") koji ocito nije vidljiv/nadjen; treba repro
+   authed (staging) pa afordancija i NA DNU canvasa. Gotovo kad: novi korisnik bez upute
+   doda 2. sekciju i 3. blok.
+3. **U3 — mail potvrde vodi na nepostojecu stranicu:** vjerojatno Site URL / redirect
+   allow-lista u Supabase Auth (registracija s localhosta salje localhost redirect;
+   klik kad server ne vrti = mrtva stranica). Fix = URL Configuration (Site URL
+   https://www.sokratstudy.com + allow-lista) + prod-verifikacija punog kruga.
+4. **U4 — posiljatelj mora biti sokrat@sokratstudy.com (Leon: „pod hitno"):** Supabase
+   salje s default adrese. Fix = custom SMTP (npr. Resend free) + DNS verifikacija domene
+   (SPF/DKIM u Vercel DNS-u) + Supabase Auth → Emails → SMTP. Ovo je ujedno TEMELJ za R3
+   (mail-obavijesti idu kroz isti SMTP/domenu) — posao se NE radi dvaput.
+
+Google OAuth: ✅ radi (Leon potvrdio). „Crni ekran" u Chromeu = neponovljen, drzati na oku.
+
 ### 🔐 RAČUN blok — Leonove želje 2026-09-01 (poslije deploya redizajna; seoba otkazana pa ništa ne čeka rujan)
 
 Leon (2026-09-01): Google prijava · Facebook prijava · *„povećanje cijelog profila"* (profilna
