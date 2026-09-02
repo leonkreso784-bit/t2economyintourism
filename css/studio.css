@@ -519,3 +519,20 @@
 }
 .ed-guard[hidden]{ display:none; }
 .ed-guard-msg{ max-width:34ch; font-size:15px; line-height:1.5; }
+
+/* ── U1 (R1-UX, 2026-09-02): „＋ Nova sekcija" i na DNU panea. Jedina afordancija dosad
+   (st-metas na vrhu) skrola iz vida čim se radi na blokovima → korisnik ostane zarobljen
+   u jednoj sekciji (Leon uživo). Namjerno JAČA od .be-bigplus (sekcija > blok). ── */
+#editor-page .st-addcat-foot {
+  width: 100%; margin-top: 26px; padding: 15px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1.5px dashed color-mix(in srgb, var(--color-brand-500) 45%, transparent);
+  border-radius: 14px;
+  color: var(--color-brand-500); font-size: 14px; font-weight: 700;
+  background: color-mix(in srgb, var(--color-brand-500) 8%, transparent); transition: .16s;
+}
+#editor-page .st-addcat-foot:hover {
+  border-color: var(--color-brand-500);
+  background: color-mix(in srgb, var(--color-brand-500) 14%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand-500) 9%, transparent);
+}

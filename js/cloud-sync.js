@@ -190,6 +190,51 @@ const CloudSync = (function () {
         snapshot = {};
     }
 
+    /**
+     * U2 (R1-UX): obriši CIJELU povijest učenja — cloud I lokalno I sync-snapshot, BEZ odjave.
+     *
+     * Zašto ovako: stari „Delete cloud data" je brisao samo cloud i odjavio korisnika, a
+     * lokalne podatke ČUVAO — pa ih je sljedeća prijava union-mergeom VRATILA u cloud.
+     * Brisanje koje se samo poništi je gore od nikakvog (Leon, 2026-09-02, uživo).
+     *
+     * Redoslijed je bitan: petlja se prvo GASI (da push ne utrkuje brisanje), cloud se
+     * briše PRIJE lokalnog (padne li mreža, ništa nije izgubljeno — sve ostaje kako je
+     * bilo), pa tek onda lokalni ključevi + META_KEY + snapshot.
+     *
+     * ⚠️ Pošteno ograničenje (offline-first cijena): DRUGI uređaj koji drži lokalnu kopiju
+     * vratit će svoj dio pri svojoj sljedećoj prijavi. Za potpuno brisanje svugdje korisnik
+     * briše na uređaju koji koristi (Leonov slučaj) ili briše račun (GDPR put).
+     */
+    async function wipeAll() {
+        const client = SokratAuth.getClient();
+        if (!client || !userId) return { ok: false, reason: 'not signed in' };
+        const wasRunning = !!timer;
+        stop(); // gasi timer + prazni snapshot
+
+        const { error } = await client.from('progress').delete().neq('key', '');
+        if (error) {
+            if (wasRunning) start();
+            return { ok: false, reason: error.message };
+        }
+
+        watchedKeys().forEach(function (k) { localStorage.removeItem(k); });
+        localStorage.removeItem(META_KEY);
+        snapshot = {};
+
+        // Isti best-effort UI refresh kao nakon pulla — otvoren predmet ne smije
+        // nastaviti pokazivati (i pri idućem spremanju USKRSNUTI) obrisani napredak.
+        try {
+            if (typeof AppState !== 'undefined' && AppState.nav.subject && typeof loadProgress === 'function') {
+                loadProgress();
+                if (typeof loadAnalytics === 'function') loadAnalytics();
+                if (typeof updateHomeStats === 'function') updateHomeStats();
+            }
+        } catch (e) { /* best-effort */ }
+
+        if (wasRunning) start(); // prazan snapshot + prazan storage → nema što pushati
+        return { ok: true };
+    }
+
     function handleAuthChange(user) {
         if (user) {
             if (userId === user.id && timer) return; // SIGNED_IN se zna ponoviti (token refresh, fokus taba)
@@ -213,6 +258,9 @@ const CloudSync = (function () {
         // u sinkronizaciju — kriterij 3 traži „istu sinkronizaciju kao katalog", a to se ne vidi
         // iz ponašanja bez čekanja intervala.
         watchedKeys: watchedKeys,
+        // U2: profil zove brisanje povijesti — mora ići KROZ sync modul jer jedino on
+        // zna ključeve, snapshot i petlju (brisanje mimo njega je stara greška).
+        wipeAll: wipeAll,
         // P4: izlozeno po ISTOM razlogu kao `watchedKeys` gore — tvrdnja „napredak se
         // spoji bez gubitka" je jedina koja stiti ucenje offline, a iz ponasanja se ne
         // vidi bez racuna, mreze i cekanja intervala. Cista funkcija, bez stanja.

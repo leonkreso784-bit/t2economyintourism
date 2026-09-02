@@ -7174,6 +7174,40 @@ h4.lb-heading {
   font-size: 15px;
   line-height: 1.5;
 }
+#editor-page .st-addcat-foot {
+  width: 100%;
+  margin-top: 26px;
+  padding: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1.5px dashed color-mix(in srgb, #1657d0 45%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    border: 1.5px dashed color-mix(in srgb, var(--color-brand-500) 45%, transparent);
+  }
+  border-radius: 14px;
+  color: var(--color-brand-500);
+  font-size: 14px;
+  font-weight: 700;
+  background: color-mix(in srgb, #1657d0 8%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background: color-mix(in srgb, var(--color-brand-500) 8%, transparent);
+  }
+  transition: .16s;
+}
+#editor-page .st-addcat-foot:hover {
+  border-color: var(--color-brand-500);
+  background: color-mix(in srgb, #1657d0 14%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background: color-mix(in srgb, var(--color-brand-500) 14%, transparent);
+  }
+  box-shadow: 0 0 0 3px color-mix(in srgb, #1657d0 9%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand-500) 9%, transparent);
+  }
+}
 :root {
   --topbar-h: 64px;
   --pathbar-h: 44px;

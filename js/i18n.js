@@ -463,9 +463,9 @@
     'msg.passwordsNoMatch': { en: 'Passwords do not match.', hr: 'Lozinke se ne podudaraju.' },
     'msg.saving': { en: 'Saving…', hr: 'Spremanje…' },
     'msg.passwordUpdated': { en: 'Password updated.', hr: 'Lozinka promijenjena.' },
-    'msg.deleteCloudFail': { en: 'Could not delete cloud data: ', hr: 'Brisanje podataka u oblaku nije uspjelo: ' },
-    'msg.cloudDataDeleted': { en: 'Cloud data deleted.', hr: 'Podaci u oblaku obrisani.' },
-    'msg.confirmDeleteCloud': { en: 'Delete ALL study progress stored in the cloud? Progress on this device is kept, but you will be signed out.', hr: 'Obrisati SAV napredak pohranjen u oblaku? Napredak na ovom uređaju ostaje, ali bit ćeš odjavljen/a.' },
+    'msg.deleteCloudFail': { en: 'Could not delete study history: ', hr: 'Brisanje povijesti učenja nije uspjelo: ' },
+    'msg.cloudDataDeleted': { en: 'Study history deleted.', hr: 'Povijest učenja obrisana.' },
+    'msg.confirmDeleteCloud': { en: 'Delete ALL study progress — in the cloud and on this device? Your account stays. This cannot be undone.', hr: 'Obrisati SAV napredak učenja — u oblaku i na ovom uređaju? Račun ostaje. Ovo se ne može poništiti.' },
 
     // ===== Auth modal (građen u auth.js) =====
     // R1: dijalog više nije „backup napretka" nego ULAZ u platformu (spec RACUN).
@@ -633,8 +633,9 @@
     'profile.syncNow': { en: 'Sync now', hr: 'Sinkroniziraj sada' },
     'profile.progressOverview': { en: 'Progress overview', hr: 'Pregled napretka' },
     'profile.privacyData': { en: 'Privacy & data', hr: 'Privatnost i podaci' },
-    'profile.deleteDesc': { en: 'Delete all study progress stored in the cloud — progress saved on this device stays.', hr: 'Obriši sav napredak pohranjen u oblaku — napredak spremljen na ovom uređaju ostaje.' },
-    'profile.deleteCloud': { en: 'Delete cloud data', hr: 'Obriši podatke iz oblaka' },
+    // U2 (R1-UX): brisanje je sada STVARNO — cloud + ovaj uređaj, račun ostaje.
+    'profile.deleteDesc': { en: 'Delete your entire study history — from the cloud and this device. Your account stays.', hr: 'Obriši cijelu povijest učenja — iz oblaka i s ovog uređaja. Račun ostaje.' },
+    'profile.deleteCloud': { en: 'Delete study history', hr: 'Obriši povijest učenja' },
     // GDPR čl. 17 — self-service brisanje računa. Do 2026-08-08 je ovdje stajalo „pošalji mail".
     'profile.deleteAccount': { en: 'Delete account', hr: 'Obriši račun' },
     'profile.deleteAccountDesc': {

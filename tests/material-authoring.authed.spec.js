@@ -477,3 +477,20 @@ test.describe('M3a — boja bloka', () => {
     }
   });
 });
+
+// ── U1 (R1-UX, Leon uživo 2026-09-02): korisnik NE SMIJE ostati zarobljen u jednoj sekciji ──
+// Jedina afordancija za novu sekciju bila je u st-metas retku na VRHU canvasa, koji skrola
+// iz vida čim se radi na blokovima. Ovaj test zabija: na DNU learn panea postoji
+// .st-addcat-foot i klik na njega STVARNO dodaje drugu sekciju.
+test('U1: „＋ Nova sekcija" postoji na dnu learn panea i dodaje drugu sekciju', async ({ page }) => {
+  await openMaterials(page);
+  const id = await openFreshMaterialWithSection(page, 'U1 Druga sekcija');
+  try {
+    const foot = page.locator('#stCanvas .st-pane[data-pane="learn"] .st-addcat-foot');
+    await expect(foot, 'dno learn panea nema afordanciju za novu sekciju').toHaveCount(1);
+    await foot.click();
+    await expect(page.locator('#stCanvas .st-learn-cat')).toHaveCount(2, { timeout: 20000 });
+  } finally {
+    await rmNode(page, id);
+  }
+});

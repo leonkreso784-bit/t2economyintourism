@@ -301,15 +301,18 @@ async function deleteCloudData() {
     });
     if (!ok) return;
 
-    const { error } = await client.from('progress').delete().neq('key', '');
-    if (error) {
-        if (typeof showToast === 'function') showToast((window.t ? t('msg.deleteCloudFail') : 'Could not delete cloud data: ') + error.message);
+    // U2 (R1-UX): brisanje ide KROZ CloudSync.wipeAll — cloud + lokalno + snapshot, bez
+    // odjave. Stara verzija je brisala samo cloud i odjavila korisnika, a union-merge je
+    // pri sljedećoj prijavi sve vratio: brisanje koje se samo poništi (Leon, 2026-09-02).
+    if (typeof CloudSync === 'undefined' || !CloudSync.wipeAll) return;
+    const res = await CloudSync.wipeAll();
+    if (!res.ok) {
+        if (typeof showToast === 'function') showToast((window.t ? t('msg.deleteCloudFail') : 'Could not delete study history: ') + res.reason);
         return;
     }
-    // Odjava odmah gasi sync petlju — inače bi lokalni podaci bili ponovno uploadani.
-    await SokratAuth.signOut();
-    if (typeof showToast === 'function') showToast(window.t ? t('msg.cloudDataDeleted') : 'Cloud data deleted.');
-    navigateTo('landing');
+    if (typeof showToast === 'function') showToast(window.t ? t('msg.cloudDataDeleted') : 'Study history deleted.');
+    // Korisnik OSTAJE prijavljen; profil se osvježi da odmah pokaže prazno stanje.
+    if (typeof renderProfilePage === 'function') renderProfilePage();
 }
 
 // ===== GDPR čl. 17 — self-service brisanje računa =====

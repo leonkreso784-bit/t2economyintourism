@@ -716,7 +716,17 @@ const SokratStudio = (function () {
       out += '</div></div>';
     });
     if (!out) return '<p class="st-hint">' + esc(t('studio.learnEmpty', 'Nema learn-sadržaja u ovoj skripti.')) + '</p>';
+    // U1 (R1-UX, Leon uživo 2026-09-02): afordancija za NOVU sekciju i na DNU panea.
+    // Jedina dosad (st-metas na vrhu canvasa) skrola iz vida čim korisnik radi na
+    // blokovima → ostane zarobljen u jednoj sekciji i sve piše u nju. Delegacija na
+    // canvasu već hvata svaki [data-st-addcat], pa je ovo čisti markup.
+    if (isEd) out += addCatFootHtml();
     return out;
+  }
+
+  function addCatFootHtml() {
+    return '<button type="button" class="st-addcat-foot" data-st-addcat>＋ '
+      + esc(t('studio.addSection', 'Nova sekcija')) + '</button>';
   }
 
   function renderLearnBody(L, kind) {
@@ -794,7 +804,9 @@ const SokratStudio = (function () {
       });
       if (hasCtrls) out += '<div class="st-addwrap">' + _adminAddBtn(true, m.type, catId, m.add) + '</div>';
     });
-    return out || '<p class="st-hint">' + esc(t('studio.paneEmpty', 'Nema sadržaja u ovom modu.')) + '</p>';
+    if (!out) return '<p class="st-hint">' + esc(t('studio.paneEmpty', 'Nema sadržaja u ovom modu.')) + '</p>';
+    if (isEd) out += addCatFootHtml(); // U1: isti razlog kao u learn paneu (vidi gore)
+    return out;
   }
 
   // ---- BLOK-EDITOR mount (U8.2): montira SokratBlockEditor u svaki .be-mount learn-panea ----
