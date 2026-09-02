@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-02 (FABLE) — 🚀 **U5 NA PRODUKCIJI** (`3c6c995`, kod `2de0456`, Leonov OK)
+
+Fast-forward `feat/racun-r1` → `main` (U5 + compact-prep docs). Uživo potvrđeno: token
+`20260902032929` na www.sokratstudy.com i `signInWithIdToken` u živom `auth.js`.
+Gate: preflight EXIT 0 (×2: ručno + pre-push hook).
+
 ## 2026-09-02 (FABLE) — **U5: Google prijava bez supabase-domene na ekranu** (grana)
 
 ### Promijenjeno

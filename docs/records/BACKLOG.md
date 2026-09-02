@@ -19,7 +19,7 @@
 bez odjave, authed spec) i U1 (Nova sekcija na dnu panea) popravljeni i NA PRODUKCIJI s
 cijelim R1 paketom. **U5 (novi nalaz):** Googleov ekran pisao supabase-domenu + mail o
 dijeljenju podataka s njom → rijeseno BESPLATNO (implicit id_token s nase stranice,
-signInWithIdToken; ne custom domena za 10 USD/mj) — na grani feat/racun-r1, ceka deploy.
+signInWithIdToken; ne custom domena za 10 USD/mj) — NA PRODUKCIJI 2026-09-02 (`2de0456`).
 Otvoreno SAMO: **U3** (Supabase Site URL + redirect allow-lista) i **U4** (Resend SMTP →
 sokrat@sokratstudy.com; temelj za R3) — oba Leonovi konzolni koraci, upute u PROGRESS/chatu.
 

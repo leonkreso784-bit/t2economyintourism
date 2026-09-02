@@ -26,6 +26,14 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-02 (FABLE) — 🚀 U5 deployan (Leon: "moze deploy")
+
+Fast-forward feat/racun-r1 → main (3c6c995, kod 2de0456). Uzivo potvrdjeno: token
+20260902032929 na produkciji + signInWithIdToken u zivom auth.js. Preflight EXIT 0.
+Isti Leonov zahtjev trazio je i korake za Facebook (Metina konzola) — dani u chatu.
+
+---
+
 ## 2026-09-02 (FABLE) — U5: Google bez supabase-domene (id_token izravno)
 
 Leonov nalaz nakon deploya: Googleov ekran pise <ref>.supabase.co i stize mail o

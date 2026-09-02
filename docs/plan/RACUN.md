@@ -2,7 +2,7 @@
 
 **Status:** 🟩 AKTIVAN — **R1 jezgra NA PRODUKCIJI 2026-09-02** (`921ef08`, Leonov OK):
 novi dijalog + upitnik + Google-prijava (radi uživo) + U1/U2 popravci iz Leonovog testiranja.
-**U5** (Google bez supabase-domene: id_token izravno) na grani, čeka deploy-OK. FB čeka
+**U5** (Google bez supabase-domene: id_token izravno) TAKOĐER na produkciji. FB čeka
 Metine ključeve; U3/U4 = Leonove konzole (BACKLOG §R1-UX). Leon je blok otvorio i PROŠIRIO
 2026-09-02: Facebook uz Google (ne više uvjetno), a blok je izričito i **UX računskih
 površina** (dijalog + profil), ne samo priključak providera. Napomena o dosegu: „frontend gotov (2026-09-01)" se odnosio na
