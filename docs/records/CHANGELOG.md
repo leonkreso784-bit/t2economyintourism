@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-02 (FABLE) — 🚀 **FB gumb maknut — NA PRODUKCIJI** (`9f2977c`, Leonov OK)
+
+Fast-forward `feat/racun-r1` → `main`. Uživo potvrđeno: token `20260902045623` na
+www.sokratstudy.com, `FB_LOGIN = false` u živom `auth.js`. Gate: preflight EXIT 0
+(ručno + pre-push hook) · auth spec 16/16.
+
 ## 2026-09-02 (FABLE) — **Facebook gumb maknut iz dijaloga** (grana)
 
 - Leon: *„makni facebook za sada to cemo kasnije dodat"* — gumb je čekao Metine ključeve

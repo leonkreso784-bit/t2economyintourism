@@ -26,6 +26,12 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-02 (FABLE) — 🚀 FB-off deployan (Leon: "deplojaj na produkciju verziju gdje nema gumba za fejs")
+
+main = 9f2977c; uzivo: token 20260902045623 + FB_LOGIN=false u zivom auth.js.
+
+---
+
 ## 2026-09-02 (FABLE) — FB gumb maknut (Leon: "makni facebook za sada")
 
 Zastavica FB_LOGIN=false u auth.js gasi markup + listener; sve ostalo (handleOAuth,
