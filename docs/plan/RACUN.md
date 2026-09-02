@@ -2,8 +2,10 @@
 
 **Status:** 🟩 AKTIVAN — **R1 jezgra NA PRODUKCIJI 2026-09-02** (`921ef08`, Leonov OK):
 novi dijalog + upitnik + Google-prijava (radi uživo) + U1/U2 popravci iz Leonovog testiranja.
-**U5** (Google bez supabase-domene: id_token izravno) TAKOĐER na produkciji. FB čeka
-Metine ključeve; U3/U4 = Leonove konzole (BACKLOG §R1-UX). Leon je blok otvorio i PROŠIRIO
+**U5** (Google bez supabase-domene: id_token izravno) TAKOĐER na produkciji. **FB gumb
+maknut na Leonovu riječ** („makni facebook za sada") — `FB_LOGIN=false`, Metine upute
+spremljene u PROGRESS-u. **U3+U4 ✅ zatvorio Leon 2026-09-02** (Site URL + Resend SMTP,
+BACKLOG §R1-UX). Leon je blok otvorio i PROŠIRIO
 2026-09-02: Facebook uz Google (ne više uvjetno), a blok je izričito i **UX računskih
 površina** (dijalog + profil), ne samo priključak providera. Napomena o dosegu: „frontend gotov (2026-09-01)" se odnosio na
 REDIZAJN-spec (posjetiteljski + študentski put) — dijalog prijave i profil u njemu NISU bili,
@@ -27,12 +29,13 @@ Google), inače se dijalog prepravlja treći put.
 | **R1** | **A0 prepravak `#authModal` + UPITNIK pri registraciji + Google- i Facebook-prijava** (jedan zahvat) | …se registrirati Googleom, Facebookom ili e-mailom kroz ISTI dijalog, pri registraciji (i pri PRVOJ OAuth-prijavi!) reći tko je (student/škola + faks; FMTU se prepoznaje) i dati/uskratiti mail-pristanak — a postojeći korisnici se i dalje prijavljuju bez ikakve promjene |
 | **R2** | **Profil** — slika (bucket po `node-images` obrascu: vlasnički prefiks + RLS), uređivanje podataka i izgleda profila | …staviti profilnu sliku, promijeniti ime i vidjeti svoj profil onako kako će ga vidjeti drugi |
 | **R3** | **Mail-obavijesti** — provider + Edge Function (ADR-016), pristanak iz upitnika; prvi segment = FMTU (obavijest o novim predmetima) | …primiti mail o novom predmetu SAMO ako je pristao, i odjaviti se jednim klikom iz samog maila |
-| — | ~~Facebook = uvjetno~~ **Leon 2026-09-02: Facebook ide u R1 uz Google.** Supabase posao je isti; ⚠️ Metin **app-review** znači da FB-gumb radi ODMAH samo za testere Meta-appa, javno tek kad review prođe — Google nema tu prepreku | — |
+| — | ~~Facebook = uvjetno~~ ~~Leon 2026-09-02: FB ide u R1 uz Google~~ **Leon 2026-09-02 kasnije: „makni facebook za sada, to ćemo kasnije dodat"** — gumb maknut s produkcije (`FB_LOGIN=false` u auth.js); povratak = Metini ključevi + flip zastavice. Metine upute korak-po-korak stoje u PROGRESS/chatu | — |
 
 **Leonov dio R1:** ① ✅ **Google GOTOV i potvrđen uživo** (2026-09-02: GCP projekt „Sokrat
-Study" → client → Supabase Providers → Leonova prava prijava prošla); ② ⏳ **Meta/Facebook
-čeka** (developers.facebook.com → app + Facebook Login → App ID+Secret u Supabase Providers;
-redirect URI isti kao za Google). Kod radi i prije ključeva (gumb → jasna poruka).
+Study" → client → Supabase Providers → Leonova prava prijava prošla); ② ✅ **U3+U4**
+(2026-09-02: Site URL + redirect lista; Resend — DNS u **Porkbunu**, SMTP u Supabaseu,
+pošiljatelj sokrat@sokratstudy.com); ③ 💤 **Meta/Facebook ODGOĐEN na Leonovu riječ** —
+upute spremljene, kod se vraća flipom `FB_LOGIN`.
 
 ## 3 · Tvrde granice (ne popuštaju ni ovdje)
 

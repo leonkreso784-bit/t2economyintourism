@@ -26,6 +26,17 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-02 (FABLE) — U3+U4 zatvoreni (Leonove konzole; "rijeseno sve")
+
+U3: Supabase Site URL https://www.sokratstudy.com + redirect allow-lista (**wildcard).
+U4: Resend (regija EU) → DNS zapisi → SMTP u Supabaseu (smtp.resend.com:465, user resend,
+posiljatelj sokrat@sokratstudy.com). Izvana potvrdjeno: DKIM, DMARC, send/rsend CNAME zivi.
+POUKA: prvo sam Leona slao u Vercel DNS — a nameserveri sokratstudy.com su PORKBUNOVI
+(domena kupljena tamo, DNS ostao tamo). Provjeri `Resolve-DnsName -Type NS` PRIJE davanja
+DNS uputa; lokalni resolver zna kesirati prazno — autoritativni server je istina.
+
+---
+
 ## 2026-09-02 (FABLE) — 🚀 FB-off deployan (Leon: "deplojaj na produkciju verziju gdje nema gumba za fejs")
 
 main = 9f2977c; uzivo: token 20260902045623 + FB_LOGIN=false u zivom auth.js.
