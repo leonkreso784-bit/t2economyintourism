@@ -5,6 +5,18 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-02 (FABLE) — 🚀 **RAČUN R1 NA PRODUKCIJI** (`921ef08`, Leonov izričit OK)
+
+Cijeli R1 paket deployan fast-forwardom `feat/racun-r1` → `main`: **novi dijalog prijave
+(Google + Facebook ulazi, dvokoračna registracija s upitnikom, upitnik i pri prvoj
+OAuth-prijavi)** + **U1** (Nova sekcija na dnu panea) + **U2** (brisanje povijesti stvarno
+briše, bez odjave). Vercel production READY; uživo potvrđeno: novi bump token, `authGoogleBtn`
+u auth.js, `wipeAll` u cloud-sync.js, `st-addcat-foot` u studio.js. Google prijava RADI
+(Leonov krug); FB gumb daje jasnu poruku dok Metini ključevi ne sjednu. Gate: preflight 20/20
+(×2: ručno + pre-push hook) · auth spec 16/16 · authed U1+U2 na stagingu.
+⚠️ Zapisan i Leonov nalaz: **OAuth s preview-URL-a vraća na produkciju** (preview-origin nije
+u Supabase redirect allow-listi) — testiranje OAutha ide na localhostu ili produkciji.
+
 ## 2026-09-02 (FABLE) — **RAČUN R1: OAuth ulazi + upitnik + novi dijalog prijave** (grana `feat/racun-r1`)
 
 ### Dodano

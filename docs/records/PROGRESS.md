@@ -26,6 +26,18 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-02 (FABLE) — 🚀 R1 deployan (Leon: "molim te napravi deploy")
+
+Sesija s zivim Leonovim testiranjem: 4 nalaza (BACKLOG §R1-UX), U1+U2 popravljena i
+deployana ISTI dan zajedno s dijalogom. Vazna lekcija o komunikaciji: Leon je testirao
+STARI kod na produkciji dok je popravak zivio na grani -- "popravljeno" bez "gdje" je
+poluinformacija koja frustrira; ubuduce uz svaki popravak IZRICITO reci na kojoj ga
+adresi korisnik moze vidjeti. Njegov nalaz usput: OAuth s previewa vraca na produkciju
+(preview-origin nije u Supabase allow-listi) -- ocekivano, ali vrijedi znati za
+testiranje. U3 (Site URL) i U4 (Resend SMTP) ostaju Leonovi konzolni koraci.
+
+---
+
 ## 2026-09-02 (FABLE) — R1: Google OAuth UZIVO potvrdjen (Leonov krug)
 
 Leon proveden kroz konzole (novi GCP projekt "Sokrat Study" — stari MOBIX bi se korisnicima
