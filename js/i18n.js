@@ -507,6 +507,7 @@
     'auth.st.badEmail': { en: 'That email address does not look valid.', hr: 'Taj e-mail ne izgleda ispravno.' },
     'auth.st.samePass': { en: 'The new password must be different from the current one.', hr: 'Nova lozinka mora biti različita od trenutne.' },
     'auth.st.genericErr': { en: 'Something went wrong. Please try again.', hr: 'Nešto je pošlo po zlu. Pokušaj ponovno.' },
+    'auth.st.serverErr': { en: 'The server could not send the email right now — please try again in a few minutes.', hr: 'Server trenutno ne može poslati e-mail — pokušaj ponovno za par minuta.' },
     'auth.st.redirect': { en: 'Opening secure sign-in…', hr: 'Otvaranje sigurne prijave…' },
     'auth.st.providerOff': { en: 'This sign-in method is not available yet — please use email for now.', hr: 'Ovaj način prijave još nije dostupan — zasad koristi e-mail.' },
     // R1: upitnik pri registraciji / prvoj OAuth-prijavi (spec RACUN §2)

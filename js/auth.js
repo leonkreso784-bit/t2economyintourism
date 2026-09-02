@@ -275,8 +275,15 @@ const SokratAuth = (function () {
         if (/provider is not enabled|unsupported provider/i.test(raw)) {
             return at('auth.st.providerOff', 'This sign-in method is not available yet — please use email for now.');
         }
-        // Nepoznato: radije sirova engleska recenica nego prazan crveni okvir.
-        return raw || at('auth.st.genericErr', 'Something went wrong. Please try again.');
+        // 5xx (npr. SMTP pao pa mail ne izlazi): tijelo zna biti PRAZAN JSON → supabase-js
+        // složi message "{}" — korisniku se pokazao doslovno "{}" (Leonov nalaz, 2026-09-02).
+        if (code === 'unexpected_failure' || (err && typeof err.status === 'number' && err.status >= 500)) {
+            return at('auth.st.serverErr', 'The server could not send the email right now — please try again in a few minutes.');
+        }
+        // Nepoznato: radije sirova engleska recenica nego prazan crveni okvir — ali samo ako
+        // je LJUDSKA. Serializirani JSON ("{}", "[…]") ili "[object Object]" nije poruka.
+        if (raw && !/^[\[{]/.test(raw) && raw.indexOf('[object') === -1) return raw;
+        return at('auth.st.genericErr', 'Something went wrong. Please try again.');
     }
 
     function injectModal() {

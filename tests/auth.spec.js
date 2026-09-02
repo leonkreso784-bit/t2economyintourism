@@ -184,3 +184,30 @@ test('auth R1: buildQuestData recognizes FMTU and shapes metadata', async ({ pag
   expect(out.consent.is_fmtu).toBe(false);
   expect(typeof out.consent.questionnaire_at).toBe('string');
 });
+
+test('auth: 5xx na /recover daje ljudsku poruku, nikad serializirani JSON', async ({ page }) => {
+  // Leonov nalaz 2026-09-02: SMTP pao → GoTrue vratio 500 s PRAZNIM JSON tijelom →
+  // supabase-js slozi message "{}" → korisnik vidio doslovno "{}" u crvenom.
+  // Mock drzi rub deterministicnim (ne ovisi o stvarnom stanju SMTP-a).
+  await page.route('**/auth/v1/recover*', (route) => route.fulfill({
+    status: 500, contentType: 'application/json', body: '{}'
+  }));
+
+  await page.goto('/');
+  const btn = page.locator('#authNavBtn');
+  let cdnOk = true;
+  try { await btn.waitFor({ state: 'visible', timeout: 15000 }); } catch (e) { cdnOk = false; }
+  test.skip(!cdnOk, 'supabase-js CDN unreachable — auth disabled by design');
+
+  await btn.click();
+  await page.click('#authForgotLink');
+  await page.fill('#authForgotEmail', 'nepostojeci@example.com');
+  await page.click('#authForgotForm button[type="submit"]');
+
+  const status = page.locator('#authStatus');
+  await expect(status).toBeVisible();
+  await expect(status).toHaveClass(/is-error/);
+  const text = (await status.textContent()).trim();
+  expect(text.length).toBeGreaterThan(10);            // prava recenica, ne fragment
+  expect(text).not.toMatch(/^[\[{]|\[object/);        // nikad JSON/objekt kao poruka
+});
