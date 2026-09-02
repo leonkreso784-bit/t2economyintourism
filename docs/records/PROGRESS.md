@@ -26,6 +26,18 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-02 (FABLE) — U5: Google bez supabase-domene (id_token izravno)
+
+Leonov nalaz nakon deploya: Googleov ekran pise <ref>.supabase.co i stize mail o
+dijeljenju podataka s tom domenom — izgleda kao phishing. Umjesto placanja custom
+domene (10 USD/mj): implicit id_token s nase stranice (redirect_uri = nas origin) +
+signInWithIdToken prema GoTrueu; nonce kroz sessionStorage, fallback na stari put u
+privatnom nacinu. Lekcija: Google trazi TOCAN redirect URI match — s kosom crtom na
+kraju (origin+pathname daje "/"). Mismatch-greska prije unosa bila je i dokaz da nasa
+strana gradi ispravan URL. Leon potvrdio krug uzivo.
+
+---
+
 ## 2026-09-02 (FABLE) — 🚀 R1 deployan (Leon: "molim te napravi deploy")
 
 Sesija s zivim Leonovim testiranjem: 4 nalaza (BACKLOG §R1-UX), U1+U2 popravljena i

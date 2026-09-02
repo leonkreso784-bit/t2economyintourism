@@ -5,6 +5,25 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-02 (FABLE) — **U5: Google prijava bez supabase-domene na ekranu** (grana)
+
+### Promijenjeno
+- Google više NE ide preko Supabaseovog callbacka (`signInWithOAuth`) nego **implicit
+  id_token izravno s naše stranice**: `redirect_uri` = naš origin → Googleov ekran piše
+  **sokratstudy.com**, a ne `<ref>.supabase.co`, i sigurnosni mail o „dijeljenju podataka"
+  imenuje našu domenu. Token se predaje GoTrueu kroz `signInWithIdToken` (+ nonce kroz
+  sessionStorage preko redirecta; privatni način bez sessionStoragea pada na stari put).
+  Povod: Leonov nalaz — supabase-link na prijavi izgleda kao phishing; custom domena
+  košta 10 USD/mj, ovo je besplatno. URL se čisti PRIJE mrežnog poziva (token ne
+  preživljava refresh/bookmark). Facebook ostaje na supabase-callbacku (Metin review ionako čeka).
+- Google klijent: dodana 2 redirect URI-ja (`https://www.sokratstudy.com/` ·
+  `http://localhost:5050/` — **s kosom crtom**, Google traži točan match; Leon uživo).
+
+### Dokaz
+- Živa proba: klik → accounts.google.com s `response_type=id_token` i našim originom
+  (mismatch-greška PRIJE Leonovih unosa imenovala točno naš URI = naša strana ispravna);
+  Leon prošao puni krug: *„jesam riješeno"*. auth spec 16/16 · preflight 20/20.
+
 ## 2026-09-02 (FABLE) — 🚀 **RAČUN R1 NA PRODUKCIJI** (`921ef08`, Leonov izričit OK)
 
 Cijeli R1 paket deployan fast-forwardom `feat/racun-r1` → `main`: **novi dijalog prijave

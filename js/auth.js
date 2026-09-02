@@ -118,9 +118,29 @@ const SokratAuth = (function () {
             });
         });
 
+        // Povratak s Googlea (U5): #id_token u fragmentu → predaj GoTrueu. supabase-jsov
+        // detectSessionInUrl id_token NE dira (traži access_token/code), pa je posao naš.
+        // URL se čisti PRIJE mrežnog poziva — token ne smije preživjeti refresh/bookmark.
+        const _gFrag = new URLSearchParams((window.location.hash || '').replace(/^#/, ''));
+        const _gIdToken = _gFrag.get('id_token');
+        if (_gIdToken) {
+            history.replaceState(null, '', window.location.pathname);
+            let _gNonce = null;
+            try {
+                _gNonce = sessionStorage.getItem(GOOGLE_NONCE_KEY);
+                sessionStorage.removeItem(GOOGLE_NONCE_KEY);
+            } catch (e) { /* bez nonca GoTrue odbija ako ga token nosi — poruka niže */ }
+            client.auth.signInWithIdToken({ provider: 'google', token: _gIdToken, nonce: _gNonce || undefined })
+                .then(function (r) {
+                    if (r.error) { openModal(); setStatus(authError(r.error), true); }
+                    // Uspjeh: SIGNED_IN event vodi dalje (upitnik/toast) — isti put kao dosad.
+                });
+        }
+
         // OAuth povratak s GREŠKOM: GoTrue ne vraća error signInWithOAuth pozivu (taj samo
         // redirecta) nego ga šalje NATRAG u URL-u (#error_description=…). Bez ovoga klik na
         // provider koji u dashboardu još nije uključen izgleda kao „ništa se nije dogodilo".
+        // Hvata i Googleov implicit povratak s greškom (#error=access_denied bez tokena).
         const _oauthErr = new URLSearchParams(
             (window.location.hash || '').replace(/^#/, '') + '&' + (window.location.search || '').replace(/^\?/, '')
         ).get('error_description');
@@ -380,7 +400,7 @@ const SokratAuth = (function () {
         document.getElementById('authSignUpForm').addEventListener('submit', handleSignUpStep1);
         document.getElementById('authSignUpForm2').addEventListener('submit', handleSignUp);
         document.getElementById('authSignUpBack').addEventListener('click', function () { showPanel('signup'); });
-        document.getElementById('authGoogleBtn').addEventListener('click', function () { handleOAuth('google'); });
+        document.getElementById('authGoogleBtn').addEventListener('click', function () { handleGoogle(); });
         document.getElementById('authFacebookBtn').addEventListener('click', function () { handleOAuth('facebook'); });
         document.getElementById('authForgotForm').addEventListener('submit', handleForgot);
         document.getElementById('authRecoveryForm').addEventListener('submit', handleRecovery);
@@ -562,6 +582,44 @@ const SokratAuth = (function () {
             questionnaire_done: true,
             questionnaire_at: new Date().toISOString()
         };
+    }
+
+    // U5 (R1-UX): Google BEZ supabase-domene na ekranu pristanka. `signInWithOAuth` vodi
+    // preko Supabaseovog callbacka pa Google piše „to continue to <ref>.supabase.co" i šalje
+    // mail o dijeljenju s tom domenom (Leonov nalaz — izgleda kao phishing). Custom domena
+    // košta 10 USD/mj; besplatni put je implicit id_token IZRAVNO s naše stranice
+    // (redirect_uri = naš origin → Google piše sokratstudy.com), a token predamo GoTrueu
+    // kroz signInWithIdToken. Nonce ide kroz sessionStorage preko redirecta (CSRF/replay).
+    const GOOGLE_CLIENT_ID = '646318963527-nch7cvm11ef0r74jjge8pp8cnr7dgc8o.apps.googleusercontent.com';
+    const GOOGLE_NONCE_KEY = 'sokrat-gnonce';
+
+    function randomHex(n) {
+        const a = new Uint8Array(n);
+        crypto.getRandomValues(a);
+        return Array.prototype.map.call(a, function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+    }
+
+    function handleGoogle() {
+        if (!client) return;
+        let nonce = null;
+        try {
+            nonce = randomHex(16);
+            sessionStorage.setItem(GOOGLE_NONCE_KEY, nonce);
+        } catch (e) {
+            // Privatni način bez sessionStoragea → stari supabase-redirect put (radi, samo ružnije piše).
+            handleOAuth('google');
+            return;
+        }
+        setStatus(at('auth.st.redirect', 'Opening secure sign-in…'));
+        const p = new URLSearchParams({
+            client_id: GOOGLE_CLIENT_ID,
+            redirect_uri: window.location.origin + window.location.pathname,
+            response_type: 'id_token',
+            scope: 'openid email profile',
+            nonce: nonce,
+            prompt: 'select_account'
+        });
+        window.location.assign('https://accounts.google.com/o/oauth2/v2/auth?' + p.toString());
     }
 
     async function handleOAuth(provider) {
