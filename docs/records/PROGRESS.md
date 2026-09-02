@@ -26,6 +26,23 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-02 (FABLE) — RACUN R1 pocet: OAuth + upitnik + novi dijalog (grana feat/racun-r1)
+
+Leon otvorio blok ("poboljsati cijeli UX + Google i Facebook prijava") i PROSIRIO spec:
+FB uz Google (ne vise uvjetno), blok = i UX racunskih povrsina; RACUN.md i CLAUDE.md
+poravnati prije prve linije koda. Dijalog pregraden u jednom zahvatu (za to i jest cekao):
+OAuth ulazi iznad tabova, dvokoracna registracija (signUp trazi SVE u options.data —
+email-korisnik nakon signUp-a nema sesiju kojom bi upitnik predao naknadno), upitnik pri
+prvoj OAuth-prijavi s biljegom i za preskok. Lekcija: GoTrue gresku za neukljucen provider
+NE vraca signInWithOAuth pozivu nego je salje NATRAG u URL-u — bez hvatanja na initu klik
+izgleda kao "nista se nije dogodilo". Debug-lekcija: goto na ISTI dokument s drugim hashom
+ne reloada stranicu — mjerio sam stari DOM i "nasao" bug kojeg nema; svjezi tab pokazao da
+sve radi (kandidat za METODA popis). check:i18n je uhvatio konkatenaciju `prefix +
+'Consent"><span>'` kao tekstni cvor — popravljen SKLOP (id unaprijed), ne osnovica.
+Dokaz: preflight 20/20 · auth+components 52/52 · puna suita zelena · ziva proba 393px.
+
+---
+
 ## 2026-09-02 (FABLE) — 🚀 Birac tema deployan (Leon: "Ok")
 
 FF push feat/birac-tema -> main (6c5a5d8), Vercel production READY. Tri teme zive:

@@ -186,9 +186,10 @@ pregleda ušla je i dorada **learn u bojama sekcija** (spec §15.1; CI je prvu v
 na amberu 4.41 → mix izmjeren na 45 %). **Next.js odbijen (ADR-028).**
 Aktivni spec: **`docs/plan/RACUN.md`** (drži „što sada"; posao kreće na Leonovu riječ).
 
-**Sljedeće = RAČUN blok** (`BACKLOG.md §RAČUN`, čeka Leonovu riječ za početak): **A0 prepravak
-`#authModal` + UPITNIK pri registraciji + Google-prijava u JEDNOM zahvatu** (dijalog je građen
-za jedan put — inače se prepravlja treći put) → profil (slika/uređivanje, bucket po
+**Sljedeće = RAČUN blok — Leon OTVORIO 2026-09-02** („poboljšati cijeli UX + Google i
+Facebook prijava"): **A0 prepravak `#authModal` + UPITNIK pri registraciji + Google- i
+Facebook-prijava u JEDNOM zahvatu** (dijalog je građen za jedan put — inače se prepravlja
+treći put; FB radi javno tek po Metinom app-reviewu) → profil (slika/uređivanje, bucket po
 `node-images` obrascu) → mail-obavijesti (Edge Function, ADR-016; pristanak iz upitnika).
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
@@ -234,8 +235,8 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
   temi, jer je izmjereno da bijelo pada u `chalk`/`mint` (**2.01–3.12**), a tamno ondje daje
   **5.81–9.00**; u `academic`/`paper` bijelo prolazi (5.30–6.15). **Gasi 7 od preostalih 10
   fatalnih pravila palete.** Isto vrijedi za KARTICE, gdje boja dolazi izvana → `inkForTint()` (već postoji, C5a/4).
-- **OAuth: NE zasad.** Od 5 računa **4 su Leonova**, peti je neaktivan → stvarnih vanjskih
-  korisnika **nula**. Ne planirati; ne obećavati „Sign in with ChatGPT" (nepotvrđen).
+- **OAuth: OTVOREN (RAČUN R1).** Odluka „NE zasad" (2026-08-30) potrošena Leonovim željama
+  2026-09-01/02 — Google + Facebook idu u R1. „Sign in with ChatGPT" se i dalje NE obećava.
 - **„Povijest učenja" OSTAJE, ali plitko.** Smisao dobiva tek s objavom materijala i mnogo
   sadržaja. **Ne razvijati sad, ne brisati** — `.history-item*` su namjerno mrtva, ne siročad.
 

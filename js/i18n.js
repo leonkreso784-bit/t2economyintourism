@@ -468,8 +468,12 @@
     'msg.confirmDeleteCloud': { en: 'Delete ALL study progress stored in the cloud? Progress on this device is kept, but you will be signed out.', hr: 'Obrisati SAV napredak pohranjen u oblaku? Napredak na ovom uređaju ostaje, ali bit ćeš odjavljen/a.' },
 
     // ===== Auth modal (građen u auth.js) =====
-    'auth.m.title': { en: 'Sync your progress', hr: 'Sinkroniziraj svoj napredak' },
-    'auth.m.text': { en: 'Back up your study progress and continue on any device with a free account.', hr: 'Sigurno pohrani napredak i nastavi na bilo kojem uređaju uz besplatan račun.' },
+    // R1: dijalog više nije „backup napretka" nego ULAZ u platformu (spec RACUN).
+    'auth.m.title': { en: 'Welcome to Sokrat', hr: 'Dobrodošli u Sokrat' },
+    'auth.m.text': { en: 'One free account: progress synced on every device, plus your own study materials.', hr: 'Jedan besplatan račun: napredak na svim uređajima i vlastiti materijali.' },
+    'auth.oauth.google': { en: 'Continue with Google', hr: 'Nastavi s Googleom' },
+    'auth.oauth.facebook': { en: 'Continue with Facebook', hr: 'Nastavi s Facebookom' },
+    'auth.divider.or': { en: 'or', hr: 'ili' },
     'auth.tab.signUp': { en: 'Create account', hr: 'Otvori račun' },
     'auth.ph.password': { en: 'Password', hr: 'Lozinka' },
     'auth.forgot': { en: 'Forgot password?', hr: 'Zaboravljena lozinka?' },
@@ -503,6 +507,21 @@
     'auth.st.badEmail': { en: 'That email address does not look valid.', hr: 'Taj e-mail ne izgleda ispravno.' },
     'auth.st.samePass': { en: 'The new password must be different from the current one.', hr: 'Nova lozinka mora biti različita od trenutne.' },
     'auth.st.genericErr': { en: 'Something went wrong. Please try again.', hr: 'Nešto je pošlo po zlu. Pokušaj ponovno.' },
+    'auth.st.redirect': { en: 'Opening secure sign-in…', hr: 'Otvaranje sigurne prijave…' },
+    'auth.st.providerOff': { en: 'This sign-in method is not available yet — please use email for now.', hr: 'Ovaj način prijave još nije dostupan — zasad koristi e-mail.' },
+    // R1: upitnik pri registraciji / prvoj OAuth-prijavi (spec RACUN §2)
+    'auth.q.title': { en: 'Tell us who you are', hr: 'Reci nam tko si' },
+    'auth.q.text': { en: 'One quick step — it helps us show you the right subjects.', hr: 'Samo jedan korak — pomaže nam da ti pokažemo prave predmete.' },
+    'auth.q.rolesLabel': { en: 'Who are you?', hr: 'Tko si?' },
+    'auth.q.student': { en: 'University student', hr: 'Student/ica' },
+    'auth.q.pupil': { en: 'High school', hr: 'Srednja škola' },
+    'auth.q.other': { en: 'Other', hr: 'Ostalo' },
+    'auth.q.schoolPh': { en: 'Your university or school (optional)', hr: 'Tvoj fakultet ili škola (neobavezno)' },
+    'auth.q.consent': { en: 'Email me about new subjects and features.', hr: 'Šaljite mi e-mail o novim predmetima i mogućnostima.' },
+    'auth.q.continue': { en: 'Continue', hr: 'Nastavi' },
+    'auth.q.back': { en: '← Back', hr: '← Natrag' },
+    'auth.q.skip': { en: 'Skip for now', hr: 'Preskoči zasad' },
+    'auth.q.thanks': { en: 'Thanks — welcome to Sokrat!', hr: 'Hvala — dobrodošli u Sokrat!' },
 
     // ===== Profil (#profile-page; renderProfilePage u profile.js) =====
     'profile.title': { en: 'My Profile', hr: 'Moj profil' },

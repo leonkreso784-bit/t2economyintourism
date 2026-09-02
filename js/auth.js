@@ -7,10 +7,17 @@
 //   ako CDN ne uspije, cijela funkcionalnost se tiho ugasi — app radi kao prije.
 // - Publishable key je javan po dizajnu (RLS u bazi štiti podatke);
 //   service key NIKAD ne ide u frontend.
-// - Login: email + lozinka (signInWithPassword). Registracija (signUp) traži
-//   potvrdu emaila; ime ide u user_metadata.display_name. „Forgot password?"
-//   → resetPasswordForEmail → PASSWORD_RECOVERY event → forma za novu lozinku.
-//   Google login se može dodati kasnije.
+// - Login: email + lozinka (signInWithPassword) ILI OAuth Google/Facebook (R1, spec RACUN):
+//   signInWithOAuth = puni redirect natrag na istu stranicu (detectSessionInUrl odradi
+//   izmjenu koda); provider koji u Supabase dashboardu još NIJE uključen vraća grešku
+//   → prevedena poruka u statusu, ništa ne puca (kod smije ispred ključeva).
+// - Registracija (signUp) traži potvrdu emaila; ime ide u user_metadata.display_name.
+//   UPITNIK (R1): tko si + faks/škola (FMTU se prepoznaje) + mail-pristanak žive u
+//   user_metadata — bez nove tablice/RLS-a, a brisanjem računa nestaju i oni (GDPR
+//   besplatno). OAuth preskače formu → upitnik se traži pri PRVOJ OAuth-prijavi
+//   (app_metadata.provider !== 'email' bez questionnaire_done biljega), i preskočiv je;
+//   email-korisnici se POSLIJE prijave nikad ne gnjave (postojeći računi netaknuti).
+// - „Forgot password?" → resetPasswordForEmail → PASSWORD_RECOVERY → forma za novu lozinku.
 
 const SOKRAT_AUTH_CONFIG = {
     enabled: true,
@@ -58,6 +65,7 @@ const SokratAuth = (function () {
     let client = null;
     let currentUser = null;
     let recoveryMode = false; // true nakon PASSWORD_RECOVERY (link iz reset emaila)
+    let questMode = false;    // true = pokazujemo upitnik nakon prve OAuth-prijave (R1)
     const changeListeners = [];
 
     // ---------- Supabase client ----------
@@ -110,12 +118,25 @@ const SokratAuth = (function () {
             });
         });
 
+        // OAuth povratak s GREŠKOM: GoTrue ne vraća error signInWithOAuth pozivu (taj samo
+        // redirecta) nego ga šalje NATRAG u URL-u (#error_description=…). Bez ovoga klik na
+        // provider koji u dashboardu još nije uključen izgleda kao „ništa se nije dogodilo".
+        const _oauthErr = new URLSearchParams(
+            (window.location.hash || '').replace(/^#/, '') + '&' + (window.location.search || '').replace(/^\?/, '')
+        ).get('error_description');
+        if (_oauthErr) {
+            openModal();
+            setStatus(authError({ message: _oauthErr }), true);
+            // Očisti URL — greška ne smije preživjeti refresh/bookmark.
+            history.replaceState(null, '', window.location.pathname);
+        }
+
         // Postojeća sesija + redirecti iz emaila (potvrda registracije, reset
         // lozinke) — detectSessionInUrl je default.
         client.auth.onAuthStateChange(function (event, session) {
             const wasSignedIn = !!currentUser;
             currentUser = session ? session.user : null;
-            if (!currentUser) recoveryMode = false;
+            if (!currentUser) { recoveryMode = false; questMode = false; }
             if (event === 'PASSWORD_RECOVERY') recoveryMode = true;
             updateNavButton();
             renderModalState();
@@ -123,8 +144,16 @@ const SokratAuth = (function () {
                 try { fn(currentUser, event); } catch (err) { console.warn('[auth] listener:', err); }
             });
             if (event === 'SIGNED_IN' && !wasSignedIn && !recoveryMode) {
-                closeModal();
-                if (typeof showToast === 'function') showToast(window.t ? t('msg.signedInSync') : 'Signed in — your progress now syncs to the cloud.');
+                if (needsQuestionnaire()) {
+                    // Prva OAuth-prijava: preskočila je signup formu → upitnik SAD.
+                    // SIGNED_IN se NE pali za obnovljenu sesiju (to je INITIAL_SESSION),
+                    // pa ovo hvata samo stvarne prijave — nema gnjavaže na svakom loadu.
+                    questMode = true;
+                    openModal();
+                } else {
+                    closeModal();
+                    if (typeof showToast === 'function') showToast(window.t ? t('msg.signedInSync') : 'Signed in — your progress now syncs to the cloud.');
+                }
             }
             if (event === 'PASSWORD_RECOVERY') openModal();
             // Ako je Profile otvoren, osvježi ga (ili makni ako se korisnik odjavio).
@@ -140,7 +169,9 @@ const SokratAuth = (function () {
     function getDisplayName() {
         if (!currentUser) return null;
         const meta = currentUser.user_metadata || {};
-        const name = (meta.display_name || '').trim();
+        // OAuth (R1): Google/FB ne pišu display_name nego full_name/name — bez fallbacka
+        // bi prijava Googleom u navu pokazivala prefiks emaila umjesto imena.
+        const name = (meta.display_name || meta.full_name || meta.name || '').trim();
         return name || null;
     }
 
@@ -219,6 +250,11 @@ const SokratAuth = (function () {
         if (code === 'same_password' || /should be different from the old/i.test(raw)) {
             return at('auth.st.samePass', 'The new password must be different from the current one.');
         }
+        // Provider (Google/FB) postoji u kodu, a u dashboardu još nije uključen — namjerno
+        // stanje dok Leon ne upiše ključeve; korisnik dobiva put naprijed, ne sirovu grešku.
+        if (/provider is not enabled|unsupported provider/i.test(raw)) {
+            return at('auth.st.providerOff', 'This sign-in method is not available yet — please use email for now.');
+        }
         // Nepoznato: radije sirova engleska recenica nego prazan crveni okvir.
         return raw || at('auth.st.genericErr', 'Something went wrong. Please try again.');
     }
@@ -241,6 +277,13 @@ const SokratAuth = (function () {
             '  <div id="authSignedOut">' +
             '    <h3 id="authModalTitle" class="auth-modal__title"><i class="fas fa-cloud"></i> ' + at('auth.m.title', 'Sync your progress') + '</h3>' +
             '    <p class="auth-modal__text">' + at('auth.m.text', 'Back up your study progress and continue on any device with a free account.') + '</p>' +
+            '    <div class="auth-oauth-wrap" id="authOAuthWrap">' +
+            '      <div class="auth-oauth">' +
+            '        <button type="button" class="auth-oauth__btn" id="authGoogleBtn"><i class="fab fa-google"></i><span>' + at('auth.oauth.google', 'Continue with Google') + '</span></button>' +
+            '        <button type="button" class="auth-oauth__btn" id="authFacebookBtn"><i class="fab fa-facebook-f"></i><span>' + at('auth.oauth.facebook', 'Continue with Facebook') + '</span></button>' +
+            '      </div>' +
+            '      <div class="auth-divider"><span>' + at('auth.divider.or', 'or') + '</span></div>' +
+            '    </div>' +
             '    <div class="auth-modal__tabs" role="tablist">' +
             '      <button type="button" class="auth-modal__tab is-active" id="authTabSignIn" role="tab" aria-selected="true">' + at('auth.signIn', 'Sign in') + '</button>' +
             '      <button type="button" class="auth-modal__tab" id="authTabSignUp" role="tab" aria-selected="false">' + at('auth.tab.signUp', 'Create account') + '</button>' +
@@ -254,6 +297,9 @@ const SokratAuth = (function () {
             '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-right-to-bracket"></i><span>' + at('auth.signIn', 'Sign in') + '</span></button>' +
             '      <button type="button" class="auth-modal__link" id="authForgotLink">' + at('auth.forgot', 'Forgot password?') + '</button>' +
             '    </form>' +
+            // Registracija u DVA koraka (R1): 1. podaci računa → 2. upitnik. `signUp` traži
+            // SVE u jednom pozivu (options.data), pa se upitnik skuplja PRIJE poziva — nakon
+            // signUp-a email-korisnik nema sesiju (čeka potvrdu) i ne bi ga imao gdje predati.
             '    <form id="authSignUpForm" class="auth-modal__form" hidden>' +
             '      <input type="text" id="authSignUpName" class="auth-modal__input" placeholder="' + at('auth.ph.name', 'Your name') + '" required maxlength="60" autocomplete="name">' +
             '      <input type="email" id="authSignUpEmail" class="auth-modal__input" placeholder="you@email.com" required autocomplete="email">' +
@@ -261,7 +307,13 @@ const SokratAuth = (function () {
             '        <input type="password" id="authSignUpPassword" class="auth-modal__input" placeholder="' + at('auth.ph.passwordMin', 'Password (min. 8 characters)') + '" required minlength="8" autocomplete="new-password">' +
             '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
             '      </div>' +
+            '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-arrow-right"></i><span>' + at('auth.q.continue', 'Continue') + '</span></button>' +
+            '    </form>' +
+            '    <form id="authSignUpForm2" class="auth-modal__form" hidden>' +
+            '      <p class="auth-modal__text auth-modal__text--tight">' + at('auth.q.text', 'One quick step — it helps us show you the right subjects.') + '</p>' +
+            questFieldsHtml('authSignUp') +
             '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-user-plus"></i><span>' + at('auth.tab.signUp', 'Create account') + '</span></button>' +
+            '      <button type="button" class="auth-modal__link" id="authSignUpBack">' + at('auth.q.back', '← Back') + '</button>' +
             '    </form>' +
             '    <form id="authForgotForm" class="auth-modal__form" hidden>' +
             '      <p class="auth-modal__text auth-modal__text--tight">' + at('auth.forgot.text', 'Enter your email and we will send you a link to reset your password.') + '</p>' +
@@ -296,6 +348,20 @@ const SokratAuth = (function () {
             '    <p class="auth-modal__text auth-modal__sync" id="authSyncInfo">' + at('auth.syncAuto', 'Your progress syncs automatically.') + '</p>' +
             '    <button type="button" id="authSignOutBtn" class="cta-button secondary"><i class="fas fa-sign-out-alt"></i><span>' + at('profile.signOut', 'Sign out') + '</span></button>' +
             '  </div>' +
+
+            // Upitnik NAKON prijave — samo za prvu OAuth-prijavu (preskočila je signup formu).
+            '  <div id="authQuest" hidden>' +
+            '    <h3 class="auth-modal__title"><i class="fas fa-graduation-cap"></i> ' + at('auth.q.title', 'Tell us who you are') + '</h3>' +
+            '    <p class="auth-modal__text">' + at('auth.q.text', 'One quick step — it helps us show you the right subjects.') + '</p>' +
+            '    <form id="authQuestForm" class="auth-modal__form">' +
+            questFieldsHtml('authQ') +
+            '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-check"></i><span>' + at('auth.q.continue', 'Continue') + '</span></button>' +
+            '      <button type="button" class="auth-modal__link" id="authQuestSkip">' + at('auth.q.skip', 'Skip for now') + '</button>' +
+            '    </form>' +
+            '    <p class="auth-modal__status" id="authQuestStatus" hidden></p>' +
+            '  </div>' +
+
+            '  <datalist id="authSchoolList"><option value="FMTU — Fakultet za menadžment u turizmu i ugostiteljstvu, Opatija"></option></datalist>' +
             '</div>';
         document.body.appendChild(wrap);
 
@@ -311,28 +377,62 @@ const SokratAuth = (function () {
         });
         document.getElementById('authBackToSignIn').addEventListener('click', function () { showPanel('signin'); });
         document.getElementById('authSignInForm').addEventListener('submit', handleSignIn);
-        document.getElementById('authSignUpForm').addEventListener('submit', handleSignUp);
+        document.getElementById('authSignUpForm').addEventListener('submit', handleSignUpStep1);
+        document.getElementById('authSignUpForm2').addEventListener('submit', handleSignUp);
+        document.getElementById('authSignUpBack').addEventListener('click', function () { showPanel('signup'); });
+        document.getElementById('authGoogleBtn').addEventListener('click', function () { handleOAuth('google'); });
+        document.getElementById('authFacebookBtn').addEventListener('click', function () { handleOAuth('facebook'); });
         document.getElementById('authForgotForm').addEventListener('submit', handleForgot);
         document.getElementById('authRecoveryForm').addEventListener('submit', handleRecovery);
+        document.getElementById('authQuestForm').addEventListener('submit', handleQuest);
+        document.getElementById('authQuestSkip').addEventListener('click', skipQuest);
         document.getElementById('authSignOutBtn').addEventListener('click', signOut);
     }
 
-    // Panel unutar odjavljenog stanja: 'signin' | 'signup' | 'forgot'
-    // (forgot je podvarijanta Sign in taba, pa tab ostaje aktivan).
+    // Polja upitnika — JEDAN izvor za oba mjesta (signup korak 2 + post-OAuth panel),
+    // razlikuje ih samo prefiks id-a. Radio `required` na prvom vrijedi za cijelu grupu.
+    function questFieldsHtml(prefix) {
+        function role(value, key, fb) {
+            return '<label class="auth-role"><input type="radio" name="' + prefix + 'Type" value="' + value + '"' +
+                (value === 'student' ? ' required' : '') + '><span>' + at(key, fb) + '</span></label>';
+        }
+        // id-evi sastavljeni UNAPRIJED — fragment poput `Consent"><span>` u konkatenaciji
+        // check:i18n inače vidi kao tekstni čvor (kriva pozitiva, ali brana je s razlogom stroga).
+        const schoolId = prefix + 'School';
+        const consentId = prefix + 'Consent';
+        return '<div class="auth-roles" role="radiogroup" aria-label="' + at('auth.q.rolesLabel', 'Who are you?') + '">' +
+            role('student', 'auth.q.student', 'University student') +
+            role('pupil', 'auth.q.pupil', 'High school') +
+            role('other', 'auth.q.other', 'Other') +
+            '</div>' +
+            '<input type="text" id="' + schoolId + '" class="auth-modal__input" placeholder="' + at('auth.q.schoolPh', 'Your university or school (optional)') + '" maxlength="120" list="authSchoolList" autocomplete="organization">' +
+            '<label class="auth-consent"><input type="checkbox" id="' + consentId + '"><span>' + at('auth.q.consent', 'Email me about new subjects and features.') + '</span></label>';
+    }
+
+    // Panel unutar odjavljenog stanja: 'signin' | 'signup' | 'signup2' | 'forgot'
+    // (forgot je podvarijanta Sign in taba, pa tab ostaje aktivan; signup2 = upitnik,
+    // drugi korak registracije — vrijednosti koraka 1 ostaju u skrivenoj formi).
     function showPanel(name) {
         const signIn = document.getElementById('authSignInForm');
         const signUp = document.getElementById('authSignUpForm');
+        const signUp2 = document.getElementById('authSignUpForm2');
         const forgot = document.getElementById('authForgotForm');
-        if (!signIn || !signUp || !forgot) return;
+        if (!signIn || !signUp || !signUp2 || !forgot) return;
+        const isUp = (name === 'signup' || name === 'signup2');
         signIn.hidden = name !== 'signin';
         signUp.hidden = name !== 'signup';
+        signUp2.hidden = name !== 'signup2';
         forgot.hidden = name !== 'forgot';
+        // OAuth gumbi se miču usred registracije (korak 2) i na forgotu — „Continue with
+        // Google" UZ upitnik bi izgledao kao alternativni način da ga se dovrši.
+        const oauthWrap = document.getElementById('authOAuthWrap');
+        if (oauthWrap) oauthWrap.hidden = (name === 'signup2' || name === 'forgot');
         const tabIn = document.getElementById('authTabSignIn');
         const tabUp = document.getElementById('authTabSignUp');
-        tabIn.classList.toggle('is-active', name !== 'signup');
-        tabUp.classList.toggle('is-active', name === 'signup');
-        tabIn.setAttribute('aria-selected', name !== 'signup' ? 'true' : 'false');
-        tabUp.setAttribute('aria-selected', name === 'signup' ? 'true' : 'false');
+        tabIn.classList.toggle('is-active', !isUp);
+        tabUp.classList.toggle('is-active', isUp);
+        tabIn.setAttribute('aria-selected', !isUp ? 'true' : 'false');
+        tabUp.setAttribute('aria-selected', isUp ? 'true' : 'false');
         setStatus('');
     }
 
@@ -353,15 +453,28 @@ const SokratAuth = (function () {
         else { m.setAttribute('aria-hidden', 'true'); m.classList.remove('is-open'); }
     }
 
+    // Treba li korisniku upitnik? SAMO OAuth-računi bez biljega — email-put ga skuplja
+    // u registraciji, a postojeći email-korisnici bez biljega se NE diraju (spec RACUN §3:
+    // „postojeći korisnici se i dalje prijavljuju bez ikakve promjene").
+    function needsQuestionnaire() {
+        if (!currentUser) return false;
+        const provider = (currentUser.app_metadata && currentUser.app_metadata.provider) || 'email';
+        if (provider === 'email') return false;
+        return !(currentUser.user_metadata && currentUser.user_metadata.questionnaire_done);
+    }
+
     function renderModalState() {
         const out = document.getElementById('authSignedOut');
         const rec = document.getElementById('authRecovery');
         const inn = document.getElementById('authSignedIn');
-        if (!out || !rec || !inn) return;
+        const q = document.getElementById('authQuest');
+        if (!out || !rec || !inn || !q) return;
         const showRecovery = !!(recoveryMode && currentUser);
+        const showQuest = !!(questMode && currentUser && !showRecovery);
         out.hidden = !!currentUser;
         rec.hidden = !showRecovery;
-        inn.hidden = !currentUser || showRecovery;
+        q.hidden = !showQuest;
+        inn.hidden = !currentUser || showRecovery || showQuest;
         if (currentUser) {
             const el = document.getElementById('authUserEmail');
             if (el) el.textContent = currentUser.email || '';
@@ -380,6 +493,14 @@ const SokratAuth = (function () {
 
     function setRecoveryStatus(msg, isError) {
         const el = document.getElementById('authRecoveryStatus');
+        if (!el) return;
+        el.hidden = !msg;
+        el.textContent = msg || '';
+        el.classList.toggle('is-error', !!isError);
+    }
+
+    function setQuestStatus(msg, isError) {
+        const el = document.getElementById('authQuestStatus');
         if (!el) return;
         el.hidden = !msg;
         el.textContent = msg || '';
@@ -425,6 +546,36 @@ const SokratAuth = (function () {
     // Na window za profile.js (promjena lozinke) — isti razlog kao refreshAuthNav gore.
     window.checkPwnedPassword = isPasswordPwned;
 
+    // ---------- Upitnik (R1): FMTU prepoznavanje + sastavljanje metapodataka ----------
+
+    // Prepoznaje FMTU u slobodnom tekstu (kratica · Opatija · puni naziv). Namjerno
+    // širokogrudno — kriva pozitiva znači samo krivi mail-segment, ne sigurnosni problem.
+    const FMTU_RE = /fmtu|opatij|menad\w*\s+.{0,3}turizm|turizm\w*\s+i\s+ugostiteljstv/i;
+
+    function buildQuestData(type, school, consent) {
+        const s = (school || '').trim();
+        return {
+            acct_type: type || 'other',            // 'student' | 'pupil' | 'other'
+            school: s,
+            is_fmtu: FMTU_RE.test(s),
+            mail_consent: !!consent,               // GDPR: default false, izričit klik
+            questionnaire_done: true,
+            questionnaire_at: new Date().toISOString()
+        };
+    }
+
+    async function handleOAuth(provider) {
+        if (!client) return;
+        setStatus(at('auth.st.redirect', 'Opening secure sign-in…'));
+        // Puni redirect: preglednik ODLAZI na provider i vraća se na istu stranicu,
+        // gdje detectSessionInUrl (default) razmijeni kod → SIGNED_IN event.
+        const { error } = await client.auth.signInWithOAuth({
+            provider: provider,
+            options: { redirectTo: window.location.origin + window.location.pathname }
+        });
+        if (error) setStatus(authError(error), true);
+    }
+
     async function handleSignIn(e) {
         e.preventDefault();
         if (!client) return;
@@ -437,13 +588,22 @@ const SokratAuth = (function () {
         // Uspjeh: onAuthStateChange zatvara modal i javlja toast.
     }
 
+    // Korak 1 registracije: browser je validirao required polja → samo prijeđi na upitnik.
+    function handleSignUpStep1(e) {
+        e.preventDefault();
+        showPanel('signup2');
+    }
+
     async function handleSignUp(e) {
         e.preventDefault();
         if (!client) return;
         const name = (document.getElementById('authSignUpName').value || '').trim();
         const email = (document.getElementById('authSignUpEmail').value || '').trim();
         const password = document.getElementById('authSignUpPassword').value;
-        if (!name || !email || !password) return;
+        if (!name || !email || !password) { showPanel('signup'); return; }
+        const type = (document.querySelector('input[name="authSignUpType"]:checked') || {}).value;
+        const school = document.getElementById('authSignUpSchool').value;
+        const consent = document.getElementById('authSignUpConsent').checked;
         setStatus(at('auth.st.creating', 'Creating account…'));
         if (await isPasswordPwned(password)) {
             setStatus(at('auth.st.weakPwned', 'This password has appeared in a known data breach — please pick a different one.'), true);
@@ -453,7 +613,7 @@ const SokratAuth = (function () {
             email: email,
             password: password,
             options: {
-                data: { display_name: name },
+                data: Object.assign({ display_name: name }, buildQuestData(type, school, consent)),
                 emailRedirectTo: window.location.origin + window.location.pathname
             }
         });
@@ -515,6 +675,33 @@ const SokratAuth = (function () {
         if (typeof showToast === 'function') showToast(window.t ? t('msg.passwordUpdatedSignedIn') : 'Password updated — you are signed in.');
     }
 
+    // Upitnik nakon prve OAuth-prijave: sesija VEĆ postoji → updateUser, ne signUp.
+    async function handleQuest(e) {
+        e.preventDefault();
+        if (!client || !currentUser) return;
+        const type = (document.querySelector('input[name="authQType"]:checked') || {}).value;
+        const school = document.getElementById('authQSchool').value;
+        const consent = document.getElementById('authQConsent').checked;
+        setQuestStatus(at('msg.saving', 'Saving…'));
+        const { error } = await client.auth.updateUser({ data: buildQuestData(type, school, consent) });
+        if (error) { setQuestStatus(authError(error), true); return; }
+        questMode = false;
+        setQuestStatus('');
+        closeModal();
+        if (typeof showToast === 'function') showToast(at('auth.q.thanks', 'Thanks — welcome to Sokrat!'));
+    }
+
+    // „Preskoči" SVEJEDNO piše biljeg (questionnaire_done, mail_consent:false) — bez njega
+    // bi se upitnik vraćao na SVAKOJ OAuth-prijavi, a „ne" na pristanak MORA biti zapamćen.
+    async function skipQuest() {
+        questMode = false;
+        closeModal();
+        if (!client || !currentUser) return;
+        await client.auth.updateUser({
+            data: { questionnaire_done: true, mail_consent: false, questionnaire_at: new Date().toISOString() }
+        });
+    }
+
     async function signOut() {
         if (!client) return;
         await client.auth.signOut();
@@ -531,6 +718,9 @@ const SokratAuth = (function () {
         getDisplayName: getDisplayName,
         onChange: function (fn) { changeListeners.push(fn); },
         authError: authError,
+        // TEST-ŠAV (R1): čista funkcija za Playwright evaluate — FMTU prepoznavanje i
+        // oblik metapodataka upitnika se testiraju bez prave prijave.
+        buildQuestData: buildQuestData,
         openModal: openModal,
         signOut: signOut,
         setSyncInfo: function (text) {

@@ -5,6 +5,31 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-02 (FABLE) — **RAČUN R1: OAuth ulazi + upitnik + novi dijalog prijave** (grana `feat/racun-r1`)
+
+### Dodano
+- **Google/Facebook gumbi** u `#authModal` (`signInWithOAuth`, povratak na istu stranicu).
+  Provider bez ključeva u dashboardu → prevedena poruka, i to na OBA puta: pri kliku I pri
+  povratku (GoTrue grešku ne vraća pozivu nego je šalje natrag u URL-u — hvata se na initu,
+  URL se čisti `replaceState`-om). Gumbi se miču na koraku 2 i forgot panelu.
+- **Registracija u DVA koraka:** podaci → upitnik (tko si: student/srednja/ostalo · faks/škola
+  s FMTU-datalistom · mail-pristanak, default NE). Sve ide u `user_metadata` kroz
+  `signUp options.data` — bez nove tablice/RLS-a, brisanjem računa nestaje (GDPR besplatno).
+- **Upitnik pri PRVOJ OAuth-prijavi** (`app_metadata.provider !== 'email'` bez
+  `questionnaire_done`); preskočiv, a preskok TAKOĐER piše biljeg (inače bi se vraćao svaku
+  prijavu). Postojeći email-korisnici se NIKAD ne pitaju (spec RAČUN §3).
+- FMTU prepoznavanje (kratica · Opatija · puni naziv) → `is_fmtu` za R3 mail-segment;
+  test-šav `SokratAuth.buildQuestData`. `getDisplayName` fallback na `full_name`/`name`
+  (Google NE piše `display_name` — nav bi pokazivao prefiks emaila).
+- Novi copy: „Welcome to Sokrat" umjesto „Sync your progress" — dijalog je ULAZ u platformu.
+
+### Dokaz
+- 2 nova Playwright testa (struktura + tok panela · buildQuestData kroz evaluate);
+  auth+components 52/52 · puna responsive suita zelena · preflight 20/20 · živa proba na
+  393 px: oba koraka + OAuth-greška u hashu → prevedena poruka i očišćen URL.
+- ⏳ Google/FB ključevi = Leonov dio (Google Cloud + Meta konzola → Supabase Auth Providers);
+  kod je građen da radi i prije njih (gumb → jasna poruka umjesto sirove greške).
+
 ## 2026-09-02 (FABLE) — 🚀 **BIRAČ TEMA NA PRODUKCIJI** (`6c5a5d8`, Leonov OK)
 
 Dva zapisa niže (birač u profilu + `paper` van) deployana fast-forwardom na `main`.

@@ -99,3 +99,87 @@ test('profile page shows sign-in prompt when signed out and navigates back', asy
 
   expect(errors).toEqual([]);
 });
+
+// ===== R1 (spec RACUN): OAuth ulazi + dvokoracna registracija s upitnikom =====
+// Pravi OAuth se u testu NE klika (signInWithOAuth = puni redirect na provider);
+// ovdje se tvrdi STRUKTURA i tok panela — ziva prijava je test:authed domena.
+test('auth R1: OAuth buttons + two-step signup with questionnaire', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
+
+  await page.goto('/');
+  const btn = page.locator('#authNavBtn');
+  let cdnOk = true;
+  try {
+    await btn.waitFor({ state: 'visible', timeout: 15000 });
+  } catch (e) {
+    cdnOk = false;
+  }
+  test.skip(!cdnOk, 'supabase-js CDN unreachable — auth disabled by design');
+
+  await btn.click();
+  await expect(page.locator('#authModal')).toBeVisible();
+
+  // OAuth gumbi vidljivi na prijavi I registraciji (blok je iznad tabova)
+  await expect(page.locator('#authGoogleBtn')).toBeVisible();
+  await expect(page.locator('#authFacebookBtn')).toBeVisible();
+  await page.click('#authTabSignUp');
+  await expect(page.locator('#authGoogleBtn')).toBeVisible();
+
+  // Korak 1 → korak 2: upitnik (role-pilule + skola + pristanak), OAuth se MICE
+  // (usred registracije bi „Continue with Google" izgledao kao put da se ona dovrsi)
+  await page.fill('#authSignUpName', 'Test Testic');
+  await page.fill('#authSignUpEmail', 'test@example.com');
+  await page.fill('#authSignUpPassword', 'neka-duga-lozinka-123');
+  await page.click('#authSignUpForm button[type="submit"]');
+  await expect(page.locator('#authSignUpForm2')).toBeVisible();
+  await expect(page.locator('#authSignUpForm')).toBeHidden();
+  await expect(page.locator('#authGoogleBtn')).toBeHidden();
+  await expect(page.locator('input[name="authSignUpType"]')).toHaveCount(3);
+  await expect(page.locator('#authSignUpSchool')).toBeVisible();
+  await expect(page.locator('#authSignUpConsent')).not.toBeChecked(); // GDPR: default NE
+
+  // Natrag cuva vrijednosti koraka 1 (forma je samo skrivena, ne resetirana)
+  await page.click('#authSignUpBack');
+  await expect(page.locator('#authSignUpForm')).toBeVisible();
+  await expect(page.locator('#authSignUpEmail')).toHaveValue('test@example.com');
+  await expect(page.locator('#authGoogleBtn')).toBeVisible();
+
+  // Na forgot panelu OAuth-a takoder nema (nije nacin da se resetira lozinka)
+  await page.click('#authTabSignIn');
+  await page.click('#authForgotLink');
+  await expect(page.locator('#authGoogleBtn')).toBeHidden();
+
+  expect(errors).toEqual([]);
+});
+
+// buildQuestData test-sav: FMTU prepoznavanje + oblik metapodataka, bez prave prijave.
+test('auth R1: buildQuestData recognizes FMTU and shapes metadata', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForFunction(() => typeof SokratAuth !== 'undefined' && !!SokratAuth.buildQuestData);
+
+  const out = await page.evaluate(() => {
+    const b = SokratAuth.buildQuestData;
+    return {
+      fmtuShort: b('student', 'FMTU', true).is_fmtu,
+      fmtuFull: b('student', 'Fakultet za menadžment u turizmu i ugostiteljstvu', false).is_fmtu,
+      fmtuCity: b('student', 'faks u Opatiji', false).is_fmtu,
+      notFmtu: b('student', 'FER Zagreb', false).is_fmtu,
+      empty: b(undefined, '', undefined),
+      consent: b('pupil', 'Gimnazija Rijeka', true)
+    };
+  });
+
+  expect(out.fmtuShort).toBe(true);
+  expect(out.fmtuFull).toBe(true);
+  expect(out.fmtuCity).toBe(true);
+  expect(out.notFmtu).toBe(false);
+  // Prazan/preskocen unos: valjan biljeg (role fallback 'other', pristanak false)
+  expect(out.empty.acct_type).toBe('other');
+  expect(out.empty.mail_consent).toBe(false);
+  expect(out.empty.questionnaire_done).toBe(true);
+  expect(out.consent.acct_type).toBe('pupil');
+  expect(out.consent.mail_consent).toBe(true);
+  expect(out.consent.is_fmtu).toBe(false);
+  expect(typeof out.consent.questionnaire_at).toBe('string');
+});

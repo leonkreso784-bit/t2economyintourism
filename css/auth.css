@@ -198,3 +198,59 @@ sokrat-modal.auth-modal > * {
 @media (max-width: 640px) {
     .auth-modal__card { padding: 1.4rem 1.15rem 1.25rem; }
 }
+
+/* ===== R1 (spec RACUN): OAuth ulazi + upitnik ===== */
+
+.auth-oauth-wrap[hidden] { display: none; }
+
+.auth-oauth { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 0.95rem; }
+
+.auth-oauth__btn {
+    display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+    min-height: var(--touch-target);
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    background: var(--color-surface-1);
+    color: var(--color-ink-0);
+    font: inherit; font-weight: 600; font-size: 0.92rem;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+}
+.auth-oauth__btn:hover { border-color: var(--color-line-strong); background: var(--color-surface-2); }
+.auth-oauth__btn i { color: var(--color-brand-500); }
+
+.auth-divider {
+    display: flex; align-items: center; gap: 0.7rem;
+    color: var(--color-ink-2); font-size: 0.78rem;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 0.95rem;
+}
+.auth-divider::before,
+.auth-divider::after { content: ''; height: 1px; flex: 1; background: var(--color-line); }
+
+/* Upitnik: tri role-pilule (pravi radio ispod — a11y i required besplatno) */
+.auth-roles { display: flex; gap: 0.5rem; }
+.auth-role { flex: 1; position: relative; }
+.auth-role input { position: absolute; opacity: 0; pointer-events: none; }
+.auth-role span {
+    display: flex; align-items: center; justify-content: center;
+    min-height: var(--touch-target);
+    padding: 0.3rem 0.4rem;
+    border: 1px solid var(--color-line); border-radius: 10px;
+    background: var(--color-surface-1); color: var(--color-ink-1);
+    font-size: 0.84rem; font-weight: 600; text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+.auth-role input:checked + span {
+    border-color: var(--color-brand-500);
+    color: var(--color-brand-500);
+    background: color-mix(in srgb, var(--color-brand-500) 10%, var(--color-surface-1));
+}
+.auth-role input:focus-visible + span { outline: 2px solid var(--color-brand-500); outline-offset: 2px; }
+
+.auth-consent {
+    display: flex; align-items: flex-start; gap: 0.55rem;
+    font-size: 0.82rem; color: var(--color-ink-1); cursor: pointer;
+}
+.auth-consent input { margin-top: 0.15rem; accent-color: var(--color-brand-500); }
