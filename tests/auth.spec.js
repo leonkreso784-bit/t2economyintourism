@@ -122,7 +122,8 @@ test('auth R1: OAuth buttons + two-step signup with questionnaire', async ({ pag
 
   // OAuth gumbi vidljivi na prijavi I registraciji (blok je iznad tabova)
   await expect(page.locator('#authGoogleBtn')).toBeVisible();
-  await expect(page.locator('#authFacebookBtn')).toBeVisible();
+  // Facebook maknut na Leonovu riječ 2026-09-02 (čeka Metine ključeve; FB_LOGIN u auth.js)
+  await expect(page.locator('#authFacebookBtn')).toHaveCount(0);
   await page.click('#authTabSignUp');
   await expect(page.locator('#authGoogleBtn')).toBeVisible();
 

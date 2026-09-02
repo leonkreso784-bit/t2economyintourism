@@ -300,7 +300,7 @@ const SokratAuth = (function () {
             '    <div class="auth-oauth-wrap" id="authOAuthWrap">' +
             '      <div class="auth-oauth">' +
             '        <button type="button" class="auth-oauth__btn" id="authGoogleBtn"><i class="fab fa-google"></i><span>' + at('auth.oauth.google', 'Continue with Google') + '</span></button>' +
-            '        <button type="button" class="auth-oauth__btn" id="authFacebookBtn"><i class="fab fa-facebook-f"></i><span>' + at('auth.oauth.facebook', 'Continue with Facebook') + '</span></button>' +
+            (FB_LOGIN ? '        <button type="button" class="auth-oauth__btn" id="authFacebookBtn"><i class="fab fa-facebook-f"></i><span>' + at('auth.oauth.facebook', 'Continue with Facebook') + '</span></button>' : '') +
             '      </div>' +
             '      <div class="auth-divider"><span>' + at('auth.divider.or', 'or') + '</span></div>' +
             '    </div>' +
@@ -401,7 +401,7 @@ const SokratAuth = (function () {
         document.getElementById('authSignUpForm2').addEventListener('submit', handleSignUp);
         document.getElementById('authSignUpBack').addEventListener('click', function () { showPanel('signup'); });
         document.getElementById('authGoogleBtn').addEventListener('click', function () { handleGoogle(); });
-        document.getElementById('authFacebookBtn').addEventListener('click', function () { handleOAuth('facebook'); });
+        if (FB_LOGIN) document.getElementById('authFacebookBtn').addEventListener('click', function () { handleOAuth('facebook'); });
         document.getElementById('authForgotForm').addEventListener('submit', handleForgot);
         document.getElementById('authRecoveryForm').addEventListener('submit', handleRecovery);
         document.getElementById('authQuestForm').addEventListener('submit', handleQuest);
@@ -592,6 +592,9 @@ const SokratAuth = (function () {
     // kroz signInWithIdToken. Nonce ide kroz sessionStorage preko redirecta (CSRF/replay).
     const GOOGLE_CLIENT_ID = '646318963527-nch7cvm11ef0r74jjge8pp8cnr7dgc8o.apps.googleusercontent.com';
     const GOOGLE_NONCE_KEY = 'sokrat-gnonce';
+    // Facebook maknut iz dijaloga na Leonovu riječ (2026-09-02: „makni facebook za sada,
+    // to ćemo kasnije dodat") — čeka Metine ključeve; flip na true kad sjednu u Supabase.
+    const FB_LOGIN = false;
 
     function randomHex(n) {
         const a = new Uint8Array(n);

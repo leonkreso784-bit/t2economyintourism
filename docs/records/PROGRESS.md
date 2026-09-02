@@ -26,6 +26,13 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-02 (FABLE) — FB gumb maknut (Leon: "makni facebook za sada")
+
+Zastavica FB_LOGIN=false u auth.js gasi markup + listener; sve ostalo (handleOAuth,
+i18n kljucevi, supabase-callback plan) ostaje za kasnije. Test okrenut: gumba NEMA.
+
+---
+
 ## 2026-09-02 (FABLE) — 🚀 U5 deployan (Leon: "moze deploy")
 
 Fast-forward feat/racun-r1 → main (3c6c995, kod 2de0456). Uzivo potvrdjeno: token

@@ -5,6 +5,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-02 (FABLE) — **Facebook gumb maknut iz dijaloga** (grana)
+
+- Leon: *„makni facebook za sada to cemo kasnije dodat"* — gumb je čekao Metine ključeve
+  i do tada samo javljao grešku. Maknut markup + listener iza zastavice `FB_LOGIN = false`
+  u `auth.js` (handleOAuth i i18n ključevi OSTAJU — povratak = flip na true kad ključevi
+  sjednu u Supabase). auth spec sada tvrdi da gumba NEMA (16/16) · preflight 20/20.
+
 ## 2026-09-02 (FABLE) — 🚀 **U5 NA PRODUKCIJI** (`3c6c995`, kod `2de0456`, Leonov OK)
 
 Fast-forward `feat/racun-r1` → `main` (U5 + compact-prep docs). Uživo potvrđeno: token
