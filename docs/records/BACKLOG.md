@@ -13,7 +13,15 @@
 > Njihovi zapisi ostaju **ovdje i nedirnuti** jer nose obrazloženje i mjerenja; spec nosi **redoslijed
 > i dokaz**. Kad cigla padne, ovdje se stavlja ✅ s brojkom — ne briše se.
 
-### 🔴 R1-UX NALAZI (Leon uzivo, 2026-09-02) — "velika sranja, dno dna" → razrada ODMAH
+### 🟡 R1-UX NALAZI (Leon uzivo, 2026-09-02) — U1+U2 ✅ DEPLOYANO (921ef08) · U5 ✅ na grani · ostaju U3/U4 (Leonove konzole)
+
+**Stanje 2026-09-02 kasnije isti dan:** U2 (brisanje povijesti — wipeAll kroz CloudSync,
+bez odjave, authed spec) i U1 (Nova sekcija na dnu panea) popravljeni i NA PRODUKCIJI s
+cijelim R1 paketom. **U5 (novi nalaz):** Googleov ekran pisao supabase-domenu + mail o
+dijeljenju podataka s njom → rijeseno BESPLATNO (implicit id_token s nase stranice,
+signInWithIdToken; ne custom domena za 10 USD/mj) — na grani feat/racun-r1, ceka deploy.
+Otvoreno SAMO: **U3** (Supabase Site URL + redirect allow-lista) i **U4** (Resend SMTP →
+sokrat@sokratstudy.com; temelj za R3) — oba Leonovi konzolni koraci, upute u PROGRESS/chatu.
 
 Leon testirao R1 krug i nasao cetiri problema (redoslijed = prioritet razrade):
 

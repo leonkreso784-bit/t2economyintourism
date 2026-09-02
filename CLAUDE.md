@@ -184,7 +184,7 @@ potvrđen uživo · **E2 re-sync baze** odrađen (backup → 7 predmeta → `dif
 `check:final` 17/17) · §9 kućice zatvorene · **oba speca u `docs/archive/`**. Iz Leonovog
 pregleda ušla je i dorada **learn u bojama sekcija** (spec §15.1; CI je prvu verziju oborio
 na amberu 4.41 → mix izmjeren na 45 %). **Next.js odbijen (ADR-028).**
-Aktivni spec: **`docs/plan/RACUN.md`** (drži „što sada"; posao kreće na Leonovu riječ).
+Aktivni spec: **`docs/plan/RACUN.md`** — R1 jezgra na produkciji 2026-09-02, ostatak u tijeku.
 
 **Sljedeće = RAČUN blok — Leon OTVORIO 2026-09-02** („poboljšati cijeli UX + Google i
 Facebook prijava"): **A0 prepravak `#authModal` + UPITNIK pri registraciji + Google- i

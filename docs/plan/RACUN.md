@@ -1,9 +1,11 @@
 # RAČUN — prijava, identitet i doseg do korisnika
 
-**Status:** 🟩 AKTIVAN — **Leon otvorio rad 2026-09-02** (*„Trebamo poboljšati cijeli UX
-zajedno sa dodavanjem prijave preko Googla i Facebooka"*) i time PROŠIRIO blok: Facebook ide
-UZ Google (ne više uvjetno), a blok je izričito i **UX računskih površina** (dijalog + profil),
-ne samo priključak providera. Napomena o dosegu: „frontend gotov (2026-09-01)" se odnosio na
+**Status:** 🟩 AKTIVAN — **R1 jezgra NA PRODUKCIJI 2026-09-02** (`921ef08`, Leonov OK):
+novi dijalog + upitnik + Google-prijava (radi uživo) + U1/U2 popravci iz Leonovog testiranja.
+**U5** (Google bez supabase-domene: id_token izravno) na grani, čeka deploy-OK. FB čeka
+Metine ključeve; U3/U4 = Leonove konzole (BACKLOG §R1-UX). Leon je blok otvorio i PROŠIRIO
+2026-09-02: Facebook uz Google (ne više uvjetno), a blok je izričito i **UX računskih
+površina** (dijalog + profil), ne samo priključak providera. Napomena o dosegu: „frontend gotov (2026-09-01)" se odnosio na
 REDIZAJN-spec (posjetiteljski + študentski put) — dijalog prijave i profil u njemu NISU bili,
 ovo je njihov red. Ovaj blok je ujedno i priprema za MCP (ADR-030/031: konektor traži OAuth).
 **Izvor želja:** Leon, 2026-09-01 (doslovno u [BACKLOG.md §RAČUN](../records/BACKLOG.md)).
