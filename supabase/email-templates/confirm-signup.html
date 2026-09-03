@@ -1,0 +1,140 @@
+<!-- Sokrat Study — potvrda registracije (ujedno mail dobrodošlice).
+     Supabase → Authentication → Emails → Templates → "Confirm signup".
+     Subject: Dobrodošao na Sokrat — potvrdi svoju adresu
+     Pravila i razlozi: vidi README.md u ovoj mapi. -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="light dark" />
+<meta name="supported-color-schemes" content="light dark" />
+<title>Dobrodošao na Sokrat</title>
+<style>
+  /* Progresivno poboljšanje — klijent koji ovo ignorira i dalje dobiva ispravan mail (inline stilovi). */
+  @media (prefers-color-scheme: dark) {
+    .s-bg { background-color: #0f1115 !important; }
+    .s-card { background-color: #171a21 !important; border-color: #262b36 !important; }
+    .s-text { color: #e6e8ee !important; }
+    .s-muted { color: #9aa1b1 !important; }
+    .s-hr { border-color: #262b36 !important; }
+  }
+  @media only screen and (max-width: 620px) {
+    .s-card { width: 100% !important; }
+    .s-pad { padding-left: 24px !important; padding-right: 24px !important; }
+    .s-h1 { font-size: 24px !important; }
+  }
+</style>
+</head>
+<body class="s-bg" style="margin:0; padding:0; background-color:#f4f5f7; -webkit-font-smoothing:antialiased;">
+
+<!-- Preheader: tekst koji inbox pokazuje uz naslov. Sakriven u samom mailu. -->
+<div style="display:none; font-size:1px; color:#f4f5f7; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;">
+  Jedan klik i račun je tvoj — napredak ti se pamti na svim uređajima.
+</div>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="s-bg" style="background-color:#f4f5f7;">
+  <tr>
+    <td align="center" style="padding:40px 16px;">
+
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" class="s-card" style="width:600px; max-width:600px; background-color:#ffffff; border:1px solid #e5e7eb; border-radius:16px;">
+
+        <!-- Zaglavlje: znak + ime. Slika ima alt jer je klijenti blokiraju dok korisnik ne dopusti. -->
+        <tr>
+          <td class="s-pad" align="center" style="padding:40px 48px 0 48px;">
+            <img src="https://www.sokratstudy.com/icon-192.png" width="56" height="56" alt="Sokrat Study" style="display:block; width:56px; height:56px; border:0; border-radius:14px;" />
+            <div class="s-text" style="margin-top:14px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; font-weight:600; letter-spacing:0.02em; color:#111827;">
+              Sokrat Study
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="s-pad" style="padding:32px 48px 0 48px;">
+            <h1 class="s-text s-h1" style="margin:0 0 16px 0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:28px; line-height:1.25; font-weight:700; color:#111827;">
+              Dobrodošao na Sokrat 👋
+            </h1>
+            <p class="s-text" style="margin:0 0 12px 0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:16px; line-height:1.6; color:#374151;">
+              Ostao je još jedan klik. Potvrdi svoju adresu i račun je spreman.
+            </p>
+          </td>
+        </tr>
+
+        <!-- Gumb kao tablica (Outlook ne stilizira <button>). -->
+        <tr>
+          <td class="s-pad" style="padding:28px 48px 0 48px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td align="center" bgcolor="#6366f1" style="background-color:#6366f1; border-radius:10px;">
+                  <a href="{{ .ConfirmationURL }}" target="_blank" style="display:inline-block; padding:15px 32px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:16px; font-weight:600; color:#ffffff; text-decoration:none; border-radius:10px;">
+                    Potvrdi e-adresu
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Što ga čeka — tri stvarne mogućnosti platforme, ne marketinška maglica. -->
+        <tr>
+          <td class="s-pad" style="padding:36px 48px 0 48px;">
+            <div class="s-muted" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:12px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#6b7280;">
+              Što te čeka
+            </div>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:14px;">
+              <tr>
+                <td style="padding:8px 0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; line-height:1.55; color:#374151;" class="s-text">
+                  <strong style="color:#6366f1;">&#8226;</strong>&nbsp; Kartice, kvizovi, dopune i vježbe za cijele predmete
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; line-height:1.55; color:#374151;" class="s-text">
+                  <strong style="color:#6366f1;">&#8226;</strong>&nbsp; Napredak koji te prati sa svakog uređaja
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; line-height:1.55; color:#374151;" class="s-text">
+                  <strong style="color:#6366f1;">&#8226;</strong>&nbsp; Vlastiti materijali — gradivo koje sam slažeš
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Goli URL: dio korporativnih klijenata gumb pretvori u čisti tekst. -->
+        <tr>
+          <td class="s-pad" style="padding:32px 48px 0 48px;">
+            <hr class="s-hr" style="border:0; border-top:1px solid #e5e7eb; margin:0 0 20px 0;" />
+            <p class="s-muted" style="margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:13px; line-height:1.6; color:#6b7280;">
+              Gumb ne radi? Zalijepi ovu poveznicu u preglednik:<br />
+              <a href="{{ .ConfirmationURL }}" style="color:#6366f1; text-decoration:underline; word-break:break-all;">{{ .ConfirmationURL }}</a>
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="s-pad" style="padding:24px 48px 40px 48px;">
+            <p class="s-muted" style="margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:13px; line-height:1.6; color:#6b7280;">
+              Nisi ti otvorio račun? Slobodno zanemari ovaj mail — bez potvrde se ništa ne događa.
+            </p>
+          </td>
+        </tr>
+      </table>
+
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px; max-width:600px;">
+        <tr>
+          <td align="center" style="padding:24px 24px 0 24px;">
+            <p class="s-muted" style="margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:12px; line-height:1.6; color:#9ca3af;">
+              <a href="https://www.sokratstudy.com" style="color:#9ca3af; text-decoration:none;">sokratstudy.com</a>
+              &nbsp;&middot;&nbsp;
+              <a href="https://www.sokratstudy.com/privacy.html" style="color:#9ca3af; text-decoration:none;">Pravila privatnosti</a>
+            </p>
+          </td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
+</body>
+</html>
