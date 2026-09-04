@@ -8,6 +8,10 @@ spremljene u PROGRESS-u. **U3+U4 ✅ zatvorio Leon 2026-09-02** (Site URL + Rese
 BACKLOG §R1-UX). **Mail-identitet ✅ 2026-09-04:** pošiljatelj `sokrat@sokratstudy.com`,
 Googleov avatar sa znakom, HR predlošci s potpisom (`supabase/email-templates/`) — time je
 i **temelj R3 postavljen**, ostaje mu samo Edge Function + odjava + admin-forma.
+⏭️ **Prije R2 idu DVIJE cigle iz [BACKLOG.md](../records/BACKLOG.md) §U TIJEKU** (Leon,
+2026-09-04): **učitavanje po ruti** (izmjereno ~1270 ms bržeg prvog kadra) i **tema stranice
+= izgled maila** (mail već vozi indigo iz znaka; stranica ne). Nisu RAČUN-cigle nego zatečeni
+nalazi, ali imaju prednost jer ih je Leon tražio imenom.
 Leon je blok otvorio i PROŠIRIO
 2026-09-02: Facebook uz Google (ne više uvjetno), a blok je izričito i **UX računskih
 površina** (dijalog + profil), ne samo priključak providera. Napomena o dosegu: „frontend gotov (2026-09-01)" se odnosio na

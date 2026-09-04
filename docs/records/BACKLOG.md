@@ -60,7 +60,9 @@ skripte i dalje skida odmah; snizen prioritet ne vraca propusnost.
 **✅ Ucinjeno:** brands-font (106 KB, za DVIJE ikone od kojih se jedna ne crta) zamijenjen
 ugradjenim SVG-om — commit `6db1c2f`, brana `tests/unit/no-brand-font.test.js`.
 
-**Sljedece (veliko, treba Leonova rijec o opsegu):** landing ucitava `flashcards` `quiz`
+**⏭️ ODGODJENO ZA SLJEDECU SESIJU (Leon, 2026-09-04: *„Tu ciglu cemo stavit u sljedecu
+sesiju"*).** Radi se u koracima, s mjerom (`perf-probe`) nakon svakog.
+**Sto tocno:** landing ucitava `flashcards` `quiz`
 `fill-blanks` `learn` `progress` `blind-map` `exercises*` `blocks-renderer` `math`
 `my-materials` `profile` `node-images` `cloud-sync` `admin-reveal` — nista od toga ne treba
 za prvi kadar. Uz to KaTeX JS (61.8 KB) ide na svaku stranicu, a `assets/logo.svg` je
@@ -69,11 +71,42 @@ za prvi kadar. Uz to KaTeX JS (61.8 KB) ide na svaku stranicu, a `assets/logo.sv
 se dira ucitavanje.
 
 **2. Tema stranice = izgled maila** (Leon: *„frontend theme da ima isti kao i sta mejl salje"*).
-Mail predlosci (`supabase/email-templates/`) koriste **indigo #6366f1** (znak marke), bijelu
-plohu, sivu pozadinu #f4f5f7, mekane rubove 16 px i grotesk — a zadana tema stranice je
-`academic` (plava #1657d0). Zadatak: poravnati stranicu s mailom, ne obrnuto (mail je Leon
-vidio i potvrdio). ⚠️ Paziti na `check:contrast` (358 provjera kroz sve teme) i na pravilo
-da znak ZADRZAVA indigo kroz sve teme.
+**IZMJERENO 2026-09-04 — nalaz je bolji nego sto je izgledalo.**
+
+⚠️ **Mail koristi TOCNO indigo iz znaka: `#6366f1` je isti heks koji stoji u
+`assets/logo.svg`.** Dakle mailu nismo radili poseban izgled — mail je u boji marke, a
+**stranica je ta koja odudara**: zadana tema `academic` vozi `#1657d0`. Poravnanje sa mailom
+je istovremeno poravnanje s vlastitim znakom (pravilo „znak zadrzava indigo kroz sve teme").
+
+| | mail | `academic` danas |
+|---|---|---|
+| akcent | `#6366f1` | `#1657d0` |
+| ploha / pozadina | `#ffffff` / `#f4f5f7` | `#ffffff` / `#f7f9fc` |
+| tinta 1 / 2 / 3 | `#111827` / `#374151` / `#6b7280` | `#0e1a2b` / `#34455c` / `#5b6879` |
+| crta | `#e5e7eb` | `#dde4ee` |
+
+Plohe i tinte su prakticki iste — razlikuje ih samo **plavi podton** nasih sivih. Pravi posao
+je **jedna zamjena akcenta**, ne prekrajanje teme.
+
+🪤 **ZAMKA KOJU CE BRANA NACI (izmjereno, ne pretpostavljeno):**
+
+| par | kontrast | presuda |
+|---|---|---|
+| `#6366f1` na bijelom | **4.47** | ❌ tekst treba 4.5 — fali 0.03 |
+| bijelo na `#6366f1` | **4.47** | ❌ isto |
+| `#4f46e5` na bijelom | **6.29** | ✅ |
+| `#1657d0` danas | 6.35 | ✅ |
+
+⇒ **Indigo `#6366f1` ide na PLOHE i gumbe** (ondje je prag 3.0), **a za TEKST i poveznice ide
+nijansu tamniji `#4f46e5`** — okom se ne razlikuje, a `check:contrast` (358 provjera) prolazi.
+Isti razred greske je vec jednom oboren na amberu 4.41 (learn-sekcije, spec §15.1).
+
+**Doseg:** dira SAMO temu `academic`; `chalk`/`mint` zadrzavaju svoje akcente.
+**Uz istu ciglu ide i:** `contact.html` · `faq.html` · `privacy.html` · `terms.html` **nemaju
+temu uopce** (nema `data-theme` ni `theme.js`, voze `tokens.static.css`) → korisnik na tamnoj
+temi ondje dobije svijetlu stranicu. Nije bljesak nego **nedostatak teme**.
+**Brane koje ce presuditi:** `check:contrast` · `check:contrast:live` (crta stvarni ekran) ·
+`check:palette` (zakucane ispune) · `check:tokens`. Poslije izmjene: `build:css` → `bump`.
 
 ### ✅ R1-UX NALAZI (Leon uzivo, 2026-09-02) — SVE ZATVORENO (U1+U2+U5 deployani · U3+U4 Leon konzole)
 
@@ -182,8 +215,11 @@ boje svijetle.
 (dvije tamne palete su već jednom pale na živom ekranu). **Ne dira se bez njegove riječi.**
 
 ✅ **RIJEŠENO 2026-09-01 — birač POSTOJI** (Leonova riječ, isti dan: „U profilu"): kartica
-„Izgled" na `#profile-page` (crta se i neprijavljenom — tema je stvar uređaja), 4 teme s
-pregled-krugovima (`--theme-swatch-*` u `tokens.css`), mehanizam = postojeći `js/theme.js`.
+„Izgled" na `#profile-page` (crta se i neprijavljenom — tema je stvar uređaja), teme s
+pregled-krugovima (`--theme-swatch-*` u `tokens.css`).
+⚠️ **Ispravljeno 2026-09-04:** tema je tada imala 4 palete i mehanizam u `js/theme.js`; danas
+su **3** (`paper` maknut isti tjedan), a popis i primjena zive u **`js/boot.js`** (odluka mora
+pasti prije prvog crtanja — v. cigla FOUC gore). `theme.js` nosi jos samo klik i normalizaciju.
 **Zapisana obaveza ispunjena isti dan:** zabrana #1 u `check:palette` proširena na JAKE
 semantičke ispune (`--color-ok/-strong`, `--color-danger`, `--color-warn`) — pronađeno 0
 prekršaja (ADR-032 je teren već očistio); -soft varijante namjerno izvan.
