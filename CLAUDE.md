@@ -171,7 +171,7 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 i dvaput vratio uvjerljiv krivi broj umjesto da padne.
 **K5** (editor dvojezično) čeka i ne blokira ništa.
 
-### 🎯 FRONTEND REDIZAJN + MREŽA = ✅ **NA PRODUKCIJI (2026-09-01)** — sljedeći blok: **RAČUN**
+### 🎯 FRONTEND REDIZAJN + MREŽA = ✅ **NA PRODUKCIJI (2026-09-01)** — dalje: **RASPORED F1**
 
 Oba speca u `docs/archive/`; što je točno isporučeno zna CHANGELOG. **Next.js odbijen (ADR-028).**
 **🚚 SEOBA je OTKAZANA** (Leon, 2026-09-01: *„Nastavlja Supabase do daljnjeg"*) → `BACKLOG.md`
@@ -189,7 +189,7 @@ Ostaje njegov nalaz **ⓑ trzanje pri skrolanju** — *„smooth kao na najnovij
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 
-- **Zadana tema je SVIJETLA — „Akademsko plavo"** (`academic`; ostale `chalk`, `mint` — `paper` maknut na Leonovu riječ 2026-09-01).
+- **Zadana tema je SVIJETLA — „Akademsko plavo"** (`academic`; ostale `chalk`, `mint`, **`carbon`** = tamna polovica maila, F1/2 — `paper` maknut 2026-09-01).
   Dvije tamne palete zaredom pale su na živom ekranu. Smjer izgleda je **APPLE** (Leon: *„apple
   smjer, naravno"*): grotesk svugdje (**serif nadglašen**), praznina, tipografija nosi, monokrom
   + jedan akcent. Spec §7.3–7.8.
@@ -284,7 +284,7 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
 - **ADR-026:** korisnik gradi **„materijal"**, spremnik je **„polica"** (EN ostaje `folder`); „gradivo" = javni katalog. **Mobilno autorstvo ide preko korisnikovog AI-a (MCP)**, ne preko editora na dodir. MCP invarijante: nikad katalog, nikad `is_admin()`, nikad `service_role`.
 - **ADR-025:** doseg osobnog materijala — vježbe **odgođene** · dijeljenje privatno sad (**cijena: slike su vezane na vlasnički prefiks**) · napredak isti kao katalog · **boje se nasljeđuju od sekcije i smiju se pregaziti** · korisnik je **bilo tko**.
 - **ADR-024:** osobni graditelj = **zaseban otok** (`nodes` + owner-RLS + RPC-only upis), NE proširenje kataloga; dva publish-puta svjesno koegzistiraju.
-- **ADR-023:** Saša = content-only opseg + PR-workflow, least privilege.
+- **ADR-023:** ⚰️ **otkazan 2026-09-04** (suradnik); t.5 (ADR-022 pull-forward) ostaje.
 - **ADR-022:** identitet predmeta preko programa (placement ≠ sadržaj) — temelj HR-ekspanzije.
 - **ADR-018:** student uploada **PODATKE, nikad KOD** (vrijedi i za UGC).
 - **ADR-017:** cache-busting = **jedan** auto-bumpani token (`npm run bump`), ne per-file hash.
