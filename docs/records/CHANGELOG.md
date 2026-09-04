@@ -5,6 +5,38 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-04 (FABLE) — **F1/2: tema `carbon` = tamna polovica maila**
+
+### Dodano
+- **Tema `carbon` („Ugljen")** — `:root[data-theme="carbon"]` u `css/tokens.css` s **doslovnim
+  heksovima** iz `prefers-color-scheme: dark` bloka predložaka: `#0f1115` pozadina · `#171a21`
+  kartica · `#262b36` crta · `#e6e8ee` tekst · `#9aa1b1` prigušeno. Ono što mail ne definira
+  (surface-2, line-strong, ink-1, semantika, tinte gradiva, sjene) uzeto je iz `mint` — dokazana
+  tamna paleta na gotovo istoj podlozi, a ova je tamnija pa se svaki omjer samo popravlja.
+  **Indigo je obrnut u odnosu na `academic`:** 500 `#818cf8` (tekst 5.84) · 400 `#a5b4fc` ·
+  600 `#7075f4` · `--color-on-brand: #0f1115` (bijelo na `#818cf8` bi bilo 2.98).
+- Registrirana na svih pet mjesta koja temu poznaju: `js/boot.js` (`TEME` + `TAMNE`),
+  `js/profile.js` (birač: ime + swatch), `js/i18n.js` (`profile.themeCarbon` en/hr),
+  `css/profile.css` (swatch), `scripts/check-contrast-live.js` (zakucani popis — F1/4 ga seli).
+  `tests/unit/theme-boot-order.test.js` je čuvao da `boot.js` == `tokens.css`.
+
+### Nađeno živom branom (statička to NE MOŽE vidjeti)
+- **`brand-600` se koristi kao ispuna U MIROVANJU na ~8 mjesta**, protiv ugovora tokena
+  („600 = pritisak"). Prvi prolaz pao na 3 elementa: `#0f1115` na `#6366f1` = **4.23**.
+  U `academic`/`chalk`/`mint` to nije bolilo jer im je 600 uvijek visokokontrastan — **carbon
+  je prva tema sa srednje-svijetlim 600**. Popravak u cigli: samo carbonov 600 → `#7075f4`
+  (4.98). CSS-zloporaba (dira sve teme) → **F4**, BACKLOG §CRNA TEMA.
+- `check:contrast:live` **ne diže vlastiti poslužitelj** — `ERR_CONNECTION_REFUSED` znači „nema
+  `serve:test` na :5050", ne kvar brane. Jutros je prošla na starom poslužitelju iz prethodne
+  sesije.
+
+### Gate
+`check:contrast` **5 tema · 358 provjera** · `check:contrast:live` **0 elemenata ispod praga na
+13 ruta × 4 teme** · `theme-boot-order` ✅ · `check:i18n` / `check:palette` / `check:tokens` /
+`check:orphan-css` bez novog · `build:css` + `bump` · **`preflight` EXIT 0**.
+`CLAUDE.md`: broj provjera vraćen na **358** (jučerašnjih 292 je vrijedilo samo bez pete teme).
+
+
 ## 2026-09-04 (OPUS) — **Crna tema: mail ima DVIJE palete, a izmjerio sam jednu** (zapis + plan)
 
 ### Ispravak vlastitog nalaza

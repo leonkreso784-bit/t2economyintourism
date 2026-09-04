@@ -5,6 +5,34 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-04 (FABLE) — F1/2: tema `carbon` — mail u tamnom, na stranici
+
+Leon: *"super svida mi se jeli mozemo krenuti."* Vodjeno kroz `/brick`.
+
+**Omedjenje prije koda:** ugovor teme = 26 tokena po bloku (procitano iz `chalk`/`mint`), pet
+mjesta koja temu poznaju (`boot.js` · `profile.js` · `i18n.js` · `profile.css` ·
+`check-contrast-live.js`), i sve vrijednosti koje mail NE definira izracunate protiv pragova
+PRIJE pisanja bloka (surface-2, line-strong, ink-1, cijela indigo-ljestvica, semantika iz mint-a).
+Staticka brana je zato prosla iz prve: **5 tema · 358 provjera.**
+
+**Ziva brana je pala — i to je bio pravi posao cigle.** Tri elementa na `#0f1115`-na-`#6366f1`
+= 4.23: `.filter-btn` aktivan, `.check-btn`, jedan span u gradivu. Uzrok NIJE tema nego CSS:
+`brand-600` se na ~8 mjesta koristi kao ispuna **u mirovanju**, protiv ugovora "600 = pritisak".
+Tri starije teme to nisu vidjele jer im je 600 uvijek visokokontrastan; carbon je prvi sa
+srednje-svijetlim 600. **Popravak = jedna varijabla samo u carbonu** (600 → `#7075f4`, tamni tekst
+4.98, jos jasno tamniji od 500); zloporaba u CSS-u ide u F4 jer dira sve teme i `css:diff`.
+Drugi prolaz: **0 ispod praga na 13 ruta × 4 teme.**
+
+**Gotcha koja je kostala krug:** `check:contrast:live` ne dize poslužitelj (traži `serve:test`).
+Jutros je prosla na STAROM posluzitelju iz prethodne sesije; moj `serve:test` je zato pao s
+`EADDRINUSE`, stari je umro, i brana je vratila `ERR_CONNECTION_REFUSED`. Nije teorija — procitano
+iz retka 32 skripte i iz izlaza `serve:test` taska. *Poruka o gresci opisuje mrezu, ne boju.*
+
+**Snimke** (naslovnica, gradivo) poslane Leonu — crno kao mail, indigo gumbi s tamnim tekstom.
+`preflight` EXIT 0. CLAUDE.md: broj provjera vracen na 358.
+
+---
+
 ## 2026-09-04 (OPUS) — Crna tema: mail ima DVIJE palete, a ja sam izmjerio jednu
 
 Leon: *„Izgled frontenda u modu sa emailom mora imati crnu pozadinu isto kao i email template.

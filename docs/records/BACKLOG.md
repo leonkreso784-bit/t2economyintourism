@@ -209,6 +209,28 @@ uređajem već tražio, ne svakom posjetitelju. Tko dođe s Googlea na svijetlom
 
 **Plan izvedbe: [RASPORED.md](../plan/RASPORED.md) §F1.**
 
+> ### ✅ F1/2 ISPORUČENA 2026-09-04 — tema `carbon` (hr „Ugljen")
+> Blok `:root[data-theme="carbon"]` s doslovnim heksovima predloška; ono što mail ne definira
+> uzeto iz `mint` (dokazana tamna paleta na gotovo istoj podlozi). Indigo obrnut kako je gore
+> izmjereno: 500 `#818cf8` · 400 `#a5b4fc` · `--color-on-brand: #0f1115`.
+> **Brane:** `check:contrast` **5 tema · 358 provjera** ✅ · `check:contrast:live` **0 ispod praga
+> na 13 ruta × 4 teme** ✅ · `theme-boot-order` (boot == tokens) ✅ · `check:i18n` bez novog ✅ ·
+> `preflight` EXIT 0.
+>
+> 🔎 **NALAZ ŽIVE BRANE koji statička nije mogla vidjeti — `brand-600` se koristi kao ispuna U
+> MIROVANJU.** Prvi prolaz je pao na 3 elementa (`.filter-btn` aktivan, `.check-btn`, jedan
+> `<span>` u gradivu): `#0f1115` na `#6366f1` = **4.23**. Ugovor tokena kaže „600 = pritisak
+> (tamnije)", ali `grep brand-600` nalazi **~8 mjesta** gdje je 600 ispuna u mirovanju
+> (`learn.css` ×3, `fill-blanks-section.css`, `pages.css`, `components.css`, `sokrat-confirm.css`)
+> plus gradijenti `500→600` na još 6. U tri starije teme to nikad nije bolilo jer im je 600 uvijek
+> bio visokokontrastan; **carbon je prva tema sa srednje-svijetlim 600** i razotkrila ga je.
+> **Popravak u cigli:** samo carbonov 600 → `#7075f4` (tamni tekst 4.98, još jasno tamniji od 500).
+> **Ne popravljeno (F4):** zloporaba 600 kao ispune u CSS-u — dira sve teme i `css:diff`.
+>
+> ⚠️ **Gotcha koja je koštala jedan krug:** `check:contrast:live` **ne diže vlastiti poslužitelj**
+> (traži `serve:test` na :5050, redak 32). Jutros je prošla jer je na portu visio stari
+> poslužitelj iz prethodne sesije; `ERR_CONNECTION_REFUSED` = nema poslužitelja, ne kvar brane.
+
 ---
 
 **2. Tema stranice = izgled maila** ✅ **ISPORUČENO 2026-09-04 (cigla F1/1)** — `brand-400 #6366f1` (plohe/hover/fokus, prag 3.0) · `brand-500 #4f46e5` (tekst i gumbi, 6.29) · `brand-600 #4338ca`; uz njih i `--theme-swatch-academic-acc`. Dira SAMO `academic`.

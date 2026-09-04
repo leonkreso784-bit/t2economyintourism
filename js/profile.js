@@ -21,14 +21,16 @@ function themeCardHtml() {
     const imena = {
         academic: pt('profile.themeAcademic', 'Academic blue'),
         chalk: pt('profile.themeChalk', 'Chalkboard'),
-        mint: pt('profile.themeMint', 'Mint')
+        mint: pt('profile.themeMint', 'Mint'),
+        carbon: pt('profile.themeCarbon', 'Carbon')
     };
     // Imena klasa DOSLOVNO, ne sastavljena ('--' + ime): skener siročadi (check:orphan-css)
     // čita izvor, ne runtime — ista logika zbog koje ADR-028 zabranjuje dinamičke klase.
     const swatch = {
         academic: 'theme-option-swatch--academic',
         chalk: 'theme-option-swatch--chalk',
-        mint: 'theme-option-swatch--mint'
+        mint: 'theme-option-swatch--mint',
+        carbon: 'theme-option-swatch--carbon'
     };
     const teme = window.SOKRAT_THEMES || ['academic', 'chalk', 'mint'];
     let gumbi = '';

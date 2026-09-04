@@ -36,7 +36,7 @@
  */
 const { chromium } = require('@playwright/test');
 
-const TEME = ['academic', 'chalk', 'mint'];
+const TEME = ['academic', 'chalk', 'mint', 'carbon']; // ⚠️ ZAKUCANO — F1/4 ga seli u tokens.css
 const BAZA = process.env.BAZA || 'http://localhost:5050';
 
 const MJERA = function () {

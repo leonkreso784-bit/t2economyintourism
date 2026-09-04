@@ -17,9 +17,9 @@
        Ovdje se izvršava prije prvog crtanja, pa je razlika 0.
        ⚠️ POPIS TEMA ŽIVI OVDJE (a `theme.js` ga čita s `window`) — jedan popis, jedno mjesto:
        druga kopija bi se razišla pri prvoj sljedećoj temi, a razlaz bi se vidio tek kao bljesak. */
-    var TEME = ['academic', 'chalk', 'mint'];
+    var TEME = ['academic', 'chalk', 'mint', 'carbon'];
     var ZADANA = 'academic';
-    var TAMNE = { chalk: 1, mint: 1 };
+    var TAMNE = { chalk: 1, mint: 1, carbon: 1 };
 
     function primijeniTemu() {
         var spremljena = null;

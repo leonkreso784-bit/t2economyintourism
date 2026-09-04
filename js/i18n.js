@@ -536,6 +536,7 @@
     'profile.themeAcademic': { en: 'Academic blue', hr: 'Akademsko plavo' },
     'profile.themeChalk': { en: 'Chalkboard', hr: 'Ploča' },
     'profile.themeMint': { en: 'Mint', hr: 'Menta' },
+    'profile.themeCarbon': { en: 'Carbon', hr: 'Ugljen' },
     'profile.newPassPlaceholder': { en: 'New password (min. 8 characters)', hr: 'Nova lozinka (min. 8 znakova)' },
     'profile.repeatNewPass': { en: 'Repeat new password', hr: 'Ponovi novu lozinku' },
     'profile.saveNewPass': { en: 'Save new password', hr: 'Spremi novu lozinku' },
