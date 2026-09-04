@@ -135,6 +135,8 @@ OBAVEZNO re-export**, inače CI drift-gate pada; vježbe se **ne** exportaju ·
 `node scripts/seed-staging.js [id]` (STAGING-only guard) ·
 generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 
+**Analiza rada:** `python scripts/rad-xlsx.py` → `docs/records/RAD.xlsx`; **na kraju svake faze**, ulazi samo odrađeno; grafovi se grade iznova, ručni su „vrsta (ručno)" i Vizije.
+
 **Naše lokalne komande (gitignored):** `/next` (raspoređivač) · `/brick` (jedna cigla end-to-end) ·
 `/deploy` (siguran deploy). Agenti: `content-review` / `exercise-review` · `agent-builder`
 (tvornica). [[sokrat-agent-engine]]
@@ -185,7 +187,7 @@ postao referenca. **Šest pitanja čeka Leonovu riječ — §6 rasporeda.**
 Ostaje njegov nalaz **ⓑ trzanje pri skrolanju** — *„smooth kao na najnovijem iPhoneu"*,
 **nije ni izmjereno**, a `perf-probe` tu NE pomaže: on mjeri prvi kadar, ovo je trošak PO kadru.
 *Mjera na razvojnom stroju je donja granica, ne stvarnost korisnika* (njegov bljesak je trajao
-~1 s, moj izmjereni 119 ms). Puni zapis: `BACKLOG.md` §LEONOVI NALAZI. **Dva nova (2026-09-05):** ⓒ **ljepljivi hover** nakon prelaska (na mišu reproducirano 100 %, dodir čeka pravi telefon; 148 `:hover` pravila, 1 zaštićeno) = **F1/8** · želja **Tinder-špil kartica** na telefonu = **F1/9**.
+~1 s, moj izmjereni 119 ms). Puni zapis: `BACKLOG.md` §LEONOVI NALAZI. **Dva nova (2026-09-05):** ⓒ **ljepljivi hover** nakon prelaska (148 `:hover`, 1 zaštićeno) = **F1/8** · **Tinder-špil kartica** = **F1/9**.
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 

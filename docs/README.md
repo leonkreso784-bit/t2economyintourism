@@ -95,6 +95,7 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 | [HISTORY.md](./records/HISTORY.md) | Vremenska crta milestone-a (brza orijentacija) |
 | [CHANGELOG.md](./records/CHANGELOG.md) | Verzije i što se mijenjalo |
 | [PROGRESS.md](./records/PROGRESS.md) | Dnevnik rada po sesijama |
+| `RAD.xlsx` (records/) | **Analiza rada** — commiti, isporuke, faze, vizije + 8 grafova; generira `python scripts/rad-xlsx.py` na kraju svake faze (samo odrađeno ulazi) |
 | [DECISIONS.md](./records/DECISIONS.md) | Arhitektonske odluke (ADR-001…033) i zašto |
 | [BUGS.md](./records/BUGS.md) | Bugovi + lekcije naučene |
 | [BACKLOG.md](./records/BACKLOG.md) | Parkiralište ideja |

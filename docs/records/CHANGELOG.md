@@ -5,6 +5,22 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-05 (FABLE) — **Analiza rada: `docs/records/RAD.xlsx` + `scripts/rad-xlsx.py`**
+
+### Dodano
+- **`docs/records/RAD.xlsx`** (Leon: *„jednu excel tablicu koliko radimo … koju ćemo stalno
+  nadopunjavat"*) — šest listova: Dnevnik (jedan red po commitu iz gita od 2026-08-29, s vrstom
+  rada auto/ručno, oznakom faze, +/− redaka i redcima u testovima/branama) · Isporuke (jedan red po
+  unosu u PROGRESS.md) · Faze (zatvorene s datumima iz gita, F1–F7 čitane iz RASPORED-a) · Vizije
+  (21 stavka sa stanjem i procjenom %) · Sažetak (tempo po danu, pet vrsta rada, 18 pokazatelja
+  kvalitete i brzine, faze) · Upute. **Osam grafova.**
+- **`scripts/rad-xlsx.py`** (Python, `openpyxl==3.1.5` pinano u `scripts/requirements-rad.txt`) —
+  generator; pokreće se **na kraju svake faze**. Zašto skripta: openpyxl pri otvaranju gubi grafove,
+  pa se sažetak i grafovi grade iznova; ručno se čuvaju samo stupac „vrsta (ručno)" (po SHA) i
+  list Vizije. U tablicu ulazi **samo odrađeno**.
+- Dvije ispravke prije slanja: broj cigli zatvorenih faza je **mjera** (commit s oznakom faze), ne
+  procjena; „sati rada" je **git-hours proxy** (razmaci < 2 h + 0,5 h po sesiji), označen kao proxy.
+
 ## 2026-09-05 (FABLE) — **F1/3: prvi kadar prati uređaj — crno bez klika, kao mail**
 
 ### Dodano

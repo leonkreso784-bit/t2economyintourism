@@ -5,6 +5,37 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-05 (FABLE) — Analiza rada u Excelu: `docs/records/RAD.xlsx` + generator
+
+Leon: *„jednu excel tablicu koliko radimo … koju ćemo stalno nadopunjavat i imat ćemo nekoliko
+grafova koji će pokazivat koliko radimo, koliko dobro radimo … vrste radova … koliko smo faza
+napravili u koliko vremena … planovi i vizije i koliko je od toga napravljeno."*
+
+**Izvedba:** `scripts/rad-xlsx.py` (Python + `openpyxl==3.1.5`, pinano u `scripts/requirements-rad.txt`;
+jedini Python u projektu, jer Node-biblioteke bez plaćanja ne crtaju grafove). Šest listova:
+**Dnevnik** (jedan red po commitu iz gita od 2026-08-29: datum, vrijeme, opis, oznaka faze, vrsta
+rada auto/ručno, podvrsta, datoteke, +/− redaka, redaka u testovima i branama) · **Isporuke** (jedan
+red po unosu u ovaj dnevnik) · **Faze** (zatvorene s datumima iz gita; F1–F7 se ČITAJU iz RASPORED-a)
+· **Vizije** (21 stavka sa stanjem i procjenom %) · **Sažetak** (tempo po danu, Leonovih pet vrsta
+rada, 18 pokazatelja kvalitete i brzine, faze) · **Upute**. **Osam grafova.**
+
+**Zašto skripta, a ne samo datoteka:** openpyxl pri otvaranju GUBI grafove — svaka dopuna bez skripte
+bi ih obrisala. Zato su podatkovni listovi izvor, sažetak i grafovi se grade iznova; ručno se čuvaju
+samo stupac „vrsta (ručno)" (po SHA) i cijeli list Vizije. Pokreće se **na kraju svake faze**; u
+tablicu ulazi **samo odrađeno** (commit, unos u dnevnik) — ne namjere ni razgovori.
+
+**Dvije stvari koje sam ispravio prije nego sam mu je poslao:** broj cigli zatvorenih faza bio je
+moja procjena („39/35") — sad je mjera: cigla zatvorene faze = commit s oznakom faze. „Sati rada" su
+bili raspon prvog i zadnjeg commita u danu, pa je noć između dva commita brojila kao rad — sad je
+git-hours proxy (razmaci < 2 h + 0,5 h po sesiji) i tako je označen. *Proxy koji nije označen kao
+proxy postaje brojka koju netko prepiše kao mjeru.*
+
+**Brojke tjedna (2026-08-29 → 09-05):** 116 commita u 8 radnih dana · 78 isporuka · 6 deploya ·
+52 099 redaka (+/−), od toga 5 001 u testovima i branama (9,6 %) · debugging 8,6 % commita ·
+dokumentacija 30,2 % · 11 isporuka pokrenuto Leonovim nalazom · 3 faze zatvorene, prosjek 8,5 dana.
+
+---
+
 ## 2026-09-05 (FABLE) — Leonova dva nova zahtjeva: ljepljivi hover (izmjeren) · Tinder-špil (zapisan)
 
 Leon: *„Svaki put kada se stisne na neki gumb on po rubovima malo posvijetli. Onda kada taj gumb
