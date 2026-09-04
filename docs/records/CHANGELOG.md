@@ -5,6 +5,26 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-04 (OPUS) — **FOUC teme zatvoren + brands-font maknut** (grana `feat/racun-r1`)
+
+### Popravljeno
+- **Bljesak krive teme**: popis tema i primjena sele u `js/boot.js` (sinkrona, prije prvog
+  crtanja). Izmjereno 119 ms (produkcija) / 232 ms (Slow-4G) → **0 ms**. `theme.js` zadrzava
+  samo `setTheme()` i normalizaciju zapisa.
+- **`fa-brands-400.woff2` (106 KB)** se vise ne skida: znakovi Googlea i Facebooka su
+  ugradjeni SVG (~0.6 KB). Google dobio svoj sluzbeni cetverobojni znak.
+
+### Dodano — mjerni instrumenti (nisu gate; mreza/preglednik)
+- `scripts/fouc-probe.js` — bljesak teme u milisekundama + snimka kadrova.
+- `scripts/perf-probe.js` — hladan prvi posjet, Lighthouseov mobilni profil, FCP/LCP/CLS/TBT
+  i bajtovi iz CDP-a; `--bez=` (protucinjenicni pokus), `--defer`, `--kontrola`, `--vodopad`.
+
+### Brane
+- `tests/unit/theme-boot-order.test.js` · `tests/unit/no-brand-font.test.js` (oba u preflightu)
+- `tests/theme-fouc.spec.js` — nula promjena teme poslije prvog kadra (chalk + mint).
+
+⚠️ **NIJE na produkciji** — ceka Leonov izricit OK.
+
 ## 2026-09-04 (OPUS) — **Mail-identitet: predlosci, potpis, posiljatelj** (grana + Supabase)
 
 ### Dodano

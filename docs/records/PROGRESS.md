@@ -26,6 +26,44 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-04 (OPUS) — Leonova tri problema: dijagnoza mjerenjem, dvije cigle zatvorene
+
+Leon: *„pregledaj sve trenutne probleme, analiziraj ih detaljno kako se desavaju i zasto,
+napravi plan debugga i kreni"*. **Obje ranije dijagnoze iz BACKLOG-a pokazale su se KRIVE** —
+zato su i zapisane kao ispravak, ne prepisane u tisini.
+
+**① FOUC — nije bio "theme.js je na dnu".** `index.html` ima zakucano
+`<html data-theme="academic">` I komentar koji tvrdi da je time bljesak rijesen. Bio je —
+samo za zadanu temu. `chalk`/`mint` su tamne, pa im je prvi kadar bio zajamceno svijetao.
+Izmjereno novom sondom `scripts/fouc-probe.js`: 119 ms (produkcija) / 232 ms (Slow-4G) krive
+teme, uz snimku kadrova. Popravak u `boot.js` → **0 ms**. Brane: `theme-boot-order` (unit,
+preflight) + `theme-fouc.spec` s obrnutom provjerom.
+
+**③ BRZINA — nije bio JS budzet, nego IZGLADNJIVANJE CSS-a.** `styles.bundle.css` krece na
+293 ms a stize na 2244 ms: 1951 ms za 37 KB, jer 46 zahtjeva dijeli istu vezu.
+Protucinjenicni pokusi (`perf-probe --bez=`) daju poredak: nasih ~35 skripti nosi
+**~1270 ms** FCP-a, sva tri CDN-a zajedno samo ~320 ms. **`defer` je izmjeren kao
+beskoristan** (uz posteni `--kontrola`, jer presretanje dokumenta samo po sebi kosta).
+Usput: `fa-brands-400.woff2` = **106 KB za dvije ikone**, od kojih se jedna (facebook) uz
+`FB_LOGIN=false` ne crta → zamijenjen ugradjenim SVG-om, Google dobio svoj sluzbeni znak.
+
+POUKE:
+1. **Komentar koji tvrdi da je nesto rijeseno je najskuplja vrsta dokumentacije** — onaj u
+   `index.html` je tocno opisivao mehanizam i bio tocan za zadanu temu, pa je zaklonio bug
+   za druge dvije. Zato tvrdnje o stanju sada nose brane, ne recenice.
+2. **Prije optimizacije napravi PROTUCINJENICNI pokus.** Krenuo sam na Font Awesome (272 KB,
+   36 % stranice) i bio bih potrosio ciglu na 100 ms. Blokiranje resursa na zivoj produkciji
+   (`--bez=`) presudilo je u minuti.
+3. **Svaki alat treba KONTROLU.** Prvi `--defer` pokus je pokazao pogorsanje — mjerilo se
+   presretanje dokumenta, ne defer. Bez `--kontrola` bi zakljucak bio kriv.
+4. **Sonda koja mjeri krivi scenarij daje LAZNO ZELENO.** Prva verzija `fouc-probe` mjerila
+   je PRVI posjet, gdje spremljene teme jos nema → "tema nije mijenjana", bljesak nevidljiv.
+   Leonov opis je bio *„kada se OPET ulazi"* — mjera mora pratiti recenicu korisnika.
+5. Brana zna pasti na **vlastitom komentaru** (`no-brand-font` na spomenu imena datoteke) —
+   zabrana se odnosi na UPOTREBU, ne na spominjanje; to mora biti u regexu.
+
+---
+
 ## 2026-09-04 (OPUS) — Mail-identitet gotov (predlosci + potpis + posiljatelj + avatar)
 
 Mailovi sada izlaze kao SOKRAT: posiljatelj sokrat@sokratstudy.com (Resend SMTP), Googleov

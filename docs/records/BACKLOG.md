@@ -13,36 +13,60 @@
 > Njihovi zapisi ostaju **ovdje i nedirnuti** jer nose obrazloženje i mjerenja; spec nosi **redoslijed
 > i dokaz**. Kad cigla padne, ovdje se stavlja ✅ s brojkom — ne briše se.
 
-### 🔴 ZA SLJEDECU SESIJU (Leon, 2026-09-04) — FOUC teme · tema = izgled maila · BRZINA
+### 🟡 U TIJEKU (2026-09-04) — ~~FOUC~~ ✅ · ~~brands-font~~ ✅ · UCITAVANJE PO RUTI · tema = izgled maila
 
-**1. FOUC: bijela stranica pa skok u temu** (Leon: *„prvo se ucita bijela obicna stranica pa
-onda na brzinu theme koji je izabran — ruzno i neprofesionalno"*). Pojavljuje se na SVAKOM
-ulasku, na svim uredjajima.
-**Dijagnoza (2026-09-04):** `js/theme.js` se ucitava **na dnu** `index.html` (r. ~1318), pa
-`data-theme` sjedne tek nakon sto je preglednik vec nacrtao zadanu (svijetlu) temu.
-**Gdje popravak ide:** `js/boot.js` — JEDINA sinkrona skripta, na vrhu `<body>`, koja postoji
-BAS zato sto CSP zabranjuje inline blok, i izvrsi se prije prvog crtanja (ondje vec sjede
-`no-pathbar` i KaTeX media-swap iz istog razloga). Procitati `localStorage['sokrat-theme']`,
-provjeriti ga prema popisu tema (nepoznata vrijednost je vec jednom obojila bijeli tekst na
-bijelom — v. komentar u `theme.js`) i postaviti `data-theme` na `<html>`. ⚠️ Popravak mora
-imati **mjeru**, ne „na oko": tema je vidljiva u prvom kadru → dokaz je snimka/mjerenje
-prvog crtanja, ne dojam.
+**1. FOUC ✅ ZATVORENO 2026-09-04** (commit `891a1ce`, na grani — ⚠️ NIJE na produkciji).
+**Dijagnoza gore je bila KRIVA i zato stoji ispravak:** nije problem bio "theme.js je na dnu"
+nego **zakucana tema u markupu**. `index.html` ima `<html data-theme="academic">` i komentar
+koji tvrdi da je time bljesak rijesen — bio je, ali SAMO za zadanu temu. `chalk` i `mint` su
+TAMNE, pa im je prvi kadar bio zajamceno svijetao.
+**Izmjereno** (`scripts/fouc-probe.js`, nova sonda, produkcija/mobitel): FCP 608 ms → tema
+727 ms = **119 ms krive teme**, na Slow-4G **232 ms**; snimka kadrova: bijelo → svijetla
+academic stranica → tamna tema. **Poslije popravka: 0 ms.**
+**Zahvat:** popis tema + primjena sele u `js/boot.js` (jedina sinkrona skripta); popis zivi
+SAMO ondje, `theme.js` ga cita s window-a. Brane: `tests/unit/theme-boot-order.test.js`
+(preflight) + `tests/theme-fouc.spec.js` (obrnuta provjera: na starom kodu pada).
+**Ostatak, ne blokira:** `contact/faq/privacy/terms.html` nemaju `data-theme` ni `theme.js`
+— korisnik na tamnoj temi ondje dobije svijetlu stranicu. Nije bljesak nego **nedostatak
+teme**; ide uz ciglu "tema = izgled maila".
 
-**3. BRZINA — PageSpeed 75 (desktop), losije na mobitelu** (Leon, 2026-09-04, uz mjeru:
-pagespeed.web.dev). ⚠️ Google PSI API bez kljuca vraca 429 → **prvo pribaviti mjeru koja se
-moze ponavljati** (Lighthouse lokalno ili PSI s kljucem), inace se optimizira naslijepo.
-**Izmjereno 2026-09-04** (`check:budget` + analiza `index.html`):
-- **38 skripti · 192.8 KiB gzip · budzet 200 KB → zaliha 7.7 KiB.** Brana je zelena, ali
-  je *puna* — svaka iduca cigla ju probija. Najteze: `navigation.js` 24.2 · `i18n.js` 20.9 ·
-  `auth.js` 13.9 · `my-materials.js` 13.8 · `catalog.js` 11.1 · `blocks-renderer.js` 10.3.
-- **Sve se ucitava UNAPRIJED, i za posjetitelja koji nikad ne udje dalje od landinga:**
-  `my-materials.js`, `exercises.js` (+`exercises-core.js`), `profile.js`, `blocks-renderer.js`
-  = ~49 KiB gzip koje landing NE treba. Prvi kandidat: ucitavanje po ruti.
-- **KaTeX (2 JS + CSS) i Font Awesome idu na SVAKU stranicu**, a matematika treba samo
-  kvantitativnim predmetima. (KaTeX CSS je naveden dvaput NAMJERNO — drugi je `<noscript>`
-  fallback uz `media="print"` trik; **nije bug**, provjereno.)
-**Veza s ciglom 1:** i FOUC i brzina su isti razred problema — *sto se dogadja prije prvog
-kadra*. Rjesavati ih zajedno, jednim mjerenjem.
+**3. BRZINA — PRAVA DIJAGNOZA (2026-09-04), stara je bila kriva.**
+Mjera je sada PONOVLJIVA: `scripts/perf-probe.js` (Chromium koji vec imamo + CDP; hladan
+cache, Lighthouseov mobilni profil 4× CPU / Slow-4G). PSI API bez kljuca vraca 429, a
+Lighthouse bi bio nova ovisnost (pravilo #9) — zato vlastita sonda.
+
+**Polazno stanje produkcije (mobitel, hladan cache):** FCP/LCP **2856 ms** · TBT **613 ms** ·
+**694 KB / 50 zahtjeva** (js 334 · font 253 · css 62).
+
+⚠️ **BAJTOVI NISU GLAVNI KRIVAC — izmjereno protucinjenicnim pokusom** (`--bez=`, blokira
+resurs na ISTOJ produkciji):
+
+| pokus | FCP | zahtjeva |
+|---|---|---|
+| produkcija danas | 2856 ms | 50 |
+| bez Font Awesomea + KaTeXa + Supabasea (−390 KB!) | 2536 ms | 43 |
+| **bez NASIH ~35 skripti** (CDN-ovi ostaju) | **1588 ms** | 11 |
+| bez icega osim CSS-a (gornja granica) | 1492 ms | 6 |
+
+**Uzrok:** `styles.bundle.css` (37 KB, jedini render-blokirajuci resurs) **krece na 293 ms a
+stize tek na 2244 ms** — 1951 ms za 37 KB. Nije spor, nego **izgladnjen**: 46 zahtjeva dijeli
+istu vezu, pa jedini file koji drzi prvi kadar dobiva mrvicu propusnosti.
+**`defer` NE POMAZE — provjereno pokusom** (`--defer` uz posteni `--kontrola`, jer samo
+presretanje dokumenta kosta): 2928–3284 ms vs kontrola 2720–2796 ms. Preglednik deferirane
+skripte i dalje skida odmah; snizen prioritet ne vraca propusnost.
+⇒ **Jedini pravi lijek: NE TRAZITI ono sto prvi kadar ne treba.** Ucitavanje po ruti.
+**Vrijedi ~1270 ms FCP-a** (2856 → ~1588), tj. ~44 % brzi prvi kadar.
+
+**✅ Ucinjeno:** brands-font (106 KB, za DVIJE ikone od kojih se jedna ne crta) zamijenjen
+ugradjenim SVG-om — commit `6db1c2f`, brana `tests/unit/no-brand-font.test.js`.
+
+**Sljedece (veliko, treba Leonova rijec o opsegu):** landing ucitava `flashcards` `quiz`
+`fill-blanks` `learn` `progress` `blind-map` `exercises*` `blocks-renderer` `math`
+`my-materials` `profile` `node-images` `cloud-sync` `admin-reveal` — nista od toga ne treba
+za prvi kadar. Uz to KaTeX JS (61.8 KB) ide na svaku stranicu, a `assets/logo.svg` je
+**45 KB na disku** (vektoriziran potraceom) za znak od 32 px.
+⚠️ `check:budget` mjeri SAMO skripte i nije ni vidio 253 KB fontova — rupu zatvoriti kad
+se dira ucitavanje.
 
 **2. Tema stranice = izgled maila** (Leon: *„frontend theme da ima isti kao i sta mejl salje"*).
 Mail predlosci (`supabase/email-templates/`) koriste **indigo #6366f1** (znak marke), bijelu

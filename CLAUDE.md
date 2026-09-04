@@ -100,6 +100,8 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 | `npm run blocks:diff` | isto za **blokove gradiva** kroz `window.renderBlocks`: katalog od `learn-blocks.css` crta **2 od 44 pravila**, pa `css:diff` ondje mjeri prazno. Dokazuje POKRIVENOST pa razliku. | preglednik + worktree |
 | `npm run check:contrast:live` | kontrast kakav se STVARNO iscrta: 4 teme × **13** ruta (`te2` NEMA `exercises`/`blind-map` → imenovani zasebno, inače ih brana ne vidi). `check:contrast` čita tokene i ne zna KORISTI li ih CSS — ovo mjeri ekran; iznimke u `scripts/contrast-live-allow.json` (**prazne**) | preglednik + poslužitelj |
 | `npm run build:og` | crta `og-cover.png` **1200×630** (boje iz tokena, tekst iz i18n) | preglednik; PNG se **commita**, dimenzije mjeri `check:seo` |
+| `node scripts/perf-probe.js` | hladan PRVI posjet, mobilni profil: FCP/LCP/CLS/TBT + bajti iz **CDP-a** (`transferSize` = 0 za CDN). **`--bez=…` = protučinjenični pokus** nad živom produkcijom · `--defer` uz obavezan `--kontrola` · `--vodopad` | mreža + preglednik |
+| `node scripts/fouc-probe.js` | bljesak teme u ms + kadrovi. ⚠️ Mjeri **DRUGI** posjet (prvi nema spremljenu temu → lažno zeleno) | preglednik + poslužitelj |
 | `npm run css:debt` | što je ostalo za C4–C7: po cigli datoteke, redci, `!important` izvan komentara | read-only, **nije gate** — plan je do 2026-08-25 te brojke nosio **ručno** i obje su ostarile |
 | `npm run palette:breakdown` | razloži ostatak palete po **POSLJEDICI** (nevidljiv tekst · blijede plohe · stara paleta) | read-only, **nije gate** |
 | `npm run check:final` | bazni `final` red == M1⊕M2(+examPractice); preskočene **imenuje** protiv zakucane osnovice (osmi = pad) | mrežno (anon, read-only) |
@@ -143,9 +145,8 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 ## Stanje — TRENUTNO (2026-09-01)
 
 > **Ovdje stoji samo ono što vrijedi SAD** (ADR-027). **Povijest cigli je IZAŠLA odavde**
-> (2026-08-25): mjere, pouke i obrnute provjere svake cigle žive u specu i zapisima, a ova je
-> sekcija do tada nosila **41 604 znaka o GOTOVIM ciglama** — drugu kopiju onoga što spec već
-> ima. Provjereno prije brisanja: od **513 pojmova** u tekstu njih **513 postoji drugdje**.
+> (2026-08-25): mjere, pouke i obrnute provjere svake cigle žive u specu i zapisima — ova je
+> sekcija do tada nosila **41 604 znaka o GOTOVIM ciglama**, drugu kopiju onoga što spec ima.
 >
 > | pitanje | tko zna odgovor |
 > |---|---|
@@ -173,24 +174,25 @@ i dvaput vratio uvjerljiv krivi broj umjesto da padne.
 
 ### 🚚 SEOBA — **OTKAZANA (Leon, 2026-09-01: *„Nastavlja Supabase do daljnjeg"*)**
 
-Supabase (i Vercel) ostaju; **Pro se nastavlja plaćati do daljnjeg** → nema free-tier
-spavanja ni pada server-side lozinka-brana. `BACKLOG.md` §SELF-HOST je time **arhiviran
-zapis odluke**, ne plan. Posljedica: OAuth/redirect-URI više ništa ne čeka.
+Supabase i Vercel ostaju, **Pro se plaća do daljnjeg** → nema free-tier spavanja ni pada
+server-side lozinka-brane. `BACKLOG.md` §SELF-HOST = **arhiviran zapis odluke**, ne plan.
 
 ### 🎯 FRONTEND REDIZAJN + MREŽA = ✅ **NA PRODUKCIJI (2026-09-01)** — sljedeći blok: **RAČUN**
 
-**Deploy `f8bc5cb`** (Leonov izričit OK, cijeli paket): C0–C7 + MREŽA A–E · **CSP enforce**
-potvrđen uživo · **E2 re-sync baze** odrađen (backup → 7 predmeta → `diff:db` 0 razlika →
-`check:final` 17/17) · §9 kućice zatvorene · **oba speca u `docs/archive/`**. Iz Leonovog
-pregleda ušla je i dorada **learn u bojama sekcija** (spec §15.1; CI je prvu verziju oborio
-na amberu 4.41 → mix izmjeren na 45 %). **Next.js odbijen (ADR-028).**
+**Deploy `f8bc5cb`** (Leonov izričit OK): C0–C7 + MREŽA A–E · **CSP enforce** potvrđen uživo ·
+**E2 re-sync baze** (backup → 7 predmeta → `diff:db` 0 razlika → `check:final` 17/17) · **oba
+speca u `docs/archive/`** · dorada **learn u bojama sekcija** (§15.1). **Next.js odbijen (ADR-028).**
 Aktivni spec: **`docs/plan/RACUN.md`** — R1 jezgra na produkciji 2026-09-02, ostatak u tijeku.
 
 **RAČUN u tijeku:** R1 ✅ (dijalog + upitnik + Google, na produkciji) · **mail-identitet ✅
 2026-09-04** (pošiljatelj `sokrat@sokratstudy.com`, HR predlošci s potpisom u
-`supabase/email-templates/`, avatar) · FB **odgođen** Leonovom riječju. **Sljedeće (Leon,
-2026-09-04): FOUC teme + tema stranice = izgled maila** (oba u `BACKLOG.md`), pa R2 profil
-(slika/uređivanje, bucket po `node-images`) → R3 obavijesti (Edge Function, ADR-016).
+`supabase/email-templates/`, avatar) · FB **odgođen** Leonovom riječju.
+**Leonova tri problema (2026-09-04):** ① FOUC teme **✅ zatvoren** (`boot.js`, 119→**0 ms**) ·
+③ brzina — **prava dijagnoza je IZGLADNJIVANJE CSS-a**, ne bajtovi: `styles.bundle.css` kreće
+na 293 ms a stiže na 2244 ms jer 46 zahtjeva dijeli vezu; naših ~35 skripti nosi **~1270 ms**
+FCP-a, sva tri CDN-a samo ~320 ms, a **`defer` je izmjeren kao beskoristan**. Brands-font
+(106 KB za dvije ikone) **✅ maknut**; ostaje **učitavanje po ruti** (mjere u `BACKLOG.md`) ·
+② tema stranice = izgled maila. Pa R2 profil (slika, bucket po `node-images`) → R3 obavijesti.
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 
@@ -270,10 +272,10 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
 - **Sitni dug (ne blokira):** siročad u Storageu · staging poravnati s `supabase/f1-nodes.sql` ·
   `set_updated_at` ima promjenjiv `search_path` (jedini sigurnosni WARN koji nije namjeran). ⚠️ **`is_admin()` se NE smije
   revokeati `authenticated`-u** — zovu ga RLS politike kao pozivatelj.
-- **Napomene:** **Supabase org je `pro` i NASTAVLJA SE PLAĆATI do daljnjeg** (Leon,
-  2026-09-01) — free-tier spavanje nije prijetnja dok se plaća · `content_versions`/`node_content_versions` = **append-only audit**,
-  brisanje **samo uz izričit OK** · PWA drži staru ikonu do reinstalacije (nije bug) ·
-  `mcp-admin/` = untracked read-only spike [[mcp-admin-spike]].
+- **Napomene:** Supabase org je `pro` i **plaća se do daljnjeg** (Leon, 2026-09-01) →
+  free-tier spavanje nije prijetnja · `content_versions`/`node_content_versions` =
+  **append-only audit**, brisanje **samo uz izričit OK** · PWA drži staru ikonu do
+  reinstalacije (nije bug) · `mcp-admin/` = untracked read-only spike [[mcp-admin-spike]].
 
 ## Ključne odluke — samo one koje MIJENJAJU današnji rad
 
