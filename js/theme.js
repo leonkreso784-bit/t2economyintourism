@@ -17,33 +17,33 @@
 // koji je pisao `light` — temu koja u CSS-u NIJE POSTOJALA. Prekidač je dakle vodio u
 // prazno, a `dark` je bio jedini stvarni ishod. Sada su teme prave, pa i ovo mora biti.
 //
-// ⚠️ Vrijednost se PROVJERAVA prema popisu: nepoznat `data-theme` (npr. zaostali `dark`
-// iz localStoragea nekog starog posjetitelja) ne bi pogodio nijedan token-blok, ali BI
-// aktivirao 21 legacy pravilo koje selektira `[data-theme="dark"]` → bijeli tekst na
-// svijetloj podlozi. Zato se nepoznata vrijednost odbacuje, a ne propušta.
-// 'paper' maknut na Leonovu rijec (2026-09-01) — spremljeni 'paper' pada na academic.
-const SOKRAT_THEMES = ['academic', 'chalk', 'mint'];
-const SOKRAT_THEME_DEFAULT = 'academic';
-
+// ⚠️⚠️ POPIS TEMA I PRIMJENA VIŠE NISU OVDJE — sele u `js/boot.js` (2026-09-04).
+// Razlog nije urednost nego MJERA: ova je datoteka na DNU stranice i temu je primjenjivala
+// tek na `DOMContentLoaded`, iza 42 skripte koje blokiraju parser. Za `chalk`/`mint` (tamne)
+// to je značilo 119–232 ms svijetle stranice na svakom ulasku — Leonov nalaz, potvrđen
+// `scripts/fouc-probe.js` i snimkom kadrova. Odluka prije prvog crtanja MORA u `boot.js`,
+// jedinu sinkronu skriptu. Ovdje ostaje samo ono što se događa na KLIK.
+// ⚠️ Nema rezervne kopije popisa: rezerva bi bila druga istina koja se tiho razilazi, a
+// razlaz bi se opet vidio kao bljesak. `boot.js` je uvjet, i to provjerava
+// `tests/unit/theme-boot-order.test.js` (u preflightu), ne komentar.
+// ⚠️ NEMA `const SOKRAT_THEMES` — `boot.js` ga postavlja NA WINDOW, pa je golo ime
+// (`SOKRAT_THEMES` u `init.js`) i dalje vidljivo. Leksička deklaracija istog imena ovdje
+// bila bi samo sjena preko iste vrijednosti, uz rizik od sudara s globalnim svojstvom.
 function initTheme() {
-    let saved = null;
-    try { saved = localStorage.getItem('sokrat-theme'); } catch (e) { /* privatni način */ }
-    const theme = SOKRAT_THEMES.indexOf(saved) >= 0 ? saved : SOKRAT_THEME_DEFAULT;
-    document.documentElement.setAttribute('data-theme', theme);
-    // `color-scheme` javlja pregledniku kakve da crta scrollbarove i zadana polja;
-    // bez toga svijetla tema dobiva tamne native kontrole i obrnuto.
-    document.documentElement.style.colorScheme = (theme === 'chalk' || theme === 'mint') ? 'dark' : 'light';
+    // `boot.js` je isto ovo napravio prije prvog crtanja; ovdje se samo NORMALIZIRA
+    // spremljena vrijednost (zaostali `dark`/`paper` → `academic`), što ne mora prije crtanja.
+    const theme = window.__sokratPrimijeniTemu();
     try { localStorage.setItem('sokrat-theme', theme); } catch (e) { /* privatni način */ }
 }
 
 function setTheme(name) {
-    if (SOKRAT_THEMES.indexOf(name) < 0) return false;
+    if (window.SOKRAT_THEMES.indexOf(name) < 0) return false;
     try { localStorage.setItem('sokrat-theme', name); } catch (e) { /* privatni način */ }
     initTheme();
     return true;
 }
 window.setTheme = setTheme;
-window.SOKRAT_THEMES = SOKRAT_THEMES;
 
-// Tema se primjenjuje čim je dokument spreman — v. bilješku o pozivu u zaglavlju.
+// Tema je već na ekranu (boot.js); ovdje se samo normalizira zapis u localStorageu, pa
+// smije čekati `DOMContentLoaded`. Ono što se VIDI ne čeka ništa.
 document.addEventListener('DOMContentLoaded', initTheme);
