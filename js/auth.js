@@ -306,8 +306,8 @@ const SokratAuth = (function () {
             '    <p class="auth-modal__text">' + at('auth.m.text', 'Back up your study progress and continue on any device with a free account.') + '</p>' +
             '    <div class="auth-oauth-wrap" id="authOAuthWrap">' +
             '      <div class="auth-oauth">' +
-            '        <button type="button" class="auth-oauth__btn" id="authGoogleBtn"><i class="fab fa-google"></i><span>' + at('auth.oauth.google', 'Continue with Google') + '</span></button>' +
-            (FB_LOGIN ? '        <button type="button" class="auth-oauth__btn" id="authFacebookBtn"><i class="fab fa-facebook-f"></i><span>' + at('auth.oauth.facebook', 'Continue with Facebook') + '</span></button>' : '') +
+            '        <button type="button" class="auth-oauth__btn" id="authGoogleBtn">' + IKONA_GOOGLE + '<span>' + at('auth.oauth.google', 'Continue with Google') + '</span></button>' +
+            (FB_LOGIN ? '        <button type="button" class="auth-oauth__btn" id="authFacebookBtn">' + IKONA_FACEBOOK + '<span>' + at('auth.oauth.facebook', 'Continue with Facebook') + '</span></button>' : '') +
             '      </div>' +
             '      <div class="auth-divider"><span>' + at('auth.divider.or', 'or') + '</span></div>' +
             '    </div>' +
@@ -602,6 +602,27 @@ const SokratAuth = (function () {
     // Facebook maknut iz dijaloga na Leonovu riječ (2026-09-02: „makni facebook za sada,
     // to ćemo kasnije dodat") — čeka Metine ključeve; flip na true kad sjednu u Supabase.
     const FB_LOGIN = false;
+
+    /* ===== ZNAKOVI PROVIDERA SU UGRAĐENI SVG, NE FONT-AWESOME =====
+     * IZMJERENO (2026-09-04, `scripts/perf-probe.js` na produkciji): `fa-brands-400.woff2`
+     * je **106 KB** i skidao se na SVAKOM učitavanju landinga — zbog TOČNO OVE DVIJE ikone,
+     * od kojih se jedna (facebook) uz `FB_LOGIN=false` niti ne crta. Sto šest kilobajta za
+     * jedno slovo „G" u dijalogu koji većina posjetitelja nikad ne otvori.
+     * Ugrađeni SVG je ~0.6 KB, dolazi s dokumentom (nula zahtjeva) i ne može regresirati:
+     * `tests/unit/no-brand-font.test.js` pada čim se ta obitelj ikona vrati u kod.
+     * Google traži SVOJ znak na „Continue with Google" gumbu (Branding Guidelines) —
+     * dosadašnja indigo-obojena FA aproksimacija to nije poštovala; ovo je službeni G. */
+    const IKONA_GOOGLE =
+        '<svg class="auth-oauth__ikona" viewBox="0 0 48 48" width="18" height="18" aria-hidden="true" focusable="false">'
+        + '<path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/>'
+        + '<path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/>'
+        + '<path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24s.85 6.91 2.34 9.88l7.35-5.7z"/>'
+        + '<path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/>'
+        + '</svg>';
+    const IKONA_FACEBOOK =
+        '<svg class="auth-oauth__ikona" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">'
+        + '<path fill="#1877F2" d="M24 12.07C24 5.44 18.63.07 12 .07S0 5.44 0 12.07c0 5.99 4.39 10.95 10.13 11.85v-8.38H7.08v-3.47h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.24 2.69.24v2.95h-1.51c-1.49 0-1.96.93-1.96 1.87v2.25h3.33l-.53 3.47h-2.8v8.38C19.61 23.02 24 18.06 24 12.07z"/>'
+        + '</svg>';
 
     function randomHex(n) {
         const a = new Uint8Array(n);

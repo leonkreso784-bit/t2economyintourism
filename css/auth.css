@@ -218,6 +218,10 @@ sokrat-modal.auth-modal > * {
 }
 .auth-oauth__btn:hover { border-color: var(--color-line-strong); background: var(--color-surface-2); }
 .auth-oauth__btn i { color: var(--color-brand-500); }
+/* Znakovi providera su UGRAĐENI SVG (v. `IKONA_GOOGLE` u js/auth.js) — Font Awesome je za
+   njih skidao 106 KB brands-fonta. Boje su providerove i NAMJERNO ne slušaju temu: to su
+   tuđe marke, ne naša paleta, pa ovdje nema tokena i `check:palette` ih ne dira. */
+.auth-oauth__ikona { flex: 0 0 auto; display: block; }
 
 .auth-divider {
     display: flex; align-items: center; gap: 0.7rem;

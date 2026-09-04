@@ -7711,6 +7711,10 @@ sokrat-modal.auth-modal > * {
 .auth-oauth__btn i {
   color: var(--color-brand-500);
 }
+.auth-oauth__ikona {
+  flex: 0 0 auto;
+  display: block;
+}
 .auth-divider {
   display: flex;
   align-items: center;
