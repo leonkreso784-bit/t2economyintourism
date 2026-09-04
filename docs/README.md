@@ -71,7 +71,7 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 
 | Dokument | Svrha |
 |---|---|
-| [RACUN.md](./plan/RACUN.md) | 🟩 **tekući spec** — prijava/identitet/doseg: **R1** A0-dijalog + upitnik + Google u JEDNOM zahvatu · **R2** profil (slika/uređivanje) · **R3** mail-obavijesti; FB uvjetno. Otvoren deployem redizajna 2026-09-01; **prva cigla kreće na Leonovu riječ.** |
+| [RASPORED.md](./plan/RASPORED.md) | 🟩 **tekući spec** — sve što čeka, razrezano na **sedam faza kroz sesije**: F1 uređaj (izgled + glatkoća) · F2 račun (R2+R3 + CSS profila) · F3 dvojezičnost · F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. Nosi **redoslijed i izlazni uvjet**, ne mjerenja — ta ostaju u BACKLOG-u. |
 | [ROADMAP.md](./plan/ROADMAP.md) | Milestones + status (**povijesni zapis**, ne plan rada) |
 
 > Prethodne dvije faze ispunjene su i deployane, pa su im planovi istog dana otišli u arhivu
@@ -84,7 +84,6 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 | Dokument | Svrha |
 |---|---|
 | [TESTING.md](./workflow/TESTING.md) | QA checklista + automatske provjere (verify, validatori, unit, Playwright, authed, CI) |
-| [TEAM.md](./workflow/TEAM.md) | Uloge, PR-workflow, tvrde granice, least-privilege (ADR-023) |
 | [CONTENT_GUIDE.md](./workflow/CONTENT_GUIDE.md) | Kako dodati predmet/lekciju (playbook) |
 | [CONTENT_INTAKE.md](./workflow/CONTENT_INTAKE.md) | Kako slagati profesorske materijale (PDF/JPG) za točnu ekstrakciju |
 | [CONTENT_GENERATOR.md](./workflow/CONTENT_GENERATOR.md) | Generator predmeta (PDF→Sonnet→data), ADR-010 |
@@ -134,6 +133,8 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 | [EDITOR_FEEDBACK.md](./archive/EDITOR_FEEDBACK.md) | Leonovih 8 nalaza F1–F8 iz živog pregleda editora |
 | [FOUNDATION_PLAN.md](./archive/FOUNDATION_PLAN.md) | Platformski temelj F0–F6; F1–F4 isporučeni, F5/F6 nadglašeni |
 | [CRUD_PLAN.md](./archive/CRUD_PLAN.md) | Admin CRUD javnog kataloga — ispunjen kroz EDITOR_PLAN |
+| [TEAM.md](./archive/TEAM.md) | Model rada s content-suradnikom (ADR-023) — ⚰️ **suradnja otkazana 2026-09-04**; gradivo koje je proizvela ostaje na produkciji |
+| [RACUN.md](./archive/RACUN.md) | Blok RAČUN — **R1 (dijalog + upitnik + Google) isporučen 2026-09-02**; R2/R3 preseljeni u `plan/RASPORED.md` F2. Referenca za obrazloženje zašto je R1 izveden odjednom |
 | [HRV_PLAN.md](./archive/HRV_PLAN.md) | HRV program (klon-program + UI toggle, ADR-012) — cigle 1–5c ✅, ostatak pauziran |
 | [EXERCISES_DB_FIX_PLAN.md](./archive/EXERCISES_DB_FIX_PLAN.md) | BUG-012 fix plan (✅ 2026-06-27) |
 | [SONNET_REVIEW_2026-06.md](./archive/SONNET_REVIEW_2026-06.md) | Vanjski review — potrošen input |

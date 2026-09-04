@@ -5,6 +5,35 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-04 (OPUS) — **Suradnik otkazan · RASPORED postaje tekući spec** (+ `main` pomaknut na `e42cd90`)
+
+### Promijenjeno
+- **⚰️ Content-suradnik OTKAZAN** (Leon: *„Sašu možeš maknut, on je otkazan… bio je lijen i nije
+  ništa radio."*). **Role-router u `CLAUDE.md` je UKINUT** — `git config user.name` se više ne
+  provjerava; repo ima jednog suradnika. `docs/workflow/TEAM.md` → **`docs/archive/TEAM.md`** s
+  pečatom otkazivanja; **ADR-023 dobiva status ⚰️ OTKAZANO**, ali t.5 (ADR-022 pull-forward = U2.5)
+  **ostaje na snazi** — ta cigla nije ovisila o suradniku nego o rasporedu.
+  ⚠️ **Otkazana je suradnja, ne gradivo:** sedam HR predmeta je živo i `verify` ih broji među 24.
+  **Bez vlasnika** je ostao samo zadatak S4+S5 (4 kvantitativna HR predmeta) — nije otkazan.
+- **`docs/plan/RASPORED.md` = novi tekući spec** (Leon: *„napravi strukturiran plan koji će ići
+  fazama kroz sesije"*). Sedam faza: **F1** uređaj (izgled + glatkoća) · **F2** račun (R2+R3 **+ CSS
+  profila u istom prolazu** — ista površina, inače se prepisuje dvaput) · **F3** dvojezičnost ·
+  **F4** čišćenje CSS-duga · **F5** vježbe/recepti · **F6** MCP · **F7** objava. Nosi **redoslijed i
+  izlazni uvjet**, ne mjerenja (ADR-027) — mjere ostaju u BACKLOG-u. `RACUN.md` → `archive/`
+  (R1 isporučen; R2/R3 su F2).
+- 📋 **Popis svega otvorenog** (39 stavki, razvrstanih po tome NA ŠTO čekaju) sastavljen je iz
+  žive provjere, ne iz proze: `git` · `verify` · `css:debt` · `palette:breakdown` · `check:i18n` ·
+  `check:orphan-css`. **Dva nalaza koja proza nije nosila:** ① redizajn-spec je arhiviran kao
+  ispunjen, a **C3/C5b/C6/C7 mu nisu zatvoreni** (`css:debt` = 6088 redaka, 2 `!important`) — sad
+  su to F2/F4; ② **paleta je na 0/0/0**, dakle dug koji je blokirao birač tema je otplaćen.
+
+### Deploy
+- **`main` pomaknut na `e42cd90`** uz Leonov izričit OK (*„možeš pushat i deployat ovaj popravak"*)
+  — nosi mail-predloške, FOUC-popravak (`boot.js`, 119 → 0 ms), brands-font (−106 KB) i
+  **učitavanje po ruti**. Preflight EXIT 0, pre-push hook prošao.
+  ⚠️ **Nalaz: GitHub je vratio `fatal error in commit_refs`, a ref je SVEJEDNO pomaknut** —
+  provjereno `git log origin/main`. Poruka o grešci nije bila istinita.
+
 ## 2026-09-04 (OPUS) — **Ucitavanje po ruti: prvi kadar s 41 skripte na 22** (grana `feat/racun-r1`)
 
 ### Dodano

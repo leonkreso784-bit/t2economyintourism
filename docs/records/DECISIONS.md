@@ -521,8 +521,18 @@ umjesto matrice `visibility × status × role`. Duh ADR-018 („student uploada 
 
 ---
 
-## ADR-023 — Prvi suradnik (Saša Vudrag): content-staza kroz PR+CI, least-privilege, ADR-022 pull-forward
-**Datum:** 2026-07-09 · **Status:** ✅ ODLUČENO (korisnik 2026-07-08/09) · **Dokument:** `docs/workflow/TEAM.md`
+## ADR-023 — Prvi suradnik: content-staza kroz PR+CI, least-privilege, ADR-022 pull-forward
+**Datum:** 2026-07-09 · **Status:** ⚰️ **OTKAZANO 2026-09-04 (Leon)** — suradnja je prekinuta, pa
+t.1–t.4 (uloge, granice, pristupi, dnevnik-pravila) **više ne opisuju ništa živo**. **t.5 stoji i
+dalje** (ADR-022 pull-forward = U2.5 je izveden 2026-07-11 i živi u `data/catalog.js`) — ta cigla
+nije ovisila o suradniku nego o rasporedu. · **Dokument:** `docs/archive/TEAM.md` (arhiviran istog dana)
+
+> **Što ostaje nakon otkazivanja:** sedam HR predmeta koje je ta staza proizvela **živi su i na
+> produkciji**; HR-ploča (`docs/subjects/README.md` §HR) od 2026-09-04 nema vlasnika. Odluka se ne
+> briše nego dobiva pečat, jer objašnjava zašto postoje branch-protection, least-privilege ključevi
+> i `content-review` agent — mehanizmi koji su nadživjeli povod.
+
+**Izvorni status:** ✅ ODLUČENO (korisnik 2026-07-08/09)
 **Kontekst:** Saša Vudrag (student prog. inž., Algebra) pridružuje se kao content-suradnik: HR program do pune 2 godine
 (prijevod + HR materijali), zatim MUT/MOR smjerovi. Prvi suradnik ikad → treba model koji ubrzava, a **ne može srušiti sustav**.
 **Odluka:**

@@ -5,6 +5,46 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-04 (OPUS) — Suradnik otkazan · RASPORED = tekuci spec · main na `e42cd90`
+
+**Tri Leonova naloga u jednoj poruci, izvedena tim redom.**
+
+**1. Deploy.** Leon: *"mozes pushat i deplozat ovaj popravak."* Preflight EXIT 0 → push grane →
+`git push origin feat/racun-r1:main` (fast-forward, pre-push hook prosao). ⚠️ **GitHub je vratio
+`remote: fatal error in commit_refs` i "[remote rejected]", a ref je SVEJEDNO bio pomaknut** —
+sljedeci push je rekao "Everything up-to-date", a `git log origin/main` pokazuje `e42cd90`.
+*Poruka o gresci nije uvijek istinita — provjeri stanje, ne poruku.*
+⚠️ **Vercel NIJE napravio novi deploy na taj push** (`list_deployments since` = 0): isti SHA je vec
+bio izgraden kao **preview** grane, pa ga integracija preskace. Zadnji `target: production` je
+`0656511`. Provjera sadrzaja produkcije s ovog stroja **nije moguca** — svaki zahtjev (i `/`, i
+datoteke koje postoje u STAROM kodu) vraca **403** s `private, no-store`, dakle zastita, ne stanje.
+Ranija tvrdnja "produkcija nema loader.js" je time **bezvrijedna**, ne dokaz.
+
+**2. Suradnik otkazan.** Leon: *"Sasu mozes maknut, on je otkazan, nema nista od njega, bio je
+ljen i nije nista radio."* Role-router u CLAUDE.md **ukinut** (git user.name se vise ne provjerava);
+`workflow/TEAM.md` → `archive/TEAM.md` s pecatom; ADR-023 dobio status ⚰️ OTKAZANO uz napomenu da
+**t.5 (ADR-022 pull-forward) ostaje** jer nije ovisio o njemu; HR-ploca u `subjects/README.md`
+prepisana ("bez vlasnika", ne "pauzirano"). Sedam poveznica na TEAM.md prevedeno na novu putanju,
+plus dvije koje su **od prije bile mrtve** (`workflow/content/` nikad nije postojao).
+⚠️ **Otkazana je SURADNJA, ne GRADIVO** — sedam HR predmeta je zivo, `verify` ih broji medu 24.
+
+**3. RASPORED.** Leon: *"napravi strukturiran plan koji ce ici fazama kroz sesije."*
+Prije pisanja procitano zivo stanje, ne proza: `git` · `verify` · `css:debt` · `palette:breakdown` ·
+`check:i18n` · `check:orphan-css` · `check:docs`. **Dva nalaza koja proza nije nosila:**
+- **redizajn-spec je arhiviran kao ispunjen, a C3/C5b/C6/C7 mu nisu zatvoreni** — `css:debt` mjeri
+  6088 redaka i 2 `!important`, a `styles.bundle.css` jos postoji. To nije propust nego posljedica
+  toga da je proizvod bio gotov pa je fokus otisao na RACUN. Sad su F2 (C6 uz profil) i F4.
+- **`palette:breakdown` = 0/0/0** — dug koji je blokirao birac tema je otplacen, pa svaka proza koja
+  jos tvrdi "birac ceka paletu" laze.
+`RACUN.md` → `archive/` (R1 isporucen, R2/R3 su F2). `check:docs` + `check:state` zeleni.
+CLAUDE.md je pritom probio budzet (33 080 > 33 000) → rezan je **duplikat**, ne novi sadrzaj:
+odlomak o tri Leonova problema stajao je i u BACKLOG-u i u RASPORED-u.
+
+**Ceka Leona (5 pitanja, RASPORED §6):** neprijavljen korisnik na tudjem uredaju · sidebar predmeta
+(obrisati ili vratiti) · opseg frontenda vjezbi · Facebook · cetiri kvantitativna HR predmeta.
+
+---
+
 ## 2026-09-01 (FABLE) — Tracnice prebacene: MREZA je isporucila sve blokove, "sto sada" je opet redizajn (C5b/2)
 
 Leonova rijec nakon zatvaranja bloka E. MREZA spec nosi ⏸️ uz obrazlozenje (izlazni uvjeti su

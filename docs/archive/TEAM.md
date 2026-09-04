@@ -1,10 +1,30 @@
 # TEAM.md — tim, uloge, workflow i zaštita sustava
 
-> **Status:** ▶ AKTIVNO (2026-07-09; Saša se pridružio 2026-07-08). **Svrha:** jedan dom za „tko što radi,
+> ## ⚰️ SURADNJA OTKAZANA — 2026-09-04 (Leon)
+> **Leon:** *„Sašu možeš maknut, on je otkazan, nema ništa od njega — bio je lijen i nije ništa radio."*
+> Time je **cijeli ovaj dokument povijest**, a ne pravilo: repozitorij ima **jednog suradnika**, i
+> role-router u `CLAUDE.md` više ne grana po `git config user.name`.
+>
+> **Što OSTAJE i nakon otkazivanja** (jer je u katalogu i na produkciji):
+> `te2-hr` · `entrepreneurship-hr` · `ebusiness-hr` i ostatak HR programa — sadržaj se **ne dira**;
+> otkazana je suradnja, ne gradivo. Statusna ploča je u [subjects/README.md](../subjects/README.md).
+>
+> **Što je time postalo NIČIJE:** S4+S5 (četiri kvantitativna HR predmeta — `macroeconomics-hr` ·
+> `statistics-hr` · `math-hr` · `accounting-hr`). Nije otkazano nego **bez vlasnika** — ako se radi,
+> radimo ga mi, i tada vrijede naša pravila, ne §2 ispod.
+>
+> **Zašto se dokument ne briše:** opisuje razdoblje u kojem su nastala tri živa HR predmeta i
+> objašnjava zašto su neka pravila (least-privilege, branch-protection, `content-review` agent)
+> uopće postavljena. Odluka koja ga je stvorila je **ADR-023**, i ondje stoji označena otkazanom.
+>
+> ---
+>
+> **Izvorni status (do 2026-09-04):** ▶ AKTIVNO (2026-07-09; Saša se pridružio 2026-07-08). **Svrha:** jedan dom za „tko što radi,
 > kako, i što NIKAD ne dira" — da drugi par ruku UBRZA projekt, a da pritom bude **fizički nemoguće srušiti sustav**
 > (granice + CI gateovi + PR review = trostruka brava; ne oslanjamo se na dobru volju nego na mehanizme).
-> **Vezano:** [EDITOR_PLAN.md](../archive/EDITOR_PLAN.md) (platformska U-staza) · [HRV_PLAN.md](../archive/HRV_PLAN.md) (prijevodi) ·
-> [subjects/README.md](../subjects/README.md) (statusna ploča) · ADR-023 (ovaj model) · [content/](content/) (autorski alati).
+> **Vezano:** [EDITOR_PLAN.md](./EDITOR_PLAN.md) (platformska U-staza) · [HRV_PLAN.md](./HRV_PLAN.md) (prijevodi) ·
+> [subjects/README.md](../subjects/README.md) (statusna ploča) · ADR-023 (ovaj model).
+> *(Ovdje je stajala i poveznica na `workflow/content/` — ta mapa nikad nije postojala.)*
 
 ## 1. Tim i uloge
 
@@ -24,7 +44,7 @@ zatim drugi smjerovi FMTU (MUT/MOR, nakon ADR-022). Platformski kod NIJE u opseg
 
 ## 2. ⚠️ PRAVILA ZA SAŠU I NJEGOVOG CLAUDEA (tvrde granice)
 
-> **Ako si Claude i `git config user.name` nije "Leon Kreso" → OVO su tvoja pravila. Pročitaj i [content/CONTENT_GUIDE.md](./CONTENT_GUIDE.md) + [HRV_PLAN.md](../archive/HRV_PLAN.md) prije prvog rada.**
+> **Ako si Claude i `git config user.name` nije "Leon Kreso" → OVO su tvoja pravila. Pročitaj i [content/CONTENT_GUIDE.md](../workflow/CONTENT_GUIDE.md) + [HRV_PLAN.md](./HRV_PLAN.md) prije prvog rada.**
 
 ### SMIJEŠ (i samo ovo)
 - **`data/<subject>-hr/`** — nove HR mape predmeta (midterm-1/2, final, kasnije exercises po §5 fazi S5).
@@ -70,7 +90,7 @@ grana content/<subject-id>-hr  →  rad (prijevod+verifikacija)  →  lokalni ga
 
 | # | Cigla | Opis | Preduvjet |
 |---|---|---|---|
-| S1 | **Onboarding** ✅ | pročitati: ovaj doc → [content/CONTENT_GUIDE.md](./CONTENT_GUIDE.md) → [content/CONTENT_SCHEMA.md](../architecture/CONTENT_SCHEMA.md) → [HRV_PLAN.md](../archive/HRV_PLAN.md) → [subjects/README.md](../subjects/README.md) (od 2026-07-13 docs su na `main`-u — §9); lokalni setup (`npm ci`); pokrenuti SVE gateove na netaknutom repou (moraju biti zeleni — to je baseline) | GitHub invite + API ključ |
+| S1 | **Onboarding** ✅ | pročitati: ovaj doc → [content/CONTENT_GUIDE.md](../workflow/CONTENT_GUIDE.md) → [content/CONTENT_SCHEMA.md](../architecture/CONTENT_SCHEMA.md) → [HRV_PLAN.md](./HRV_PLAN.md) → [subjects/README.md](../subjects/README.md) (od 2026-07-13 docs su na `main`-u — §9); lokalni setup (`npm ci`); pokrenuti SVE gateove na netaknutom repou (moraju biti zeleni — to je baseline) | GitHub invite + API ključ |
 | S2 | **PILOT: 1 predmet end-to-end** | prijedlog: **Management** (srednji, tekstualan, bez vježbi); cijeli §5 tok kroz PR; svrha = naučiti put, kalibrirati review | S1 |
 | S3 | **Batch tekstualni** (~11 predmeta) | ritam ~2–3/tjedan; jedan PR po predmetu | S2 mergean glatko |
 | S4 | **Kvantitativni** (micro/macro/stat/math) | KaTeX — alat čuva formule, čovjek provjerava currency-safe/balans (alat to i verificira) | S3 iskustvo |
@@ -80,7 +100,7 @@ grana content/<subject-id>-hr  →  rad (prijevod+verifikacija)  →  lokalni ga
 
 ## 5. „Definition of done" za HR predmet (PR checklista — kopira se u svaki PR)
 
-1. ⬜ Prijevod alatom: `node scripts/translate-subject.js …` (konvencije: id `-hr`, storageKey, `…Hr…` varovi — [HRV_PLAN.md](../archive/HRV_PLAN.md) §Konvencije)
+1. ⬜ Prijevod alatom: `node scripts/translate-subject.js …` (konvencije: id `-hr`, storageKey, `…Hr…` varovi — [HRV_PLAN.md](./HRV_PLAN.md) §Konvencije)
 2. ⬜ **HR MATERIJALI = AUTORITET:** prijevod uspoređen protiv HR skripti/predavanja/ispitnih pitanja tog kolegija; terminologija hotelijerstva ispravljena (prijevod je BAZA, materijali su ISTINA — pouka te2!)
 3. ⬜ Ljudski pregled smisla (Saša, izvorni govornik) — alat čuva strukturu, čovjek čuva značenje
 4. ⬜ catalog-unos dodan (`-hr` subject; `icon/color/year/semester` = identični EN-u)

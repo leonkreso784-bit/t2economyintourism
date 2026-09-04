@@ -38,15 +38,30 @@
 | Management | `management` | 2 | 11 / 89 / 84 / 55 | — | Lussier 9e; teme 2/3/6/13/15 bez decka → neobrađene; LIVE 2026-06-14 `06c96a8` |
 | Traffic in Tourism | `traffic` | 2 | 27 / 189 / 186 / 188 | — | ručno (NE generator); CONNECTOR+PRODUCT obrazac; plan [TRAFFIC_PLAN.md](./TRAFFIC_PLAN.md); LIVE 2026-06-25 `62a4119` |
 
-## HR program „Menadžment u Hotelijerstvu" (klon, ADR-012) — STATUSNA PLOČA (vodi: Saša, [TEAM.md](../workflow/TEAM.md))
+## HR program „Menadžment u Hotelijerstvu" (klon, ADR-012) — STATUSNA PLOČA
 
-> **Aktivno od 2026-07-09** (ADR-023): Saša prevodi/gradi HR program do pune 2 godine. Tok po predmetu = [TEAM.md](../workflow/TEAM.md) §5
-> (prijevod alatom → **HR materijali = autoritet** → gate → PR). Faza = S-cigla iz TEAM.md §4. Saša ažurira SAMO ovu tablicu
+> ### ⚰️ HR-STAZA JE OD 2026-09-04 BEZ VLASNIKA
+> Content-suradnik je **otkazan** (Leon, 2026-09-04) → ploču od danas vodimo mi, a ne on.
+> Model rada koji je uz njega postojao je povijest: [archive/TEAM.md](../archive/TEAM.md), odluka
+> [ADR-023](../records/DECISIONS.md) (označena otkazanom).
+>
+> ⚠️ **Otkazana je SURADNJA, ne GRADIVO.** Sedam HR predmeta u tablici ispod je **živo i na
+> produkciji** — `npm run verify` ih broji među 24. Ništa se ne briše i ne prepisuje.
+>
+> 🎯 **NIČIJI ZADATAK (bio je Leonov nalog 2026-07-28):** 4 kvantitativna predmeta s vježbama →
+> **`macroeconomics-hr` · `statistics-hr` · `math-hr` · `accounting-hr`** (study + **vježbe = SAMO
+> string-polja**; `generate/answer/type` nedirljivi, `test:unit` zelen). Razlog je i dalje valjan:
+> **vježbe moraju biti na hrvatskom.** Ako se radi, radimo ga mi. *(`microeconomics-hr` nije bio u
+> toj rundi.)*
+>
+> <details><summary>Kako je ploča vođena dok je suradnik postojao</summary>
+>
+> **Aktivno od 2026-07-09** (ADR-023): suradnik prevodi/gradi HR program do pune 2 godine. Tok po predmetu = [TEAM.md](../archive/TEAM.md) §5
+> (prijevod alatom → **HR materijali = autoritet** → gate → PR). Faza = S-cigla iz TEAM.md §4. Suradnik ažurira SAMO ovu tablicu
 > (svoj redak, direktno u PR-u — **normalno pravilo vraćeno 2026-07-13**, docs su na main-u).
 >
-> 🛑 **STOP-NALOG JE ISPUNJEN (2026-08-15).** Obje preostale grane (`entrepreneurship-hr`, `ebusiness-hr`) su mergeane u `main` — **ne od Saše nego s naše strane**, jer su bile 88 commita iza i rebase je nakon C1 nosio modify/delete na obrisanom `styles.css`. Saša je time **na stanci dok frontend redizajn nije gotov** (TEAM.md §9). Zadatak ispod je time PAUZIRAN, ne otkazan.
->
-> 🎯 **PAUZIRANI ZADATAK (Leon, 2026-07-28):** 4 KVANTITATIVNA predmeta s vježbama → **`macroeconomics-hr` · `statistics-hr` · `math-hr` · `accounting-hr`** (S4 study + **S5 vježbe = SAMO string-polja**; `generate/answer/type` nedirljivi, `test:unit` zelen). **Razlog: vježbe moraju biti na hrvatskom.** Nakon ova 4 → **izgradnja mature**. Deploy: Saša sam mergea approvani PR (TEAM.md §9). *(`microeconomics-hr` NIJE u ovoj rundi.)*
+> 🛑 **STOP-NALOG JE ISPUNJEN (2026-08-15).** Obje preostale grane (`entrepreneurship-hr`, `ebusiness-hr`) su mergeane u `main` — **ne od njega nego s naše strane**, jer su bile 88 commita iza i rebase je nakon C1 nosio modify/delete na obrisanom `styles.css`. Time je stavljen na stanku dok frontend redizajn ne bude gotov (TEAM.md §9); stanka je 2026-09-04 prerasla u otkazivanje.
+> </details>
 
 | Predmet (EN izvor) | HR ID | Faza | Status | PR / napomena |
 |---|---|---|---|---|

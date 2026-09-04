@@ -3,11 +3,9 @@
 > Ovaj fajl se učitava SVAKU sesiju. **Drži ga sažetim — samo TRENUTNO stanje, pravila i pointeri.**
 > Povijest milestone-a: `docs/records/HISTORY.md` · stanje predmeta: `docs/subjects/README.md` · dnevnik: `docs/records/PROGRESS.md`.
 
-## 🔀 TKO RADI? (role-router — provjeri PRIJE rada)
-Repo ima 2 suradnika. Provjeri `git config user.name`:
-- **"Leon Kreso"** (vlasnik) → nastavi po OVOM dokumentu (platforma + sve).
-- **Saša Vudrag** (ili bilo tko drugi) → **STANI i pročitaj `docs/workflow/TEAM.md` §2** — tvoj opseg je SAMO content
-  (`data/<subj>-hr/` + PR workflow); platformski kod, `main`, deploy i Supabase su IZVAN opsega. TEAM.md je tvoj izvor pravila.
+> **👤 Repo ima JEDNOG suradnika: Leona.** Content-suradnik je otkazan 2026-09-04 → **role-router je
+> ukinut**, `git config user.name` se više ne provjerava. Povijest tog modela: `docs/archive/TEAM.md`,
+> ADR-023 (otkazan). Sedam HR predmeta koje je proizveo **ostaje na produkciji**.
 
 ## Što je projekt
 Interaktivna platforma za učenje (flashcards / quiz / fill / learn + interaktivne vježbe). Live: **www.sokratstudy.com**.
@@ -178,22 +176,16 @@ i dvaput vratio uvjerljiv krivi broj umjesto da padne.
 Oba speca u `docs/archive/`; što je točno isporučeno zna CHANGELOG. **Next.js odbijen (ADR-028).**
 **🚚 SEOBA je OTKAZANA** (Leon, 2026-09-01: *„Nastavlja Supabase do daljnjeg"*) → `BACKLOG.md`
 §SELF-HOST je arhiviran zapis odluke, ne plan.
-Aktivni spec: **`docs/plan/RACUN.md`** — R1 jezgra na produkciji 2026-09-02, ostatak u tijeku.
+Aktivni spec: **`docs/plan/RASPORED.md`** (2026-09-04) — cijela preostala lista razrezana na
+**sedam faza kroz sesije**: F1 uređaj · F2 račun (R2+R3 + CSS profila) · F3 dvojezičnost ·
+F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. RAČUN R1 je isporučen; spec mu je
+postao referenca. **Pet pitanja čeka Leonovu riječ — §6 rasporeda.**
 
-**RAČUN u tijeku:** R1 ✅ (dijalog + upitnik + Google, na produkciji) · **mail-identitet ✅
-2026-09-04** (pošiljatelj `sokrat@sokratstudy.com`, HR predlošci s potpisom u
-`supabase/email-templates/`, avatar) · FB **odgođen** Leonovom riječju.
-**Leonova tri problema (2026-09-04):** ① FOUC teme **✅ zatvoren** (`boot.js`, 119→**0 ms**) ·
-③ brzina **✅ zatvorena**: prava dijagnoza je bila **IZGLADNJIVANJE CSS-a**, ne bajtovi (`defer`
-je izmjeren kao beskoristan), pa je lijek **učitavanje po ruti** — `js/loader.js`, prvi kadar
-**41→22 skripte / 234→113 KiB**; uz to brands-font (106 KB) maknut · ostaje ② **tema stranice =
-izgled maila** (mjere u `BACKLOG.md`). Pa R2 profil (slika, bucket po `node-images`, **+ tema
-prati RAČUN, ne uređaj** — Leon 2026-09-04) → R3 obavijesti.
-**🔴 Leonovi nalazi s uređaja (`BACKLOG.md` §LEONOVI NALAZI):** ⓐ tema prati račun ·
-ⓑ **trzanje pri skrolanju** (*„smooth kao na najnovijem iPhoneu"*) — **nije ni izmjereno**, a
-`perf-probe` tu NE pomaže: on mjeri prvi kadar, ovo je trošak PO kadru · ⓒ bljesak teme na
-njegovom telefonu traje **~1 s**, ne 119 ms. *Mjera na razvojnom stroju je donja granica, ne
-stvarnost korisnika.*
+**Leonova tri problema (2026-09-04) — ① FOUC i ③ brzina ZATVORENI, ② tema=mail je F1/1.**
+Ostaje njegov nalaz **ⓑ trzanje pri skrolanju** — *„smooth kao na najnovijem iPhoneu"*,
+**nije ni izmjereno**, a `perf-probe` tu NE pomaže: on mjeri prvi kadar, ovo je trošak PO kadru.
+*Mjera na razvojnom stroju je donja granica, ne stvarnost korisnika* (njegov bljesak je trajao
+~1 s, moj izmjereni 119 ms). Puni zapis: `BACKLOG.md` §LEONOVI NALAZI.
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 
@@ -259,13 +251,12 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
   seed = `node scripts/seed-staging.js`.
 - **⏳ Grane izvan `main`-a:** zna ih `git branch --no-merged main`, ne ova datoteka. ⚠️ Grana zna
   izgledati kao platformski zahvat a nositi samo `?v=` tokene → *uzmi `main`, pa `npm run bump`*.
-- **👥 Saša Vudrag** (content-suradnik) — opseg **SAMO HR sadržaj + PR-workflow**
-  (`docs/workflow/TEAM.md`, role-router gore; ADR-023). **Na stanci je dok frontend redizajn nije
-  gotov** (razlog je mehanički: C2–C7 bumpaju iste tokene i prepisuju `index.html`, koje dira i
-  svaki content-PR). **S4+S5 je PAUZIRAN, ne otkazan.** PR-ovi → `content-review` agent.
-  [[content-model-standard]]
+- **⚰️ Content-suradnik OTKAZAN 2026-09-04** (Leon) — role-router ukinut, `docs/archive/TEAM.md` je
+  povijest, ADR-023 nosi pečat. **Gradivo ostaje:** sedam HR predmeta je živo. **S4+S5** (4
+  kvantitativna HR predmeta, vježbe = samo string-polja) je time **BEZ VLASNIKA**, ne otkazan.
+  `content-review` agent i dalje vrijedi za bilo koji content-zahvat. [[content-model-standard]]
 - **HR-ekspanzija:** HR 1. god × 3 smjera FMTU dijele vezne predmete (ADR-022). Kad HR program
-  bude potpun → **HR u Supabase** (Leon/Claude `migrate-content.js`, ne Saša). [[hrv-program]]
+  bude potpun → **HR u Supabase** (`migrate-content.js`). [[hrv-program]]
 - **PAUZIRANO za nas:** 3. godina · novi EN sadržaj (ADR-018: student uploada PODATKE, nikad KOD).
 - **Min. lozinka 8 (server-side) + leaked-password** vrijede dok je Pro (odluka 2026-09-01:
   ostaje); klijentski dvojnik (D4, `js/auth.js`) svejedno stoji.

@@ -1,6 +1,14 @@
 # RAČUN — prijava, identitet i doseg do korisnika
 
-**Status:** 🟩 AKTIVAN — **R1 jezgra NA PRODUKCIJI 2026-09-02** (`921ef08`, Leonov OK):
+> ## 🗄 REFERENCA OD 2026-09-04 — R1 ISPORUČEN, R2/R3 SU PRESELJENI
+> **R1 je ispunjen i na produkciji.** R2 (profil + tema uz račun) i R3 (mail-obavijesti) nastavljaju
+> kao **Faza 2** u [RASPORED.md](../plan/RASPORED.md), zajedno s CSS-om profila — ista površina, pa
+> ide u istom prolazu. Ovaj dokument od danas **objašnjava ZAŠTO je R1 izveden odjednom**
+> (`#authModal` je bio građen za jedan put), i **nije red čekanja.**
+>
+> ---
+>
+> **Izvorni status (do 2026-09-04):** 🟩 tekući spec — **R1 jezgra NA PRODUKCIJI 2026-09-02** (`921ef08`, Leonov OK):
 novi dijalog + upitnik + Google-prijava (radi uživo) + U1/U2 popravci iz Leonovog testiranja.
 **U5** (Google bez supabase-domene: id_token izravno) TAKOĐER na produkciji. **FB gumb
 maknut na Leonovu riječ** („makni facebook za sada") — `FB_LOGIN=false`, Metine upute

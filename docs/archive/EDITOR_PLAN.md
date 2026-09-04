@@ -176,7 +176,7 @@ rate-limit/zloupotreba. = naš generator-pipeline izložen kao „donesi svoj AI
 
 ## 12. Brick-sekvenca (ŽIVA — ažuriraj status ovdje)
 > Nastavlja F4 (CRUD_PLAN); „F4.4-kategorije" i F4.5/4.6 se izvode KROZ ovaj slijed (strukturne operacije = unutar draft-moda).
-> **Paralelna S-staza (Saša, content — [TEAM.md](../workflow/TEAM.md) §4):** neovisna o U-stazi (v1-format datoteke; U2-migracija ih obuhvaća).
+> **Paralelna S-staza (content — [TEAM.md](./TEAM.md) §4; ⚰️ suradnja otkazana 2026-09-04):** neovisna o U-stazi (v1-format datoteke; U2-migracija ih obuhvaća).
 > Jedina ovisnost: **S7 (MUT/MOR) čeka U2.5.**
 >
 > **🎨 PRESLAGIVANJE (Leon, 2026-07-13):** admin CRUD Leonu nije cilj za sebe — gradi se KAO TEMELJ UGC-a, a današnji utility-UI (viewer+modali) mu ne odgovara. Odluka: **(1)** nakon U4 ide **U-UX dizajn-faza** (2–3 interaktivna HTML mockupa → Leon presudi → `EDITOR_UX.md`) pa se U6/U7/U8 grade JEDNOM, direktno u tom dizajnu — dizajn PRIJE editor-koda = „pravi trenutak" za editor; **(2)** **U5 (povijest/Vrati UI) ODGOĐEN** iza editora (admin-only kozmetika, UGC-u ne treba odmah); **(3)** **osvježenje CIJELE platforme** (landing/study/browse) = ZASEBNA faza NAKON U-staze — kandidat uz F5 SRS ili pred-UGC lansiranje („u pravom trenutku" — Leon presuđuje kad; ne usred CRUD-a i ne dok Saša gura content-PR-ove, da se izbjegnu masovni CSS konflikti).

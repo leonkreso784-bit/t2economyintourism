@@ -1,7 +1,7 @@
 # ROADMAP — Milestones
 
 > ## ⚠️ ČITAJ PRVO — SVE ISPOD PRVE CRTE JE POVIJESNI ZAPIS
-> **[FRONTEND_REDIZAJN.md](../archive/FRONTEND_REDIZAJN.md) je ISPUNJEN i NA PRODUKCIJI (2026-09-01).** Tekući spec je **[RACUN.md](./RACUN.md)** — **R1 jezgra je NA PRODUKCIJI (2026-09-02)**, mail-identitet zatvoren 2026-09-04; R2/R3 slijede.
+> **[FRONTEND_REDIZAJN.md](../archive/FRONTEND_REDIZAJN.md) je ISPUNJEN i NA PRODUKCIJI (2026-09-01).** Tekući spec je **[RASPORED.md](./RASPORED.md)** — sedam faza kroz sesije (F1 uređaj · F2 račun · F3 dvojezičnost · F4 čišćenje · F5 vježbe · F6 MCP · F7 objava). RAČUN R1 je isporučen 2026-09-02, a R2/R3 su preseljeni u njegovu **Fazu 2**.
 > Prethodne dvije faze su ispunjene i na produkciji → [MATERIJAL_FAZA.md](../archive/MATERIJAL_FAZA.md)
 > (2026-08-07) i [MJERA_I_ZABORAV.md](../archive/MJERA_I_ZABORAV.md) (2026-08-08).
 > Što proizvod jest piše u [product/UGC_SPEC.md](../product/UGC_SPEC.md).
@@ -36,7 +36,7 @@
 Legenda statusa: ⬜ todo · 🟦 u tijeku · ✅ gotovo
 
 ## 🧱 STRATEŠKI ZAOKRET (2026-06-29) — PLATFORMA-FIRST
-> **🆕 2026-07-09:** nastavak F4 ide kroz **[EDITOR_PLAN.md](../archive/EDITOR_PLAN.md)** (draft→objavi, U-staza; ADR-022 = U2.5) · **tim: +Saša** (content, paralelna S-staza — [TEAM.md](../workflow/TEAM.md), ADR-023) → sadržajna pauza dolje sad vrijedi samo za Leona/Claudea.
+> **🆕 2026-07-09:** nastavak F4 ide kroz **[EDITOR_PLAN.md](../archive/EDITOR_PLAN.md)** (draft→objavi, U-staza; ADR-022 = U2.5) · **tim: +1 content-suradnik** (paralelna S-staza — [TEAM.md](../archive/TEAM.md), ADR-023) → sadržajna pauza dolje sad vrijedi samo za Leona/Claudea. ⚰️ **Suradnja otkazana 2026-09-04** → pauza opet vrijedi za sve.
 **Korisnik odlučio:** staviti DODAVANJE SADRŽAJA na pauzu (na koliko god treba) i izgraditi **profesionalan, reliable,
 reusable temelj** prije daljnjeg rasta. Cilj: platforma „brutalno napravljena", pripremljena za CRUD/UGC/AI-tutor/monetizaciju.
 Sve detaljno (misije, faze, reusable podsistemi, brick-liste, KAKO): **[FOUNDATION_PLAN.md](../archive/FOUNDATION_PLAN.md)** +
