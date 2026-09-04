@@ -5,6 +5,42 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-05 (FABLE) — F1/3: prvi kadar prati uređaj — crno bez klika, kao mail
+
+Leon: *„pregledaj sve sta se napravilo i realiziraj sljedecu ciglu."* Vođeno kroz `/brick`.
+
+**Omeđenje prije koda** je našlo ono što spec nije predvidio: produkcijski `theme.js` na SVAKOM
+učitavanju upisuje primijenjenu temu u `sokrat-theme` (zvao se „normalizacija"). Do danas bez
+posljedice — a čim stranica prati uređaj, posljedica je da **nitko tko ju je već otvorio ne
+dobije crno**: svi imaju `academic` bez da su birali, uključujući Leonov telefon. Cigla je zato
+dobila migraciju koje u RASPORED-u nema: izbor od F1/3 nosi biljeg `sokrat-theme-chosen`;
+`academic` bez biljega = stari automatski upis (nije izbor), `chalk`/`mint` bez biljega = sigurno
+izbor, jer je stari kod tamnu upisao samo onome tko ju je birao. `initTheme()` sad samo BRIŠE.
+
+**Što je isporučeno:** `boot.js` čita `prefers-color-scheme` kad nema izbora (tamno → `carbon`);
+birač u profilu dobio „Automatski · ‹što uređaj bira›" kao prvu opciju, aktivan je IZBOR a ne
+tema; `theme.js` prati promjenu uređaja uživo dok je izbor automatski. Prvenstvo zapisano jednom:
+račun > lokalni izbor > uređaj > `academic`.
+
+**Dokaz, ne dojam:** novi `tests/unit/theme-device.test.js` vrti `boot.js` + `theme.js` u `vm`
+sandboxu (28 tvrdnji); `theme-fouc.spec.js` +4 s emuliranim uređajem (uklj. stari zapis i „izbor
+pobjeđuje"); `fouc-probe` dobio scenarij `uredjaj-tamni` → `carbon` na startu, **0 ms bljeska**
+u oba profila. Preflight EXIT 0.
+
+**Dvaput me je brana ispravila, oba puta s pravom.** Oblik-test je pao na riječ `setItem` u mom
+KOMENTARU (sad skida komentare); sandbox je oborio moju tvrdnju „u privatnom načinu tema se
+primijeni do reloada" — ne primijeni se, pada na uređaj. Komentar je ispravljen na istinu, test
+tvrdi stvarno ponašanje. *Tvrdnja u komentaru bez testa je upravo ono što ADR-027 zove propustom.*
+
+**Što F1/3 NIJE zacrnio:** `theme-color` meta ostaje statična svijetla (F4) — traka preglednika
+iznad crne stranice. Prijedlog bez druge kopije boje stoji u RASPORED §F1.
+
+**Sljedeće:** F1/4 (živa brana čita popis tema iz `tokens.css`, ne iz zakucanog niza).
+⚠️ Leonov telefon: ako je ondje ranije BIRAO Ploču/Mentu, izbor pobjeđuje uređaj — „Automatski"
+u profilu ga vraća. Deploy čeka njegovu riječ.
+
+---
+
 ## 2026-09-04 (FABLE) — F1/2: tema `carbon` — mail u tamnom, na stranici
 
 Leon: *"super svida mi se jeli mozemo krenuti."* Vodjeno kroz `/brick`.

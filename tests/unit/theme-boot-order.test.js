@@ -59,6 +59,18 @@ tvrdi(/window\.SOKRAT_THEMES\s*=/.test(boot), 'boot.js izlaže SOKRAT_THEMES');
 tvrdi(/localStorage\.getItem\(\s*['"]sokrat-theme['"]/.test(boot), 'boot.js ČITA spremljenu temu (inače popravlja ništa)');
 tvrdi(/data-theme/.test(boot), 'boot.js postavlja data-theme');
 
+// F1/3: bez izbora se prati UREĐAJ — i to isto mora pasti PRIJE crtanja, dakle u boot.js.
+// Da je `prefers-color-scheme` čitao theme.js, tamni telefon bi opet vidio bljesak bijele.
+tvrdi(/prefers-color-scheme/.test(boot), 'boot.js čita prefers-color-scheme (uređaj se odlučuje prije crtanja)');
+tvrdi(/window\.__sokratIzborTeme\s*=/.test(boot), 'boot.js izlaže __sokratIzborTeme (jedno pravilo „što je izbor")');
+// ⚠️ ZAPIS NA UČITAVANJU je zabranjen: `initTheme()` je do F1/3 upisivao primijenjenu temu,
+// čime bi „Automatski" trajao točno jedno učitavanje. Ponašanje čuva theme-device.test.js;
+// ovdje se čuva OBLIK — da se `setItem` ne vrati u initTheme „radi urednosti".
+// Komentari se skidaju prije provjere — inače brana pada na rečenici koja objašnjava zašto postoji.
+const initBody = tema.slice(tema.indexOf('function initTheme'), tema.indexOf('function setTheme'))
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '');
+tvrdi(initBody.length > 0 && !/setItem\(/.test(initBody), 'theme.js: initTheme() NE upisuje temu na učitavanju (samo briše)');
+
 // Popis tema smije postojati SAMO u boot.js. Tražimo doslovan niz imena tema u theme.js.
 const kopijaPopisa = /\[[^\]]*['"]chalk['"][^\]]*['"]mint['"][^\]]*\]/.test(tema)
     || /\[[^\]]*['"]academic['"][^\]]*['"]chalk['"][^\]]*\]/.test(tema);

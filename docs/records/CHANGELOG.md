@@ -5,6 +5,53 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-05 (FABLE) — **F1/3: prvi kadar prati uređaj — crno bez klika, kao mail**
+
+### Dodano
+- **`js/boot.js` bez spremljenog izbora čita `prefers-color-scheme`** prije prvog crtanja:
+  tamno → `carbon`, svijetlo → `academic`. Prvenstvo (zapisano jednom, RASPORED §F1):
+  račun (F2/1) > lokalni izbor > uređaj > `academic`. Zadana ostaje SVIJETLA (odluka
+  2026-08-13) — crno dobiva tko ga je uređajem već tražio, ne svaki posjetitelj.
+- **Birač u profilu: „Automatski · ‹tema koju uređaj bira›"** kao prva opcija; aktivan je IZBOR
+  (`getThemeChoice()`), ne primijenjena tema — na tamnom uređaju je primijenjeno `carbon`, a
+  izabrano ništa. `setTheme('auto')` briše izbor. Swatch pola svijetle / pola tamne, oba akcenta.
+  `i18n`: `profile.themeAuto` + novi `appearanceDesc` („Automatski prati uređaj, kao i naši mailovi").
+- **`theme.js` prati promjenu uređaja uživo** (iOS/Android „automatski" pri zalasku) — samo dok
+  je izbor automatski; korisnikov izbor se ne gazi.
+- Testovi: **`tests/unit/theme-device.test.js` (NOV)** — `boot.js` + `theme.js` u `vm` sandboxu
+  s lažnim `document`/`localStorage`/`matchMedia`, 28 tvrdnji (uređaj · izbor · migracija ·
+  privatni način · praćenje uživo) · `theme-boot-order` +3 (boot čita `prefers-color-scheme`,
+  izlaže `__sokratIzborTeme`, **`initTheme()` NE upisuje**) · `theme-fouc.spec.js` +4 (emulirani
+  uređaj dark/light · stari zapis · izbor pobjeđuje) · `fouc-probe` scenarij `uredjaj-tamni`.
+
+### Nađeno u hodu (spec ovo nije predvidio)
+- **Produkcija je na SVAKOM učitavanju upisivala primijenjenu temu u `sokrat-theme`**
+  (`initTheme()`, zvano „normalizacija"). Do danas bez posljedice — a s praćenjem uređaja bi
+  značilo da **nitko tko je stranicu već otvorio ne dobije crno**: svi imaju `academic` bez da
+  su birali. **Migracija:** izbor od F1/3 nosi biljeg `sokrat-theme-chosen`; `academic` bez
+  biljega = stari automatski upis (odbačen, pa počišćen na `DOMContentLoaded`), `chalk`/`mint`
+  bez biljega = sigurno izbor (stari kod je tamnu upisao samo onome tko ju je birao) → ostaje.
+  `initTheme()` od sada samo BRIŠE, nikad ne upisuje. `KEEP_LOCAL_KEYS` čuva i biljeg.
+- Sandbox je **oborio moju tvrdnju u komentaru** („privatni način: tema se primijeni do
+  reloada") — bez zapisa nema ni izbora, pada na uređaj (do F1/3 je padao na zadanu). Komentar
+  ispravljen na istinu, test tvrdi stvarno ponašanje. Oblik-test je pak prvo pao na riječ
+  `setItem` u **komentaru** — sad skida komentare prije provjere.
+- **`theme-color` meta ostaje statična svijetla** (već u F4) — na tamnom telefonu je traka
+  preglednika svijetla iznad crne stranice. Jedino što F1/3 nije zacrnio; prijedlog popravka
+  bez druge kopije boje stoji u RASPORED §F1.
+
+### Izmjereno
+- `fouc-probe`, scenarij „tamni uređaj, ništa spremljeno": `carbon` na startu, **NIJE MIJENJANA,
+  0 ms bljeska** — stolno (FCP 528 ms) i mobitel 4×CPU/Slow-4G (FCP 4264 ms). Kontrole `chalk`
+  i `academic` također 0.
+- `npm run preflight` EXIT 0 · `theme-fouc.spec.js` 6/6 (iPhone-15Pro-393) · birač snimljen u
+  obje sheme (dark/hr: „Automatski · Ugljen" aktivan; klik Akademsko → izbor s biljegom; klik
+  Automatski → `carbon`, zapis obrisan).
+- Cijela `test:responsive` suita (uklj. `authenticated`): **568 prošlo · 1 palo · 114 preskočeno**
+  (23.5 min). Jedini pad je **zastarjeli** `cascade.authed.spec.js`: tražio je token
+  `--warning-text`, koji ne postoji ni na produkciji (ime iz stare palete; `studio.css` koristi
+  `--color-warn-ink`). Nije F1/3 — popravljen zasebnim commitom, test sad čita pravi token.
+
 ## 2026-09-04 (FABLE) — **F1/2: tema `carbon` = tamna polovica maila**
 
 ### Dodano

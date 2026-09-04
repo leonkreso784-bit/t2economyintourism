@@ -8597,6 +8597,9 @@ sokrat-modal.auth-modal > * {
   --ts-bg: var(--theme-swatch-carbon-bg);
   --ts-acc: var(--theme-swatch-carbon-acc);
 }
+.theme-option-swatch--auto {
+  background: radial-gradient(circle at 28% 28%, var(--theme-swatch-academic-acc) 0 24%, transparent 30%), radial-gradient(circle at 72% 72%, var(--theme-swatch-carbon-acc) 0 24%, transparent 30%), linear-gradient(135deg, var(--theme-swatch-academic-bg) 0 50%, var(--theme-swatch-carbon-bg) 50%);
+}
 .mm {
   margin-top: 16px;
 }

@@ -17,8 +17,11 @@ function pt(key, fb) {
 // Tema je svojstvo UREĐAJA (localStorage, js/theme.js) — zato se kartica crta
 // i neprijavljenom korisniku, a izbor ne ide ni u kakav profil na serveru.
 function themeCardHtml() {
-    const cur = document.documentElement.getAttribute('data-theme');
+    // Aktivan je IZBOR, ne primijenjena tema (F1/3): „Automatski" na tamnom uređaju crta
+    // `carbon`, a izabrano je — ništa. Bez `theme.js` (stranica bez teme) pada na atribut.
+    const cur = window.getThemeChoice ? getThemeChoice() : document.documentElement.getAttribute('data-theme');
     const imena = {
+        auto: pt('profile.themeAuto', 'Automatic'),
         academic: pt('profile.themeAcademic', 'Academic blue'),
         chalk: pt('profile.themeChalk', 'Chalkboard'),
         mint: pt('profile.themeMint', 'Mint'),
@@ -27,19 +30,26 @@ function themeCardHtml() {
     // Imena klasa DOSLOVNO, ne sastavljena ('--' + ime): skener siročadi (check:orphan-css)
     // čita izvor, ne runtime — ista logika zbog koje ADR-028 zabranjuje dinamičke klase.
     const swatch = {
+        auto: 'theme-option-swatch--auto',
         academic: 'theme-option-swatch--academic',
         chalk: 'theme-option-swatch--chalk',
         mint: 'theme-option-swatch--mint',
         carbon: 'theme-option-swatch--carbon'
     };
-    const teme = window.SOKRAT_THEMES || ['academic', 'chalk', 'mint'];
+    // Popis tema je SAMO u boot.js (jedna istina); bez njega ovdje nema što ponuditi.
+    const teme = ['auto'].concat(window.SOKRAT_THEMES || []);
+    // „Automatski" kaže i ŠTO uređaj trenutno bira — inače je gumb obećanje bez sadržaja.
+    const uredjaj = window.__sokratTemaUredjaja ? __sokratTemaUredjaja() : null;
     let gumbi = '';
     for (let i = 0; i < teme.length; i++) {
         const ime = teme[i];
+        const naziv = (ime === 'auto' && uredjaj && imena[uredjaj])
+            ? imena.auto + ' · ' + imena[uredjaj]
+            : (imena[ime] || ime);
         gumbi += '<button type="button" class="theme-option" data-theme-pick="' + ime + '"' +
             ' aria-pressed="' + (ime === cur ? 'true' : 'false') + '">' +
             '<span class="theme-option-swatch ' + (swatch[ime] || '') + '" aria-hidden="true"></span>' +
-            '<span>' + (imena[ime] || ime) + '</span></button>';
+            '<span>' + naziv + '</span></button>';
     }
     return '<div class="profile-card profile-card--wide">' +
         '<h3 class="profile-card-title"><i class="fas fa-palette"></i> ' + pt('profile.appearance', 'Appearance') + '</h3>' +
@@ -334,7 +344,9 @@ const DELETE_TOKEN = 'DELETE';
  * Consent se čuva jer je i sam GDPR-artefakt (dokaz pristanka), a `sokrat-supabase-override`
  * je test-prekidač — brisanje bi razvalilo staging-sesiju usred testa.
  */
-const KEEP_LOCAL_KEYS = ['sokrat-theme', 'sokrat-ui-lang', 'sokrat-cookie-consent', 'sokrat-supabase-override'];
+// `sokrat-theme-chosen` = biljeg da je tema IZABRANA (boot.js, F1/3): ostane li tema bez
+// biljega, `academic` bi se na sljedećem ulasku pročitao kao stari automatski upis i nestao.
+const KEEP_LOCAL_KEYS = ['sokrat-theme', 'sokrat-theme-chosen', 'sokrat-ui-lang', 'sokrat-cookie-consent', 'sokrat-supabase-override'];
 
 /**
  * Počisti SVE lokalne tragove korisnika. Allow-lista (a ne popis za brisanje) je namjerna:

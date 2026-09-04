@@ -18,16 +18,47 @@
        ⚠️ POPIS TEMA ŽIVI OVDJE (a `theme.js` ga čita s `window`) — jedan popis, jedno mjesto:
        druga kopija bi se razišla pri prvoj sljedećoj temi, a razlaz bi se vidio tek kao bljesak. */
     var TEME = ['academic', 'chalk', 'mint', 'carbon'];
-    var ZADANA = 'academic';
     var TAMNE = { chalk: 1, mint: 1, carbon: 1 };
 
+    /* F1/3 (Leon, 2026-09-04: „isto kao i email template"): bez spremljenog IZBORA stranica
+       prati UREĐAJ, točno kao predlošci maila — `prefers-color-scheme: dark` → `carbon`
+       (tamna polovica maila), inače `academic` (svijetla). Prvenstvo, zapisano JEDNOM:
+       račun (F2/1) > lokalni izbor > uređaj > academic. Odluka „zadana je SVIJETLA"
+       (2026-08-13) stoji: crno dobiva samo tko ga je uređajem već tražio, ne svaki posjetitelj. */
+    var ZADANA = { light: 'academic', dark: 'carbon' };
+
+    function temaUredjaja() {
+        try {
+            return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+                ? ZADANA.dark : ZADANA.light;
+        } catch (e) { return ZADANA.light; }
+    }
+
+    /* Spremljeni IZBOR, ili null kad ga nema.
+       Nepoznata vrijednost (zaostali `dark`, maknuti `paper`) se ODBACUJE, ne propušta: ne bi
+       pogodila nijedan token-blok, ali BI upalila legacy pravila za tamnu temu → bijeli tekst
+       na svijetloj podlozi.
+       ⚠️ MIGRACIJA, ne urednost: do F1/3 je `theme.js` na SVAKOM učitavanju upisivao
+       primijenjenu temu natrag u `sokrat-theme` — pa svaki povratni posjetitelj ima `academic`
+       iako nikad nije birao. Da se to čita kao izbor, „prati uređaj" ne bi dobio NITKO tko je
+       stranicu već otvorio (ni Leon). Zato izbor od F1/3 nosi i biljeg `sokrat-theme-chosen`:
+       `academic` BEZ biljega je stari automatski upis i odbacuje se. `chalk`/`mint`/`carbon`
+       bez biljega su sigurno izbor (stari kod je upisivao samo ono što je primijenio, a tamnu
+       je primijenio samo tko ju je birao) — pa se ZADRŽAVAJU, inače bi Ploča koju je netko
+       birao na telefonu nestala. Isto pravilo čita i `theme.js` (birač), kroz ovu funkciju. */
+    function izborTeme() {
+        var spremljena = null, biljeg = null;
+        try {
+            spremljena = localStorage.getItem('sokrat-theme');
+            biljeg = localStorage.getItem('sokrat-theme-chosen');
+        } catch (e) { /* privatni način */ }
+        if (TEME.indexOf(spremljena) < 0) return null;
+        if (spremljena === ZADANA.light && !biljeg) return null;
+        return spremljena;
+    }
+
     function primijeniTemu() {
-        var spremljena = null;
-        try { spremljena = localStorage.getItem('sokrat-theme'); } catch (e) { /* privatni način */ }
-        /* Nepoznata vrijednost (zaostali `dark`, maknuti `paper`) se ODBACUJE, ne propušta:
-           ne bi pogodila nijedan token-blok, ali BI upalila legacy pravila za tamnu temu
-           → bijeli tekst na svijetloj podlozi. Ista provjera stoji i u `theme.js`. */
-        var tema = TEME.indexOf(spremljena) >= 0 ? spremljena : ZADANA;
+        var tema = izborTeme() || temaUredjaja();
         var html = document.documentElement;
         // Postavljamo samo kad se RAZLIKUJE — inače je to badava preračun stila na svakom
         // učitavanju, a i test na bljesak broji upravo stvarne promjene vrijednosti.
@@ -37,7 +68,8 @@
     }
 
     window.SOKRAT_THEMES = TEME;
-    window.SOKRAT_THEME_DEFAULT = ZADANA;
+    window.__sokratIzborTeme = izborTeme;
+    window.__sokratTemaUredjaja = temaUredjaja;
     window.__sokratPrimijeniTemu = primijeniTemu;
     primijeniTemu();
 

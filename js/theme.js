@@ -30,19 +30,55 @@
 // (`SOKRAT_THEMES` u `init.js`) i dalje vidljivo. Leksička deklaracija istog imena ovdje
 // bila bi samo sjena preko iste vrijednosti, uz rizik od sudara s globalnim svojstvom.
 function initTheme() {
-    // `boot.js` je isto ovo napravio prije prvog crtanja; ovdje se samo NORMALIZIRA
-    // spremljena vrijednost (zaostali `dark`/`paper` → `academic`), što ne mora prije crtanja.
+    // `boot.js` je isto ovo napravio prije prvog crtanja; ovdje se samo NORMALIZIRA ZAPIS.
     const theme = window.__sokratPrimijeniTemu();
-    try { localStorage.setItem('sokrat-theme', theme); } catch (e) { /* privatni način */ }
+    /* ⚠️ Normalizira se SAMO BRISANJEM — nikad upisom primijenjene teme. Do F1/3 se ovdje
+       upisivalo `setItem('sokrat-theme', theme)`, i to je bio kvar koji nitko nije vidio jer
+       nije imao posljedicu: svaki posjet je automatski ishod pretvarao u „izabrano". S
+       praćenjem uređaja bi posljedica bila da „Automatski" traje točno jedno učitavanje.
+       Zapis koji NIJE izbor (`dark`, `paper`, stari `academic` bez biljega) se makne, da
+       birač pokaže „Automatski" i da se pravilo migracije ne izvodi na svakom ulasku. */
+    try {
+        if (localStorage.getItem('sokrat-theme') !== null && !window.__sokratIzborTeme()) {
+            localStorage.removeItem('sokrat-theme');
+            localStorage.removeItem('sokrat-theme-chosen');
+        }
+    } catch (e) { /* privatni način */ }
+    return theme;
 }
 
 function setTheme(name) {
-    if (window.SOKRAT_THEMES.indexOf(name) < 0) return false;
-    try { localStorage.setItem('sokrat-theme', name); } catch (e) { /* privatni način */ }
+    try {
+        if (name === 'auto') {
+            localStorage.removeItem('sokrat-theme');
+            localStorage.removeItem('sokrat-theme-chosen');
+        } else {
+            if (window.SOKRAT_THEMES.indexOf(name) < 0) return false;
+            localStorage.setItem('sokrat-theme', name);
+            localStorage.setItem('sokrat-theme-chosen', '1');   // biljeg izbora — v. boot.js
+        }
+    } catch (e) { /* privatni način: bez zapisa NEMA ni izbora — pada na uređaj (do F1/3 je padao na zadanu) */ }
     initTheme();
     return true;
 }
+
+/* Što birač pokazuje kao aktivno: IZBOR, ne primijenjenu temu. Uz „Automatski" te dvije
+   stvari više nisu isto — na tamnom uređaju je primijenjeno `carbon`, a izabrano je ništa. */
+function getThemeChoice() {
+    return window.__sokratIzborTeme() || 'auto';
+}
 window.setTheme = setTheme;
+window.getThemeChoice = getThemeChoice;
+
+/* Uređaj se mijenja i dok je stranica otvorena (iOS/Android „automatski" pri zalasku).
+   Mail to prati besplatno (media-upit u CSS-u); mi moramo izričito — i SAMO dok je izbor
+   „Automatski", jer se korisnikov izbor ne gazi. */
+try {
+    const uredjaj = window.matchMedia('(prefers-color-scheme: dark)');
+    const prati = () => { if (!window.__sokratIzborTeme()) initTheme(); };
+    if (uredjaj.addEventListener) uredjaj.addEventListener('change', prati);
+    else if (uredjaj.addListener) uredjaj.addListener(prati);
+} catch (e) { /* bez matchMedia nema ni praćenja — boot.js je već pao na svijetlu */ }
 
 // Tema je već na ekranu (boot.js); ovdje se samo normalizira zapis u localStorageu, pa
 // smije čekati `DOMContentLoaded`. Ono što se VIDI ne čeka ništa.

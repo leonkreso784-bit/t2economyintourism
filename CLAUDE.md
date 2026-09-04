@@ -189,7 +189,7 @@ Ostaje njegov nalaz **ⓑ trzanje pri skrolanju** — *„smooth kao na najnovij
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 
-- **Zadana tema je SVIJETLA — „Akademsko plavo"** (`academic`; ostale `chalk`, `mint`, **`carbon`** = tamna polovica maila, F1/2 — `paper` maknut 2026-09-01).
+- **Zadana tema je SVIJETLA — „Akademsko plavo"** (`academic`; ostale `chalk`, `mint`, **`carbon`** = tamna polovica maila, F1/2 — `paper` maknut 2026-09-01). **Bez izbora prati UREĐAJ** (F1/3, `boot.js`, prije crtanja: tamno → `carbon`). ⚠️ Izbor nosi biljeg `sokrat-theme-chosen`; `academic` **bez** biljega = stari automatski upis, NE izbor — `initTheme()` nikad ne upisuje, samo briše.
   Dvije tamne palete zaredom pale su na živom ekranu. Smjer izgleda je **APPLE** (Leon: *„apple
   smjer, naravno"*): grotesk svugdje (**serif nadglašen**), praznina, tipografija nosi, monokrom
   + jedan akcent. Spec §7.3–7.8.

@@ -64,3 +64,68 @@ for (const tema of ['chalk', 'mint']) {
         expect(r + g + b, 'pozadina nije tamna: ' + stanje.pozadina).toBeLessThan(200);
     });
 }
+
+// ===== F1/3: BEZ IZBORA TEMA PRATI UREĐAJ — ISTO MJERILO, ISTA GRANICA (prvi kadar) =====
+// Leon (2026-09-04): „isto kao i email template" — predlošci maila imaju `prefers-color-scheme`
+// blok, pa se na tamnom telefonu otvore crni. Stranica mora isto, i to bez bljeska bijele:
+// odluka je u boot.js (sinkrono), a ovdje se to dokazuje kroz emulirani uređaj.
+// Četvrti slučaj je MIGRACIJA: produkcija je do F1/3 svakom posjetitelju upisivala `academic`
+// bez da je birao — takav zapis se mora čitati kao „ništa", inače crno ne dobiva nitko.
+const UREDJAJ = [
+    { shema: 'dark',  tema: 'carbon',   tamna: true,  spremljeno: null,       opis: 'ništa spremljeno' },
+    { shema: 'light', tema: 'academic', tamna: false, spremljeno: null,       opis: 'ništa spremljeno' },
+    { shema: 'dark',  tema: 'carbon',   tamna: true,  spremljeno: 'academic', opis: 'stari automatski `academic` bez biljega → nije izbor' },
+    { shema: 'dark',  tema: 'chalk',    tamna: true,  spremljeno: 'chalk',    opis: 'izbor `chalk` pobjeđuje uređaj' },
+];
+for (const u of UREDJAJ) {
+    test('uređaj ' + u.shema + ' · ' + u.opis + ' → „' + u.tema + '" od prvog kadra', async ({ page }) => {
+        await page.goto('/');
+        await page.evaluate((s) => {
+            localStorage.removeItem('sokrat-theme');
+            localStorage.removeItem('sokrat-theme-chosen');   // bez biljega = kako je produkcija pisala
+            if (s) localStorage.setItem('sokrat-theme', s);
+        }, u.spremljeno);
+        await page.emulateMedia({ colorScheme: u.shema });
+
+        await page.addInitScript(() => {
+            window.__promjene = [];
+            const pocni = () => {
+                const html = document.documentElement;
+                window.__pocetni = html.getAttribute('data-theme');
+                new MutationObserver((zapisi) => {
+                    for (const z of zapisi) {
+                        const novo = html.getAttribute('data-theme');
+                        if (z.oldValue !== novo) window.__promjene.push({ iz: z.oldValue, u: novo, t: performance.now() });
+                    }
+                }).observe(html, { attributes: true, attributeFilter: ['data-theme'], attributeOldValue: true });
+            };
+            if (document.documentElement) pocni();
+            else document.addEventListener('readystatechange', pocni, { once: true });
+        });
+
+        await page.reload({ waitUntil: 'load' });
+        await page.waitForFunction(() => typeof window.getThemeChoice === 'function');
+
+        const stanje = await page.evaluate(() => ({
+            promjene: window.__promjene,
+            pocetni: window.__pocetni,
+            konacni: document.documentElement.getAttribute('data-theme'),
+            colorScheme: document.documentElement.style.colorScheme,
+            pozadina: getComputedStyle(document.body).backgroundColor,
+            izbor: window.getThemeChoice(),
+            zapis: localStorage.getItem('sokrat-theme'),
+        }));
+
+        expect(stanje.promjene, 'tema se mijenjala PRED korisnikom: ' + JSON.stringify(stanje.promjene)).toEqual([]);
+        expect(stanje.pocetni).toBe(u.tema);
+        expect(stanje.konacni).toBe(u.tema);
+        expect(stanje.colorScheme).toBe(u.tamna ? 'dark' : 'light');
+        const [r, g, b] = stanje.pozadina.match(/\d+/g).map(Number);
+        if (u.tamna) expect(r + g + b, 'pozadina nije tamna: ' + stanje.pozadina).toBeLessThan(200);
+        else expect(r + g + b, 'pozadina nije svijetla: ' + stanje.pozadina).toBeGreaterThan(600);
+        // Birač vidi IZBOR: „auto" kad ga nema — i stari automatski zapis je počišćen, ne
+        // pretvoren u izbor (drugi način da „Automatski" traje jedno učitavanje).
+        if (u.spremljeno === 'chalk') { expect(stanje.izbor).toBe('chalk'); expect(stanje.zapis).toBe('chalk'); }
+        else { expect(stanje.izbor).toBe('auto'); expect(stanje.zapis).toBeNull(); }
+    });
+}

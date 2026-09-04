@@ -515,3 +515,12 @@
 .theme-option-swatch--chalk    { --ts-bg: var(--theme-swatch-chalk-bg);    --ts-acc: var(--theme-swatch-chalk-acc); }
 .theme-option-swatch--mint     { --ts-bg: var(--theme-swatch-mint-bg);     --ts-acc: var(--theme-swatch-mint-acc); }
 .theme-option-swatch--carbon   { --ts-bg: var(--theme-swatch-carbon-bg);   --ts-acc: var(--theme-swatch-carbon-acc); }
+
+/* „Automatski" (F1/3): pola svijetle, pola tamne zadane — dvije teme koje uređaj bira,
+   svaka sa svojim akcentom. Bez `--ts-*`, jer nijedna tema nije „ta". */
+.theme-option-swatch--auto {
+    background:
+        radial-gradient(circle at 28% 28%, var(--theme-swatch-academic-acc) 0 24%, transparent 30%),
+        radial-gradient(circle at 72% 72%, var(--theme-swatch-carbon-acc) 0 24%, transparent 30%),
+        linear-gradient(135deg, var(--theme-swatch-academic-bg) 0 50%, var(--theme-swatch-carbon-bg) 50%);
+}

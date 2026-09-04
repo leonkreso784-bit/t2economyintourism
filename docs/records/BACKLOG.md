@@ -231,6 +231,25 @@ uređajem već tražio, ne svakom posjetitelju. Tko dođe s Googlea na svijetlom
 > (traži `serve:test` na :5050, redak 32). Jutros je prošla jer je na portu visio stari
 > poslužitelj iz prethodne sesije; `ERR_CONNECTION_REFUSED` = nema poslužitelja, ne kvar brane.
 
+> ### ✅ F1/3 ISPORUČENA 2026-09-05 — prvi kadar prati uređaj
+> `boot.js` bez spremljenog izbora čita `prefers-color-scheme` prije prvog crtanja (tamno →
+> `carbon`); birač „Automatski · ‹što uređaj bira›"; `theme.js` prati promjenu uređaja uživo.
+> **Brane:** `theme-device.test.js` (NOV, sandbox, 28) ✅ · `theme-fouc.spec.js` 6/6 ✅ ·
+> `fouc-probe` `uredjaj-tamni` **0 ms bljeska** (oba profila) ✅ · `preflight` EXIT 0.
+>
+> 🔎 **NALAZ IZVAN SPECA — produkcija svakom posjetitelju upisuje `academic` bez da je birao.**
+> `initTheme()` je na SVAKOM učitavanju radio `setItem('sokrat-theme', primijenjena)` — do danas
+> bez posljedice, a s praćenjem uređaja bi crno dobio **nitko** tko je stranicu već otvorio.
+> **Migracija:** izbor od F1/3 nosi biljeg `sokrat-theme-chosen`; `academic` bez biljega = stari
+> automatski upis (odbačen, počišćen na DOMContentLoaded); `chalk`/`mint` bez biljega = sigurno
+> izbor (stari kod je tamnu upisao samo tko ju je birao) → ostaje. `initTheme()` sad samo briše;
+> oblik čuva `theme-boot-order` (bez `setItem` u tijelu), ponašanje `theme-device`.
+>
+> ⚠️ **Što F1/3 nije zacrnio:** `<meta name="theme-color">` je statična `#f7f9fc` — na tamnom
+> telefonu traka preglednika ostaje svijetla iznad crne stranice. Bilo u F4 i prije; sad je
+> vidljivije. Popravak bez druge kopije boje: `boot.js` iza primjene teme pročita
+> `--color-surface-0` iz izračunatog stila i upiše u `meta.content` (RASPORED §F1).
+
 ---
 
 **2. Tema stranice = izgled maila** ✅ **ISPORUČENO 2026-09-04 (cigla F1/1)** — `brand-400 #6366f1` (plohe/hover/fokus, prag 3.0) · `brand-500 #4f46e5` (tekst i gumbi, 6.29) · `brand-600 #4338ca`; uz njih i `--theme-swatch-academic-acc`. Dira SAMO `academic`.

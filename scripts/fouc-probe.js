@@ -37,9 +37,18 @@ const PROFILI = [
     },
 ];
 
-const TEME = ['chalk', 'academic'];   // tamna (kritična) + zadana (kontrola)
+/* Scenariji: spremljena tema (kako je bilo do F1/3) ili NIŠTA spremljeno uz emulirani
+   uređaj (F1/3: bez izbora stranica prati `prefers-color-scheme`, kao mail). Treći je
+   Leonov slučaj doslovno — tamni telefon, prvi ulazak bez ikakvog izbora — i mora dati
+   „NIJE MIJENJANA" uz `carbon` na startu; bljesak bijele bi se ovdje vidio kao broj. */
+const SCENARIJI = [
+    { ime: 'chalk',         spremljena: 'chalk',    uredjaj: null,   snimaj: true },  // tamna (kritična)
+    { ime: 'academic',      spremljena: 'academic', uredjaj: null },                  // zadana (kontrola)
+    { ime: 'uredjaj-tamni', spremljena: null,       uredjaj: 'dark', snimaj: true },  // F1/3
+];
 
-async function mjeri(browser, tema, profil, snimaj) {
+async function mjeri(browser, sc, profil) {
+    const tema = sc.ime, snimaj = !!sc.snimaj;
     const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
     const cdp = await page.context().newCDPSession(page);
     await cdp.send('Emulation.setCPUThrottlingRate', { rate: profil.cpu });
@@ -52,7 +61,13 @@ async function mjeri(browser, tema, profil, snimaj) {
        i vratila „tema NIJE MIJENJANA" — lažno zeleno, jer spremljena tema nije ni
        postojala u trenutku učitavanja. */
     await page.goto(URL_BASE, { waitUntil: 'domcontentloaded' });
-    await page.evaluate((t) => { try { localStorage.setItem('sokrat-theme', t); } catch (e) { /* */ } }, tema);
+    await page.evaluate((t) => {
+        try {
+            localStorage.removeItem('sokrat-theme'); localStorage.removeItem('sokrat-theme-chosen');
+            if (t) { localStorage.setItem('sokrat-theme', t); localStorage.setItem('sokrat-theme-chosen', '1'); }
+        } catch (e) { /* */ }
+    }, sc.spremljena);
+    if (sc.uredjaj) await page.emulateMedia({ colorScheme: sc.uredjaj });
 
     /* Promatrač mora biti postavljen PRIJE skripti stranice — mjerimo trenutak TUĐE izmjene. */
     await page.addInitScript(() => {
@@ -121,13 +136,15 @@ async function mjeri(browser, tema, profil, snimaj) {
     const browser = await chromium.launch();
     const sve = [];
     for (const profil of PROFILI) {
-        for (const tema of TEME) {
-            const r = await mjeri(browser, tema, profil, tema === 'chalk');
+        for (const sc of SCENARIJI) {
+            const tema = sc.ime;
+            const r = await mjeri(browser, sc, profil);
             const prva = (r.fouc.promjene[0] || {}).t;
             const bljesak = (prva != null && r.fouc.fcp != null) ? prva - r.fouc.fcp : null;
             sve.push({ tema, profil: profil.ime, ...r, bljesak });
             console.log('\n── ' + tema + ' / ' + profil.ime + ' ' + '─'.repeat(30));
-            console.log('  markup na startu : data-theme="' + r.fouc.pocetni + '"');
+            console.log('  markup na startu : data-theme="' + r.fouc.pocetni + '"' + (sc.uredjaj ? '  (uređaj: ' + sc.uredjaj + ', ništa spremljeno)' : ''));
+            console.log('  tema na kraju    : ' + r.tema + ' · pozadina ' + r.pozadina);
             console.log('  FCP              : ' + Math.round(r.fouc.fcp) + ' ms');
             console.log('  tema primijenjena: ' + (prva != null ? Math.round(prva) + ' ms (' + r.fouc.promjene[0].v + ')' : 'NIJE MIJENJANA'));
             console.log('  ⇒ BLJESAK        : ' + (bljesak != null ? Math.round(bljesak) + ' ms krive teme' : '0 (nema promjene)'));
