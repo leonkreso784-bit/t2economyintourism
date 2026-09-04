@@ -5,6 +5,32 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-05 (FABLE) — Leonova dva nova zahtjeva: ljepljivi hover (izmjeren) · Tinder-špil (zapisan)
+
+Leon: *„Svaki put kada se stisne na neki gumb on po rubovima malo posvijetli. Onda kada taj gumb
+odvede na drugu stranicu, gumb koji je stajao na mjestu starog gumba isto svijetli po rubovima a
+nije ga se diralo, to je jako naporno."* + *„na mobitelu bi napravio za kartice kao tinder način
+otvaranja i gledanja. To se treba zapisat."*
+
+**Prvo mjera, pa zapis** (pravilo rasporeda: mjeri prije nego popravljaš). Sonda kroz browse
+drill-down, gdje kartice stoje u istom gridu pa nova dolazi točno na mjesto stare: na **mišu** se
+reproducira 100 % — nakon klika nova kartica pod nepomičnim pokazivačem odmah je `:hover` (rub
+`#4f46e5`, −4 px, sjena) i ne prolazi ni nakon 3 s. U Chromiumovoj **emulaciji dodira se ne
+reproducira** — što ne obara nalaz s pravog telefona (iOS Safari / Android Chrome drže ljepljivi
+hover), nego znači da tu granu potvrđujemo na Leonovom uređaju. Fokus nije uzrok: navigacija ne
+zove `.focus()`, `activeElement` je `BODY`.
+
+**Inventar:** 148 `:hover` pravila u 20 datoteka, 1 zaštićeno; 14 `:focus` prema 12 `:focus-visible`.
+To je zahvat na svakom CSS-u → **serija, ne cigla**; kandidat je zamatanje kroz `build:css` (jedno
+mjesto), ne 148 ručnih izmjena, plus „hover se naoruža tek prvim pomakom poslije promjene rute".
+
+**Zapisano:** RASPORED F1/8 (hover) i F1/9 (špil) s kriterijima prihvaćanja; BACKLOG §LEONOVI
+NALAZI D/E s mjerama i kandidatima; §6 dobio šesto pitanje (špil: zamjena ili prekidač; koji
+preglednik na telefonu). **Ništa nije popravljano** — Leon je tražio zapis, popravak dira zajednički
+šav i prvo traži njegovu riječ o telefonu.
+
+---
+
 ## 2026-09-05 (FABLE) — F1/3: prvi kadar prati uređaj — crno bez klika, kao mail
 
 Leon: *„pregledaj sve sta se napravilo i realiziraj sljedecu ciglu."* Vođeno kroz `/brick`.

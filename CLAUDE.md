@@ -179,13 +179,13 @@ Oba speca u `docs/archive/`; što je točno isporučeno zna CHANGELOG. **Next.js
 Aktivni spec: **`docs/plan/RASPORED.md`** (2026-09-04) — cijela preostala lista razrezana na
 **sedam faza kroz sesije**: F1 uređaj · F2 račun (R2+R3 + CSS profila) · F3 dvojezičnost ·
 F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. RAČUN R1 je isporučen; spec mu je
-postao referenca. **Pet pitanja čeka Leonovu riječ — §6 rasporeda.**
+postao referenca. **Šest pitanja čeka Leonovu riječ — §6 rasporeda.**
 
 **Leonova tri problema (2026-09-04) — ① FOUC i ③ brzina ZATVORENI, ② tema=mail je F1/1.**
 Ostaje njegov nalaz **ⓑ trzanje pri skrolanju** — *„smooth kao na najnovijem iPhoneu"*,
 **nije ni izmjereno**, a `perf-probe` tu NE pomaže: on mjeri prvi kadar, ovo je trošak PO kadru.
 *Mjera na razvojnom stroju je donja granica, ne stvarnost korisnika* (njegov bljesak je trajao
-~1 s, moj izmjereni 119 ms). Puni zapis: `BACKLOG.md` §LEONOVI NALAZI.
+~1 s, moj izmjereni 119 ms). Puni zapis: `BACKLOG.md` §LEONOVI NALAZI. **Dva nova (2026-09-05):** ⓒ **ljepljivi hover** nakon prelaska (na mišu reproducirano 100 %, dodir čeka pravi telefon; 148 `:hover` pravila, 1 zaštićeno) = **F1/8** · želja **Tinder-špil kartica** na telefonu = **F1/9**.
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 

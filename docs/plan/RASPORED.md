@@ -39,7 +39,7 @@ preskače svjesno, a ne zaboravom.
 
 | # | faza | zašto baš tu | gotovo kad korisnik… |
 |---|---|---|---|
-| **F1** | **UREĐAJ** — izgled i glatkoća | Leon to vidi na svom telefonu svaki dan; sve je ili izmjereno ili traži jedno mjerenje | …otvori stranicu na telefonu i zatekne **isto što i u mailu** — crno na tamnom uređaju, svijetlo na svijetlom — bez bljeska i bez trzanja pri skrolanju |
+| **F1** | **UREĐAJ** — izgled i glatkoća | Leon to vidi na svom telefonu svaki dan; sve je ili izmjereno ili traži jedno mjerenje | …otvori stranicu na telefonu i zatekne **isto što i u mailu** — crno na tamnom uređaju, svijetlo na svijetlom — bez bljeska, bez trzanja pri skrolanju i bez gumba koji svijetle sami od sebe |
 | **F2** | **RAČUN** — profil i obavijesti | nastavak tekućeg bloka; profil je ujedno i najveći komad CSS-duga, pa ide u istom prolazu | …se prijavi s bilo kojeg uređaja i zatekne svoju temu, svoju sliku i svoje ime — i primi mail samo ako je na njega pristao |
 | **F3** | **DVOJEZIČNOST** — 421 → 0 | Leonova presuda (ADR-033); četiri stranice nemaju ni mehanizam, a to je pola posla | …prebaci jezik i **nigdje** ne naiđe na engleski ostatak, uključujući pravne stranice i editor |
 | **F4** | **ČIŠĆENJE** — CSS dug do nule | ne blokira ništa vidljivo, ali svaka sljedeća vizualna cigla plaća kamatu na njega | …ne primijeti ništa — ovo je faza u kojoj se ne smije promijeniti nijedan piksel |
@@ -73,6 +73,8 @@ preskače svjesno, a ne zaboravom.
 | **F1/5** | **Četiri stranice bez teme** — `contact` · `faq` · `privacy` · `terms` nemaju ni `data-theme` ni `boot.js`. ⚠️ **Od F1/3 ovo prestaje biti sitnica:** čim stranica prati uređaj, korisnik na tamnom telefonu dobiva crn katalog i **bijela Pravila privatnosti**. Isplati se uzeti i njihov prijevod (F3/1) u istom obilasku. | …korisnik na tamnom uređaju otvori Pravila privatnosti i ne zaboli ga oko |
 | **F1/6** | **Sonda za trzanje pri skrolanju.** Isporuka je **mjera, ne popravak**: kadrovi kroz skriptirani skrol, duge zadaće, koliko je piksela prebojano. | …postoji brojka koja kaže gdje se gube kadrovi — bez nje se ne dira ništa |
 | **F1/7** | **Popravak po nalazu sonde.** Hipoteza se piše TEK nakon F1/6. | …Leon skrola po svom telefonu i kaže da je glatko (on presuđuje, ne brojka) |
+| **F1/8** | **Ljepljivi hover nakon prelaska** (Leon, 2026-09-05: *„gumb koji je stajao na mjestu starog gumba isto svijetli po rubovima a nije ga se diralo, to je jako naporno"* — *„imamo taj problem od početka"*). **Izmjereno:** na mišu se reproducira 100 % — nakon klika kartica koja dođe pod nepomični pokazivač odmah dobije `:hover` (rub `brand-500`, −4 px, sjena) i ne prolazi ni nakon 3 s; u Chromiumovoj emulaciji dodira se NE reproducira, pa dodirni put treba potvrditi na Leonovom telefonu (**koji preglednik?**). Fokus nije uzrok (navigacija ne zove `.focus()`). CSS: **148 `:hover` pravila u 20 datoteka, 1 zaštićeno** `@media (hover: hover)`; 14 `:focus` prema 12 `:focus-visible`. **Serija, ne cigla** (dira svaki CSS): ① brana u `phone.spec` — nakon dodira koji mijenja rutu, element pod točkom nosi mirni stil · ② hover samo gdje pokazivač postoji **i tek nakon prvog pomaka poslije promjene rute** — kroz `build:css`, ne 148 ručnih izmjena · ③ `:focus` → `:focus-visible`. Mjere i kandidati: [BACKLOG.md](../records/BACKLOG.md) §LEONOVI NALAZI D. | …Leon pritisne gumb, dođe na drugu stranicu i **nijedan** gumb ondje ne svijetli dok ga ne dotakne |
+| **F1/9** | **Kartice kao Tinder-špil na telefonu** (Leon, 2026-09-05: *„na mobitelu bi napravio za kartice kao tinder način otvaranja i gledanja"*). Danas: jedna kartica, klik okreće, četiri gumba, **nijedne dodirne geste** u modovima učenja. Zadano dok Leon ne kaže drugačije: dodir okreće · povlačenje desno = znam · lijevo = ne znam · iduće dvije kartice vire ispod · gumbi ostaju (pristupačnost) · stolno zadržava današnji prikaz i tipkovnicu · bez biblioteke (pointer-događaji + `transform`, `prefers-reduced-motion` gasi let). **Jedini put upisa ostaju `markKnown`/`markUnknown`** — gesta ih zove, ne duplicira. Pitanje §6/6. | …Leon na telefonu prolazi špil palcem bez ijednog gumba, a „znam / ne znam" je isto stanje koje vide statistika i cloud-sync |
 
 **Zamke koje su već poznate:** `perf-probe` ovdje **ne pomaže** — on mjeri prvi kadar, a trzanje je
 trošak po kadru. ⚠️ **`theme-color` meta je i dalje statična svijetla** (`#f7f9fc`, F4): na tamnom
@@ -240,13 +242,14 @@ Zapisano da se ne otvara iznova, ne da se planira.
 
 ## 6 · Što čeka Leonovu riječ
 
-Pet pitanja koja mijenjaju izvedbu, a ne mogu se razumno pretpostaviti:
+Šest pitanja koja mijenjaju izvedbu, a ne mogu se razumno pretpostaviti:
 
 1. **Neprijavljen korisnik na tuđem uređaju** — zadnja lokalna tema ili zadana? *(F2/1)*
 2. **Sidebar predmeta** — obrisati ili vratiti kao brzi izbornik? *(sitni dug)*
 3. **Opseg frontenda vježbi** — tokeni i razmaci, ili prepravak interakcije? *(F5/3)*
 4. **Facebook prijava** — čeka Metine ključeve; kod se vraća jednom zastavicom. *(F2, ako se vraća)*
 5. **Četiri kvantitativna HR predmeta** — radimo ih mi, ili padaju? *(izvan faza)*
+6. **Tinder-špil kartica** — zamjenjuje današnji prikaz na telefonu, ili je prekidač uz njega? Nosi li smjer povlačenja značenje (desno = znam)? I za F1/8: **koji preglednik na telefonu** vidi ljepljivi hover (Safari / Chrome)? *(F1/8, F1/9)*
 
 ---
 

@@ -42,6 +42,51 @@ mjereno je 119 ms na brzoj vezi i 232 ms na Slow-4G, a Leonov telefon je gori sl
 stvari. **Popravak ceka na grani** — dok se ne deploya, Leon vidi stari kod.
 ⚠️ Pouka koja ostaje: **mjera na razvojnom stroju je DONJA granica, ne stvarnost korisnika.**
 
+**D. LJEPLJIVI HOVER NAKON PRELASKA** (Leon, 2026-09-05: *„Svaki put kada se stisne na neki gumb
+on po rubovima malo posvijetli. Onda kada taj gumb odvede na drugu stranicu, gumb koji je stajao na
+mjestu starog gumba isto svijetli po rubovima a nije ga se diralo, to je jako naporno."* —
+*„imamo taj problem od početka"*).
+**Izmjereno 2026-09-05** (scratch-sonda, browse drill-down fakultet → program → godina; kartice u
+istom gridu, pa nova dolazi točno na mjesto stare):
+
+| profil | nakon 1. prelaska | nakon 2. prelaska + 3 s |
+|---|---|---|
+| **miš** (1280×800) | kartica pod nepomičnim pokazivačem **JE `:hover`**: rub `#4f46e5`, `translateY(-4px)`, `shadow-e2` — mirna susjeda `#dde4ee` / bez sjene | isto; ne prolazi samo od sebe |
+| **dodir** (393×852, Chromium `hasTouch`) | pod točkom je nova kartica, **NIJE `:hover`**, stil = mirni | isto, i nakon skrola |
+
+Na **mišu** je to standardno ponašanje preglednika (hover se računa po položaju pokazivača, ne po
+pokretu) — ali upravo to Leon opisuje i upravo to smeta. Na **dodiru** emulacija ne reproducira, a
+pravi iOS Safari / Android Chrome drže „ljepljivi" hover nakon dodira → dodirni put se potvrđuje na
+Leonovom telefonu (**koji preglednik** odlučuje koji popravak). **Fokus nije uzrok:** navigacija ne
+zove `.focus()`, `activeElement` poslije prelaska je `BODY` — svijetli `:hover`, ne fokus-prsten.
+**Inventar:** `:hover` **148 pravila u 20 datoteka** (block-editor 24 · studio 18 · profile 10 ·
+landing 10 · my-materials 9 · …), **1 zaštićeno** (`policies.css`: `@media (hover: hover) and
+(pointer: fine)`); `:focus` bez `-visible` **14** naspram `:focus-visible` **12**; `:active` 11.
+Tailwind v4 svoj `hover:` varijant već zamata u `@media (hover: hover)` — naš ručni CSS ne.
+**Kandidati (odluka u cigli, ne ovdje):**
+ⓐ dodir — `@media (hover: hover)` oko svakog hover-pravila, **kroz `build:css`** (postcss već stoji
+ispod Tailwinda): jedno mjesto, buduća pravila pokrivena, umjesto 148 ručnih zamotavanja;
+ⓑ miš — hover se **naoruža tek prvim `pointermove`-om poslije promjene rute**: `navigateTo` stavi
+`data-hover-paused` na `<html>`, prvi pomak ga skine, hover-selektori dobiju prefiks
+`:where(:root:not([data-hover-paused]))` (**nula specifičnosti** — inače C3 kaskada-testovi padaju);
+ⓒ `:focus` → `:focus-visible` (14 mjesta).
+⚠️ **Zamka:** `pointer-events: none` dok je pauzirano NIJE opcija — dodir bez pomaka bio bi blokiran.
+**Mjesto: F1/8** (serija: brana → zamatanje → fokus).
+
+**E. KARTICE KAO TINDER-ŠPIL NA TELEFONU** (Leon, 2026-09-05: *„na mobitelu bi napravio za kartice
+kao tinder način otvaranja i gledanja. To se treba zapisat."*).
+**Danas** (`js/flashcards.js`, `#flashcards`): jedna kartica, klik okreće (`flipCard`), gumbi
+`btnPrev` / `btnNext` / `btnCorrect` / `btnWrong`; napredak kroz `markKnown` / `markUnknown` →
+`saveFlashcardProgress` (cloud-sync ga zrcali). **Nijedne dodirne geste** u modovima učenja —
+jedini `pointerdown` na platformi je u `my-materials.js`.
+**Zadano dok Leon ne kaže drugačije:** dodir = okreni · povlačenje desno = znam · lijevo = ne znam ·
+iduće dvije kartice vire ispod (špil) · gumbi ostaju ispod špila (pristupačnost) · stolno zadržava
+današnji prikaz + tipkovnicu · `prefers-reduced-motion` gasi let kartice · bez biblioteke
+(pointer-događaji + `transform`, bez `scroll`-slušača). **Jedini put upisa ostaju
+`markKnown` / `markUnknown`** — gesta ih zove, ne duplicira.
+**Otvoreno (RASPORED §6/6):** zamjenjuje li špil današnji prikaz na telefonu ili je prekidač; nosi li
+smjer značenje. **Mjesto: F1/9.**
+
 ---
 
 ### 🟡 U TIJEKU (2026-09-04) — ~~FOUC~~ ✅ · ~~brands-font~~ ✅ · ~~UCITAVANJE PO RUTI~~ ✅ · tema = izgled maila
