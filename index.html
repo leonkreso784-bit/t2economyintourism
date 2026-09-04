@@ -137,6 +137,9 @@
     <!-- Praćenje grešaka (Faza 2, 2E): učita se prije consent.js; consent-gated + no-op bez DSN-a. -->
     <script src="js/monitoring.js?v=20260902045623" defer></script>
     <script src="js/consent.js?v=20260902045623" defer></script>
+    
+    <!-- Vercel Speed Insights: performance monitoring -->
+    <script type="module" src="js/speed-insights.js?v=20260902045623" defer></script>
 </head>
 <!-- ⚠️ `no-pathbar` STOJI U MARKUPU, NE ČEKA JS (CLS, 2026-08-24).
      `#landing-page` je u markupu već `active`, a landing NEMA drugi red trake — pa je `<body>`
