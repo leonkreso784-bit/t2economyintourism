@@ -186,11 +186,11 @@ pregleda ušla je i dorada **learn u bojama sekcija** (spec §15.1; CI je prvu v
 na amberu 4.41 → mix izmjeren na 45 %). **Next.js odbijen (ADR-028).**
 Aktivni spec: **`docs/plan/RACUN.md`** — R1 jezgra na produkciji 2026-09-02, ostatak u tijeku.
 
-**Sljedeće = RAČUN blok — Leon OTVORIO 2026-09-02** („poboljšati cijeli UX + Google i
-Facebook prijava"): **A0 prepravak `#authModal` + UPITNIK pri registraciji + Google- i
-Facebook-prijava u JEDNOM zahvatu** (dijalog je građen za jedan put — inače se prepravlja
-treći put; FB radi javno tek po Metinom app-reviewu) → profil (slika/uređivanje, bucket po
-`node-images` obrascu) → mail-obavijesti (Edge Function, ADR-016; pristanak iz upitnika).
+**RAČUN u tijeku:** R1 ✅ (dijalog + upitnik + Google, na produkciji) · **mail-identitet ✅
+2026-09-04** (pošiljatelj `sokrat@sokratstudy.com`, HR predlošci s potpisom u
+`supabase/email-templates/`, avatar) · FB **odgođen** Leonovom riječju. **Sljedeće (Leon,
+2026-09-04): FOUC teme + tema stranice = izgled maila** (oba u `BACKLOG.md`), pa R2 profil
+(slika/uređivanje, bucket po `node-images`) → R3 obavijesti (Edge Function, ADR-016).
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 

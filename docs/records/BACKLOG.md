@@ -13,6 +13,28 @@
 > Njihovi zapisi ostaju **ovdje i nedirnuti** jer nose obrazloženje i mjerenja; spec nosi **redoslijed
 > i dokaz**. Kad cigla padne, ovdje se stavlja ✅ s brojkom — ne briše se.
 
+### 🔴 ZA SLJEDECU SESIJU (Leon, 2026-09-04) — tema stranice + FOUC
+
+**1. FOUC: bijela stranica pa skok u temu** (Leon: *„prvo se ucita bijela obicna stranica pa
+onda na brzinu theme koji je izabran — ruzno i neprofesionalno"*). Pojavljuje se na SVAKOM
+ulasku, na svim uredjajima.
+**Dijagnoza (2026-09-04):** `js/theme.js` se ucitava **na dnu** `index.html` (r. ~1318), pa
+`data-theme` sjedne tek nakon sto je preglednik vec nacrtao zadanu (svijetlu) temu.
+**Gdje popravak ide:** `js/boot.js` — JEDINA sinkrona skripta, na vrhu `<body>`, koja postoji
+BAS zato sto CSP zabranjuje inline blok, i izvrsi se prije prvog crtanja (ondje vec sjede
+`no-pathbar` i KaTeX media-swap iz istog razloga). Procitati `localStorage['sokrat-theme']`,
+provjeriti ga prema popisu tema (nepoznata vrijednost je vec jednom obojila bijeli tekst na
+bijelom — v. komentar u `theme.js`) i postaviti `data-theme` na `<html>`. ⚠️ Popravak mora
+imati **mjeru**, ne „na oko": tema je vidljiva u prvom kadru → dokaz je snimka/mjerenje
+prvog crtanja, ne dojam.
+
+**2. Tema stranice = izgled maila** (Leon: *„frontend theme da ima isti kao i sta mejl salje"*).
+Mail predlosci (`supabase/email-templates/`) koriste **indigo #6366f1** (znak marke), bijelu
+plohu, sivu pozadinu #f4f5f7, mekane rubove 16 px i grotesk — a zadana tema stranice je
+`academic` (plava #1657d0). Zadatak: poravnati stranicu s mailom, ne obrnuto (mail je Leon
+vidio i potvrdio). ⚠️ Paziti na `check:contrast` (358 provjera kroz sve teme) i na pravilo
+da znak ZADRZAVA indigo kroz sve teme.
+
 ### ✅ R1-UX NALAZI (Leon uzivo, 2026-09-02) — SVE ZATVORENO (U1+U2+U5 deployani · U3+U4 Leon konzole)
 
 **Stanje 2026-09-02 kasnije isti dan:** U2 (brisanje povijesti — wipeAll kroz CloudSync,

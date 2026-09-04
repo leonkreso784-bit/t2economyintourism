@@ -5,7 +5,10 @@ novi dijalog + upitnik + Google-prijava (radi uživo) + U1/U2 popravci iz Leonov
 **U5** (Google bez supabase-domene: id_token izravno) TAKOĐER na produkciji. **FB gumb
 maknut na Leonovu riječ** („makni facebook za sada") — `FB_LOGIN=false`, Metine upute
 spremljene u PROGRESS-u. **U3+U4 ✅ zatvorio Leon 2026-09-02** (Site URL + Resend SMTP,
-BACKLOG §R1-UX). Leon je blok otvorio i PROŠIRIO
+BACKLOG §R1-UX). **Mail-identitet ✅ 2026-09-04:** pošiljatelj `sokrat@sokratstudy.com`,
+Googleov avatar sa znakom, HR predlošci s potpisom (`supabase/email-templates/`) — time je
+i **temelj R3 postavljen**, ostaje mu samo Edge Function + odjava + admin-forma.
+Leon je blok otvorio i PROŠIRIO
 2026-09-02: Facebook uz Google (ne više uvjetno), a blok je izričito i **UX računskih
 površina** (dijalog + profil), ne samo priključak providera. Napomena o dosegu: „frontend gotov (2026-09-01)" se odnosio na
 REDIZAJN-spec (posjetiteljski + študentski put) — dijalog prijave i profil u njemu NISU bili,

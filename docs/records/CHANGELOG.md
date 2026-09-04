@@ -5,6 +5,24 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-04 (OPUS) — **Mail-identitet: predlosci, potpis, posiljatelj** (grana + Supabase)
+
+### Dodano
+- `supabase/email-templates/` — tri hrvatska predloska (potvrda/dobrodoslica, reset lozinke,
+  promjena adrese) s **potpisom u podnozju** (znak u kvadratu + ime + tagline + link).
+  Repo je izvor istine, Supabase dashboard kopija.
+- `scripts/mail-preview.js` — renderira predloske u PNG (svijetlo + tamno, s popunjenim
+  varijablama). Time je uhvacen bug da `<strong>` sa zakucanom tinom **nestane u tamnoj temi**.
+
+### Postavljeno (izvan repoa)
+- Resend SMTP → posiljatelj `sokrat@sokratstudy.com` · Porkbun forwarding `sokrat@` → Leonov
+  Gmail (MX fwd1/fwd2.porkbun.com) · Google racun na toj adresi sa Sokratovim avatarom.
+- Hrvatski naslovi mailova kroz **Supabase Management API** (PAT; MCP to ne pokriva).
+
+### Dokaz
+- Leonov inbox procitan kroz Gmail konektor: mail 2026-09-04 13:22 UTC nosi naslov „Promjena
+  lozinke na Sokratu", nas tekst i potpis; posiljatelj `sokrat@sokratstudy.com`.
+
 ## 2026-09-02 (FABLE) — 🚀 **FB gumb maknut — NA PRODUKCIJI** (`9f2977c`, Leonov OK)
 
 Fast-forward `feat/racun-r1` → `main`. Uživo potvrđeno: token `20260902045623` na

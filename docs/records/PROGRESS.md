@@ -26,6 +26,30 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-04 (OPUS) — Mail-identitet gotov (predlosci + potpis + posiljatelj + avatar)
+
+Mailovi sada izlaze kao SOKRAT: posiljatelj sokrat@sokratstudy.com (Resend SMTP), Googleov
+avatar sa Sokratovim znakom, hrvatski predlosci s potpisom u podnozju (znak u kvadratu +
+ime + tagline + link). Dokaz: procitan Leonov inbox (Gmail konektor) — mail 13:22 UTC nosi
+nas naslov, nas tekst i nas potpis.
+
+POUKE:
+1. **Dashboard-postavke se MOGU mijenjati kodom** — Supabase **Management API**
+   (`PATCH /v1/projects/<ref>/config/auth`) s **Personal Access Tokenom** (`sbp_…`).
+   MCP alati to ne pokrivaju, `service_role` ni ne dodiruje. Tim putem su postavljeni
+   hrvatski naslovi (`mailer_subjects_*`); predloske je Leon vec bio ubacio ispravno.
+2. **„Ne radi" je bio STARI MAIL u inboxu.** Leon je gledao poruku poslanu PRIJE unosa
+   predlozaka. Presuda nije dosla iz rasprave nego iz **usporedbe**: GET configa pokazao da
+   je spremljeni predlozak bajt-do-bajta jednak nasoj datoteci, a citanje inboxa da najnoviji
+   mail JEST nas. Kad korisnik kaze „ne radi", trazi vremenski zig, ne drugu teoriju.
+3. **SMTP username je doslovno `resend`** — Supabase u to polje ponudi ime projekta; kriv
+   unos daje `535 Invalid username` i NIJEDAN mail ne izlazi (ni potvrde ni reset).
+4. **DNS je na PORKBUNU** (domena kupljena ondje), ne na Vercelu — provjeri NS prije uputa.
+5. Predlozak u tamnoj temi: `<strong>` sa zakucanom tamnom tintom NESTANE (adresa nevidljiva)
+   — uhvaceno tek `scripts/mail-preview.js` renderiranjem, ne citanjem koda.
+
+---
+
 ## 2026-09-02 (FABLE) — U3+U4 zatvoreni (Leonove konzole; "rijeseno sve")
 
 U3: Supabase Site URL https://www.sokratstudy.com + redirect allow-lista (**wildcard).
