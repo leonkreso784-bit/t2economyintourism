@@ -100,11 +100,13 @@ test.describe('kaskada (prijavljen) — iznimka pobjeđuje bez `!important`', ()
     expect(e.pod.color, 'oznaka „uređuješ" izgubila je boju pod mišem').toBe(e.mirno.color);
     expect(e.pod.borderTopColor, 'oznaka „uređuješ" izgubila je rub pod mišem').toBe(e.mirno.borderTopColor);
 
-    // Boja MORA biti `--warning-text`, a ne naslijeđeni `--text-muted` s `.st-m` —
-    // inače bi test prošao i da `.st-editing` uopće ne djeluje.
+    // Boja MORA biti `--color-warn-ink` (token koji `studio.css` stvarno koristi), a ne
+    // naslijeđena tinta s `.st-m` — inače bi test prošao i da `.st-editing` uopće ne djeluje.
+    // ⚠️ Do 2026-09-05 je ovdje stajao `--warning-text` — ime iz stare palete koje je nestalo s
+    // tokenima (`css/tokens.css`), a test ga je i dalje tražio: brana je pala, a proizvod nije.
     const warning = await page.evaluate(() =>
-      getComputedStyle(document.documentElement).getPropertyValue('--warning-text').trim());
-    expect(warning, '`--warning-text` mora postojati u temi').not.toBe('');
+      getComputedStyle(document.documentElement).getPropertyValue('--color-warn-ink').trim());
+    expect(warning, '`--color-warn-ink` mora postojati u temi').not.toBe('');
 
     // ── OBRNUTA PROVJERA ── obična `.st-m` MORA reagirati na hover.
     const obicna = cipovi.nth(1);
