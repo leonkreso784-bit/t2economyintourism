@@ -13,6 +13,8 @@
 // ⚠️ TRAKA PRIVOLE se gasi prije učitavanja: na telefonu prekriva donji dio ekrana i miješa
 // se u mjerenja rasporeda (T4).
 
+const { ucitajPakete } = require('./paketi');
+
 const CEKANJE = 30000;
 
 async function bezTrakePrivole(page) {
@@ -42,10 +44,19 @@ async function otvoriAdminPreglednik(page) {
   await page.waitForSelector('#admin-page.active #adminSubjectSel', { timeout: CEKANJE });
 }
 
-/** Aplikacija (polica) — ondje žive `SokratMaterials` i ostatak proizvoda. */
+/**
+ * Aplikacija (polica) — ondje žive `SokratMaterials` i ostatak proizvoda.
+ *
+ * ⚠️ Od cigle „učitavanje po ruti" (2026-09-04) taj obećani „ostatak proizvoda" NE stoji na
+ * naslovnici: `my-materials.js`, `profile.js`, `node-images.js` i `admin-reveal.js` stižu s
+ * paketom `profile`, a načini učenja s paketom `study` (v. `js/loader.js`). Pomoćnik ih zato
+ * traži OVDJE — na jednom mjestu, kao što i njegov naslov obećava — inače svaki pozivatelj
+ * čeka global koji nikad neće doći i pada tek na dvominutnom isteku.
+ */
 async function otvoriAplikaciju(page) {
   await bezTrakePrivole(page);
   await page.goto('/');
+  await ucitajPakete(page, ['profile', 'study']);
   await page.waitForFunction(() => typeof window.navigateTo === 'function');
 }
 

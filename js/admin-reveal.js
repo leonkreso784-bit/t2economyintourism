@@ -62,7 +62,14 @@ const SokratAdmin = (function () {
   // Otkrivanje visi o životnom ciklusu STRANICE, ne o editoru: `init()` se veže na promjenu
   // auth-stanja i osvježi vidljivost. Namještaj admin-stranice (ulazni gumb, „natrag") je
   // s T6 u `js/admin.js`, jer živi i pada zajedno s tom stranicom.
-  document.addEventListener('DOMContentLoaded', init);
+  // ⚠️ NE SAMO `DOMContentLoaded`. Od učitavanja po ruti ova skripta stiže s paketom
+  // `profile`, dakle DAVNO nakon tog događaja — slušač koji čeka nešto što se već dogodilo
+  // ne okine se nikad, pa se admin-kartica ne bi otkrila baš onome tko je otvorio profil.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
   return { refresh: refresh, isAdmin: isAdmin, applyVisibility: applyVisibility };
 })();

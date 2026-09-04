@@ -51,7 +51,18 @@ const PAGES = fs.readdirSync(ROOT).filter((f) => f.endsWith('.html')).sort();
 const DYNAMIC = [
   { file: 'js/auth.js', urlConst: 'cdnSrc', sriConst: 'cdnIntegrity', sto: 'Supabase JS SDK' },
   { file: 'js/block-editor-media.js', urlConst: 'MATHLIVE_SRC', sriConst: 'MATHLIVE_SRI', sto: 'MathLive' },
+  // Učitavanje po ruti: KaTeX i DOMPurify su otišli iz `index.html` u paket `study`.
+  { file: 'js/loader.js', urlConst: 'KATEX_CSS_SRC', sriConst: 'KATEX_CSS_SRI', sto: 'KaTeX CSS' },
+  { file: 'js/loader.js', urlConst: 'KATEX_SRC', sriConst: 'KATEX_SRI', sto: 'KaTeX' },
+  { file: 'js/loader.js', urlConst: 'KATEX_AUTORENDER_SRC', sriConst: 'KATEX_AUTORENDER_SRI', sto: 'KaTeX auto-render' },
+  { file: 'js/loader.js', urlConst: 'DOMPURIFY_SRC', sriConst: 'DOMPURIFY_SRI', sto: 'DOMPurify' },
 ];
+
+/**
+ * CDN-ovi s kojih smijemo išta učitati. Popis postoji zbog provjere #5 — ne kao dopuštenje
+ * nego kao MJESTO ZA GLEDANJE: sve što s njih dolazi mora proći kroz `DYNAMIC` ili tag.
+ */
+const CDN_HOSTS = /https:\/\/(?:cdnjs\.cloudflare\.com|cdn\.jsdelivr\.net|unpkg\.com)\/[^'"\s)]+/g;
 
 const problems = [];
 function fail(check, msg, lines) { problems.push({ check, msg, lines: lines || [] }); }
@@ -111,6 +122,47 @@ function checkDynamic() {
   }
   if (nalazi.length) {
     fail('dinamicki', 'Skripta koja se ubacuje iz JS-a mora biti pinana i imati SRI jednako kao tag:', nalazi);
+  }
+}
+
+// ── 5: nijedan CDN-URL u `js/**` izvan popisa ──────────────────────────────────────────────────
+/**
+ * ⚠️ POVOD (2026-09-04, cigla „učitavanje po ruti"): KaTeX i DOMPurify su preselili iz taga u
+ * `js/loader.js`. Provjere #1/#2 čitaju HTML, pa bi ih od tog trenutka VIŠE NE BI VIDJELE — a
+ * gate bi i dalje javljao „svi vanjski podresursi pinani i pod SRI". To je isti razred kvara
+ * koji je već jednom prošao ovuda (`editor.html` i ručni popis stranica, T6): brana koja gleda
+ * jedno mjesto, a istina se preselila na drugo.
+ *
+ * Zato: svaki URL s poznatog CDN-a koji se pojavi u `js/**` mora biti pokriven `DYNAMIC`
+ * unosom. Time hand-list prestaje ovisiti o tome da se netko sjeti — ako se sjetio dodati
+ * URL, a nije popis, gate pada.
+ */
+function checkNepopisani() {
+  const jsDir = path.join(ROOT, 'js');
+  const poznati = new Set();
+  for (const d of DYNAMIC) {
+    if (!fs.existsSync(path.join(ROOT, d.file))) continue;
+    const src = rd(d.file);
+    const url = (src.match(new RegExp(d.urlConst + "\\s*[:=]\\s*'([^']+)'")) || [])[1];
+    if (url) poznati.add(url);
+  }
+  const nalazi = [];
+  const hoda = (dir) => {
+    for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
+      const p = path.join(dir, f.name);
+      if (f.isDirectory()) { hoda(p); continue; }
+      if (!f.name.endsWith('.js')) continue;
+      const rel = path.relative(ROOT, p).replace(/\\/g, '/');
+      const txt = fs.readFileSync(p, 'utf8');
+      for (const url of txt.match(CDN_HOSTS) || []) {
+        if (!poznati.has(url)) nalazi.push(rel + ' → ' + url.replace(/^https:\/\//, '').slice(0, 80));
+      }
+    }
+  };
+  hoda(jsDir);
+  if (nalazi.length) {
+    fail('nepopisani', 'CDN-URL u `js/**` koji nije u popisu DYNAMIC — provjere #1–#4 ga NE VIDE, '
+      + 'pa bi gate javljao zeleno za resurs koji nitko ne provjerava:', nalazi);
   }
 }
 
@@ -206,6 +258,7 @@ async function main() {
   console.log('\n=== check:cdn' + (LIVE ? ' --verify' : '') + ' ===');
   checkTags();
   checkDynamic();
+  checkNepopisani();
   let provjereno = 0;
   if (LIVE) {
     if (typeof fetch !== 'function') {

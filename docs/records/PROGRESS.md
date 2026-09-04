@@ -26,6 +26,55 @@ pregled + deploy-paket).
 
 ---
 
+## 2026-09-04 (OPUS) — UCITAVANJE PO RUTI: prvi kadar s 41 skripte na 22
+
+Prva od dvije cigle koje je Leon parkirao za ovu sesiju. Radjeno u **dva koraka s mjerom nakon
+svakog**, kako je i trazio.
+
+**Zahvat:** `js/loader.js` — imenovani paketi koji stizu na svoj dogadjaj (`study` na otvorenu
+lekciju · `blind-map`/`exercises` na klik taba · `polica` na popis lekcija · `materials`/`profile`
+na svoje stranice · `sync` na PRIJAVU). Redoslijed unutar paketa je zajamcen (`script.async=false`),
+verzija se cita iz `src` samog loadera — **bump `?v=` u `js/**` NE doseze**, pa bi zapisan token
+ondje tiho ostario i posjetitelj bi zauvijek dobivao staru skriptu.
+
+**Mjera** (localhost, hladan cache, mobilni profil — usporedba na istom posluzitelju):
+FCP **5820 → 4236 ms**, zahtjeva **49 → 29**, `check:budget` prvi kadar **41 skripta / 234 KiB →
+22 / 112,7 KiB**. ⚠️ Apsolutni iznosi nisu produkcijski (lokalni posluzitelj ne stisce) — vrijedi
+razlika: **−27 %**.
+
+**Selidba je proizvela tri kvara i sva tri su nadjena PRIJE gatea:**
+① `.then(initBlindMap)` razrijesi ime ODMAH — prije nego skripta stigne → ReferenceError (dim-test).
+② `progress.js` je citao `blindMapState` iz drugog paketa → svaka lekcija geografije bi bacala
+gresku i prije nego bi itko dotaknuo kartu (dim-test). ③ `admin-reveal.js`/`profile.js` vezali su
+se na `DOMContentLoaded` — dogadjaj koji je za lijeno ucitanu skriptu **vec prosao**.
+
+**Regresija koju bi cigla inace unijela, zatvorena istom rukom:** skinut predmet u zrakoplovnom
+nacinu. Dok su sve skripte bile u markupu, prvi posjet ih je provukao kroz Service Worker; sada se
+predmet skida s POPISA LEKCIJA — korak prije nego ijedan nacin ucenja stigne. `SokratLoad.zagrij()`
++ poziv iz `offline-store.download()`; **namjerno mimo `plan()`/`urls`**, jer te adrese brise
+`remove(predmet)`, a skripte aplikacije su zajednicke (uklanjanje jednog predmeta ubilo bi offline
+za sve ostale).
+
+**Cetiri brane** — `tests/unit/loader-packages.test.js` (12 tvrdnji, ukljucujuci **osnovicu golih
+referenci preko granice paketa**, koja se cisti sama) · `check:cdn` **provjera #5** (CDN-URL u
+`js/**` izvan popisa = pad; bez nje bi odlazak KaTeXa iz taga znacio da ga brana vise ne vidi, a
+javlja zeleno) · `check:budget` sada mjeri **oba** puta (inace bi se brana oborila seljenjem
+tereta) · `check:contrast:live` i `blocks-diff` prilagodjeni fiksnom cekanju koje vise ne vrijedi.
+Obrnute provjere odradjene za obje nove brane (namjerno pokvareno → pada).
+
+**Doseljeno u `js/utils.js`:** `inkForTint` + `TINT_INK_CROSSOVER` i `safeIcon`. Landing je zbog
+JEDNE ciste funkcije vukao cijeli `blocks-renderer.js`, a `profile.js` bi bez `safeIcon` tiho
+pretvorio sve ikone predmeta u knjigu (`? SokratBlocks.safeIcon(icon) : 'fa-book'`). `utils.js` je
+jedina datoteka koju ucitavaju i `index.html` i `editor.html`; `SokratBlocks.*` ostaju kao precaci.
+
+**Testovi:** osam specova je cekalo globale koji na naslovnici vise ne postoje — preduvjet je
+postao IZRICIT kroz `tests/helpers/paketi.js` (`ucitajPakete(page, ['study'])`). To nije popustanje
+mjere nego njezino pojasnjenje: u pregledniku isti paket dovlaci klik korisnika.
+
+⚠️ **Nista od ovoga nije na produkciji** — ceka Leonov izricit OK.
+
+---
+
 ## 2026-09-04 (OPUS) — Leonova tri problema: dijagnoza mjerenjem, dvije cigle zatvorene
 
 Leon: *„pregledaj sve trenutne probleme, analiziraj ih detaljno kako se desavaju i zasto,

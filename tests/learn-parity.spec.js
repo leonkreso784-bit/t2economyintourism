@@ -4,12 +4,15 @@
 // (b) i dalje UKLANJA opasni sadržaj (script/onclick/javascript:). Renderira se kroz window.renderBlocks
 // (isti put kao study nakon U7c flipa). Pokreće se u default (iphone) projektima = dio smoke suite.
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 
 test('U7c: pravi DOMPurify čuva legacy stil (parity) + blokira XSS', async ({ page }) => {
   const errors = [];
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
   await page.goto('/');
-  // renderer + PRAVI DOMPurify moraju biti dostupni (DOMPurify = defer CDN, kao KaTeX)
+  // Renderer i DOMPurify od učitavanja po ruti stižu s paketom `study` (v. js/loader.js).
+  await ucitajPakete(page, ['study']);
+  // renderer + PRAVI DOMPurify moraju biti dostupni (oboje dolazi s paketom, DOMPurify s CDN-a)
   await page.waitForFunction(
     () => typeof window.renderBlocks === 'function' && window.DOMPurify && typeof window.DOMPurify.sanitize === 'function',
     null, { timeout: 15000 }

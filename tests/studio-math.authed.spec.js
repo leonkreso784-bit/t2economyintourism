@@ -10,6 +10,7 @@
 //   Za OSOBNO GRADIVO je to teže nego za katalog: čvor se gleda ISKLJUČIVO u Studiju, pa se
 //   formula tamo ne tipografira NIKAD — ni u pregledu, ni nakon objave.
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 // T6: editor je vlastiti dokument — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
 const { otvoriStudio, otvoriAplikaciju } = require('./helpers/studio-entry');
 
@@ -20,11 +21,12 @@ async function openMaterials(page) {
     try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
   });
   await page.goto('/');
+  await ucitajPakete(page, ['profile', 'study']);
   await page.waitForFunction(() =>
     !!window.SokratMaterials && !!window.SokratAdmin
     && typeof window.navigateTo === 'function');
-  // KaTeX auto-render stiže s CDN-a (`defer`) — bez njega je renderMath TIHI no-op i test bi
-  // lažno pao na infrastrukturi umjesto na regresiji.
+  // KaTeX auto-render stiže s CDN-a uz paket `study` (do 2026-09-04 `defer` u `index.html`) —
+  // bez njega je renderMath TIHI no-op i test bi lažno pao na infrastrukturi umjesto na regresiji.
   await page.waitForFunction(() => typeof window.renderMathInElement === 'function', null, { timeout: 20000 });
   await page.waitForFunction(() => window.SokratMaterials.isAvailable(), null, { timeout: 20000 });
   await page.evaluate(() => navigateTo('materials'));

@@ -14,6 +14,7 @@
 // Ako netko ikad napravi drugi editor kartica, ograničenje tiho nestane u pola proizvoda —
 // i tad pada test „osobni materijal", ne produkcija.
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 // T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
 const { otvoriAdminPreglednik, otvoriAplikaciju } = require('./helpers/studio-entry');
 
@@ -50,6 +51,7 @@ async function openMaterials(page) {
     try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
   });
   await page.goto('/');
+  await ucitajPakete(page, ['profile']);
   await page.waitForFunction(() =>
     !!window.SokratMaterials && !!window.SokratAdmin && typeof window.navigateTo === 'function');
   await page.waitForFunction(() => window.SokratMaterials.isAvailable(), null, { timeout: 20000 });

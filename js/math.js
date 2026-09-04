@@ -17,10 +17,11 @@
 //
 // Author convention + escaping rules: docs/architecture/CONTENT_SCHEMA.md (§ Matematika / formule).
 //
-// CDN (KaTeX + auto-render) is loaded in index.html <head> with `defer`. If it fails
-// to load (offline / CDN down), renderMath is a silent no-op — formulas degrade to
-// their raw LaTeX source but nothing breaks (same philosophy as the Supabase CDN
-// fallback in js/auth.js).
+// CDN (KaTeX + auto-render) stiže s paketom `study` (js/loader.js), zajedno s ovom
+// datotekom — do učitavanja po ruti je stajao u `index.html <head>` s `defer` i skidao se
+// svakome tko otvori naslovnicu, iako se formule crtaju samo u lekciji (samo KaTeX JS =
+// 61,8 KB). Ako ne stigne (offline / CDN down), renderMath je tihi no-op — formule padnu
+// na svoj LaTeX izvor, ali ništa se ne ruši (ista filozofija kao Supabase CDN u js/auth.js).
 
 (function () {
     'use strict';

@@ -12,6 +12,7 @@
 // tim putem do kraja i provjerava da stavke prežive objavu. Kriterij 1 iz
 // `docs/product/UGC_SPEC.md` traži oboje.
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 // T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
 const { otvoriAplikaciju } = require('./helpers/studio-entry');
 
@@ -22,6 +23,7 @@ async function openMaterials(page) {
     try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
   });
   await page.goto('/');
+  await ucitajPakete(page, ['profile']);
   await page.waitForFunction(() =>
     !!window.SokratMaterials && !!window.SokratAdmin
     && typeof window.navigateTo === 'function');

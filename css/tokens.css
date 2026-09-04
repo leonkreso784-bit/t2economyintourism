@@ -148,7 +148,7 @@
      tokena definiraju JEDNOM i NIKAD se ne redefiniraju u `[data-theme]` blokovima.
 
      ⚠️ Koja se od dvije koristi NE bira se okom nego IZRAČUNOM luminancije pločice
-     (`inkForTint()` u `js/navigation.js`). Povod: dotad je glif nosio `--color-on-brand`,
+     (`inkForTint()` u `js/utils.js`). Povod: dotad je glif nosio `--color-on-brand`,
      token izračunat za boju MARKE, pa je na 11 boja predmeta nitko nikad nije izmjerio.
      Mjerenje: bijela na `#f59e0b` = **2.15** (5 predmeta), na `#14b8a6` = 2.49 (3),
      na `#0ea5e9` = 2.77 (2) — dakle 10 od 24 predmeta ispod praga 3:1 za grafički element,

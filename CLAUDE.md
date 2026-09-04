@@ -30,6 +30,7 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 - **Auth:** email+lozinka (`js/auth.js`, CDN supabase-js, tihi fallback) + **cloud-sync napretka** (`js/cloud-sync.js`, offline-first merge unija/max). Profil + GDPR na `#profile-page`.
 - **Editor/Admin CRUD (FUNKC. GOTOV):** `window.SokratAdmin` (`js/admin.js` jezgra + `js/admin-editors.js` modal-editori) + **Studio** (`#editor-page`, `js/studio.js`+`js/block-editor.js`+`js/block-editor-media.js`) + **jedan renderer** `js/blocks-renderer.js` (sigurnosna granica). Draft-mod: `window.SokratDraft` (`js/draft-store.js`) → editori pišu OPOVE (id-adresirano) → **jedini write-put = `publish_document` RPC** (SECURITY DEFINER, is_admin, base_version, atomično, `content_versions` audit). `is_admin()` RPC + `.admin-only` reveal.
 - **⚠️ GOTCHA:** `SokratAuth`/`SokratCatalog` su top-level `const` (leksički globali) → referenciraj **GOLO** (`typeof X !== 'undefined'`), NE `window.X`; `SokratContent`/`SokratAdmin`/`AppState` JESU na window. [[live-login-verifies-crud]]
+- **Učitavanje po ruti (2026-09-04):** `window.SokratLoad` (`js/loader.js`) — **imenovani paketi** (`study` · `blind-map` · `exercises` · `polica` · `materials` · `profile` · `sync`) stižu na SVOJ događaj, ne u markupu. ⚠️ **Novi mod = novi unos u paketu, ne novi `<script>` u `index.html`.** Token se čita iz `src` loadera (`bump` ne dira `js/**`); redoslijed u paketu je zajamčen (`async=false`) — KaTeX auto-render bez toga stiže prije `katex` i tiho pada. Brana: `tests/unit/loader-packages.test.js` (uklj. osnovicu **golih referenci preko granice paketa**).
 - **Service Worker:** `sw.js` (navigacija network-first + offline shell; asseti stale-while-revalidate; kill-switch `__swKill()`); `SW_VERSION` bumpa `npm run bump`.
 - **i18n:** globalni 🌐 HR/EN toggle (`js/i18n.js`, `localStorage 'sokrat-ui-lang'`); sadržaj po programu (HR = klon-program, ADR-012).
 - **Monitoring:** GA4 (`G-ME0V58NJ1Z`) + Sentry — oboje **consent-gated**; GA ponašanje mijenjati SAMO u `js/consent.js`. [[google-analytics-consent]]
@@ -142,18 +143,18 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 
 > **„F4", „U8", „K6" u starim zapisima = ZATVORENE oznake faza** (temelj F1–F6 · graditelj F0–F5 · editor U/F7/K). Sve tri serije su ispunjene i žive samo kao povijest u `docs/archive/` i `docs/plan/ROADMAP.md`. **Nova faza dobiva ime, ne slovo.**
 
-## Stanje — TRENUTNO (2026-09-01)
+## Stanje — TRENUTNO (2026-09-04)
 
 > **Ovdje stoji samo ono što vrijedi SAD** (ADR-027). **Povijest cigli je IZAŠLA odavde**
-> (2026-08-25): mjere, pouke i obrnute provjere svake cigle žive u specu i zapisima — ova je
-> sekcija do tada nosila **41 604 znaka o GOTOVIM ciglama**, drugu kopiju onoga što spec ima.
+> (2026-08-25): mjere, pouke i obrnute provjere žive u specu i zapisima — ova je sekcija do
+> tada nosila **41 604 znaka o GOTOVIM ciglama**, drugu kopiju onoga što spec ima.
 >
 > | pitanje | tko zna odgovor |
 > |---|---|
 > | što je na produkciji | zadnji **🚀** redak u `docs/records/CHANGELOG.md` |
 > | grana · commiti · je li pushano | `git status -sb` · `git log --oneline -1 origin/main` |
 > | koliko predmeta | `npm run verify` |
-> | zašto je cigla izvedena baš tako | `docs/archive/FRONTEND_REDIZAJN.md` §7 (C0–C3, landing) · §8 (KOSTUR) · §9 (TELEFON, `about`, SEO) · §10 (C4) · §11 (C5a) · **§12 (C5b — mjera) · §12.7 (C5b/0)** |
+> | zašto je cigla izvedena baš tako | `docs/archive/FRONTEND_REDIZAJN.md` §7–§12 (C0–C5b, landing · KOSTUR · TELEFON · SEO) |
 > | koji su bugovi bili i što su naučili | `docs/records/BUGS.md` |
 > | što je isporučeno i kada | `CHANGELOG.md` · dnevnik sesija: `PROGRESS.md` |
 >
@@ -172,27 +173,27 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 i dvaput vratio uvjerljiv krivi broj umjesto da padne.
 **K5** (editor dvojezično) čeka i ne blokira ništa.
 
-### 🚚 SEOBA — **OTKAZANA (Leon, 2026-09-01: *„Nastavlja Supabase do daljnjeg"*)**
-
-Supabase i Vercel ostaju, **Pro se plaća do daljnjeg** → nema free-tier spavanja ni pada
-server-side lozinka-brane. `BACKLOG.md` §SELF-HOST = **arhiviran zapis odluke**, ne plan.
-
 ### 🎯 FRONTEND REDIZAJN + MREŽA = ✅ **NA PRODUKCIJI (2026-09-01)** — sljedeći blok: **RAČUN**
 
-**Deploy `f8bc5cb`** (Leonov izričit OK): C0–C7 + MREŽA A–E · **CSP enforce** potvrđen uživo ·
-**E2 re-sync baze** (backup → 7 predmeta → `diff:db` 0 razlika → `check:final` 17/17) · **oba
-speca u `docs/archive/`** · dorada **learn u bojama sekcija** (§15.1). **Next.js odbijen (ADR-028).**
+Oba speca u `docs/archive/`; što je točno isporučeno zna CHANGELOG. **Next.js odbijen (ADR-028).**
+**🚚 SEOBA je OTKAZANA** (Leon, 2026-09-01: *„Nastavlja Supabase do daljnjeg"*) → `BACKLOG.md`
+§SELF-HOST je arhiviran zapis odluke, ne plan.
 Aktivni spec: **`docs/plan/RACUN.md`** — R1 jezgra na produkciji 2026-09-02, ostatak u tijeku.
 
 **RAČUN u tijeku:** R1 ✅ (dijalog + upitnik + Google, na produkciji) · **mail-identitet ✅
 2026-09-04** (pošiljatelj `sokrat@sokratstudy.com`, HR predlošci s potpisom u
 `supabase/email-templates/`, avatar) · FB **odgođen** Leonovom riječju.
 **Leonova tri problema (2026-09-04):** ① FOUC teme **✅ zatvoren** (`boot.js`, 119→**0 ms**) ·
-③ brzina — **prava dijagnoza je IZGLADNJIVANJE CSS-a**, ne bajtovi: `styles.bundle.css` kreće
-na 293 ms a stiže na 2244 ms jer 46 zahtjeva dijeli vezu; naših ~35 skripti nosi **~1270 ms**
-FCP-a, sva tri CDN-a samo ~320 ms, a **`defer` je izmjeren kao beskoristan**. Brands-font
-(106 KB za dvije ikone) **✅ maknut**; ostaje **učitavanje po ruti** (mjere u `BACKLOG.md`) ·
-② tema stranice = izgled maila. Pa R2 profil (slika, bucket po `node-images`) → R3 obavijesti.
+③ brzina **✅ zatvorena**: prava dijagnoza je bila **IZGLADNJIVANJE CSS-a**, ne bajtovi (`defer`
+je izmjeren kao beskoristan), pa je lijek **učitavanje po ruti** — `js/loader.js`, prvi kadar
+**41→22 skripte / 234→113 KiB**; uz to brands-font (106 KB) maknut · ostaje ② **tema stranice =
+izgled maila** (mjere u `BACKLOG.md`). Pa R2 profil (slika, bucket po `node-images`, **+ tema
+prati RAČUN, ne uređaj** — Leon 2026-09-04) → R3 obavijesti.
+**🔴 Leonovi nalazi s uređaja (`BACKLOG.md` §LEONOVI NALAZI):** ⓐ tema prati račun ·
+ⓑ **trzanje pri skrolanju** (*„smooth kao na najnovijem iPhoneu"*) — **nije ni izmjereno**, a
+`perf-probe` tu NE pomaže: on mjeri prvi kadar, ovo je trošak PO kadru · ⓒ bljesak teme na
+njegovom telefonu traje **~1 s**, ne 119 ms. *Mjera na razvojnom stroju je donja granica, ne
+stvarnost korisnika.*
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 
@@ -208,7 +209,9 @@ FCP-a, sva tri CDN-a samo ~320 ms, a **`defer` je izmjeren kao beskoristan**. Br
 - **Prikaz blokova ide ISKLJUČIVO kroz `renderContentBlocks()`**, a **svaki tekst iz podataka
   koji ide u `innerHTML` mora kroz `SokratBlocks.esc`** (ikona kroz `safeIcon`, boja kroz
   `accentFrom`, URL kroz `safeUrl`). Povod: BUG-024/025 — jedno pitanje u katalogu bilo je
-  **neodgovorljivo**. [[escape-all-data-in-innerhtml]]
+  **neodgovorljivo**. ⚠️ `safeIcon` i `inkForTint` od 2026-09-04 **stanuju u `js/utils.js`**
+  (stranica bez renderera ih i dalje treba); `SokratBlocks.*` su prečaci, ne kopije.
+  [[escape-all-data-in-innerhtml]]
 - **Telefon je MJERENA površina** (faza TELEFON): `tests/phone.spec.js` + `phone.authed.spec.js`,
   osnovica prazna → brana traži nulu. Ne popravljati „na oko" ono što ona mjeri.
   [[phone-is-unmeasured-surface]]
@@ -217,8 +220,7 @@ FCP-a, sva tri CDN-a samo ~320 ms, a **`defer` je izmjeren kao beskoristan**. Br
 
 ### 🔒 TVRDE ODLUKE O DEPLOYU
 
-① **Svaki deploy traži izričit OK** — moratorij *„ništa na produkciju dok frontend ne bude gotov"*
-je potrošen 2026-08-24 i ne vrijedi više kao dopuštenje.
+① **Svaki deploy traži izričit OK** — nijedno ranije odobrenje se ne proteže na sljedeći put.
 ② **Broj commita izvan produkcije NIJE nalaz i NE SPOMINJE SE** (*„ZNAM KADA ZELIM PUSTIT NESTO
 NA PRODUKCIJU"*) — **ova stoji netaknuta.** Pravilo #2 time dobiva dopunu: ne samo da se ne smije
 pushati bez OK-a, nego se na to ne smije ni **nagovarati**. [[leon-decides-deploys]]

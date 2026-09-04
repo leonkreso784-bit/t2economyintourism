@@ -207,7 +207,10 @@ window.resetProgress = async function() {
         categoryProgress: {}
     };
     saveProgress();
-    renderProgressPage();
+    // `renderProgressPage` stiže s paketom `study`; gumb koji ovo zove živi na toj stranici,
+    // pa je u praksi uvijek tu — ali pretpostavka zapisana kao GOLA referenca je pretpostavka
+    // koju nitko ne provjerava, a pad bi bio ReferenceError usred brisanja napretka.
+    if (typeof renderProgressPage === 'function') renderProgressPage();
     showToast(window.t ? t('msg.progressReset') : 'Progress reset!');
 };
 
@@ -235,7 +238,7 @@ window.resetAnalytics = async function() {
         firstUseDate: new Date().toISOString()
     };
     saveAnalytics();
-    renderProgressPage();
+    if (typeof renderProgressPage === 'function') renderProgressPage();
     showToast(window.t ? t('msg.analyticsReset') : 'Analytics reset!');
 };
 

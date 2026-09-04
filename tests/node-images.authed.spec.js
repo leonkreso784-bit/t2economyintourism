@@ -8,6 +8,7 @@
 //
 // RLS/HTTP stranu (tuđi prefiks, anon, javni URL) pokriva `npm run test:storage`.
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 // T6: editor je vlastiti dokument — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
 const { otvoriStudio, otvoriAplikaciju } = require('./helpers/studio-entry');
 
@@ -19,6 +20,7 @@ async function openApp(page) {
     try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
   });
   await page.goto('/');
+  await ucitajPakete(page, ['profile', 'study']);
   await page.waitForFunction(() =>
     !!window.SokratMaterials && !!window.SokratAdmin
     && !!window.SokratNodeImages && typeof window.renderBlocks === 'function');

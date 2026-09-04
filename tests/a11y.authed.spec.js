@@ -18,6 +18,7 @@
 //
 // STAGING-only, kao i ostali authed specovi. **Ništa se ne objavljuje** — draft se na kraju odbacuje.
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 // T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
 const { otvoriStudio } = require('./helpers/studio-entry');
 const { skenirajSveTeme } = require('./helpers/axe-gate');
@@ -25,6 +26,7 @@ const { skenirajSveTeme } = require('./helpers/axe-gate');
 test.describe('a11y (prijavljen) — 0 gateanih prekršaja (WCAG A/AA ∪ serious/critical) na vlastitom gradivu i u editoru', () => {
   test('Moji materijali — sa STABLOM, ne s pozivom na prijavu', async ({ page }) => {
     await page.goto('/');
+    await ucitajPakete(page, ['profile']);
     await page.waitForFunction(() => !!window.SokratMaterials && typeof window.navigateTo === 'function');
     await page.evaluate(() => navigateTo('materials'));
     await page.waitForSelector('#myMaterials .mm-bar', { timeout: 20000 });

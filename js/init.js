@@ -11,7 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initMaterialsEntries();    // C0: ulazi u vlastiti materijal
     initTopbar();              // K2b: znak → dom, „Predmeti", natrag u drugom redu
     initRouter();              // K1: adresa ⇄ stranica; MORA prije restoreLastPosition()
-    initLearnImageModal();
+    // `initLearnImageModal()` je odavde OTIŠAO u `initStudyPage`: `learn.js` od učitavanja po
+    // ruti stiže s paketom `study`, a modal za sliku ionako nema što raditi dok lekcija nije
+    // otvorena. Poziv je idempotentan, pa ponovni ulazak u lekciju ništa ne dupla.
     setupEventListeners();
     restoreLastPosition();
 });

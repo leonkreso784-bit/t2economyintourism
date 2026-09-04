@@ -104,6 +104,11 @@ async function mjeri(browser, port, sirina) {
   const page = await ctx.newPage();
   await page.route('**youtube**', (r) => r.abort());   // fasada smije nastati, mreža ne treba
   await page.goto('http://localhost:' + port + '/', { waitUntil: 'load' });
+  /* ⚠️ Renderer od učitavanja po ruti NIJE na naslovnici — stiže s paketom `study` kad se
+     otvori lekcija. Ovaj alat lekciju ne otvara (mjeri renderer izravno), pa paket mora
+     zatražiti sam; bez toga bi čekanje ispod isteklo i alat bi izgledao pokvareno. */
+  await page.waitForFunction(() => !!window.SokratLoad, null, { timeout: 20000 });
+  await page.evaluate(() => window.SokratLoad.paket('study'));
   await page.waitForFunction(() => typeof window.renderBlocks === 'function', null, { timeout: 20000 });
 
   const rez = await page.evaluate(({ blokovi, svojstva, meta }) => {

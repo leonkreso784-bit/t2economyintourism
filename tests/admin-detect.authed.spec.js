@@ -7,6 +7,7 @@
 // („Uredi lekciju" povlači payload iz BAZE — staging mora biti seedan: `node scripts/seed-staging.js te2`).
 // Editori spremaju U DRAFT (bez mreže) → smijemo i spremiti pa ODBACITI (ništa ne ode u bazu).
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 // T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
 const { otvoriAdminPreglednik } = require('./helpers/studio-entry');
 
@@ -40,6 +41,7 @@ async function openLessonInDraftMode(page) {
 
 test('admin sesija: SokratAdmin.isAdmin() = true + body.sokrat-is-admin', async ({ page }) => {
   await page.goto('/');
+  await ucitajPakete(page, ['profile']);
   await page.waitForFunction(() => !!window.SokratAdmin);
 
   const res = await page.evaluate(async () => {

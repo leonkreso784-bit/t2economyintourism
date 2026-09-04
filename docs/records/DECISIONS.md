@@ -77,9 +77,11 @@ temi, točno kako `--color-on-brand` već stoji (bijelo u `academic`/`paper`, ta
 — **isti raspored koji mjera iz ② traži**, što je neovisna potvrda da je obrazac pravi).
 
 **④ Kartice su isti princip, drugi smjer.** Ondje boja dolazi **izvana** (katalog, korisnik) pa se
-ispuna ne može unaprijed namjestiti → tintu bira **`inkForTint()`** (od MREŽA-C2 u
-`js/blocks-renderer.js`; prag je IZVEDEN iz para tinti i zapisan uz kod — `check:contrast` ih
-drži usklađenima), što je **već izvedeno u C5a/4** za `.category-bar-icon`. Pravilo: **gdje boju
+ispuna ne može unaprijed namjestiti → tintu bira **`inkForTint()`** (od MREŽA-C2; od cigle
+„učitavanje po ruti" 2026-09-04 stanuje u **`js/utils.js`**, jedinoj datoteci koju učitavaju i
+`index.html` i `editor.html` — prije toga u `js/blocks-renderer.js`, koji od tada stiže tek s
+paketom `study`. Prag je IZVEDEN iz para tinti i zapisan uz kod — `check:contrast` ih drži
+usklađenima), što je **već izvedeno u C5a/4** za `.category-bar-icon`. Pravilo: **gdje boju
 kontroliramo mi → token po temi; gdje dolazi izvana → `inkForTint()`.** Puna ispuna u oba slučaja.
 
 ---

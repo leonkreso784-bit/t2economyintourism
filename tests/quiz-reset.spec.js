@@ -5,9 +5,11 @@
 // initStudyPage) drži: nakon prelaska na drugi predmet, kviz je natrag na SETUP i
 // AppState.quiz.questions je očišćen. Bez fixa test PADA (game vidljiv, questions > 0).
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 
 test('kviz se resetira pri promjeni predmeta (BUG-020)', async ({ page }) => {
   await page.goto('/');
+  await ucitajPakete(page, ['study']);   // `startQuiz` stiže s paketom, ne s naslovnicom
   await page.waitForFunction(() =>
     window.SOKRAT_CATALOG && window.navigateTo && window.switchSection && window.startQuiz);
 

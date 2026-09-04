@@ -18,8 +18,14 @@ function test(name, fn) {
 
 console.log('\n=== blocks-renderer (U7b) ===\n');
 
+// ⚠️ `utils.js` IDE PRVI — točno kao u pregledniku (i u `index.html` i u `editor.html` stoji
+// prije renderera). Od učitavanja po ruti `inkForTint` i `safeIcon` stanuju ondje: landing i
+// `profile.js` ih trebaju, a renderer stiže tek s paketom `study`. Renderer ih doseže preko
+// `window.`, pa test mora složiti isti šav — inače bi zeleno značilo samo „nitko ih nije zvao".
+const utils = fs.readFileSync(path.join(__dirname, '..', '..', 'js', 'utils.js'), 'utf8');
 const code = fs.readFileSync(path.join(__dirname, '..', '..', 'js', 'blocks-renderer.js'), 'utf8');
 const win = {};
+new Function('window', utils)(win);
 new Function('window', code)(win); // nema top-level browser-poziva (document guardan) → čist load
 const R = win.renderBlocks;
 const B = win.SokratBlocks;

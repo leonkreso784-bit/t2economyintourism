@@ -18,6 +18,7 @@
 //
 // STAGING-only. Ništa se ne objavljuje: Studio se otvara u read-only pregledu.
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 // T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
 const { otvoriStudio } = require('./helpers/studio-entry');
 
@@ -114,6 +115,7 @@ async function prodjiSirine(page, ime) {
 test.describe('layout (prijavljen) — bez vodoravnog scrolla i bez elementa koji strši', () => {
   test('Moji materijali — sa stablom, kroz sve pragove uklj. 320px', async ({ page }) => {
     await page.goto('/');
+    await ucitajPakete(page, ['profile']);
     await page.waitForFunction(() => !!window.SokratMaterials && typeof window.navigateTo === 'function');
     await page.evaluate(() => navigateTo('materials'));
     await page.waitForSelector('#myMaterials .mm-bar', { timeout: 20000 });

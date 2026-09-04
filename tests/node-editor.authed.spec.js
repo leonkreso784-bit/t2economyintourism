@@ -5,6 +5,7 @@
 // Dokazuje ugovor faze F3: otvori study-čvor → uredi → `publish_node` → ponovno učitaj =
 // sadržaj ostao + audit-redak zapisan + `base_version` lovi tuđu izmjenu.
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 // T6: editor je vlastiti dokument — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
 const { otvoriStudio, otvoriAplikaciju } = require('./helpers/studio-entry');
 
@@ -13,6 +14,7 @@ async function openMaterials(page) {
     try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
   });
   await page.goto('/');
+  await ucitajPakete(page, ['profile']);
   await page.waitForFunction(() =>
     !!window.SokratMaterials && !!window.SokratAdmin
     && typeof window.navigateTo === 'function');

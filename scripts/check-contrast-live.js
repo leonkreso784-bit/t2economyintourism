@@ -163,6 +163,17 @@ const MJERA = function () {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
     await page.addInitScript(() => { try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) {} });
     await page.goto(BAZA + ruta, { waitUntil: 'domcontentloaded' });
+    /* ⚠️ Fiksno čekanje NIJE dovoljno otkad načini učenja stižu paketom (`js/loader.js`):
+       ruta lekcije prvo skine paket, pa tek onda gradivo. Zastor `#studyLoading` je izričit
+       signal da to još traje — čeka se ON, a 2,5 s ostaje kao rezerva za crtanje. Bez ovoga
+       bi brana mjerila stranicu USRED CRTANJA i „zeleno" bi značilo prazan ekran (isti kvar
+       koji je css:diff platio s 420 lažnih razlika). */
+    try {
+      await page.waitForFunction(() => {
+        const l = document.getElementById('studyLoading');
+        return !l || l.hasAttribute('hidden');
+      }, null, { timeout: 15000 });
+    } catch (e) { /* zastor je ostao — neka mjera to i pokaže */ }
     await page.waitForTimeout(2500);
 
     for (const tema of TEME) {

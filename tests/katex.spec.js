@@ -4,12 +4,16 @@
 //   2. Currency `$` is NEVER parsed as math — single `$` is not a delimiter, so the
 //      120+ "$NN" amounts in existing live content stay literal and untouched.
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 
 test('KaTeX renders LaTeX delimiters and leaves currency $ untouched', async ({ page }) => {
   const errors = [];
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
 
   await page.goto('/');
+  // js/math.js i KaTeX CDN stižu s paketom `study` (v. js/loader.js) — landing ih nema, i to
+  // je upravo poanta: formule postoje samo u lekciji. Test ih zove izravno, pa ih i traži.
+  await ucitajPakete(page, ['study']);
 
   // Our helper is defined by js/math.js; renderMathInElement comes from the KaTeX CDN.
   await page.waitForFunction(() => typeof window.renderMath === 'function');

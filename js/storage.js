@@ -45,5 +45,8 @@ function saveProgress() {
 
     progress.lastStudy = new Date().toISOString();
     localStorage.setItem(storageKey, JSON.stringify(progress));
-    updateHomeStats();
+    // `updateHomeStats` živi u `js/progress.js`, koji od učitavanja po ruti stiže s paketom
+    // `study`. Napredak se spremi i bez njega (npr. sinkronizacija dok je otvoren landing) —
+    // ono što bi osvježio tada nije ni na ekranu.
+    if (typeof updateHomeStats === 'function') updateHomeStats();
 }

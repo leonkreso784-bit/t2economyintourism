@@ -5,6 +5,51 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-04 (OPUS) — **Ucitavanje po ruti: prvi kadar s 41 skripte na 22** (grana `feat/racun-r1`)
+
+### Dodano
+- **`js/loader.js`** — imenovani paketi koji stizu na SVOJ dogadjaj: `study` (7 skripti +
+  KaTeX/DOMPurify) na otvorenu lekciju · `blind-map` / `exercises` na klik taba · `polica` na
+  popis lekcija · `materials` i `profile` na svoje stranice · `sync` na **prijavu** (ne na
+  profil — tko profil ne otvori, i dalje mu se napredak sinkronizira).
+  Verzija se cita iz `src` samog loadera: `npm run bump` NE dira `?v=` u `js/**`, pa bi token
+  zapisan ondje tiho ostario (BUG-004 u novom ruhu).
+- `SokratLoad.zagrij()` + poziv iz `offline-store.download()` — skinut predmet mora u
+  zrakoplovnom nacinu imati i KOD, ne samo gradivo. **Namjerno mimo `plan()`/`urls`**: te
+  adrese brise `remove(predmet)`, a skripte aplikacije su zajednicke.
+- `tests/helpers/paketi.js` — testovi koji dosezu globale iz paketa traze ih izricito.
+
+### Promijenjeno
+- `inkForTint` + `TINT_INK_CROSSOVER` i `safeIcon` sele iz `js/blocks-renderer.js` u
+  **`js/utils.js`** (jedina datoteka koju ucitavaju i `index.html` i `editor.html`).
+  `SokratBlocks.*` ostaju kao precaci. Landing je inace zbog jedne ciste funkcije vukao cijeli
+  renderer, a `profile.js` bi bez `safeIcon` tiho pretvorio sve ikone predmeta u knjigu.
+
+### Popravljeno (kvarovi koje je selidba proizvela i koji su nadjeni prije gatea)
+- `.then(initBlindMap)` razrjesuje ime ODMAH → ReferenceError; sada omotano u funkciju.
+- `progress.js` je citao `blindMapState` iz drugog paketa → svaka lekcija geografije je bacala
+  gresku prije nego bi itko dotaknuo kartu.
+- `admin-reveal.js` / `profile.js` vezali su se na `DOMContentLoaded` — dogadjaj koji je za
+  lijeno ucitanu skriptu vec prosao.
+- **KaTeX `auto-render` se izvrsavao usporedno s `katex.min.js`** → otprilike svaki drugi put
+  je stizao prvi, tiho pao u `try/catch` i lekcija bi ostala sa sirovim LaTeX-om. Redoslijed
+  koji je u markupu jamcio `defer` sada jamci `script.async = false`.
+
+### Brane
+- `tests/unit/loader-packages.test.js` (13 tvrdnji; ukljucuje **osnovicu golih referenci preko
+  granice paketa** koja se cisti sama, i redoslijed KaTeX-a).
+- `check:cdn` **provjera #5** — CDN-URL u `js/**` izvan popisa `DYNAMIC` = pad. Bez nje bi
+  odlazak KaTeXa iz taga znacio da ga brana vise ne vidi, a i dalje javlja zeleno.
+- `check:budget` mjeri **oba** puta (prvi kadar sudi budzetu, paketi se ispisuju) — inace bi se
+  brana oborila seljenjem tereta u lijeni put, bez ijednog obrisanog retka.
+- `check:contrast:live` i `blocks-diff` prilagodjeni: fiksno cekanje vise ne vrijedi.
+
+### Mjera (localhost, hladan cache, mobilni profil — usporedba na istom posluzitelju)
+FCP **5820 → 4236 ms** (−27 %) · zahtjeva **49 → 29** · `check:budget` prvi kadar
+**41 skripta / 234 KiB → 22 / 112,7 KiB**. ⚠️ Apsolutni iznosi nisu produkcijski.
+
+⚠️ **NIJE na produkciji** — ceka Leonov izricit OK.
+
 ## 2026-09-04 (OPUS) — **FOUC teme zatvoren + brands-font maknut** (grana `feat/racun-r1`)
 
 ### Popravljeno

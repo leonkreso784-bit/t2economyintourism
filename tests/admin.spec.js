@@ -16,10 +16,15 @@
 //   • „natrag" iz editora ne pravi petlju (BUG-019) → `reachability.authed` + prava
 //     povijest preglednika, jer editor više nije stranica ove aplikacije.
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 
 
 test('SokratAdmin postoji i bez sesije isAdmin() = false', async ({ page }) => {
   await page.goto('/');
+  // `admin-reveal.js` od učitavanja po ruti stiže s paketom `profile` — jedinom površinom
+  // koja danas ima `.admin-only` UI. Sigurnosni default se time NE mijenja: dok modul ne
+  // stigne, ništa se ne otkriva (fail-closed), a ovaj test upravo to i mjeri poslije.
+  await ucitajPakete(page, ['profile']);
   await page.waitForFunction(() => !!window.SokratAdmin);
 
   const res = await page.evaluate(async () => {
@@ -41,6 +46,10 @@ test('SokratAdmin postoji i bez sesije isAdmin() = false', async ({ page }) => {
 
 test('.admin-only ostaje SKRIVEN za ne-admina (sigurnosni default)', async ({ page }) => {
   await page.goto('/');
+  // `admin-reveal.js` od učitavanja po ruti stiže s paketom `profile` — jedinom površinom
+  // koja danas ima `.admin-only` UI. Sigurnosni default se time NE mijenja: dok modul ne
+  // stigne, ništa se ne otkriva (fail-closed), a ovaj test upravo to i mjeri poslije.
+  await ucitajPakete(page, ['profile']);
   await page.waitForFunction(() => !!window.SokratAdmin);
 
   const res = await page.evaluate(async () => {

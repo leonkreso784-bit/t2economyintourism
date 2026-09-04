@@ -11,11 +11,13 @@
 // PREKRIVENO ni PREKLOPLJENO. To su tri različita mehanizma s istom posljedicom — gumb
 // koji korisnik vidi, a ne može upotrijebiti (K2b · BUG-028 · BUG-029).
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 const G = require('./helpers/reach-gate');
 
 /** Prijavljen admin; `refresh()` otključava `.admin-only` ulaze prije mjerenja. */
 async function spremanAdmin(page) {
     await page.goto('/');
+    await ucitajPakete(page, ['profile']);
     await G.spreman(page);
     await page.waitForFunction(() => !!window.SokratAdmin);
     await page.evaluate(async () => { await window.SokratAdmin.refresh(); });

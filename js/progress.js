@@ -15,8 +15,9 @@ function pColor(s) {
     return (window.SokratBlocks && typeof SokratBlocks.accentFrom === 'function') ? SokratBlocks.accentFrom([s]) : '';
 }
 /**
- * Koja tinta ide NA ploču u boji kategorije. `inkForTint` živi u `js/navigation.js` kao
- * globalna funkcija (klasična skripta, `function` na vrhu datoteke) i učitava se prije ove.
+ * Koja tinta ide NA ploču u boji kategorije. `inkForTint` živi u `js/utils.js` kao globalna
+ * funkcija (klasična skripta, `function` na vrhu datoteke) i učitava se prije ove — od
+ * učitavanja po ruti ondje, a ne u rendereru, jer ju traži i landing koji renderer ne dobiva.
  * Vraća SAMO 'dark' ili 'light' — dvije vrijednosti, pa u markup ne može ući ništa iz podatka.
  * ⚠️ Do C5a/4 je boja kategorije bila boja TEKSTA glifa i davala 2.15–2.80 na svijetloj plohi
  * (prag 3.0) — imenovana iznimka u `scripts/contrast-live-allow.json`. Otkad je glif ČIP,
@@ -166,12 +167,17 @@ function renderProgressPage() {
         const bmSection = document.getElementById('blindMapProgressSection');
         if (bmSection) {
             bmSection.style.display = 'block';
-            const bmAnswered = blindMapState.answers.length;
-            const bmCorrect = blindMapState.answers.filter(a => a.correct).length;
+            // ⚠️ `blindMapState` je u DRUGOM paketu (`blind-map`), koji stiže tek kad se otvori
+            // taj tab — a napredak se crta čim se otvori lekcija. Prazno stanje ovdje NIJE
+            // izmišljena vrijednost nego doslovno ona s kojom modul i počinje, pa ploča
+            // pokazuje isto što je pokazivala i prije selidbe: nule dok se ništa nije odgovorilo.
+            const bm = (typeof blindMapState !== 'undefined') ? blindMapState : { answers: [], score: 0 };
+            const bmAnswered = bm.answers.length;
+            const bmCorrect = bm.answers.filter(a => a.correct).length;
             const bmAcc = bmAnswered > 0 ? Math.round((bmCorrect / bmAnswered) * 100) : 0;
             document.getElementById('blindMapAccuracy').textContent = `${bmAcc}%`;
             document.getElementById('blindMapAttempts').textContent = bmAnswered;
-            document.getElementById('blindMapScore').textContent = blindMapState.score;
+            document.getElementById('blindMapScore').textContent = bm.score;
         }
     } else {
         const bmSection = document.getElementById('blindMapProgressSection');

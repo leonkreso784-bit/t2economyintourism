@@ -160,6 +160,29 @@
     return Promise.all(stare.map((u) => cache.delete(u).catch(() => {}))).then(() => {});
   }
 
+  /**
+   * Uz GRADIVO treba i KOD kojim se ono uči.
+   *
+   * ⚠️ Do učitavanja po ruti (`js/loader.js`) ovo se dogadjalo samo od sebe: sve su skripte
+   * stajale u `index.html`, pa ih je prvi posjet provukao kroz Service Worker. Sada stižu
+   * tek s otvorenom lekcijom — a predmet se skida s POPISA LEKCIJA, dakle korak PRIJE toga.
+   * Bez ovoga bi skinut predmet u zrakoplovnom načinu otvorio praznu ljusku.
+   *
+   * NE ulazi u `plan()` i NE upisuje se u `urls`: te adrese briše `remove(predmet)`, a
+   * skripte aplikacije su ZAJEDNIČKE — uklanjanje jednog predmeta ne smije ubiti offline
+   * za ostale. Zagrijavanje je best-effort i namjerno ne utječe na ishod skidanja.
+   */
+  function zagrijNacineUcenja(id) {
+    const L = window.SokratLoad;
+    if (!L || typeof L.zagrij !== 'function') return;
+    const s = (typeof SokratCatalog !== 'undefined') ? SokratCatalog.getSubject(id) : null;
+    const f = (s && s.features) || {};
+    const imena = ['study'];
+    if (f.blindMap) imena.push('blind-map');
+    if (f.exercises) imena.push('exercises');
+    imena.forEach((ime) => { try { L.zagrij(ime); } catch (e) { /* best-effort */ } });
+  }
+
   // ── SKIDANJE ────────────────────────────────────────────────────────
   function download(subjectId, onProgress) {
     const id = String(subjectId);
@@ -209,6 +232,7 @@
         const map = readAll();
         map[id] = zapis;
         writeAll(map);
+        zagrijNacineUcenja(id);      // gradivo bez načina učenja je prazna ljuska
         return zapis;
       }).catch((err) => {
         // Sve-ili-ništa: pospremi za sobom pa proslijedi grešku dalje.

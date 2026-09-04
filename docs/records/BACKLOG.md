@@ -13,7 +13,38 @@
 > Njihovi zapisi ostaju **ovdje i nedirnuti** jer nose obrazloženje i mjerenja; spec nosi **redoslijed
 > i dokaz**. Kad cigla padne, ovdje se stavlja ✅ s brojkom — ne briše se.
 
-### 🟡 U TIJEKU (2026-09-04) — ~~FOUC~~ ✅ · ~~brands-font~~ ✅ · UCITAVANJE PO RUTI · tema = izgled maila
+### 🔴 LEONOVI NALAZI S UREDAJA — 2026-09-04 (nedirnuto, ceka svoj red)
+
+**A. ODLUKA: TEMA PRATI RACUN, NE UREDAJ** (Leon, 2026-09-04: *„tema treba pratiti racun"*).
+Danas se tema sprema u `localStorage` pod `sokrat-theme` — dakle po UREDAJU. To je bilo
+namjerno („tema je stvar uredaja", zapisano uz birac u profilu), ali Leon je odlucio suprotno.
+**Njegov opis kvara koji ga je na to naveo:** *„kada otvorim aplikaciju i nisam prijavljen,
+svejedno se otvara onako kako sam zadao kada sam zadnji put bio prijavljen — dakle tema nije
+vezana za profil nego za cache."* To je tocan opis danasnjeg ponasanja.
+**Sto to znaci za izvedbu (nije jos raspisano):** tema postaje korisnicki podatak, dakle ide
+uz prijavu — `localStorage` ostaje **prvi kadar** (mora se odluciti PRIJE crtanja, `boot.js`),
+a racun je **izvor istine** koji ga pri prijavi pregazi i pri promjeni upise. Otvoreno pitanje
+za tu ciglu: **sto s neprijavljenim korisnikom na tudjem uredaju** — ostaje li zadnja lokalna
+tema ili se vraca na zadanu. **Mjesto: R2 (profil).**
+
+**B. TRZANJE PRI SKROLANJU** (Leon, 2026-09-04: *„kada se scrolla mora biti savrseno smooth
+kao da si na najnovijem iphonu. trenutno prekidaju frejmovi"*).
+⚠️ **NIJE DIJAGNOSTICIRANO — nije ni izmjereno.** Ne pogadjati uzrok: `perf-probe` mjeri PRVI
+KADAR, a ovo je trosak PO KADRU, sasvim druga mjera. Treba vlastita sonda (kadrovi kroz
+skriptirani skrol + duge zadace + koliko je piksela prebojano), i tek onda hipoteza. Sumnjivci
+koje treba PROVJERITI, ne pretpostaviti: sjene i `filter` na karticama · plohe koje se ne
+kompozitiraju · `scroll` slusaci bez `passive` · velike povrsine prebojavanja.
+
+**C. BIJELI BLJESAK NA PRAVOM UREDAJU TRAJE ~1 s, ne 119 ms** (Leon: *„prvo ce se otvorit
+regularna klasicna tema (bijela) i stajat ce na jednu sekundu mozda manje. Onda ce se vratit
+na mint"*). To je ISTI kvar koji je zatvoren 2026-09-04 (`boot.js`), samo na sporijem uredaju:
+mjereno je 119 ms na brzoj vezi i 232 ms na Slow-4G, a Leonov telefon je gori slucaj iste
+stvari. **Popravak ceka na grani** — dok se ne deploya, Leon vidi stari kod.
+⚠️ Pouka koja ostaje: **mjera na razvojnom stroju je DONJA granica, ne stvarnost korisnika.**
+
+---
+
+### 🟡 U TIJEKU (2026-09-04) — ~~FOUC~~ ✅ · ~~brands-font~~ ✅ · ~~UCITAVANJE PO RUTI~~ ✅ · tema = izgled maila
 
 **1. FOUC ✅ ZATVORENO 2026-09-04** (commit `891a1ce`, na grani — ⚠️ NIJE na produkciji).
 **Dijagnoza gore je bila KRIVA i zato stoji ispravak:** nije problem bio "theme.js je na dnu"
@@ -60,15 +91,63 @@ skripte i dalje skida odmah; snizen prioritet ne vraca propusnost.
 **✅ Ucinjeno:** brands-font (106 KB, za DVIJE ikone od kojih se jedna ne crta) zamijenjen
 ugradjenim SVG-om — commit `6db1c2f`, brana `tests/unit/no-brand-font.test.js`.
 
-**⏭️ ODGODJENO ZA SLJEDECU SESIJU (Leon, 2026-09-04: *„Tu ciglu cemo stavit u sljedecu
-sesiju"*).** Radi se u koracima, s mjerom (`perf-probe`) nakon svakog.
-**Sto tocno:** landing ucitava `flashcards` `quiz`
-`fill-blanks` `learn` `progress` `blind-map` `exercises*` `blocks-renderer` `math`
-`my-materials` `profile` `node-images` `cloud-sync` `admin-reveal` — nista od toga ne treba
-za prvi kadar. Uz to KaTeX JS (61.8 KB) ide na svaku stranicu, a `assets/logo.svg` je
-**45 KB na disku** (vektoriziran potraceom) za znak od 32 px.
-⚠️ `check:budget` mjeri SAMO skripte i nije ni vidio 253 KB fontova — rupu zatvoriti kad
-se dira ucitavanje.
+**✅ UCITAVANJE PO RUTI — ISPORUCENO 2026-09-04** (na grani `feat/racun-r1`, ⚠️ NIJE na
+produkciji). Radjeno u dva koraka, s mjerom nakon svakog, kako je Leon i trazio.
+
+**Sto je bilo:** naslovnica je vukla `flashcards` `quiz` `fill-blanks` `learn` `progress`
+`blind-map` `exercises*` `blocks-renderer` `math` `my-materials` `profile` `node-images`
+`cloud-sync` `admin-reveal` `offline-store` — nista od toga ne treba za prvi kadar. Uz njih
+i KaTeX JS (61,8 KB) i DOMPurify.
+
+**Sto je sada:** `js/loader.js` — imenovani paketi koji stizu na SVOJ dogadjaj:
+`study` (7 skripti + KaTeX/DOMPurify) na otvorenu lekciju · `blind-map` i `exercises` na klik
+tog taba · `polica` na popis lekcija · `materials` i `profile` na svoje stranice · `sync` na
+PRIJAVU (ne na profil — tko svoj profil ne otvori, i dalje mu se napredak sinkronizira).
+
+| | prije | poslije |
+|---|---|---|
+| skripti u prvom kadru | **41** | **22** |
+| preneseno (gzip, `check:budget`) | **234 KiB** | **112,7 KiB** |
+| FCP (localhost, hladan cache, mobilni profil) | **5820 ms** | **4220–4236 ms** |
+| zahtjeva | 49 | 29 |
+
+⚠️ **Lokalne brojke NISU produkcijske** — lokalni posluzitelj ne stisce i ne multipleksira, pa
+su apsolutni iznosi visi. Vrijedi USPOREDBA (isti posluzitelj prije i poslije): **−27 %**.
+Produkcijska mjera se moze uzeti tek s preview-deploya.
+
+**Tri zatecena kvara koje je selidba proizvela — i nasla:**
+1. `.then(initBlindMap)` je ime razrijesio ODMAH, prije nego je skripta stigla → ReferenceError.
+   (Uhvatio dim-test.) Sada `.then(function () { initBlindMap(); })`.
+2. `progress.js` je citao `blindMapState` iz DRUGOG paketa → svaka lekcija geografije je bacala
+   gresku prije nego bi itko dotaknuo kartu. (Uhvatio dim-test; brana ispod ga sada vidi staticki.)
+3. `admin-reveal.js` i `profile.js` vezali su se na `DOMContentLoaded` — dogadjaj koji je za
+   lijeno ucitanu skriptu VEC PROSAO, pa se slusac ne bi okinuo nikad.
+
+**Cetiri brane (sve u preflightu):**
+- `tests/unit/loader-packages.test.js` — 12 tvrdnji: datoteka postoji · nije u dva svijeta ·
+  ime paketa koje kod trazi postoji · mrtav paket pada · loader nema zakucan `?v=` (bump ga u
+  `js/**` ne doseze!) · **nijedna nova gola referenca preko granice paketa** (osnovica ih
+  imenuje i cisti se sama).
+- `check:cdn` **provjera #5**: CDN-URL u `js/**` koji nije na popisu `DYNAMIC` → pad. Bez nje bi
+  odlazak KaTeXa iz taga znacio da ga brana vise ne vidi, a i dalje javlja zeleno.
+- `check:budget` sada mjeri **oba** puta: budzet sudi prvom kadru, paketi se ispisuju i zbrajaju
+  — inace bi se brana oborila seljenjem tereta u lijeni put, bez ijednog obrisanog retka.
+- `check:contrast:live` i `blocks-diff` prilagodjeni: fiksno cekanje vise nije dovoljno kad
+  gradivo stize iza paketa.
+
+**Usput popravljeno (regresija koju bi selidba inace unijela):** skinut predmet u zrakoplovnom
+nacinu. Dok su sve skripte bile u markupu, prvi posjet ih je provukao kroz Service Worker; sada
+predmet skidas s POPISA LEKCIJA, korak PRIJE nego ijedan nacin ucenja stigne. `SokratLoad.zagrij()`
++ poziv iz `offline-store.download()` to zatvara — **namjerno mimo `plan()`/`urls`**, jer te
+adrese brise `remove(predmet)`, a skripte aplikacije su zajednicke.
+
+**Doseljeno u `js/utils.js`:** `inkForTint` + `TINT_INK_CROSSOVER` i `safeIcon`. Razlog je
+mjerljiv: landing je zbog JEDNE ciste funkcije vukao cijeli `blocks-renderer.js`, a `profile.js`
+bi bez `safeIcon` tiho pretvorio sve ikone predmeta u knjigu. `utils.js` je jedina datoteka koju
+ucitavaju i `index.html` i `editor.html`. `SokratBlocks.*` ostaju kao precaci (isti kod).
+
+**Ostaje otvoreno (ne blokira):** `assets/logo.svg` je **45 KB na disku** za znak od 32 px, a
+`check:budget` mjeri SAMO skripte — 253 KB fontova nije ni vidio.
 
 **2. Tema stranice = izgled maila** (Leon: *„frontend theme da ima isti kao i sta mejl salje"*).
 **IZMJERENO 2026-09-04 — nalaz je bolji nego sto je izgledalo.**
@@ -215,7 +294,9 @@ boje svijetle.
 (dvije tamne palete su već jednom pale na živom ekranu). **Ne dira se bez njegove riječi.**
 
 ✅ **RIJEŠENO 2026-09-01 — birač POSTOJI** (Leonova riječ, isti dan: „U profilu"): kartica
-„Izgled" na `#profile-page` (crta se i neprijavljenom — tema je stvar uređaja), teme s
+„Izgled" na `#profile-page` (crta se i neprijavljenom — ⚠️ **„tema je stvar uređaja" je
+PRESUĐENO SUPROTNO 2026-09-04**: Leon je odlučio da tema prati RAČUN, v. §LEONOVI NALAZI gore;
+lokalni zapis ostaje samo zato što odluka mora pasti prije prvog crtanja), teme s
 pregled-krugovima (`--theme-swatch-*` u `tokens.css`).
 ⚠️ **Ispravljeno 2026-09-04:** tema je tada imala 4 palete i mehanizam u `js/theme.js`; danas
 su **3** (`paper` maknut isti tjedan), a popis i primjena zive u **`js/boot.js`** (odluka mora
@@ -1497,6 +1578,14 @@ koja NE skrola dodaje beskorisne zaustavne točke tipkovnice. Dakle mali runtime
 > ispravnoj jedinici zatečeno stanje bilo je **1,17×**, ne 3,7×. Stavka je dakle bila **točna u
 > smjeru, kriva u mjeri**; ostavlja se zapisana jer je pouka općenita: *agregat u krivoj jedinici
 > može mjeriti točno i savjetovati krivo* (isti razred kao `palette:breakdown`).
+>
+> **➕ NASTAVAK, 2026-09-04 — ostatak tereta je otišao ciglom „učitavanje po ruti".** T6 je
+> maknuo EDITORSKI kod; ostali su načini učenja, vježbe, slijepa karta, profil i materijali —
+> koje posjetitelj također ne vidi dok ne klikne. `js/loader.js` ih šalje na njihov događaj.
+> **Mjereno prije i poslije, kako ova stavka i traži:** prvi kadar **41 → 22 skripte**,
+> **234 → 112,7 KiB** mrežom (`check:budget`), FCP lokalno **5820 → 4236 ms** (isti poslužitelj).
+> Brana je proširena da mjeri **oba** puta — inače bi je selidba tereta u lijeni put oborila
+> bez ijednog obrisanog retka.
 >
 > **Najvažnije: sada postoji GATE.** `npm run check:budget` (u preflightu) čuva **sastav**
 > (nijedna editorska datoteka na posjetiteljevu putu) **i težinu** (≤ 200 KB prijenosa). Ova je

@@ -271,4 +271,10 @@ const CloudSync = (function () {
 // auth.js se učitava prije ovog fajla; registracija je sigurna i prije init()-a.
 if (typeof SokratAuth !== 'undefined') {
     SokratAuth.onChange(function (user) { CloudSync.handleAuthChange(user); });
+    // ⚠️ OD UČITAVANJA PO RUTI OVAJ MODUL STIŽE TEK KAD SE KORISNIK PRIJAVI — dakle NAKON
+    // događaja koji ga je i dovukao (`auth.js` traži paket `sync` u `onAuthStateChange`).
+    // Sama registracija bi zato propustila upravo tu prijavu i sinkronizacija bi krenula
+    // tek na SLJEDEĆOJ promjeni stanja — u praksi: nikad u toj sesiji. `handleAuthChange`
+    // je idempotentan (`userId === user.id && timer` → izlazi), pa dvostruki poziv ne šteti.
+    if (typeof SokratAuth.getUser === 'function') CloudSync.handleAuthChange(SokratAuth.getUser());
 }

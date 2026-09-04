@@ -29,6 +29,9 @@ async function isSubjectOpenable(subjectId) {
     if (subjectDataMap[subjectId]) return true;
     // Samo materijali imaju odgođenu registraciju; sve ostalo je obrisan ili pokvaren zapis.
     if (String(subjectId).indexOf('node:') !== 0) return false;
+    // Dijeljiva ruta smije voditi RAVNO u vlastiti materijal (`#/subject/node%3A…`), dakle na
+    // hladnom startu — a `my-materials.js` od učitavanja po ruti dolazi tek s tim putem.
+    await SokratLoad.paket('materials').catch(function (e) { console.warn('[loader]', e); });
     const M = (typeof window !== 'undefined') ? window.SokratMaterials : null;
     if (!M || typeof M.ensureRegistered !== 'function') return false;
     await M.ensureRegistered();          // tiho `false` ako nije prijavljen / nema mreže
@@ -157,18 +160,25 @@ function navigateTo(page, data = {}) {
             document.getElementById('about-page').classList.add('active');
             break;
         case 'materials':
-            // C0 / ADR-029: vlastiti materijal je ravnopravno odredište. Stranica se smije otvoriti i
-            // BEZ prijave — renderPage() tada pokaže poziv na prijavu umjesto stabla.
-            if (window.SokratMaterials) SokratMaterials.renderPage();
-            // P2: drugi izvor police. NE ovisi o prijavi — crta se uvijek, i prazan popis
-            // ima svoje stanje (inače korisnik ne bi imao odakle saznati da skidanje postoji).
-            if (window.SokratOffline) window.SokratOffline.mountShelf(document.getElementById('shelfList'));
             document.getElementById('materials-page').classList.add('active');
             closeSidebar();
+            // Stranica se PRIKAŽE odmah, sadržaj stiže sa svojim paketom. Da se čekalo prije
+            // prikaza, klik na „Moji materijali" ne bi radio ništa vidljivo dok mreža ne
+            // odgovori — a stranica ima vlastito prazno stanje i bez podataka.
+            SokratLoad.paket('materials').then(function () {
+                // C0 / ADR-029: vlastiti materijal je ravnopravno odredište. Stranica se smije otvoriti i
+                // BEZ prijave — renderPage() tada pokaže poziv na prijavu umjesto stabla.
+                if (window.SokratMaterials) SokratMaterials.renderPage();
+                // P2: drugi izvor police. NE ovisi o prijavi — crta se uvijek, i prazan popis
+                // ima svoje stanje (inače korisnik ne bi imao odakle saznati da skidanje postoji).
+                if (window.SokratOffline) window.SokratOffline.mountShelf(document.getElementById('shelfList'));
+            }).catch(pakerPao);
             break;
         case 'profile':
-            if (typeof renderProfilePage === 'function') renderProfilePage();
             document.getElementById('profile-page').classList.add('active');
+            SokratLoad.paket('profile')
+                .then(function () { if (typeof renderProfilePage === 'function') renderProfilePage(); })
+                .catch(pakerPao);
             break;
     }
 
@@ -1061,11 +1071,11 @@ function renderLandingMeta() {
 }
 
 // ========== LANDING SUBJECTS SHOWCASE (rendered from catalog) ==========
-// `inkForTint` + TINT_INK_CROSSOVER su od MREŽA C2 u `js/blocks-renderer.js`
-// (SokratBlocks.inkForTint): tintu troše i study-modovi i editorov pretpregled, a
-// editor.html navigation.js NE učitava. Ovdje ostaje samo prečac — povijest, izvod
-// praga i brana koja ga preračunava (`check:contrast`) žive uz definiciju.
-const inkForTint = (boja) => window.SokratBlocks.inkForTint(boja);
+// `inkForTint` + TINT_INK_CROSSOVER žive u `js/utils.js` (globalno, jedna definicija).
+// Do učitavanja po ruti su bili u `js/blocks-renderer.js`, a ovdje je stajao prečac na
+// njega — što je značilo da vitrina na landingu vuče CIJELI renderer prije prvog kadra
+// zbog jedne čiste funkcije. Povijest, izvod praga i brana koja ga preračunava
+// (`check:contrast`) žive uz definiciju.
 
 // Stanje filtra vitrine. Živi ovdje, a ne u `AppState`, jer ne preživljava odlazak s
 // landinga: vrati li se posjetitelj, katalog počinje otvoren — to je namjerno.
@@ -1271,7 +1281,11 @@ function renderLessonsPage(subjectId) {
     // P1 (POLICA): „skini ovaj predmet na uređaj". Montira se pri SVAKOM renderu jer
     // stanje ovisi o UREĐAJU, ne o predmetu — isti predmet je na jednom telefonu skinut,
     // na drugom nije. Modul se tiho ne montira ako preglednik nema Cache Storage.
-    if (window.SokratOffline) window.SokratOffline.mount(document.getElementById('offlineControl'), subjectId);
+    // Od učitavanja po ruti stiže sa svojim paketom; kontrola se docrta kad stigne, a
+    // popis lekcija se zbog nje ne čeka.
+    SokratLoad.paket('polica').then(function () {
+        if (window.SokratOffline) window.SokratOffline.mount(document.getElementById('offlineControl'), subjectId);
+    }).catch(function (e) { console.warn('[loader]', e); });
 
     const grid = document.getElementById('lessonsGrid');
     grid.innerHTML = '';
@@ -1392,7 +1406,13 @@ async function initStudyPage(subjectId, lessonId, targetSection) {
     let fullData = {};
     showStudyLoading(true);
     try {
+        // Načini učenja stižu TEK SADA (v. `js/loader.js`): posjetitelj koji nikad ne otvori
+        // lekciju ih ne plaća prvim kadrom. Stoji unutar istog `try` kao i dohvat sadržaja
+        // jer je posljedica ista — lekcija se ne može prikazati — pa i poruka mora biti ista.
+        await SokratLoad.paket('study');
+        initLearnImageModal();      // idempotentno; do učitavanja po ruti ga je zvao init.js
         if (subject._node) {
+            await SokratLoad.paket('materials');    // vlasnik toka stiže sa svojim paketom
             // M2 — OSOBNI MATERIJAL. Sadržaj traži vlasnik toka (`SokratMaterials`), ne katalog-repo:
             // svjetovi se namjerno ne miješaju (ADR-024), pa dual-read ostaje čist za katalog.
             // Nema fallbacka i ne treba ga — materijal postoji samo u bazi.
@@ -1551,10 +1571,24 @@ function switchSection(section) {
     } else if (section === 'learn') {
         cleanupLearnContentForMobile();
     } else if (section === 'blind-map') {
-        initBlindMap();
+        // Slijepu kartu i vježbe ima SAMO dio predmeta (catalog `features`), pa im kod stiže
+        // tek kad se otvori njihov tab. Panel je već vidljiv (gore), učitavanje je kratko i
+        // jednokratno — a pad se vidi kao poruka, ne kao prazan tab koji nikad ne oživi.
+        // ⚠️ MORA biti omotano u funkciju. `.then(initBlindMap)` izgleda jednako, ali ime se
+        // razriješi ODMAH — a tada skripta koja ga definira još nije stigla, pa je to
+        // ReferenceError, ne odgođeni poziv. (Uhvaćeno dim-testom pri samoj selidbi.)
+        SokratLoad.paket('blind-map').then(function () { initBlindMap(); }).catch(pakerPao);
     } else if (section === 'exercises') {
-        if (typeof initExercises === 'function') initExercises();
+        SokratLoad.paket('exercises')
+            .then(function () { if (typeof initExercises === 'function') initExercises(); })
+            .catch(pakerPao);
     }
+}
+
+/** Paket nije stigao (mreža/CDN) — jedina poruka koju korisnik može iskoristiti je „probaj opet". */
+function pakerPao(e) {
+    console.error(e);
+    if (typeof showToast === 'function') showToast(window.t ? t('toast.loadError') : 'Could not load this subject. Please try again.');
 }
 
 // ========== ABOUT US ==========

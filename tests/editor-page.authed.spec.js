@@ -11,12 +11,14 @@
 // ispisala tuđi tekst u vlastito sučelje. Ovako isti upit koji donosi ime ujedno DOKAZUJE
 // vlasništvo: RLS ga izda samo vlasniku, pa je prazan odgovor odgovor „nije tvoj".
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 
 async function otvoriMaterijale(page) {
   await page.addInitScript(() => {
     try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* privatni način */ }
   });
   await page.goto('/');
+  await ucitajPakete(page, ['profile']);
   await page.waitForFunction(() =>
     !!window.SokratMaterials && typeof window.navigateTo === 'function');
   await page.waitForFunction(() => window.SokratMaterials.isAvailable(), null, { timeout: 20000 });

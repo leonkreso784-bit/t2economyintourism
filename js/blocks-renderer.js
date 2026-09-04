@@ -38,16 +38,11 @@
     return '';                                         // nepoznata/opasna shema
   }
 
-  // ── ikona (Font Awesome) — BUG-025 ──
-  // Ikona ne ide u TEKST nego u `class`, gdje escape nije dovoljan: i escapan navodnik preglednik
-  // pročita kao razdjelnik imena klasa, pa bi autor mogao pridružiti bilo koju klasu. Zato se
-  // ikona ne escapa nego PROVJERAVA oblikom, a sve izvan oblika pada na siguran default.
-  // Izmjereno: svih 137 ikona u katalogu već odgovara ovom obliku → za katalog je promjena no-op.
-  function safeIcon(icon, fallback) {
-    const fb = fallback || 'fa-book';
-    const s = String(icon == null ? '' : icon).trim();
-    return /^fa-[a-z0-9-]+$/.test(s) ? s : fb;
-  }
+  // ── ikona (Font Awesome) — BUG-025; DEFINICIJA JE U `js/utils.js` ──
+  // Preselila se ondje kad je renderer otišao u paket `study`: `profile.js` piše ikonu
+  // predmeta u `innerHTML`, a renderer ne učitava — pa bi mu ovdašnja definicija bila
+  // nedostupna i sve bi ikone tiho pale na knjigu. Prečac, ne kopija.
+  const safeIcon = (icon, fallback) => window.safeIcon(icon, fallback);
 
   // ── YouTube: izvuci + validiraj 11-znakovni video-ID (iz čistog ID-a ili URL-a). ──
   function youtubeId(input) {
@@ -287,39 +282,13 @@
     }
     return '';
   }
-  // ── MREŽA C2: TINTA NA PUNOJ ISPUNI — doseljeno iz js/navigation.js ──
-  // Koja tinta ide NA plohu u boji iz podatka — računato, ne pogođeno. Do 2026-08-15 je
-  // glif pločice nosio `--color-on-brand` (token izračunat za boju MARKE) koji na 11 boja
-  // predmeta nitko nikad nije izmjerio: bijela na `#f59e0b` daje **2.15**. Vraća
-  // 'dark' | 'light' → CSS bira token; NE vraća boju (proizvoljna boja u `style` =
-  // `check:palette` gubi pregled), pa ni `data-ink` nije dinamički sastavljen (ADR-028).
-  // ⚠️ OVDJE, a ne u navigation.js: od C2 tintu troše i study-modovi i editorov
-  // pretpregled (jedan renderer = jedna granica), a editor.html navigation.js NE učitava.
-  /** @param {string} boja hex iz podatka @returns {'dark'|'light'} */
-  function inkForTint(boja) {
-    const m = String(boja || '').trim().match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
-    if (!m) return 'light';                       // nepoznat oblik → stari izgled, bez iznenađenja
-    let h = m[1];
-    if (h.length === 3) h = h.split('').map((c) => c + c).join('');
-    const kanal = [0, 2, 4].map((i) => {
-      const v = parseInt(h.slice(i, i + 2), 16) / 255;
-      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
-    });
-    const L = 0.2126 * kanal[0] + 0.7152 * kanal[1] + 0.0722 * kanal[2];
-    return L > TINT_INK_CROSSOVER ? 'dark' : 'light';
-  }
-
-  // SJECIŠTE dviju tinti: luminancija na kojoj su `--color-on-tint-dark` i `-light` jednako
-  // čitljivi. IZVEDENO iz same definicije WCAG kontrasta, nije pogođeno:
-  //     (L*+0.05)² = (L_dark+0.05)(L_light+0.05)  →  L* = √((L_d+0.05)(L_l+0.05)) − 0.05
-  // Za današnje tokene (#000000 / #ffffff) daje 0.1791.
-  // ⚠️ Prva verzija je imala 0.1833 — napisano napamet, i krivo. Zato ovaj broj od
-  // 2026-08-15 NE stoji sam: `npm run check:contrast` ga preračuna iz `css/tokens.css`
-  // i padne ako se raziđu. Promijeniš li tokene, gate ti kaže novu vrijednost.
-  // ⚠️ 2026-09-01: tamna tinta je s #14161a otišla na ČISTU CRNU — par (#14161a, bijela)
-  // je na svom sjecištu davao 4.26, ISPOD AA, i violet-500 (#8b5cf6, L=0.198) je tu rupu
-  // stvarno pogodio (axe na fill kartici: 4.27). S crnom je najgori slučaj 4.58.
-  const TINT_INK_CROSSOVER = 0.1791;
+  // ── MREŽA C2: TINTA NA PUNOJ ISPUNI — DEFINICIJA JE U `js/utils.js` ──
+  // Ovdje je stajala od C2, dok je landing (`navigation.js`) tintu dobivao odavde. Otkad se
+  // renderer učitava tek s lekcijom (paket `study` u `js/loader.js`), landing bi zbog jedne
+  // čiste funkcije vukao cijeli renderer prije prvog kadra — pa je definicija otišla u
+  // `utils.js`, jedinu datoteku koju učitavaju i `index.html` i `editor.html`. Ovo je
+  // PREČAC, ne kopija: mijenja se ondje, a `check:contrast` prag i dalje preračunava.
+  const inkForTint = (boja) => window.inkForTint(boja);
 
   function applyAccent(el, values) {
     const acc = accentFrom(values);

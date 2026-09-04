@@ -13,11 +13,13 @@
 //
 // Osnovica i pravilo „pada se samo na NOVOM kvaru" su objašnjeni u `phone.spec.js`.
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 const G = require('./helpers/phone-gate');
 
 /** Prijavljen admin; `refresh()` otključava `.admin-only` ulaze prije mjerenja. */
 async function spremanAdmin(page) {
     await page.goto('/');
+    await ucitajPakete(page, ['profile']);
     await G.spreman(page);
     await page.waitForFunction(() => !!window.SokratAdmin);
     await page.evaluate(async () => { await window.SokratAdmin.refresh(); });

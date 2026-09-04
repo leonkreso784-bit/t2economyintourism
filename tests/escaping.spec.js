@@ -10,6 +10,7 @@
 // pouka BUG-024: dokazati da pozivatelj escape STVARNO koristi, ne samo da escape postoji.
 // Podaci su vlastiti (ne ovisi o katalogu) — v. [[tests-must-be-data-independent]].
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 
 // Doslovni zapisi iz kataloga (ono što je pucalo) + klasičan teret za izvršavanje.
 const MATH = '\\(P(Z<z)\\)';
@@ -35,6 +36,9 @@ function fixture() {
 /** Otvori bilo koju rješivu lekciju (treba nam samo živ study-DOM), pa podmetni svoje podatke. */
 async function openStudyWithFixture(page) {
   await page.goto('/');
+  // Načini učenja stižu s paketom `study` (v. `js/loader.js`) — ovaj test ih zove izravno,
+  // prije nego što je lekcija otvorena, pa paket mora zatražiti sam.
+  await ucitajPakete(page, ['study']);
   await page.waitForFunction(() => window.SOKRAT_CATALOG && window.navigateTo
     && window.switchSection && window.startQuiz && window.renderLearnContent);
 

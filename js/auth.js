@@ -160,6 +160,13 @@ const SokratAuth = (function () {
             if (event === 'PASSWORD_RECOVERY') recoveryMode = true;
             updateNavButton();
             renderModalState();
+            // Sinkronizacija napretka treba SAMO prijavljenom korisniku — pa i stiže tek s
+            // njim (v. `js/loader.js`). Modul se sam prijavi na promjene I odmah primijeni
+            // zatečenog korisnika, jer ovaj događaj je već prošao dok se učitavao.
+            // `typeof` guard: `editor.html` ne učitava loader ni sinkronizaciju.
+            if (currentUser && typeof SokratLoad !== 'undefined') {
+                SokratLoad.paket('sync').catch(function (e) { console.warn('[sync]', e); });
+            }
             changeListeners.forEach(function (fn) {
                 try { fn(currentUser, event); } catch (err) { console.warn('[auth] listener:', err); }
             });

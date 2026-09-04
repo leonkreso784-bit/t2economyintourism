@@ -439,12 +439,21 @@ function profileIcon(icon) {
         ? SokratBlocks.safeIcon(icon) : 'fa-book';
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+function vezeProfila() {
     const back = document.getElementById('backFromProfile');
-    if (back) {
+    if (back && !back.dataset.bound) {
+        back.dataset.bound = '1';
         // K2a: jedan model vracanja za cijelu aplikaciju (js/navigation.js).
         back.addEventListener('click', function () {
             if (typeof goBack === 'function') goBack();
         });
     }
-});
+}
+// ⚠️ NE SAMO `DOMContentLoaded`. Od učitavanja po ruti ova skripta stiže s paketom `profile`,
+// dakle NAKON tog događaja — a slušač koji čeka nešto što se već dogodilo ne okine se nikad.
+// Posljedica bi bila gumb „natrag" koji na profilu ne radi ništa.
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', vezeProfila);
+} else {
+    vezeProfila();
+}

@@ -3,6 +3,7 @@
 // a globalni showToast() delegira na komponentu (prikaz .show + tekst, pa auto-sakrivanje).
 // Light-DOM: element zadržava klasu .toast → postojeći CSS (base + responsive) vrijedi nepromijenjeno.
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 
 test('sokrat-toast: registriran kao custom element + #toast je instanca s .show()', async ({ page }) => {
   await page.goto('/');
@@ -227,7 +228,12 @@ test('sokrat-modal: image-viewer (#imageModal, F2 2D.2b) — openLearnImageModal
   page.on('pageerror', (e) => errors.push(e.message));
 
   await page.goto('/');
-  // initLearnImageModal() se zove iz init.js na startu → close-event povezan bez navigacije.
+  // ⚠️ `learn.js` od učitavanja po ruti stiže s paketom `study`, a vezanje close-eventa
+  // (`initLearnImageModal`) s njim — dotad ga je na startu zvao `init.js`. Preduvjet testa
+  // je time postao izričit: modal za sliku ima smisla tek ondje gdje slike i postoje, pa se
+  // paket ovdje traži isto kao što ga traži otvaranje lekcije.
+  await ucitajPakete(page, ['study']);
+  await page.evaluate(() => window.initLearnImageModal());
   await page.waitForFunction(() => !!customElements.get('sokrat-modal') && typeof window.openLearnImageModal === 'function');
 
   // #imageModal je sada <sokrat-modal> (migriran s <div class="image-modal hidden">)

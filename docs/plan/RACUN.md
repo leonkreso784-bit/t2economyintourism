@@ -9,9 +9,9 @@ BACKLOG §R1-UX). **Mail-identitet ✅ 2026-09-04:** pošiljatelj `sokrat@sokrat
 Googleov avatar sa znakom, HR predlošci s potpisom (`supabase/email-templates/`) — time je
 i **temelj R3 postavljen**, ostaje mu samo Edge Function + odjava + admin-forma.
 ⏭️ **Prije R2 idu DVIJE cigle iz [BACKLOG.md](../records/BACKLOG.md) §U TIJEKU** (Leon,
-2026-09-04): **učitavanje po ruti** (izmjereno ~1270 ms bržeg prvog kadra) i **tema stranice
-= izgled maila** (mail već vozi indigo iz znaka; stranica ne). Nisu RAČUN-cigle nego zatečeni
-nalazi, ali imaju prednost jer ih je Leon tražio imenom.
+2026-09-04): ~~**učitavanje po ruti**~~ **✅ isporučeno 2026-09-04** (`js/loader.js`; prvi kadar
+41→22 skripte) i **tema stranice = izgled maila** (mail već vozi indigo iz znaka; stranica ne).
+Nisu RAČUN-cigle nego zatečeni nalazi, ali imaju prednost jer ih je Leon tražio imenom.
 Leon je blok otvorio i PROŠIRIO
 2026-09-02: Facebook uz Google (ne više uvjetno), a blok je izričito i **UX računskih
 površina** (dijalog + profil), ne samo priključak providera. Napomena o dosegu: „frontend gotov (2026-09-01)" se odnosio na
@@ -34,7 +34,7 @@ Google), inače se dijalog prepravlja treći put.
 | # | cigla | gotovo kad korisnik može… |
 |---|---|---|
 | **R1** | **A0 prepravak `#authModal` + UPITNIK pri registraciji + Google- i Facebook-prijava** (jedan zahvat) | …se registrirati Googleom, Facebookom ili e-mailom kroz ISTI dijalog, pri registraciji (i pri PRVOJ OAuth-prijavi!) reći tko je (student/škola + faks; FMTU se prepoznaje) i dati/uskratiti mail-pristanak — a postojeći korisnici se i dalje prijavljuju bez ikakve promjene |
-| **R2** | **Profil** — slika (bucket po `node-images` obrascu: vlasnički prefiks + RLS), uređivanje podataka i izgleda profila | …staviti profilnu sliku, promijeniti ime i vidjeti svoj profil onako kako će ga vidjeti drugi |
+| **R2** | **Profil** — slika (bucket po `node-images` obrascu: vlasnički prefiks + RLS), uređivanje podataka i izgleda profila **+ TEMA PRATI RAČUN** (Leon, 2026-09-04) | …staviti profilnu sliku, promijeniti ime, vidjeti svoj profil onako kako će ga vidjeti drugi — i **zateći svoju temu na svakom uređaju na kojem se prijavi** |
 | **R3** | **Mail-obavijesti** — provider + Edge Function (ADR-016), pristanak iz upitnika; prvi segment = FMTU (obavijest o novim predmetima) | …primiti mail o novom predmetu SAMO ako je pristao, i odjaviti se jednim klikom iz samog maila |
 | — | ~~Facebook = uvjetno~~ ~~Leon 2026-09-02: FB ide u R1 uz Google~~ **Leon 2026-09-02 kasnije: „makni facebook za sada, to ćemo kasnije dodat"** — gumb maknut s produkcije (`FB_LOGIN=false` u auth.js); povratak = Metini ključevi + flip zastavice. Metine upute korak-po-korak stoje u PROGRESS/chatu | — |
 

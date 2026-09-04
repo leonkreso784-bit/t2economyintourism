@@ -6,6 +6,7 @@
 // Dokazuje: stablo se učita i nacrta (RLS-filtrirano) · ugniježđenje i chevron ·
 // korisnički naziv se ESCAPA (sigurnosna granica) · prazno stanje.
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 
 /** Otvori profil s montiranim graditeljem. */
 async function openMaterials(page) {
@@ -15,6 +16,7 @@ async function openMaterials(page) {
     try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
   });
   await page.goto('/');
+  await ucitajPakete(page, ['profile']);
   await page.waitForFunction(() => !!window.SokratMaterials && typeof window.navigateTo === 'function');
   await page.waitForFunction(() => window.SokratMaterials.isAvailable(), null, { timeout: 20000 });
   await page.evaluate(() => navigateTo('materials'));

@@ -2,6 +2,7 @@
 // Auth se tiho gasi ako je supabase-js CDN nedostupan — tada se test preskače
 // (offline okruženje), jer je upravo to željeno ponašanje appa.
 const { test, expect } = require('@playwright/test');
+const { ucitajPakete } = require('./helpers/paketi');
 
 // Pre-set the cookie-consent choice so the fixed bottom banner (which legitimately
 // overlays the bottom of the viewport until dismissed) doesn't intercept clicks on
@@ -81,6 +82,9 @@ test('profile page shows sign-in prompt when signed out and navigates back', asy
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
 
   await page.goto('/');
+  // `profile.js` stiže s istoimenim paketom; `navigateTo('profile')` bi ga i sam dovukao,
+  // ali test ga traži izričito da čekanje ispod ne ovisi o brzini te mreže.
+  await ucitajPakete(page, ['profile']);
   await page.waitForFunction(() => window.navigateTo && window.renderProfilePage);
 
   await page.evaluate(() => navigateTo('profile'));

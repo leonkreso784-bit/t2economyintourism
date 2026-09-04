@@ -58,6 +58,31 @@ function skripte(stranica) {
   return [...new Set(out)];
 }
 
+/**
+ * Paketi iz `js/loader.js` — skripte koje se od učitavanja po ruti NE nalaze u markupu.
+ *
+ * ⚠️ ZAŠTO OVO MORA BITI OVDJE: bez toga bi cigla „učitavanje po ruti" tiho OBORILA ovu branu
+ * s 234 KiB na stotinjak — i to bez ijednog obrisanog retka koda. Brojka bi pala, a tvrdnja
+ * („koliko koda dobije posjetitelj") ostala bi točna samo za prvi kadar. Zato mjerimo OBOJE:
+ * budžet i dalje sudi PRVOM KADRU (to je ono što posjetitelja košta), a paketi se ispisuju i
+ * zbrajaju da rast ne postane nevidljiv seljenjem u lijeni put. Provjera SASTAVA (editorski
+ * kod) gleda i jedno i drugo — editor u paketu je jednako pogrešan kao editor u markupu.
+ *
+ * Datoteka se čita u pješčaniku (`new Function`), ne regexom: manifest je JS i takav treba i
+ * ostati; regex nad njim bi ostario prvom promjenom oblika.
+ */
+function paketi() {
+  const src = fs.readFileSync(path.join(ROOT, 'js', 'loader.js'), 'utf8');
+  const win = {};
+  new Function('window', src)(win);        // `document` je undefined → token ostaje prazan, to je sve
+  const P = (win.SokratLoad || {}).PAKETI || {};
+  const out = {};
+  for (const ime of Object.keys(P)) {
+    out[ime] = P[ime].filter((s) => typeof s === 'string');   // vanjski (CDN) su na `check:cdn`
+  }
+  return out;
+}
+
 function mjeri(popis) {
   let sirovo = 0;
   let mrezom = 0;
@@ -75,11 +100,13 @@ console.log('=== check:budget — posjetiteljev put ===\n');
 
 const posjetitelj = skripte('index.html');
 const m = mjeri(posjetitelj);
+const PAKETI = paketi();
+const lijeno = [...new Set(Object.values(PAKETI).flat())];
 
 let pao = false;
 
-// ① SASTAV
-const uljezi = posjetitelj.filter((f) => EDITORSKE.includes(f));
+// ① SASTAV — i markup i paketi (v. komentar uz `paketi()`)
+const uljezi = [...posjetitelj, ...lijeno].filter((f) => EDITORSKE.includes(f));
 if (uljezi.length) {
   pao = true;
   console.error('❌ EDITORSKI KOD JE NA POSJETITELJEVU PUTU (' + uljezi.length + '):');
@@ -90,10 +117,10 @@ if (uljezi.length) {
   console.log('✅ sastav: nijedna editorska datoteka nije na posjetiteljevu putu.');
 }
 
-// ② TEŽINA
+// ② TEŽINA — sudi PRVOM KADRU
 const prekoracenje = m.mrezom - BUDZET_KB * 1024;
-console.log('   skripti: ' + m.koliko + '  ·  sirovo ' + kb(m.sirovo) + '  ·  mrežom (gzip) ' + kb(m.mrezom)
-  + '  ·  budžet ' + BUDZET_KB + ' KB');
+console.log('   PRVI KADAR: ' + m.koliko + ' skripti  ·  sirovo ' + kb(m.sirovo) + '  ·  mrežom (gzip) '
+  + kb(m.mrezom) + '  ·  budžet ' + BUDZET_KB + ' KB');
 
 if (prekoracenje > 0) {
   pao = true;
@@ -101,6 +128,17 @@ if (prekoracenje > 0) {
   console.error('   Budžet mjeri PRENESENE bajtove (kao Lighthouse), ne veličinu na disku.');
 } else {
   console.log('   zaliha do budžeta: ' + kb(-prekoracenje));
+}
+
+// ③ LIJENI PUT — nije pod budžetom (plaća ga tko otvori lekciju), ali se MORA vidjeti.
+if (lijeno.length) {
+  const l = mjeri(lijeno);
+  console.log('\n   PO RUTI (js/loader.js): ' + l.koliko + ' skripti · ' + kb(l.sirovo) + ' sirovo · '
+    + kb(l.mrezom) + ' mrežom  →  UKUPNO aplikacija ' + kb(m.mrezom + l.mrezom));
+  for (const ime of Object.keys(PAKETI)) {
+    const p = mjeri(PAKETI[ime]);
+    console.log('     • ' + ime.padEnd(11) + p.koliko + ' skripti · ' + kb(p.mrezom) + ' mrežom');
+  }
 }
 
 // Za usporedbu (nije gate — stranica editora smije biti teška, plaća ju tko u nju uđe).
