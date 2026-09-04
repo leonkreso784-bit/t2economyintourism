@@ -57,7 +57,7 @@ Najkraća faza. Tri cigle su izmjerene i čekaju izvedbu, jedna traži da se prv
 
 | cigla | posao | gotovo kad |
 |---|---|---|
-| **F1/1** | **Tema stranice = izgled maila.** Indigo iz znaka na plohe i gumbe, nijansu tamniji na tekst i poveznice. Dira samo temu `academic`. | …stranica i mail izgledaju kao ista marka; `check:contrast` i `check:contrast:live` prolaze bez nove iznimke |
+| **F1/1** ✅ | ~~**Tema stranice = izgled maila.**~~ **Isporučeno 2026-09-04** — `brand-400 #6366f1` (plohe/hover/fokus) · `brand-500 #4f46e5` (tekst i gumbi) · `brand-600 #4338ca` + swatch; `og-cover.png` pregrađen. Brojke i **nalaz o hoveru koji je cigla usput našla**: [BACKLOG.md](../records/BACKLOG.md). | …stranica i mail izgledaju kao ista marka; `check:contrast` 292/292 i `check:contrast:live` **0 ispod praga** |
 | **F1/2** | **Četiri stranice bez teme** — `contact` · `faq` · `privacy` · `terms` nemaju `data-theme` ni `boot.js`. | …korisnik na tamnoj temi otvori Pravila privatnosti i dobije tamnu stranicu |
 | **F1/3** | **Sonda za trzanje pri skrolanju.** Isporuka je **mjera, ne popravak**: kadrovi kroz skriptirani skrol, duge zadaće, koliko je piksela prebojano. | …postoji brojka koja kaže gdje se gube kadrovi — bez nje se ne dira ništa |
 | **F1/4** | **Popravak po nalazu sonde.** Hipoteza se piše TEK nakon F1/3. | …Leon skrola po svom telefonu i kaže da je glatko (on presuđuje, ne brojka) |

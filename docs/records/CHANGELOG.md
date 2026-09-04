@@ -5,6 +5,41 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-04 (OPUS) — **F1/1: stranica je dobila boju vlastitog znaka** (+ Vercel Insights odbijen)
+
+### Promijenjeno
+- **Akcent teme `academic` = indigo iz `assets/logo.svg`.** `--color-brand-400` `#4a82e8` → **`#6366f1`** ·
+  `-500` `#1657d0` → **`#4f46e5`** · `-600` `#0f3f9c` → **`#4338ca`**, plus `--theme-swatch-academic-acc`.
+  Mijenja se na **dva mjesta** (`@theme static` i `:root[data-theme="academic"]`) jer blok postoji da
+  bi izbor teme bio izreciv, a ne samo odsutnost drugih. Ostale teme nedirnute.
+  **Povod:** mail vozi točno `#6366f1` — dakle mailu nikad nismo radili poseban izgled, **stranica je
+  bila ta koja odudara od vlastitog znaka.**
+  ⚠️ **Indigo se vratio, ali NE na mjesto s kojeg je otišao.** Tokeni su nosili zapis da `#6366f1`
+  pada AA — i to **i dalje vrijedi za tekst** (4.47 na bijelom, prag 4.50). Zato je na `400`, gdje je
+  prag 3.0 (plohe, gradijenti, fokus-obrubi, hover), a nosivu ulogu preuzima `#4f46e5` (6.29).
+  **Izmjereno na OBJE strane, ne samo na novoj:** 400 se **popravlja** 3.72 → 4.47 (bitno — na njega
+  `.door--primary:hover` stavlja bijeli tekst), 500 ostaje 6.35 → 6.29, 600 pada 9.50 → 7.90.
+- `og-cover.png` pregrađen (`build:og`) — poveznice u pretpregledu sad nose boju marke.
+- `CLAUDE.md`: `check:contrast` broji **292**, ne 358 (brojka je ostarjela kad je tema `paper` maknuta).
+
+### Nađeno usput (zapisano, NIJE popravljeno)
+- **`.door--primary` na hover pada ispod praga — i padao je i prije.** Gumb prigušuje tekst
+  `color-mix`-om na 88 % / 90 % bijele, a **ti su postotci izmjereni protiv boje koja se u
+  međuvremenu promijenila**. U mirovanju je sve dobro (5.25–6.29); na hover pozadina prelazi na
+  `brand-400` pa `door-d` daje **3.25 → 3.84**. Cigla to **popravlja za pola boda, ali ne zatvara**.
+  ⚠️ **Nijedna brana ovo ne vidi:** `check:contrast` čita tokene i ne zna za `:hover`,
+  `check:contrast:live` crta stranicu u mirovanju. Popravak traži **prvo odluku o izgledu**
+  („svjetlije na hover" je danas zapisano pravilo palete). Mjesto: F4.
+
+### Maknuto
+- **Vercel Speed Insights odbijen** (Leon: *„makni vercel insights"*) — bot-grana obrisana s origina,
+  PR se sam zatvorio. **U repozitorij nikad nije ušao.** Da jest, rušila bi ga tri pravila odjednom:
+  pinane ovisnosti (#9), `check:csp` (ES-modul u 6 HTML-ova) i `check:budget`.
+
+### Gate
+`preflight` EXIT 0 · `check:contrast` 292/292 kroz 4 teme · `check:contrast:live` **0 elemenata ispod
+praga** na 13 ruta × 3 teme · `check:palette` 0 · `check:tokens` bez novog · `build:css` + `bump`.
+
 ## 2026-09-04 (OPUS) — **Suradnik otkazan · RASPORED postaje tekući spec** (+ `main` pomaknut na `e42cd90`)
 
 ### Promijenjeno

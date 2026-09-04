@@ -23,9 +23,9 @@
     --color-ink-2: #5b6879;
     --color-line: #dde4ee;
     --color-line-strong: #7d8a9c;
-    --color-brand-400: #4a82e8;
-    --color-brand-500: #1657d0;
-    --color-brand-600: #0f3f9c;
+    --color-brand-400: #6366f1;
+    --color-brand-500: #4f46e5;
+    --color-brand-600: #4338ca;
     --color-on-brand: #ffffff;
     --color-on-ok: #ffffff;
     --color-on-danger: #ffffff;
@@ -33,7 +33,7 @@
     --color-on-tint-dark: #000000;
     --color-on-tint-light: #ffffff;
     --theme-swatch-academic-bg: #f7f9fc;
-    --theme-swatch-academic-acc: #1657d0;
+    --theme-swatch-academic-acc: #4f46e5;
     --theme-swatch-chalk-bg: #1e1f1c;
     --theme-swatch-chalk-acc: #f2c14e;
     --theme-swatch-mint-bg: #0b1a1c;
@@ -131,9 +131,9 @@
   --color-ink-0: #0e1a2b;
   --color-ink-1: #34455c;
   --color-ink-2: #5b6879;
-  --color-brand-400: #4a82e8;
-  --color-brand-500: #1657d0;
-  --color-brand-600: #0f3f9c;
+  --color-brand-400: #6366f1;
+  --color-brand-500: #4f46e5;
+  --color-brand-600: #4338ca;
   --color-on-brand: #ffffff;
   --color-mark: #ffd24a;
   --color-on-ok: #ffffff;

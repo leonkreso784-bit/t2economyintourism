@@ -20,9 +20,9 @@
     --color-ink-2: #5b6879;
     --color-line: #dde4ee;
     --color-line-strong: #7d8a9c;
-    --color-brand-400: #4a82e8;
-    --color-brand-500: #1657d0;
-    --color-brand-600: #0f3f9c;
+    --color-brand-400: #6366f1;
+    --color-brand-500: #4f46e5;
+    --color-brand-600: #4338ca;
     --color-on-brand: #ffffff;
     --color-on-ok: #ffffff;
     --color-on-danger: #ffffff;
@@ -30,7 +30,7 @@
     --color-on-tint-dark: #000000;
     --color-on-tint-light: #ffffff;
     --theme-swatch-academic-bg: #f7f9fc;
-    --theme-swatch-academic-acc: #1657d0;
+    --theme-swatch-academic-acc: #4f46e5;
     --theme-swatch-chalk-bg: #1e1f1c;
     --theme-swatch-chalk-acc: #f2c14e;
     --theme-swatch-mint-bg: #0b1a1c;
@@ -126,9 +126,9 @@
   --color-ink-0: #0e1a2b;
   --color-ink-1: #34455c;
   --color-ink-2: #5b6879;
-  --color-brand-400: #4a82e8;
-  --color-brand-500: #1657d0;
-  --color-brand-600: #0f3f9c;
+  --color-brand-400: #6366f1;
+  --color-brand-500: #4f46e5;
+  --color-brand-600: #4338ca;
   --color-on-brand: #ffffff;
   --color-mark: #ffd24a;
   --color-on-ok: #ffffff;
@@ -282,7 +282,7 @@ section[id$="-page"] {
 }
 .landing-page.active {
   background-color: var(--color-surface-0);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='z'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23z)' opacity='0.035'/%3E%3C/svg%3E"),  radial-gradient(58rem 38rem at 12% -8%, color-mix(in srgb, #1657d0 13%, transparent), transparent 68%),  repeating-linear-gradient(to right, color-mix(in srgb, #0e1a2b 5%, transparent) 0 1px, transparent 1px 64px), repeating-linear-gradient(to bottom, color-mix(in srgb, #0e1a2b 5%, transparent) 0 1px, transparent 1px 64px),  repeating-linear-gradient(to right, color-mix(in srgb, #0e1a2b 2.5%, transparent) 0 1px, transparent 1px 16px), repeating-linear-gradient(to bottom, color-mix(in srgb, #0e1a2b 2.5%, transparent) 0 1px, transparent 1px 16px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='z'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23z)' opacity='0.035'/%3E%3C/svg%3E"),  radial-gradient(58rem 38rem at 12% -8%, color-mix(in srgb, #4f46e5 13%, transparent), transparent 68%),  repeating-linear-gradient(to right, color-mix(in srgb, #0e1a2b 5%, transparent) 0 1px, transparent 1px 64px), repeating-linear-gradient(to bottom, color-mix(in srgb, #0e1a2b 5%, transparent) 0 1px, transparent 1px 64px),  repeating-linear-gradient(to right, color-mix(in srgb, #0e1a2b 2.5%, transparent) 0 1px, transparent 1px 16px), repeating-linear-gradient(to bottom, color-mix(in srgb, #0e1a2b 2.5%, transparent) 0 1px, transparent 1px 16px);
   @supports (color: color-mix(in lab, red, red)) {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='z'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23z)' opacity='0.035'/%3E%3C/svg%3E"),  radial-gradient(58rem 38rem at 12% -8%, color-mix(in srgb, var(--color-brand-500) 13%, transparent), transparent 68%),  repeating-linear-gradient(to right, color-mix(in srgb, var(--color-ink-0) 5%, transparent) 0 1px, transparent 1px 64px), repeating-linear-gradient(to bottom, color-mix(in srgb, var(--color-ink-0) 5%, transparent) 0 1px, transparent 1px 64px),  repeating-linear-gradient(to right, color-mix(in srgb, var(--color-ink-0) 2.5%, transparent) 0 1px, transparent 1px 16px), repeating-linear-gradient(to bottom, color-mix(in srgb, var(--color-ink-0) 2.5%, transparent) 0 1px, transparent 1px 16px);
   }
@@ -1150,7 +1150,7 @@ section[id$="-page"] {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(120% 120% at 0% 0%, var(--card-accent, #1657d0), transparent 60%);
+  background: radial-gradient(120% 120% at 0% 0%, var(--card-accent, #4f46e5), transparent 60%);
   @supports (color: color-mix(in lab, red, red)) {
     background: radial-gradient(120% 120% at 0% 0%, color-mix(in srgb, var(--card-accent, var(--color-brand-500)) 14%, transparent), transparent 60%);
   }
@@ -1633,11 +1633,11 @@ body:has(.landing-page.active) .footer, body:has(.browse-page.active) .footer {
   border: 1px solid var(--color-line);
 }
 .cta-button.secondary:hover {
-  border-color: color-mix(in srgb, #1657d0 55%, transparent);
+  border-color: color-mix(in srgb, #4f46e5 55%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border-color: color-mix(in srgb, var(--color-brand-500) 55%, transparent);
   }
-  background: color-mix(in srgb, #1657d0 12%, transparent);
+  background: color-mix(in srgb, #4f46e5 12%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
   }
@@ -1935,7 +1935,7 @@ sokrat-modal.sokrat-confirm-modal > * {
 }
 .action-btn.primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px color-mix(in srgb, #1657d0 30%, transparent);
+  box-shadow: 0 8px 16px color-mix(in srgb, #4f46e5 30%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 8px 16px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
   }
@@ -2500,7 +2500,7 @@ sokrat-modal.sokrat-confirm-modal > * {
 }
 .start-quiz-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px color-mix(in srgb, #1657d0 30%, transparent);
+  box-shadow: 0 8px 16px color-mix(in srgb, #4f46e5 30%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 8px 16px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
   }
@@ -2583,7 +2583,7 @@ sokrat-modal.sokrat-confirm-modal > * {
 }
 .answer-btn:hover:not(.disabled) {
   border-color: var(--color-brand-500);
-  background: color-mix(in srgb, #1657d0 10%, transparent);
+  background: color-mix(in srgb, #4f46e5 10%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 10%, transparent);
   }
@@ -2654,7 +2654,7 @@ sokrat-modal.sokrat-confirm-modal > * {
 }
 .quiz-nav-btn:hover {
   border-color: var(--color-brand-500);
-  background: color-mix(in srgb, #1657d0 10%, transparent);
+  background: color-mix(in srgb, #4f46e5 10%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 10%, transparent);
   }
@@ -3430,7 +3430,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   background: linear-gradient(135deg, var(--color-brand-500), var(--color-ok-strong, var(--color-brand-500)));
   color: var(--color-on-brand);
   border-color: transparent;
-  box-shadow: 0 4px 12px color-mix(in srgb, #1657d0 30%, transparent);
+  box-shadow: 0 4px 12px color-mix(in srgb, #4f46e5 30%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 4px 12px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
   }
@@ -3490,7 +3490,7 @@ sokrat-modal.sokrat-confirm-modal > * {
 }
 .map-submit-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px color-mix(in srgb, #1657d0 30%, transparent);
+  box-shadow: 0 6px 12px color-mix(in srgb, #4f46e5 30%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 6px 12px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
   }
@@ -3713,7 +3713,7 @@ sokrat-modal.sokrat-confirm-modal > * {
 .ex-input:focus, .ex-select:focus {
   outline: none;
   border-color: var(--color-brand-500);
-  box-shadow: 0 0 0 3px color-mix(in srgb, #1657d0 25%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, #4f46e5 25%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand-500) 25%, transparent);
   }
@@ -4188,7 +4188,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   }
   .action-btn.primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 20px color-mix(in srgb, #1657d0 30%, transparent);
+    box-shadow: 0 10px 20px color-mix(in srgb, #4f46e5 30%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       box-shadow: 0 10px 20px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
     }
@@ -4430,7 +4430,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  box-shadow: 0 4px 15px color-mix(in srgb, #1657d0 30%, transparent);
+  box-shadow: 0 4px 15px color-mix(in srgb, #4f46e5 30%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 4px 15px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
   }
@@ -4494,7 +4494,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   border-color: var(--color-brand-500);
   background: var(--color-brand-600);
   color: var(--color-on-brand);
-  box-shadow: 0 2px 8px color-mix(in srgb, #1657d0 40%, transparent);
+  box-shadow: 0 2px 8px color-mix(in srgb, #4f46e5 40%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 2px 8px color-mix(in srgb, var(--color-brand-500) 40%, transparent);
   }
@@ -4665,7 +4665,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--color-ink-1);
 }
 :where(#learn) .learn-card-content .highlight {
-  background: color-mix(in srgb, #1657d0 15%, transparent);
+  background: color-mix(in srgb, #4f46e5 15%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 15%, transparent);
   }
@@ -4700,14 +4700,14 @@ sokrat-modal.sokrat-confirm-modal > * {
   border-left-color: var(--color-danger);
 }
 :where(#learn) .example-box, :where(#learn) .learn-card-content .example-box {
-  background: color-mix(in srgb, #1657d0 10%, transparent);
+  background: color-mix(in srgb, #4f46e5 10%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 10%, transparent);
   }
   border-left-color: var(--color-brand-500);
 }
 :where(#learn) .formula-box, :where(#learn) .learn-card-content .formula-box {
-  background: color-mix(in srgb, #1657d0 6%, transparent);
+  background: color-mix(in srgb, #4f46e5 6%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 6%, transparent);
   }
@@ -5121,7 +5121,7 @@ h4.lb-heading {
   border-radius: 10px;
   padding: 0.9em 1.1em;
   margin: 1.2em 0;
-  background: color-mix(in srgb, #1657d0 8%, transparent);
+  background: color-mix(in srgb, #4f46e5 8%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 8%, transparent);
   }
@@ -5172,7 +5172,7 @@ h4.lb-heading {
   transition: background 0.2s ease;
 }
 .lb-video__play:hover {
-  background: color-mix(in srgb, #1657d0 12%, transparent);
+  background: color-mix(in srgb, #4f46e5 12%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
   }
@@ -5403,7 +5403,7 @@ h4.lb-heading {
 .be-block.be-dragging {
   opacity: .4;
   border-style: dashed;
-  border-color: color-mix(in srgb, #1657d0 50%, transparent);
+  border-color: color-mix(in srgb, #4f46e5 50%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border-color: color-mix(in srgb, var(--color-brand-500) 50%, transparent);
   }
@@ -5415,7 +5415,7 @@ h4.lb-heading {
   pointer-events: none;
   z-index: 1450;
   background: var(--color-brand-500);
-  box-shadow: 0 0 8px 1px color-mix(in srgb, #1657d0 60%, transparent);
+  box-shadow: 0 0 8px 1px color-mix(in srgb, #4f46e5 60%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 0 8px 1px color-mix(in srgb, var(--color-brand-500) 60%, transparent);
   }
@@ -5434,7 +5434,7 @@ h4.lb-heading {
   font-weight: 600;
   color: var(--color-ink-0);
   background: var(--color-surface-1);
-  border: 1px solid color-mix(in srgb, #1657d0 55%, transparent);
+  border: 1px solid color-mix(in srgb, #4f46e5 55%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border: 1px solid color-mix(in srgb, var(--color-brand-500) 55%, transparent);
   }
@@ -5483,7 +5483,7 @@ h4.lb-heading {
   height: 2px;
   transform: translateY(-50%);
   border-radius: 2px;
-  background: linear-gradient(90deg, transparent, color-mix(in srgb, #1657d0 40%, transparent) 18%, color-mix(in srgb, #1657d0 40%, transparent) 82%, transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, #4f46e5 40%, transparent) 18%, color-mix(in srgb, #4f46e5 40%, transparent) 82%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-brand-500) 40%, transparent) 18%, color-mix(in srgb, var(--color-brand-500) 40%, transparent) 82%, transparent);
   }
@@ -5500,7 +5500,7 @@ h4.lb-heading {
   line-height: 1;
   color: var(--color-brand-500);
   background: var(--color-surface-1);
-  border: 1.5px solid color-mix(in srgb, #1657d0 55%, transparent);
+  border: 1.5px solid color-mix(in srgb, #4f46e5 55%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border: 1.5px solid color-mix(in srgb, var(--color-brand-500) 55%, transparent);
   }
@@ -5522,7 +5522,7 @@ h4.lb-heading {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 1.5px dashed color-mix(in srgb, #1657d0 34%, transparent);
+  border: 1.5px dashed color-mix(in srgb, #4f46e5 34%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border: 1.5px dashed color-mix(in srgb, var(--color-brand-500) 34%, transparent);
   }
@@ -5530,7 +5530,7 @@ h4.lb-heading {
   color: var(--color-ink-2);
   font-size: 13.5px;
   font-weight: 600;
-  background: color-mix(in srgb, #1657d0 5%, transparent);
+  background: color-mix(in srgb, #4f46e5 5%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 5%, transparent);
   }
@@ -5539,11 +5539,11 @@ h4.lb-heading {
 .be-bigplus:hover {
   border-color: var(--color-brand-500);
   color: var(--color-brand-500);
-  background: color-mix(in srgb, #1657d0 12%, transparent);
+  background: color-mix(in srgb, #4f46e5 12%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
   }
-  box-shadow: 0 0 0 3px color-mix(in srgb, #1657d0 9%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, #4f46e5 9%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand-500) 9%, transparent);
   }
@@ -5593,11 +5593,11 @@ h4.lb-heading {
   background: var(--color-surface-2);
 }
 .be-edit:focus {
-  background: color-mix(in srgb, #1657d0 8%, transparent);
+  background: color-mix(in srgb, #4f46e5 8%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 8%, transparent);
   }
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, #1657d0 45%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #4f46e5 45%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-brand-500) 45%, transparent);
   }
@@ -5697,7 +5697,7 @@ h4.lb-heading {
   box-shadow: inset 0 0 0 1px var(--color-line);
 }
 .be-tbc:hover::after {
-  box-shadow: inset 0 0 0 1px var(--color-line-strong), 0 0 0 2px color-mix(in srgb, #1657d0 40%, transparent);
+  box-shadow: inset 0 0 0 1px var(--color-line-strong), 0 0 0 2px color-mix(in srgb, #4f46e5 40%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: inset 0 0 0 1px var(--color-line-strong), 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 40%, transparent);
   }
@@ -5780,7 +5780,7 @@ h4.lb-heading {
 }
 .be-cvar:hover {
   color: var(--color-on-brand);
-  border-color: color-mix(in srgb, #1657d0 50%, transparent);
+  border-color: color-mix(in srgb, #4f46e5 50%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border-color: color-mix(in srgb, var(--color-brand-500) 50%, transparent);
   }
@@ -5822,7 +5822,7 @@ h4.lb-heading {
 }
 .be-mfield:focus {
   border-color: var(--color-brand-400);
-  box-shadow: 0 0 0 2px color-mix(in srgb, #1657d0 20%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, #4f46e5 20%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 20%, transparent);
   }
@@ -5844,7 +5844,7 @@ h4.lb-heading {
 }
 .be-upload--over {
   border-color: var(--color-brand-500);
-  background: color-mix(in srgb, #1657d0 14%, transparent);
+  background: color-mix(in srgb, #4f46e5 14%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 14%, transparent);
   }
@@ -5921,14 +5921,14 @@ h4.lb-heading {
   outline: none;
   transition: .13s;
   --caret-color: var(--color-brand-400);
-  --selection-background-color: color-mix(in srgb, #1657d0 35%, transparent);
+  --selection-background-color: color-mix(in srgb, #4f46e5 35%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     --selection-background-color: color-mix(in srgb, var(--color-brand-500) 35%, transparent);
   }
 }
 .be-mathfield:focus-within {
   border-color: var(--color-brand-400);
-  box-shadow: 0 0 0 2px color-mix(in srgb, #1657d0 20%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, #4f46e5 20%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 20%, transparent);
   }
@@ -5969,11 +5969,11 @@ h4.lb-heading {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: color-mix(in srgb, #1657d0 12%, transparent);
+  background: color-mix(in srgb, #4f46e5 12%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
   }
-  border: 1px solid color-mix(in srgb, #1657d0 30%, transparent);
+  border: 1px solid color-mix(in srgb, #4f46e5 30%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border: 1px solid color-mix(in srgb, var(--color-brand-500) 30%, transparent);
   }
@@ -5987,7 +5987,7 @@ h4.lb-heading {
   width: 100%;
 }
 .be-mathkey:hover {
-  background: color-mix(in srgb, #1657d0 26%, transparent);
+  background: color-mix(in srgb, #4f46e5 26%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 26%, transparent);
   }
@@ -6026,7 +6026,7 @@ h4.lb-heading {
 }
 .be-tcell:focus {
   border-color: var(--color-brand-400);
-  box-shadow: 0 0 0 2px color-mix(in srgb, #1657d0 20%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, #4f46e5 20%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 20%, transparent);
   }
@@ -6037,11 +6037,11 @@ h4.lb-heading {
 }
 .be-tcell--h {
   font-weight: 700;
-  background: color-mix(in srgb, #1657d0 12%, transparent);
+  background: color-mix(in srgb, #4f46e5 12%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
   }
-  border-color: color-mix(in srgb, #1657d0 30%, transparent);
+  border-color: color-mix(in srgb, #4f46e5 30%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border-color: color-mix(in srgb, var(--color-brand-500) 30%, transparent);
   }
@@ -6073,11 +6073,11 @@ h4.lb-heading {
   font-size: 12.5px;
   font-weight: 600;
   color: var(--color-ink-2);
-  background: color-mix(in srgb, #1657d0 6%, transparent);
+  background: color-mix(in srgb, #4f46e5 6%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 6%, transparent);
   }
-  border: 1px dashed color-mix(in srgb, #1657d0 32%, transparent);
+  border: 1px dashed color-mix(in srgb, #4f46e5 32%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border: 1px dashed color-mix(in srgb, var(--color-brand-500) 32%, transparent);
   }
@@ -6086,7 +6086,7 @@ h4.lb-heading {
 .be-tbtn:hover {
   border-color: var(--color-brand-500);
   color: var(--color-brand-500);
-  background: color-mix(in srgb, #1657d0 12%, transparent);
+  background: color-mix(in srgb, #4f46e5 12%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
   }
@@ -6117,7 +6117,7 @@ h4.lb-heading {
 }
 .be-cdot:hover {
   transform: scale(1.15);
-  box-shadow: 0 0 0 2px color-mix(in srgb, #1657d0 40%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, #4f46e5 40%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 40%, transparent);
   }
@@ -6141,7 +6141,7 @@ h4.lb-heading {
   --st-rail: var(--color-surface-2);
   --st-sunken: var(--color-surface-2);
   --st-fill: var(--color-brand-500);
-  --st-glow: 0 0 22px color-mix(in srgb, #1657d0 30%, transparent);
+  --st-glow: 0 0 22px color-mix(in srgb, #4f46e5 30%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     --st-glow: 0 0 22px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
   }
@@ -6321,7 +6321,7 @@ h4.lb-heading {
   background: var(--st-sunken);
 }
 #editor-page .st-node .st-row.active {
-  background: color-mix(in srgb, #1657d0 14%, transparent);
+  background: color-mix(in srgb, #4f46e5 14%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 14%, transparent);
   }
@@ -6397,7 +6397,7 @@ h4.lb-heading {
 #editor-page .st-canvas {
   overflow-y: auto;
   min-width: 0;
-  background: radial-gradient(900px 300px at 50% -80px,color-mix(in srgb, #1657d0 9%, transparent),transparent), radial-gradient(color-mix(in srgb, #5b6879 16%, transparent) 1px,transparent 1px);
+  background: radial-gradient(900px 300px at 50% -80px,color-mix(in srgb, #4f46e5 9%, transparent),transparent), radial-gradient(color-mix(in srgb, #5b6879 16%, transparent) 1px,transparent 1px);
   @supports (color: color-mix(in lab, red, red)) {
     background: radial-gradient(900px 300px at 50% -80px,color-mix(in srgb, var(--color-brand-500) 9%, transparent),transparent), radial-gradient(color-mix(in srgb, var(--color-ink-2) 16%, transparent) 1px,transparent 1px);
   }
@@ -6520,13 +6520,13 @@ h4.lb-heading {
   place-items: center;
   font-size: 12px;
   flex-shrink: 0;
-  background: color-mix(in srgb, #1657d0 16%, transparent);
+  background: color-mix(in srgb, #4f46e5 16%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 16%, transparent);
   }
   color: var(--color-brand-500);
   font-weight: 800;
-  border: 1px solid color-mix(in srgb, #1657d0 30%, transparent);
+  border: 1px solid color-mix(in srgb, #4f46e5 30%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border: 1px solid color-mix(in srgb, var(--color-brand-500) 30%, transparent);
   }
@@ -6655,7 +6655,7 @@ h4.lb-heading {
 }
 #editor-page .st-learn-cat.st-dragging {
   opacity: .5;
-  outline: 1px dashed color-mix(in srgb, #1657d0 50%, transparent);
+  outline: 1px dashed color-mix(in srgb, #4f46e5 50%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     outline: 1px dashed color-mix(in srgb, var(--color-brand-500) 50%, transparent);
   }
@@ -6710,7 +6710,7 @@ h4.lb-heading {
 }
 #editor-page .st-cdot:hover {
   transform: scale(1.15);
-  box-shadow: 0 0 0 2px color-mix(in srgb, #1657d0 40%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, #4f46e5 40%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 40%, transparent);
   }
@@ -6740,11 +6740,11 @@ h4.lb-heading {
   gap: 8px;
   padding: 9px 15px;
   border-radius: 11px;
-  border: 1.5px dashed color-mix(in srgb, #1657d0 50%, transparent);
+  border: 1.5px dashed color-mix(in srgb, #4f46e5 50%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border: 1.5px dashed color-mix(in srgb, var(--color-brand-500) 50%, transparent);
   }
-  background: color-mix(in srgb, #1657d0 6%, transparent);
+  background: color-mix(in srgb, #4f46e5 6%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 6%, transparent);
   }
@@ -6757,7 +6757,7 @@ h4.lb-heading {
 }
 #editor-page .st-migrate:hover {
   border-color: var(--color-brand-500);
-  background: color-mix(in srgb, #1657d0 12%, transparent);
+  background: color-mix(in srgb, #4f46e5 12%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
   }
@@ -6995,11 +6995,11 @@ h4.lb-heading {
   border: 2px solid transparent;
 }
 #editor-page .st-premium {
-  background: linear-gradient(120deg,color-mix(in srgb, #1657d0 16%, transparent),color-mix(in srgb, #8a5800 12%, transparent),color-mix(in srgb, #1657d0 16%, transparent));
+  background: linear-gradient(120deg,color-mix(in srgb, #4f46e5 16%, transparent),color-mix(in srgb, #8a5800 12%, transparent),color-mix(in srgb, #4f46e5 16%, transparent));
   @supports (color: color-mix(in lab, red, red)) {
     background: linear-gradient(120deg,color-mix(in srgb, var(--color-brand-500) 16%, transparent),color-mix(in srgb, var(--color-warn) 12%, transparent),color-mix(in srgb, var(--color-brand-500) 16%, transparent));
   }
-  border: 1px solid color-mix(in srgb, #1657d0 40%, transparent);
+  border: 1px solid color-mix(in srgb, #4f46e5 40%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border: 1px solid color-mix(in srgb, var(--color-brand-500) 40%, transparent);
   }
@@ -7113,7 +7113,7 @@ h4.lb-heading {
   transition: .15s;
 }
 #editor-page .st-metas .st-m:hover:not(.st-editing) {
-  border-color: color-mix(in srgb, #1657d0 35%, transparent);
+  border-color: color-mix(in srgb, #4f46e5 35%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border-color: color-mix(in srgb, var(--color-brand-500) 35%, transparent);
   }
@@ -7128,11 +7128,11 @@ h4.lb-heading {
   padding: 16px 14px;
   border-radius: 14px;
   text-align: center;
-  background: color-mix(in srgb, #1657d0 10%, transparent);
+  background: color-mix(in srgb, #4f46e5 10%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 10%, transparent);
   }
-  border: 1px solid color-mix(in srgb, #1657d0 28%, transparent);
+  border: 1px solid color-mix(in srgb, #4f46e5 28%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border: 1px solid color-mix(in srgb, var(--color-brand-500) 28%, transparent);
   }
@@ -7183,7 +7183,7 @@ h4.lb-heading {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 1.5px dashed color-mix(in srgb, #1657d0 45%, transparent);
+  border: 1.5px dashed color-mix(in srgb, #4f46e5 45%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border: 1.5px dashed color-mix(in srgb, var(--color-brand-500) 45%, transparent);
   }
@@ -7191,7 +7191,7 @@ h4.lb-heading {
   color: var(--color-brand-500);
   font-size: 14px;
   font-weight: 700;
-  background: color-mix(in srgb, #1657d0 8%, transparent);
+  background: color-mix(in srgb, #4f46e5 8%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 8%, transparent);
   }
@@ -7199,11 +7199,11 @@ h4.lb-heading {
 }
 #editor-page .st-addcat-foot:hover {
   border-color: var(--color-brand-500);
-  background: color-mix(in srgb, #1657d0 14%, transparent);
+  background: color-mix(in srgb, #4f46e5 14%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 14%, transparent);
   }
-  box-shadow: 0 0 0 3px color-mix(in srgb, #1657d0 9%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, #4f46e5 9%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand-500) 9%, transparent);
   }
@@ -7570,7 +7570,7 @@ sokrat-modal.auth-modal > * {
   color: var(--color-ink-0);
 }
 .auth-modal__tab.is-active {
-  background: color-mix(in srgb, #1657d0 18%, transparent);
+  background: color-mix(in srgb, #4f46e5 18%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 18%, transparent);
   }
@@ -7616,7 +7616,7 @@ sokrat-modal.auth-modal > * {
   transition: border-color 0.2s ease;
 }
 .auth-modal__input:focus {
-  border-color: color-mix(in srgb, #1657d0 65%, transparent);
+  border-color: color-mix(in srgb, #4f46e5 65%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border-color: color-mix(in srgb, var(--color-brand-500) 65%, transparent);
   }
@@ -7763,7 +7763,7 @@ sokrat-modal.auth-modal > * {
 .auth-role input:checked + span {
   border-color: var(--color-brand-500);
   color: var(--color-brand-500);
-  background: color-mix(in srgb, #1657d0 10%, #ffffff);
+  background: color-mix(in srgb, #4f46e5 10%, #ffffff);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 10%, var(--color-surface-1));
   }
@@ -7844,7 +7844,7 @@ sokrat-modal.auth-modal > * {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: color-mix(in srgb, #1657d0 15%, transparent);
+  background: color-mix(in srgb, #4f46e5 15%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 15%, transparent);
   }
@@ -7917,11 +7917,11 @@ sokrat-modal.auth-modal > * {
 .profile-total {
   flex: 1;
   min-width: 120px;
-  background: color-mix(in srgb, #1657d0 8%, transparent);
+  background: color-mix(in srgb, #4f46e5 8%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 8%, transparent);
   }
-  border: 1px solid color-mix(in srgb, #1657d0 25%, transparent);
+  border: 1px solid color-mix(in srgb, #4f46e5 25%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border: 1px solid color-mix(in srgb, var(--color-brand-500) 25%, transparent);
   }
@@ -8046,11 +8046,11 @@ sokrat-modal.auth-modal > * {
 }
 .header-auth-btn:hover {
   color: var(--color-ink-0);
-  border-color: color-mix(in srgb, #1657d0 55%, transparent);
+  border-color: color-mix(in srgb, #4f46e5 55%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     border-color: color-mix(in srgb, var(--color-brand-500) 55%, transparent);
   }
-  background: color-mix(in srgb, #1657d0 12%, transparent);
+  background: color-mix(in srgb, #4f46e5 12%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
   }
@@ -8588,7 +8588,7 @@ sokrat-modal.auth-modal > * {
 .mm-add:hover {
   border-color: var(--color-brand-500);
   color: var(--color-ink-0);
-  background: color-mix(in srgb, #1657d0 12%, transparent);
+  background: color-mix(in srgb, #4f46e5 12%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
   }
@@ -8619,7 +8619,7 @@ sokrat-modal.auth-modal > * {
   border-bottom: 0;
 }
 .mm-row:hover {
-  background: color-mix(in srgb, #1657d0 8%, transparent);
+  background: color-mix(in srgb, #4f46e5 8%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 8%, transparent);
   }
@@ -8648,7 +8648,7 @@ sokrat-modal.auth-modal > * {
   opacity: 0.45;
 }
 .mm-row--into {
-  background: color-mix(in srgb, #1657d0 22%, transparent);
+  background: color-mix(in srgb, #4f46e5 22%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 22%, transparent);
   }
@@ -8661,7 +8661,7 @@ sokrat-modal.auth-modal > * {
   display: none;
   pointer-events: none;
   background: var(--color-brand-500);
-  box-shadow: 0 0 8px color-mix(in srgb, #1657d0 80%, transparent);
+  box-shadow: 0 0 8px color-mix(in srgb, #4f46e5 80%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 0 8px color-mix(in srgb, var(--color-brand-500) 80%, transparent);
   }
@@ -8792,7 +8792,7 @@ body.mm-dragging {
   color: var(--color-warn);
 }
 .mm-row--edit {
-  background: color-mix(in srgb, #1657d0 10%, transparent);
+  background: color-mix(in srgb, #4f46e5 10%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 10%, transparent);
   }

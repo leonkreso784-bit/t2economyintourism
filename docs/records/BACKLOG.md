@@ -149,6 +149,21 @@ ucitavaju i `index.html` i `editor.html`. `SokratBlocks.*` ostaju kao precaci (i
 **Ostaje otvoreno (ne blokira):** `assets/logo.svg` je **45 KB na disku** za znak od 32 px, a
 `check:budget` mjeri SAMO skripte — 253 KB fontova nije ni vidio.
 
+**2. Tema stranice = izgled maila** ✅ **ISPORUČENO 2026-09-04 (cigla F1/1)** — `brand-400 #6366f1` (plohe/hover/fokus, prag 3.0) · `brand-500 #4f46e5` (tekst i gumbi, 6.29) · `brand-600 #4338ca`; uz njih i `--theme-swatch-academic-acc`. Dira SAMO `academic`.
+**Izmjereno pri zamjeni** (obje strane, ne samo nova): 400 se **popravlja** 3.72 → 4.47 · 500 ostaje 6.35 → 6.29 · 600 pada 9.50 → 7.90, sve iznad svog praga. `check:contrast` 292/292 · `check:contrast:live` **0 elemenata ispod praga** na 13 ruta × 3 teme · `check:palette` 0 · `check:tokens` bez novog. `og-cover.png` pregraden (poveznice u boji marke).
+
+> 🔎 **NALAZ KOJI JE CIGLA USPUT NAŠLA — hover na `.door--primary` je ispod praga, i BIO JE i prije.**
+> Taj gumb prigušuje tekst `color-mix`-om (88 % / 90 % bijele), a **postotci su izmjereni protiv
+> boje koja se u međuvremenu promijenila**. U mirovanju je sve dobro (5.25–6.29), ali na **hover**
+> pozadina prelazi na `brand-400`, pa tekst pada: `door-d` **3.25 → 3.84**, `door-m` 3.32 → 3.94,
+> `door-t` 3.72 → 4.47. **Cigla F1/1 to POPRAVLJA za pola boda, ali ne zatvara** — zato stoji ovdje.
+> ⚠️ **Nijedna brana ovo ne vidi:** `check:contrast` čita tokene (ne zna za `:hover`), a
+> `check:contrast:live` crta stranicu **u mirovanju**. Popravak je jedan od dvoje — ili hover ide na
+> `brand-600` (tamnije, 7.90) umjesto na 400, ili se postotci prigušenja dižu. **Prvo odluka o
+> izgledu** („svjetlije na hover“ je danas zapisano pravilo palete), pa tek onda kod. Mjesto: F4.
+
+<details><summary>Izvorni zapis — mjere koje su ciglu smjestile</summary>
+
 **2. Tema stranice = izgled maila** (Leon: *„frontend theme da ima isti kao i sta mejl salje"*).
 **IZMJERENO 2026-09-04 — nalaz je bolji nego sto je izgledalo.**
 
@@ -186,6 +201,8 @@ temu uopce** (nema `data-theme` ni `theme.js`, voze `tokens.static.css`) → kor
 temi ondje dobije svijetlu stranicu. Nije bljesak nego **nedostatak teme**.
 **Brane koje ce presuditi:** `check:contrast` · `check:contrast:live` (crta stvarni ekran) ·
 `check:palette` (zakucane ispune) · `check:tokens`. Poslije izmjene: `build:css` → `bump`.
+
+</details>
 
 ### ✅ R1-UX NALAZI (Leon uzivo, 2026-09-02) — SVE ZATVORENO (U1+U2+U5 deployani · U3+U4 Leon konzole)
 

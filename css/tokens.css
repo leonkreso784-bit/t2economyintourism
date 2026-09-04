@@ -109,13 +109,21 @@
   --color-line-strong: #7d8a9c;
 
   /* Marka. 500 = nosiva, 400 = svjetlija (hover), 600 = tamnija (pritisak).
-     Za usporedbu, stari `--primary` #6366f1 na staroj podlozi davao je 4.00, dakle
-     današnja produkcija PADA AA za tekst u boji marke. Redizajn to usput popravlja.
-     Točne vrijednosti kontrasta po plohi vrti `npm run check:contrast` — ne prepisuju
-     se ovdje, jer bi kopija ostarjela pri prvoj promjeni palete (ADR-027). */
-  --color-brand-400: #4a82e8;
-  --color-brand-500: #1657d0;
-  --color-brand-600: #0f3f9c;
+
+     ⚠️ INDIGO SE VRATIO 2026-09-04, ALI NE NA MJESTO S KOJEG JE OTIŠAO.
+     Ovdje je stajalo da stari `--primary` #6366f1 pada AA — i to je **i dalje točno za
+     TEKST** (na bijelom daje 4.47, prag je 4.50; fali 0.03). Zato se vratio SAMO na 400,
+     gdje je prag 3.0 jer to nose plohe, gradijenti, fokus-obrubi i hover — a nosivu ulogu
+     preuzima nijansu tamniji #4f46e5 (6.29), koji se okom od njega ne razlikuje.
+     Povod: mail vozi TOČNO #6366f1 iz `assets/logo.svg`, dakle mailu nikad nismo radili
+     poseban izgled — stranica je bila ta koja odudara od vlastitog znaka.
+     Mjereno pri zamjeni: 400 se popravlja 3.72 → 4.47 (bitno, jer `.door--primary:hover`
+     stavlja bijeli tekst na 400), 500 ostaje 6.35 → 6.29, 600 pada 9.50 → 7.90.
+     Točne vrijednosti po plohi vrti `npm run check:contrast` — ne prepisuju se ovdje,
+     jer bi kopija ostarjela pri prvoj promjeni palete (ADR-027). */
+  --color-brand-400: #6366f1;
+  --color-brand-500: #4f46e5;
+  --color-brand-600: #4338ca;
 
   /* ⚠️ TEKST NA ISPUNI MARKE MORA BITI TAMAN, NE BIJEL.
      Kreda-žuta je svijetla boja: #F2C14E + bijelo = 1.86 (pada i za veliki tekst),
@@ -165,7 +173,7 @@
      „chalk" mora pokazivati chalk-boje i dok je aktivna academic, a var()
      aktivne teme to ne može dati. Vrijednosti su surface-0 + brand-500
      dotične teme — promijeniš li temu niže, promijeni i njen pregled ovdje. */
-  --theme-swatch-academic-bg: #f7f9fc;  --theme-swatch-academic-acc: #1657d0;
+  --theme-swatch-academic-bg: #f7f9fc;  --theme-swatch-academic-acc: #4f46e5;
   --theme-swatch-chalk-bg: #1e1f1c;     --theme-swatch-chalk-acc: #f2c14e;
   --theme-swatch-mint-bg: #0b1a1c;      --theme-swatch-mint-acc: #4fc9ab;
 
@@ -351,7 +359,7 @@
   --color-surface-0: #f7f9fc;  --color-surface-1: #ffffff;  --color-surface-2: #edf1f7;
   --color-line: #dde4ee;      --color-line-strong: #7d8a9c;
   --color-ink-0: #0e1a2b;      --color-ink-1: #34455c;      --color-ink-2: #5b6879;
-  --color-brand-400: #4a82e8;  --color-brand-500: #1657d0;  --color-brand-600: #0f3f9c;
+  --color-brand-400: #6366f1;  --color-brand-500: #4f46e5;  --color-brand-600: #4338ca;
   --color-on-brand: #ffffff;
   --color-mark: #ffd24a;
   --color-on-ok: #ffffff;      --color-on-danger: #ffffff;

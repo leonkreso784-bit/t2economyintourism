@@ -5,6 +5,44 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-04 (OPUS) — F1/1: stranica je dobila boju vlastitog znaka
+
+**Prva cigla novog rasporeda.** Leon: *„makni vercel insights. Zapisi ovaj plan i idemo na prvu
+ciglu."*
+
+**Vercel Insights maknut.** Bot-grana `vercel/install-vercel-speed-insights-b3tyb3` obrisana s
+origina → PR #9 se sam zatvorio. U repo nikad nije usao (`grep speed-insights` = 0). Da jest, rusila
+bi ga TRI pravila odjednom: pinane ovisnosti (#9), `check:csp` (ES-modul u 6 HTML-ova), `check:budget`.
+
+**F1/1.** Akcent teme `academic` prebacen na indigo iz znaka: `brand-400` → `#6366f1`,
+`brand-500` → `#4f46e5`, `brand-600` → `#4338ca`, plus `--theme-swatch-academic-acc`. Mijenja se na
+DVA mjesta (`@theme static` i `:root[data-theme="academic"]`).
+
+⚠️ **Zamka koju sam provjerio PRIJE nego sam dirnuo:** komentar u `tokens.css` je tvrdio da
+`#6366f1` pada AA — i to je tocno, ali **samo za tekst** (4.47 vs prag 4.50). Umjesto da tvrdnju
+odbacim ili poslusam doslovno, izracunao sam obje strane: 400 nosi plohe/hover/fokus (prag 3.0) pa
+smije biti #6366f1, a nosivu ulogu preuzima #4f46e5 (6.29). **Kontrast se nigdje ne pogorsava:**
+400 se popravlja **3.72 → 4.47**, 500 ostaje 6.35 → 6.29, 600 pada 9.50 → 7.90.
+
+**NALAZ KOJI JE CIGLA USPUT NASLA** (zapisan, NIJE popravljen — to je F4):
+`.door--primary` prigusuje tekst `color-mix`-om na 88 % / 90 % bijele, a **ti su postotci izmjereni
+protiv boje koja se u medjuvremenu promijenila**. U mirovanju je sve dobro; na **hover** pozadina
+prelazi na `brand-400`, pa `door-d` daje 3.25 → 3.84 — **ispod praga, i BIO JE i prije.** Cigla to
+popravlja za pola boda ali ne zatvara.
+⚠️ **Nijedna brana ovo ne vidi:** `check:contrast` cita tokene i ne zna za `:hover`,
+`check:contrast:live` crta stranicu u MIROVANJU. Popravak traži **prvo odluku o izgledu**
+(„svjetlije na hover" je danas zapisano pravilo palete), pa tek onda kod.
+
+**Gate:** `preflight` EXIT 0 · `check:contrast` 292/292 · `check:contrast:live` **0 ispod praga**
+(13 ruta × 3 teme) · `check:palette` 0 · `check:tokens` bez novog · `build:css` + `bump` +
+`build:og` (poveznice u pretpregledu sad nose boju marke).
+Usput ispravljeno u CLAUDE.md: `check:contrast` broji **292**, ne 358 (ostarjelo kad je `paper`
+maknut), i zaostatak „HR nosi Sasa" iz jutrosnjeg otkazivanja.
+
+**Snimka poslana Leonu** prije deploya — gumbi i znak su sad ista boja.
+
+---
+
 ## 2026-09-04 (OPUS) — Suradnik otkazan · RASPORED = tekuci spec · main na `e42cd90`
 
 **Tri Leonova naloga u jednoj poruci, izvedena tim redom.**
