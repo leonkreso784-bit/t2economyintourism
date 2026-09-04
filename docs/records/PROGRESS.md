@@ -5,6 +5,47 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-04 (OPUS) — Crna tema: mail ima DVIJE palete, a ja sam izmjerio jednu
+
+Leon: *„Izgled frontenda u modu sa emailom mora imati crnu pozadinu isto kao i email template.
+Slicno onome sta smo prije imali. To zapisi i napravi plan kako da to izvedemo."*
+
+**Prvo sam provjerio predloske, ne pretpostavio.** Njegova recenica je proturjecila mojoj vlastitoj
+mjeri (zapisao sam da mail vozi `#ffffff`/`#f4f5f7`), pa sam otisao u `supabase/email-templates/`.
+**On je u pravu, a moja mjera je bila POLOVICNA:** predlosci imaju
+`@media (prefers-color-scheme: dark)` blok — `#0f1115` pozadina, `#171a21` kartica, `#262b36` crta,
+`#e6e8ee` tekst, `#9aa1b1` prigusheno. Mail se mijenja s uredjajem; njegov telefon je u tamnom.
+*Izmjerio sam jednu granu medija-upita i nazvao ju „izgledom maila".*
+⚠️ F1/1 time NIJE pogresna nego POLOVICNA — poravnanje svijetle teme stoji.
+
+**Pitao sam ga jedno pitanje jer ga nisam smio pretpostaviti:** tko dobiva crnu temu — samo tko ju
+odabere, svi, ili se prati uredjaj? **Odluka: PRATI UREDJAJ, tocno kao predlozak.**
+Redoslijed prvenstva zapisan JEDNOM (inace se svaki put izvodi iznova):
+**racun (F2/1) > lokalni izbor > uredjaj > academic.**
+
+**Izmjereno UNAPRIJED, da cigla ne otkriva u hodu:**
+- **Ljestvica indiga se na tamnom OBRCE** — zrcalno F1/1. Na `#171a21`: `#4f46e5` 2.77 (pada i za
+  plohu) · `#6366f1` 3.90 (ploha da, tekst ne) · **`#818cf8` 5.84** ✅ · `#a5b4fc` 8.73.
+- **I tinta NA ispuni se obrce:** bijelo na `#818cf8` = 2.98, `#0f1115` na njemu = 6.33 →
+  `--color-on-brand` je ondje TAMAN, kao u `chalk`. To je ADR-032 obrazac, ne iznimka.
+
+**Dva nalaza usput (zapisana, NISU popravljena):**
+1. **Gumb u samom mailu je 4.47** (`#6366f1` + bijelo) — promasuje 4.5 za 0.03, u OBJE polovice.
+2. **`scripts/check-contrast-live.js:39` ima ZAKUCAN popis tema.** Doda li se tema samo u
+   `tokens.css` i `boot.js`, ziva brana ju NECE ni pogledati i ostat ce zelena — tiho. Staticka
+   brana cita tokene pa ju vidi sama; `theme-boot-order.test.js` cuva `boot.js` vs `tokens.css`.
+   **Zakucani popis je jedini koji nitko ne cuva** → dobio je vlastitu ciglu (F1/4), a ne fusnotu.
+
+**Plan:** F1 prekrojen sa 4 na **7 cigli** (RASPORED §F1). Stara „cetiri stranice bez teme" je time
+prestala biti sitnica: cim stranica prati uredjaj, korisnik na tamnom telefonu dobiva crn katalog i
+BIJELA Pravila privatnosti. Isplati se uzeti i njihov prijevod (F3/1) u istom obilasku.
+
+**Povijest se ne presucuje:** zadana tema je 2026-08-13 postala svijetla jer su „dvije tamne palete
+zaredom pale na zivom ekranu". Ova odluka to NE ponistava — crno dobiva onaj tko ga je uredjajem vec
+trazio. Ponudio sam mu i varijantu „crna za sve" s tim rizikom ispisanim; nije ju odabrao.
+
+---
+
 ## 2026-09-04 (OPUS) — F1/1: stranica je dobila boju vlastitog znaka
 
 **Prva cigla novog rasporeda.** Leon: *„makni vercel insights. Zapisi ovaj plan i idemo na prvu

@@ -39,7 +39,7 @@ preskače svjesno, a ne zaboravom.
 
 | # | faza | zašto baš tu | gotovo kad korisnik… |
 |---|---|---|---|
-| **F1** | **UREĐAJ** — izgled i glatkoća | Leon to vidi na svom telefonu svaki dan; sve je ili izmjereno ili traži jedno mjerenje | …otvori stranicu na telefonu i ne vidi ni bljesak tuđe teme ni trzanje pri skrolanju, a boja stranice je ista kao boja maila |
+| **F1** | **UREĐAJ** — izgled i glatkoća | Leon to vidi na svom telefonu svaki dan; sve je ili izmjereno ili traži jedno mjerenje | …otvori stranicu na telefonu i zatekne **isto što i u mailu** — crno na tamnom uređaju, svijetlo na svijetlom — bez bljeska i bez trzanja pri skrolanju |
 | **F2** | **RAČUN** — profil i obavijesti | nastavak tekućeg bloka; profil je ujedno i najveći komad CSS-duga, pa ide u istom prolazu | …se prijavi s bilo kojeg uređaja i zatekne svoju temu, svoju sliku i svoje ime — i primi mail samo ako je na njega pristao |
 | **F3** | **DVOJEZIČNOST** — 421 → 0 | Leonova presuda (ADR-033); četiri stranice nemaju ni mehanizam, a to je pola posla | …prebaci jezik i **nigdje** ne naiđe na engleski ostatak, uključujući pravne stranice i editor |
 | **F4** | **ČIŠĆENJE** — CSS dug do nule | ne blokira ništa vidljivo, ali svaka sljedeća vizualna cigla plaća kamatu na njega | …ne primijeti ništa — ovo je faza u kojoj se ne smije promijeniti nijedan piksel |
@@ -53,21 +53,38 @@ preskače svjesno, a ne zaboravom.
 
 ### F1 · UREĐAJ
 
-Najkraća faza. Tri cigle su izmjerene i čekaju izvedbu, jedna traži da se prvo napravi mjerilo.
+> ### 🔄 FAZA JE PRERASLA SVOJ OPIS (2026-09-04)
+> F1/1 je poravnala **svijetlu** temu s mailom — i to stoji. Ali mail ima **dvije palete i mijenja
+> se s uređajem**, a ja sam izmjerio samo jednu granu medija-upita. Leonov telefon je u tamnom, pa
+> je njemu mail oduvijek crn. **Njegova odluka: stranica prati uređaj, točno kao predložak.**
+> Time F1 dobiva tri nove cigle, a stara F1/2 postaje njihova posljedica, ne susjed.
+> Mjere, heksovi i zamke: [BACKLOG.md](../records/BACKLOG.md) §CRNA TEMA.
+
+**Redoslijed prvenstva teme — zapisan JEDNOM, jer se inače svaki put izvodi iznova:**
+
+> **račun (F2/1)  >  lokalni izbor u profilu  >  uređaj (`prefers-color-scheme`)  >  `academic`**
 
 | cigla | posao | gotovo kad |
 |---|---|---|
-| **F1/1** ✅ | ~~**Tema stranice = izgled maila.**~~ **Isporučeno 2026-09-04** — `brand-400 #6366f1` (plohe/hover/fokus) · `brand-500 #4f46e5` (tekst i gumbi) · `brand-600 #4338ca` + swatch; `og-cover.png` pregrađen. Brojke i **nalaz o hoveru koji je cigla usput našla**: [BACKLOG.md](../records/BACKLOG.md). | …stranica i mail izgledaju kao ista marka; `check:contrast` 292/292 i `check:contrast:live` **0 ispod praga** |
-| **F1/2** | **Četiri stranice bez teme** — `contact` · `faq` · `privacy` · `terms` nemaju `data-theme` ni `boot.js`. | …korisnik na tamnoj temi otvori Pravila privatnosti i dobije tamnu stranicu |
-| **F1/3** | **Sonda za trzanje pri skrolanju.** Isporuka je **mjera, ne popravak**: kadrovi kroz skriptirani skrol, duge zadaće, koliko je piksela prebojano. | …postoji brojka koja kaže gdje se gube kadrovi — bez nje se ne dira ništa |
-| **F1/4** | **Popravak po nalazu sonde.** Hipoteza se piše TEK nakon F1/3. | …Leon skrola po svom telefonu i kaže da je glatko (on presuđuje, ne brojka) |
+| **F1/1** ✅ | ~~**Svijetla tema = svijetla polovica maila.**~~ **Isporučeno 2026-09-04** — `brand-400 #6366f1` (plohe/hover/fokus) · `brand-500 #4f46e5` (tekst i gumbi) · `brand-600 #4338ca` + swatch; `og-cover.png` pregrađen. | …stranica i mail izgledaju kao ista marka; `check:contrast` 292/292 i `check:contrast:live` **0 ispod praga** |
+| **F1/2** | **Crna tema = tamna polovica maila.** Novi `[data-theme]` blok u `css/tokens.css` s doslovnim heksovima predloška (`#0f1115` · `#171a21` · `#262b36` · `#e6e8ee` · `#9aa1b1`). ⚠️ **Ljestvica indiga se obrće:** tekst `#818cf8` (5.84), a `--color-on-brand` postaje **taman** — bijelo na `#818cf8` je 2.98. Radni naziv teme: `carbon`. | …korisnik ju odabere u profilu i cijela stranica izgleda kao njegov mail |
+| **F1/3** | **Prvi kadar prati uređaj.** `js/boot.js`: kad NEMA spremljenog izbora, čitaj `prefers-color-scheme` i stampaj temu **prije prvog crtanja**. Birač u profilu dobiva „Automatski". ⚠️ Ovo je isti šav koji je nosio FOUC — mjeri se `scripts/fouc-probe.js`, ne okom. | …Leon otvori stranicu na svom telefonu i **odmah** vidi crno, bez ijednog klika i bez bljeska |
+| **F1/4** | **Zatvori rupu u brani.** `scripts/check-contrast-live.js:39` ima **zakucan popis tema** — nova tema bez toga prolazi neizmjerena, a brana ostaje zelena. Popis mora doći iz `tokens.css`, kao što ga staticka brana već čita. | …živa brana mjeri svaku temu koja postoji, a ne onu koju je netko upisao rukom |
+| **F1/5** | **Četiri stranice bez teme** — `contact` · `faq` · `privacy` · `terms` nemaju ni `data-theme` ni `boot.js`. ⚠️ **Od F1/3 ovo prestaje biti sitnica:** čim stranica prati uređaj, korisnik na tamnom telefonu dobiva crn katalog i **bijela Pravila privatnosti**. Isplati se uzeti i njihov prijevod (F3/1) u istom obilasku. | …korisnik na tamnom uređaju otvori Pravila privatnosti i ne zaboli ga oko |
+| **F1/6** | **Sonda za trzanje pri skrolanju.** Isporuka je **mjera, ne popravak**: kadrovi kroz skriptirani skrol, duge zadaće, koliko je piksela prebojano. | …postoji brojka koja kaže gdje se gube kadrovi — bez nje se ne dira ništa |
+| **F1/7** | **Popravak po nalazu sonde.** Hipoteza se piše TEK nakon F1/6. | …Leon skrola po svom telefonu i kaže da je glatko (on presuđuje, ne brojka) |
 
 **Zamke koje su već poznate:** `perf-probe` ovdje **ne pomaže** — on mjeri prvi kadar, a trzanje je
-trošak po kadru. Kontrast indiga je granični slučaj i brana će ga uhvatiti ako se pobrka ploha s
-tekstom. Mjere i heksovi: [BACKLOG.md](../records/BACKLOG.md) §U TIJEKU i §LEONOVI NALAZI.
+trošak po kadru. Indigo je u obje teme granični slučaj, i to **na suprotne strane** (na svijetlom
+tekst traži tamniji, na crnom svjetliji) — brana to hvata samo ako tema uopće uđe u njezin popis,
+zato F1/4 nije uredovanje nego dio posla.
 
-**Izlaz iz faze:** Leon otvori stranicu na svom telefonu i potvrdi oboje — nema bljeska, nema
-trzanja. To je jedini prihvatljiv dokaz; mjera na razvojnom stroju je donja granica, ne stvarnost.
+**Što ova faza svjesno NE dira:** `chalk` i `mint` ostaju kakvi jesu, kao izričiti izbori.
+Odluka da je **zadana svijetla** (2026-08-13, jer su *„dvije tamne palete zaredom pale na živom
+ekranu"*) **ostaje na snazi** — crno dobiva onaj tko ga je uređajem već tražio, ne svaki posjetitelj.
+
+**Izlaz iz faze:** Leon otvori stranicu na svom telefonu i potvrdi troje — crna je, nema bljeska,
+nema trzanja. To je jedini prihvatljiv dokaz; mjera na razvojnom stroju je donja granica.
 
 ---
 

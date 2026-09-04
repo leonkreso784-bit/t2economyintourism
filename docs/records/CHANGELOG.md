@@ -5,6 +5,38 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-04 (OPUS) — **Crna tema: mail ima DVIJE palete, a izmjerio sam jednu** (zapis + plan)
+
+### Ispravak vlastitog nalaza
+- **Zapisao sam da mail vozi plohu `#ffffff`/`#f4f5f7`. Točno — ali samo za SVIJETLU polovicu.**
+  Predlošci u `supabase/email-templates/` imaju `@media (prefers-color-scheme: dark)` blok
+  (`#0f1115` pozadina · `#171a21` kartica · `#262b36` crta · `#e6e8ee` tekst · `#9aa1b1` prigušeno),
+  pa se mail **mijenja s uređajem**. Leonov telefon je u tamnom → njemu je mail oduvijek crn.
+  *Izmjerio sam jednu granu medija-upita i nazvao ju „izgledom maila".*
+  ⚠️ **F1/1 time nije pogrešna nego POLOVIČNA** — poravnanje svijetle teme stoji; falila je druga polovica.
+
+### Odlučeno
+- **Stranica prati uređaj, točno kao predložak** (Leon, 2026-09-04). Redoslijed prvenstva zapisan
+  jednom: **račun > lokalni izbor > uređaj > `academic`**. `chalk` i `mint` ostaju izbori;
+  odluka da je **zadana svijetla** (2026-08-13) **ostaje** — crno dobiva onaj tko ga je uređajem
+  već tražio, ne svaki posjetitelj.
+- Plan: [RASPORED.md](../plan/RASPORED.md) §F1, sada **sedam cigli** umjesto četiri.
+
+### Izmjereno unaprijed (da cigla ne otkriva u hodu)
+- **Ljestvica indiga se na tamnom OBRĆE** — zrcalno F1/1: ondje je tekst tražio tamniji indigo,
+  ovdje traži svjetliji. Na `#171a21`: `#4f46e5` = 2.77 (pada i za plohu) · `#6366f1` = 3.90
+  (ploha da, tekst ne) · **`#818cf8` = 5.84** ✅ · `#a5b4fc` = 8.73.
+- **I tinta NA ispuni se obrće:** bijelo na `#818cf8` = 2.98 (pada), `#0f1115` na njemu = 6.33 →
+  `--color-on-brand` je na toj temi **taman**, kao u `chalk`. ADR-032 obrazac, ne iznimka.
+
+### Nađeno usput (zapisano, nije popravljeno)
+- **Gumb u samom mailu je `#6366f1` s bijelim tekstom = 4.47** — promašuje 4.5 za 0.03, u **obje**
+  polovice. Popravak je jedan heks po polovici, ali predlošci su kopija u dashboardu → dva mjesta.
+- **`scripts/check-contrast-live.js:39` ima ZAKUCAN popis tema.** Doda li se tema samo u
+  `tokens.css` i `boot.js`, živa brana ju **neće ni pogledati** i ostat će zelena — tiho.
+  Statička brana čita tokene pa ju vidi sama; `theme-boot-order.test.js` čuva da se `boot.js` i
+  `tokens.css` ne raziđu. **Zakucani popis je jedini koji nitko ne čuva** → vlastita cigla F1/4.
+
 ## 2026-09-04 (OPUS) — **F1/1: stranica je dobila boju vlastitog znaka** (+ Vercel Insights odbijen)
 
 ### Promijenjeno

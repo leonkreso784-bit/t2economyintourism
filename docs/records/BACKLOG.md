@@ -149,6 +149,68 @@ ucitavaju i `index.html` i `editor.html`. `SokratBlocks.*` ostaju kao precaci (i
 **Ostaje otvoreno (ne blokira):** `assets/logo.svg` je **45 KB na disku** za znak od 32 px, a
 `check:budget` mjeri SAMO skripte — 253 KB fontova nije ni vidio.
 
+### 🖤 CRNA TEMA — MAIL IMA DVIJE PALETE, A MJERIO SAM SAMO JEDNU (Leon, 2026-09-04)
+
+**Leon:** *„Izgled frontenda u modu sa emailom mora imati crnu pozadinu isto kao i email template.
+Slično onome šta smo prije imali."*
+
+⚠️ **MOJ RANIJI NALAZ JE BIO POLOVIČAN, i to je uzrok ove stavke.** Zapisao sam da mail vozi plohu
+`#ffffff` / `#f4f5f7` — to je točno, ali **samo za svijetlu polovicu**. Predlošci u
+`supabase/email-templates/` imaju **`@media (prefers-color-scheme: dark)` blok**, dakle mail se
+**mijenja s uređajem**. Leonov telefon je u tamnom → njemu je mail oduvijek crn.
+*Mjerio sam jednu granu medija-upita i nazvao ju „izgledom maila".*
+
+**Tamna polovica maila, doslovno iz predložaka:**
+
+| uloga | heks | kontrast |
+|---|---|---|
+| pozadina (`.s-bg`) | `#0f1115` | — |
+| kartica (`.s-card`) | `#171a21` | — |
+| crta (`.s-hr`) | `#262b36` | 1.23 na kartici |
+| tekst (`.s-text`) | `#e6e8ee` | **14.21** |
+| prigušeno (`.s-muted`) | `#9aa1b1` | **6.72** |
+| akcent | `#6366f1` | **3.90** na kartici |
+
+🟢 **ODLUKA (Leon, 2026-09-04): stranica PRATI UREĐAJ, točno kao predložak.**
+Uređaj u tamnom → crna tema; uređaj u svijetlom → današnja `academic`. **Redoslijed prvenstva se
+zapisuje JEDNOM, jer se inače svaki put izvodi iznova:**
+
+> **račun (F2/1)  >  lokalni izbor u profilu  >  uređaj (`prefers-color-scheme`)  >  `academic`**
+
+🚨 **ZAMKA, IZMJERENA — LJESTVICA INDIGA SE NA TAMNOM OBRĆE.** Ista greška kao u F1/1, samo
+zrcalno: ondje je tekst tražio **tamniji** indigo, ovdje traži **svjetliji**.
+
+| indigo | na `#171a21` | presuda |
+|---|---|---|
+| `#4f46e5` (današnji nosivi) | **2.77** | pada i za plohu |
+| `#6366f1` (gumb u mailu) | **3.90** | ploha DA, tekst NE |
+| `#818cf8` | **5.84** | ✅ tekst |
+| `#a5b4fc` | **8.73** | ✅ tekst |
+
+⇒ na crnoj temi: **tekst i poveznice `#818cf8`**, plohe/gumbi svjetlija stepenica.
+⚠️ **I tinta NA ispuni se obrće:** bijelo na `#818cf8` je **2.98** (pada), a `#0f1115` na njemu
+**6.33** — dakle `--color-on-brand` je na toj temi **taman**, kao u `chalk`. To je ADR-032 obrazac
+(ispuna ostaje puna, prilagođava se TINTA), ne iznimka.
+
+🔎 **NALAZ O SAMOM MAILU (ne popravlja se u ovoj ciglu):** gumb u predlošku je `#6366f1` s
+**bijelim** tekstom → **4.47**, dakle i mail promašuje 4.5 za 0.03 — u obje polovice. Popravak je
+jedan heks po polovici (`#4f46e5` svijetla / `#818cf8` tamna), ali predlošci su **kopija u
+dashboardu**, pa se mijenjaju na dva mjesta. Zasebna, sitna cigla.
+
+🚧 **RUPA U BRANI KOJU TREBA ZATVORITI ISTOM CIGLOM:** `scripts/check-contrast-live.js:39` ima
+**zakucan popis tema** (`['academic','chalk','mint']`). Doda li se tema samo u `tokens.css` i
+`boot.js`, živa brana ju **neće ni pogledati** i ostat će zelena — tiho. `check:contrast` (staticki)
+čita tokene pa ju vidi sam; `tests/unit/theme-boot-order.test.js` čuva da se popisi u `boot.js` i
+`tokens.css` ne raziđu. **Zakucani popis je jedini koji nitko ne čuva.**
+
+**Povijest koja se ne prešućuje:** zadana tema je 2026-08-13 postala svijetla jer su *„dvije tamne
+palete zaredom pale na živom ekranu"*. Ova odluka to **ne poništava** — tamna se daje onome tko je
+uređajem već tražio, ne svakom posjetitelju. Tko dođe s Googlea na svijetlom telefonu vidi isto što i danas.
+
+**Plan izvedbe: [RASPORED.md](../plan/RASPORED.md) §F1.**
+
+---
+
 **2. Tema stranice = izgled maila** ✅ **ISPORUČENO 2026-09-04 (cigla F1/1)** — `brand-400 #6366f1` (plohe/hover/fokus, prag 3.0) · `brand-500 #4f46e5` (tekst i gumbi, 6.29) · `brand-600 #4338ca`; uz njih i `--theme-swatch-academic-acc`. Dira SAMO `academic`.
 **Izmjereno pri zamjeni** (obje strane, ne samo nova): 400 se **popravlja** 3.72 → 4.47 · 500 ostaje 6.35 → 6.29 · 600 pada 9.50 → 7.90, sve iznad svog praga. `check:contrast` 292/292 · `check:contrast:live` **0 elemenata ispod praga** na 13 ruta × 3 teme · `check:palette` 0 · `check:tokens` bez novog. `og-cover.png` pregraden (poveznice u boji marke).
 
