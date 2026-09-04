@@ -13,7 +13,7 @@
 > Njihovi zapisi ostaju **ovdje i nedirnuti** jer nose obrazloženje i mjerenja; spec nosi **redoslijed
 > i dokaz**. Kad cigla padne, ovdje se stavlja ✅ s brojkom — ne briše se.
 
-### 🔴 ZA SLJEDECU SESIJU (Leon, 2026-09-04) — tema stranice + FOUC
+### 🔴 ZA SLJEDECU SESIJU (Leon, 2026-09-04) — FOUC teme · tema = izgled maila · BRZINA
 
 **1. FOUC: bijela stranica pa skok u temu** (Leon: *„prvo se ucita bijela obicna stranica pa
 onda na brzinu theme koji je izabran — ruzno i neprofesionalno"*). Pojavljuje se na SVAKOM
@@ -27,6 +27,22 @@ provjeriti ga prema popisu tema (nepoznata vrijednost je vec jednom obojila bije
 bijelom — v. komentar u `theme.js`) i postaviti `data-theme` na `<html>`. ⚠️ Popravak mora
 imati **mjeru**, ne „na oko": tema je vidljiva u prvom kadru → dokaz je snimka/mjerenje
 prvog crtanja, ne dojam.
+
+**3. BRZINA — PageSpeed 75 (desktop), losije na mobitelu** (Leon, 2026-09-04, uz mjeru:
+pagespeed.web.dev). ⚠️ Google PSI API bez kljuca vraca 429 → **prvo pribaviti mjeru koja se
+moze ponavljati** (Lighthouse lokalno ili PSI s kljucem), inace se optimizira naslijepo.
+**Izmjereno 2026-09-04** (`check:budget` + analiza `index.html`):
+- **38 skripti · 192.8 KiB gzip · budzet 200 KB → zaliha 7.7 KiB.** Brana je zelena, ali
+  je *puna* — svaka iduca cigla ju probija. Najteze: `navigation.js` 24.2 · `i18n.js` 20.9 ·
+  `auth.js` 13.9 · `my-materials.js` 13.8 · `catalog.js` 11.1 · `blocks-renderer.js` 10.3.
+- **Sve se ucitava UNAPRIJED, i za posjetitelja koji nikad ne udje dalje od landinga:**
+  `my-materials.js`, `exercises.js` (+`exercises-core.js`), `profile.js`, `blocks-renderer.js`
+  = ~49 KiB gzip koje landing NE treba. Prvi kandidat: ucitavanje po ruti.
+- **KaTeX (2 JS + CSS) i Font Awesome idu na SVAKU stranicu**, a matematika treba samo
+  kvantitativnim predmetima. (KaTeX CSS je naveden dvaput NAMJERNO — drugi je `<noscript>`
+  fallback uz `media="print"` trik; **nije bug**, provjereno.)
+**Veza s ciglom 1:** i FOUC i brzina su isti razred problema — *sto se dogadja prije prvog
+kadra*. Rjesavati ih zajedno, jednim mjerenjem.
 
 **2. Tema stranice = izgled maila** (Leon: *„frontend theme da ima isti kao i sta mejl salje"*).
 Mail predlosci (`supabase/email-templates/`) koriste **indigo #6366f1** (znak marke), bijelu
