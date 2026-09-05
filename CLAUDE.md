@@ -103,7 +103,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 | `node scripts/fouc-probe.js` | bljesak teme u ms + kadrovi. ⚠️ Mjeri **DRUGI** posjet | preglednik + poslužitelj |
 | `node scripts/jank-probe.js` | trzanje PO KADRU kroz prst-skrol (rAF · `Paint`/Mpx · `DroppedFrame`); `--scenariji=bez-…` = protučinjenično. | preglednik + poslužitelj |
 | `npm run css:debt` | što je ostalo za C4–C7: po cigli datoteke, redci, `!important` izvan komentara | read-only, **nije gate** |
-| `npm run palette:breakdown` | razloži ostatak palete po **POSLJEDICI** (nevidljiv tekst · blijede plohe · stara paleta) | read-only, **nije gate** |
+| `npm run palette:breakdown` | razloži ostatak palete po **POSLJEDICI** | read-only, **nije gate** |
 | `npm run check:final` | bazni `final` red == M1⊕M2(+examPractice); preskočene **imenuje** protiv zakucane osnovice (osmi = pad) | mrežno (anon, read-only) |
 | `npm run diff:db [id]` | usporedi bazu s datotekama **prije re-synca** — `migrate-content.js` piše PREKO baze, a `content_versions` je audit, ne undo | mrežno |
 | `npm run check:functions` | Edge Functions na PRODUKCIJI: sve deployano i traži JWT (401), stranci obrisani (404) | mrežno, bez ijednog ključa |
@@ -184,7 +184,7 @@ F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **Šest pi
 
 **Leonovo ⓑ trzanje pri skrolanju je IZMJERENO** (F1/6, `jank-probe`, 2026-09-05): 10 ruta čisto; **samo landing preboji ~70 % ekrana svaki kadar**, a gasi ga jedino
 `background-attachment: fixed` → hipoteza F1/7. ⚠️ Chromium-mjera; iPhone presuđuje Leon. Zapis: `BACKLOG.md` §LEONOVI NALAZI B.
-**Dva nova (2026-09-05):** ⓒ **ljepljivi hover** = **F1/8** — **WebKit s dodirom ga reproducira** (svaki preglednik na iPhoneu), dvije cigle · **Tinder-špil kartica** = **F1/9**.
+**Tri nova (2026-09-05):** ⓒ **ljepljivi hover** = **F1/8** — **WebKit s dodirom ga reproducira** (svaki preglednik na iPhoneu), dvije cigle · **Tinder-špil kartica** = **F1/9** · **zoom na dodir** = **F1/10** (polja 15,2 px izmjerena; dvostruki dodir nemjerljiv → `touch-action`).
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 

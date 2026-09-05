@@ -5,6 +5,18 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-05 (FABLE) — zoom na dodir izmjeren (Leonov treći nalaz; zapis, bez popravaka)
+
+Leon: *„Još jedan veliki bug. Kada se više puta takne na jedno mjesto može se zoomat, to se mora riješit."*
+Dva uzroka. ① **Polja ispod 16 px** (iOS zumira pri fokusu) — **izmjereno** sondom u scratchu (Chromium
+393×852, 9 ruta + prijavni modal, 153 polja): na svakoj ruti **11 ispod praga**, `.auth-modal__input`
+15,2 px i `.cat-search-input` 14,4 px. ② **Dvostruki dodir** — **nemjerljiv u headlessu** (24 mjerenja,
+WebKit i Chromium, `visualViewport.scale` ostaje 1); repo ga već gasi na `.flashcard` i slijepoj karti s
+`touch-action: manipulation`. Zapisano kao **F1/10** (RASPORED) + BACKLOG §LEONOVI NALAZI F; ide u
+dodirnu seriju s F1/8 ① (Leon isti dan: hover *„još uvijek"* smeta → dodir prije landinga). Ništa nije
+popravljano. Usput provjereno na Leonovo pitanje: sve je deployano — `origin/main` = `8b70c15`, Vercel
+produkcija READY, živi token = repo.
+
 ## 2026-09-05 (FABLE) — F1/6 sonda za trzanje + hover izmjeren na WebKitu (mjerenja, bez popravaka)
 
 Leon: *„možeš li napravit sva mjerenja i pripremit se za sljedeće cigle"* — poslije compacta koji je odnio

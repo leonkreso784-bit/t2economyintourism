@@ -154,6 +154,32 @@ današnji prikaz + tipkovnicu · `prefers-reduced-motion` gasi let kartice · be
 **Otvoreno (RASPORED §6/6):** zamjenjuje li špil današnji prikaz na telefonu ili je prekidač; nosi li
 smjer značenje. **Mjesto: F1/9.**
 
+**F. ZOOM NA DODIR** (Leon, 2026-09-05: *„Još jedan veliki bug. Kada se više puta takne na jedno mjesto
+može se zoomat, to se mora riješit."*). **Dva uzroka — jedan izmjeren, drugi ovdje nemjerljiv:**
+① **Polja za unos ispod 16 px** — iOS Safari pri fokusu polja s izračunatim `font-size < 16px` sam zumira
+stranicu i ne vraća je. **Izmjereno 2026-09-05** (sonda u scratchu, Chromium 393×852, 9 ruta + prijavni
+modal, 153 polja): na SVAKOJ ruti **11 polja ispod praga** — `.auth-modal__input` **15,2 px**
+(`css/auth.css:138`, `0.95rem`; prijava, registracija, reset, upitnik = 10 polja) i `.cat-search-input`
+**14,4 px** (`css/landing.css:394`, `0.9rem`). Ostala polja (dopune, vježbe) su ≥ 16 px; pilule uloge i
+pristanak (13,3 px) su radio/checkbox i ne zumiraju.
+② **Dvostruki dodir = zoom** (Safarijeva gesta nad stranicom). **Nemjerljivo u našim sondama:** 24 mjerenja
+(WebKit i Chromium × 4 rute × 3 scenarija, dva i pet dodira u istu točku) — `visualViewport.scale` ostaje
+**1** u svima, jer headless-motor tu gestu ne izvodi (radi je Safarijev UI-proces, ne web-sadržaj). Repo je
+već gasi na dva mjesta: `.flashcard` (`flashcards-section.css:56`) i `.blank-map-canvas` (`blind-map.css:83`,
+komentar *„iOS: prevent double-tap zoom"*) — `touch-action: manipulation`, koji **zadržava** skrol i
+štipanje, a gasi samo dvostruki dodir (WebKit ga poštuje od iOS-a 13).
+**Kandidati (odluka u cigli):** ① polja ≥ 16 px na dodirnim uređajima — jedno pravilo u resetu
+(`@media (pointer: coarse)`) ili dva popravka na izvoru; **brana = deveta tvrdnja `phone-gate`-a** (nijedno
+vidljivo tekstualno polje < 16 px na 393 px) — danas bi bila crvena, i to je dokaz da mjeri. ②
+`touch-action: manipulation` u `* { }` resetu (`variables.css:75`, gdje već stoji
+`-webkit-touch-callout: none` = ista politika) **i** u `legal.css:7` (stranice bez bundlea); ne pregazi
+`touch-action: none` na ručkama za vučenje (klasa tuče `*`). **Odbačeno:** `user-scalable=no` /
+`maximum-scale=1` — gasi štipanje (pristupačnost; meta danas namjerno kaže `user-scalable=yes,
+maximum-scale=5.0`, a axe to i mjeri).
+**Dokaz:** ① brana crveno → zeleno; ② statički test da bundle i `legal.css` nose pravilo; oboje **Leon na
+iPhoneu** (dodir u polje ne zumira · dvostruki dodir ne zumira). **Mjesto: F1/10**, u istoj dodirnoj
+seriji s F1/8 ① (jedan preview, jedna provjera telefonom).
+
 ---
 
 ### 🟡 U TIJEKU (2026-09-04) — ~~FOUC~~ ✅ · ~~brands-font~~ ✅ · ~~UCITAVANJE PO RUTI~~ ✅ · tema = izgled maila
