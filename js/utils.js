@@ -63,6 +63,38 @@ function safeIcon(icon, fallback) {
 window.inkForTint = inkForTint;
 window.safeIcon = safeIcon;
 
+// ── HOVER SE NAORUŽA TEK PRVIM POMAKOM MIŠA (F1/8 ②; Leon, 2026-09-05: „gumb koji je stajao na
+// mjestu starog gumba isto svijetli po rubovima a nije ga se diralo") ──
+//
+// Preglednik računa `:hover` po POLOŽAJU pokazivača, ne po pokretu: kad klik zamijeni sadržaj
+// ispod nepomičnog miša, novi gumb je odmah `:hover` iako ga nitko nije dotaknuo (izmjereno
+// `scripts/hover-probe.js --profil=prelaz`: ljepljivo 2/2 u Chromiumu). Zato tko god mijenja ono
+// što stoji pod pokazivačem (`navigateTo`, `browseNaRazinu`) ovdje stavi `data-hover-paused` na
+// `<html>`, a prvi `pointermove` ga skine. CSS-strana: svaki hover-selektor u bundleu nosi prefiks
+// `:where(:root:not([data-hover-paused]))` — dodaje ga `scripts/hover-css.js` u `build:css`;
+// `:where()` je nula specifičnosti, pa kaskada ostaje ista kao bez njega.
+// ⚠️ Okidač je `pointermove`, NE `mousemove`: dodir uz `click` šalje `mousemove`, a `pointermove`
+// bez pomaka NE šalje (WebKit i Chromium, izmjereno 2026-09-05) — s `mousemove` bi hover naoružao
+// baš dodir koji ga ne smije. `pointer-events: none` za vrijeme pauze NIJE opcija (blokirao bi
+// dodir bez pomaka). Stoji ovdje, ne u `navigation.js`, jer nema ovisnosti pa se ponašanje mjeri
+// u pješčaniku (`tests/unit/hover-arm.test.js`) bez 1 600 redaka rutera.
+let hoverPauzaCeka = false;
+
+function naoruzajHover() {
+    hoverPauzaCeka = false;
+    document.documentElement.removeAttribute('data-hover-paused');
+}
+
+/** Ugasi hover-izgled do prvog pomaka pokazivača. Idempotentno: drugi poziv prije pomaka ne veže drugi slušač. */
+function pauzirajHover() {
+    document.documentElement.setAttribute('data-hover-paused', '');
+    if (hoverPauzaCeka) return;
+    hoverPauzaCeka = true;
+    document.addEventListener('pointermove', naoruzajHover, { once: true, passive: true });
+}
+
+window.pauzirajHover = pauzirajHover;
+
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));

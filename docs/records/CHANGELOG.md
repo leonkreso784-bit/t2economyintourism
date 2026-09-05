@@ -5,6 +5,35 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-05 (FABLE) — **F1/8 ②: hover na mišu se naoruža tek prvim pomakom** (ljepljivi hover zatvoren na oba ulaza; BUG-044 riješen)
+
+### Popravljeno
+- **Poslije klika koji mijenja stranicu ili razinu kataloga ništa ne svijetli pod nepomičnim mišem dok se
+  miš ne pomakne** (Leon: *„gumb koji je stajao na mjestu starog gumba isto svijetli po rubovima a nije ga
+  se diralo"*). Na mišu je to bilo STANDARDNO ponašanje preglednika — hover se računa po položaju
+  pokazivača, ne po pokretu — pa ① (medij) ondje nije mogao pomoći. **JS:** `pauzirajHover()` u `js/utils.js`
+  stavi `data-hover-paused` na `<html>`, prvi **`pointermove`** ga skine (ne `mousemove` — dodir ga šalje,
+  izmjereno; `once` + `passive`, idempotentno). Zovu ga `navigateTo` **i `browseNaRazinu`** — browse-prelazi
+  (fakultet → smjer → godina) NE idu kroz `navigateTo`, a to je Leonov točan scenarij; plan iz memorije ga
+  je previdio, sonda ga je našla. **CSS:** isti prolaz `scripts/hover-css.js` svakom hover-selektoru doda
+  prefiks **`:where(:root:not([data-hover-paused]))`** (nula specifičnosti → kaskada ista), i onima koja
+  su već pod hover-medijem (Tailwindov `hover:`) — njima samo prelude na mjestu; idempotentno; `html:hover`,
+  `:root …:hover` i `&:hover` ruše build (prefiks ih ne bi pogodio ili bi promijenio značenje). **142/142
+  selektora** s prefiksom; `consent.css` ručno (traka je na `index.html`), `legal.css` bez (pravne stranice
+  nemaju ruter).
+### Dodano
+- **`scripts/hover-probe.js --profil=prelaz`** (Chromium, miš): KONTROLA (kartica pod mišem PRIJE klika ima
+  hover-izgled — inače sonda ne dokazuje ništa) · bez pomaka poslije prelaska · pomak 1 px. **Prije: ljepljivo
+  2/2 · poslije: mirno 2/2 + hover se vraća prvim pomakom 2/2** (`pauza=true` → `false`).
+- **`tests/unit/hover-arm.test.js`** (28 tvrdnji, `test:unit`): `pauzirajHover` u `vm` pješčaniku (okidač
+  `pointermove`, `mousemove` NE naoružava, jedan slušač, ponovno naoružavanje), šav u `navigation.js`
+  (obrnuto: na `HEAD` obje funkcije bez poziva), CSS-modul na uzorku (cijepanje liste, prefiks na mjestu,
+  idempotentnost, `naoruzaj: false`, četiri ruba koji ruše build).
+- `check:hover` traži i prefiks (bundle + consent). Obrnuto: na starom bundleu **134 nenaoružana pravila** → 0.
+- Dokazi da miš NIJE izgubio hover: `hover-probe --profil=mis --usporedi` **0 razlika** na 38 elemenata (20 i
+  dalje mijenja izgled); `css:diff` `#/subjects` + `#/about` × 3 širine = **7 161 usporedbi, 0 razlika**; WebKit
+  dodir i dalje mirno 2/2; `browse.spec` + `back-model.spec` 7/7; preflight EXIT 0.
+
 ## 2026-09-05 (FABLE) — **F1/8 ①: `:hover` samo gdje hover postoji** (ljepljivi hover na dodiru; ② miš čeka)
 
 ### Popravljeno

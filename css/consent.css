@@ -130,9 +130,10 @@
     color: var(--color-on-brand);
 }
 /* `:hover` samo gdje hover postoji (F1/8 ①): datoteka nije u bundleu, omot je ručan —
-   čuva ga `npm run check:hover`. */
+   čuva ga `npm run check:hover`. Prefiks `:where(:root:not([data-hover-paused]))` (F1/8 ②) je
+   ovdje isto ručan: traka stoji na `index.html`, gdje ruter gasi hover do prvog pomaka miša. */
 @media (hover: hover) {
-    .cookie-btn--accept:hover { background: var(--color-brand-600); }
+    :where(:root:not([data-hover-paused])) .cookie-btn--accept:hover { background: var(--color-brand-600); }
 }
 
 .cookie-btn--reject {
@@ -141,7 +142,7 @@
     border: 1px solid var(--color-line-strong);
 }
 @media (hover: hover) {
-    .cookie-btn--reject:hover { background: var(--color-surface-2); color: var(--color-ink-0); }
+    :where(:root:not([data-hover-paused])) .cookie-btn--reject:hover { background: var(--color-surface-2); color: var(--color-ink-0); }
 }
 
 /* On narrow screens stack text over full-width buttons */

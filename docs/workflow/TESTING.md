@@ -188,6 +188,11 @@ bijelom), a sve tri brane koje bi to trebale hvatati bile su zelene — svaka iz
   `CSS.supports` je false u SVAKOM motoru kojim mjerimo — nijedna brana ga nije mogla vidjeti.
   `@media (pointer: coarse)` je istina i u emulaciji. Isto lice: **brana koja emulira telefon bez
   `hasTouch` mjeri uređaj koji ne postoji** — `phone.authed.spec.js` je do F1/10 imao miš.
+- **Sonda koja mjeri ODSUTNOST prvo dokaže PRISUTNOST** (F1/8 ②). `hover-probe --profil=prelaz` prije
+  svakog prelaska provjeri da kartica pod mišem uopće ima hover-izgled (kontrola), pa tek onda tvrdi da
+  nova kartica poslije klika nema — i da se hover vrati pomakom od 1 px. „Ništa ne svijetli" i „hover ne
+  radi" daju isti ekran; bez kontrole i povratka sonda bi prošla i s obrisanim hoverom. Isti razred:
+  popravak koji gađa `navigateTo` promašio bi browse-prelaze — sonda mjeri Leonov scenarij, ne ruter.
 
 ⚠️ **Posebno za `learn-blocks.css`:** javni katalog od te datoteke iscrtava **2 od 44 pravila**
 (`.lb-legacy`, `.lb-table-wrap`) jer je gradivo v1 HTML kroz DOMPurify. Ostalo živi u editoru i

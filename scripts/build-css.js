@@ -23,6 +23,10 @@
  * na istom mjestu kaskade (`scripts/hover-css.js` — zašto i kako je ondje). Na dodiru hover
  * ne postoji, pa se poslije prelaska ništa ne „lijepi" za prst; na mišu 0 razlika (css:diff +
  * hover-probe). Čuva ga `npm run check:hover`. Legal/consent NISU u bundleu → omot ručan.
+ * ⚠️ F1/8 ② (2026-09-05): isti prolaz svakom hover-selektoru doda prefiks
+ * `:where(:root:not([data-hover-paused]))` (nula specifičnosti) — `pauzirajHover()` u `js/utils.js`
+ * stavi taj atribut kad se mijenja ono što je pod mišem, prvi `pointermove` ga skine. Na mišu
+ * poslije klika ništa ne svijetli dok se miš ne pomakne (`hover-probe --profil=prelaz`).
  *
  * RABLJENJE:
  *   node scripts/build-css.js           # regeneriraj styles.bundle.css
@@ -194,7 +198,8 @@ function main() {
   checkManifestCoverage();
   const { content, version, hover } = compile();
   const modules = importedModules().length;
-  const hoverInfo = hover.zamotano + ' hover-pravila (' + hover.prije.hoverSelektora + ' selektora) pod (hover: hover)';
+  const hoverInfo = hover.zamotano + ' hover-pravila (' + hover.prije.hoverSelektora + ' selektora) pod (hover: hover), '
+    + hover.naoruzano + ' selektora s prefiksom :where(:root:not([data-hover-paused]))';
   const tokens = extractTokens(content, version);
 
   if (check) {
@@ -215,7 +220,7 @@ function main() {
   const kb = (Buffer.byteLength(content) / 1024).toFixed(1);
   const tkb = (Buffer.byteLength(tokens) / 1024).toFixed(1);
   console.log(`✅ ${OUT_REL} zgrađen iz ${modules} modula + tokena (${kb} KB, tailwindcss ${version}).`);
-  console.log(`✅ ${hoverInfo} — na dodiru se ništa ne lijepi (F1/8 ①, scripts/hover-css.js).`);
+  console.log(`✅ ${hoverInfo} — na dodiru se ništa ne lijepi, na mišu tek poslije pomaka (F1/8 ①+②, scripts/hover-css.js).`);
   console.log(`✅ ${TOKENS_OUT_REL} zgrađen (${tkb} KB) — paleta za stranice bez bundlea.`);
   console.log('   ⚠️ Cache-bump: pokreni `npm run bump` (styles.bundle.css token je u index.html).');
 }

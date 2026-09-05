@@ -17,16 +17,25 @@
  * NIŠTA na mišu, a broj elemenata čiji se izgled pod mišem mijenja dokazuje da hover uopće
  * još postoji (brana koja bi prošla i s obrisanim hoverom nije brana).
  *
+ * Profil PRELAZ (Chromium, miš; F1/8 ②): pokazivač stoji na kartici, klik promijeni razinu
+ * kataloga, i pod NEPOMIČNIM pokazivačem se nađe nova kartica. Preglednik joj po pravilu daje
+ * `:hover` (hover se računa po položaju, ne po pokretu) — a Leon upravo to ne želi vidjeti.
+ * Tri mjerenja po prelasku: KONTROLA (kartica pod mišem PRIJE klika ima hover-izgled — inače
+ * sonda ne može ništa dokazati) · MIRNO (poslije prelaska, bez pomaka, nova kartica pod istim
+ * pokazivačem NEMA hover-izgled, makar JEST `:hover`) · NAORUŽANO (pomak od 1 px → hover-izgled
+ * se vrati; hover koji se ne vrati nije popravak nego gubitak). Prije ②: ljepljivo 2/2.
+ *
  * ── ZAŠTO NIJE U PREFLIGHTU ──────────────────────────────────────────────────────
  * Traži preglednik i poslužitelj (`npm run serve:test`), a WebKit u CI-ju ne postoji.
- * Statičku stranu čuva `npm run check:hover`.
+ * Statičku stranu čuva `npm run check:hover`, JS-stranu `tests/unit/hover-arm.test.js`.
  *
  * RABLJENJE:
- *   node scripts/hover-probe.js                                  # dodir, WebKit (dokaz)
+ *   node scripts/hover-probe.js                                  # dodir, WebKit (dokaz ①)
  *   node scripts/hover-probe.js --motor=chromium                 # dodir, Chromium (kontrola)
+ *   node scripts/hover-probe.js --profil=prelaz                  # miš poslije prelaska (dokaz ②)
  *   node scripts/hover-probe.js --profil=mis --out=prije.json    # miš: snimka
  *   node scripts/hover-probe.js --profil=mis --usporedi=prije.json
- * Izlaz 1 = ljepljivo (dodir) ili razlike (miš).
+ * Izlaz 1 = ljepljivo (dodir · prelaz) ili razlike (miš); 2 = kontrola pala (sonda ne mjeri).
  */
 const fs = require('fs');
 const path = require('path');
@@ -34,12 +43,33 @@ const pw = require('@playwright/test');
 
 const arg = (k, d) => { const m = process.argv.find((a) => a.startsWith('--' + k + '=')); return m ? m.slice(k.length + 3) : d; };
 const PROFIL = arg('profil', 'dodir');
-const MOTOR = arg('motor', PROFIL === 'mis' ? 'chromium' : 'webkit');
+const MOTOR = arg('motor', PROFIL === 'dodir' ? 'webkit' : 'chromium');
 const OUT = arg('out', '');
 const USPOREDI = arg('usporedi', '');
 const BASE = 'http://localhost:5050';
 
 const UGASI_PRIVOLU = () => { try { localStorage.setItem('sokrat-cookie-consent', 'declined'); } catch (e) { /* */ } };
+
+/**
+ * Što je pod točkom (x, y): koja kartica, je li `:hover`, njezin izgled i izgled jedne MIRNE
+ * kartice do nje (usporedba s bratom, ne sa zapisanom bojom — tema smije mijenjati boje).
+ * `pauza` = nosi li `<html>` `data-hover-paused` (F1/8 ②; do ② uvijek false).
+ */
+const podTockom = (page, x, y) => page.evaluate(([x, y]) => {
+  const g = document.elementFromPoint(x, y);
+  const k = g && g.closest('.browse-card');
+  if (!k) return { pod: null, pauza: document.documentElement.hasAttribute('data-hover-paused') };
+  const cs = getComputedStyle(k);
+  const druga = Array.from(document.querySelectorAll('.browse-card')).find((el) => el !== k && el.offsetParent);
+  const cd = druga && getComputedStyle(druga);
+  return {
+    pod: k.dataset.browse + ':' + k.dataset.id, hover: k.matches(':hover'),
+    pauza: document.documentElement.hasAttribute('data-hover-paused'),
+    rub: cs.borderTopColor, pomak: cs.transform, sjena: cs.boxShadow,
+    mirniRub: cd ? cd.borderTopColor : null, mirniPomak: cd ? cd.transform : null, mirnaSjena: cd ? cd.boxShadow : null,
+  };
+}, [x, y]);
+const hoverIzgled = (s) => !!(s.pod && (s.rub !== s.mirniRub || s.pomak !== s.mirniPomak || s.sjena !== s.mirnaSjena));
 
 async function dodir(browser) {
   const ctx = await browser.newContext({ viewport: { width: 393, height: 852 }, isMobile: true, hasTouch: true, deviceScaleFactor: 3, baseURL: BASE });
@@ -53,19 +83,7 @@ async function dodir(browser) {
   const b = await prva.boundingBox();
   const x = Math.round(b.x + b.width / 2), y = Math.round(b.y + b.height / 2);
 
-  const stanje = () => page.evaluate(([x, y]) => {
-    const g = document.elementFromPoint(x, y);
-    const k = g && g.closest('.browse-card');
-    if (!k) return { pod: null };
-    const cs = getComputedStyle(k);
-    const druga = Array.from(document.querySelectorAll('.browse-card')).find((el) => el !== k && el.offsetParent);
-    const cd = druga && getComputedStyle(druga);
-    return {
-      pod: k.dataset.browse + ':' + k.dataset.id, hover: k.matches(':hover'),
-      rub: cs.borderTopColor, pomak: cs.transform, sjena: cs.boxShadow,
-      mirniRub: cd ? cd.borderTopColor : null, mirniPomak: cd ? cd.transform : null, mirnaSjena: cd ? cd.boxShadow : null,
-    };
-  }, [x, y]);
+  const stanje = () => podTockom(page, x, y);
 
   let ljepljivo = 0;
   const hopovi = [['program', 'fakultet → program'], ['year', 'program → godina']];
@@ -74,7 +92,7 @@ async function dodir(browser) {
     await page.waitForSelector('.browse-card[data-browse="' + cilj + '"]');
     await page.waitForTimeout(500);
     const s = await stanje();
-    const izgled = s.pod && (s.rub !== s.mirniRub || s.pomak !== s.mirniPomak || s.sjena !== s.mirnaSjena);
+    const izgled = hoverIzgled(s);
     const lj = !!(s.pod && s.hover && izgled);
     if (lj) ljepljivo++;
     console.log('  ' + ime.padEnd(20) + ' pod prstom: ' + (s.pod || 'ništa') + ' · :hover=' + s.hover + ' · hover-izgled=' + !!izgled
@@ -148,9 +166,53 @@ async function mis(browser) {
   return 0;
 }
 
+async function prelaz(browser) {
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, baseURL: BASE });
+  const page = await ctx.newPage();
+  await page.goto('/#/subjects', { waitUntil: 'load' });
+  await page.evaluate(UGASI_PRIVOLU);
+  // Prijelazi bi dali polovične vrijednosti — gase se, hover-pravila ostaju netaknuta.
+  await page.addStyleTag({ content: '*, *::before, *::after { transition: none !important; animation: none !important; }' });
+  console.log('MOTOR ' + MOTOR + ' · profil prelaz (miš) · 1280×800');
+  const prva = page.locator('.browse-card[data-browse="faculty"]').first();
+  await prva.waitFor({ state: 'visible' });
+  const b = await prva.boundingBox();
+  const x = Math.round(b.x + b.width / 2), y = Math.round(b.y + b.height / 2);
+  const opis = (s) => (s.pod || 'ništa') + ' · :hover=' + s.hover + ' · hover-izgled=' + hoverIzgled(s) + ' · pauza=' + s.pauza;
+
+  let ljepljivo = 0, neNaoruzano = 0;
+  const hopovi = [['program', 'fakultet → program'], ['year', 'program → godina']];
+  for (const [cilj, ime] of hopovi) {
+    // KONTROLA: miš stoji na kartici i ona MORA imati hover-izgled — inače dolje ne mjerimo ništa.
+    await page.mouse.move(x, y); await page.waitForTimeout(150);
+    const k = await podTockom(page, x, y);
+    if (!(k.pod && k.hover && hoverIzgled(k))) {
+      console.log('  ' + ime.padEnd(20) + ' KONTROLA pala: ' + opis(k) + ' — hover na mišu ne radi, sonda ne može ništa dokazati');
+      await ctx.close();
+      return 2;
+    }
+    await page.mouse.click(x, y);
+    await page.waitForSelector('.browse-card[data-browse="' + cilj + '"]');
+    await page.waitForTimeout(500);
+    const s = await podTockom(page, x, y);           // bez pomaka
+    const lj = hoverIzgled(s);
+    if (lj) ljepljivo++;
+    await page.mouse.move(x + 1, y + 1); await page.waitForTimeout(150);
+    const n = await podTockom(page, x + 1, y + 1);   // poslije pomaka od 1 px
+    const nao = !!(n.pod && n.hover && hoverIzgled(n));
+    if (!nao) neNaoruzano++;
+    console.log('  ' + ime.padEnd(20) + ' kontrola ✅ · bez pomaka: ' + opis(s) + '  → ' + (lj ? '❌ LJEPLJIVO' : '✅ mirno')
+      + '\n' + ' '.repeat(23) + 'pomak 1 px: ' + opis(n) + '  → ' + (nao ? '✅ naoružano' : '❌ hover se NIJE vratio'));
+  }
+  await ctx.close();
+  console.log('DOSEG: ' + hopovi.length + ' prelaska · ' + (ljepljivo ? '❌ ljepljivo u ' + ljepljivo : '✅ ništa ne svijetli dok se miš ne pomakne')
+    + (neNaoruzano ? ' · ❌ hover se nije vratio u ' + neNaoruzano : ' · ✅ hover se vraća prvim pomakom'));
+  return (ljepljivo || neNaoruzano) ? 1 : 0;
+}
+
 (async () => {
   const browser = await pw[MOTOR].launch();
-  const kod = PROFIL === 'mis' ? await mis(browser) : await dodir(browser);
+  const kod = PROFIL === 'mis' ? await mis(browser) : PROFIL === 'prelaz' ? await prelaz(browser) : await dodir(browser);
   await browser.close();
   process.exit(kod);
 })().catch((e) => { console.error('❌ ' + (e && e.message ? e.message.split('\n')[0] : e)); process.exit(2); });

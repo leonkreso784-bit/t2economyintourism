@@ -35,11 +35,27 @@
  *   `(hover: none)` pravila ugasio.
  * • Broj hover-selektora PRIJE i POSLIJE mora biti isti — nijedan se ne smije izgubiti.
  *
- * Koriste ga `scripts/build-css.js` (zamotaj) i `scripts/check-hover.js` (brana: nula golih).
+ * ── ② MIŠ: HOVER SE NAORUŽA TEK PRVIM POMAKOM (F1/8 ②) ─────────────────────────
+ * Na mišu je isti kvar STANDARDNO ponašanje preglednika: hover se računa po položaju
+ * pokazivača, ne po pokretu, pa je nova kartica pod nepomičnim mišem odmah `:hover`
+ * (`hover-probe --profil=prelaz`: ljepljivo 2/2 u Chromiumu). `js/utils.js` (`pauzirajHover`)
+ * stavi `data-hover-paused` na `<html>` kad se mijenja ono što stoji pod pokazivačem, a prvi
+ * `pointermove` ga skine. Ovaj modul svakom hover-selektoru doda prefiks
+ * `:where(:root:not([data-hover-paused])) ` — `:where()` je NULA specifičnosti, pa kaskada
+ * ostaje ista (usp. `tests/cascade.authed.spec.js`), a potomak-kombinator ne mijenja ništa
+ * osim za `<html>` sam. Prefiks dobivaju i pravila koja VEĆ stoje pod hover-medijem
+ * (Tailwindov `hover:` varijant, `policies.css`): njima se na mjestu prepisuje samo prelude.
+ * Rubovi koji padaju glasno: hover-selektor koji počinje na `html`/`:root` (prefiks ga nikad
+ * ne bi pogodio) i `&` (ugniježđeno pravilo — prefiks bi promijenio značenje). Danas 0 i 0.
+ *
+ * Koriste ga `scripts/build-css.js` (zamotaj) i `scripts/check-hover.js` (brana: nula golih,
+ * nula nenaoružanih).
  */
 const { transform } = require('lightningcss');
 
 const HOVER_ZNACAJKE = new Set(['hover', 'any-hover']);
+/** Prefiks kojim JS (`pauzirajHover`, `js/utils.js`) gasi hover do prvog pomaka miša (F1/8 ②). */
+const PREFIKS = ':where(:root:not([data-hover-paused]))';
 
 /** Spominje li medijski uvjet `hover`/`any-hover` (bilo koja vrijednost, bilo koja dubina)? */
 function mediaSpominjeHover(cond) {
@@ -63,6 +79,29 @@ function polozajHovera(sel) {
   return r;
 }
 
+/** Nosi li selektor na početku prefiks `:where(:root:not([data-hover-paused])) ` (potomak-kombinator)? */
+function jeNaoruzan(sel) {
+  const w = sel[0];
+  if (!w || w.type !== 'pseudo-class' || w.kind !== 'where' || !Array.isArray(w.selectors) || w.selectors.length !== 1) return false;
+  const u = w.selectors[0];
+  if (u.length !== 2 || u[0].type !== 'pseudo-class' || u[0].kind !== 'root') return false;
+  const n = u[1];
+  if (n.type !== 'pseudo-class' || n.kind !== 'not' || !Array.isArray(n.selectors) || n.selectors.length !== 1) return false;
+  const a = n.selectors[0];
+  if (a.length !== 1 || a[0].type !== 'attribute' || a[0].name !== 'data-hover-paused' || a[0].operation) return false;
+  return !!sel[1] && sel[1].type === 'combinator' && sel[1].value === 'descendant';
+}
+
+/** Zašto se selektor NE SMIJE prefiksirati: 'html' (prvi spoj je html/:root) · 'nesting' (`&`) · null = smije. */
+function zaprekaPrefiksa(sel) {
+  if (sel.some((c) => c.type === 'nesting')) return 'nesting';
+  for (const c of sel) {
+    if (c.type === 'combinator') break;
+    if ((c.type === 'type' && String(c.name).toLowerCase() === 'html') || (c.type === 'pseudo-class' && c.kind === 'root')) return 'html';
+  }
+  return null;
+}
+
 /** Gruba serijalizacija selektora — samo za poruke o greškama, ne za izlaz. */
 function selektorTekst(sel) {
   return sel.map((c) => {
@@ -83,7 +122,7 @@ function selektorTekst(sel) {
 
 /**
  * Parsiraj CSS i vrati sva style-pravila s `:hover` + brojeve dosega.
- * `pravila[i]` = { off, line, n, hoverIdx, uHoverMediju, selektori }.
+ * `pravila[i]` = { off, line, n, hoverIdx, naoruzanIdx, uHoverMediju, selektori }.
  */
 function analiziraj(css, filename) {
   const tekst = css.replace(/\r\n/g, '\n');
@@ -95,9 +134,10 @@ function analiziraj(css, filename) {
   transform({ filename: filename || 'ulaz.css', code: Buffer.from(tekst), visitor: { StyleSheet(s) { ss = s; } } });
   if (!ss) throw new Error('hover-css: lightningcss nije dao StyleSheet za ' + filename);
 
-  const doseg = { pravila: 0, selektora: 0, hoverSelektora: 0, hoverUMediju: 0, golihPravila: 0, golihSelektora: 0 };
+  const doseg = { pravila: 0, selektora: 0, hoverSelektora: 0, hoverUMediju: 0, golihPravila: 0, golihSelektora: 0, naoruzanihSelektora: 0 };
   const pravila = [];
   const slozeni = [];
+  const zapreke = [];
 
   function walk(rules, uHoverMediju) {
     for (const r of rules) {
@@ -112,8 +152,14 @@ function analiziraj(css, filename) {
           doseg.hoverSelektora += hoverIdx.length;
           if (uHoverMediju) doseg.hoverUMediju += hoverIdx.length;
           else { doseg.golihPravila++; doseg.golihSelektora += hoverIdx.length; }
+          const naoruzanIdx = hoverIdx.filter((i) => jeNaoruzan(v.selectors[i]));
+          doseg.naoruzanihSelektora += naoruzanIdx.length;
+          hoverIdx.forEach((i) => {
+            const z = !naoruzanIdx.includes(i) && zaprekaPrefiksa(v.selectors[i]);
+            if (z) zapreke.push({ line: v.loc.line + 1, selektor: selektorTekst(v.selectors[i]), zasto: z });
+          });
           pravila.push({
-            off: off(v.loc), line: v.loc.line + 1, n: v.selectors.length, hoverIdx, uHoverMediju,
+            off: off(v.loc), line: v.loc.line + 1, n: v.selectors.length, hoverIdx, naoruzanIdx, uHoverMediju,
             selektori: v.selectors.map(selektorTekst),
           });
         }
@@ -131,6 +177,11 @@ function analiziraj(css, filename) {
   if (slozeni.length) {
     throw new Error('hover-css: `:hover` unutar :not()/:is()/:where()/:has() se NE SMIJE slijepo zamotati (mijenja značenje) — '
       + 'riješi ručno pa proširi modul:\n  ' + slozeni.map((s) => filename + ':' + s.line + '  ' + s.selektor).join('\n  '));
+  }
+  if (zapreke.length) {
+    throw new Error('hover-css: hover-selektor koji prefiks `' + PREFIKS + ' ` ne može pogoditi (html/:root kao prvi spoj) '
+      + 'ili ugniježđen (`&`) — na mišu bi ostao ljepljiv; riješi ručno pa proširi modul:\n  '
+      + zapreke.map((z) => filename + ':' + z.line + '  ' + z.selektor + '  (' + z.zasto + ')').join('\n  '));
   }
   return { tekst, pravila, doseg };
 }
@@ -166,18 +217,23 @@ function podijeliSelektore(prelude) {
 }
 
 /**
- * Zamotaj sva GOLA hover-pravila u `@media (hover: hover)` na istom mjestu.
- * Vraća { css, doseg, prije, poslije } — `poslije.golihSelektora` je 0 ili se baca.
+ * Zamotaj sva GOLA hover-pravila u `@media (hover: hover)` na istom mjestu (①) i svakom
+ * hover-selektoru bez prefiksa dodaj `:where(:root:not([data-hover-paused])) ` (②;
+ * `opts.naoruzaj === false` ga preskače — za datoteke bez rutera, gdje se pod mišem ništa ne mijenja).
+ * Idempotentno: drugi prolaz po vlastitom izlazu ne mijenja ništa.
+ * Vraća { css, prije, poslije, zamotano, naoruzano } — ili baca ako obrnuta provjera ne prođe.
  */
-function zamotaj(css, filename) {
+function zamotaj(css, filename, opts) {
+  const naoruzaj = !(opts && opts.naoruzaj === false);
   const { tekst, pravila, doseg } = analiziraj(css, filename);
   let t = tekst;
-  const gola = pravila.filter((p) => !p.uHoverMediju).sort((a, b) => b.off - a.off);
+  const trebaPrefiks = (p) => naoruzaj && p.naoruzanIdx.length < p.hoverIdx.length;
+  const posao = pravila.filter((p) => !p.uHoverMediju || trebaPrefiks(p)).sort((a, b) => b.off - a.off);
+  let zamotano = 0, naoruzano = 0;
 
-  for (const p of gola) {
+  for (const p of posao) {
     const o = p.off;
     const b = t.indexOf('{', o);
-    const kraj = krajBloka(t, b);
     const ls = t.lastIndexOf('\n', o) + 1;
     const uvlaka = t.slice(ls, o);
     if (/\S/.test(uvlaka)) throw new Error('hover-css: pravilo ne počinje na svom retku (' + filename + ':' + p.line + ')');
@@ -186,8 +242,20 @@ function zamotaj(css, filename) {
       throw new Error('hover-css: tekst i AST se ne slažu u broju selektora (' + filename + ':' + p.line + ': tekst '
         + dijelovi.length + ', AST ' + p.n + ') — ' + JSON.stringify(t.slice(o, b)));
     }
+    const sel = (i) => {
+      if (naoruzaj && p.hoverIdx.includes(i) && !p.naoruzanIdx.includes(i)) { naoruzano++; return PREFIKS + ' ' + dijelovi[i]; }
+      return dijelovi[i];
+    };
+    if (p.uHoverMediju) {
+      // Već pod hover-medijem (①): samo prelude na mjestu, tijelo i položaj netaknuti.
+      const rep = t.slice(o, b).match(/\s*$/)[0];
+      t = t.slice(0, o) + dijelovi.map((_, i) => sel(i)).join(', ') + rep + t.slice(b);
+      continue;
+    }
+    zamotano++;
+    const kraj = krajBloka(t, b);
     const tijelo = t.slice(b, kraj + 1);
-    const hover = dijelovi.filter((_, i) => p.hoverIdx.includes(i));
+    const hover = dijelovi.map((_, i) => i).filter((i) => p.hoverIdx.includes(i)).map(sel);
     const ostali = dijelovi.filter((_, i) => !p.hoverIdx.includes(i));
     const tijeloUvuceno = tijelo.split('\n').map((l, i) => (i === 0 ? l : '  ' + l)).join('\n');
     const dio = [];
@@ -196,7 +264,7 @@ function zamotaj(css, filename) {
     t = t.slice(0, o) + dio.join('\n' + uvlaka) + t.slice(kraj + 1);
   }
 
-  // Obrnuta provjera vlastitog izlaza: nula golih, nijedan hover-selektor izgubljen.
+  // Obrnuta provjera vlastitog izlaza: nula golih, nijedan hover-selektor izgubljen, svi naoružani.
   const poslije = analiziraj(t, filename).doseg;
   if (poslije.golihSelektora !== 0) {
     throw new Error('hover-css: nakon zamatanja još ' + poslije.golihSelektora + ' golih hover-selektora u ' + filename);
@@ -204,13 +272,23 @@ function zamotaj(css, filename) {
   if (poslije.hoverSelektora !== doseg.hoverSelektora) {
     throw new Error('hover-css: izgubljeni hover-selektori u ' + filename + ' (prije ' + doseg.hoverSelektora + ', poslije ' + poslije.hoverSelektora + ')');
   }
-  return { css: t, prije: doseg, poslije, zamotano: gola.length };
+  if (naoruzaj && poslije.naoruzanihSelektora !== poslije.hoverSelektora) {
+    throw new Error('hover-css: ' + (poslije.hoverSelektora - poslije.naoruzanihSelektora) + ' hover-selektora bez prefiksa `' + PREFIKS + '` u ' + filename);
+  }
+  return { css: t, prije: doseg, poslije, zamotano, naoruzano };
 }
 
-/** Brana: koja hover-pravila stoje IZVAN medija koji spominje hover. */
+/**
+ * Brana: koja hover-pravila stoje IZVAN medija koji spominje hover (`gola`) i koja nose bar jedan
+ * hover-selektor BEZ prefiksa `:where(:root:not([data-hover-paused]))` (`nenaoruzana`).
+ */
 function gola(css, filename) {
   const { pravila, doseg } = analiziraj(css, filename);
-  return { doseg, gola: pravila.filter((p) => !p.uHoverMediju) };
+  return {
+    doseg,
+    gola: pravila.filter((p) => !p.uHoverMediju),
+    nenaoruzana: pravila.filter((p) => p.naoruzanIdx.length < p.hoverIdx.length),
+  };
 }
 
-module.exports = { analiziraj, zamotaj, gola, mediaSpominjeHover, polozajHovera, podijeliSelektore };
+module.exports = { PREFIKS, analiziraj, zamotaj, gola, mediaSpominjeHover, polozajHovera, podijeliSelektore, jeNaoruzan, zaprekaPrefiksa };

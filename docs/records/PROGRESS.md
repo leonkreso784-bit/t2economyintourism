@@ -5,6 +5,21 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-05 (FABLE) — F1/8 ② isporučen: hover na mišu se naoruža tek prvim pomakom (JS pauza + CSS prefiks + sonda + 28 tvrdnji)
+
+Leon: *„pregledaj i analiziraj sve i kreni na sljedeću ciglu"* → F1/8 ② po planu iz memorije. **Nalaz koji plan
+nije nosio:** browse-prelazi (fakultet → smjer → godina — Leonov točan scenarij) ne idu kroz `navigateTo` nego
+kroz `browseNaRazinu()` → pauza stoji na oba mjesta (tvrdnja u `hover-arm.test.js` to čuva). **Redoslijed:** prvo
+sonda koja kvar MJERI (`hover-probe --profil=prelaz`: na današnjem bundleu ljepljivo 2/2 — obrnuta provjera), pa
+popravak: `pauzirajHover()` u `utils.js` (bez ovisnosti → pješčanik), prefiks `:where(:root:not([data-hover-paused]))`
+u ISTOM prolazu `hover-css.js` (i na pravilima već pod hover-medijem; idempotentno; `html`/`:root`/`&` ruše build),
+`check:hover` traži prefiks (obrnuto: 134 nenaoružana pravila na starom bundleu → 0). **Dokazi:** prelaz mirno 2/2 +
+naoružano 2/2 · WebKit dodir mirno 2/2 · miš `--usporedi` 0 razlika (20 i dalje mijenja) · css:diff 7 161 usporedbi
+0 razlika · browse/back-model 7/7 · unit 28/28 (obrnuto: šav na `HEAD` = false/false) · preflight EXIT 0. Sljedeće:
+**F1/7** (landing `background-attachment: fixed`). ⚠️ Pouka alata, ponovljena: heredoc u Bash-alatu progutao je
+backslasheve i u JS-sondi — regex je TIHO postao krivi („tijelo NIJE NADJENO" na oba stabla umjesto false/true);
+skripte s backslashevima idu kroz Write.
+
 ## 2026-09-05 (FABLE) — F1/8 ① isporučen: `:hover` samo gdje hover postoji (build-prolaz + brana + sonda)
 
 Leon: *„Može kreni"* → druga cigla dodirne serije. **Alat:** lightningcss 1.32.0 (već u `node_modules` kao

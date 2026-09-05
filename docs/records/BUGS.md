@@ -17,24 +17,6 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
-### BUG-044 — Ljepljivi hover: poslije dodira koji mijenja rutu, gumb pod prstom svijetli a nije dotaknut
-
-- Status: 🟡 **u radu** — **① dodir riješen 2026-09-05 (F1/8 ①)**, ② miš čeka · Težina: **visok**
-  (Leon: *„jako naporno"*, *„od početka"*) · Našao: Leon na iPhoneu.
-- **Opis.** Dodir na karticu promijeni rutu; WebKit (svaki preglednik na iPhoneu) zadrži `:hover` na
-  onome što se sad nalazi pod prstom — nova kartica ima rub `brand-500`, pomak i sjenu, i ne prolazi ni
-  nakon 3 s. Na mišu isto: nova kartica pod nepomičnim pokazivačem odmah je `:hover`.
-- **Uzrok.** 130 `:hover` pravila (142 selektora) vrijedilo je i na uređajima BEZ hovera; presedan koji
-  to rješava postojao je za tri gumba (`policies.css:12`), za ostalih 138 nije.
-- **Rješenje ①.** `scripts/hover-css.js` u `build:css`: svako `:hover` pravilo pod `@media (hover: hover)`,
-  na istom mjestu (medij ne mijenja ni redoslijed ni specifičnost); lightningcss parsira, tekst se
-  prepisuje. Brana `check:hover`; sonda `scripts/hover-probe.js` (WebKit dodir: ljepljivo 2/2 → mirno
-  2/2; miš: 0 razlika na 38 elemenata). **Leon na iPhoneu, preview `92269c2`: *„Ne svijetli, odlično."***
-  **② miš** = hover se naoruža tek prvim `pointermove` poslije rute.
-- **Lekcija (dosad).** Pravilo koje vrijedi „svugdje" vrijedi i tamo gdje mu stanje ne postoji; sposobnost
-  (`hover`) se pita medijem, ne pretpostavlja. I: kad alat ne može vratiti stablo, neka ga samo čita —
-  prepis teksta po koordinatama parsera je manji zahvat od ponovne serijalizacije svega.
-
 ### BUG-039 — Ljestva širine kviza i dva pravila za male telefone su MRTVI: kasniji širi upit gasi raniji uži
 
 - Status: 🔴 **otvoren** — svjesno odgođen, jer ispravak je **odluka o izgledu**, a našao ga je
@@ -142,6 +124,34 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 ---
 
 ## Riješeni / Lekcije
+
+### BUG-044 — Ljepljivi hover: poslije dodira koji mijenja rutu, gumb pod prstom svijetli a nije dotaknut
+
+- Status: ✅ **riješen 2026-09-05** — ① dodir (F1/8 ①; Leon na iPhoneu: *„Ne svijetli, odlično"*) + ② miš
+  (F1/8 ②; `hover-probe --profil=prelaz` mirno 2/2) · Težina: **visok** (Leon: *„jako naporno"*, *„od
+  početka"*) · Našao: Leon na iPhoneu.
+- **Opis.** Dodir na karticu promijeni rutu; WebKit (svaki preglednik na iPhoneu) zadrži `:hover` na
+  onome što se sad nalazi pod prstom — nova kartica ima rub `brand-500`, pomak i sjenu, i ne prolazi ni
+  nakon 3 s. Na mišu isto: nova kartica pod nepomičnim pokazivačem odmah je `:hover`.
+- **Uzrok.** 130 `:hover` pravila (142 selektora) vrijedilo je i na uređajima BEZ hovera; presedan koji
+  to rješava postojao je za tri gumba (`policies.css:12`), za ostalih 138 nije. Na mišu je uzrok sam
+  preglednik: hover se računa po položaju pokazivača, ne po pokretu.
+- **Rješenje ①.** `scripts/hover-css.js` u `build:css`: svako `:hover` pravilo pod `@media (hover: hover)`,
+  na istom mjestu (medij ne mijenja ni redoslijed ni specifičnost); lightningcss parsira, tekst se
+  prepisuje. Brana `check:hover`; sonda `scripts/hover-probe.js` (WebKit dodir: ljepljivo 2/2 → mirno
+  2/2; miš: 0 razlika na 38 elemenata). **Leon na iPhoneu, preview `92269c2`: *„Ne svijetli, odlično."***
+- **Rješenje ②.** `pauzirajHover()` (`js/utils.js`) stavi `data-hover-paused` na `<html>` kad se mijenja ono
+  što je pod mišem — iz `navigateTo` **i `browseNaRazinu`** (browse-prelazi fakultet → smjer → godina ne idu
+  kroz `navigateTo`; plan je to previdio, sonda ga je našla) — a prvi `pointermove` ga skine (`mousemove` ne:
+  dodir ga šalje uz klik). Isti prolaz `hover-css.js` svakom hover-selektoru doda
+  `:where(:root:not([data-hover-paused]))` (nula specifičnosti; 142/142, i onima već pod hover-medijem);
+  `check:hover` traži prefiks. Dokazi: `hover-probe --profil=prelaz` ljepljivo 2/2 → mirno 2/2 + naoružano 2/2
+  · miš `--usporedi` 0 razlika · css:diff 7 161 usporedbi 0 razlika · `tests/unit/hover-arm.test.js` 28 tvrdnji.
+- **Lekcija.** Pravilo koje vrijedi „svugdje" vrijedi i tamo gdje mu stanje ne postoji; sposobnost
+  (`hover`) se pita medijem, ne pretpostavlja. Kad alat ne može vratiti stablo, neka ga samo čita —
+  prepis teksta po koordinatama parsera je manji zahvat od ponovne serijalizacije svega. I: popravak koji
+  gađa ruter promaši svaki prelazak koji mijenja sadržaj bez promjene stranice — sonda mora mjeriti
+  korisnikov scenarij, ne funkciju za koju misliš da ga nosi.
 
 ### BUG-043 — Zoom na dodir: zaštita je stajala iza njuškanja motora koje nijedna brana ne vidi, a prijavljena brana mjerila je telefon s mišem
 

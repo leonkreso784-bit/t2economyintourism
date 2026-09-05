@@ -83,7 +83,7 @@ mjereno je 119 ms na brzoj vezi i 232 ms na Slow-4G, a Leonov telefon je gori sl
 stvari. **Popravak je na produkciji od 2026-09-05** (`8b70c15`) — presuđuje Leonov telefon.
 ⚠️ Pouka koja ostaje: **mjera na razvojnom stroju je DONJA granica, ne stvarnost korisnika.**
 
-**D. LJEPLJIVI HOVER NAKON PRELASKA** (Leon, 2026-09-05: *„Svaki put kada se stisne na neki gumb
+**D. ✅ LJEPLJIVI HOVER NAKON PRELASKA — ISPORUČENO 2026-09-05 (① dodir + ② miš, BUG-044 zatvoren)** (Leon, 2026-09-05: *„Svaki put kada se stisne na neki gumb
 on po rubovima malo posvijetli. Onda kada taj gumb odvede na drugu stranicu, gumb koji je stajao na
 mjestu starog gumba isto svijetli po rubovima a nije ga se diralo, to je jako naporno."* —
 *„imamo taj problem od početka"*).
@@ -118,7 +118,13 @@ precima, `loc`), TEKST se prepisuje — vraćanje stabla u Rust puca i prepisalo
 142 selektora u `@media (hover: hover)`, liste cijepane (`:focus-visible` vani), 4 već pod hover-medijem
 preskočena, `:hover` u `:not()/:is()` = pad builda (danas 0). Legal/consent ručno. Brana `check:hover`
 (obrnuto 130 golih → 0). `scripts/hover-probe.js`: WebKit dodir ljepljivo 2/2 → mirno 2/2; miš 38 elemenata
-0 razlika, 20 i dalje mijenja izgled. **② miš čeka** (`data-hover-paused` + `:where()` prefiks).
+0 razlika, 20 i dalje mijenja izgled.
+**② ISPORUČENO 2026-09-05 (miš).** `pauzirajHover()` (`js/utils.js`) stavi `data-hover-paused` na `<html>` iz
+`navigateTo` I `browseNaRazinu` — browse-prelazi ne idu kroz `navigateTo`, plan je to previdio, sonda našla; prvi
+`pointermove` skine (ne `mousemove`: dodir ga šalje). Prefiks `:where(:root:not([data-hover-paused]))` na 142/142
+selektora kroz isti `hover-css.js` prolaz (i na pravilima već pod medijem; idempotentno); `check:hover` ga traži
+(obrnuto 134 → 0). `hover-probe --profil=prelaz`: ljepljivo 2/2 → mirno 2/2 + naoružano 2/2; miš `--usporedi`
+0 razlika; css:diff 7 161 usporedbi 0 razlika; `hover-arm.test.js` 28 tvrdnji.
 
 **Izmjereno DRUGI put, 2026-09-05 — WebKit instaliran u Playwright (isti drill-down, sonda u scratchu):**
 

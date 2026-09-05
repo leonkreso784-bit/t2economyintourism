@@ -478,7 +478,7 @@ section[id$="-page"] {
   transition: border-color 0.18s ease, transform 0.18s ease;
 }
 @media (hover: hover) {
-  .door:hover {
+  :where(:root:not([data-hover-paused])) .door:hover {
     border-color: var(--color-brand-500);
     transform: translateY(-2px);
   }
@@ -488,7 +488,7 @@ section[id$="-page"] {
   border-color: var(--color-brand-500);
 }
 @media (hover: hover) {
-  .door--primary:hover {
+  :where(:root:not([data-hover-paused])) .door--primary:hover {
     background: var(--color-brand-400);
     border-color: var(--color-brand-400);
   }
@@ -599,7 +599,7 @@ section[id$="-page"] {
   transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
 }
 @media (hover: hover) {
-  .cat-program:hover:not([aria-pressed="true"]) {
+  :where(:root:not([data-hover-paused])) .cat-program:hover:not([aria-pressed="true"]) {
     border-color: var(--color-ink-2);
     color: var(--color-ink-0);
   }
@@ -668,7 +668,7 @@ section[id$="-page"] {
   transition: border-color 0.18s ease, background 0.18s ease;
 }
 @media (hover: hover) {
-  .landing-subject-card:hover {
+  :where(:root:not([data-hover-paused])) .landing-subject-card:hover {
     border-color: var(--card-accent, var(--color-brand-500));
     background: var(--color-surface-2);
   }
@@ -708,7 +708,7 @@ section[id$="-page"] {
   flex-shrink: 0;
 }
 @media (hover: hover) {
-  .landing-subject-card:hover .landing-subject-arrow {
+  :where(:root:not([data-hover-paused])) .landing-subject-card:hover .landing-subject-arrow {
     color: var(--color-ink-0);
   }
 }
@@ -717,7 +717,7 @@ section[id$="-page"] {
   background: transparent;
 }
 @media (hover: hover) {
-  .landing-subject-card--make:hover {
+  :where(:root:not([data-hover-paused])) .landing-subject-card--make:hover {
     border-style: dashed;
     border-color: var(--color-ink-0);
     background: var(--color-surface-1);
@@ -729,7 +729,7 @@ section[id$="-page"] {
   border: 1px dashed var(--color-line);
 }
 @media (hover: hover) {
-  .landing-subject-card--make:hover .landing-subject-icon--make {
+  :where(:root:not([data-hover-paused])) .landing-subject-card--make:hover .landing-subject-icon--make {
     color: var(--color-ink-0);
   }
 }
@@ -819,7 +819,7 @@ section[id$="-page"] {
   transition: background 0.18s ease;
 }
 @media (hover: hover) {
-  .own-cta:hover {
+  :where(:root:not([data-hover-paused])) .own-cta:hover {
     background: var(--color-brand-600);
   }
 }
@@ -958,7 +958,7 @@ section[id$="-page"] {
   cursor: pointer;
 }
 @media (hover: hover) {
-  .footer-col a:hover, .footer-link-btn:hover {
+  :where(:root:not([data-hover-paused])) .footer-col a:hover, :where(:root:not([data-hover-paused])) .footer-link-btn:hover {
     color: var(--color-ink-0);
     text-decoration: underline;
   }
@@ -1045,7 +1045,7 @@ section[id$="-page"] {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .close-sidebar-btn:hover {
+  :where(:root:not([data-hover-paused])) .close-sidebar-btn:hover {
     background: var(--color-danger);
     color: var(--color-on-danger);
   }
@@ -1072,7 +1072,7 @@ section[id$="-page"] {
   border: 2px solid transparent;
 }
 @media (hover: hover) {
-  .subject-item:hover {
+  :where(:root:not([data-hover-paused])) .subject-item:hover {
     border-color: var(--color-brand-500);
     transform: translateX(5px);
   }
@@ -1126,7 +1126,7 @@ section[id$="-page"] {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .subject-item:hover .subject-arrow {
+  :where(:root:not([data-hover-paused])) .subject-item:hover .subject-arrow {
     color: var(--color-brand-500);
     transform: translateX(3px);
   }
@@ -1226,7 +1226,7 @@ section[id$="-page"] {
   outline: none;
 }
 @media (hover: hover) {
-  .browse-card:hover {
+  :where(:root:not([data-hover-paused])) .browse-card:hover {
     border-color: var(--card-accent, var(--color-brand-500));
     transform: translateY(-4px);
     box-shadow: var(--shadow-e2);
@@ -1237,7 +1237,7 @@ section[id$="-page"] {
   opacity: 1;
 }
 @media (hover: hover) {
-  .browse-card:hover::before {
+  :where(:root:not([data-hover-paused])) .browse-card:hover::before {
     opacity: 1;
   }
 }
@@ -1319,7 +1319,7 @@ section[id$="-page"] {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .browse-card:hover .browse-card-arrow {
+  :where(:root:not([data-hover-paused])) .browse-card:hover .browse-card-arrow {
     color: var(--card-accent, var(--color-brand-500));
     transform: translateX(4px);
   }
@@ -1381,7 +1381,7 @@ section[id$="-page"] {
   cursor: not-allowed;
 }
 @media (hover: hover) {
-  .lesson-card:hover {
+  :where(:root:not([data-hover-paused])) .lesson-card:hover {
     border-color: var(--color-brand-500);
     transform: translateY(-3px);
     box-shadow: var(--shadow-e2);
@@ -1417,7 +1417,7 @@ section[id$="-page"] {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .lesson-card:hover .lesson-arrow {
+  :where(:root:not([data-hover-paused])) .lesson-card:hover .lesson-arrow {
     color: var(--color-brand-500);
     transform: translateX(5px);
   }
@@ -1447,7 +1447,7 @@ section[id$="-page"] {
   box-shadow: var(--shadow-e2);
 }
 @media (hover: hover) {
-  .logo-wrapper-large:hover {
+  :where(:root:not([data-hover-paused])) .logo-wrapper-large:hover {
     transform: scale(1.05);
   }
 }
@@ -1500,7 +1500,7 @@ section[id$="-page"] {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .about-btn:hover:not([disabled]) {
+  :where(:root:not([data-hover-paused])) .about-btn:hover:not([disabled]) {
     background: var(--color-surface-2);
   }
 }
@@ -1510,7 +1510,7 @@ section[id$="-page"] {
   color: var(--color-on-brand);
 }
 @media (hover: hover) {
-  .about-btn--primary:hover:not([disabled]) {
+  :where(:root:not([data-hover-paused])) .about-btn--primary:hover:not([disabled]) {
     background: var(--color-brand-600);
     border-color: var(--color-brand-600);
   }
@@ -1584,7 +1584,7 @@ section[id$="-page"] {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .email-link:hover {
+  :where(:root:not([data-hover-paused])) .email-link:hover {
     background: var(--color-brand-500);
     color: var(--color-on-brand);
   }
@@ -1714,7 +1714,7 @@ body:has(.landing-page.active) .footer, body:has(.browse-page.active) .footer {
   color: var(--color-on-brand);
 }
 @media (hover: hover) {
-  .cta-button.primary:hover {
+  :where(:root:not([data-hover-paused])) .cta-button.primary:hover {
     background: var(--color-brand-600);
   }
 }
@@ -1723,7 +1723,7 @@ body:has(.landing-page.active) .footer, body:has(.browse-page.active) .footer {
   border: 1px solid var(--color-line);
 }
 @media (hover: hover) {
-  .cta-button.secondary:hover {
+  :where(:root:not([data-hover-paused])) .cta-button.secondary:hover {
     border-color: color-mix(in srgb, #4f46e5 55%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       border-color: color-mix(in srgb, var(--color-brand-500) 55%, transparent);
@@ -1848,7 +1848,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--color-ink-1, #cbd5e1);
 }
 @media (hover: hover) {
-  .sokrat-confirm__cancel:hover {
+  :where(:root:not([data-hover-paused])) .sokrat-confirm__cancel:hover {
     color: var(--color-ink-0, #f8fafc);
     border-color: var(--color-line-strong);
   }
@@ -1858,7 +1858,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--color-on-brand);
 }
 @media (hover: hover) {
-  .sokrat-confirm__ok:hover {
+  :where(:root:not([data-hover-paused])) .sokrat-confirm__ok:hover {
     background: var(--color-brand-600);
   }
 }
@@ -1866,7 +1866,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   background: var(--color-danger);
 }
 @media (hover: hover) {
-  .sokrat-confirm__ok.is-danger:hover {
+  :where(:root:not([data-hover-paused])) .sokrat-confirm__ok.is-danger:hover {
     transform: translateY(-1px);
     box-shadow: var(--shadow-e2);
   }
@@ -1918,7 +1918,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .stat-card:hover {
+  :where(:root:not([data-hover-paused])) .stat-card:hover {
     transform: translateY(-3px);
     box-shadow: var(--shadow-e2);
   }
@@ -1967,7 +1967,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   text-align: left;
 }
 @media (hover: hover) {
-  .category-btn:hover {
+  :where(:root:not([data-hover-paused])) .category-btn:hover {
     border-color: var(--color-brand-500);
     transform: translateY(-2px);
     box-shadow: var(--shadow-e1);
@@ -2036,7 +2036,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--color-on-brand);
 }
 @media (hover: hover) {
-  .action-btn.primary:hover {
+  :where(:root:not([data-hover-paused])) .action-btn.primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 16px color-mix(in srgb, #4f46e5 30%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -2050,7 +2050,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   border: 2px solid var(--color-line);
 }
 @media (hover: hover) {
-  .action-btn.secondary:hover {
+  :where(:root:not([data-hover-paused])) .action-btn.secondary:hover {
     border-color: var(--color-brand-500);
     color: var(--color-brand-500);
   }
@@ -2319,7 +2319,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   border: 2px solid var(--color-danger);
 }
 @media (hover: hover) {
-  .control-btn.wrong:hover {
+  :where(:root:not([data-hover-paused])) .control-btn.wrong:hover {
     background: var(--color-danger);
     color: var(--color-on-brand);
   }
@@ -2330,7 +2330,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   border: 2px solid var(--color-ok);
 }
 @media (hover: hover) {
-  .control-btn.correct:hover {
+  :where(:root:not([data-hover-paused])) .control-btn.correct:hover {
     background: var(--color-ok);
     color: var(--color-on-brand);
   }
@@ -2340,7 +2340,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--color-ink-1);
 }
 @media (hover: hover) {
-  .control-btn.prev:hover, .control-btn.next:hover {
+  :where(:root:not([data-hover-paused])) .control-btn.prev:hover, :where(:root:not([data-hover-paused])) .control-btn.next:hover {
     background: var(--color-brand-500);
     color: var(--color-on-brand);
   }
@@ -2610,7 +2610,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   min-height: var(--touch-target-large);
 }
 @media (hover: hover) {
-  .start-quiz-btn:hover {
+  :where(:root:not([data-hover-paused])) .start-quiz-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 16px color-mix(in srgb, #4f46e5 30%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -2695,7 +2695,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   min-height: var(--touch-target-large);
 }
 @media (hover: hover) {
-  .answer-btn:hover:not(.disabled) {
+  :where(:root:not([data-hover-paused])) .answer-btn:hover:not(.disabled) {
     border-color: var(--color-brand-500);
     background: color-mix(in srgb, #4f46e5 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -2768,7 +2768,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   min-height: var(--touch-target);
 }
 @media (hover: hover) {
-  .quiz-nav-btn:hover {
+  :where(:root:not([data-hover-paused])) .quiz-nav-btn:hover {
     border-color: var(--color-brand-500);
     background: color-mix(in srgb, #4f46e5 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -2784,7 +2784,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--color-danger, #ef4444);
 }
 @media (hover: hover) {
-  .quiz-restart-btn:hover {
+  :where(:root:not([data-hover-paused])) .quiz-restart-btn:hover {
     background: rgba(239, 68, 68, 0.1);
     border-color: var(--color-danger, #ef4444);
   }
@@ -3197,7 +3197,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   min-height: var(--touch-target);
 }
 @media (hover: hover) {
-  .check-btn:hover {
+  :where(:root:not([data-hover-paused])) .check-btn:hover {
     transform: translateY(-1px);
     box-shadow: var(--shadow-e2);
   }
@@ -3239,7 +3239,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   border: 2px solid var(--color-warn);
 }
 @media (hover: hover) {
-  .control-btn.hint:hover {
+  :where(:root:not([data-hover-paused])) .control-btn.hint:hover {
     background: var(--color-warn);
     color: var(--color-on-brand);
   }
@@ -3434,7 +3434,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   min-height: var(--touch-target);
 }
 @media (hover: hover) {
-  .reset-btn:hover {
+  :where(:root:not([data-hover-paused])) .reset-btn:hover {
     background: var(--color-danger);
     color: var(--color-on-danger);
   }
@@ -3547,7 +3547,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   gap: 0.4rem;
 }
 @media (hover: hover) {
-  .map-diff-btn:hover {
+  :where(:root:not([data-hover-paused])) .map-diff-btn:hover {
     border-color: var(--color-brand-500);
     color: var(--color-brand-500);
     transform: translateY(-1px);
@@ -3615,7 +3615,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--color-on-brand);
 }
 @media (hover: hover) {
-  .map-submit-btn:hover {
+  :where(:root:not([data-hover-paused])) .map-submit-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 12px color-mix(in srgb, #4f46e5 30%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -3629,7 +3629,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   border: 2px solid var(--color-danger);
 }
 @media (hover: hover) {
-  .map-clear-btn:hover {
+  :where(:root:not([data-hover-paused])) .map-clear-btn:hover {
     background: var(--color-danger);
     color: var(--color-on-danger);
   }
@@ -3639,7 +3639,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--color-ink-1);
 }
 @media (hover: hover) {
-  .map-skip-btn:hover {
+  :where(:root:not([data-hover-paused])) .map-skip-btn:hover {
     background: var(--color-brand-500);
     color: var(--color-on-brand);
   }
@@ -3783,7 +3783,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   box-shadow: var(--shadow-e1);
 }
 @media (hover: hover) {
-  .ex-card:hover {
+  :where(:root:not([data-hover-paused])) .ex-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-e2);
   }
@@ -3878,7 +3878,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--color-on-brand);
 }
 @media (hover: hover) {
-  .ex-btn-primary:hover {
+  :where(:root:not([data-hover-paused])) .ex-btn-primary:hover {
     background: var(--color-brand-600);
   }
 }
@@ -3888,7 +3888,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   border: 1px solid var(--color-line);
 }
 @media (hover: hover) {
-  .ex-btn-ghost:hover {
+  :where(:root:not([data-hover-paused])) .ex-btn-ghost:hover {
     background: var(--color-surface-2);
   }
 }
@@ -3971,7 +3971,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .ex-opt:hover {
+  :where(:root:not([data-hover-paused])) .ex-opt:hover {
     border-color: var(--color-brand-500);
   }
 }
@@ -4171,7 +4171,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   line-height: 1;
 }
 @media (hover: hover) {
-  .ex-jr-del:hover {
+  :where(:root:not([data-hover-paused])) .ex-jr-del:hover {
     border-color: var(--color-danger);
     color: var(--color-danger);
   }
@@ -4324,23 +4324,23 @@ sokrat-modal.sokrat-confirm-modal > * {
   }
 }
 @media (hover: hover) and (pointer: fine) {
-  .category-btn:hover {
+  :where(:root:not([data-hover-paused])) .category-btn:hover {
     transform: translateY(-3px);
     box-shadow: var(--shadow-e2);
   }
-  .action-btn.primary:hover {
+  :where(:root:not([data-hover-paused])) .action-btn.primary:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 20px color-mix(in srgb, #4f46e5 30%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       box-shadow: 0 10px 20px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
     }
   }
-  .stat-card:hover {
+  :where(:root:not([data-hover-paused])) .stat-card:hover {
     transform: translateY(-5px);
   }
 }
 @media (hover: none) {
-  .category-btn:hover, .action-btn:hover, .stat-card:hover {
+  :where(:root:not([data-hover-paused])) .category-btn:hover, :where(:root:not([data-hover-paused])) .action-btn:hover, :where(:root:not([data-hover-paused])) .stat-card:hover {
     transform: none;
   }
   .category-btn:active, .action-btn:active, .cta-button:active {
@@ -4455,7 +4455,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   white-space: nowrap;
 }
 @media (hover: hover) {
-  .study-nav-btn:hover {
+  :where(:root:not([data-hover-paused])) .study-nav-btn:hover {
     background: var(--color-surface-2);
     color: var(--color-brand-500);
   }
@@ -4601,7 +4601,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   border-radius: 3px;
 }
 @media (hover: hover) {
-  :where(#learn) .learn-filter::-webkit-scrollbar-thumb:hover {
+  :where(:root:not([data-hover-paused])) :where(#learn) .learn-filter::-webkit-scrollbar-thumb:hover {
     background: var(--color-ink-1, var(--color-line));
   }
 }
@@ -4646,7 +4646,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   }
 }
 @media (hover: hover) {
-  :where(#learn) .filter-btn:hover {
+  :where(:root:not([data-hover-paused])) :where(#learn) .filter-btn:hover {
     border-color: var(--color-brand-500);
     background: var(--color-brand-600);
     color: var(--color-on-brand);
@@ -4957,7 +4957,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   outline: none;
 }
 @media (hover: hover) {
-  :where(#learn) .learn-zoomable:hover {
+  :where(:root:not([data-hover-paused])) :where(#learn) .learn-zoomable:hover {
     transform: translateY(-1px);
     box-shadow: 0 8px 24px color-mix(in srgb, #0e1a2b 28%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -5339,7 +5339,7 @@ h4.lb-heading {
   transition: background 0.2s ease;
 }
 @media (hover: hover) {
-  .lb-video__play:hover {
+  :where(:root:not([data-hover-paused])) .lb-video__play:hover {
     background: color-mix(in srgb, #4f46e5 12%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
@@ -5469,7 +5469,7 @@ h4.lb-heading {
   border-color: var(--color-line-strong);
 }
 @media (hover: hover) {
-  .be-block:hover {
+  :where(:root:not([data-hover-paused])) .be-block:hover {
     background: color-mix(in srgb, #5b6879 8%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background: color-mix(in srgb, var(--color-ink-2) 8%, transparent);
@@ -5497,12 +5497,12 @@ h4.lb-heading {
   transition: opacity .13s, background .13s, color .13s;
 }
 @media (hover: hover) {
-  .be-block:hover .be-grip {
+  :where(:root:not([data-hover-paused])) .be-block:hover .be-grip {
     opacity: .85;
   }
 }
 @media (hover: hover) {
-  .be-grip:hover {
+  :where(:root:not([data-hover-paused])) .be-grip:hover {
     opacity: 1;
     color: var(--color-brand-500);
     background: var(--color-surface-2);
@@ -5546,7 +5546,7 @@ h4.lb-heading {
   color: var(--color-brand-500);
 }
 @media (hover: hover) {
-  .be-block:hover .be-n {
+  :where(:root:not([data-hover-paused])) .be-block:hover .be-n {
     color: var(--color-brand-500);
   }
 }
@@ -5561,7 +5561,7 @@ h4.lb-heading {
   opacity: 1;
 }
 @media (hover: hover) {
-  .be-block:hover .be-ctrls {
+  :where(:root:not([data-hover-paused])) .be-block:hover .be-ctrls {
     opacity: 1;
   }
 }
@@ -5579,7 +5579,7 @@ h4.lb-heading {
   transition: .13s;
 }
 @media (hover: hover) {
-  .be-btn:hover:not([disabled]) {
+  :where(:root:not([data-hover-paused])) .be-btn:hover:not([disabled]) {
     color: var(--color-on-brand);
     border-color: var(--color-brand-500);
     background: var(--color-brand-500);
@@ -5590,7 +5590,7 @@ h4.lb-heading {
   cursor: default;
 }
 @media (hover: hover) {
-  .be-del:hover:not([disabled]) {
+  :where(:root:not([data-hover-paused])) .be-del:hover:not([disabled]) {
     color: var(--color-on-brand);
     border-color: var(--color-danger);
     background: var(--color-danger);
@@ -5668,7 +5668,7 @@ h4.lb-heading {
   opacity: .5;
 }
 @media (hover: hover) {
-  .be-adder:hover, .be-root:hover .be-adder {
+  :where(:root:not([data-hover-paused])) .be-adder:hover, :where(:root:not([data-hover-paused])) .be-root:hover .be-adder {
     opacity: .5;
   }
 }
@@ -5676,7 +5676,7 @@ h4.lb-heading {
   opacity: 1;
 }
 @media (hover: hover) {
-  .be-adder:hover {
+  :where(:root:not([data-hover-paused])) .be-adder:hover {
     opacity: 1;
   }
 }
@@ -5714,7 +5714,7 @@ h4.lb-heading {
   transition: .14s;
 }
 @media (hover: hover) {
-  .be-add:hover {
+  :where(:root:not([data-hover-paused])) .be-add:hover {
     color: var(--color-on-brand);
     background: var(--color-brand-500);
     border-color: transparent;
@@ -5745,7 +5745,7 @@ h4.lb-heading {
   transition: .16s;
 }
 @media (hover: hover) {
-  .be-bigplus:hover {
+  :where(:root:not([data-hover-paused])) .be-bigplus:hover {
     border-color: var(--color-brand-500);
     color: var(--color-brand-500);
     background: color-mix(in srgb, #4f46e5 12%, transparent);
@@ -5784,7 +5784,7 @@ h4.lb-heading {
   transition: .12s;
 }
 @media (hover: hover) {
-  .be-menu-item:hover {
+  :where(:root:not([data-hover-paused])) .be-menu-item:hover {
     background: var(--color-brand-500);
     color: var(--color-on-brand);
   }
@@ -5802,7 +5802,7 @@ h4.lb-heading {
   cursor: text;
 }
 @media (hover: hover) {
-  .be-edit:hover {
+  :where(:root:not([data-hover-paused])) .be-edit:hover {
     background: var(--color-surface-2);
   }
 }
@@ -5881,7 +5881,7 @@ h4.lb-heading {
   transition: .12s;
 }
 @media (hover: hover) {
-  .be-tb:hover {
+  :where(:root:not([data-hover-paused])) .be-tb:hover {
     background: var(--color-brand-500);
     color: var(--color-on-brand);
   }
@@ -5913,7 +5913,7 @@ h4.lb-heading {
   box-shadow: inset 0 0 0 1px var(--color-line);
 }
 @media (hover: hover) {
-  .be-tbc:hover::after {
+  :where(:root:not([data-hover-paused])) .be-tbc:hover::after {
     box-shadow: inset 0 0 0 1px var(--color-line-strong), 0 0 0 2px color-mix(in srgb, #4f46e5 40%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       box-shadow: inset 0 0 0 1px var(--color-line-strong), 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 40%, transparent);
@@ -5963,7 +5963,7 @@ h4.lb-heading {
   transition: .13s;
 }
 @media (hover: hover) {
-  .be-imgresize:hover {
+  :where(:root:not([data-hover-paused])) .be-imgresize:hover {
     background: var(--color-brand-500);
   }
 }
@@ -5999,7 +5999,7 @@ h4.lb-heading {
   transition: .12s;
 }
 @media (hover: hover) {
-  .be-cvar:hover {
+  :where(:root:not([data-hover-paused])) .be-cvar:hover {
     color: var(--color-on-brand);
     border-color: color-mix(in srgb, #4f46e5 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -6089,7 +6089,7 @@ h4.lb-heading {
   transition: .13s;
 }
 @media (hover: hover) {
-  .be-upload__btn:hover {
+  :where(:root:not([data-hover-paused])) .be-upload__btn:hover {
     filter: brightness(1.08);
     transform: translateY(-1px);
   }
@@ -6211,7 +6211,7 @@ h4.lb-heading {
   width: 100%;
 }
 @media (hover: hover) {
-  .be-mathkey:hover {
+  :where(:root:not([data-hover-paused])) .be-mathkey:hover {
     background: color-mix(in srgb, #4f46e5 26%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background: color-mix(in srgb, var(--color-brand-500) 26%, transparent);
@@ -6282,7 +6282,7 @@ h4.lb-heading {
   transition: opacity .12s;
 }
 @media (hover: hover) {
-  .be-tgrid tr:hover .be-tgrid-rc .be-btn {
+  :where(:root:not([data-hover-paused])) .be-tgrid tr:hover .be-tgrid-rc .be-btn {
     opacity: 1;
   }
 }
@@ -6290,7 +6290,7 @@ h4.lb-heading {
   opacity: 1;
 }
 @media (hover: hover) {
-  .be-tgrid:hover .be-tgrid-crow .be-btn {
+  :where(:root:not([data-hover-paused])) .be-tgrid:hover .be-tgrid-crow .be-btn {
     opacity: 1;
   }
 }
@@ -6317,7 +6317,7 @@ h4.lb-heading {
   transition: .14s;
 }
 @media (hover: hover) {
-  .be-tbtn:hover {
+  :where(:root:not([data-hover-paused])) .be-tbtn:hover {
     border-color: var(--color-brand-500);
     color: var(--color-brand-500);
     background: color-mix(in srgb, #4f46e5 12%, transparent);
@@ -6338,7 +6338,7 @@ h4.lb-heading {
   opacity: 1;
 }
 @media (hover: hover) {
-  .be-block:hover .be-cdots {
+  :where(:root:not([data-hover-paused])) .be-block:hover .be-cdots {
     opacity: 1;
   }
 }
@@ -6356,7 +6356,7 @@ h4.lb-heading {
   color: var(--color-ink-2);
 }
 @media (hover: hover) {
-  .be-cdot:hover {
+  :where(:root:not([data-hover-paused])) .be-cdot:hover {
     transform: scale(1.15);
     box-shadow: 0 0 0 2px color-mix(in srgb, #4f46e5 40%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -6455,7 +6455,7 @@ h4.lb-heading {
   box-shadow: var(--shadow-e1);
 }
 @media (hover: hover) {
-  #editor-page .st-btn.primary:hover:not(:disabled) {
+  :where(:root:not([data-hover-paused])) #editor-page .st-btn.primary:hover:not(:disabled) {
     transform: translateY(-1px);
     box-shadow: var(--shadow-e2);
   }
@@ -6466,7 +6466,7 @@ h4.lb-heading {
   background: var(--st-sunken);
 }
 @media (hover: hover) {
-  #editor-page .st-btn.ghost:hover:not(:disabled) {
+  :where(:root:not([data-hover-paused])) #editor-page .st-btn.ghost:hover:not(:disabled) {
     border-color: var(--color-brand-400);
     color: var(--color-ink-0);
   }
@@ -6489,7 +6489,7 @@ h4.lb-heading {
   font-size: 15px;
 }
 @media (hover: hover) {
-  #editor-page .st-iconbtn:hover {
+  :where(:root:not([data-hover-paused])) #editor-page .st-iconbtn:hover {
     border-color: var(--color-brand-400);
     color: var(--color-ink-0);
   }
@@ -6537,7 +6537,7 @@ h4.lb-heading {
   font-family: inherit;
 }
 @media (hover: hover) {
-  #editor-page .st-newscript:hover {
+  :where(:root:not([data-hover-paused])) #editor-page .st-newscript:hover {
     transform: translateY(-1px);
     box-shadow: var(--shadow-e2);
   }
@@ -6568,7 +6568,7 @@ h4.lb-heading {
   position: relative;
 }
 @media (hover: hover) {
-  #editor-page .st-node .st-row:hover {
+  :where(:root:not([data-hover-paused])) #editor-page .st-node .st-row:hover {
     background: var(--st-sunken);
   }
 }
@@ -6719,7 +6719,7 @@ h4.lb-heading {
   font-family: inherit;
 }
 @media (hover: hover) {
-  #editor-page .st-tab:hover {
+  :where(:root:not([data-hover-paused])) #editor-page .st-tab:hover {
     color: var(--color-ink-0);
   }
 }
@@ -6871,7 +6871,7 @@ h4.lb-heading {
   transition: background .12s, outline-color .12s;
 }
 @media (hover: hover) {
-  #editor-page .st-cat-name:hover {
+  :where(:root:not([data-hover-paused])) #editor-page .st-cat-name:hover {
     background: var(--st-sunken);
   }
 }
@@ -6902,7 +6902,7 @@ h4.lb-heading {
   transition: .13s;
 }
 @media (hover: hover) {
-  #editor-page .st-catdrag:hover {
+  :where(:root:not([data-hover-paused])) #editor-page .st-catdrag:hover {
     opacity: 1;
     color: var(--color-brand-500);
     background: var(--st-sunken);
@@ -6935,7 +6935,7 @@ h4.lb-heading {
   transition: .13s;
 }
 @media (hover: hover) {
-  #editor-page .st-catdel:hover {
+  :where(:root:not([data-hover-paused])) #editor-page .st-catdel:hover {
     opacity: 1;
     color: var(--color-danger-ink);
     background: color-mix(in srgb, #c0332b 12%, transparent);
@@ -6969,7 +6969,7 @@ h4.lb-heading {
   transition: .12s;
 }
 @media (hover: hover) {
-  #editor-page .st-cdot:hover {
+  :where(:root:not([data-hover-paused])) #editor-page .st-cdot:hover {
     transform: scale(1.15);
     box-shadow: 0 0 0 2px color-mix(in srgb, #4f46e5 40%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7018,7 +7018,7 @@ h4.lb-heading {
   font-family: inherit;
 }
 @media (hover: hover) {
-  #editor-page .st-migrate:hover {
+  :where(:root:not([data-hover-paused])) #editor-page .st-migrate:hover {
     border-color: var(--color-brand-500);
     background: color-mix(in srgb, #4f46e5 12%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7162,7 +7162,7 @@ h4.lb-heading {
   opacity: 1;
 }
 @media (hover: hover) {
-  #editor-page .st-edit-item:hover .st-idots {
+  :where(:root:not([data-hover-paused])) #editor-page .st-edit-item:hover .st-idots {
     opacity: 1;
   }
 }
@@ -7342,7 +7342,7 @@ h4.lb-heading {
   animation: stpop .22s ease;
 }
 @media (hover: hover) {
-  #editor-page .st-kv:hover {
+  :where(:root:not([data-hover-paused])) #editor-page .st-kv:hover {
     border-color: var(--color-line-strong);
     transform: translateY(-2px);
     box-shadow: var(--shadow-e2);
@@ -7360,7 +7360,7 @@ h4.lb-heading {
   animation: stpop .22s ease;
 }
 @media (hover: hover) {
-  #editor-page .st-fcard:hover {
+  :where(:root:not([data-hover-paused])) #editor-page .st-fcard:hover {
     transform: translateY(-3px) rotateX(2deg);
     box-shadow: var(--shadow-e2);
   }
@@ -7370,7 +7370,7 @@ h4.lb-heading {
   animation: stpop .22s ease;
 }
 @media (hover: hover) {
-  #editor-page .st-qz:hover, #editor-page .st-fill:hover {
+  :where(:root:not([data-hover-paused])) #editor-page .st-qz:hover, :where(:root:not([data-hover-paused])) #editor-page .st-fill:hover {
     border-color: var(--color-line-strong);
     transform: translateY(-1px);
     box-shadow: var(--shadow-e2);
@@ -7380,7 +7380,7 @@ h4.lb-heading {
   transition: border-color .2s,box-shadow .2s,transform .2s;
 }
 @media (hover: hover) {
-  #editor-page .st-edit-item:hover {
+  :where(:root:not([data-hover-paused])) #editor-page .st-edit-item:hover {
     border-color: var(--color-line-strong);
     transform: translateY(-1px);
     box-shadow: var(--shadow-e2);
@@ -7390,7 +7390,7 @@ h4.lb-heading {
   transition: .15s;
 }
 @media (hover: hover) {
-  #editor-page .st-metas .st-m:hover:not(.st-editing) {
+  :where(:root:not([data-hover-paused])) #editor-page .st-metas .st-m:hover:not(.st-editing) {
     border-color: color-mix(in srgb, #4f46e5 35%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       border-color: color-mix(in srgb, var(--color-brand-500) 35%, transparent);
@@ -7477,7 +7477,7 @@ h4.lb-heading {
   transition: .16s;
 }
 @media (hover: hover) {
-  #editor-page .st-addcat-foot:hover {
+  :where(:root:not([data-hover-paused])) #editor-page .st-addcat-foot:hover {
     border-color: var(--color-brand-500);
     background: color-mix(in srgb, #4f46e5 14%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -7562,7 +7562,7 @@ body.no-pathbar {
   white-space: nowrap;
 }
 @media (hover: hover) {
-  .topbar-btn:hover:not(:disabled) {
+  :where(:root:not([data-hover-paused])) .topbar-btn:hover:not(:disabled) {
     background: var(--color-surface-2);
     color: var(--color-ink-0);
   }
@@ -7601,7 +7601,7 @@ body.no-pathbar {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .topbar-cta:hover {
+  :where(:root:not([data-hover-paused])) .topbar-cta:hover {
     background: var(--color-brand-400);
     border-color: var(--color-brand-400);
   }
@@ -7624,7 +7624,7 @@ body.on-landing .topbar-cta {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .topbar-iconbtn:hover {
+  :where(:root:not([data-hover-paused])) .topbar-iconbtn:hover {
     background: var(--color-surface-2);
     color: var(--color-ink-0);
   }
@@ -7659,7 +7659,7 @@ body.no-pathbar .pathbar {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .pathbar-back:hover {
+  :where(:root:not([data-hover-paused])) .pathbar-back:hover {
     color: var(--color-ink-0);
   }
 }
@@ -7693,7 +7693,7 @@ body.no-pathbar .pathbar {
   white-space: nowrap;
 }
 @media (hover: hover) {
-  .crumb:hover {
+  :where(:root:not([data-hover-paused])) .crumb:hover {
     color: var(--color-ink-0);
   }
 }
@@ -7707,7 +7707,7 @@ body.no-pathbar .pathbar {
   max-width: 100%;
 }
 @media (hover: hover) {
-  .crumb-current:hover {
+  :where(:root:not([data-hover-paused])) .crumb-current:hover {
     color: var(--color-ink-0);
   }
 }
@@ -7818,7 +7818,7 @@ sokrat-modal.auth-modal > * {
   cursor: pointer;
 }
 @media (hover: hover) {
-  .auth-modal__close:hover {
+  :where(:root:not([data-hover-paused])) .auth-modal__close:hover {
     color: var(--color-ink-0);
   }
 }
@@ -7862,7 +7862,7 @@ sokrat-modal.auth-modal > * {
   transition: background 0.2s ease, color 0.2s ease;
 }
 @media (hover: hover) {
-  .auth-modal__tab:hover {
+  :where(:root:not([data-hover-paused])) .auth-modal__tab:hover {
     color: var(--color-ink-0);
   }
 }
@@ -7898,7 +7898,7 @@ sokrat-modal.auth-modal > * {
   transition: color 0.2s ease;
 }
 @media (hover: hover) {
-  .auth-modal__link:hover {
+  :where(:root:not([data-hover-paused])) .auth-modal__link:hover {
     color: var(--color-brand-500);
   }
 }
@@ -7945,7 +7945,7 @@ sokrat-modal.auth-modal > * {
   transition: color 0.2s ease;
 }
 @media (hover: hover) {
-  .auth-pass-toggle:hover {
+  :where(:root:not([data-hover-paused])) .auth-pass-toggle:hover {
     color: var(--color-ink-0);
   }
 }
@@ -8006,7 +8006,7 @@ sokrat-modal.auth-modal > * {
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 @media (hover: hover) {
-  .auth-oauth__btn:hover {
+  :where(:root:not([data-hover-paused])) .auth-oauth__btn:hover {
     border-color: var(--color-line-strong);
     background: var(--color-surface-2);
   }
@@ -8292,7 +8292,7 @@ sokrat-modal.auth-modal > * {
   transition: background 0.2s ease;
 }
 @media (hover: hover) {
-  .profile-danger-btn:hover {
+  :where(:root:not([data-hover-paused])) .profile-danger-btn:hover {
     background: rgba(248, 113, 113, 0.2);
   }
 }
@@ -8310,7 +8310,7 @@ sokrat-modal.auth-modal > * {
   border-color: rgba(248, 113, 113, 0.7);
 }
 @media (hover: hover) {
-  .profile-danger-btn--hard:hover {
+  :where(:root:not([data-hover-paused])) .profile-danger-btn--hard:hover {
     background: rgba(248, 113, 113, 0.3);
   }
 }
@@ -8352,7 +8352,7 @@ sokrat-modal.auth-modal > * {
   transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 @media (hover: hover) {
-  .header-auth-btn:hover {
+  :where(:root:not([data-hover-paused])) .header-auth-btn:hover {
     color: var(--color-ink-0);
     border-color: color-mix(in srgb, #4f46e5 55%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -8510,7 +8510,7 @@ sokrat-modal.auth-modal > * {
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 @media (hover: hover) {
-  .admin-edit-btn:hover {
+  :where(:root:not([data-hover-paused])) .admin-edit-btn:hover {
     background: var(--color-brand-600);
     color: var(--color-on-brand);
     border-color: var(--color-brand-500);
@@ -8533,7 +8533,7 @@ sokrat-modal.auth-modal > * {
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 @media (hover: hover) {
-  .admin-add-btn:hover {
+  :where(:root:not([data-hover-paused])) .admin-add-btn:hover {
     background: var(--color-surface-2);
     color: var(--color-brand-500);
     border-color: var(--color-brand-500);
@@ -8561,7 +8561,7 @@ sokrat-modal.auth-modal > * {
   gap: 0.35rem;
 }
 @media (hover: hover) {
-  .admin-cat-del:hover, .admin-del:hover {
+  :where(:root:not([data-hover-paused])) .admin-cat-del:hover, :where(:root:not([data-hover-paused])) .admin-del:hover {
     background: var(--color-danger);
     color: var(--color-on-danger);
     border-color: var(--color-danger);
@@ -8572,7 +8572,7 @@ sokrat-modal.auth-modal > * {
   cursor: not-allowed;
 }
 @media (hover: hover) {
-  .admin-edit-btn[disabled]:hover {
+  :where(:root:not([data-hover-paused])) .admin-edit-btn[disabled]:hover {
     background: var(--color-surface-2);
     color: var(--color-ink-1);
     border-color: var(--color-line);
@@ -8609,7 +8609,7 @@ sokrat-modal.auth-modal > * {
   border-radius: 8px;
 }
 @media (hover: hover) {
-  .admin-edit__close:hover {
+  :where(:root:not([data-hover-paused])) .admin-edit__close:hover {
     color: var(--color-ink-0);
     background: var(--color-surface-2);
   }
@@ -8798,7 +8798,7 @@ sokrat-modal.auth-modal > * {
   justify-content: center;
 }
 @media (hover: hover) {
-  .admin-quiz-delopt:hover {
+  :where(:root:not([data-hover-paused])) .admin-quiz-delopt:hover {
     background: var(--color-danger);
     color: var(--color-on-danger);
     border-color: var(--color-danger);
@@ -8817,7 +8817,7 @@ sokrat-modal.auth-modal > * {
   font-family: inherit;
 }
 @media (hover: hover) {
-  .admin-quiz-addopt:hover {
+  :where(:root:not([data-hover-paused])) .admin-quiz-addopt:hover {
     border-color: var(--color-brand-500);
     color: var(--color-ink-0);
   }
@@ -8916,7 +8916,7 @@ sokrat-modal.auth-modal > * {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .mm-add:hover {
+  :where(:root:not([data-hover-paused])) .mm-add:hover {
     border-color: var(--color-brand-500);
     color: var(--color-ink-0);
     background: color-mix(in srgb, #4f46e5 12%, transparent);
@@ -8951,7 +8951,7 @@ sokrat-modal.auth-modal > * {
   border-bottom: 0;
 }
 @media (hover: hover) {
-  .mm-row:hover {
+  :where(:root:not([data-hover-paused])) .mm-row:hover {
     background: color-mix(in srgb, #4f46e5 8%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background: color-mix(in srgb, var(--color-brand-500) 8%, transparent);
@@ -8975,12 +8975,12 @@ sokrat-modal.auth-modal > * {
   opacity: 0.55;
 }
 @media (hover: hover) {
-  .mm-row:hover .mm-grip {
+  :where(:root:not([data-hover-paused])) .mm-row:hover .mm-grip {
     opacity: 0.55;
   }
 }
 @media (hover: hover) {
-  .mm-grip:hover {
+  :where(:root:not([data-hover-paused])) .mm-grip:hover {
     opacity: 1;
     color: var(--color-ink-0);
   }
@@ -9032,7 +9032,7 @@ body.mm-dragging {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .mm-twisty-btn:hover {
+  :where(:root:not([data-hover-paused])) .mm-twisty-btn:hover {
     color: var(--color-ink-0);
     background: var(--color-surface-2);
   }
@@ -9092,7 +9092,7 @@ body.mm-dragging {
   opacity: 1;
 }
 @media (hover: hover) {
-  .mm-row:hover .mm-acts {
+  :where(:root:not([data-hover-paused])) .mm-row:hover .mm-acts {
     opacity: 1;
   }
 }
@@ -9112,13 +9112,13 @@ body.mm-dragging {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .mm-act:hover {
+  :where(:root:not([data-hover-paused])) .mm-act:hover {
     color: var(--color-ink-0);
     background: var(--color-surface-2);
   }
 }
 @media (hover: hover) {
-  .mm-act--danger:hover {
+  :where(:root:not([data-hover-paused])) .mm-act--danger:hover {
     color: var(--color-danger-ink);
     background: color-mix(in srgb, #c0332b 12%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -9134,7 +9134,7 @@ body.mm-dragging {
   color: var(--color-warn);
 }
 @media (hover: hover) {
-  .mm-add--undo:hover {
+  :where(:root:not([data-hover-paused])) .mm-add--undo:hover {
     border-color: var(--color-warn);
     background: color-mix(in srgb, #8a5800 12%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -9246,7 +9246,7 @@ body.mm-dragging {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .offline-btn:hover:not(:disabled), .offline-refresh:hover:not(:disabled) {
+  :where(:root:not([data-hover-paused])) .offline-btn:hover:not(:disabled), :where(:root:not([data-hover-paused])) .offline-refresh:hover:not(:disabled) {
     border-color: var(--color-brand-500);
   }
 }
@@ -9321,7 +9321,7 @@ body.mm-dragging {
   overflow-wrap: anywhere;
 }
 @media (hover: hover) {
-  .shelf-tile__name:hover {
+  :where(:root:not([data-hover-paused])) .shelf-tile__name:hover {
     color: var(--color-brand-500);
   }
 }
@@ -9342,7 +9342,7 @@ body.mm-dragging {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .shelf-tile__remove:hover:not(:disabled) {
+  :where(:root:not([data-hover-paused])) .shelf-tile__remove:hover:not(:disabled) {
     border-color: var(--color-danger);
     color: var(--color-danger-ink);
   }
@@ -9379,7 +9379,7 @@ body.mm-dragging {
   transition: var(--transition);
 }
 @media (hover: hover) {
-  .shelf-tile__refresh:hover:not(:disabled) {
+  :where(:root:not([data-hover-paused])) .shelf-tile__refresh:hover:not(:disabled) {
     border-color: var(--color-brand-500);
   }
 }

@@ -123,6 +123,9 @@ function navigateTo(page, data = {}) {
     // T6: editor i admin-preglednik više nisu stranice ove aplikacije (v. `editor.html`).
     if (page !== 'profile' && page !== 'materials') saveCurrentPosition(page, data);
 
+    // F1/8 ②: stranica se mijenja ispod nepomičnog miša → hover miruje do prvog pomaka (`utils.js`).
+    pauzirajHover();
+
     document.querySelectorAll('.landing-page, .browse-page, .lessons-page, .study-page, .about-page, .materials-page, .profile-page, .admin-page, .studio-page').forEach(p => {
         p.classList.remove('active');
     });
@@ -852,6 +855,10 @@ function browseNaRazinu(razina, podaci) {
     } else {
         return;
     }
+    // F1/8 ②: kartice nove razine dolaze na mjesto starih, pod isti nepomični miš — Leonov
+    // točan scenarij (fakultet → smjer → godina). Ovo NIJE `navigateTo` (stranica ostaje
+    // `browse`), pa pauza mora stajati i ovdje; sonda `hover-probe --profil=prelaz` mjeri baš ovo.
+    pauzirajHover();
     renderBrowse();
     if (typeof renderPathbar === 'function') renderPathbar();
 }
