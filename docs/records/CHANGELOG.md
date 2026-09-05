@@ -5,6 +5,18 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-06 (FABLE) — **F1/5: pravne stranice prate uređaj — `boot.js` + `data-theme` na `contact/faq/privacy/terms`**
+
+Od F1/3 aplikacija bez izbora prati uređaj, a četiri pravne stranice nisu imale ni `data-theme` ni `boot.js`: korisnik na
+tamnom telefonu dobivao je crn katalog i **bijela Pravila privatnosti** jednim klikom iz footera. Popravak je isti mehanizam
+kao na `index.html` — `<html data-theme="academic">` + **sinkroni `boot.js`** na vrhu `<body>` (prije prvog crtanja); ništa
+novo u CSS-u, jer `tokens.static.css` sve teme već nosi, a `legal.css` je od MREŽE bez ijednog heksa. Brane:
+`theme-boot-order.test.js` traži boot na SVAKOJ stranici (dotad je preskakao one bez birača — rupa; obrnuto 8 crvenih) ·
+`tests/legal.spec.js` +2 mjere ISCRTANO (dark → `carbon`, light → `academic`, `color-scheme`, pozadina `<body>` == token
+teme) · `check:contrast:live` +4 pravne rute (4 × 4 teme, 0 ispod praga). Preflight EXIT 0, bump.
+**Svjesno NE:** `viewport-fit=cover` na pravnim (nema safe-area razmaka) · prijevod F3/1 (to je F3, ne poliranje).
+**Gdje se vidi:** grana `feat/racun-r1` (preview); produkcija `c53c28c` bez toga.
+
 ## 2026-09-06 (FABLE) — **F1/4: popis tema ima JEDNO mjesto (`scripts/teme.js`) — a11y-brana prvi put skenira `carbon`**
 
 Četiri brane su „koje teme postoje" čitale na četiri načina: statička `check-contrast.js` regexom iz `tokens.css`

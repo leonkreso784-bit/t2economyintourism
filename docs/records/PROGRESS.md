@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-06 (FABLE) — F1/5: pravne stranice prate uređaj (`boot.js` sinkron + `data-theme` na 4 stranice) — kraj poliranja F1 osim Tindera
+
+Isti mehanizam kao `index.html`, bez nove kopije: `tokens.static.css` je sve četiri teme nosio od MREŽE, `legal.css` nema
+heksa — nedostajali su samo atribut i sinkrona skripta. Brana oblika (`theme-boot-order`) je stranice bez `theme.js`
+PRESKAKALA — birač nije preduvjet za temu; sad traži boot svugdje (obrnuto `git worktree`: 8 crvenih). Ponašanje mjeri
+`legal.spec.js` iscrtano (dark → `carbon` / light → `academic`, pozadina `<body>` == `--color-surface-0`, ne kopija
+heksa); `check:contrast:live` je pravne rute dotad zaobilazio (jednobojne) → +4 rute, 4 × 4 teme = 0 ispod praga.
+`MSYS_NO_PATHCONV=1` treba i ovoj skripti kad ruta počinje s `/` (Git Bash ju pretvori u `C:/Program Files/Git/…`).
+**Nije uzeto, svjesno:** `viewport-fit=cover` (legal.css bez safe-area) · **prijevod F3/1** — RASPORED ga nudi „u istom
+obilasku", ali to je F3 i nije poliranje; Leonova riječ. Preflight EXIT 0, bump. F1 = sve osim F1/9 (čeka §6/6).
+
 ## 2026-09-06 (FABLE) — F1/4: `scripts/teme.js` — popis tema iz `tokens.css` za sve četiri brane (a11y prvi put skenira `carbon`)
 
 Leon: *„kreni sa poslom"* → plan sesije = F1/4 + F1/5. F1/4: jedan modul `scripts/teme.js` (`temeIzTokena()`, komentari se

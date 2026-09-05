@@ -31,6 +31,33 @@ for (const p of PAGES) {
   });
 }
 
+// F1/5 (2026-09-06): pravne stranice prate UREĐAJ kao i aplikacija (F1/3) — do tada nisu imale ni
+// `data-theme` ni `boot.js`, pa je korisnik na tamnom telefonu dobivao crn katalog i bijela Pravila.
+// Mjeri se ISCRTANO (atribut na <html>, `color-scheme`, izračunata pozadina <body> == token teme),
+// ne prisutnost skripte. Imena tema su odluka iz F1/3 (`boot.js` ZADANA), ne kopija palete.
+const hexUrgb = (hex) => {
+  const h = hex.replace('#', '');
+  const p = h.length === 3 ? h.split('').map((c) => c + c) : [h.slice(0, 2), h.slice(2, 4), h.slice(4, 6)];
+  return 'rgb(' + p.map((x) => parseInt(x, 16)).join(', ') + ')';
+};
+for (const [shema, tema] of [['dark', 'carbon'], ['light', 'academic']]) {
+  test(`legal pages follow the device colour scheme (${shema} → ${tema})`, async ({ page }) => {
+    await page.emulateMedia({ colorScheme: shema });
+    for (const p of PAGES) {
+      await page.goto(p.url);
+      const s = await page.evaluate(() => ({
+        tema: document.documentElement.getAttribute('data-theme'),
+        shema: document.documentElement.style.colorScheme,
+        bg: getComputedStyle(document.body).backgroundColor,
+        surface0: getComputedStyle(document.documentElement).getPropertyValue('--color-surface-0').trim(),
+      }));
+      expect(s.tema, p.url + ': data-theme').toBe(tema);
+      expect(s.shema, p.url + ': color-scheme').toBe(shema);
+      expect(s.bg, p.url + ': body pozadina == --color-surface-0 teme').toBe(hexUrgb(s.surface0));
+    }
+  });
+}
+
 test('landing footer links to legal pages', async ({ page }) => {
   await page.goto('/');
   await page.waitForSelector('.landing-footer');

@@ -157,7 +157,10 @@ const MJERA = function () {
   const ZADANO = ['/', '/#/subjects', '/#/about', '/#/materials', '/#/subject/te2',
     L, L + '/learn', L + '/flashcards', L + '/quiz', L + '/fill', L + '/progress',
     '/#/subject/statistics/first-midterm/exercises',
-    '/#/subject/geography/first-midterm/blind-map'];
+    '/#/subject/geography/first-midterm/blind-map',
+    // F1/5 (2026-09-06): pravne stranice imaju SVOJ CSS (`legal.css`, ne bundle) i od F1/5 sve teme.
+    // Do tada ih nijedna živa brana nije mjerila — bile su jednobojne, pa se ništa nije imalo mjeriti.
+    '/contact.html', '/faq.html', '/privacy.html', '/terms.html'];
   const stranice = process.argv.length > 2 ? process.argv.slice(2) : ZADANO;
   const browser = await chromium.launch();
   const nalazi = new Map();

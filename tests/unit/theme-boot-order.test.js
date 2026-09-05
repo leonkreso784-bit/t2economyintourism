@@ -35,10 +35,12 @@ for (const ime of stranice) {
     const html = fs.readFileSync(path.join(KORIJEN, ime), 'utf8');
     const boot = html.search(/<script[^>]+js\/boot\.js/);
     const tema = html.search(/<script[^>]+js\/theme\.js/);
-    if (tema < 0) { console.log('  ·  ' + ime + ' ne učitava theme.js — preskačem'); continue; }
-
-    tvrdi(boot >= 0, ime + ': učitava boot.js (jer učitava theme.js)');
-    tvrdi(boot >= 0 && boot < tema, ime + ': boot.js dolazi PRIJE theme.js');
+    // F1/5 (2026-09-06): SVAKA stranica u korijenu učitava boot.js — i pravne (contact/faq/privacy/
+    // terms), koje dotad nisu imale ni `data-theme` ni boot. Od F1/3 stranica prati uređaj, pa je
+    // korisnik na tamnom telefonu dobivao crn katalog i BIJELA Pravila privatnosti. Preskakanje
+    // stranica bez theme.js bila je rupa u ovoj brani: birač teme nije preduvjet za temu.
+    tvrdi(boot >= 0, ime + ': učitava boot.js (svaka stranica, ne samo one s biračem)');
+    if (tema >= 0) tvrdi(boot >= 0 && boot < tema, ime + ': boot.js dolazi PRIJE theme.js');
 
     // ① Sinkronost: `defer`/`async` bi odluku vratili iza prvog crtanja — točno bug koji
     //    popravljamo. Gledamo SAMO tag boot.js-a, ne cijeli dokument.
