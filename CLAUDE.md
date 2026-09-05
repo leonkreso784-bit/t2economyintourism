@@ -86,7 +86,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 | `check:i18n` | nijedan korisniku vidljiv tekst zakucan mimo `js/i18n.js` (HTML · JS sinkovi · ključ bez rječnika); osnovica = brojač po datoteci |
 | `check:orphan-css` | **čegrtaljka**: klasa u `css/**` koju ne spominje ni markup, ni JS, ni gradivo, ni test. Osnovica ih **imenuje** — dio je legitiman |
 | `check:safearea` | `env(safe-area-inset-*)` samo u `css/variables.css`, drugdje `var(--safe-*)` |
-| `check:hover` | svaki `:hover` pod `(hover: hover)` + prefiks `:where(:root:not([data-hover-paused]))` (`pauzirajHover()`) — ne lijepi se ni dodir ni miš |
+| `check:hover` | svaki `:hover` pod `(hover: hover)` + prefiks `:where(:root:not([data-hover-paused]))` — ne lijepi se ni dodir ni miš |
 | `check:csp` | 0 inline `<script>` (iznimka ld+json) i 0 `on*` atributa u `*.html` + enforce header bez `unsafe-inline` za skripte |
 | `check:budget` | posjetiteljev put: **nijedna editorska datoteka** + **≤ 200 KB prenesenih** skripti (mjeri PRENESENE bajtove, ne disk) |
 | `check:seo` | ono što tražilica i pretpregled VIDE: sitemap == disk · robots ne `Disallow`-a `noindex` stranicu · jedan tekst u `<title>`/`og:`/`twitter:` · `og:image` **1200×630** · JSON-LD **parsira**. `--write` regenerira sitemap |
@@ -101,7 +101,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 | `npm run check:contrast:live` | kontrast kakav se STVARNO iscrta: 4 teme × **13** ruta (`te2` NEMA `exercises`/`blind-map` → imenovani zasebno, inače ih brana ne vidi). `check:contrast` čita tokene i ne zna KORISTI li ih CSS — ovo mjeri ekran; iznimke u `scripts/contrast-live-allow.json` (**prazne**) | preglednik + poslužitelj |
 | `npm run build:og` | crta `og-cover.png` **1200×630** (boje iz tokena, tekst iz i18n) | preglednik; PNG se **commita**, dimenzije mjeri `check:seo` |
 | `node scripts/perf-probe.js` | hladan PRVI posjet, mobilni profil: FCP/LCP/CLS/TBT + bajti iz **CDP-a** (`transferSize` = 0 za CDN). **`--bez=…` = protučinjenični pokus** nad živom produkcijom · `--defer` uz obavezan `--kontrola` · `--vodopad` | mreža + preglednik |
-| `node scripts/hover-probe.js` | ljepljivi hover poslije prelaska (dodir WebKit · `--profil=prelaz` miš · `mis` netaknut) | WebKit + poslužitelj |
+| `node scripts/hover-probe.js` | ljepljivi hover poslije prelaska (dodir · `prelaz` miš · `mis` netaknut) | WebKit + poslužitelj |
 | `node scripts/fouc-probe.js` | bljesak teme u ms + kadrovi. ⚠️ Mjeri **DRUGI** posjet | preglednik + poslužitelj |
 | `node scripts/jank-probe.js` | trzanje PO KADRU kroz prst-skrol (rAF · `Paint`/Mpx · `DroppedFrame`); `--scenariji=bez-…` = protučinjenično. | preglednik + poslužitelj |
 | `npm run css:debt` | što je ostalo za C4–C7: po cigli datoteke, redci, `!important` izvan komentara | read-only, **nije gate** |
@@ -138,7 +138,7 @@ OBAVEZNO re-export**, inače CI drift-gate pada; vježbe se **ne** exportaju ·
 `node scripts/seed-staging.js [id]` (STAGING-only guard) ·
 generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 
-**Analiza rada:** `python scripts/rad-xlsx.py` → `docs/records/RAD.xlsx`; **na kraju svake faze**, ulazi samo odrađeno; grafovi se grade iznova, ručni su „vrsta (ručno)" i Vizije.
+**Analiza rada:** `python scripts/rad-xlsx.py` → `docs/records/RAD.xlsx`, **na kraju svake faze**, samo odrađeno.
 
 **Naše lokalne komande (gitignored):** `/next` (raspoređivač) · `/brick` (jedna cigla end-to-end) ·
 `/deploy` (siguran deploy). Agenti: `content-review` / `exercise-review` · `agent-builder`
@@ -174,7 +174,6 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 ⚠️ **N2 je POLA:** polica pokazuje **skinuto**, ne uniju skinutog i onoga što se uči.
 ⚠️ **Mjerač mora ispisati i koliko je toga dotaknuo** — bio je prvi kvar 12× u fazi redizajna
 i dvaput vratio uvjerljiv krivi broj umjesto da padne.
-**K5** (editor dvojezično) čeka i ne blokira ništa.
 
 ### 🎯 FRONTEND REDIZAJN + MREŽA = ✅ **NA PRODUKCIJI (2026-09-01)** — dalje: **RASPORED F1**
 
@@ -184,8 +183,8 @@ Aktivni spec: **`docs/plan/RASPORED.md`** (2026-09-04) — cijela preostala list
 **sedam faza kroz sesije**: F1 uređaj · F2 račun (R2+R3 + CSS profila) · F3 dvojezičnost ·
 F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **Šest pitanja čeka Leonovu riječ — §6 rasporeda.**
 
-**ⓑ trzanje IZMJERENO** (F1/6, `jank-probe`): samo landing preboji, uzrok `background-attachment: fixed` → F1/7; Chromium-mjera, iPhone presuđuje Leon (`BACKLOG.md` §B).
-**Tri nova (2026-09-05):** hover = **F1/8 ✅** · Tinder-špil = **F1/9** · zoom na dodir = **F1/10 ✅** (BUG-043).
+**ⓑ trzanje IZMJERENO** (F1/6): samo landing preboji, uzrok `background-attachment: fixed` → F1/7 (`BACKLOG.md` §B).
+**Četiri nova (2026-09-05):** hover = **F1/8 ✅** · Tinder-špil = **F1/9** · zoom = **F1/10 ✅** · **bez zuma = F1/11** (ADR-034).
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 
@@ -269,9 +268,10 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
 
 ## Ključne odluke — samo one koje MIJENJAJU današnji rad
 
-> Puni tekst i sve starije: **`docs/records/DECISIONS.md` (ADR-001…033)**.
+> Puni tekst i sve starije: **`docs/records/DECISIONS.md` (ADR-001…034)**.
 > Ovdje su ADR-ovi koji su **živa ograničenja**, ne povijesno obrazloženje.
 
+- **ADR-034:** **stranica se NE zumira** (Leon, 2026-09-05) — ni štipanje ni dodir ni fokus; nadjačava WCAG 1.4.4; provedba **F1/11** (axe `meta-viewport` = imenovana iznimka).
 - **ADR-031:** **MCP je CJEVOVOD, ne CRUD** (Leon, 2026-08-30): `Learn` je podloga svega → AI prvo prepozna lekcije/sekcije i napiše skriptu → iz nje kartice (**pojam/pitanje → objašnjenje**, boja po lekciji da se vidi kojoj pripada) → iz kartica dopune i kviz, uz **pokrivenost, ne uzorak**. **AI je KORISNIKOV** (ne plaćamo tokene → kvalitetu držimo samo branama), **materijal dolazi kroz chat** (datoteku nikad ne vidimo), **sve ide u NACRT**, doseg = **samo vlastito gradivo** (ni čitanje kataloga). **Četiri tvrde brane u write-putu:** duljina kartice · svaka kartica daje bar jedno pitanje · svaka lekcija dobiva boju · dopuna ima jednoznačan odgovor. **Radi se TEK NAKON FRONTENDA**, a konektor traži OAuth → čeka **RAČUN blok** (seoba otkazana 2026-09-01, OAuth više ne čeka nju).
 - **ADR-030:** **AI kroz MCP je GLAVNI put stvaranja; editor je DORADA** (Leon, 2026-08-13) — smije IZGUBITI funkcije, ne dobiti ih. MCP je proizvod, ne spike (danas untracked read-only pokus), i najveći neriješeni komad plana; **kontrola kvalitete seli s ekrana u write-put** (`js/card-limits.js` = **treći čitatelj, nikad treća kopija**); nikad katalog/`is_admin()`/`service_role`; **vježbe izvan MCP-a** (ADR-018).
 

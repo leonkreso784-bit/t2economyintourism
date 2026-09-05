@@ -197,6 +197,12 @@ zadovoljava nijedan motor naših brana (`CSS.supports` false u Chromiumu i Playw
 bio nemjerljiv; `(pointer: coarse)` je istina u oba (izmjereno). Brana ⑨ obrnuto: stari bundle 11 × 13 × 4
 crveno → 0. Usput: `phone.authed.spec.js` mjerio je telefon bez `hasTouch` (miš) — popravljen. Dvostruki
 dodir i dalje presuđuje Leon (BUG-043).
+**➕ 2026-09-05 navečer, poslije deploya `c53c28c` — Leon obrće odbijanje:** *„Stranica uopće ne bi trebala imati mogućnost da se nešto povećava ili smanjuje na njoj ikako. Treba ostati na mjestu."*
+→ **ADR-034**, cigla **F1/11** (RASPORED). „Odbačeno: gasi štipanje — pristupačnost" postaje odluka o
+proizvodu: štipanje se gasi NAMJERNO. Teren za ciglu: 6 viewport-meta (`index`/`editor` danas
+`user-scalable=yes, maximum-scale=5.0`; 4 pravne bez `viewport-fit`); iOS Safari od verzije 10 ignorira
+`user-scalable=no` za štipanje → `touch-action: pan-x pan-y` / `gesturestart` mjeriti na uređaju; axe
+`meta-viewport` (AA) traži imenovanu iznimku u `axe-gate.js`. Zapisano, NE provedeno.
 
 ---
 

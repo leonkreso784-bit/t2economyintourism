@@ -4,6 +4,39 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-034 — Stranica se NE zumira: ništa se ne povećava ni smanjuje, sve ostaje na mjestu
+**Datum:** 2026-09-05 · **Status:** ✅ ODLUČENO (Leon), provedba = cigla **F1/11** (RASPORED) · **Vezano:** F1/10 (zoom na dodir), BUG-043, [ADR-027](#adr-027) (rub → test)
+
+**Kontekst.** F1/10 je isti dan zatvorio dva uzroka zooma (polja < 16 px pri fokusu · dvostruki dodir
+kroz `touch-action: manipulation`) i **svjesno odbacio** `user-scalable=no` / `maximum-scale=1`, jer
+gase štipanje — WCAG 1.4.4, axe pravilo `meta-viewport` (razina AA, dakle u našem a11y-gateu). Meta je
+zato namjerno govorila `user-scalable=yes, maximum-scale=5.0`. Leon je nakon deploya `c53c28c`
+presudio suprotno.
+
+**Odluka (Leon):** *„Stranica uopće ne bi trebala imati mogućnost da se nešto povećava ili smanjuje na njoj ikako. Treba ostati na mjestu."*
+
+Dakle **nijedna gesta ne smije mijenjati mjerilo stranice** — ni štipanje, ni dvostruki dodir, ni
+fokus polja. To je odluka o proizvodu koja svjesno **nadjačava** pristupačnosnu preporuku 1.4.4 za
+zumiranje gestom; povećanje teksta ostaje moguće postavkama sustava (iOS Dynamic Type, Android
+veličina fonta) i preglednikovim zumom na stolnom računalu.
+
+**Posljedice:**
+- **F1/11** provodi: `maximum-scale=1, user-scalable=no` u viewport-meti na svih **6** stranica
+  (`index` · `editor` · 4 pravne, koje danas nemaju ni `viewport-fit`) **i** sloj za iOS — Safari na
+  iOS-u od verzije 10 **ignorira `user-scalable=no` za štipanje**, pa meta sama ondje ne radi.
+  Kandidati za mjerenje na uređaju: `touch-action: pan-x pan-y` na korijenu (štipanje otpada, skrol
+  ostaje) i/ili `gesturestart` → `preventDefault()` (Safarijev nestandardni događaj). Što od toga
+  stvarno drži iPhone **zna samo iPhone** — headless ne izvodi štipanje (BUG-043: 24 mjerenja,
+  `visualViewport.scale` uvijek 1).
+- a11y-gate (`tests/helpers/axe-gate.js`): `meta-viewport` je AA → pao bi. Cigla dodaje **imenovanu
+  iznimku s ovim ADR-om kao razlogom**, ne gasi pravilo šutke; `meta-viewport-large` (≥ 5) prestaje
+  biti relevantan.
+- Tvrdnja ⑨ `phone-gate`-a (polja ≥ 16 px na dodiru) **ostaje** — fokus-zoom je i dalje zoom, a meta
+  ga na iOS-u ne gasi.
+- Izlaz iz faze F1 „dodir ne zumira" postaje **„ništa ne zumira"**; presuda ostaje Leonova, na uređaju.
+
+---
+
 ## ADR-033 — Dvojezičnost se PREVODI, ne gasi; jezik sučelja NIKAD ne dira predmete
 **Datum:** 2026-09-01 · **Status:** ✅ ODLUČENO (Leon) · **Vezano:** [ADR-012](#) (sadržaj po programu), [ADR-027](#adr-027) (znanje u kod)
 

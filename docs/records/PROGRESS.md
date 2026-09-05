@@ -5,6 +5,15 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-05 (FABLE) — Leonova odluka: bez zuma uopće (ADR-034 → F1/11) · compact-priprema
+
+Leon (poslije deploya `c53c28c`): *„Stranica uopće ne bi trebala imati mogućnost da se nešto povećava ili smanjuje na njoj ikako. Treba ostati na mjestu."* *„Zapiši to i pripremi
+se za compact."* Zapisano, NE provedeno: **ADR-034** (obrće F1/10 odbijanje `user-scalable=no`; svjesno
+nadjačava WCAG 1.4.4 za gestu), cigla **F1/11** u RASPORED-u (6 meta + iOS-sloj jer Safari ignorira
+`user-scalable=no` za štipanje; imenovana axe-iznimka; tvrdnja ⑨ ostaje), BACKLOG §F dopuna, izlaz iz F1
+„dodir ne zumira" → „ništa ne zumira", `docs/README.md` ADR-raspon 034. Compact-priprema (pravilo #6):
+grep „na grani / čeka OK" poslije deploya = 0 zastarjelih; HISTORY red i memorija ažurirani.
+
 ## 2026-09-05 (FABLE) — 🚀 deploy `c53c28c`: F1/10 + F1/8 ① + F1/8 ② na produkciji (Leonov uvjetni OK, suita zelena)
 
 Leon: *„Kada brana završi i svi testovi prođu deployaj."* Puna responsive suita (pravilo #4, do tada
