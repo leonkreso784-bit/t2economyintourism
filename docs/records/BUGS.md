@@ -183,6 +183,9 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
   promijenjeno, sve na 16 px, 52 netaknuta. Prijavljena suita 12/12 bez novih nalaza u ①–⑧.
   Dvostruki dodir **nije mjerljiv u headlessu** (24 mjerenja, `visualViewport.scale` uvijek 1 — gestu
   izvodi Safarijev UI-proces) → Leon na iPhoneu.
+- **➕ Isti dan navečer (F1/11, ADR-034):** Leon je presudio da se stranica **uopće** ne smije zumirati, pa je
+  `touch-action: manipulation` iz ② zamijenjen s **`pan-x pan-y`** (gasi i štipanje) uz metu `user-scalable=no,
+  maximum-scale=1` na 6 stranica; `touch-zoom.test.js` prepisan (35 tvrdnji). Ovaj zapis opisuje stanje F1/10.
 - **Lekcija.** **Pravilo iza njuškanja motora je pravilo koje nijedna brana ne može izmjeriti** — a
   nemjerljivo pravilo je vjera, ne zaštita. Pravilo po SPOSOBNOSTI (`pointer`, `hover`) je istinito i u
   emulaciji, pa ga brana može obrnuto provjeriti. Drugo lice: **brana koja emulira telefon bez prsta
