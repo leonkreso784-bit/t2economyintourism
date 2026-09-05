@@ -5,6 +5,25 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-05 (FABLE) — **F1/7: landing se više ne preboji pri skrolu (`fixed` → `scroll`) + `?bez=` prekidač za A/B na iPhoneu**
+
+Leon (04.09.): *„kada se scrolla mora biti savršeno smooth kao da si na najnovijem iPhoneu"*; F1/6 je izmjerio
+JEDINU rutu koja preboji ekran i jedini uzrok. Dva commita:
+- **① `css/landing.css`** (`9139d6f`): `background-attachment: fixed, fixed, scroll…` → `scroll`. Zrno i odsjaj
+  ostaju (brana to tvrdi), samo putuju sa slojem umjesto da se precrtavaju svaki kadar. `jank-probe`, landing,
+  kontrola, isti dan: **paint 240 / 532,7 Mpx → 0 / 0, ispušteni kadrovi 94 → 0.** Brana u `test:unit`:
+  `tests/unit/no-fixed-background.test.js` (bundle + izvor; obrnuto 2 crvene).
+- **② `?bez=` prekidač** (iPhone instrument ne vidi — Safari `fixed` crta kao `scroll`, headless ne skrola prstom):
+  `css/bez.css` (novi modul: `[data-bez~="zamucenja|sjena|prijelaza|pozadine"]`, `!important` namjeran i
+  imenovan za F4/3, inertan bez atributa) · `js/boot.js` PRIJE prvog crtanja upiše `data-bez` iz `?bez=` (sanirano,
+  nadživi `replaceState`) · `scripts/jank-probe.js` **više nema vlastitu tablicu zabrana** — čita popis iz
+  `bez.css` i postavlja isti atribut (ADR-027). Dokazi: `bez-switch.test.js` 26 tvrdnji (obrnuto na HEAD-u 5
+  crvenih) · živa provjera: zamućenje 5 → 0, sjene 27 → 0, prijelazi 187 → 0, pozadina → `none`, kontrola
+  netaknuta, `?bez=nepoznato` inertno · `jank-probe` 5/5 scenarija kroz atribut, paint 0/0 · preflight EXIT 0.
+
+**Gdje se vidi:** grana `feat/racun-r1` (preview); produkcija ostaje `c53c28c`. **Presuda glatkoće na iPhoneu =
+Leon, s prekidačem:** `?bez=zamucenja` · `?bez=sjena` · `?bez=prijelaza` · `?bez=pozadine`.
+
 ## 2026-09-05 (FABLE) — **F1/11: ništa ne zumira — meta na 6 stranica + `touch-action: pan-x pan-y` + imenovano isključenje u a11y-brani** (ADR-034)
 
 Leon poslije deploya `c53c28c`: *„Stranica uopće ne bi trebala imati mogućnost da se nešto povećava ili smanjuje na

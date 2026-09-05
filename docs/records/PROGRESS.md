@@ -5,6 +5,20 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-05 (FABLE) — F1/7 isporučen u dva commita: landing `fixed` → `scroll` (paint 240 → 0) · `?bez=` prekidač za iPhone
+
+Leon: *„Kreni."* ① Baseline istog dana (sonda još radi: paint 240 / 532,7 Mpx, ispušteno 94) → obrnuta provjera nove
+brane na starom stanju (2 crvene) → `scroll` → build → brana zelena → sonda **0 / 0, ispušteno 0**. Prvi build je
+pao jer je `css/bez.css` (dio ②) već postojao bez manifesta — modul privremeno u scratchpad, ① zasebno, pa ②.
+② `css/bez.css` + `boot.js` (`data-bez` prije prvog crtanja) + sonda čita modul umjesto vlastite kopije (ADR-027).
+**Nalaz:** popis imena iz modula pokupio je i primjer `ime` iz zaglavlja modula — i test i sonda bi mjerili scenarij
+koji ne gasi ništa → komentari se skidaju prije čitanja, test to sad tvrdi za oboje. Dokazi: `bez-switch.test.js`
+26 (obrnuto s HEAD `boot.js`: 5 crvenih) · živa sonda `.jank/probes/bez-live.js`: 5/27/187 → 0, pozadina `none`,
+nepoznato inertno · `jank-probe` 5/5 scenarija paint 0/0 (vrćeno paralelno s preflightom, pa su „>25 ms" brojke
+šum CPU-a, paint/ispušteno nisu) · preflight EXIT 0 ×2. **Gdje se vidi:** grana/preview; produkcija `c53c28c`.
+**Otvoreno: Leonov A/B na iPhoneu s `?bez=`.** Usput: `theme-device`/`theme-boot-order` zeleni uz novi `boot.js`.
+Sljedeće: **F1/4** (popis tema iz `tokens.css` u `check-contrast-live` I `axe-gate`), pa F1/5.
+
 ## 2026-09-05 (FABLE) — F1/11 isporučen: ništa ne zumira (meta na 6 stranica · `pan-x pan-y` · `ISKLJUCENO_ODLUKOM` u a11y-brani)
 
 Leon: *„Ovo što mi se dešava je svugdje, nije samo na Safariju, kreni."* Redoslijed: meta + reset → `build:css` →

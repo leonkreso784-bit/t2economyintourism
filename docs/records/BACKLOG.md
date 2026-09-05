@@ -75,6 +75,12 @@ fixed` ionako crta kao `scroll`, pa je ovo dokaz troška na Androidu/stolnom Chr
 trzati iz razloga koji ovaj alat ne vidi** (ondje najsumnjivije: `backdrop-filter: blur(12px)` na ljepljivoj
 traci). Zato F1/7 uz popravak landinga nosi i A/B na pravom telefonu (`?bez=…` prekidač na previewu).
 **Mjesto: F1/7** (hipoteza u RASPORED-u).
+**✅ F1/7 ISPORUČEN 2026-09-05 navečer** — ① `css/landing.css` `fixed` → `scroll` (`9139d6f`): kontrola na landingu
+PRIJE paint 240 / 532,7 Mpx, ispušteno 94 → POSLIJE **0 / 0, ispušteno 0** (isti instrument, isti dan); brana
+`no-fixed-background.test.js`. ② `?bez=` prekidač: `css/bez.css` + `boot.js` (`data-bez` prije prvog crtanja) +
+sonda čita modul umjesto vlastite kopije; živa provjera u Chromiumu (393 px): zamućenje 5 → 0 · sjene 27 → 0 ·
+prijelazi 187 → 0 · pozadina → `none`; `jank-probe` 5/5 scenarija paint 0/0. **Čeka: Leonov A/B na iPhoneu**
+(`?bez=zamucenja` najsumnjivije — `backdrop-filter: blur(12px)` na ljepljivoj traci, v. ⚠️ gore).
 
 **C. BIJELI BLJESAK NA PRAVOM UREDAJU TRAJE ~1 s, ne 119 ms** (Leon: *„prvo ce se otvorit
 regularna klasicna tema (bijela) i stajat ce na jednu sekundu mozda manje. Onda ce se vratit
