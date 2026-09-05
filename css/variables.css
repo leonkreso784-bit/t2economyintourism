@@ -78,6 +78,14 @@
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
+    /* F1/10: gasi Safarijev dvostruki dodir = zoom (Leon: „kad se više puta takne na jedno
+       mjesto može se zoomat"). `manipulation` ZADRŽAVA skrol i štipanje — za razliku od
+       `user-scalable=no`, koji bi uzeo i štipanje (pristupačnost; meta namjerno drži
+       `maximum-scale=5`). Na `*`, ne na `html`: motori različito sastavljaju vrijednost kroz
+       pretke, a ručke za vučenje s `touch-action: none` (klasa) i dalje pobjeđuju.
+       Nemjerljivo u headlessu (gestu izvodi Safarijev UI-proces, ne stranica) — ovdje ga
+       čuva `tests/unit/touch-zoom.test.js`, na ekranu Leon. */
+    touch-action: manipulation;
 }
 
 img {
@@ -85,10 +93,18 @@ img {
     height: auto;
 }
 
-/* Prevent iOS zoom on input focus */
-@supports (-webkit-touch-callout: none) {
-    input, select, textarea {
-        font-size: 16px !important;
+/* F1/10: iOS zumira stranicu kad fokusirano polje ima izračunati font < 16 px, i ne vraća je.
+   ⚠️ Do 2026-09-05 je isto štitilo pravilo iza `@supports (-webkit-touch-callout: none)` s
+   `!important` — njuškanje motora koje NIJEDAN motor u našim branama ne zadovoljava (Chromium
+   i Playwrightov WebKit: `CSS.supports` = false), pa je bilo NEMJERLJIVO: sonda je vidjela
+   15,2 px na prijavi i 14,4 px na pretrazi, a je li iPhone zaista dobio 16 px nije mogao reći
+   nitko. `(pointer: coarse)` je SPOSOBNOST (prst kao primarni pokazivač), istinita i na
+   iPhoneu i u emulaciji — mjeri je tvrdnja ⑨ u `tests/helpers/phone-gate.js`.
+   Specifičnost 0,2,1 (`:is()` + dva `:not()`) tuče klase komponenata (`.auth-modal__input`
+   0,95rem, `.ex-cl-select` 0,9rem) bez `!important`; radio/checkbox ne primaju tekst. */
+@media (pointer: coarse) {
+    :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]) {
+        font-size: 16px;
     }
 }
 

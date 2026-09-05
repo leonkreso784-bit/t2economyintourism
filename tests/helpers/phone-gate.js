@@ -692,6 +692,27 @@ function mjeri(page, rub, faza) {
             }
         });
 
+        // ── ⑨ DODIR NE ZUMIRA (cigla F1/10) ────────────────────────────────────────
+        // iOS Safari zumira stranicu kad fokusirano polje ima izračunati `font-size` < 16 px,
+        // i ne vraća je (Leonov nalaz 2026-09-05). Mjere se SVA tekstualna polja u DOM-u,
+        // i skrivena: izračunati font ne ovisi o vidljivosti, a polje koje je danas u
+        // zatvorenom modalu (prijava) sutra je dotaknuto polje. Radio/checkbox i gumbi ne
+        // primaju tekst, pa ne zumiraju — isključeni su da nalaz imenuje samo stvarne kvarove.
+        //
+        // ⚠️ Zašto je ovo bilo NEMJERLJIVO do F1/10: štitilo je pravilo iza
+        // `@supports (-webkit-touch-callout: none)` s `!important`, koje NIJEDAN motor ove
+        // brane ne zadovoljava (Chromium i Playwrightov WebKit: `CSS.supports` = false).
+        // Obrnuta provjera 2026-09-05: na stanju prije popravka **11 polja** na svakom od 13
+        // ekrana (`.auth-modal__input` 15,2 px · `.cat-search-input` 14,4 px), s popravkom 0.
+        const POLJA = ':is(input, select, textarea):not([type=hidden]):not([type=checkbox])'
+            + ':not([type=radio]):not([type=range]):not([type=color]):not([type=file])'
+            + ':not([type=submit]):not([type=button]):not([type=reset]):not([type=image])';
+        const sitnaPolja = [];
+        Array.prototype.slice.call(document.querySelectorAll(POLJA)).forEach((el) => {
+            const px = parseFloat(getComputedStyle(el).fontSize);
+            if (px < 16) sitnaPolja.push(ime(el) + ': ' + (Math.round(px * 10) / 10) + ' px');
+        });
+
         return {
             stranica: (window.AppState && AppState.nav && AppState.nav.page) || '?',
             vw: vw, vh: vh,
@@ -703,6 +724,7 @@ function mjeri(page, rub, faza) {
             upotrebljivih: upotrebljivi.length,
             prviUpotrebljiv: upotrebljivi.length ? ime(upotrebljivi[0].el) : '—',
             namjestaj: namjestaj,
+            sitnaPolja: sitnaPolja,
             zaglavlja: zaglavlja
         };
     }, { rub: rub, faza: faza });

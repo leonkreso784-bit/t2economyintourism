@@ -253,14 +253,15 @@
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
+  touch-action: manipulation;
 }
 img {
   max-width: 100%;
   height: auto;
 }
-@supports (-webkit-touch-callout: none) {
-  input, select, textarea {
-    font-size: 16px !important;
+@media (pointer: coarse) {
+  :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]) {
+    font-size: 16px;
   }
 }
 .scrollable {
@@ -2113,7 +2114,6 @@ sokrat-modal.sokrat-confirm-modal > * {
   height: auto;
   cursor: pointer;
   position: relative;
-  touch-action: manipulation;
 }
 .flashcard-inner {
   width: 100%;
@@ -3487,7 +3487,6 @@ sokrat-modal.sokrat-confirm-modal > * {
   display: block;
   background: #0f0d2e;
   cursor: crosshair;
-  touch-action: manipulation;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;

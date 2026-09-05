@@ -118,7 +118,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 - **`npm run test:authed`** — pozitivan admin-put (storageState; traži `TEST_ADMIN_EMAIL/PASSWORD`;
   gađa **STAGING** kad su `STAGING_*` u `.env`; u CI-ju zaseban secret-gated job).
 - **`tests/phone.spec.js` + `phone.authed.spec.js`** (mjera: `tests/helpers/phone-gate.js`) —
-  **telefon kao STRANICA**: 8 tvrdnji na 320/393/430 px i 852×393, + **sedam** načina učenja
+  **telefon kao STRANICA**: 9 tvrdnji na 320/393/430 px i 852×393, + **sedam** načina učenja
   (`progress` C5a/4 · `exercises`/`blind-map` MREŽA-E4, uvjetni — predmet iz kataloga po značajci). ⚠️ **568×320 svjesno NIJE u brani** (22 tuđa nalaza; `BACKLOG.md`).
   Osnovica je `tests/phone-baseline.json` (danas **prazna** → traži nulu);
   spuštanje = `PHONE_BASELINE_UPDATE=1 npx playwright test …`.
@@ -184,7 +184,7 @@ F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **Šest pi
 
 **Leonovo ⓑ trzanje pri skrolanju je IZMJERENO** (F1/6, `jank-probe`, 2026-09-05): 10 ruta čisto; **samo landing preboji ~70 % ekrana svaki kadar**, a gasi ga jedino
 `background-attachment: fixed` → hipoteza F1/7. ⚠️ Chromium-mjera; iPhone presuđuje Leon. Zapis: `BACKLOG.md` §LEONOVI NALAZI B.
-**Tri nova (2026-09-05):** ⓒ **ljepljivi hover** = **F1/8** — **WebKit s dodirom ga reproducira** (svaki preglednik na iPhoneu), dvije cigle · **Tinder-špil kartica** = **F1/9** · **zoom na dodir** = **F1/10** (polja 15,2 px izmjerena; dvostruki dodir nemjerljiv → `touch-action`).
+**Tri nova (2026-09-05):** ⓒ **ljepljivi hover** = **F1/8** — **WebKit s dodirom ga reproducira** (svaki preglednik na iPhoneu), dvije cigle · **Tinder-špil kartica** = **F1/9** · **zoom na dodir** = **F1/10 ✅** (`(pointer: coarse)` + `touch-action`, brana ⑨; BUG-043).
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 

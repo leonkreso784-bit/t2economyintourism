@@ -28,7 +28,7 @@ async function spremanAdmin(page) {
 
 const NALAZI = {
     otok: [], kromo: [], sukob: [], prviEkran: [], zaglavlje: [],
-    dno: [], bocno: [], spremnik: [], namjestaj: []
+    dno: [], bocno: [], spremnik: [], namjestaj: [], polja: []
 };
 let izmjerenoEkrana = 0;
 
@@ -38,8 +38,14 @@ test.beforeAll(async ({ browser }, testInfo) => {
     const snimka = [];
 
     for (const e of G.EKRANI) {
+        // ⚠️ ISTI TELEFON KAO U JAVNOJ BRANI (F1/10, 2026-09-05). Do tada je ovaj kontekst imao samo
+        // `viewport`: telefonsku ŠIRINU s MIŠEM kao pokazivačem. Tvrdnja ⑨ je to razotkrila — iza
+        // prijave je „vidjela" 15,2 px na poljima koja su na pravom telefonu 16 px, jer pravilo
+        // stoji iza `@media (pointer: coarse)`, a taj upit pali `hasTouch` (izmjereno: `isMobile`
+        // sam ga NE pali). Brana koja emulira telefon bez prsta mjeri uređaj koji ne postoji.
         const ctx = await browser.newContext({
             viewport: { width: e.w, height: e.h },
+            deviceScaleFactor: 3, isMobile: true, hasTouch: true,
             storageState, baseURL
         });
         const page = await ctx.newPage();
@@ -74,6 +80,7 @@ test.beforeAll(async ({ browser }, testInfo) => {
         }
         m.namjestaj.forEach((x) => NALAZI.namjestaj.push(gdje(r) + ' · ' + x));
         m.zaglavlja.forEach((x) => NALAZI.zaglavlje.push(gdje(r) + ' · ' + x));
+        m.sitnaPolja.forEach((x) => NALAZI.polja.push(gdje(r) + ' · ' + x));
         r.r.dno.forEach((x) => NALAZI.dno.push(gdje(r) + ' · ' + x));
         r.r.bocno.forEach((x) => NALAZI.bocno.push(gdje(r) + ' · ' + x));
         r.r.spremnik.forEach((x) => NALAZI.spremnik.push(gdje(r) + ' · ' + x));
@@ -132,6 +139,14 @@ test('⑦ bočni rub: polegnut telefon i iza prijave', async () => {
 
 test('⑦b spremnik prijavljenih stranica poštuje sigurnu zonu', async () => {
     protivOsnovice('spremnik', 'NOVI spremnici sadržaja koji ulaze u sigurnu zonu (BUG-031)');
+});
+
+test('⑨ dodir ne zumira: nijedno tekstualno polje ispod 16 px (F1/10) — i iza prijave', async () => {
+    // iOS zumira pri fokusu polja s fontom < 16 px i ne vraća se. Mjeri se IZRAČUNATI font,
+    // ne izvor: pravilo koje ga diže mora pogoditi polje kroz kaskadu (specifičnost), a to se
+    // vidi samo na stranici. Do F1/10 je pravilo bilo iza njuškanja motora koje nijedan naš
+    // motor ne zadovoljava — pa je brana koja bi ga mjerila bila nemoguća, ne samo odsutna.
+    protivOsnovice('polja', 'NOVA polja ispod 16 px — iOS na dodir zumira (F1/10)');
 });
 
 test('⓪ pokrivenost: sve prijavljene stranice na sva četiri profila', async () => {

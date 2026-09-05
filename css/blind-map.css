@@ -79,8 +79,6 @@
     display: block;
     background: #0f0d2e;
     cursor: crosshair;
-    /* iOS: prevent double-tap zoom on canvas */
-    touch-action: manipulation;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;

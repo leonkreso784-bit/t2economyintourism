@@ -5,6 +5,39 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-05 (FABLE) — **F1/10: zoom na dodir** (Leonov treći nalaz; popravak + dvije brane)
+
+### Popravljeno
+- **Dodir ne zumira** (Leon: *„kada se više puta takne na jedno mjesto može se zoomat"*), dva uzroka,
+  oba u resetu `css/variables.css`: ① **`touch-action: manipulation` na `*`** gasi Safarijev dvostruki
+  dodir, skrol i štipanje ostaju (`user-scalable=no` odbačen — uzeo bi štipanje); isti redak u
+  `css/legal.css` (pravne stranice nemaju bundle). Dva lokalna primjerka (`.flashcard`, slijepa karta)
+  maknuta — jedna činjenica, jedno mjesto. ② **Polja ≥ 16 px na dodiru** kroz
+  `@media (pointer: coarse)` — iOS pri fokusu polja s manjim fontom sam zumira. ⚠️ **Do sada je isto
+  „štitilo" pravilo iza `@supports (-webkit-touch-callout: none)` s `!important`** — njuškanje motora
+  koje NIJEDAN motor naših brana ne zadovoljava (Chromium i Playwrightov WebKit: `CSS.supports` =
+  false), pa je godinu dana bilo **nemjerljivo**: sonda je vidjela **15,2 px** na svih deset polja
+  prijave i **14,4 px** na pretrazi kataloga, a je li iPhone zaista dobio 16 px nije znao nitko.
+  Novo pravilo tuče klase komponenata specifičnošću (`:is()` + dva `:not()` = 0,2,1), bez `!important`.
+### Dodano
+- **Tvrdnja ⑨ telefonske brane** (`tests/helpers/phone-gate.js`, u OBJE suite): nijedno tekstualno
+  polje u DOM-u — ni skriveno, jer zatvoreni modal prijave je sutrašnje dotaknuto polje — s
+  izračunatim fontom < 16 px. **Obrnuta provjera na starom bundleu: 11 polja × 13 ekrana × 4 širine
+  crveno; s popravkom 0**, ostalih deset tvrdnji nedirnuto.
+- **`tests/unit/touch-zoom.test.js`** (u `test:unit`): čita BUNDLE — `*` nosi `manipulation` točno
+  jednom, `legal.css` isto, `(pointer: coarse)` daje 16 px bez `!important`, i njuškanje se ne vraća.
+  Obrnuto: na starom bundleu 6 od 9 tvrdnji crveno.
+- **`.jank/probes/polja-sva.js`** (gitignored): sva polja po 13 ruta u oba motora — prije/poslije:
+  točno 11 polja poraslo na 16 px, ostala 52 nepromijenjena, identično u Chromiumu i WebKitu.
+### Popravljeno u brani
+- **`tests/phone.authed.spec.js` mjerio je telefon s MIŠEM**: kontekst je imao samo `viewport`, bez
+  `hasTouch`/`isMobile` — pa je ⑨ iza prijave prvo pokazala 15,2 px na poljima koja su na pravom
+  telefonu 16 px. Izmjereno: `(pointer: coarse)` pali **`hasTouch`**, `isMobile` sam ne. Kontekst sad
+  isti kao u javnoj suiti; svih 12 tvrdnji zeleno, nijedan novi nalaz u ①–⑧.
+### Nije mjerljivo ovdje
+- Dvostruki dodir izvodi Safarijev UI-proces, ne stranica (24 mjerenja, `visualViewport.scale` = 1
+  uvijek) → **presudu daje Leon na iPhoneu** (preview grane). Zapis: BUG-043.
+
 ## 2026-09-05 (FABLE) — 🚀 **F1/1 + F1/2 + F1/3 + F1/6 NA PRODUKCIJI** (`8b70c15`, Leonov izričit OK: *„Možeš deployat sve"*)
 
 Fast-forward `feat/racun-r1` → `main` preko refspeca (`e8f1651..8b70c15`, devet commita), pre-push

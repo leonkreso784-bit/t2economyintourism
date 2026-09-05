@@ -179,6 +179,12 @@ maximum-scale=5.0`, a axe to i mjeri).
 **Dokaz:** ① brana crveno → zeleno; ② statički test da bundle i `legal.css` nose pravilo; oboje **Leon na
 iPhoneu** (dodir u polje ne zumira · dvostruki dodir ne zumira). **Mjesto: F1/10**, u istoj dodirnoj
 seriji s F1/8 ① (jedan preview, jedna provjera telefonom).
+**✅ ISPORUČENO 2026-09-05 (F1/10).** Odabrano: JEDNO pravilo u resetu, `@media (pointer: coarse)`, jer je
+zatečeno da isto već „štiti" `@supports (-webkit-touch-callout: none) { … !important }` — a taj upit ne
+zadovoljava nijedan motor naših brana (`CSS.supports` false u Chromiumu i Playwrightovom WebKitu), pa je
+bio nemjerljiv; `(pointer: coarse)` je istina u oba (izmjereno). Brana ⑨ obrnuto: stari bundle 11 × 13 × 4
+crveno → 0. Usput: `phone.authed.spec.js` mjerio je telefon bez `hasTouch` (miš) — popravljen. Dvostruki
+dodir i dalje presuđuje Leon (BUG-043).
 
 ---
 

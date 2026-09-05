@@ -5,6 +5,22 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-05 (FABLE) — F1/10 isporučen: zoom na dodir (popravak + brana ⑨ + unit-test; brana iza prijave popravljena)
+
+Leon: *„pregledaj i analiziraj sve i kreni sa sljedećom ciglom"* → F1/10 po planu iz memorije. **Nalaz prije
+popravka:** u `variables.css` je VEĆ stajalo pravilo protiv zooma pri fokusu — iza `@supports
+(-webkit-touch-callout: none)` s `!important`; `CSS.supports` je **false i u Chromiumu i u Playwrightovom
+WebKitu**, pa ga nijedna brana nije mogla vidjeti (zato je jučerašnja sonda mjerila 15,2 px). Zamijenjeno
+pravilom po SPOSOBNOSTI `@media (pointer: coarse)` (istina u oba motora — izmjereno — i na iPhoneu),
+specifičnost 0,2,1 umjesto `!important`. `touch-action: manipulation` u `*` reset + `legal.css`; dva lokalna
+primjerka maknuta. **Brane:** tvrdnja ⑨ u `phone-gate` (sva polja, i skrivena) — obrnuto: stari bundle 11 ×
+13 × 4 crveno, novi 0; `tests/unit/touch-zoom.test.js` — obrnuto 6/9 crveno, sad 9/9. Sonda `polja-sva.js`
+(oba motora, 195 polja × 2): točno 11 promjena, sve na 16 px. **Drugi nalaz:** `phone.authed.spec.js` je imao
+kontekst bez `hasTouch` → mjerio telefon s mišem; ⑨ ga je razotkrila (15,2 px iza prijave). Popravljeno
+(isti kontekst kao javna suita), 12/12, nijedan novi nalaz. Preflight EXIT 0. Zapisano: CHANGELOG, BUG-043,
+TESTING pouka, RASPORED F1/10 ✅, BACKLOG §F. **Dvostruki dodir presuđuje Leon na iPhoneu** (preview).
+Sljedeće: F1/8 ① (hover na dodiru, build-prolaz).
+
 ## 2026-09-05 (FABLE) — zoom na dodir izmjeren (Leonov treći nalaz; zapis, bez popravaka)
 
 Leon: *„Još jedan veliki bug. Kada se više puta takne na jedno mjesto može se zoomat, to se mora riješit."*

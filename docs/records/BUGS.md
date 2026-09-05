@@ -125,6 +125,42 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Riješeni / Lekcije
 
+### BUG-043 — Zoom na dodir: zaštita je stajala iza njuškanja motora koje nijedna brana ne vidi, a prijavljena brana mjerila je telefon s mišem
+
+- Status: ✅ **riješen** (2026-09-05, F1/10) · Težina: **visok** (Leon: *„još jedan veliki bug"* —
+  stranica se na iPhoneu zumira i ne vraća) · Našao: **Leon na iPhoneu**, ne brana.
+- **Opis.** *„Kada se više puta takne na jedno mjesto može se zoomat."* Dva mehanizma: ① iOS Safari
+  pri fokusu polja s izračunatim fontom **< 16 px** zumira stranicu i ne vraća je — prijava
+  (`.auth-modal__input`, 0,95rem = **15,2 px**, deset polja) i pretraga kataloga (`.cat-search-input`,
+  0,9rem = **14,4 px**); ② Safarijev **dvostruki dodir** zumira gdje god `touch-action` to dopušta.
+- **Uzrok — i zašto nijedna brana nije vidjela.** Za ① je u `css/variables.css` **već stajalo**
+  pravilo `@supports (-webkit-touch-callout: none) { input, select, textarea { font-size: 16px
+  !important } }`. To je **njuškanje motora**, ne sposobnosti: `CSS.supports('-webkit-touch-callout',
+  'none')` je **false u Chromiumu i u Playwrightovom WebKitu** — dakle u SVAKOM motoru kojim mjerimo.
+  Pravilo je bilo nevidljivo svakoj brani, a je li ga iPhone doista primjenjivao nije mogao reći nitko;
+  Leonov nalaz kaže da zoom postoji. Za ② je repo držao `touch-action: manipulation` na dva mjesta
+  (`.flashcard`, slijepa karta), a nigdje drugdje. **Drugo sljepilo, otkriveno novom branom:**
+  `tests/phone.authed.spec.js` je otvarao kontekst samo s `viewport` — bez `hasTouch`/`isMobile` —
+  pa je „telefon" iza prijave imao **miš** kao pokazivač: nijedan `(pointer: coarse)`/`(hover: none)`
+  upit ondje nije bio istinit. Izmjereno: `pointer: coarse` pali **`hasTouch`**; `isMobile` sam ne.
+- **Rješenje.** ① `@media (pointer: coarse) { :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]) { font-size: 16px } }`
+  u resetu — sposobnost umjesto njuškanja, specifičnost 0,2,1 umjesto `!important`; staro pravilo
+  obrisano. ② `touch-action: manipulation` na `*` (reset) i u `css/legal.css` (stranice bez bundlea);
+  dva lokalna primjerka maknuta (ADR-027). ③ **Tvrdnja ⑨** u `tests/helpers/phone-gate.js`, obje
+  suite: nijedno tekstualno polje u DOM-u ispod 16 px — **i skrivena**, jer je zatvoreni modal prijave
+  sutrašnje dotaknuto polje. ④ `tests/unit/touch-zoom.test.js` čita BUNDLE. ⑤ Prijavljena brana dobila
+  isti telefon kao javna (`isMobile` + `hasTouch` + `deviceScaleFactor: 3`).
+- **Provjera.** Obrnuto na STAROM bundleu: ⑨ = 11 polja × 13 ekrana × 4 širine crveno, unit-test 6/9
+  crveno; s popravkom 0 i 9/9. Sonda `.jank/probes/polja-sva.js` u oba motora: od 195 polja točno 11
+  promijenjeno, sve na 16 px, 52 netaknuta. Prijavljena suita 12/12 bez novih nalaza u ①–⑧.
+  Dvostruki dodir **nije mjerljiv u headlessu** (24 mjerenja, `visualViewport.scale` uvijek 1 — gestu
+  izvodi Safarijev UI-proces) → Leon na iPhoneu.
+- **Lekcija.** **Pravilo iza njuškanja motora je pravilo koje nijedna brana ne može izmjeriti** — a
+  nemjerljivo pravilo je vjera, ne zaštita. Pravilo po SPOSOBNOSTI (`pointer`, `hover`) je istinito i u
+  emulaciji, pa ga brana može obrnuto provjeriti. Drugo lice: **brana koja emulira telefon bez prsta
+  mjeri uređaj koji ne postoji** — i to je isti razred kao „ruta koju brana ne imenuje je ruta koju ne
+  vidi" (TESTING.md): nova tvrdnja je vrijedila i zato što je razotkrila kontekst stare.
+
 ### BUG-042 — Kolačić-traka je oborila CI kontrastom koji na ekranu ne postoji (treći put ista utrka)
 
 - Status: ✅ **riješen** (2026-08-31) · Težina: **srednji** (lažni crveni CI, ne kvar proizvoda) ·

@@ -47,7 +47,7 @@ test.beforeEach(({}, testInfo) => {
  *  (4 profila × 10 ekrana ≈ 3 min), pa se ne ponavlja po tvrdnji. */
 const NALAZI = {
     otok: [], kromo: [], sukob: [], prviEkran: [], zaglavlje: [],
-    dno: [], bocno: [], spremnik: [], namjestaj: []
+    dno: [], bocno: [], spremnik: [], namjestaj: [], polja: []
 };
 let izmjerenoEkrana = 0;
 
@@ -129,6 +129,7 @@ test.beforeAll(async ({ browser }, testInfo) => {
         }
         m.namjestaj.forEach((x) => NALAZI.namjestaj.push(gdje(r) + ' · ' + x));
         m.zaglavlja.forEach((x) => NALAZI.zaglavlje.push(gdje(r) + ' · ' + x));
+        m.sitnaPolja.forEach((x) => NALAZI.polja.push(gdje(r) + ' · ' + x));
         r.r.dno.forEach((x) => NALAZI.dno.push(gdje(r) + ' · ' + x));
         r.r.bocno.forEach((x) => NALAZI.bocno.push(gdje(r) + ' · ' + x));
         r.r.spremnik.forEach((x) => NALAZI.spremnik.push(gdje(r) + ' · ' + x));
@@ -210,6 +211,14 @@ test('⑦b spremnik sadržaja poštuje sigurnu zonu i kad u njoj nema gumba', as
     // sigurnoj zoni — i kvar bi se vratio čim netko doda gumb. Zato se mjeri i gdje
     // počinje sam spremnik sadržaja.
     protivOsnovice('spremnik', 'NOVI spremnici sadržaja koji ulaze u sigurnu zonu (BUG-031)');
+});
+
+test('⑨ dodir ne zumira: nijedno tekstualno polje ispod 16 px (F1/10)', async () => {
+    // iOS zumira pri fokusu polja s fontom < 16 px i ne vraća se. Mjeri se IZRAČUNATI font,
+    // ne izvor: pravilo koje ga diže mora pogoditi polje kroz kaskadu (specifičnost), a to se
+    // vidi samo na stranici. Do F1/10 je pravilo bilo iza njuškanja motora koje nijedan naš
+    // motor ne zadovoljava — pa je brana koja bi ga mjerila bila nemoguća, ne samo odsutna.
+    protivOsnovice('polja', 'NOVA polja ispod 16 px — iOS na dodir zumira (F1/10)');
 });
 
 test('⓪ pokrivenost: mjerač je stvarno obišao sve ekrane i sve širine', async () => {

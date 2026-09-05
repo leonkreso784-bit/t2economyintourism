@@ -183,6 +183,11 @@ bijelom), a sve tri brane koje bi to trebale hvatati bile su zelene — svaka iz
   `tests/learn-blocks-contrast.spec.js` je to napravljeno: stare vrijednosti nametnute preko
   tokena obore **16 od 32** mjerenja, i to točno na dvije svijetle teme. *Test koji ne bi pao ni
   da je tvrdnja lažna nije test nego ukras.*
+- **Pravilo iza njuškanja motora je nemjerljivo; pravilo po sposobnosti nije** (F1/10, BUG-043).
+  `@supports (-webkit-touch-callout: none)` je godinu dana „štitilo" polja od iOS-zooma, a
+  `CSS.supports` je false u SVAKOM motoru kojim mjerimo — nijedna brana ga nije mogla vidjeti.
+  `@media (pointer: coarse)` je istina i u emulaciji. Isto lice: **brana koja emulira telefon bez
+  `hasTouch` mjeri uređaj koji ne postoji** — `phone.authed.spec.js` je do F1/10 imao miš.
 
 ⚠️ **Posebno za `learn-blocks.css`:** javni katalog od te datoteke iscrtava **2 od 44 pravila**
 (`.lb-legacy`, `.lb-table-wrap`) jer je gradivo v1 HTML kroz DOMPurify. Ostalo živi u editoru i
