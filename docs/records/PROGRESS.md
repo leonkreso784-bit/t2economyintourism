@@ -16,6 +16,12 @@ WebKit i Chromium, `visualViewport.scale` ostaje 1); repo ga već gasi na `.flas
 dodirnu seriju s F1/8 ① (Leon isti dan: hover *„još uvijek"* smeta → dodir prije landinga). Ništa nije
 popravljano. Usput provjereno na Leonovo pitanje: sve je deployano — `origin/main` = `8b70c15`, Vercel
 produkcija READY, živi token = repo.
+**Leonova odluka za sljedeću sesiju:** *„da riješimo zoom i css problem do kraja"* → **F1/10 + F1/8 ① + F1/8 ②**
+u jednoj dodirnoj seriji (tri commita, jedan preview za iPhone), F1/7 poslije. Compact-priprema (pravilo #6):
+četiri „na grani / NIJE na produkciji" tvrdnje u BACKLOG-u (F1/3 bljesak · FOUC · učitavanje po ruti · POLICA)
+prepisane u „na produkciji" — sve su na `main` od `8b70c15`/`2026-09-01`; HISTORY „dva nova" → tri. Probe-skripte
+ove sesije (`hover-webkit2` · `hover-inventar` · `dvotap-zoom` · `input-zoom`) kopirane u **`.jank/probes/`**
+(gitignored, u stablu repoa pa `require` radi) da ih sljedeća sesija promovira u `scripts/`.
 
 ## 2026-09-05 (FABLE) — F1/6 sonda za trzanje + hover izmjeren na WebKitu (mjerenja, bez popravaka)
 

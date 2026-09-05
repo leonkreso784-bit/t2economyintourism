@@ -80,7 +80,7 @@ traci). Zato F1/7 uz popravak landinga nosi i A/B na pravom telefonu (`?bez=…`
 regularna klasicna tema (bijela) i stajat ce na jednu sekundu mozda manje. Onda ce se vratit
 na mint"*). To je ISTI kvar koji je zatvoren 2026-09-04 (`boot.js`), samo na sporijem uredaju:
 mjereno je 119 ms na brzoj vezi i 232 ms na Slow-4G, a Leonov telefon je gori slucaj iste
-stvari. **Popravak ceka na grani** — dok se ne deploya, Leon vidi stari kod.
+stvari. **Popravak je na produkciji od 2026-09-05** (`8b70c15`) — presuđuje Leonov telefon.
 ⚠️ Pouka koja ostaje: **mjera na razvojnom stroju je DONJA granica, ne stvarnost korisnika.**
 
 **D. LJEPLJIVI HOVER NAKON PRELASKA** (Leon, 2026-09-05: *„Svaki put kada se stisne na neki gumb
@@ -184,7 +184,7 @@ seriji s F1/8 ① (jedan preview, jedna provjera telefonom).
 
 ### 🟡 U TIJEKU (2026-09-04) — ~~FOUC~~ ✅ · ~~brands-font~~ ✅ · ~~UCITAVANJE PO RUTI~~ ✅ · tema = izgled maila
 
-**1. FOUC ✅ ZATVORENO 2026-09-04** (commit `891a1ce`, na grani — ⚠️ NIJE na produkciji).
+**1. FOUC ✅ ZATVORENO 2026-09-04** (commit `891a1ce`; **na produkciji od 2026-09-05**, `8b70c15`).
 **Dijagnoza gore je bila KRIVA i zato stoji ispravak:** nije problem bio "theme.js je na dnu"
 nego **zakucana tema u markupu**. `index.html` ima `<html data-theme="academic">` i komentar
 koji tvrdi da je time bljesak rijesen — bio je, ali SAMO za zadanu temu. `chalk` i `mint` su
@@ -229,8 +229,8 @@ skripte i dalje skida odmah; snizen prioritet ne vraca propusnost.
 **✅ Ucinjeno:** brands-font (106 KB, za DVIJE ikone od kojih se jedna ne crta) zamijenjen
 ugradjenim SVG-om — commit `6db1c2f`, brana `tests/unit/no-brand-font.test.js`.
 
-**✅ UCITAVANJE PO RUTI — ISPORUCENO 2026-09-04** (na grani `feat/racun-r1`, ⚠️ NIJE na
-produkciji). Radjeno u dva koraka, s mjerom nakon svakog, kako je Leon i trazio.
+**✅ UCITAVANJE PO RUTI — ISPORUCENO 2026-09-04** (**na produkciji od 2026-09-05**,
+`8b70c15`). Radjeno u dva koraka, s mjerom nakon svakog, kako je Leon i trazio.
 
 **Sto je bilo:** naslovnica je vukla `flashcards` `quiz` `fill-blanks` `learn` `progress`
 `blind-map` `exercises*` `blocks-renderer` `math` `my-materials` `profile` `node-images`
@@ -977,8 +977,8 @@ to pitanje: koliko je podvlaka postaje nevažno.
 
 > **STATUS 2026-08-25:** faza **„TELEFON" (T0–T6) je gotova i NA PRODUKCIJI** od 2026-08-24,
 > zajedno s BUG-030/031/032; phone-osnovica je **prazna**, pa brana od tada traži **nulu**.
-> **AŽURIRANO 2026-08-28: faza „POLICA" (P1–P4) je ISPUNJENA** (spec §9.17–9.21) i čeka na grani
-> `feat/polica`. Nalaz ispod ostaje jer objašnjava **zašto su brane takve kakve jesu**, a to se
+> **AŽURIRANO 2026-08-28: faza „POLICA" (P1–P4) je ISPUNJENA** (spec §9.17–9.21); **na produkciji od 2026-09-01**.
+> Nalaz ispod ostaje jer objašnjava **zašto su brane takve kakve jesu**, a to se
 > nije promijenilo.
 > ⚠️ **Ovdje je do 2026-08-29 stajalo „Sljedeća cigla je C4" — C4 je u međuvremenu ZATVOREN.**
 > Redoslijed cigli se **više ne prepisuje u BACKLOG**: zna ga `CLAUDE.md` §Gdje smo i spec §3, a
