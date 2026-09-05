@@ -5,6 +5,17 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-05 (FABLE) — **Matura = vizija (VISION.md §8) · RAD.xlsx se puni automatski svaki dan (`scripts/rad-dnevno.ps1`)**
+
+Dvije Leonove odluke iste večeri. **① Matura:** *„mature ne diramo, to je vizija"* → odjeljak u
+[VISION.md](../product/VISION.md) §8 (što bi bila, zašto je vizija, kad bi se otvorila), RASPORED §5 pokazuje onamo;
+bez datuma, jer `check:docs` drži `product/` bez kronologije. Ne dobiva spec, ciglu ni fazu. **② Analiza rada:** *„excel
+se popunjava na kraju svakog dana, to treba biti automatski"* → Windows Task Scheduler „Sokrat RAD.xlsx" svaki dan u
+23:45 zove `scripts/rad-dnevno.ps1`: generator → ako se knjiga promijenila, `git commit -- docs/records/RAD.xlsx` na
+tekuću granu (nikad na `main`, nikad push); dnevnik `.jank/rad-dnevno.log`; propušten dan ili otvoren Excel nadoknadi
+sljedeći prolaz (generator čita cijeli git). Prvi prolaz odmah: 123 commita · 89 isporuka · 11 faza · 21 vizija · 8
+grafova → `cbaf4d2`. Ukloni: `schtasks /Delete /F /TN "Sokrat RAD.xlsx"`.
+
 ## 2026-09-05 (FABLE) — **F1/11 ②: štipanje s dva prsta gasi JS (`js/no-zoom.js`), jer Safari metu i `touch-action` ne sluša** (ADR-034)
 
 Leon na iPhoneu poslije F1/11 ①: dodir u polje i dvostruki dodir *„više ne, sređeno je, good job"* — ali *„ja bi da maknemo
