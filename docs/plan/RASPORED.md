@@ -229,7 +229,7 @@ ništa, ali ništa ni ne nestaje samo od sebe.
 Zapisano da se ne otvara iznova, ne da se planira.
 
 - **Matura** — Leon: *„neću otvarat maturu."* Blokator je nepotvrđeno pravno pitanje o objavi
-  NCVVO materijala.
+  NCVVO materijala. **Vizija** (što bi bila i kad bi se otvorila): [VISION.md](../product/VISION.md) §8 (Leon, 2026-09-05: *„to je vizija"*).
 - **Simulacija vođenja hotela** — zaseban proizvod ([ideas/HOTEL_SIM.md](../ideas/HOTEL_SIM.md)),
   posuđuje naše primitive ali nije Sokratova značajka.
 - **Spaced repetition** — nije otkazan, samo više nije sljedeći.

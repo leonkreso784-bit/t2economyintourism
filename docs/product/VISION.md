@@ -105,3 +105,30 @@ Svaka je otvorena; rješavamo ih jednu po jednu i tad upisujemo ADR.
 - `DATA_MODEL.md` — kad krene Blok B (detaljna schema; sad živi u [ARCHITECTURE.md](../architecture/ARCHITECTURE.md)).
 - `AI_PIPELINE.md` — kad krene F3 (PDF→ekstrakcija→Claude→draft→pregled→publish).
 - ~~`MONETIZATION.md`~~ ✅ postoji od 2026-06-27 ([MONETIZATION.md](./MONETIZATION.md) — modeli, matura-tržište, MoR vs Stripe).
+
+## 8. Matura — VIZIJA, ne projekt (Leon: „mature ne diramo, to je vizija")
+
+**Što bi bila.** Priprema za državnu maturu na temelju objavljenih NCVVO ispita: vlastita stranica
+(`matura.html`), izbor predmeta, unutar predmeta ispitni rokovi po godinama, **exam mode** (ispit pod
+satom) uz **privatnu** statistiku pokušaja. Prošli ispit je **fiksan sadržaj** — čisti podatak bez
+`generate()`, pa recepti (F5) NISU preduvjet; parametrizirano „beskonačno vježbanje" bio bi tek v2.
+Prvi opseg koji je bio skiciran: **Matematika A, 3 godine × 2 roka**; hrvatski i engleski
+(esej, lektire) svjesno izvan — engine nema tip koji ocjenjuje esej, a „engine se ne mijenja za
+sadržaj" je sveto pravilo. Cjevovod unosa ispita živio bi u **zasebnom repozitoriju** (generator ≠
+integrator), a u platformu bi ušao kao treći način smještaja predmeta (`exam` os uz legacy i
+`placement[]`, ADR-022), na istom otoku pravila kao sve ostalo (ADR-018: podaci, nikad kod).
+
+**Zašto je vizija, a ne cigla.** Dva razloga, oba Leonova:
+1. **Pravno pitanje o objavi NCVVO materijala nije potvrđeno** — dok nije, ne objavljuje se ništa
+   ([RASPORED.md](../plan/RASPORED.md) §5: *„neću otvarat maturu"*).
+2. **Fokus.** Sedam faza rasporeda (uređaj → račun → dvojezičnost → čišćenje → vježbe → MCP → objava)
+   ide prije bilo kojeg novog tržišta; matura bi se natjecala za istu jedinu ruku.
+
+**Kad bi se otvorila.** Tek s (a) pravnim odgovorom, (b) zatvorenim F5 (vježba kao podatak → ispit je
+samo još jedan skup podataka) i (c) F7 (objava — smisao mature je i ljestvica, a to je zaseban dizajn).
+Kalendar je jedini prirodni rok koji ovaj smjer ima: vrhunac korištenja je **2.–5. mjesec**. Tržišna
+strana (broj pristupnika, sezonska propusnica) stoji u [MONETIZATION.md](./MONETIZATION.md) §Tržište —
+kao hipoteza, ne kao posao u planu.
+
+**Dogovor.** Ovaj odjeljak je jedino mjesto na kojem matura živi u proizvodnoj dokumentaciji: ne dobiva
+spec, ciglu ni fazu dok Leon ne kaže drugačije, a `check:docs` i dalje traži točno jedan aktivni plan.
