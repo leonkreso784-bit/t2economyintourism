@@ -5,6 +5,16 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-05 (FABLE) — F1/11 ②: `js/no-zoom.js` — štipanje s dva prsta gasi JS (Leon na iPhoneu: meta + `pan-x pan-y` ne drže)
+
+Leon: *„Neka više i sređeno je, good job"* (dodir u polje, dvostruki dodir) — *„no ja bi da maknemo mogućnost zumiranja
+kompletno … sa dva prsta."* Dakle F1/11 ① je na uređaju držao dodir, ne štipanje; uređaj je jedino mjesto gdje se to moglo
+saznati (BUG-043). Odluka o mjestu: vlastita datoteka na 6 stranica, ne `boot.js` — pravne ga nemaju, a duplikat bi bio
+ADR-027 propust; `defer` dovoljan (gesta stiže poslije učitavanja). Veže se samo uz `GestureEvent` da Chrome ne plaća
+nepasivan `touchmove`. Brana u `touch-zoom.test.js` ③ (vm sandbox s lažnim `document` i `GestureEvent`). Preflight EXIT 0.
+**Gdje se vidi:** grana/preview; produkcija `c53c28c`. **Otvoreno: Leon s dva prsta na previewu.**
+Uz to Leonove dvije nove: **matura = vizija** (VISION.md, ne dira se) · **RAD.xlsx automatski svaki dan** — zasebni commiti.
+
 ## 2026-09-05 (FABLE) — F1/7 isporučen u dva commita: landing `fixed` → `scroll` (paint 240 → 0) · `?bez=` prekidač za iPhone
 
 Leon: *„Kreni."* ① Baseline istog dana (sonda još radi: paint 240 / 532,7 Mpx, ispušteno 94) → obrnuta provjera nove

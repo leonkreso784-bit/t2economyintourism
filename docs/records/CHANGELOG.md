@@ -5,6 +5,17 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-05 (FABLE) — **F1/11 ②: štipanje s dva prsta gasi JS (`js/no-zoom.js`), jer Safari metu i `touch-action` ne sluša** (ADR-034)
+
+Leon na iPhoneu poslije F1/11 ①: dodir u polje i dvostruki dodir *„više ne, sređeno je, good job"* — ali *„ja bi da maknemo
+mogućnost zumiranja kompletno, da se ne može zumirat ni kada korisnik pokuša — sa dva prsta."* Meta `user-scalable=no`
+Safari za štipanje ignorira od iOS-a 10, a `pan-x pan-y` ga na uređaju nije zaustavio. Ostaje jedini sloj koji WebKit
+sluša: **`js/no-zoom.js`** — `gesturestart` / `gesturechange` + `touchmove` sa `scale !== 1` → `preventDefault()` uz
+`passive: false`; veže se SAMO gdje `GestureEvent` postoji (Chrome/Android slušaju metu, nepasivan `touchmove` bi im badava
+usporio skrol); jedan prst (`scale 1`) se ne dira. Vlastita datoteka s `defer` na svih 6 stranica — pravne nemaju `boot.js`,
+pa kopija u dva mjesta nije opcija (ADR-027) i F1/5 nije preduvjet. Brana: `touch-zoom.test.js` ③ (6 stranica × tag, sandbox
+7 tvrdnji), preflight EXIT 0. **Gdje se vidi:** grana `feat/racun-r1` (preview); produkcija `c53c28c`. **Presuda = Leon, dva prsta.**
+
 ## 2026-09-05 (FABLE) — **F1/7: landing se više ne preboji pri skrolu (`fixed` → `scroll`) + `?bez=` prekidač za A/B na iPhoneu**
 
 Leon (04.09.): *„kada se scrolla mora biti savršeno smooth kao da si na najnovijem iPhoneu"*; F1/6 je izmjerio

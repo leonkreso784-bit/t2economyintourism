@@ -218,6 +218,11 @@ obrnuto: bez njega landing pada, moderate/AA) · `touch-zoom.test.js` 35 tvrdnji
 **Otvoreno: štipanje na iPhoneu** (headless ne štipa) — ako `pan-x pan-y` ne drži, rezerva je `gesturestart` →
 `preventDefault()`, a to traži skriptu na pravnim stranicama → F1/5 (`boot.js`) postaje preduvjet. Usput nađeno:
 `axe-gate.js` `TEME` zakucan (`paper` mrtav, `carbon` nema) → F1/4.
+**Leon na iPhoneu (05.09. kasno navečer):** dodir u polje i dvostruki dodir **potvrđeno ugašeni** (*„više ne, sređeno je,
+good job"*), **štipanje s dva prsta i dalje zumira** → `touch-action: pan-x pan-y` Safari za štipanje NE drži (na uređaju;
+headless to ne može reći) → **F1/11 ② `js/no-zoom.js`**: `gesturestart`/`gesturechange` + `touchmove` sa `scale !== 1`,
+`preventDefault()` uz `passive: false`, samo gdje `GestureEvent` postoji; vlastita datoteka na 6 stranica (pravne nemaju
+`boot.js`, pa F1/5 nije preduvjet). Brana `touch-zoom.test.js` ③. Presuda opet iPhone.
 
 ---
 

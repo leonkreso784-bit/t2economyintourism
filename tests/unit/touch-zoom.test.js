@@ -24,6 +24,12 @@
 //      `@supports (-webkit-touch-callout: none) { … font-size: 16px !important }` ne zadovoljava
 //      NIJEDAN motor naših brana (Chromium i Playwrightov WebKit: `CSS.supports` = false), pa je
 //      godinu dana bilo nevidljivo svakom mjerenju — je li iPhone dobio 16 px nije znao nitko.
+//   ③ iOS JS-sloj `js/no-zoom.js` (F1/11 ②; Leon na iPhoneu poslije ⓪+①: „sa dva prsta" i dalje zumira,
+//      dodir u polje i dvostruki dodir potvrđeno ugašeni): Safari `user-scalable=no` za štipanje IGNORIRA,
+//      a `pan-x pan-y` ga na uređaju nije zaustavio. Ostaje ono što WebKit sluša: `gesturestart` /
+//      `gesturechange` + `touchmove` sa `scale !== 1`, `preventDefault()` uz `passive: false`. Veže se
+//      SAMO gdje `GestureEvent` postoji — Chrome ga nema, a nepasivan `touchmove` bi mu badava usporio
+//      skrol. Vlastita datoteka na svih 6 stranica (`defer`), jer pravne nemaju `boot.js` (ADR-027).
 //
 // a11y: axe `meta-viewport` (WCAG 1.4.4, AA) na ovu metu PADA — imenovano isključenje s razlogom
 // ADR-034 stoji u `tests/helpers/axe-gate.js` (`ISKLJUCENO_ODLUKOM`), ne u osnovici.
@@ -151,6 +157,43 @@ tvrdi(njuskanje.every((b) => !/font-size/.test(b)),
     'bundle: nijedan `@supports (-webkit-touch-callout: none)` blok ne postavlja `font-size` (njuškanje motora = nemjerljivo)');
 const fsImportant = (bundle.match(/font-size:[^;]*!important/g) || []).length;
 tvrdi(fsImportant === 0, 'bundle: nula `font-size … !important` (bilo 1, iz istog njuškanja), nađeno ' + fsImportant);
+
+// ③ iOS JS-sloj — svih 6 stranica ga učitava, a u sandboxu radi točno ono što tvrdi
+const vm = require('vm');
+const NOZOOM = citaj('js', 'no-zoom.js');
+for (const f of APP.concat(PRAVNE)) {
+    const tagovi = citaj(f).match(/<script[^>]*\ssrc="js\/no-zoom\.js\?v=\d+"[^>]*>/g) || [];
+    tvrdi(tagovi.length === 1 && /\bdefer\b/.test(tagovi[0]), f + ': učitava `js/no-zoom.js` točno jednom, s `?v=` i `defer`, nađeno ' + tagovi.length);
+}
+/** Lažni svijet: `document` pamti slušače; `posalji` glumi preglednik i vraća je li događaj otkazan. */
+function svijetGeste(imaGestureEvent) {
+    const slusaci = [];
+    const document = { addEventListener: (tip, fn, opts) => slusaci.push({ tip, fn, opts }) };
+    const ctx = { document, console };
+    ctx.window = ctx;
+    if (imaGestureEvent) ctx.GestureEvent = function GestureEvent() {};
+    vm.createContext(ctx);
+    vm.runInContext(NOZOOM, ctx, { filename: 'no-zoom.js' });
+    const posalji = (tip, e) => {
+        let otkazano = false;
+        const ev = Object.assign({ preventDefault: () => { otkazano = true; } }, e || {});
+        slusaci.filter((s) => s.tip === tip).forEach((s) => s.fn(ev));
+        return otkazano;
+    };
+    return { slusaci, posalji };
+}
+{
+    const bez = svijetGeste(false);
+    tvrdi(bez.slusaci.length === 0, 'bez `GestureEvent` (Chrome/Android): NIJEDAN slušač — meta ondje radi, nepasivan touchmove bi usporio skrol');
+    const s = svijetGeste(true);
+    const tipovi = s.slusaci.map((x) => x.tip).sort().join(',');
+    tvrdi(tipovi === 'gesturechange,gesturestart,touchmove', 's `GestureEvent` (WebKit): slušači gesturestart + gesturechange + touchmove, nađeno: ' + tipovi);
+    tvrdi(s.slusaci.every((x) => x.opts && x.opts.passive === false), 'svi slušači su `passive: false` (pasivan ne smije otkazati ništa)');
+    tvrdi(s.posalji('gesturestart') === true && s.posalji('gesturechange') === true, '`gesturestart` i `gesturechange` se otkazuju (štipanje s dva prsta)');
+    tvrdi(s.posalji('touchmove', { scale: 2 }) === true, '`touchmove` sa `scale: 2` (štipanje) se otkazuje');
+    tvrdi(s.posalji('touchmove', { scale: 1 }) === false, '`touchmove` sa `scale: 1` (skrol jednim prstom) se NE otkazuje');
+    tvrdi(s.posalji('touchmove', {}) === false, '`touchmove` bez `scale` (drugi motori) se NE otkazuje');
+}
 
 console.log('\n' + (pao ? '❌ palo: ' + pao : '✅ sve prošlo') + '\n');
 process.exit(pao ? 1 : 0);
