@@ -17,6 +17,23 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
+### BUG-044 — Ljepljivi hover: poslije dodira koji mijenja rutu, gumb pod prstom svijetli a nije dotaknut
+
+- Status: 🟡 **u radu** — **① dodir riješen 2026-09-05 (F1/8 ①)**, ② miš čeka · Težina: **visok**
+  (Leon: *„jako naporno"*, *„od početka"*) · Našao: Leon na iPhoneu.
+- **Opis.** Dodir na karticu promijeni rutu; WebKit (svaki preglednik na iPhoneu) zadrži `:hover` na
+  onome što se sad nalazi pod prstom — nova kartica ima rub `brand-500`, pomak i sjenu, i ne prolazi ni
+  nakon 3 s. Na mišu isto: nova kartica pod nepomičnim pokazivačem odmah je `:hover`.
+- **Uzrok.** 130 `:hover` pravila (142 selektora) vrijedilo je i na uređajima BEZ hovera; presedan koji
+  to rješava postojao je za tri gumba (`policies.css:12`), za ostalih 138 nije.
+- **Rješenje ①.** `scripts/hover-css.js` u `build:css`: svako `:hover` pravilo pod `@media (hover: hover)`,
+  na istom mjestu (medij ne mijenja ni redoslijed ni specifičnost); lightningcss parsira, tekst se
+  prepisuje. Brana `check:hover`; sonda `scripts/hover-probe.js` (WebKit dodir: ljepljivo 2/2 → mirno
+  2/2; miš: 0 razlika na 38 elemenata). **② miš** = hover se naoruža tek prvim `pointermove` poslije rute.
+- **Lekcija (dosad).** Pravilo koje vrijedi „svugdje" vrijedi i tamo gdje mu stanje ne postoji; sposobnost
+  (`hover`) se pita medijem, ne pretpostavlja. I: kad alat ne može vratiti stablo, neka ga samo čita —
+  prepis teksta po koordinatama parsera je manji zahvat od ponovne serijalizacije svega.
+
 ### BUG-039 — Ljestva širine kviza i dva pravila za male telefone su MRTVI: kasniji širi upit gasi raniji uži
 
 - Status: 🔴 **otvoren** — svjesno odgođen, jer ispravak je **odluka o izgledu**, a našao ga je

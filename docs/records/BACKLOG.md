@@ -113,6 +113,12 @@ ispod Tailwinda): jedno mjesto, buduća pravila pokrivena, umjesto 148 ručnih z
 ⓒ `:focus` → `:focus-visible` (14 mjesta).
 ⚠️ **Zamka:** `pointer-events: none` dok je pauzirano NIJE opcija — dodir bez pomaka bio bi blokiran.
 **Mjesto: F1/8** (serija: brana → zamatanje → fokus).
+**① ISPORUČENO 2026-09-05 (dodir).** `scripts/hover-css.js` u `build:css`: lightningcss ČITA (stablo s
+precima, `loc`), TEKST se prepisuje — vraćanje stabla u Rust puca i prepisalo bi svaki bajt. 130 pravila /
+142 selektora u `@media (hover: hover)`, liste cijepane (`:focus-visible` vani), 4 već pod hover-medijem
+preskočena, `:hover` u `:not()/:is()` = pad builda (danas 0). Legal/consent ručno. Brana `check:hover`
+(obrnuto 130 golih → 0). `scripts/hover-probe.js`: WebKit dodir ljepljivo 2/2 → mirno 2/2; miš 38 elemenata
+0 razlika, 20 i dalje mijenja izgled. **② miš čeka** (`data-hover-paused` + `:where()` prefiks).
 
 **Izmjereno DRUGI put, 2026-09-05 — WebKit instaliran u Playwright (isti drill-down, sonda u scratchu):**
 

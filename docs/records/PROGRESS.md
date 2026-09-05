@@ -5,6 +5,21 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-05 (FABLE) — F1/8 ① isporučen: `:hover` samo gdje hover postoji (build-prolaz + brana + sonda)
+
+Leon: *„Može kreni"* → druga cigla dodirne serije. **Alat:** lightningcss 1.32.0 (već u `node_modules` kao
+Tailwindov motor) — `StyleSheet` hook daje cijelo stablo s precima, ali vraćanje stabla natrag u Rust puca
+(`failed to deserialize … Specifier`) i prepisalo bi svaki bajt; zato modul `scripts/hover-css.js` samo
+**čita** (loc + pretci + položaj `:hover` u selektoru) a **tekst** bundlea prepisuje po koordinatama —
+bundle bajt-identičan osim zamotanih pravila. Teren prije koda: 0 `:not(:hover)`, 0 `:is(…:hover)`, 0
+`&:hover`, 4 pravila već pod hover-medijem, 126 ugniježđenih `@supports` u pravilima (Tailwindov
+`color-mix` fallback — tijelo se kopira cijelo). **Rezultat:** 130 pravila / 142 selektora pod
+`@media (hover: hover)`, liste cijepane, legal/consent ručno. **Dokazi:** `check:hover` crveno na starom
+bundleu (130 golih) → zeleno; `hover-probe` WebKit dodir ljepljivo 2/2 → mirno 2/2; miš 38 elemenata 0
+razlika (20 i dalje mijenja izgled); css:diff 0 razlika (2 rute × 3 širine, 7 161 usporedbi); `check:lockfile` zeleno s pinanim
+`lightningcss`. ⚠️ Pouka alata: heredoc u Bash-alatu guta jednu razinu backslasheva (`\\r\\n` → CR LF) —
+python-skripte s backslashevima idu kroz Write, ne heredoc. Sljedeće: **F1/8 ②** (miš, `data-hover-paused`).
+
 ## 2026-09-05 (FABLE) — F1/10 isporučen: zoom na dodir (popravak + brana ⑨ + unit-test; brana iza prijave popravljena)
 
 Leon: *„pregledaj i analiziraj sve i kreni sa sljedećom ciglom"* → F1/10 po planu iz memorije. **Nalaz prije

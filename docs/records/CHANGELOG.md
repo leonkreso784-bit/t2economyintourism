@@ -5,6 +5,34 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-05 (FABLE) — **F1/8 ①: `:hover` samo gdje hover postoji** (ljepljivi hover na dodiru; ② miš čeka)
+
+### Popravljeno
+- **Poslije dodira koji mijenja rutu ništa više ne svijetli pod prstom** (Leon: *„gumb koji je stajao na
+  mjestu starog gumba isto svijetli po rubovima a nije ga se diralo"*, *„od početka"*). Svako `:hover`
+  pravilo u bundleu sada stoji u **`@media (hover: hover)`** na istom mjestu kaskade — na mišu se ne mijenja
+  ništa, na dodiru pravilo ne postoji. Radi to **`scripts/hover-css.js`** u `build:css`, POSLIJE Tailwinda:
+  **lightningcss** (Tailwindov motor, sad pinan kao izravna ovisnost `1.32.0`) CSS **parsira** i daje `loc`
+  + pretke svakog pravila, a prepisuje se **tekst** bundlea — vraćanje stabla u Rust puca (`Specifier`) i
+  promijenilo bi svaki bajt (`blue` → `#00f`), pa bi `css:diff` mjerio šum. Liste selektora se **cijepaju**
+  (`.a:hover, .b:focus-visible` → fokus ostaje vani), pravila već pod medijem koji spominje hover se
+  preskaču, `:hover` unutar `:not()/:is()/:where()/:has()` **odbija build** (mijenja značenje; danas 0).
+  **130 pravila / 142 selektora** zamotano, 0 izgubljeno (modul to sam obrnuto provjerava).
+- `css/legal.css` i `css/consent.css` nisu u bundleu → omot **ručan** (2 + 2 pravila).
+### Dodano
+- **`npm run check:hover`** (preflight): nijedan `:hover` u bundleu + legal/consent izvan hover-medija;
+  isti parser kao build, ispisuje doseg. Obrnuto: na starom bundleu **130 golih**.
+- **`scripts/hover-probe.js`** (izvan preflighta, traži WebKit + poslužitelj): profil **dodir** = Leonov
+  opis riječ po riječ (dodir kartice → nova ruta → što je pod istim prstom) — **prije: ljepljivo 2/2
+  prelaska, poslije: mirno 2/2**; profil **miš** (`--out`/`--usporedi`) = izgled 38 elemenata na 3 rute u
+  mirovanju i pod mišem — **0 razlika prije/poslije, 20 elemenata i dalje mijenja izgled** (hover na mišu
+  živ, ne samo „ne smeta").
+- `css:diff` (`#/subjects` + `#/about` × 3 širine = 7 161 usporedbi, pravi Chromium, radno stablo vs `831d905`): 0 razlika (2 rute × 3 širine, 7 161 usporedbi).
+### Nije dirano
+- `@media (hover: none) { …:hover { transform: none } }` reset-pravila (`flashcards`, `quiz`, `policies`)
+  postala su mrtva — ostaju za F4 (čišćenje), ne diraju ništa.
+- **② miš** (hover se naoruža tek prvim `pointermove` poslije rute) = sljedeća cigla.
+
 ## 2026-09-05 (FABLE) — **F1/10: zoom na dodir** (Leonov treći nalaz; popravak + dvije brane)
 
 ### Popravljeno

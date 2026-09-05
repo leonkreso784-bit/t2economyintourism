@@ -69,7 +69,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 ### `npm run preflight` — sve brze brane odjednom (pokreni PRIJE svakog main-pusha)
 
 `check:lockfile` · `check:node` · `verify` · `bump:check` · css-drift · `check:tailwind` · `check:cdn` ·
-`check:palette` · `check:tokens` · `check:i18n` · `check:orphan-css` · `check:safearea` · `check:csp` · `check:budget` · `check:seo` · `check:contrast` ·
+`check:palette` · `check:tokens` · `check:i18n` · `check:orphan-css` · `check:safearea` · `check:hover` · `check:csp` · `check:budget` · `check:seo` · `check:contrast` ·
 `typecheck` · `validate:schema` · `export:json --check` · `check:docs` · `check:state` ·
 `test:unit`. Pre-push hook ga automatski vrti na `main`.
 
@@ -86,6 +86,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 | `check:i18n` | nijedan korisniku vidljiv tekst zakucan mimo `js/i18n.js` (HTML · JS sinkovi · ključ bez rječnika); osnovica = brojač po datoteci |
 | `check:orphan-css` | **čegrtaljka**: klasa u `css/**` koju ne spominje ni markup, ni JS, ni gradivo, ni test. Osnovica ih **imenuje** — dio je legitiman |
 | `check:safearea` | `env(safe-area-inset-*)` samo u `css/variables.css`, drugdje `var(--safe-*)` |
+| `check:hover` | svaki `:hover` (bundle + legal/consent) pod `@media (hover: hover)` — dodir se ne lijepi |
 | `check:csp` | 0 inline `<script>` (iznimka ld+json) i 0 `on*` atributa u `*.html` + enforce header bez `unsafe-inline` za skripte |
 | `check:budget` | posjetiteljev put: **nijedna editorska datoteka** + **≤ 200 KB prenesenih** skripti (mjeri PRENESENE bajtove, ne disk) |
 | `check:seo` | ono što tražilica i pretpregled VIDE: sitemap == disk · robots ne `Disallow`-a `noindex` stranicu · jedan tekst u `<title>`/`og:`/`twitter:` · `og:image` **1200×630** · JSON-LD **parsira**. `--write` regenerira sitemap |
@@ -100,6 +101,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 | `npm run check:contrast:live` | kontrast kakav se STVARNO iscrta: 4 teme × **13** ruta (`te2` NEMA `exercises`/`blind-map` → imenovani zasebno, inače ih brana ne vidi). `check:contrast` čita tokene i ne zna KORISTI li ih CSS — ovo mjeri ekran; iznimke u `scripts/contrast-live-allow.json` (**prazne**) | preglednik + poslužitelj |
 | `npm run build:og` | crta `og-cover.png` **1200×630** (boje iz tokena, tekst iz i18n) | preglednik; PNG se **commita**, dimenzije mjeri `check:seo` |
 | `node scripts/perf-probe.js` | hladan PRVI posjet, mobilni profil: FCP/LCP/CLS/TBT + bajti iz **CDP-a** (`transferSize` = 0 za CDN). **`--bez=…` = protučinjenični pokus** nad živom produkcijom · `--defer` uz obavezan `--kontrola` · `--vodopad` | mreža + preglednik |
+| `node scripts/hover-probe.js` | ljepljivi hover poslije prelaska (WebKit + dodir); `--profil=mis` = hover na mišu netaknut | WebKit + poslužitelj |
 | `node scripts/fouc-probe.js` | bljesak teme u ms + kadrovi. ⚠️ Mjeri **DRUGI** posjet | preglednik + poslužitelj |
 | `node scripts/jank-probe.js` | trzanje PO KADRU kroz prst-skrol (rAF · `Paint`/Mpx · `DroppedFrame`); `--scenariji=bez-…` = protučinjenično. | preglednik + poslužitelj |
 | `npm run css:debt` | što je ostalo za C4–C7: po cigli datoteke, redci, `!important` izvan komentara | read-only, **nije gate** |
@@ -119,7 +121,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
   gađa **STAGING** kad su `STAGING_*` u `.env`; u CI-ju zaseban secret-gated job).
 - **`tests/phone.spec.js` + `phone.authed.spec.js`** (mjera: `tests/helpers/phone-gate.js`) —
   **telefon kao STRANICA**: 9 tvrdnji na 320/393/430 px i 852×393, + **sedam** načina učenja
-  (`progress` C5a/4 · `exercises`/`blind-map` MREŽA-E4, uvjetni — predmet iz kataloga po značajci). ⚠️ **568×320 svjesno NIJE u brani** (22 tuđa nalaza; `BACKLOG.md`).
+  (`progress` · `exercises`/`blind-map` uvjetni — predmet iz kataloga po značajci). ⚠️ **568×320 svjesno NIJE u brani** (22 tuđa nalaza; `BACKLOG.md`).
   Osnovica je `tests/phone-baseline.json` (danas **prazna** → traži nulu);
   spuštanje = `PHONE_BASELINE_UPDATE=1 npx playwright test …`.
 - **`npm run test:storage`** — bucket `node-images` kroz HTTP (vlastiti upload · tuđi prefiks ·
@@ -182,9 +184,8 @@ Aktivni spec: **`docs/plan/RASPORED.md`** (2026-09-04) — cijela preostala list
 **sedam faza kroz sesije**: F1 uređaj · F2 račun (R2+R3 + CSS profila) · F3 dvojezičnost ·
 F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **Šest pitanja čeka Leonovu riječ — §6 rasporeda.**
 
-**Leonovo ⓑ trzanje pri skrolanju je IZMJERENO** (F1/6, `jank-probe`, 2026-09-05): 10 ruta čisto; **samo landing preboji ~70 % ekrana svaki kadar**, a gasi ga jedino
-`background-attachment: fixed` → hipoteza F1/7. ⚠️ Chromium-mjera; iPhone presuđuje Leon. Zapis: `BACKLOG.md` §LEONOVI NALAZI B.
-**Tri nova (2026-09-05):** ⓒ **ljepljivi hover** = **F1/8** — **WebKit s dodirom ga reproducira** (svaki preglednik na iPhoneu), dvije cigle · **Tinder-špil kartica** = **F1/9** · **zoom na dodir** = **F1/10 ✅** (`(pointer: coarse)` + `touch-action`, brana ⑨; BUG-043).
+**ⓑ trzanje IZMJERENO** (F1/6, `jank-probe`): samo landing preboji, uzrok `background-attachment: fixed` → F1/7; Chromium-mjera, iPhone presuđuje Leon (`BACKLOG.md` §B).
+**Tri nova (2026-09-05):** ⓒ **ljepljivi hover** = **F1/8** (① ✅; ② miš čeka) · **Tinder-špil** = **F1/9** · **zoom na dodir** = **F1/10 ✅** (brana ⑨; BUG-043).
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 

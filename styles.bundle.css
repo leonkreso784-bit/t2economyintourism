@@ -477,17 +477,21 @@ section[id$="-page"] {
   background: var(--color-surface-1);
   transition: border-color 0.18s ease, transform 0.18s ease;
 }
-.door:hover {
-  border-color: var(--color-brand-500);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .door:hover {
+    border-color: var(--color-brand-500);
+    transform: translateY(-2px);
+  }
 }
 .door--primary {
   background: var(--color-brand-500);
   border-color: var(--color-brand-500);
 }
-.door--primary:hover {
-  background: var(--color-brand-400);
-  border-color: var(--color-brand-400);
+@media (hover: hover) {
+  .door--primary:hover {
+    background: var(--color-brand-400);
+    border-color: var(--color-brand-400);
+  }
 }
 .door-t {
   display: block;
@@ -594,9 +598,11 @@ section[id$="-page"] {
   background: var(--color-surface-1);
   transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
 }
-.cat-program:hover:not([aria-pressed="true"]) {
-  border-color: var(--color-ink-2);
-  color: var(--color-ink-0);
+@media (hover: hover) {
+  .cat-program:hover:not([aria-pressed="true"]) {
+    border-color: var(--color-ink-2);
+    color: var(--color-ink-0);
+  }
 }
 .cat-program[aria-pressed="true"] {
   color: var(--color-ink-0);
@@ -661,9 +667,11 @@ section[id$="-page"] {
   background: var(--color-surface-1);
   transition: border-color 0.18s ease, background 0.18s ease;
 }
-.landing-subject-card:hover {
-  border-color: var(--card-accent, var(--color-brand-500));
-  background: var(--color-surface-2);
+@media (hover: hover) {
+  .landing-subject-card:hover {
+    border-color: var(--card-accent, var(--color-brand-500));
+    background: var(--color-surface-2);
+  }
 }
 .landing-subject-icon {
   display: grid;
@@ -699,25 +707,31 @@ section[id$="-page"] {
   color: var(--color-ink-2);
   flex-shrink: 0;
 }
-.landing-subject-card:hover .landing-subject-arrow {
-  color: var(--color-ink-0);
+@media (hover: hover) {
+  .landing-subject-card:hover .landing-subject-arrow {
+    color: var(--color-ink-0);
+  }
 }
 .landing-subject-card--make {
   border-style: dashed;
   background: transparent;
 }
-.landing-subject-card--make:hover {
-  border-style: dashed;
-  border-color: var(--color-ink-0);
-  background: var(--color-surface-1);
+@media (hover: hover) {
+  .landing-subject-card--make:hover {
+    border-style: dashed;
+    border-color: var(--color-ink-0);
+    background: var(--color-surface-1);
+  }
 }
 .landing-subject-icon--make {
   color: var(--color-ink-2);
   background: var(--color-surface-2);
   border: 1px dashed var(--color-line);
 }
-.landing-subject-card--make:hover .landing-subject-icon--make {
-  color: var(--color-ink-0);
+@media (hover: hover) {
+  .landing-subject-card--make:hover .landing-subject-icon--make {
+    color: var(--color-ink-0);
+  }
 }
 .own-steps {
   display: grid;
@@ -804,8 +818,10 @@ section[id$="-page"] {
   background: var(--color-brand-500);
   transition: background 0.18s ease;
 }
-.own-cta:hover {
-  background: var(--color-brand-600);
+@media (hover: hover) {
+  .own-cta:hover {
+    background: var(--color-brand-600);
+  }
 }
 .own-cta > i {
   font-size: 0.8rem;
@@ -941,9 +957,11 @@ section[id$="-page"] {
   text-align: start;
   cursor: pointer;
 }
-.footer-col a:hover, .footer-link-btn:hover {
-  color: var(--color-ink-0);
-  text-decoration: underline;
+@media (hover: hover) {
+  .footer-col a:hover, .footer-link-btn:hover {
+    color: var(--color-ink-0);
+    text-decoration: underline;
+  }
 }
 .footer-bottom {
   margin-top: 2rem;
@@ -1026,9 +1044,11 @@ section[id$="-page"] {
   cursor: pointer;
   transition: var(--transition);
 }
-.close-sidebar-btn:hover {
-  background: var(--color-danger);
-  color: var(--color-on-danger);
+@media (hover: hover) {
+  .close-sidebar-btn:hover {
+    background: var(--color-danger);
+    color: var(--color-on-danger);
+  }
 }
 .sidebar-content {
   flex: 1;
@@ -1051,9 +1071,11 @@ section[id$="-page"] {
   transition: var(--transition);
   border: 2px solid transparent;
 }
-.subject-item:hover {
-  border-color: var(--color-brand-500);
-  transform: translateX(5px);
+@media (hover: hover) {
+  .subject-item:hover {
+    border-color: var(--color-brand-500);
+    transform: translateX(5px);
+  }
 }
 .subject-item-icon {
   width: 50px;
@@ -1103,9 +1125,11 @@ section[id$="-page"] {
   color: var(--color-ink-2);
   transition: var(--transition);
 }
-.subject-item:hover .subject-arrow {
-  color: var(--color-brand-500);
-  transform: translateX(3px);
+@media (hover: hover) {
+  .subject-item:hover .subject-arrow {
+    color: var(--color-brand-500);
+    transform: translateX(3px);
+  }
 }
 @media (max-width: 480px) {
   .sidebar-logo .logo-wrapper {
@@ -1195,14 +1219,27 @@ section[id$="-page"] {
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
-.browse-card:hover, .browse-card:focus-visible {
+.browse-card:focus-visible {
   border-color: var(--card-accent, var(--color-brand-500));
   transform: translateY(-4px);
   box-shadow: var(--shadow-e2);
   outline: none;
 }
-.browse-card:hover::before, .browse-card:focus-visible::before {
+@media (hover: hover) {
+  .browse-card:hover {
+    border-color: var(--card-accent, var(--color-brand-500));
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-e2);
+    outline: none;
+  }
+}
+.browse-card:focus-visible::before {
   opacity: 1;
+}
+@media (hover: hover) {
+  .browse-card:hover::before {
+    opacity: 1;
+  }
 }
 .browse-card-top {
   display: flex;
@@ -1281,9 +1318,11 @@ section[id$="-page"] {
   font-size: 0.95rem;
   transition: var(--transition);
 }
-.browse-card:hover .browse-card-arrow {
-  color: var(--card-accent, var(--color-brand-500));
-  transform: translateX(4px);
+@media (hover: hover) {
+  .browse-card:hover .browse-card-arrow {
+    color: var(--card-accent, var(--color-brand-500));
+    transform: translateX(4px);
+  }
 }
 .browse-progress {
   display: flex;
@@ -1341,10 +1380,12 @@ section[id$="-page"] {
   opacity: 0.65;
   cursor: not-allowed;
 }
-.lesson-card:hover {
-  border-color: var(--color-brand-500);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-e2);
+@media (hover: hover) {
+  .lesson-card:hover {
+    border-color: var(--color-brand-500);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-e2);
+  }
 }
 .lesson-number {
   width: 40px;
@@ -1375,9 +1416,11 @@ section[id$="-page"] {
   font-size: 1.25rem;
   transition: var(--transition);
 }
-.lesson-card:hover .lesson-arrow {
-  color: var(--color-brand-500);
-  transform: translateX(5px);
+@media (hover: hover) {
+  .lesson-card:hover .lesson-arrow {
+    color: var(--color-brand-500);
+    transform: translateX(5px);
+  }
 }
 .about-page {
   min-height: 100vh;
@@ -1403,8 +1446,10 @@ section[id$="-page"] {
   flex-shrink: 0;
   box-shadow: var(--shadow-e2);
 }
-.logo-wrapper-large:hover {
-  transform: scale(1.05);
+@media (hover: hover) {
+  .logo-wrapper-large:hover {
+    transform: scale(1.05);
+  }
 }
 @media (max-width: 480px) {
   .logo-wrapper-large {
@@ -1454,17 +1499,21 @@ section[id$="-page"] {
   cursor: pointer;
   transition: var(--transition);
 }
-.about-btn:hover:not([disabled]) {
-  background: var(--color-surface-2);
+@media (hover: hover) {
+  .about-btn:hover:not([disabled]) {
+    background: var(--color-surface-2);
+  }
 }
 .about-btn--primary {
   background: var(--color-brand-500);
   border-color: var(--color-brand-500);
   color: var(--color-on-brand);
 }
-.about-btn--primary:hover:not([disabled]) {
-  background: var(--color-brand-600);
-  border-color: var(--color-brand-600);
+@media (hover: hover) {
+  .about-btn--primary:hover:not([disabled]) {
+    background: var(--color-brand-600);
+    border-color: var(--color-brand-600);
+  }
 }
 .about-btn:focus-visible {
   outline: 3px solid var(--color-brand-500);
@@ -1534,9 +1583,11 @@ section[id$="-page"] {
   font-weight: 500;
   transition: var(--transition);
 }
-.email-link:hover {
-  background: var(--color-brand-500);
-  color: var(--color-on-brand);
+@media (hover: hover) {
+  .email-link:hover {
+    background: var(--color-brand-500);
+    color: var(--color-on-brand);
+  }
 }
 .creator-avatar {
   width: 70px;
@@ -1662,21 +1713,25 @@ body:has(.landing-page.active) .footer, body:has(.browse-page.active) .footer {
   background: var(--color-brand-500);
   color: var(--color-on-brand);
 }
-.cta-button.primary:hover {
-  background: var(--color-brand-600);
+@media (hover: hover) {
+  .cta-button.primary:hover {
+    background: var(--color-brand-600);
+  }
 }
 .cta-button.secondary {
   background: var(--color-surface-2);
   border: 1px solid var(--color-line);
 }
-.cta-button.secondary:hover {
-  border-color: color-mix(in srgb, #4f46e5 55%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    border-color: color-mix(in srgb, var(--color-brand-500) 55%, transparent);
-  }
-  background: color-mix(in srgb, #4f46e5 12%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
+@media (hover: hover) {
+  .cta-button.secondary:hover {
+    border-color: color-mix(in srgb, #4f46e5 55%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in srgb, var(--color-brand-500) 55%, transparent);
+    }
+    background: color-mix(in srgb, #4f46e5 12%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
+    }
   }
 }
 .cta-button:disabled, .cta-button[disabled] {
@@ -1792,23 +1847,29 @@ sokrat-modal.sokrat-confirm-modal > * {
   border-color: var(--color-line);
   color: var(--color-ink-1, #cbd5e1);
 }
-.sokrat-confirm__cancel:hover {
-  color: var(--color-ink-0, #f8fafc);
-  border-color: var(--color-line-strong);
+@media (hover: hover) {
+  .sokrat-confirm__cancel:hover {
+    color: var(--color-ink-0, #f8fafc);
+    border-color: var(--color-line-strong);
+  }
 }
 .sokrat-confirm__ok {
   background: var(--color-brand-500);
   color: var(--color-on-brand);
 }
-.sokrat-confirm__ok:hover {
-  background: var(--color-brand-600);
+@media (hover: hover) {
+  .sokrat-confirm__ok:hover {
+    background: var(--color-brand-600);
+  }
 }
 .sokrat-confirm__ok.is-danger {
   background: var(--color-danger);
 }
-.sokrat-confirm__ok.is-danger:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-e2);
+@media (hover: hover) {
+  .sokrat-confirm__ok.is-danger:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-e2);
+  }
 }
 .sokrat-confirm__btn:focus-visible {
   outline: 2px solid var(--color-brand-400);
@@ -1856,9 +1917,11 @@ sokrat-modal.sokrat-confirm-modal > * {
   box-shadow: var(--shadow-e1);
   transition: var(--transition);
 }
-.stat-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-e2);
+@media (hover: hover) {
+  .stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-e2);
+  }
 }
 .stat-card i {
   font-size: 1.25rem;
@@ -1903,10 +1966,12 @@ sokrat-modal.sokrat-confirm-modal > * {
   min-height: var(--touch-target-large);
   text-align: left;
 }
-.category-btn:hover {
-  border-color: var(--color-brand-500);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-e1);
+@media (hover: hover) {
+  .category-btn:hover {
+    border-color: var(--color-brand-500);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-e1);
+  }
 }
 .category-btn.active {
   border-color: var(--color-brand-500);
@@ -1970,11 +2035,13 @@ sokrat-modal.sokrat-confirm-modal > * {
   background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-600));
   color: var(--color-on-brand);
 }
-.action-btn.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px color-mix(in srgb, #4f46e5 30%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    box-shadow: 0 8px 16px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
+@media (hover: hover) {
+  .action-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px color-mix(in srgb, #4f46e5 30%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      box-shadow: 0 8px 16px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
+    }
   }
 }
 .action-btn.secondary {
@@ -1982,9 +2049,11 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--color-ink-0);
   border: 2px solid var(--color-line);
 }
-.action-btn.secondary:hover {
-  border-color: var(--color-brand-500);
-  color: var(--color-brand-500);
+@media (hover: hover) {
+  .action-btn.secondary:hover {
+    border-color: var(--color-brand-500);
+    color: var(--color-brand-500);
+  }
 }
 .action-btn.tertiary {
   background: linear-gradient(135deg, var(--color-ok), var(--color-ok-strong));
@@ -2249,26 +2318,32 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--color-danger-ink);
   border: 2px solid var(--color-danger);
 }
-.control-btn.wrong:hover {
-  background: var(--color-danger);
-  color: var(--color-on-brand);
+@media (hover: hover) {
+  .control-btn.wrong:hover {
+    background: var(--color-danger);
+    color: var(--color-on-brand);
+  }
 }
 .control-btn.correct {
   background: transparent;
   color: var(--color-ok);
   border: 2px solid var(--color-ok);
 }
-.control-btn.correct:hover {
-  background: var(--color-ok);
-  color: var(--color-on-brand);
+@media (hover: hover) {
+  .control-btn.correct:hover {
+    background: var(--color-ok);
+    color: var(--color-on-brand);
+  }
 }
 .control-btn.prev, .control-btn.next {
   background: var(--color-surface-2);
   color: var(--color-ink-1);
 }
-.control-btn.prev:hover, .control-btn.next:hover {
-  background: var(--color-brand-500);
-  color: var(--color-on-brand);
+@media (hover: hover) {
+  .control-btn.prev:hover, .control-btn.next:hover {
+    background: var(--color-brand-500);
+    color: var(--color-on-brand);
+  }
 }
 .stat.correct {
   color: var(--color-ok);
@@ -2534,11 +2609,13 @@ sokrat-modal.sokrat-confirm-modal > * {
   transition: var(--transition);
   min-height: var(--touch-target-large);
 }
-.start-quiz-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px color-mix(in srgb, #4f46e5 30%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    box-shadow: 0 8px 16px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
+@media (hover: hover) {
+  .start-quiz-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px color-mix(in srgb, #4f46e5 30%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      box-shadow: 0 8px 16px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
+    }
   }
 }
 .quiz-game {
@@ -2617,11 +2694,13 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--color-ink-0);
   min-height: var(--touch-target-large);
 }
-.answer-btn:hover:not(.disabled) {
-  border-color: var(--color-brand-500);
-  background: color-mix(in srgb, #4f46e5 10%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in srgb, var(--color-brand-500) 10%, transparent);
+@media (hover: hover) {
+  .answer-btn:hover:not(.disabled) {
+    border-color: var(--color-brand-500);
+    background: color-mix(in srgb, #4f46e5 10%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-brand-500) 10%, transparent);
+    }
   }
 }
 .answer-btn.selected {
@@ -2688,11 +2767,13 @@ sokrat-modal.sokrat-confirm-modal > * {
   transition: var(--transition);
   min-height: var(--touch-target);
 }
-.quiz-nav-btn:hover {
-  border-color: var(--color-brand-500);
-  background: color-mix(in srgb, #4f46e5 10%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in srgb, var(--color-brand-500) 10%, transparent);
+@media (hover: hover) {
+  .quiz-nav-btn:hover {
+    border-color: var(--color-brand-500);
+    background: color-mix(in srgb, #4f46e5 10%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-brand-500) 10%, transparent);
+    }
   }
 }
 .quiz-nav-btn:active {
@@ -2702,9 +2783,11 @@ sokrat-modal.sokrat-confirm-modal > * {
   border-color: var(--color-danger, #ef4444);
   color: var(--color-danger, #ef4444);
 }
-.quiz-restart-btn:hover {
-  background: rgba(239, 68, 68, 0.1);
-  border-color: var(--color-danger, #ef4444);
+@media (hover: hover) {
+  .quiz-restart-btn:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: var(--color-danger, #ef4444);
+  }
 }
 .quiz-results {
   animation: fadeIn 0.5s ease;
@@ -3113,9 +3196,11 @@ sokrat-modal.sokrat-confirm-modal > * {
   transition: var(--transition);
   min-height: var(--touch-target);
 }
-.check-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-e2);
+@media (hover: hover) {
+  .check-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-e2);
+  }
 }
 .fill-feedback {
   margin-top: 1rem;
@@ -3153,9 +3238,11 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--color-warn);
   border: 2px solid var(--color-warn);
 }
-.control-btn.hint:hover {
-  background: var(--color-warn);
-  color: var(--color-on-brand);
+@media (hover: hover) {
+  .control-btn.hint:hover {
+    background: var(--color-warn);
+    color: var(--color-on-brand);
+  }
 }
 @media (min-width: 768px) {
   .fill-input-wrapper input {
@@ -3346,9 +3433,11 @@ sokrat-modal.sokrat-confirm-modal > * {
   transition: var(--transition);
   min-height: var(--touch-target);
 }
-.reset-btn:hover {
-  background: var(--color-danger);
-  color: var(--color-on-danger);
+@media (hover: hover) {
+  .reset-btn:hover {
+    background: var(--color-danger);
+    color: var(--color-on-danger);
+  }
 }
 @media (min-width: 768px) {
   .progress-card.main {
@@ -3457,10 +3546,12 @@ sokrat-modal.sokrat-confirm-modal > * {
   align-items: center;
   gap: 0.4rem;
 }
-.map-diff-btn:hover {
-  border-color: var(--color-brand-500);
-  color: var(--color-brand-500);
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .map-diff-btn:hover {
+    border-color: var(--color-brand-500);
+    color: var(--color-brand-500);
+    transform: translateY(-1px);
+  }
 }
 .map-diff-btn.active {
   background: linear-gradient(135deg, var(--color-brand-500), var(--color-ok-strong, var(--color-brand-500)));
@@ -3523,11 +3614,13 @@ sokrat-modal.sokrat-confirm-modal > * {
   background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-600));
   color: var(--color-on-brand);
 }
-.map-submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px color-mix(in srgb, #4f46e5 30%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    box-shadow: 0 6px 12px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
+@media (hover: hover) {
+  .map-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px color-mix(in srgb, #4f46e5 30%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      box-shadow: 0 6px 12px color-mix(in srgb, var(--color-brand-500) 30%, transparent);
+    }
   }
 }
 .map-clear-btn {
@@ -3535,17 +3628,21 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--color-danger);
   border: 2px solid var(--color-danger);
 }
-.map-clear-btn:hover {
-  background: var(--color-danger);
-  color: var(--color-on-danger);
+@media (hover: hover) {
+  .map-clear-btn:hover {
+    background: var(--color-danger);
+    color: var(--color-on-danger);
+  }
 }
 .map-skip-btn {
   background: var(--color-surface-2);
   color: var(--color-ink-1);
 }
-.map-skip-btn:hover {
-  background: var(--color-brand-500);
-  color: var(--color-on-brand);
+@media (hover: hover) {
+  .map-skip-btn:hover {
+    background: var(--color-brand-500);
+    color: var(--color-on-brand);
+  }
 }
 .map-feedback {
   display: none;
@@ -3685,9 +3782,11 @@ sokrat-modal.sokrat-confirm-modal > * {
   transition: var(--transition);
   box-shadow: var(--shadow-e1);
 }
-.ex-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-e2);
+@media (hover: hover) {
+  .ex-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-e2);
+  }
 }
 .ex-card-title {
   font-weight: 700;
@@ -3778,16 +3877,20 @@ sokrat-modal.sokrat-confirm-modal > * {
   background: var(--color-brand-500);
   color: var(--color-on-brand);
 }
-.ex-btn-primary:hover {
-  background: var(--color-brand-600);
+@media (hover: hover) {
+  .ex-btn-primary:hover {
+    background: var(--color-brand-600);
+  }
 }
 .ex-btn-ghost {
   background: transparent;
   color: var(--color-ink-1);
   border: 1px solid var(--color-line);
 }
-.ex-btn-ghost:hover {
-  background: var(--color-surface-2);
+@media (hover: hover) {
+  .ex-btn-ghost:hover {
+    background: var(--color-surface-2);
+  }
 }
 .ex-feedback {
   margin-top: 1rem;
@@ -3867,8 +3970,10 @@ sokrat-modal.sokrat-confirm-modal > * {
   min-height: var(--touch-target);
   transition: var(--transition);
 }
-.ex-opt:hover {
-  border-color: var(--color-brand-500);
+@media (hover: hover) {
+  .ex-opt:hover {
+    border-color: var(--color-brand-500);
+  }
 }
 .ex-opt.selected {
   background: var(--color-brand-500);
@@ -4065,9 +4170,11 @@ sokrat-modal.sokrat-confirm-modal > * {
   cursor: pointer;
   line-height: 1;
 }
-.ex-jr-del:hover {
-  border-color: var(--color-danger);
-  color: var(--color-danger);
+@media (hover: hover) {
+  .ex-jr-del:hover {
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+  }
 }
 .ex-jr-add {
   margin-bottom: 1rem;
@@ -4347,9 +4454,11 @@ sokrat-modal.sokrat-confirm-modal > * {
   transition: var(--transition);
   white-space: nowrap;
 }
-.study-nav-btn:hover {
-  background: var(--color-surface-2);
-  color: var(--color-brand-500);
+@media (hover: hover) {
+  .study-nav-btn:hover {
+    background: var(--color-surface-2);
+    color: var(--color-brand-500);
+  }
 }
 .study-nav-btn.active {
   background: var(--color-brand-500);
@@ -4491,8 +4600,10 @@ sokrat-modal.sokrat-confirm-modal > * {
   background: var(--color-line);
   border-radius: 3px;
 }
-:where(#learn) .learn-filter::-webkit-scrollbar-thumb:hover {
-  background: var(--color-ink-1, var(--color-line));
+@media (hover: hover) {
+  :where(#learn) .learn-filter::-webkit-scrollbar-thumb:hover {
+    background: var(--color-ink-1, var(--color-line));
+  }
 }
 :where(#learn) .learn-filter.can-scroll-right {
   -webkit-mask-image: linear-gradient(to right, currentColor calc(100% - 36px), transparent);
@@ -4525,13 +4636,24 @@ sokrat-modal.sokrat-confirm-modal > * {
   min-height: 44px;
   -webkit-tap-highlight-color: transparent;
 }
-:where(#learn) .filter-btn:hover, :where(#learn) .filter-btn.active {
+:where(#learn) .filter-btn.active {
   border-color: var(--color-brand-500);
   background: var(--color-brand-600);
   color: var(--color-on-brand);
   box-shadow: 0 2px 8px color-mix(in srgb, #4f46e5 40%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 2px 8px color-mix(in srgb, var(--color-brand-500) 40%, transparent);
+  }
+}
+@media (hover: hover) {
+  :where(#learn) .filter-btn:hover {
+    border-color: var(--color-brand-500);
+    background: var(--color-brand-600);
+    color: var(--color-on-brand);
+    box-shadow: 0 2px 8px color-mix(in srgb, #4f46e5 40%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      box-shadow: 0 2px 8px color-mix(in srgb, var(--color-brand-500) 40%, transparent);
+    }
   }
 }
 :where(#learn) .filter-btn:active {
@@ -4826,13 +4948,23 @@ sokrat-modal.sokrat-confirm-modal > * {
   cursor: zoom-in;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-:where(#learn) .learn-zoomable:hover, :where(#learn) .learn-zoomable:focus-visible {
+:where(#learn) .learn-zoomable:focus-visible {
   transform: translateY(-1px);
   box-shadow: 0 8px 24px color-mix(in srgb, #0e1a2b 28%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     box-shadow: 0 8px 24px color-mix(in srgb, var(--color-shadow) 28%, transparent);
   }
   outline: none;
+}
+@media (hover: hover) {
+  :where(#learn) .learn-zoomable:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px color-mix(in srgb, #0e1a2b 28%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      box-shadow: 0 8px 24px color-mix(in srgb, var(--color-shadow) 28%, transparent);
+    }
+    outline: none;
+  }
 }
 body.modal-open {
   overflow: hidden;
@@ -5206,10 +5338,12 @@ h4.lb-heading {
   background: transparent;
   transition: background 0.2s ease;
 }
-.lb-video__play:hover {
-  background: color-mix(in srgb, #4f46e5 12%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
+@media (hover: hover) {
+  .lb-video__play:hover {
+    background: color-mix(in srgb, #4f46e5 12%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
+    }
   }
 }
 .lb-video__icon {
@@ -5327,12 +5461,21 @@ h4.lb-heading {
   padding: 6px 12px 9px 34px;
   transition: background .14s, border-color .14s;
 }
-.be-block:hover, .be-block:focus-within {
+.be-block:focus-within {
   background: color-mix(in srgb, #5b6879 8%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-ink-2) 8%, transparent);
   }
   border-color: var(--color-line-strong);
+}
+@media (hover: hover) {
+  .be-block:hover {
+    background: color-mix(in srgb, #5b6879 8%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-ink-2) 8%, transparent);
+    }
+    border-color: var(--color-line-strong);
+  }
 }
 .be-grip {
   position: absolute;
@@ -5353,13 +5496,17 @@ h4.lb-heading {
   touch-action: none;
   transition: opacity .13s, background .13s, color .13s;
 }
-.be-block:hover .be-grip {
-  opacity: .85;
+@media (hover: hover) {
+  .be-block:hover .be-grip {
+    opacity: .85;
+  }
 }
-.be-grip:hover {
-  opacity: 1;
-  color: var(--color-brand-500);
-  background: var(--color-surface-2);
+@media (hover: hover) {
+  .be-grip:hover {
+    opacity: 1;
+    color: var(--color-brand-500);
+    background: var(--color-surface-2);
+  }
 }
 .be-grip:active {
   cursor: grabbing;
@@ -5395,8 +5542,13 @@ h4.lb-heading {
   border: 1px solid var(--color-line);
   transition: color .14s;
 }
-.be-block:hover .be-n, .be-block:focus-within .be-n {
+.be-block:focus-within .be-n {
   color: var(--color-brand-500);
+}
+@media (hover: hover) {
+  .be-block:hover .be-n {
+    color: var(--color-brand-500);
+  }
 }
 .be-ctrls {
   display: flex;
@@ -5405,8 +5557,13 @@ h4.lb-heading {
   opacity: 0;
   transition: .15s;
 }
-.be-block:hover .be-ctrls, .be-block:focus-within .be-ctrls {
+.be-block:focus-within .be-ctrls {
   opacity: 1;
+}
+@media (hover: hover) {
+  .be-block:hover .be-ctrls {
+    opacity: 1;
+  }
 }
 .be-btn {
   width: 26px;
@@ -5421,19 +5578,23 @@ h4.lb-heading {
   cursor: pointer;
   transition: .13s;
 }
-.be-btn:hover:not([disabled]) {
-  color: var(--color-on-brand);
-  border-color: var(--color-brand-500);
-  background: var(--color-brand-500);
+@media (hover: hover) {
+  .be-btn:hover:not([disabled]) {
+    color: var(--color-on-brand);
+    border-color: var(--color-brand-500);
+    background: var(--color-brand-500);
+  }
 }
 .be-btn[disabled] {
   opacity: .3;
   cursor: default;
 }
-.be-del:hover:not([disabled]) {
-  color: var(--color-on-brand);
-  border-color: var(--color-danger);
-  background: var(--color-danger);
+@media (hover: hover) {
+  .be-del:hover:not([disabled]) {
+    color: var(--color-on-brand);
+    border-color: var(--color-danger);
+    background: var(--color-danger);
+  }
 }
 .be-block.be-dragging {
   opacity: .4;
@@ -5503,11 +5664,21 @@ h4.lb-heading {
   opacity: 0;
   transition: opacity .16s;
 }
-.be-adder:hover, .be-root:hover .be-adder, .be-adder:focus-within {
+.be-adder:focus-within {
   opacity: .5;
 }
-.be-adder:hover, .be-adder:focus-within {
+@media (hover: hover) {
+  .be-adder:hover, .be-root:hover .be-adder {
+    opacity: .5;
+  }
+}
+.be-adder:focus-within {
   opacity: 1;
+}
+@media (hover: hover) {
+  .be-adder:hover {
+    opacity: 1;
+  }
 }
 .be-adder::before {
   content: '';
@@ -5542,11 +5713,13 @@ h4.lb-heading {
   box-shadow: var(--shadow-e1);
   transition: .14s;
 }
-.be-add:hover {
-  color: var(--color-on-brand);
-  background: var(--color-brand-500);
-  border-color: transparent;
-  transform: scale(1.1);
+@media (hover: hover) {
+  .be-add:hover {
+    color: var(--color-on-brand);
+    background: var(--color-brand-500);
+    border-color: transparent;
+    transform: scale(1.1);
+  }
 }
 .be-bigplus {
   width: 100%;
@@ -5571,16 +5744,18 @@ h4.lb-heading {
   }
   transition: .16s;
 }
-.be-bigplus:hover {
-  border-color: var(--color-brand-500);
-  color: var(--color-brand-500);
-  background: color-mix(in srgb, #4f46e5 12%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
-  }
-  box-shadow: 0 0 0 3px color-mix(in srgb, #4f46e5 9%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand-500) 9%, transparent);
+@media (hover: hover) {
+  .be-bigplus:hover {
+    border-color: var(--color-brand-500);
+    color: var(--color-brand-500);
+    background: color-mix(in srgb, #4f46e5 12%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
+    }
+    box-shadow: 0 0 0 3px color-mix(in srgb, #4f46e5 9%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand-500) 9%, transparent);
+    }
   }
 }
 .be-menu {
@@ -5608,9 +5783,11 @@ h4.lb-heading {
   border: none;
   transition: .12s;
 }
-.be-menu-item:hover {
-  background: var(--color-brand-500);
-  color: var(--color-on-brand);
+@media (hover: hover) {
+  .be-menu-item:hover {
+    background: var(--color-brand-500);
+    color: var(--color-on-brand);
+  }
 }
 .be-mount {
   margin-top: 8px;
@@ -5624,8 +5801,10 @@ h4.lb-heading {
   min-height: 1.4em;
   cursor: text;
 }
-.be-edit:hover {
-  background: var(--color-surface-2);
+@media (hover: hover) {
+  .be-edit:hover {
+    background: var(--color-surface-2);
+  }
 }
 .be-edit:focus {
   background: color-mix(in srgb, #4f46e5 8%, transparent);
@@ -5701,9 +5880,11 @@ h4.lb-heading {
   border: none;
   transition: .12s;
 }
-.be-tb:hover {
-  background: var(--color-brand-500);
-  color: var(--color-on-brand);
+@media (hover: hover) {
+  .be-tb:hover {
+    background: var(--color-brand-500);
+    color: var(--color-on-brand);
+  }
 }
 .be-tbsep {
   width: 1px;
@@ -5731,10 +5912,12 @@ h4.lb-heading {
   background: var(--sw, var(--color-ink-2));
   box-shadow: inset 0 0 0 1px var(--color-line);
 }
-.be-tbc:hover::after {
-  box-shadow: inset 0 0 0 1px var(--color-line-strong), 0 0 0 2px color-mix(in srgb, #4f46e5 40%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    box-shadow: inset 0 0 0 1px var(--color-line-strong), 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 40%, transparent);
+@media (hover: hover) {
+  .be-tbc:hover::after {
+    box-shadow: inset 0 0 0 1px var(--color-line-strong), 0 0 0 2px color-mix(in srgb, #4f46e5 40%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      box-shadow: inset 0 0 0 1px var(--color-line-strong), 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 40%, transparent);
+    }
   }
 }
 .be-media {
@@ -5779,8 +5962,10 @@ h4.lb-heading {
   backdrop-filter: blur(3px);
   transition: .13s;
 }
-.be-imgresize:hover {
-  background: var(--color-brand-500);
+@media (hover: hover) {
+  .be-imgresize:hover {
+    background: var(--color-brand-500);
+  }
 }
 .be-imgw {
   position: absolute;
@@ -5813,11 +5998,13 @@ h4.lb-heading {
   border: 1px solid var(--color-line);
   transition: .12s;
 }
-.be-cvar:hover {
-  color: var(--color-on-brand);
-  border-color: color-mix(in srgb, #4f46e5 50%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    border-color: color-mix(in srgb, var(--color-brand-500) 50%, transparent);
+@media (hover: hover) {
+  .be-cvar:hover {
+    color: var(--color-on-brand);
+    border-color: color-mix(in srgb, #4f46e5 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in srgb, var(--color-brand-500) 50%, transparent);
+    }
   }
 }
 .be-cvar.on {
@@ -5901,9 +6088,11 @@ h4.lb-heading {
   background: var(--color-brand-500);
   transition: .13s;
 }
-.be-upload__btn:hover {
-  filter: brightness(1.08);
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .be-upload__btn:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+  }
 }
 .be-upload__hint {
   font-size: 12px;
@@ -6021,12 +6210,14 @@ h4.lb-heading {
   min-width: 0;
   width: 100%;
 }
-.be-mathkey:hover {
-  background: color-mix(in srgb, #4f46e5 26%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in srgb, var(--color-brand-500) 26%, transparent);
+@media (hover: hover) {
+  .be-mathkey:hover {
+    background: color-mix(in srgb, #4f46e5 26%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-brand-500) 26%, transparent);
+    }
+    border-color: var(--color-brand-400);
   }
-  border-color: var(--color-brand-400);
 }
 .be-mathkey:active {
   transform: translateY(1px);
@@ -6090,11 +6281,18 @@ h4.lb-heading {
   opacity: 0;
   transition: opacity .12s;
 }
-.be-tgrid tr:hover .be-tgrid-rc .be-btn {
+@media (hover: hover) {
+  .be-tgrid tr:hover .be-tgrid-rc .be-btn {
+    opacity: 1;
+  }
+}
+.be-tgrid:focus-within .be-btn {
   opacity: 1;
 }
-.be-tgrid:hover .be-tgrid-crow .be-btn, .be-tgrid:focus-within .be-btn {
-  opacity: 1;
+@media (hover: hover) {
+  .be-tgrid:hover .be-tgrid-crow .be-btn {
+    opacity: 1;
+  }
 }
 .be-tgrid-add {
   display: flex;
@@ -6118,12 +6316,14 @@ h4.lb-heading {
   }
   transition: .14s;
 }
-.be-tbtn:hover {
-  border-color: var(--color-brand-500);
-  color: var(--color-brand-500);
-  background: color-mix(in srgb, #4f46e5 12%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
+@media (hover: hover) {
+  .be-tbtn:hover {
+    border-color: var(--color-brand-500);
+    color: var(--color-brand-500);
+    background: color-mix(in srgb, #4f46e5 12%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
+    }
   }
 }
 .be-cdots {
@@ -6134,8 +6334,13 @@ h4.lb-heading {
   opacity: 0;
   transition: opacity .12s;
 }
-.be-block:hover .be-cdots, .be-block:focus-within .be-cdots {
+.be-block:focus-within .be-cdots {
   opacity: 1;
+}
+@media (hover: hover) {
+  .be-block:hover .be-cdots {
+    opacity: 1;
+  }
 }
 .be-cdot {
   width: 15px;
@@ -6150,11 +6355,13 @@ h4.lb-heading {
   line-height: 1;
   color: var(--color-ink-2);
 }
-.be-cdot:hover {
-  transform: scale(1.15);
-  box-shadow: 0 0 0 2px color-mix(in srgb, #4f46e5 40%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 40%, transparent);
+@media (hover: hover) {
+  .be-cdot:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 2px color-mix(in srgb, #4f46e5 40%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 40%, transparent);
+    }
   }
 }
 .be-cdot.on {
@@ -6247,18 +6454,22 @@ h4.lb-heading {
   color: var(--color-on-brand);
   box-shadow: var(--shadow-e1);
 }
-#editor-page .st-btn.primary:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-e2);
+@media (hover: hover) {
+  #editor-page .st-btn.primary:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-e2);
+  }
 }
 #editor-page .st-btn.ghost {
   border: 1px solid var(--st-line);
   color: var(--color-ink-1);
   background: var(--st-sunken);
 }
-#editor-page .st-btn.ghost:hover:not(:disabled) {
-  border-color: var(--color-brand-400);
-  color: var(--color-ink-0);
+@media (hover: hover) {
+  #editor-page .st-btn.ghost:hover:not(:disabled) {
+    border-color: var(--color-brand-400);
+    color: var(--color-ink-0);
+  }
 }
 #editor-page .st-btn:disabled {
   opacity: .45;
@@ -6277,9 +6488,11 @@ h4.lb-heading {
   transition: .15s;
   font-size: 15px;
 }
-#editor-page .st-iconbtn:hover {
-  border-color: var(--color-brand-400);
-  color: var(--color-ink-0);
+@media (hover: hover) {
+  #editor-page .st-iconbtn:hover {
+    border-color: var(--color-brand-400);
+    color: var(--color-ink-0);
+  }
 }
 #editor-page .st-layout {
   display: grid;
@@ -6323,9 +6536,11 @@ h4.lb-heading {
   cursor: pointer;
   font-family: inherit;
 }
-#editor-page .st-newscript:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-e2);
+@media (hover: hover) {
+  #editor-page .st-newscript:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-e2);
+  }
 }
 #editor-page .st-tree h3 {
   font-size: 10.5px;
@@ -6352,8 +6567,10 @@ h4.lb-heading {
   transition: .15s;
   position: relative;
 }
-#editor-page .st-node .st-row:hover {
-  background: var(--st-sunken);
+@media (hover: hover) {
+  #editor-page .st-node .st-row:hover {
+    background: var(--st-sunken);
+  }
 }
 #editor-page .st-node .st-row.active {
   background: color-mix(in srgb, #4f46e5 14%, transparent);
@@ -6501,8 +6718,10 @@ h4.lb-heading {
   background: none;
   font-family: inherit;
 }
-#editor-page .st-tab:hover {
-  color: var(--color-ink-0);
+@media (hover: hover) {
+  #editor-page .st-tab:hover {
+    color: var(--color-ink-0);
+  }
 }
 #editor-page .st-tab.on {
   background: var(--st-fill);
@@ -6651,8 +6870,10 @@ h4.lb-heading {
   outline: 1px solid transparent;
   transition: background .12s, outline-color .12s;
 }
-#editor-page .st-cat-name:hover {
-  background: var(--st-sunken);
+@media (hover: hover) {
+  #editor-page .st-cat-name:hover {
+    background: var(--st-sunken);
+  }
 }
 #editor-page .st-cat-name:focus {
   background: var(--st-sunken);
@@ -6680,10 +6901,12 @@ h4.lb-heading {
   opacity: .55;
   transition: .13s;
 }
-#editor-page .st-catdrag:hover {
-  opacity: 1;
-  color: var(--color-brand-500);
-  background: var(--st-sunken);
+@media (hover: hover) {
+  #editor-page .st-catdrag:hover {
+    opacity: 1;
+    color: var(--color-brand-500);
+    background: var(--st-sunken);
+  }
 }
 #editor-page .st-catdrag:active {
   cursor: grabbing;
@@ -6711,12 +6934,14 @@ h4.lb-heading {
   opacity: .45;
   transition: .13s;
 }
-#editor-page .st-catdel:hover {
-  opacity: 1;
-  color: var(--color-danger-ink);
-  background: color-mix(in srgb, #c0332b 12%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in srgb, var(--color-danger) 12%, transparent);
+@media (hover: hover) {
+  #editor-page .st-catdel:hover {
+    opacity: 1;
+    color: var(--color-danger-ink);
+    background: color-mix(in srgb, #c0332b 12%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-danger) 12%, transparent);
+    }
   }
 }
 #editor-page .st-catdel:focus-visible {
@@ -6743,11 +6968,13 @@ h4.lb-heading {
   border: 1px solid var(--color-line);
   transition: .12s;
 }
-#editor-page .st-cdot:hover {
-  transform: scale(1.15);
-  box-shadow: 0 0 0 2px color-mix(in srgb, #4f46e5 40%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 40%, transparent);
+@media (hover: hover) {
+  #editor-page .st-cdot:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 2px color-mix(in srgb, #4f46e5 40%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-brand-500) 40%, transparent);
+    }
   }
 }
 #editor-page .st-cdot.on {
@@ -6790,13 +7017,15 @@ h4.lb-heading {
   transition: .15s;
   font-family: inherit;
 }
-#editor-page .st-migrate:hover {
-  border-color: var(--color-brand-500);
-  background: color-mix(in srgb, #4f46e5 12%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
+@media (hover: hover) {
+  #editor-page .st-migrate:hover {
+    border-color: var(--color-brand-500);
+    background: color-mix(in srgb, #4f46e5 12%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
+    }
+    box-shadow: var(--st-glow);
   }
-  box-shadow: var(--st-glow);
 }
 #editor-page .st-cardgrid {
   display: grid;
@@ -6929,8 +7158,13 @@ h4.lb-heading {
   opacity: 0;
   transition: opacity .12s;
 }
-#editor-page .st-edit-item:hover .st-idots, #editor-page .st-edit-item:focus-within .st-idots {
+#editor-page .st-edit-item:focus-within .st-idots {
   opacity: 1;
+}
+@media (hover: hover) {
+  #editor-page .st-edit-item:hover .st-idots {
+    opacity: 1;
+  }
 }
 #editor-page .st-edit-item .st-q,#editor-page .st-edit-item .st-qtext {
   font-weight: 600;
@@ -7107,10 +7341,12 @@ h4.lb-heading {
   transition: border-color .2s,box-shadow .2s,transform .2s;
   animation: stpop .22s ease;
 }
-#editor-page .st-kv:hover {
-  border-color: var(--color-line-strong);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-e2);
+@media (hover: hover) {
+  #editor-page .st-kv:hover {
+    border-color: var(--color-line-strong);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-e2);
+  }
 }
 #editor-page .st-kv::before {
   box-shadow: 2px 0 14px -2px var(--st-acc,transparent);
@@ -7123,36 +7359,44 @@ h4.lb-heading {
   transition: border-color .2s,box-shadow .2s,transform .2s;
   animation: stpop .22s ease;
 }
-#editor-page .st-fcard:hover {
-  transform: translateY(-3px) rotateX(2deg);
-  box-shadow: var(--shadow-e2);
+@media (hover: hover) {
+  #editor-page .st-fcard:hover {
+    transform: translateY(-3px) rotateX(2deg);
+    box-shadow: var(--shadow-e2);
+  }
 }
 #editor-page .st-qz,#editor-page .st-fill {
   transition: border-color .2s,box-shadow .2s,transform .2s;
   animation: stpop .22s ease;
 }
-#editor-page .st-qz:hover,#editor-page .st-fill:hover {
-  border-color: var(--color-line-strong);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-e2);
+@media (hover: hover) {
+  #editor-page .st-qz:hover, #editor-page .st-fill:hover {
+    border-color: var(--color-line-strong);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-e2);
+  }
 }
 #editor-page .st-edit-item {
   transition: border-color .2s,box-shadow .2s,transform .2s;
 }
-#editor-page .st-edit-item:hover {
-  border-color: var(--color-line-strong);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-e2);
+@media (hover: hover) {
+  #editor-page .st-edit-item:hover {
+    border-color: var(--color-line-strong);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-e2);
+  }
 }
 #editor-page .st-metas .st-m {
   transition: .15s;
 }
-#editor-page .st-metas .st-m:hover:not(.st-editing) {
-  border-color: color-mix(in srgb, #4f46e5 35%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    border-color: color-mix(in srgb, var(--color-brand-500) 35%, transparent);
+@media (hover: hover) {
+  #editor-page .st-metas .st-m:hover:not(.st-editing) {
+    border-color: color-mix(in srgb, #4f46e5 35%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in srgb, var(--color-brand-500) 35%, transparent);
+    }
+    color: var(--color-ink-1);
   }
-  color: var(--color-ink-1);
 }
 #editor-page .st-premium {
   background-size: 220% 220%;
@@ -7232,15 +7476,17 @@ h4.lb-heading {
   }
   transition: .16s;
 }
-#editor-page .st-addcat-foot:hover {
-  border-color: var(--color-brand-500);
-  background: color-mix(in srgb, #4f46e5 14%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in srgb, var(--color-brand-500) 14%, transparent);
-  }
-  box-shadow: 0 0 0 3px color-mix(in srgb, #4f46e5 9%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand-500) 9%, transparent);
+@media (hover: hover) {
+  #editor-page .st-addcat-foot:hover {
+    border-color: var(--color-brand-500);
+    background: color-mix(in srgb, #4f46e5 14%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-brand-500) 14%, transparent);
+    }
+    box-shadow: 0 0 0 3px color-mix(in srgb, #4f46e5 9%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-brand-500) 9%, transparent);
+    }
   }
 }
 :root {
@@ -7315,9 +7561,11 @@ body.no-pathbar {
   transition: var(--transition);
   white-space: nowrap;
 }
-.topbar-btn:hover:not(:disabled) {
-  background: var(--color-surface-2);
-  color: var(--color-ink-0);
+@media (hover: hover) {
+  .topbar-btn:hover:not(:disabled) {
+    background: var(--color-surface-2);
+    color: var(--color-ink-0);
+  }
 }
 .topbar-btn[aria-current="page"] {
   color: var(--color-brand-500);
@@ -7352,9 +7600,11 @@ body.no-pathbar {
   cursor: pointer;
   transition: var(--transition);
 }
-.topbar-cta:hover {
-  background: var(--color-brand-400);
-  border-color: var(--color-brand-400);
+@media (hover: hover) {
+  .topbar-cta:hover {
+    background: var(--color-brand-400);
+    border-color: var(--color-brand-400);
+  }
 }
 body.on-landing .topbar-cta {
   display: inline-flex;
@@ -7373,9 +7623,11 @@ body.on-landing .topbar-cta {
   cursor: pointer;
   transition: var(--transition);
 }
-.topbar-iconbtn:hover {
-  background: var(--color-surface-2);
-  color: var(--color-ink-0);
+@media (hover: hover) {
+  .topbar-iconbtn:hover {
+    background: var(--color-surface-2);
+    color: var(--color-ink-0);
+  }
 }
 .pathbar {
   display: flex;
@@ -7406,8 +7658,10 @@ body.no-pathbar .pathbar {
   cursor: pointer;
   transition: var(--transition);
 }
-.pathbar-back:hover {
-  color: var(--color-ink-0);
+@media (hover: hover) {
+  .pathbar-back:hover {
+    color: var(--color-ink-0);
+  }
 }
 .crumbs {
   display: flex;
@@ -7438,8 +7692,10 @@ body.no-pathbar .pathbar {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.crumb:hover {
-  color: var(--color-ink-0);
+@media (hover: hover) {
+  .crumb:hover {
+    color: var(--color-ink-0);
+  }
 }
 .crumb-current {
   color: var(--color-ink-0);
@@ -7450,8 +7706,10 @@ body.no-pathbar .pathbar {
   flex-shrink: 0;
   max-width: 100%;
 }
-.crumb-current:hover {
-  color: var(--color-ink-0);
+@media (hover: hover) {
+  .crumb-current:hover {
+    color: var(--color-ink-0);
+  }
 }
 .crumb-sep {
   color: var(--color-ink-2);
@@ -7559,8 +7817,10 @@ sokrat-modal.auth-modal > * {
   color: var(--color-ink-1);
   cursor: pointer;
 }
-.auth-modal__close:hover {
-  color: var(--color-ink-0);
+@media (hover: hover) {
+  .auth-modal__close:hover {
+    color: var(--color-ink-0);
+  }
 }
 .auth-modal__title {
   display: flex;
@@ -7601,8 +7861,10 @@ sokrat-modal.auth-modal > * {
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease;
 }
-.auth-modal__tab:hover {
-  color: var(--color-ink-0);
+@media (hover: hover) {
+  .auth-modal__tab:hover {
+    color: var(--color-ink-0);
+  }
 }
 .auth-modal__tab.is-active {
   background: color-mix(in srgb, #4f46e5 18%, transparent);
@@ -7635,8 +7897,10 @@ sokrat-modal.auth-modal > * {
   cursor: pointer;
   transition: color 0.2s ease;
 }
-.auth-modal__link:hover {
-  color: var(--color-brand-500);
+@media (hover: hover) {
+  .auth-modal__link:hover {
+    color: var(--color-brand-500);
+  }
 }
 .auth-modal__input {
   width: 100%;
@@ -7680,8 +7944,10 @@ sokrat-modal.auth-modal > * {
   cursor: pointer;
   transition: color 0.2s ease;
 }
-.auth-pass-toggle:hover {
-  color: var(--color-ink-0);
+@media (hover: hover) {
+  .auth-pass-toggle:hover {
+    color: var(--color-ink-0);
+  }
 }
 .auth-modal__submit {
   justify-content: center;
@@ -7739,9 +8005,11 @@ sokrat-modal.auth-modal > * {
   cursor: pointer;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
-.auth-oauth__btn:hover {
-  border-color: var(--color-line-strong);
-  background: var(--color-surface-2);
+@media (hover: hover) {
+  .auth-oauth__btn:hover {
+    border-color: var(--color-line-strong);
+    background: var(--color-surface-2);
+  }
 }
 .auth-oauth__btn i {
   color: var(--color-brand-500);
@@ -8023,8 +8291,10 @@ sokrat-modal.auth-modal > * {
   cursor: pointer;
   transition: background 0.2s ease;
 }
-.profile-danger-btn:hover {
-  background: rgba(248, 113, 113, 0.2);
+@media (hover: hover) {
+  .profile-danger-btn:hover {
+    background: rgba(248, 113, 113, 0.2);
+  }
 }
 .profile-danger-btn:disabled {
   opacity: 0.5;
@@ -8039,8 +8309,10 @@ sokrat-modal.auth-modal > * {
   background: rgba(248, 113, 113, 0.18);
   border-color: rgba(248, 113, 113, 0.7);
 }
-.profile-danger-btn--hard:hover {
-  background: rgba(248, 113, 113, 0.3);
+@media (hover: hover) {
+  .profile-danger-btn--hard:hover {
+    background: rgba(248, 113, 113, 0.3);
+  }
 }
 .profile-delete-form {
   display: flex;
@@ -8079,15 +8351,17 @@ sokrat-modal.auth-modal > * {
   cursor: pointer;
   transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
-.header-auth-btn:hover {
-  color: var(--color-ink-0);
-  border-color: color-mix(in srgb, #4f46e5 55%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    border-color: color-mix(in srgb, var(--color-brand-500) 55%, transparent);
-  }
-  background: color-mix(in srgb, #4f46e5 12%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
+@media (hover: hover) {
+  .header-auth-btn:hover {
+    color: var(--color-ink-0);
+    border-color: color-mix(in srgb, #4f46e5 55%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in srgb, var(--color-brand-500) 55%, transparent);
+    }
+    background: color-mix(in srgb, #4f46e5 12%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
+    }
   }
 }
 .header-auth-btn.is-signed-in {
@@ -8235,10 +8509,12 @@ sokrat-modal.auth-modal > * {
   justify-content: center;
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
-.admin-edit-btn:hover {
-  background: var(--color-brand-600);
-  color: var(--color-on-brand);
-  border-color: var(--color-brand-500);
+@media (hover: hover) {
+  .admin-edit-btn:hover {
+    background: var(--color-brand-600);
+    color: var(--color-on-brand);
+    border-color: var(--color-brand-500);
+  }
 }
 .admin-add-btn {
   margin-top: 0.6rem;
@@ -8256,10 +8532,12 @@ sokrat-modal.auth-modal > * {
   color: var(--color-ink-1);
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
-.admin-add-btn:hover {
-  background: var(--color-surface-2);
-  color: var(--color-brand-500);
-  border-color: var(--color-brand-500);
+@media (hover: hover) {
+  .admin-add-btn:hover {
+    background: var(--color-surface-2);
+    color: var(--color-brand-500);
+    border-color: var(--color-brand-500);
+  }
 }
 .admin-cat-head {
   display: flex;
@@ -8282,19 +8560,23 @@ sokrat-modal.auth-modal > * {
   display: inline-flex;
   gap: 0.35rem;
 }
-.admin-cat-del:hover, .admin-del:hover {
-  background: var(--color-danger);
-  color: var(--color-on-danger);
-  border-color: var(--color-danger);
+@media (hover: hover) {
+  .admin-cat-del:hover, .admin-del:hover {
+    background: var(--color-danger);
+    color: var(--color-on-danger);
+    border-color: var(--color-danger);
+  }
 }
 .admin-edit-btn[disabled] {
   opacity: 0.35;
   cursor: not-allowed;
 }
-.admin-edit-btn[disabled]:hover {
-  background: var(--color-surface-2);
-  color: var(--color-ink-1);
-  border-color: var(--color-line);
+@media (hover: hover) {
+  .admin-edit-btn[disabled]:hover {
+    background: var(--color-surface-2);
+    color: var(--color-ink-1);
+    border-color: var(--color-line);
+  }
 }
 .admin-add-btn--cat {
   margin-top: 1rem;
@@ -8326,9 +8608,11 @@ sokrat-modal.auth-modal > * {
   cursor: pointer;
   border-radius: 8px;
 }
-.admin-edit__close:hover {
-  color: var(--color-ink-0);
-  background: var(--color-surface-2);
+@media (hover: hover) {
+  .admin-edit__close:hover {
+    color: var(--color-ink-0);
+    background: var(--color-surface-2);
+  }
 }
 .admin-edit__title {
   margin: 0 0 1rem;
@@ -8513,10 +8797,12 @@ sokrat-modal.auth-modal > * {
   align-items: center;
   justify-content: center;
 }
-.admin-quiz-delopt:hover {
-  background: var(--color-danger);
-  color: var(--color-on-danger);
-  border-color: var(--color-danger);
+@media (hover: hover) {
+  .admin-quiz-delopt:hover {
+    background: var(--color-danger);
+    color: var(--color-on-danger);
+    border-color: var(--color-danger);
+  }
 }
 .admin-quiz-addopt {
   align-self: flex-start;
@@ -8530,9 +8816,11 @@ sokrat-modal.auth-modal > * {
   font-size: 0.82rem;
   font-family: inherit;
 }
-.admin-quiz-addopt:hover {
-  border-color: var(--color-brand-500);
-  color: var(--color-ink-0);
+@media (hover: hover) {
+  .admin-quiz-addopt:hover {
+    border-color: var(--color-brand-500);
+    color: var(--color-ink-0);
+  }
 }
 .admin-learn .admin-edit__card {
   width: min(94vw, 640px);
@@ -8627,12 +8915,14 @@ sokrat-modal.auth-modal > * {
   cursor: pointer;
   transition: var(--transition);
 }
-.mm-add:hover {
-  border-color: var(--color-brand-500);
-  color: var(--color-ink-0);
-  background: color-mix(in srgb, #4f46e5 12%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
+@media (hover: hover) {
+  .mm-add:hover {
+    border-color: var(--color-brand-500);
+    color: var(--color-ink-0);
+    background: color-mix(in srgb, #4f46e5 12%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
+    }
   }
 }
 .mm-add i {
@@ -8660,10 +8950,12 @@ sokrat-modal.auth-modal > * {
 .mm-row:last-child {
   border-bottom: 0;
 }
-.mm-row:hover {
-  background: color-mix(in srgb, #4f46e5 8%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in srgb, var(--color-brand-500) 8%, transparent);
+@media (hover: hover) {
+  .mm-row:hover {
+    background: color-mix(in srgb, #4f46e5 8%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-brand-500) 8%, transparent);
+    }
   }
 }
 .mm-grip {
@@ -8679,12 +8971,19 @@ sokrat-modal.auth-modal > * {
   touch-action: none;
   transition: opacity 0.18s ease, color 0.18s ease;
 }
-.mm-row:hover .mm-grip, .mm-row:focus-within .mm-grip {
+.mm-row:focus-within .mm-grip {
   opacity: 0.55;
 }
-.mm-grip:hover {
-  opacity: 1;
-  color: var(--color-ink-0);
+@media (hover: hover) {
+  .mm-row:hover .mm-grip {
+    opacity: 0.55;
+  }
+}
+@media (hover: hover) {
+  .mm-grip:hover {
+    opacity: 1;
+    color: var(--color-ink-0);
+  }
 }
 .mm-row--dragging {
   opacity: 0.45;
@@ -8732,9 +9031,11 @@ body.mm-dragging {
   cursor: pointer;
   transition: var(--transition);
 }
-.mm-twisty-btn:hover {
-  color: var(--color-ink-0);
-  background: var(--color-surface-2);
+@media (hover: hover) {
+  .mm-twisty-btn:hover {
+    color: var(--color-ink-0);
+    background: var(--color-surface-2);
+  }
 }
 .mm-twisty-btn i {
   font-size: 0.7rem;
@@ -8787,8 +9088,13 @@ body.mm-dragging {
   opacity: 0;
   transition: opacity 0.18s ease;
 }
-.mm-row:hover .mm-acts, .mm-row:focus-within .mm-acts {
+.mm-row:focus-within .mm-acts {
   opacity: 1;
+}
+@media (hover: hover) {
+  .mm-row:hover .mm-acts {
+    opacity: 1;
+  }
 }
 .mm-act {
   display: inline-flex;
@@ -8805,15 +9111,19 @@ body.mm-dragging {
   cursor: pointer;
   transition: var(--transition);
 }
-.mm-act:hover {
-  color: var(--color-ink-0);
-  background: var(--color-surface-2);
+@media (hover: hover) {
+  .mm-act:hover {
+    color: var(--color-ink-0);
+    background: var(--color-surface-2);
+  }
 }
-.mm-act--danger:hover {
-  color: var(--color-danger-ink);
-  background: color-mix(in srgb, #c0332b 12%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in srgb, var(--color-danger) 12%, transparent);
+@media (hover: hover) {
+  .mm-act--danger:hover {
+    color: var(--color-danger-ink);
+    background: color-mix(in srgb, #c0332b 12%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-danger) 12%, transparent);
+    }
   }
 }
 .mm-add--undo {
@@ -8823,11 +9133,13 @@ body.mm-dragging {
   }
   color: var(--color-warn);
 }
-.mm-add--undo:hover {
-  border-color: var(--color-warn);
-  background: color-mix(in srgb, #8a5800 12%, transparent);
-  @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in srgb, var(--color-warn) 12%, transparent);
+@media (hover: hover) {
+  .mm-add--undo:hover {
+    border-color: var(--color-warn);
+    background: color-mix(in srgb, #8a5800 12%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-warn) 12%, transparent);
+    }
   }
 }
 .mm-add--undo i {
@@ -8933,8 +9245,10 @@ body.mm-dragging {
   cursor: pointer;
   transition: var(--transition);
 }
-.offline-btn:hover:not(:disabled), .offline-refresh:hover:not(:disabled) {
-  border-color: var(--color-brand-500);
+@media (hover: hover) {
+  .offline-btn:hover:not(:disabled), .offline-refresh:hover:not(:disabled) {
+    border-color: var(--color-brand-500);
+  }
 }
 .offline-btn:disabled, .offline-refresh:disabled {
   opacity: 0.6;
@@ -9006,8 +9320,10 @@ body.mm-dragging {
   text-decoration: none;
   overflow-wrap: anywhere;
 }
-.shelf-tile__name:hover {
-  color: var(--color-brand-500);
+@media (hover: hover) {
+  .shelf-tile__name:hover {
+    color: var(--color-brand-500);
+  }
 }
 .shelf-tile__meta {
   margin: 0.15rem 0 0;
@@ -9025,9 +9341,11 @@ body.mm-dragging {
   cursor: pointer;
   transition: var(--transition);
 }
-.shelf-tile__remove:hover:not(:disabled) {
-  border-color: var(--color-danger);
-  color: var(--color-danger-ink);
+@media (hover: hover) {
+  .shelf-tile__remove:hover:not(:disabled) {
+    border-color: var(--color-danger);
+    color: var(--color-danger-ink);
+  }
 }
 .shelf-tile__remove:disabled {
   opacity: 0.5;
@@ -9060,8 +9378,10 @@ body.mm-dragging {
   cursor: pointer;
   transition: var(--transition);
 }
-.shelf-tile__refresh:hover:not(:disabled) {
-  border-color: var(--color-brand-500);
+@media (hover: hover) {
+  .shelf-tile__refresh:hover:not(:disabled) {
+    border-color: var(--color-brand-500);
+  }
 }
 .shelf-tile__refresh:disabled {
   opacity: 0.5;

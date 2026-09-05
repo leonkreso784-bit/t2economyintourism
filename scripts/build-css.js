@@ -19,6 +19,11 @@
  * To je promjena BAJTOVA bundlea, ne promjena RENDERA (mjereno u C1: computed-style diff kroz
  * pravi preglednik, 0 razlika). Komentari žive u `css/*.css`, gdje ih se i čita.
  *
+ * ⚠️ F1/8 ① (2026-09-05): POSLIJE Tailwinda svako `:hover` pravilo završi u `@media (hover: hover)`
+ * na istom mjestu kaskade (`scripts/hover-css.js` — zašto i kako je ondje). Na dodiru hover
+ * ne postoji, pa se poslije prelaska ništa ne „lijepi" za prst; na mišu 0 razlika (css:diff +
+ * hover-probe). Čuva ga `npm run check:hover`. Legal/consent NISU u bundleu → omot ručan.
+ *
  * RABLJENJE:
  *   node scripts/build-css.js           # regeneriraj styles.bundle.css
  *   node scripts/build-css.js --check   # CI gate: bundle u sinku s izvorima? (drift = exit 1)
@@ -26,6 +31,7 @@
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
+const { zamotaj: zamotajHover } = require('./hover-css');
 
 const ROOT = path.resolve(__dirname, '..');
 const SRC = path.join(ROOT, 'css', 'app.css');
@@ -117,9 +123,12 @@ function compile() {
     console.error('❌ Tailwind CLI nije proizveo izlaz.');
     process.exit(2);
   }
-  const content = fs.readFileSync(tmp, 'utf8').replace(/\r\n/g, '\n').trimEnd() + '\n';
+  const sirovo = fs.readFileSync(tmp, 'utf8').replace(/\r\n/g, '\n').trimEnd() + '\n';
   fs.unlinkSync(tmp);
-  return { content, version };
+  // F1/8 ①: gola `:hover` pravila → `@media (hover: hover)`, u tekstu, po lightningcss `loc`.
+  // Baca ako ijedno ostane golo ili se ijedan hover-selektor izgubi (obrnuta provjera u modulu).
+  const hover = zamotajHover(sirovo, OUT_REL);
+  return { content: hover.css, version, hover };
 }
 
 /* ── drugi izlaz: samo tokeni, za stranice bez bundlea ────────────────────────
@@ -183,8 +192,9 @@ function extractTokens(css, version) {
 function main() {
   const check = process.argv.includes('--check');
   checkManifestCoverage();
-  const { content, version } = compile();
+  const { content, version, hover } = compile();
   const modules = importedModules().length;
+  const hoverInfo = hover.zamotano + ' hover-pravila (' + hover.prije.hoverSelektora + ' selektora) pod (hover: hover)';
   const tokens = extractTokens(content, version);
 
   if (check) {
@@ -192,7 +202,7 @@ function main() {
     const tokensOnDisk = fs.existsSync(TOKENS_OUT)
       ? fs.readFileSync(TOKENS_OUT, 'utf8').replace(/\r\n/g, '\n') : null;
     if (onDisk === content && tokensOnDisk === tokens) {
-      console.log(`✅ ${OUT_REL} + ${TOKENS_OUT_REL} u sinku s ${modules} modula + tokenima (tailwindcss ${version}).`);
+      console.log(`✅ ${OUT_REL} + ${TOKENS_OUT_REL} u sinku s ${modules} modula + tokenima (tailwindcss ${version}; ${hoverInfo}).`);
       process.exit(0);
     }
     const koji = onDisk !== content ? OUT_REL : TOKENS_OUT_REL;
@@ -205,6 +215,7 @@ function main() {
   const kb = (Buffer.byteLength(content) / 1024).toFixed(1);
   const tkb = (Buffer.byteLength(tokens) / 1024).toFixed(1);
   console.log(`✅ ${OUT_REL} zgrađen iz ${modules} modula + tokena (${kb} KB, tailwindcss ${version}).`);
+  console.log(`✅ ${hoverInfo} — na dodiru se ništa ne lijepi (F1/8 ①, scripts/hover-css.js).`);
   console.log(`✅ ${TOKENS_OUT_REL} zgrađen (${tkb} KB) — paleta za stranice bez bundlea.`);
   console.log('   ⚠️ Cache-bump: pokreni `npm run bump` (styles.bundle.css token je u index.html).');
 }

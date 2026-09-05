@@ -74,7 +74,11 @@ body {
     white-space: nowrap;
 }
 
-.legal-back:hover { text-decoration: underline; }
+/* `:hover` samo gdje hover postoji (F1/8 ①): ove stranice nisu u bundleu, pa omot koji
+   `build:css` radi strojno ovdje stoji ručno — čuva ga `npm run check:hover`. */
+@media (hover: hover) {
+    .legal-back:hover { text-decoration: underline; }
+}
 
 main.legal {
     flex: 1;
@@ -131,7 +135,9 @@ main.legal {
 }
 
 .legal-footer a { color: var(--text-dim); text-decoration: none; }
-.legal-footer a:hover { color: var(--color-brand-500); }
+@media (hover: hover) {
+    .legal-footer a:hover { color: var(--color-brand-500); }
+}
 
 @media (max-width: 480px) {
     main.legal { padding: 1.8rem 1.1rem 2.2rem; }
