@@ -5,6 +5,16 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-06 (FABLE) — Leonovi odgovori: F2/1 = odjava briše lokalni izbor · iPhone: dodir ne zumira, štipanje da — ali testira INSTALIRANU aplikaciju (produkcija, bez F1/11)
+
+Leon: *„Prijatelj neprijavljen vidi originalnu temu, ne onu koju je korisnik stavio. Znači B, tuđi izbor ne smije
+preživjeti odjavu."* → RASPORED §6/1 odgovoreno, F2/1 nosi odluku (pet pitanja otvoreno). *„Na iPhoneu kada se tapka ne
+zooma se, no kada se štipa se povećava. Provjeravam kao na aplikaciji: na Safariju Share → app."* Instalirana aplikacija
+s početnog zaslona učitava **www.sokratstudy.com = produkciju `c53c28c`**, a ondje je samo F1/10 (dodir 16 px + dvostruki
+dodir) — meta `user-scalable=yes, maximum-scale=5`, bez `pan-x pan-y`, bez `no-zoom.js` (provjereno jednim sporim
+zahtjevom). Dakle njegov nalaz **točno opisuje produkciju**, ne F1/11 ①+② koji su samo na grani/previewu (iza Vercel
+prijave). Presuda štipanja za F1/11 ② još NIJE dana. Compact-priprema: memorija + RASPORED + PROGRESS.
+
 ## 2026-09-05 (FABLE) — F1/11 ②: `js/no-zoom.js` — štipanje s dva prsta gasi JS (Leon na iPhoneu: meta + `pan-x pan-y` ne drže)
 
 Leon: *„Neka više i sređeno je, good job"* (dodir u polje, dvostruki dodir) — *„no ja bi da maknemo mogućnost zumiranja

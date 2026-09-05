@@ -102,14 +102,13 @@ prepisuje profil nosi i njegov CSS — inače se ista datoteka prepisuje dvaput.
 
 | cigla | posao | gotovo kad |
 |---|---|---|
-| **F2/1** | **Tema prati račun.** `localStorage` ostaje **prvi kadar** (odluka mora pasti prije crtanja, `boot.js`), račun postaje izvor istine koji ga pri prijavi pregazi i pri promjeni upiše. | …korisnik postavi temu na jednom uređaju i zatekne ju na drugom čim se prijavi |
+| **F2/1** | **Tema prati račun.** `localStorage` ostaje **prvi kadar** (odluka mora pasti prije crtanja, `boot.js`), račun postaje izvor istine koji ga pri prijavi pregazi i pri promjeni upiše. **Odluka (Leon, 2026-09-06): odjava BRIŠE lokalni izbor** — neprijavljeni posjetitelj na tom uređaju vidi zadano (prati uređaj), *„tuđi izbor ne smije preživjeti odjavu"*; račun izbor čuva za iduću prijavu. | …korisnik postavi temu na jednom uređaju i zatekne ju na drugom čim se prijavi |
 | **F2/2** | **Profilna slika** — bucket po obrascu `node-images`: vlasnički prefiks + RLS. | …korisnik stavi svoju sliku i vidi ju odmah, a tuđi prefiks mu je nedostupan |
 | **F2/3** | **Uređivanje profila + `css/profile.css`, `auth.css`, `pages.css`, `consent.css`, `legal.css`, `home-section.css`, `sidebar.css`** (bivši C6). | …korisnik promijeni ime i vidi svoj profil onako kako ga vide drugi |
 | **F2/4** | **Mail-obavijesti** — Edge Function (ADR-016), pristanak iz upitnika, odjava jednim klikom iz maila, admin-forma. Prvi segment: FMTU. | …primi mail o novom predmetu SAMO ako je pristao, i odjavi se jednim klikom iz samog maila |
 
-**Otvoreno pitanje za F2/1 (čeka Leona):** što s **neprijavljenim** korisnikom na tuđem uređaju —
-ostaje li mu zadnja lokalna tema ili se vraća na zadanu? Bez odgovora se cigla može izvesti, ali s
-pretpostavkom koja se poslije mijenja teško.
+**Pitanje za F2/1 odgovoreno (Leon, 2026-09-06): vraća se na zadanu.** Neprijavljeni korisnik na tuđem
+uređaju vidi temu uređaja, ne tuđu — odjava briše lokalni izbor, račun ga čuva za iduću prijavu.
 
 **Ne popušta ni ovdje:** identitet isključivo iz JWT-a (`getUser()`) · `service_role` samo u Edge
 Functions · RLS i `publish_document` nedirnuti · osobni graditelj ostaje zaseban otok.
@@ -244,9 +243,9 @@ Zapisano da se ne otvara iznova, ne da se planira.
 
 ## 6 · Što čeka Leonovu riječ
 
-Šest pitanja koja mijenjaju izvedbu, a ne mogu se razumno pretpostaviti:
+Šest pitanja koja mijenjaju izvedbu, a ne mogu se razumno pretpostaviti (jedno odgovoreno, pet otvorenih):
 
-1. **Neprijavljen korisnik na tuđem uređaju** — zadnja lokalna tema ili zadana? *(F2/1)*
+1. ~~**Neprijavljen korisnik na tuđem uređaju** — zadnja lokalna tema ili zadana?~~ **Odgovoreno 2026-09-06: zadana** — odjava briše lokalni izbor, *„tuđi izbor ne smije preživjeti odjavu"*. *(F2/1)*
 2. **Sidebar predmeta** — obrisati ili vratiti kao brzi izbornik? *(sitni dug)*
 3. **Opseg frontenda vježbi** — tokeni i razmaci, ili prepravak interakcije? *(F5/3)*
 4. **Facebook prijava** — čeka Metine ključeve; kod se vraća jednom zastavicom. *(F2, ako se vraća)*
