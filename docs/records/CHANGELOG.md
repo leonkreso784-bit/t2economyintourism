@@ -5,6 +5,17 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-05 (FABLE) — 🚀 **F1/1 + F1/2 + F1/3 + F1/6 NA PRODUKCIJI** (`8b70c15`, Leonov izričit OK: *„Možeš deployat sve"*)
+
+Fast-forward `feat/racun-r1` → `main` preko refspeca (`e8f1651..8b70c15`, devet commita), pre-push
+kuka vrtjela preflight → EXIT 0. Vercel: produkcijski deployment `dpl_Pbx2Q4a9k9WoDam9fU5omoFbvAmM`
+za `8b70c15`, **READY**; uživo potvrđeno: token `20260905001021` na www.sokratstudy.com. Na
+produkciji su sada: svijetla tema u boji znaka (F1/1) · tema `carbon` (F1/2) · prvi kadar prati
+uređaj + „Automatski" u biraču + migracija starog `academic` zapisa (F1/3) · `scripts/jank-probe.js`
+i popravljeni kaskadni test · `docs/records/RAD.xlsx` + generator · svi zapisi. ⚠️ Za razliku od
+04.09., Vercel je ovaj put izgradio produkciju za SHA koji je već imao preview — pravilo je dakle
+*„provjeri `list_deployments`"*, ne *„isti SHA se ne gradi"*.
+
 ## 2026-09-05 (FABLE) — **F1/6: sonda za trzanje + ljepljivi hover izmjeren na WebKitu**
 
 ### Dodano

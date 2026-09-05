@@ -31,7 +31,9 @@ vidi → F1/7 nosi A/B na telefonu (`?bez=…` na previewu). `dropped` je šum (
 paintova stabilan (240) → paint je mjera na koju se oslanjamo.
 
 **Docs:** RASPORED F1/6 ✅ · F1/7 hipoteza · F1/8 dvije cigle · §6/6; BACKLOG §B i §D tablice; CLAUDE.md;
-memorija. **Ništa nije popravljano.** Sljedeće: F1/7 (landing `fixed` → `scroll`/pseudo, dokaz 0 paintova,
+memorija. **Ništa nije popravljano.** **🚀 Deploy (Leon: *„Možeš deployat sve"*):** `feat/racun-r1` →
+`main` fast-forward na `8b70c15`, kuka preflight EXIT 0, Vercel produkcija READY, živi token
+`20260905001021` = repo. Vercel je ovaj put izgradio SHA koji je već imao preview (04.09. nije). Sljedeće: F1/7 (landing `fixed` → `scroll`/pseudo, dokaz 0 paintova,
 pa Leonov sud) i F1/8 ① (zamatanje `:hover` kroz `build:css` + statička brana). F1/4 i F1/5 potvrđene i
 sitne: `check-contrast-live.js:39` i dalje zakucan; `contact/faq/privacy/terms.html` bez `boot.js`.
 
