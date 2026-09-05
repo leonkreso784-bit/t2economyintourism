@@ -5,6 +5,29 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-05 (FABLE) — **F1/6: sonda za trzanje + ljepljivi hover izmjeren na WebKitu**
+
+### Dodano
+- **`scripts/jank-probe.js`** — mjerni instrument izvan preflighta (kao `fouc-probe`): mobilni profil
+  393×852 @3x, CPU 4×, prst kao ručni niz touch-događaja (sintetička CDP gesta u headlessu ne miče
+  stranicu — izmjereno 0 px), 3+3 zamaha po ruti; rAF-kadrovi, LoAF, `Paint` + prebojana površina i
+  `DroppedFrame` iz tracea, layout/recalc/skripta s glavne niti; `--scenariji=bez-…` ubrizgava
+  protučinjenične zabrane; **ispisuje doseg**. Izlaz u `.jank/` (gitignored).
+- **Nalaz (10 ruta, 5 363 kadra):** glavna nit čista svugdje; **samo landing** preboji — 240 paintova /
+  533 Mpx (≈ 70 % ekrana svaki kadar), 28–54 ispuštena kadra; protučinjenično: zamućenje, sjene i
+  prijelazi ne mijenjaju ništa, **`background-attachment: fixed` je jedini uzrok** (bez njega 0 paintova,
+  0 ispuštenih). Hipoteza za F1/7 u RASPORED-u; ⚠️ instrument je Chromium, iPhone (WebKit) traži A/B na
+  telefonu.
+- **Ljepljivi hover (F1/8) izmjeren na dva motora** (WebKit instaliran u Playwright): WebKit s dodirom
+  **reproducira** Leonov opis (svaki preglednik na iPhoneu je WebKit → pitanje „koji preglednik" otpada),
+  Chromium s dodirom ne; `@media (hover: none)` protučinjenično vraća karticu u mirni izgled; dodir šalje
+  `mousemove` ali ne `pointermove`; 12 golih `:focus` sva na poljima za unos → treća cigla serije otpada,
+  ostaju dvije (zamatanje kroz `build:css` + `pointermove`-naoružavanje za miš).
+
+### Promijenjeno
+- `docs/plan/RASPORED.md`: F1/6 ✅ · F1/7 nosi hipotezu · F1/8 prekrojen na dvije cigle · §6/6 bez pitanja
+  o pregledniku. `.gitignore`: `/.jank/`. Ništa u `js/`/`css/` nije dirano.
+
 ## 2026-09-05 (FABLE) — **Analiza rada: `docs/records/RAD.xlsx` + `scripts/rad-xlsx.py`**
 
 ### Dodano

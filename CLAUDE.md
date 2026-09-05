@@ -100,8 +100,9 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 | `npm run check:contrast:live` | kontrast kakav se STVARNO iscrta: 4 teme × **13** ruta (`te2` NEMA `exercises`/`blind-map` → imenovani zasebno, inače ih brana ne vidi). `check:contrast` čita tokene i ne zna KORISTI li ih CSS — ovo mjeri ekran; iznimke u `scripts/contrast-live-allow.json` (**prazne**) | preglednik + poslužitelj |
 | `npm run build:og` | crta `og-cover.png` **1200×630** (boje iz tokena, tekst iz i18n) | preglednik; PNG se **commita**, dimenzije mjeri `check:seo` |
 | `node scripts/perf-probe.js` | hladan PRVI posjet, mobilni profil: FCP/LCP/CLS/TBT + bajti iz **CDP-a** (`transferSize` = 0 za CDN). **`--bez=…` = protučinjenični pokus** nad živom produkcijom · `--defer` uz obavezan `--kontrola` · `--vodopad` | mreža + preglednik |
-| `node scripts/fouc-probe.js` | bljesak teme u ms + kadrovi. ⚠️ Mjeri **DRUGI** posjet (prvi nema spremljenu temu → lažno zeleno) | preglednik + poslužitelj |
-| `npm run css:debt` | što je ostalo za C4–C7: po cigli datoteke, redci, `!important` izvan komentara | read-only, **nije gate** — plan je do 2026-08-25 te brojke nosio **ručno** i obje su ostarile |
+| `node scripts/fouc-probe.js` | bljesak teme u ms + kadrovi. ⚠️ Mjeri **DRUGI** posjet | preglednik + poslužitelj |
+| `node scripts/jank-probe.js` | trzanje PO KADRU kroz prst-skrol (rAF · `Paint`/Mpx · `DroppedFrame`); `--scenariji=bez-…` = protučinjenično. | preglednik + poslužitelj |
+| `npm run css:debt` | što je ostalo za C4–C7: po cigli datoteke, redci, `!important` izvan komentara | read-only, **nije gate** |
 | `npm run palette:breakdown` | razloži ostatak palete po **POSLJEDICI** (nevidljiv tekst · blijede plohe · stara paleta) | read-only, **nije gate** |
 | `npm run check:final` | bazni `final` red == M1⊕M2(+examPractice); preskočene **imenuje** protiv zakucane osnovice (osmi = pad) | mrežno (anon, read-only) |
 | `npm run diff:db [id]` | usporedi bazu s datotekama **prije re-synca** — `migrate-content.js` piše PREKO baze, a `content_versions` je audit, ne undo | mrežno |
@@ -176,18 +177,14 @@ i dvaput vratio uvjerljiv krivi broj umjesto da padne.
 ### 🎯 FRONTEND REDIZAJN + MREŽA = ✅ **NA PRODUKCIJI (2026-09-01)** — dalje: **RASPORED F1**
 
 Oba speca u `docs/archive/`; što je točno isporučeno zna CHANGELOG. **Next.js odbijen (ADR-028).**
-**🚚 SEOBA je OTKAZANA** (Leon, 2026-09-01: *„Nastavlja Supabase do daljnjeg"*) → `BACKLOG.md`
-§SELF-HOST je arhiviran zapis odluke, ne plan.
+**🚚 SEOBA je OTKAZANA** (Leon, 2026-09-01) → `BACKLOG.md` §SELF-HOST = arhiv odluke, ne plan.
 Aktivni spec: **`docs/plan/RASPORED.md`** (2026-09-04) — cijela preostala lista razrezana na
 **sedam faza kroz sesije**: F1 uređaj · F2 račun (R2+R3 + CSS profila) · F3 dvojezičnost ·
-F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. RAČUN R1 je isporučen; spec mu je
-postao referenca. **Šest pitanja čeka Leonovu riječ — §6 rasporeda.**
+F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **Šest pitanja čeka Leonovu riječ — §6 rasporeda.**
 
-**Leonova tri problema (2026-09-04) — ① FOUC i ③ brzina ZATVORENI, ② tema=mail je F1/1.**
-Ostaje njegov nalaz **ⓑ trzanje pri skrolanju** — *„smooth kao na najnovijem iPhoneu"*,
-**nije ni izmjereno**, a `perf-probe` tu NE pomaže: on mjeri prvi kadar, ovo je trošak PO kadru.
-*Mjera na razvojnom stroju je donja granica, ne stvarnost korisnika* (njegov bljesak je trajao
-~1 s, moj izmjereni 119 ms). Puni zapis: `BACKLOG.md` §LEONOVI NALAZI. **Dva nova (2026-09-05):** ⓒ **ljepljivi hover** nakon prelaska (148 `:hover`, 1 zaštićeno) = **F1/8** · **Tinder-špil kartica** = **F1/9**.
+**Leonovo ⓑ trzanje pri skrolanju je IZMJERENO** (F1/6, `jank-probe`, 2026-09-05): 10 ruta čisto; **samo landing preboji ~70 % ekrana svaki kadar**, a gasi ga jedino
+`background-attachment: fixed` → hipoteza F1/7. ⚠️ Chromium-mjera; iPhone presuđuje Leon. Zapis: `BACKLOG.md` §LEONOVI NALAZI B.
+**Dva nova (2026-09-05):** ⓒ **ljepljivi hover** = **F1/8** — **WebKit s dodirom ga reproducira** (svaki preglednik na iPhoneu), dvije cigle · **Tinder-špil kartica** = **F1/9**.
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 
@@ -230,11 +227,8 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
 
 - **Semantika je UVIJEK PUNA ISPUNA — obrub NIJE zamjena za nju** (ADR-032, Leon: *„ne smije biti
   obruba uopće"*). Prilagođava se **tinta, ne ispuna**: `--color-on-ok`/`--color-on-danger` po
-  temi, jer je izmjereno da bijelo pada u `chalk`/`mint` (**2.01–3.12**), a tamno ondje daje
-  **5.81–9.00**; u `academic`/`paper` bijelo prolazi (5.30–6.15). **Gasi 7 od preostalih 10
-  fatalnih pravila palete.** Isto vrijedi za KARTICE, gdje boja dolazi izvana → `inkForTint()` (već postoji, C5a/4).
-- **OAuth: OTVOREN (RAČUN R1).** Odluka „NE zasad" (2026-08-30) potrošena Leonovim željama
-  2026-09-01/02 — Google + Facebook idu u R1. „Sign in with ChatGPT" se i dalje NE obećava.
+  temi, izmjereno: bijelo pada u `chalk`/`mint`, tamno prolazi (brojke u spec-arhivi). Isto vrijedi za KARTICE, gdje boja dolazi izvana → `inkForTint()` (već postoji, C5a/4).
+- **OAuth:** Google isporučen u R1; Facebook čeka Metine ključeve (§6). „Sign in with ChatGPT" se NE obećava.
 - **„Povijest učenja" OSTAJE, ali plitko.** Smisao dobiva tek s objavom materijala i mnogo
   sadržaja. **Ne razvijati sad, ne brisati** — `.history-item*` su namjerno mrtva, ne siročad.
 

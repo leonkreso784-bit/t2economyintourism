@@ -5,6 +5,36 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-05 (FABLE) — F1/6 sonda za trzanje + hover izmjeren na WebKitu (mjerenja, bez popravaka)
+
+Leon: *„možeš li napravit sva mjerenja i pripremit se za sljedeće cigle"* — poslije compacta koji je odnio
+živi kontekst; preživjelo je samo ono što je bilo u repou i memoriji (zato pravilo #6).
+
+**Hover (F1/8):** u Playwright instaliran WebKit (motor SVAKOG preglednika na iPhoneu). Isti drill-down
+fakultet → program → godina: **WebKit s dodirom reproducira** Leonov opis 100 % (kartica pod točkom odmah
+`:hover`, ne prolazi ni nakon 3 s ni nakon idućeg dodira), Chromium s dodirom ne, miš u oba da → pitanje
+„koji preglednik" (§6/6) otpada. Protučinjenično: `@media (hover: none)` vraća karticu u mirni izgled u
+WebKitu s dodirom, a miš ne dira → kandidat ⓐ potvrđen. Dodir šalje `mousemove`, ali ne `pointermove`;
+poslije prelaska bez pomaka nijedan motor ne šalje `pointermove` → kandidat ⓑ ima siguran okidač. Inventar
+po svojstvu: 138 pravila, **66 mijenja rub** (Leonovo „po rubovima"); 12 golih `:focus` sva na poljima za
+unos → treća cigla otpada. **Serija = dvije cigle.** Zamka za ①: selektor-lista se cijepa (`:focus-visible`
+ostaje vani); `postcss` nije instaliran.
+
+**Trzanje (F1/6):** `scripts/jank-probe.js`. Prvi pokušaj: sintetička CDP gesta `touch` u headlessu **ne
+miče stranicu** (0 px) — mjerač je to sam prijavio („bez pomaka"), pa se prešlo na ručni niz
+touch-događaja (miče, i ide istim putem kao prst). 10 ruta × kontrola + landing × 6 scenarija, 8 782 kadra:
+**glavna nit čista svugdje** (median 16,7 ms, 0 layouta tijekom skrola); **samo landing preboji** — 240
+paintova / 533 Mpx po prolazu (≈ 70 % ekrana svaki kadar), 28–54 ispuštena kadra. Protučinjenično:
+zamućenje, sjene, prijelazi = isto; **`background-attachment: fixed` = jedini uzrok** (bez njega 0/0).
+⚠️ Chromium; iOS taj `fixed` ionako crta kao `scroll` → Leonov iPhone može trzati iz razloga koji alat ne
+vidi → F1/7 nosi A/B na telefonu (`?bez=…` na previewu). `dropped` je šum (20–54 kroz prolaze), broj
+paintova stabilan (240) → paint je mjera na koju se oslanjamo.
+
+**Docs:** RASPORED F1/6 ✅ · F1/7 hipoteza · F1/8 dvije cigle · §6/6; BACKLOG §B i §D tablice; CLAUDE.md;
+memorija. **Ništa nije popravljano.** Sljedeće: F1/7 (landing `fixed` → `scroll`/pseudo, dokaz 0 paintova,
+pa Leonov sud) i F1/8 ① (zamatanje `:hover` kroz `build:css` + statička brana). F1/4 i F1/5 potvrđene i
+sitne: `check-contrast-live.js:39` i dalje zakucan; `contact/faq/privacy/terms.html` bez `boot.js`.
+
 ## 2026-09-05 (FABLE) — Analiza rada u Excelu: `docs/records/RAD.xlsx` + generator
 
 Leon: *„jednu excel tablicu koliko radimo … koju ćemo stalno nadopunjavat i imat ćemo nekoliko

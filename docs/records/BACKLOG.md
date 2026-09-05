@@ -35,6 +35,47 @@ skriptirani skrol + duge zadace + koliko je piksela prebojano), i tek onda hipot
 koje treba PROVJERITI, ne pretpostaviti: sjene i `filter` na karticama · plohe koje se ne
 kompozitiraju · `scroll` slusaci bez `passive` · velike povrsine prebojavanja.
 
+**IZMJERENO 2026-09-05 — F1/6, `scripts/jank-probe.js`** (Chromium, 393×852 @3x, CPU 4×, prst = ručni niz
+touch-događaja 3+3 zamaha; rAF-kadrovi + trace `Paint`/`DroppedFrame` + `Performance.getMetrics`). ⚠️ CDP
+`Input.synthesizeScrollGesture` s `touch` u headlessu **ne miče stranicu** (0 px) — mjerač je to sam prijavio.
+
+| ruta | prešlo / moguće px | kadrova | median / max ms | > 25 ms | paintova / Mpx | ispušteno |
+|---|---|---|---|---|---|---|
+| **landing** | 2 072 / 4 795 | 591 | 16,7 / 33,3 | 1 | **240 / 532,6** | **28** (54 i 20 u drugim prolazima) |
+| browse | 0 / 0 (stane na ekran) | 517 | 16,7 / 16,8 | 0 | 0 / 0 | 0 |
+| browse:dubina | 919 / 919 | 533 | 16,7 / 33,4 | 2 | 0 / 0 | 0 |
+| lessons | 149 / 149 | 524 | 16,7 / 16,8 | 0 | 0 / 0 | 0 |
+| about | 884 / 884 | 531 | 16,7 / 33,2 | 1 | 0 / 0 | 0 |
+| learn | 2 055 / 8 484 | 540 | 16,7 / 33,4 | 3 | 0 / 0 | 0 |
+| flashcards | 193 / 193 | 522 | 16,7 / 16,8 | 0 | 0 / 0 | 0 |
+| quiz | 163 / 163 | 529 | 16,7 / 33,3 | 1 | 0 / 0 | 0 |
+| fill | 210 / 210 | 542 | 16,7 / 33,4 | 1 | 0 / 0 | 0 |
+| progress | 880 / 880 | 534 | 16,7 / 33,3 | 3 | 0 / 0 | 0 |
+
+Layout i recalc-style tijekom skrola = **0 na svim rutama**, skripta 78–143 ms po prolazu od ~9 s, LoAF 0 →
+**glavna nit nije problem** (jedini `scroll`-slušač, `progress.js:98`, je `passive` i nije na tim rutama).
+533 Mpx / 240 paintova ≈ 2,2 Mpx po paintu ≈ **70 % ekrana @3x SVAKI kadar** — to je trzanje.
+
+**Protučinjenično na landingu** (isti prolaz, ubrizgan `<style>` s `!important` zabranom):
+
+| scenarij | paintova / Mpx | ispušteno | > 25 ms |
+|---|---|---|---|
+| kontrola | 240 / 532,6 | 54 | 1 |
+| bez zamućenja (`backdrop-filter`) | 240 / 532,6 | 51 | 1 |
+| bez sjena (`box-shadow`) | 240 / 532,6 | 34 | 1 |
+| **bez fiksne pozadine** (`background-attachment: scroll`) | **0 / 0** | **0** | 3 |
+| bez pozadinske slike landinga | 0 / 0 | 0 | 2 |
+| bez prijelaza i animacija | 240 / 532,6 | 20 | 0 |
+
+**Zaključak:** jedini izmjereni uzrok prebojavanja je `landing.css` `background-attachment: fixed, fixed, …`
+(zrno + odsjaj iza heroja). Broj paintova je **stabilan** (240 u četiri prolaza), `dropped` je **šum**
+(20–54) → paint je mjera na koju se oslanjamo, ispušteni kadrovi samo potvrda smjera.
+⚠️ **Granice instrumenta:** Chromium (WebKit u Playwrightu nema CDP-trace); iOS Safari `background-attachment:
+fixed` ionako crta kao `scroll`, pa je ovo dokaz troška na Androidu/stolnom Chromeu — Leonov **iPhone može
+trzati iz razloga koji ovaj alat ne vidi** (ondje najsumnjivije: `backdrop-filter: blur(12px)` na ljepljivoj
+traci). Zato F1/7 uz popravak landinga nosi i A/B na pravom telefonu (`?bez=…` prekidač na previewu).
+**Mjesto: F1/7** (hipoteza u RASPORED-u).
+
 **C. BIJELI BLJESAK NA PRAVOM UREDAJU TRAJE ~1 s, ne 119 ms** (Leon: *„prvo ce se otvorit
 regularna klasicna tema (bijela) i stajat ce na jednu sekundu mozda manje. Onda ce se vratit
 na mint"*). To je ISTI kvar koji je zatvoren 2026-09-04 (`boot.js`), samo na sporijem uredaju:
@@ -72,6 +113,32 @@ ispod Tailwinda): jedno mjesto, buduća pravila pokrivena, umjesto 148 ručnih z
 ⓒ `:focus` → `:focus-visible` (14 mjesta).
 ⚠️ **Zamka:** `pointer-events: none` dok je pauzirano NIJE opcija — dodir bez pomaka bio bi blokiran.
 **Mjesto: F1/8** (serija: brana → zamatanje → fokus).
+
+**Izmjereno DRUGI put, 2026-09-05 — WebKit instaliran u Playwright (isti drill-down, sonda u scratchu):**
+
+| motor / ulaz | nakon 1. prelaska | 2. prelazak + 3 s | 3. dodir · dodir u prazno |
+|---|---|---|---|
+| **WebKit / dodir** (393×852 @3x; `hover: none`, `pointer: coarse`) | nova kartica **JE `:hover`**: rub `#4f46e5`, −4 px, sjena | isto | isto · hover **preskoči** na ono što je pod novom točkom |
+| WebKit / miš | JE `:hover` | isto | — |
+| Chromium / dodir (iste media-značajke) | NIJE | NIJE | NIJE |
+| Chromium / miš | JE | isto | — |
+
+Na iPhoneu **svaki** preglednik vrti WebKit (Safari, Chrome, Firefox — Appleovo pravilo), pa pitanje „koji
+preglednik" otpada: Leon to vidi u svakom. Dodir šalje `pointerdown touchstart pointerup touchend mouseover
+mousemove mousedown mouseup click` — **`mousemove` da, `pointermove` ne**; nakon prelaska bez pomaka nijedan
+motor ne šalje `pointermove` (samo `mouseover` novom elementu). `activeElement` je `BODY` u sva četiri slučaja.
+**Protučinjenično:** ubrizgano `@media (hover: none) { .browse-card:hover { rub/pomak/sjena = mirno } }` →
+WebKit s dodirom: `matches(':hover')` ostaje `true`, ali **izgled je mirni** (rub `#dde4ee`, `transform: none`);
+na mišu (oba motora) pravilo ne radi ništa — ⓐ radi gdje treba i samo ondje.
+**Inventar po svojstvu** (138 pravila, 148 pojava, 27 datoteka): `background` 66 · `color` 64 · `border-color`
+50 · `transform` 32 · `box-shadow` 26 · `opacity` 15 → **66 pravila mijenja rub**, doslovno Leonovo „po
+rubovima". Golih `:focus` je 12 i **sva su na poljima za unos** (`input`/`select`/contenteditable), gdje prsten
+na klik i treba → **ⓒ otpada**.
+⚠️ Za ⓐ: `.browse-card:hover, .browse-card:focus-visible {…}` dijele pravilo → zamatanje mora **cijepati
+selektor-listu**, ne zamotati cijelo pravilo (inače tipkovnica na tabletu gubi fokus-stil). `postcss` NIJE
+instaliran (Tailwind CLI nosi vlastiti lightningcss) → cigla bira: pin `postcss` kao dev-ovisnost ili vlastiti
+prolaz dokazan `css:diff`-om (miš = bajt-isto). Brana ①: **statička** (svaki `:hover` u bundleu unutar
+`@media (hover: hover)`) u preflightu + WebKit-sonda izvan njega (CI nema WebKit). Serija je time **dvije cigle**.
 
 **E. KARTICE KAO TINDER-ŠPIL NA TELEFONU** (Leon, 2026-09-05: *„na mobitelu bi napravio za kartice
 kao tinder način otvaranja i gledanja. To se treba zapisat."*).
