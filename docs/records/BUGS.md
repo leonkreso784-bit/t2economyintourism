@@ -29,7 +29,8 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 - **Rješenje ①.** `scripts/hover-css.js` u `build:css`: svako `:hover` pravilo pod `@media (hover: hover)`,
   na istom mjestu (medij ne mijenja ni redoslijed ni specifičnost); lightningcss parsira, tekst se
   prepisuje. Brana `check:hover`; sonda `scripts/hover-probe.js` (WebKit dodir: ljepljivo 2/2 → mirno
-  2/2; miš: 0 razlika na 38 elemenata). **② miš** = hover se naoruža tek prvim `pointermove` poslije rute.
+  2/2; miš: 0 razlika na 38 elemenata). **Leon na iPhoneu, preview `92269c2`: *„Ne svijetli, odlično."***
+  **② miš** = hover se naoruža tek prvim `pointermove` poslije rute.
 - **Lekcija (dosad).** Pravilo koje vrijedi „svugdje" vrijedi i tamo gdje mu stanje ne postoji; sposobnost
   (`hover`) se pita medijem, ne pretpostavlja. I: kad alat ne može vratiti stablo, neka ga samo čita —
   prepis teksta po koordinatama parsera je manji zahvat od ponovne serijalizacije svega.

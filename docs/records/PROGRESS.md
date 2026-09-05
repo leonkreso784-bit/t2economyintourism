@@ -19,6 +19,10 @@ bundleu (130 golih) → zeleno; `hover-probe` WebKit dodir ljepljivo 2/2 → mir
 razlika (20 i dalje mijenja izgled); css:diff 0 razlika (2 rute × 3 širine, 7 161 usporedbi); `check:lockfile` zeleno s pinanim
 `lightningcss`. ⚠️ Pouka alata: heredoc u Bash-alatu guta jednu razinu backslasheva (`\\r\\n` → CR LF) —
 python-skripte s backslashevima idu kroz Write, ne heredoc. Sljedeće: **F1/8 ②** (miš, `data-hover-paused`).
+**Leon na iPhoneu (preview `92269c2`): *„Ne svijetli, odlično."*** — ① potvrđen na uređaju. Compact-priprema
+(pravilo #6, lagano): grep „na grani / NIJE na produkciji" kroz žive zapise + memoriju = 0 zastarjelih (sve
+današnje tvrdnje o grani su istinite: `831d905` + `92269c2` su na `feat/racun-r1`, produkcija `8b70c15`);
+HISTORY red dopunjen; memorija §SLJEDECA SESIJA = F1/8 ②.
 
 ## 2026-09-05 (FABLE) — F1/10 isporučen: zoom na dodir (popravak + brana ⑨ + unit-test; brana iza prijave popravljena)
 
