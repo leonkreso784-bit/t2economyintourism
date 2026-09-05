@@ -99,8 +99,29 @@ function mjerenjePoRazini(results, ime) {
   console.log('[B3a-mjerenje] ' + ime + ' ' + JSON.stringify(sve));
 }
 
+// ── F1/11 (ADR-034, Leon 2026-09-05): PRAVILA ISKLJUČENA ODLUKOM O PROIZVODU ─────────
+// Osnovica gore je za TOLERIRANE KVAROVE: ključ nosi površinu, a upis se proglašava
+// „riješenim" čim nalaz nestane — dakle OČEKUJE da nestane. Ovo je suprotan razred: nalaz
+// koji ne smije nestati, jer je stanje koje axe prijavljuje NAMJERNO. `meta-viewport`
+// (WCAG 1.4.4, AA) pada na `user-scalable=no` / `maximum-scale=1` — a to je ADR-034:
+// stranica se ne zumira, ni štipanjem ni dodirom ni fokusom (sustavno povećanje teksta u
+// postavkama uređaja ostaje). U osnovici bi to bilo deset redaka s istim razlogom (svaka
+// površina svoj ključ) i jedanaesti sa svakim novim specom. Zato JEDNO imenovano isključenje
+// s razlogom, ovdje — a `tests/unit/a11y-gate.test.js` tvrdi da je popis TOČNO ovaj.
+// Ne `disableRules`: axe pravilo i dalje vrti, `skeniraj` ga ispisuje kao ISKLJUČENO, pa
+// dnevnik pokazuje da nalaz postoji (i da je odluka još na snazi), ne da je nestao.
+// Obrnuto provjereno 2026-09-05: bez ovoga landing pada na `meta-viewport` (moderate, AA).
+const ISKLJUCENO_ODLUKOM = {
+  'meta-viewport': 'ADR-034 — stranica se ne zumira (Leon, 2026-09-05); WCAG 1.4.4 svjesno nadjačan za gestu'
+};
+const jeIskljuceno = (v) => Object.prototype.hasOwnProperty.call(ISKLJUCENO_ODLUKOM, v.id);
+function iskljucenoOdlukom(results) {
+  return results.violations.filter(jeIskljuceno);
+}
+
 function gateViolations(results) {
   return results.violations
+    .filter((v) => !jeIskljuceno(v))
     .filter(uGateu)
     .map((v) => ({
       id: v.id,
@@ -169,6 +190,9 @@ async function skeniraj(page, ime) {
   await smiri(page);
   const results = await new AxeBuilder({ page }).analyze();
   mjerenjePoRazini(results, ime);
+  for (const o of iskljucenoOdlukom(results)) {
+    console.log(`[a11y-odluka] ISKLJUČENO ${ime}::${o.id} (${o.nodes.length} nodeova) — ${ISKLJUCENO_ODLUKOM[o.id]}`);
+  }
   const { novi, tolerirani, rijeseni } = presudiOsnovicom(gateViolations(results), ime, ucitajOsnovicu());
   for (const t of tolerirani) {
     console.log(`[a11y-osnovica] TOLERIRANO ${ime}::${t.id} (${t.nodes} nodeova) — imenovano u tests/a11y-baseline.json`);
@@ -209,6 +233,6 @@ async function skenirajSveTeme(page, ime) {
 }
 
 module.exports = {
-  IMPACT_GATE, TEME, detalji, gateViolations, wcagRazina, uGateu,
+  IMPACT_GATE, TEME, ISKLJUCENO_ODLUKOM, detalji, gateViolations, iskljucenoOdlukom, wcagRazina, uGateu,
   ucitajOsnovicu, presudiOsnovicom, smiri, skeniraj, skenirajSveTeme
 };

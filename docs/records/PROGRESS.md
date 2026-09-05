@@ -5,6 +5,20 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-05 (FABLE) — F1/11 isporučen: ništa ne zumira (meta na 6 stranica · `pan-x pan-y` · `ISKLJUCENO_ODLUKOM` u a11y-brani)
+
+Leon: *„Ovo što mi se dešava je svugdje, nije samo na Safariju, kreni."* Redoslijed: meta + reset → `build:css` →
+**obrnuta provjera a11y-brane PRIJE iznimke** (landing pao na `meta-viewport`, moderate/AA — brana kvar vidi) →
+isključenje imenovano u `axe-gate.js` (ne osnovica: ona ključa po površini i očekuje da nalaz nestane) → landing zelen
+uz ispis `[a11y-odluka] ISKLJUČENO` → `touch-zoom.test.js` prepisan i **obrnuto kroz `git worktree` na HEAD-u: 13
+crvenih** → bump → preflight EXIT 0 → a11y-suita 7/7 (svaka površina ispisuje isključenje). Nalazi usput: ① iOS-sloj
+je bio JEDAN redak, ne novi mehanizam (`manipulation` = pan + pinch-zoom; `pan-x pan-y` = bez pinch-a) — F1/10-ov test
+je tvrdio staru vrijednost doslovno pa je svjesno prepisan, ne „popravljen"; ② `viewport-fit=cover` NE ide na pravne
+stranice (nula safe-area u `legal.css`) — sprega je sad tvrdnja; ③ `axe-gate.js` `TEME` zakucan s mrtvim `paper` i
+bez `carbon` → F1/4. Alat: heredoc opet progutao `\n` u sidru (dvije izmjene tiho nisu prošle, `assert` ih uhvatio)
+→ skripta kroz Write. **Gdje se vidi:** grana/preview; produkcija `c53c28c`. **Otvoreno: štipanje na iPhoneu**
+(rezerva `gesturestart`, koja na pravnim stranicama traži `boot.js` = F1/5). Sljedeće: **F1/7**.
+
 ## 2026-09-05 (FABLE) — Leonova odluka: bez zuma uopće (ADR-034 → F1/11) · compact-priprema
 
 Leon (poslije deploya `c53c28c`): *„Stranica uopće ne bi trebala imati mogućnost da se nešto povećava ili smanjuje na njoj ikako. Treba ostati na mjestu."* *„Zapiši to i pripremi

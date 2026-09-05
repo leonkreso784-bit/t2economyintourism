@@ -202,7 +202,16 @@ dodir i dalje presuđuje Leon (BUG-043).
 proizvodu: štipanje se gasi NAMJERNO. Teren za ciglu: 6 viewport-meta (`index`/`editor` danas
 `user-scalable=yes, maximum-scale=5.0`; 4 pravne bez `viewport-fit`); iOS Safari od verzije 10 ignorira
 `user-scalable=no` za štipanje → `touch-action: pan-x pan-y` / `gesturestart` mjeriti na uređaju; axe
-`meta-viewport` (AA) traži imenovanu iznimku u `axe-gate.js`. Zapisano, NE provedeno.
+`meta-viewport` (AA) traži imenovanu iznimku u `axe-gate.js`. Zapisano — pa **isporučeno iste
+večeri (F1/11):** meta `minimum-scale=1.0, maximum-scale=1.0, user-scalable=no` na 6 stranica (pravne bez
+`viewport-fit=cover` — `legal.css` nema safe-area razmaka, sprega je tvrdnja u testu) · reset `manipulation` →
+`pan-x pan-y` u oba reseta (`manipulation` = pan + pinch-zoom, dakle iOS-sloj je bio jedan redak) ·
+`ISKLJUCENO_ODLUKOM` u `axe-gate.js` (jedno imenovano isključenje s razlogom; pravilo se i dalje vrti i ispisuje;
+obrnuto: bez njega landing pada, moderate/AA) · `touch-zoom.test.js` 35 tvrdnji (obrnuto kroz `git worktree`:
+13 crvenih na starom stablu) · `a11y-gate.test.js` +5 · a11y-suita 7/7 · preflight EXIT 0.
+**Otvoreno: štipanje na iPhoneu** (headless ne štipa) — ako `pan-x pan-y` ne drži, rezerva je `gesturestart` →
+`preventDefault()`, a to traži skriptu na pravnim stranicama → F1/5 (`boot.js`) postaje preduvjet. Usput nađeno:
+`axe-gate.js` `TEME` zakucan (`paper` mrtav, `carbon` nema) → F1/4.
 
 ---
 

@@ -184,7 +184,7 @@ Aktivni spec: **`docs/plan/RASPORED.md`** (2026-09-04) — cijela preostala list
 F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **Šest pitanja čeka Leonovu riječ — §6 rasporeda.**
 
 **ⓑ trzanje IZMJERENO** (F1/6): samo landing preboji, uzrok `background-attachment: fixed` → F1/7 (`BACKLOG.md` §B).
-**Četiri nova (2026-09-05):** hover = **F1/8 ✅** · Tinder-špil = **F1/9** · zoom = **F1/10 ✅** · **bez zuma = F1/11** (ADR-034).
+**Četiri nova (2026-09-05):** hover = **F1/8 ✅** · Tinder-špil = **F1/9** · zoom = **F1/10 ✅** · **bez zuma = F1/11 ✅** (ADR-034).
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 
@@ -271,7 +271,7 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
 > Puni tekst i sve starije: **`docs/records/DECISIONS.md` (ADR-001…034)**.
 > Ovdje su ADR-ovi koji su **živa ograničenja**, ne povijesno obrazloženje.
 
-- **ADR-034:** **stranica se NE zumira** (Leon, 2026-09-05) — ni štipanje ni dodir ni fokus; nadjačava WCAG 1.4.4; provedba **F1/11** (axe `meta-viewport` = imenovana iznimka).
+- **ADR-034:** **stranica se NE zumira** (Leon, 2026-09-05) — ni štipanje ni dodir ni fokus; nadjačava WCAG 1.4.4; **F1/11 ✅** (`ISKLJUCENO_ODLUKOM` u `axe-gate.js`).
 - **ADR-031:** **MCP je CJEVOVOD, ne CRUD** (Leon, 2026-08-30): `Learn` je podloga svega → AI prvo prepozna lekcije/sekcije i napiše skriptu → iz nje kartice (**pojam/pitanje → objašnjenje**, boja po lekciji da se vidi kojoj pripada) → iz kartica dopune i kviz, uz **pokrivenost, ne uzorak**. **AI je KORISNIKOV** (ne plaćamo tokene → kvalitetu držimo samo branama), **materijal dolazi kroz chat** (datoteku nikad ne vidimo), **sve ide u NACRT**, doseg = **samo vlastito gradivo** (ni čitanje kataloga). **Četiri tvrde brane u write-putu:** duljina kartice · svaka kartica daje bar jedno pitanje · svaka lekcija dobiva boju · dopuna ima jednoznačan odgovor. **Radi se TEK NAKON FRONTENDA**, a konektor traži OAuth → čeka **RAČUN blok** (seoba otkazana 2026-09-01, OAuth više ne čeka nju).
 - **ADR-030:** **AI kroz MCP je GLAVNI put stvaranja; editor je DORADA** (Leon, 2026-08-13) — smije IZGUBITI funkcije, ne dobiti ih. MCP je proizvod, ne spike (danas untracked read-only pokus), i najveći neriješeni komad plana; **kontrola kvalitete seli s ekrana u write-put** (`js/card-limits.js` = **treći čitatelj, nikad treća kopija**); nikad katalog/`is_admin()`/`service_role`; **vježbe izvan MCP-a** (ADR-018).
 

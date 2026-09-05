@@ -1,32 +1,45 @@
 /* eslint-disable no-console */
-// ===== DODIR NE ZUMIRA — `touch-action` i 16 px u BUNDLEU i na pravnim stranicama (F1/10) =====
+// ===== NIŠTA NE ZUMIRA — viewport-meta na 6 stranica + `touch-action` + 16 px (F1/10 → F1/11, ADR-034) =====
 // Pokreni: node tests/unit/touch-zoom.test.js  (uključeno u `npm run test:unit`)
 //
-// ZAŠTO POSTOJI: Leon (2026-09-05): „kada se više puta takne na jedno mjesto može se zoomat,
-// to se mora riješit". Dva uzroka, dva pravila, oba u resetu `css/variables.css` — i drugi
-// primjerak `touch-action`-a u `css/legal.css`, jer četiri pravne stranice ne učitavaju bundle:
+// ZAŠTO POSTOJI: Leon (2026-09-05 ujutro): „kada se više puta takne na jedno mjesto može se
+// zoomat, to se mora riješit" → F1/10. Isti dan navečer, poslije deploya: „Stranica uopće ne bi
+// trebala imati mogućnost da se nešto povećava ili smanjuje na njoj ikako. Treba ostati na
+// mjestu." → ADR-034, F1/11. Tri sloja, svaki čuva nešto što drugi ne može:
 //
-//   ① `touch-action: manipulation` na `*` gasi Safarijev dvostruki dodir; skrol i štipanje
-//      OSTAJU (za razliku od `user-scalable=no`, koji je odbačen — uzeo bi i štipanje).
-//      NEMJERLJIVO u headlessu: gestu izvodi Safarijev UI-proces, ne stranica (24 mjerenja,
-//      WebKit + Chromium, `visualViewport.scale` uvijek 1). Zato je ovdje STATIČKA tvrdnja o
-//      onome što preglednik stvarno dobije, a presudu daje Leon na iPhoneu.
+//   ⓪ META na svih ŠEST stranica: `minimum-scale=1, maximum-scale=1, user-scalable=no`. Chrome i
+//      Android to slušaju; Safari od iOS-a 10 metu za ŠTIPANJE ignorira (zato ①), a za fokus-zoom
+//      polja ju ignorira svaki iOS (zato ②). `viewport-fit=cover` SAMO gdje postoji safe-area
+//      (bundle); `legal.css` nema nijednog `--safe-*` razmaka, pa bi cover na pravnim stranicama
+//      gurnuo tekst pod izrez u polegnutom položaju — sprega meta ⇔ safe-area je ovdje tvrdnja.
+//   ① `touch-action: pan-x pan-y` na `*` (bundle + legal.css): skrol ostaje, dvostruki dodir I
+//      štipanje se gase. F1/10 je držao `manipulation` (štipanje ostaje — pristupačnost); navečer
+//      obrnuto odlukom o proizvodu → nula `manipulation`, nula `pinch-zoom` u onome što preglednik
+//      dobije. NEMJERLJIVO u headlessu: gestu izvodi Safarijev UI-proces, ne stranica (24
+//      mjerenja, WebKit + Chromium, `visualViewport.scale` uvijek 1; BUG-043). Zato STATIČKA
+//      tvrdnja, a presudu daje Leon na iPhoneu.
 //   ② polja ≥ 16 px na dodiru (`@media (pointer: coarse)`), inače iOS zumira pri fokusu i ne
-//      vraća se. Ovo JE mjerljivo — mjeri ga tvrdnja ⑨ u `tests/phone.spec.js`. Ovdje samo da
+//      vraća se — meta to NE gasi. Mjerljivo: tvrdnja ⑨ u `tests/phone.spec.js`. Ovdje samo da
 //      pravilo nije ispalo iz bundlea i da se STARO njuškanje motora nije vratilo:
 //      `@supports (-webkit-touch-callout: none) { … font-size: 16px !important }` ne zadovoljava
 //      NIJEDAN motor naših brana (Chromium i Playwrightov WebKit: `CSS.supports` = false), pa je
 //      godinu dana bilo nevidljivo svakom mjerenju — je li iPhone dobio 16 px nije znao nitko.
 //
+// a11y: axe `meta-viewport` (WCAG 1.4.4, AA) na ovu metu PADA — imenovano isključenje s razlogom
+// ADR-034 stoji u `tests/helpers/axe-gate.js` (`ISKLJUCENO_ODLUKOM`), ne u osnovici.
+//
 // ⚠️ Čita BUNDLE (`styles.bundle.css`), ne izvor: lightningcss smije preslagati, a do korisnika
 // stiže samo bundle. Da `build:css` ispusti pravilo, izvor bi i dalje bio „ispravan".
+// Obrnuto (2026-09-05, stablo prije F1/11 kroz `git worktree`): ⓪ pada na svih 6 stranica (8 tvrdnji),
+// ① na 5 tvrdnji — 13 crvenih; ② zeleno (F1/10 je već bio na produkciji).
 
 const fs = require('fs');
 const path = require('path');
 
 const KORIJEN = path.join(__dirname, '..', '..');
-const bundle = fs.readFileSync(path.join(KORIJEN, 'styles.bundle.css'), 'utf8');
-const legal = fs.readFileSync(path.join(KORIJEN, 'css', 'legal.css'), 'utf8');
+const citaj = (...p) => fs.readFileSync(path.join(KORIJEN, ...p), 'utf8');
+const bundle = citaj('styles.bundle.css');
+const legal = citaj('css', 'legal.css');
 
 let pao = 0;
 const tvrdi = (uvjet, ime) => {
@@ -64,18 +77,66 @@ function blokovi(css, re) {
     return out;
 }
 
-console.log('\n=== dodir ne zumira: touch-action + 16 px (F1/10) ===\n');
+/** `content` svih viewport-meta u HTML-u (redoslijed atributa nije ugovor, pa se ne pretpostavlja). */
+function viewportMete(html) {
+    const out = [];
+    const re = /<meta\b[^>]*>/gi;
+    let m;
+    while ((m = re.exec(html))) {
+        const tag = m[0];
+        if (!/\bname\s*=\s*["']viewport["']/i.test(tag)) continue;
+        const c = tag.match(/\bcontent\s*=\s*["']([^"']*)["']/i);
+        out.push(c ? c[1] : '');
+    }
+    return out;
+}
+const dijelovi = (content) => content.split(',').map((s) => s.trim()).filter(Boolean);
 
-// ① dvostruki dodir — reset u bundleu i u legal.css
+console.log('\n=== ništa ne zumira: meta + touch-action + 16 px (F1/10 → F1/11, ADR-034) ===\n');
+
+// ⓪ META — šest stranica, jedna politika
+const APP = ['index.html', 'editor.html'];                                  // bundle + `--safe-*` → viewport-fit=cover
+const PRAVNE = ['contact.html', 'faq.html', 'privacy.html', 'terms.html']; // legal.css, bez safe-area
+const OBAVEZNO = ['width=device-width', 'initial-scale=1.0', 'minimum-scale=1.0', 'maximum-scale=1.0', 'user-scalable=no'];
+
+for (const f of APP.concat(PRAVNE)) {
+    const mete = viewportMete(citaj(f));
+    tvrdi(mete.length === 1, f + ': točno jedna viewport-meta, nađeno ' + mete.length);
+    const d = dijelovi(mete[0] || '');
+    const fali = OBAVEZNO.filter((k) => !d.includes(k));
+    tvrdi(fali.length === 0, f + ': meta nosi ' + OBAVEZNO.join(' · ') + (fali.length ? ' — FALI: ' + fali.join(', ') : ''));
+    const stari = d.filter((k) => /^user-scalable=(yes|1)$/.test(k) || /^maximum-scale=(?!1(\.0+)?$)/.test(k));
+    tvrdi(stari.length === 0, f + ': bez `user-scalable=yes` i bez `maximum-scale` > 1 (oblik iz F1/10)' + (stari.length ? ' — NAĐENO: ' + stari.join(', ') : ''));
+}
+for (const f of APP) {
+    tvrdi(dijelovi(viewportMete(citaj(f))[0] || '').includes('viewport-fit=cover'),
+        f + ': `viewport-fit=cover` (bundle crta ispod izreza i ima `--safe-*` razmake)');
+}
+// Sprega: cover na pravnim stranicama smije doći TEK kad legal.css dobije safe-area razmake (F1/5).
+const legalSafe = (legal.match(/safe-area-inset|--safe-/g) || []).length;
+for (const f of PRAVNE) {
+    const cover = dijelovi(viewportMete(citaj(f))[0] || '').includes('viewport-fit=cover');
+    tvrdi(cover === (legalSafe > 0),
+        f + ': `viewport-fit=cover` ⇔ `legal.css` ima safe-area razmak (danas ' + legalSafe + ' → ' + (legalSafe > 0 ? 'cover obavezan' : 'bez covera') + ')');
+}
+
+// ① štipanje i dvostruki dodir — reset u bundleu i u legal.css
 const uniB = univerzalna(bundle);
 tvrdi(uniB.length > 0, 'bundle ima pravilo sa selektorom `*` (reset iz variables.css)');
-tvrdi(uniB.some((t) => /touch-action:\s*manipulation/.test(t)), 'bundle: `*` nosi `touch-action: manipulation`');
+tvrdi(uniB.some((t) => /touch-action:\s*pan-x\s+pan-y/.test(t)), 'bundle: `*` nosi `touch-action: pan-x pan-y`');
 const uniL = univerzalna(legal);
-tvrdi(uniL.some((t) => /touch-action:\s*manipulation/.test(t)), 'legal.css: `*` nosi `touch-action: manipulation` (pravne stranice nemaju bundle)');
-// Isto pravilo NE smije živjeti i lokalno — jedna činjenica, jedno mjesto (ADR-027). Ručke za
-// vučenje s `touch-action: none` su DRUGA vrijednost i smiju ostati.
-const lokalni = (bundle.match(/touch-action:\s*manipulation/g) || []).length;
-tvrdi(lokalni === 1, 'bundle: `touch-action: manipulation` postoji TOČNO jednom (u resetu), nađeno ' + lokalni);
+tvrdi(uniL.some((t) => /touch-action:\s*pan-x\s+pan-y/.test(t)), 'legal.css: `*` nosi `touch-action: pan-x pan-y` (pravne stranice nemaju bundle)');
+// Jedna činjenica, jedno mjesto (ADR-027): reset je jedini nositelj. Ručke za vučenje s
+// `touch-action: none` su DRUGA vrijednost i smiju ostati (klasa tuče `*`, i strože je).
+const resetB = (bundle.match(/touch-action:\s*pan-x\s+pan-y/g) || []).length;
+tvrdi(resetB === 1, 'bundle: `touch-action: pan-x pan-y` postoji TOČNO jednom (u resetu), nađeno ' + resetB);
+// Ništa što preglednik dobije ne smije štipanje VRATITI: `manipulation` (= pan + pinch-zoom),
+// `pinch-zoom` sam, ili `auto`. Klasa na potomku bi pregazila reset — zato se broji cijeli CSS,
+// bez komentara (legal.css u komentaru objašnjava politiku i spominje staru vrijednost).
+const bezKomentara = (css) => css.replace(/\/\*[\s\S]*?\*\//g, '');
+const vracaZoom = (css) => (bezKomentara(css).match(/touch-action:\s*(manipulation|auto|[^;]*pinch-zoom)[^;]*/g) || []);
+tvrdi(vracaZoom(bundle).length === 0, 'bundle: nula `touch-action` vrijednosti koje vraćaju štipanje (manipulation / pinch-zoom / auto)' + (vracaZoom(bundle).length ? ' — NAĐENO: ' + vracaZoom(bundle).join(' | ') : ''));
+tvrdi(vracaZoom(legal).length === 0, 'legal.css: nula `touch-action` vrijednosti koje vraćaju štipanje' + (vracaZoom(legal).length ? ' — NAĐENO: ' + vracaZoom(legal).join(' | ') : ''));
 
 // ② polja ≥ 16 px na dodiru — pravilo po SPOSOBNOSTI, mjerljivo u svakom motoru
 const coarse = blokovi(bundle, /@media\s*\(pointer:\s*coarse\)/);

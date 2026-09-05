@@ -5,6 +5,24 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-05 (FABLE) — **F1/11: ništa ne zumira — meta na 6 stranica + `touch-action: pan-x pan-y` + imenovano isključenje u a11y-brani** (ADR-034)
+
+Leon poslije deploya `c53c28c`: *„Stranica uopće ne bi trebala imati mogućnost da se nešto povećava ili smanjuje na
+njoj ikako."*, pa: *„Ovo što mi se dešava je svugdje, nije samo na Safariju, kreni."* Tri sloja:
+- **Meta** na svih 6 stranica: `minimum-scale=1.0, maximum-scale=1.0, user-scalable=no` (Chrome/Android slušaju,
+  Safari za štipanje ne). Pravne stranice **bez** `viewport-fit=cover` — `legal.css` nema safe-area razmaka, cover bi
+  gurnuo tekst pod izrez; sprega meta ⇔ safe-area je tvrdnja u testu.
+- **Reset** `touch-action: manipulation` → **`pan-x pan-y`** (`variables.css` + `legal.css`): skrol ostaje, dvostruki
+  dodir i štipanje otpadaju. iOS-sloj je bio jedan redak, ne novi mehanizam; drži li štipanje zna samo iPhone (BUG-043).
+- **a11y-brana:** axe `meta-viewport` (AA) na ovu metu pada — obrnuto provjereno (landing crven). Dodano
+  **`ISKLJUCENO_ODLUKOM`** u `tests/helpers/axe-gate.js`: jedno imenovano isključenje s razlogom ADR-034; pravilo se
+  i dalje vrti i ispisuje kao `[a11y-odluka] ISKLJUČENO`, ne nestaje. Ne u osnovicu (ona je za kvarove koji trebaju
+  nestati i ključa po površini — bilo bi deset redaka istog razloga).
+
+Brane: `touch-zoom.test.js` prepisan (35 tvrdnji; obrnuto kroz `git worktree`: 13 crvenih na starom stablu) ·
+`a11y-gate.test.js` +5 (isključenje po id-u, ne po razini) · a11y-suita 7/7 · preflight EXIT 0.
+**Gdje se vidi:** grana `feat/racun-r1` (preview); produkcija ostaje `c53c28c`. **Presuda štipanja = Leon na iPhoneu.**
+
 ## 2026-09-05 (FABLE) — 🚀 **F1/10 + F1/8 ① + F1/8 ② NA PRODUKCIJI** (`c53c28c`, Leonov uvjetni OK: *„Kada brana završi i svi testovi prođu deployaj"*)
 
 Uvjet je bila puna responsive suita (pravilo #4, do tada vrćena samo djelomično): **571 prošlo · 0 palo ·

@@ -5,7 +5,7 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 ---
 
 ## ADR-034 — Stranica se NE zumira: ništa se ne povećava ni smanjuje, sve ostaje na mjestu
-**Datum:** 2026-09-05 · **Status:** ✅ ODLUČENO (Leon), provedba = cigla **F1/11** (RASPORED) · **Vezano:** F1/10 (zoom na dodir), BUG-043, [ADR-027](#adr-027) (rub → test)
+**Datum:** 2026-09-05 · **Status:** ✅ ODLUČENO (Leon) · **provedeno F1/11 iste večeri** (meta na 6 stranica · reset `pan-x pan-y` · `ISKLJUCENO_ODLUKOM` u `axe-gate.js`); štipanje presuđuje iPhone · **Vezano:** F1/10 (zoom na dodir), BUG-043, [ADR-027](#adr-027) (rub → test)
 
 **Kontekst.** F1/10 je isti dan zatvorio dva uzroka zooma (polja < 16 px pri fokusu · dvostruki dodir
 kroz `touch-action: manipulation`) i **svjesno odbacio** `user-scalable=no` / `maximum-scale=1`, jer
