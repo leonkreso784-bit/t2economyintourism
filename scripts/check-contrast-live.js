@@ -9,8 +9,8 @@
  * ispuna dolazila iz tokena. Tri ikone na `about`-u imale su kontrast **1.13** u
  * ZADANOJ (svijetloj) temi, a svih petnaest brana javljalo je zeleno.
  *
- * Zato ova mjera ne gleda tokene nego IZRACUNATE stilove u pregledniku, kroz sve
- * cetiri teme, na svakoj stranici koja ima adresu i u svakom nacinu ucenja:
+ * Zato ova mjera ne gleda tokene nego IZRACUNATE stilove u pregledniku, kroz SVE
+ * teme koje `tokens.css` definira, na svakoj stranici koja ima adresu i u svakom nacinu ucenja:
  *   • tekst → prag 4.5 (veliki tekst 3.0)
  *   • glif  → prag 3.0 (ikone Font Awesome zive u `::before`, ne u tekstu)
  *
@@ -36,7 +36,11 @@
  */
 const { chromium } = require('@playwright/test');
 
-const TEME = ['academic', 'chalk', 'mint', 'carbon']; // ⚠️ ZAKUCANO — F1/4 ga seli u tokens.css
+/* Popis tema se CITA iz `css/tokens.css` (`scripts/teme.js`, F1/4). Do tada je ovdje bio
+   ZAKUCAN: nova tema bez upisa ovdje prolazila bi NEIZMJERENA, a brana bi ostala zelena —
+   tiho. Staticka brana je tokene citala od pocetka; ziva nije. Ispis na kraju kaze koliko
+   je tema dotaknuto — mjerac mora reci sto je mjerio. */
+const TEME = require('./teme').temeIzTokena();
 const BAZA = process.env.BAZA || 'http://localhost:5050';
 
 const MJERA = function () {

@@ -5,6 +5,19 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-06 (FABLE) — **F1/4: popis tema ima JEDNO mjesto (`scripts/teme.js`) — a11y-brana prvi put skenira `carbon`**
+
+Četiri brane su „koje teme postoje" čitale na četiri načina: statička `check-contrast.js` regexom iz `tokens.css`
+(točno), živa `check-contrast-live.js` iz **zakucanog niza** (slučajno točno), `tests/helpers/axe-gate.js` iz zakucanog
+niza s **mrtvim `paper`** i **bez `carbon`** (a11y-suita je pet dana skenirala temu koje nema i preskakala jedinu novu
+tamnu — zelena cijelo vrijeme), `theme-boot-order.test.js` vlastitim regexom. Sad **`scripts/teme.js`** čita
+`:root[data-theme="…"] {` blokove iz tokena (bez komentara — pouka F1/7 ②; nula tema = **baca**, ne vraća `[]`), a sva
+četiri čitatelja idu kroz njega; `boot.js` zadržava svoj niz jer se vrti prije CSS-a, i test ga drži jednakim modulu.
+Brana `tests/unit/theme-list.test.js` (24 tvrdnje; obrnuto kroz `git worktree`: 9 crvenih na starom stablu).
+**Dokaz:** `a11y.authed.spec.js` 3/3 s `[carbon]` na svih 7 ploha, 0 nalaza · `check:contrast:live` 13 ruta × 4 teme iz
+tokena, 0 ispod praga · preflight EXIT 0. **Gdje se vidi:** samo u branama (nijedna korisnička datoteka nije dirana;
+grana `feat/racun-r1`). Bez bumpa — `scripts/**` i `tests/**` nisu na posjetiteljevu putu.
+
 ## 2026-09-05 (FABLE) — **Matura = vizija (VISION.md §8) · RAD.xlsx se puni automatski svaki dan (`scripts/rad-dnevno.ps1`)**
 
 Dvije Leonove odluke iste večeri. **① Matura:** *„mature ne diramo, to je vizija"* → odjeljak u

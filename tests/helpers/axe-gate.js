@@ -207,8 +207,11 @@ async function skeniraj(page, ime) {
 // Sve teme koje `css/tokens.css` definira, plus zadana (bez atributa).
 // ⚠️ `null` = zadana NIJE isto što i `academic`: zadane vrijednosti stoje na golom `:root`, pa
 // bi provjera samo imenovanih tema propustila upravo onu koju vidi većina korisnika.
-// Popis mora pratiti `scripts/check-contrast.js` — ista paleta, dva različita kuta mjerenja.
-const TEME = [null, 'academic', 'paper', 'chalk', 'mint'];
+// ⚠️ Popis se ČITA iz tokena (`scripts/teme.js`, F1/4), ne prepisuje. Do F1/4 je ovdje stajala
+// kopija koja je nosila `paper` (maknut 2026-09-01) i NIJE imala `carbon` (dodan 2026-09-05):
+// a11y-suita je mrtvu temu skenirala kao živu, a jedinu novu tamnu nije skenirala uopće —
+// i bila zelena. Čuva `tests/unit/theme-list.test.js`.
+const TEME = [null].concat(require('../../scripts/teme').temeIzTokena());
 
 /**
  * Skenira ISTU plohu kroz sve teme, pa vrati atribut kakav je zatekao.

@@ -79,8 +79,9 @@ tvrdi(/window\.__sokratPrimijeniTemu\(\)/.test(tema), 'theme.js primjenjuje temu
 
 // Popis u boot.js mora odgovarati temama koje CSS stvarno definira — inače je izbor
 // koji nigdje ne postoji (ili tema koju biraču nitko nije ponudio).
-const tokeni = fs.readFileSync(path.join(KORIJEN, 'css', 'tokens.css'), 'utf8');
-const uCssu = [...tokeni.matchAll(/:root\[data-theme="([a-z]+)"\]/g)].map((m) => m[1]).sort();
+// Teme iz tokena čita JEDAN modul (`scripts/teme.js`, F1/4) — ovdje je do tada stajao
+// četvrti regex za istu činjenicu.
+const uCssu = require('../../scripts/teme').temeIzTokena().slice().sort();
 const uBootu = (boot.match(/var TEME = \[([^\]]+)\]/) || [, ''])[1]
     .split(',').map((s) => s.trim().replace(/['"]/g, '')).filter(Boolean).sort();
 tvrdi(uCssu.length > 0 && JSON.stringify(uCssu) === JSON.stringify(uBootu),

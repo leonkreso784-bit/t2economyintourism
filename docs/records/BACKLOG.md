@@ -217,7 +217,11 @@ obrnuto: bez njega landing pada, moderate/AA) · `touch-zoom.test.js` 35 tvrdnji
 13 crvenih na starom stablu) · `a11y-gate.test.js` +5 · a11y-suita 7/7 · preflight EXIT 0.
 **Otvoreno: štipanje na iPhoneu** (headless ne štipa) — ako `pan-x pan-y` ne drži, rezerva je `gesturestart` →
 `preventDefault()`, a to traži skriptu na pravnim stranicama → F1/5 (`boot.js`) postaje preduvjet. Usput nađeno:
-`axe-gate.js` `TEME` zakucan (`paper` mrtav, `carbon` nema) → F1/4.
+`axe-gate.js` `TEME` zakucan (`paper` mrtav, `carbon` nema) → F1/4 (✅ 06.09., `scripts/teme.js`; carbon prvi put skeniran, 0 nalaza).
+⚠️ **Nalaz uz F1/4, ne popravljen:** odjavljeni `tests/a11y.spec.js` skenira SAMO zatečenu temu (`skeniraj`), sve-teme
+obilazak (`skenirajSveTeme`) živi jedino u prijavljenoj suiti — landing/browse/study/lekcije se u `carbon`/`chalk`/`mint`
+ne skeniraju axeom (kontrast im mjeri `check:contrast:live`, ali ne role/labele po temi — te su theme-neovisne). Cijena
+prebacivanja: 7 ploha × 5 tema u odjavljenoj suiti (danas 34 s → ~2,5 min). Odluka kad zatreba, ne sad.
 **Leon na iPhoneu (05.09. kasno navečer):** dodir u polje i dvostruki dodir **potvrđeno ugašeni** (*„više ne, sređeno je,
 good job"*), **štipanje s dva prsta i dalje zumira** → `touch-action: pan-x pan-y` Safari za štipanje NE drži (na uređaju;
 headless to ne može reći) → **F1/11 ② `js/no-zoom.js`**: `gesturestart`/`gesturechange` + `touchmove` sa `scale !== 1`,
@@ -379,7 +383,7 @@ zrcalno: ondje je tekst tražio **tamniji** indigo, ovdje traži **svjetliji**.
 jedan heks po polovici (`#4f46e5` svijetla / `#818cf8` tamna), ali predlošci su **kopija u
 dashboardu**, pa se mijenjaju na dva mjesta. Zasebna, sitna cigla.
 
-🚧 **RUPA U BRANI KOJU TREBA ZATVORITI ISTOM CIGLOM:** `scripts/check-contrast-live.js:39` ima
+✅ **RUPA ZATVORENA — F1/4, 2026-09-06:** `scripts/teme.js` je jedini čitatelj popisa tema (4 brane kroz njega, `tests/unit/theme-list.test.js` čuva). Bila je: `scripts/check-contrast-live.js:39` ima
 **zakucan popis tema** (`['academic','chalk','mint']`). Doda li se tema samo u `tokens.css` i
 `boot.js`, živa brana ju **neće ni pogledati** i ostat će zelena — tiho. `check:contrast` (staticki)
 čita tokene pa ju vidi sam; `tests/unit/theme-boot-order.test.js` čuva da se popisi u `boot.js` i

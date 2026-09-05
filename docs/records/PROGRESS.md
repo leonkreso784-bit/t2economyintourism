@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-06 (FABLE) — F1/4: `scripts/teme.js` — popis tema iz `tokens.css` za sve četiri brane (a11y prvi put skenira `carbon`)
+
+Leon: *„kreni sa poslom"* → plan sesije = F1/4 + F1/5. F1/4: jedan modul `scripts/teme.js` (`temeIzTokena()`, komentari se
+skidaju, nula tema baca), četiri čitatelja kroz njega — živa brana (bio zakucan niz), `axe-gate.js` (zakucan niz s `paper`,
+bez `carbon`), statička brana i `theme-boot-order.test.js` (svaki svoj regex). Brana `theme-list.test.js` 24 tvrdnje;
+obrnuto: `git worktree` na `93b4897` + kopija modula i testa = 9 crvenih (svi `require` + a11y-popis ≠ tokeni).
+**Dokaz koji je cigla tražila:** prijavljena a11y-suita (staging) sad ispisuje `[carbon]` na 7 ploha — **0 nalaza**;
+`check:contrast:live` 13 × 4 iz tokena, 0 ispod praga; preflight EXIT 0. Bez bumpa (ništa servirano nije dirano).
+Nalaz usput: odjavljeni `a11y.spec.js` skenira SAMO zatečenu temu (`skeniraj`, ne `skenirajSveTeme`) — sve-teme obilazak
+živi jedino u prijavljenoj suiti. Nije ovom ciglom mijenjano; zapisano u BACKLOG §F.
+
 ## 2026-09-06 (FABLE) — Leonovi odgovori: F2/1 = odjava briše lokalni izbor · iPhone: dodir ne zumira, štipanje da — ali testira INSTALIRANU aplikaciju (produkcija, bez F1/11)
 
 Leon: *„Prijatelj neprijavljen vidi originalnu temu, ne onu koju je korisnik stavio. Znači B, tuđi izbor ne smije
