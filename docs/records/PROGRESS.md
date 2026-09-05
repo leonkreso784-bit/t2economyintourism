@@ -5,6 +5,15 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-05 (FABLE) — 🚀 deploy `c53c28c`: F1/10 + F1/8 ① + F1/8 ② na produkciji (Leonov uvjetni OK, suita zelena)
+
+Leon: *„Kada brana završi i svi testovi prođu deployaj."* Puna responsive suita (pravilo #4, do tada
+vrćena samo djelomično — browse i back-model na jednom profilu): **571 prošlo · 0 palo · 117 preskočeno**,
+24 min. Zatim `git push origin feat/racun-r1:main` (fast-forward `8b70c15..c53c28c`), pre-push kuka
+preflight EXIT 0, Vercel produkcija `dpl_Dw1caqN4fhLXEpzCbsudu47JwD89` READY za `c53c28c`, jedan spor
+zahtjev na www.sokratstudy.com vraća token `20260905174602` = repo. Otvoreno za Leona na iPhoneu:
+dvostruki dodir (F1/10). Sljedeće: **F1/7** (landing `background-attachment: fixed`).
+
 ## 2026-09-05 (FABLE) — F1/8 ② isporučen: hover na mišu se naoruža tek prvim pomakom (JS pauza + CSS prefiks + sonda + 28 tvrdnji)
 
 Leon: *„pregledaj i analiziraj sve i kreni na sljedeću ciglu"* → F1/8 ② po planu iz memorije. **Nalaz koji plan

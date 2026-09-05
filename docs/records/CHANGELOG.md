@@ -5,6 +5,18 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-05 (FABLE) — 🚀 **F1/10 + F1/8 ① + F1/8 ② NA PRODUKCIJI** (`c53c28c`, Leonov uvjetni OK: *„Kada brana završi i svi testovi prođu deployaj"*)
+
+Uvjet je bila puna responsive suita (pravilo #4, do tada vrćena samo djelomično): **571 prošlo · 0 palo ·
+117 preskočeno**, 24 min. Zatim fast-forward `feat/racun-r1` → `main` preko refspeca (`8b70c15..c53c28c`),
+pre-push kuka vrtjela preflight → EXIT 0. Vercel: produkcijski deployment `dpl_Dw1caqN4fhLXEpzCbsudu47JwD89`
+za `c53c28c`, **READY**; uživo potvrđeno jednim sporim zahtjevom: token `20260905174602` na
+www.sokratstudy.com. Na produkciji su sada: zoom na dodir (F1/10: polja 16 px kroz `(pointer: coarse)`,
+`touch-action` u resetu, brana ⑨) · hover samo gdje hover postoji (F1/8 ①, Leon na iPhoneu: *„Ne svijetli,
+odlično"*) · hover na mišu tek poslije pomaka (F1/8 ②) · `check:hover` u preflightu · `hover-probe` ·
+`hover-arm.test.js` · svi zapisi. ⚠️ Dvostruki dodir na iPhoneu (dio F1/10) ostaje Leonova presuda —
+nemjerljiv u headlessu.
+
 ## 2026-09-05 (FABLE) — **F1/8 ②: hover na mišu se naoruža tek prvim pomakom** (ljepljivi hover zatvoren na oba ulaza; BUG-044 riješen)
 
 ### Popravljeno
