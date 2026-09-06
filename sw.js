@@ -20,7 +20,7 @@
  * ===================================================================== */
 'use strict';
 
-const SW_VERSION = '20260906171957'; // bumpan `npm run bump` (usklađen s ?v= i CONTENT_VERSION)
+const SW_VERSION = '20260906181112'; // bumpan `npm run bump` (usklađen s ?v= i CONTENT_VERSION)
 const CACHE = 'sokrat-cache-' + SW_VERSION;
 
 // ⚠️ NIJE verzioniran, i to je cijela poanta: brisač u `activate` gađa prefiks
@@ -90,8 +90,11 @@ self.addEventListener('fetch', (event) => {
         .then((res) => {
           // Keširaj SAMO uspješan odgovor — 404/500 ne smije pregaziti dobar offline shell.
           if (res && res.ok) {
+            // ⚠️ Klon ODMAH, sinkrono — v. `spremi()` (BUG-045): unutar `.then(caches.open)` je
+            // stranica već potrošila tijelo i `clone()` baca „body is already used".
+            const kopija = res.clone();
             // waitUntil: preglednik ne smije ugasiti SW prije nego upis u keš završi.
-            event.waitUntil(caches.open(CACHE).then((c) => c.put(req, res.clone())).catch(() => {}));
+            event.waitUntil(caches.open(CACHE).then((c) => c.put(req, kopija)).catch(() => {}));
           }
           return res;
         })
@@ -104,10 +107,22 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(odgovoriNaAsset(event, req));
 });
 
-/** Upis u tekući keš — samo uspješan, same-origin odgovor. */
+/** Upis u tekući keš — samo uspješan, same-origin odgovor.
+ *
+ *  ⚠️ BUG-045 (2026-09-06): `res.clone()` MORA biti sinkron, PRIJE `caches.open()`. Do
+ *  popravka je stajao unutar `.then((c) => c.put(req, res.clone()))` — a dok `caches.open`
+ *  čeka, `respondWith` je odgovor već predao stranici i ona mu je potrošila tijelo, pa je
+ *  `clone()` bacao `TypeError: Response body is already used`. Taj je pad gutao `.catch(() => {})`,
+ *  pa SW od F3 3A **nikad nije spremio nijedan runtime asset** — ni skriptu, ni sliku, ni
+ *  gradivo koje nije na polici; u kešu je stajao samo precache s instalacije. Offline je
+ *  „radio" samo dok je HTTP-keš preglednika imao datoteke, a iOS ga izbacuje — zato se skinut
+ *  predmet na iPhoneu otvarao PRAZAN iako su datoteke gradiva bile na polici: paket načina
+ *  učenja (`js/flashcards.js`…) nije imao odakle doći. Izmjereno presretanjem u živom SW-u
+ *  (`bodyUsed=true` u trenutku klona); brana: `tests/sw.spec.js` (runtime keš stvarno puni). */
 function spremi(event, req, res) {
   if (res && res.status === 200 && res.type === 'basic') {
-    event.waitUntil(caches.open(CACHE).then((c) => c.put(req, res.clone())).catch(() => {}));
+    const kopija = res.clone();
+    event.waitUntil(caches.open(CACHE).then((c) => c.put(req, kopija)).catch(() => {}));
   }
   return res;
 }

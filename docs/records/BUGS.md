@@ -19,8 +19,8 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ### BUG-045 — Skinut predmet se offline otvori PRAZAN: gradivo ostaje neučitano iako su datoteke u kešu
 
-- Status: 🔴 **otvoren** — nađen usput u F1/13, **nije popravljen ondje** (dira `content-loader` /
-  policu, ne kartice) · Težina: **visok** — pogađa jedini scenarij zbog kojeg polica postoji ·
+- Status: ✅ **POPRAVLJEN 2026-09-06** (voditelj, isti dan; nađen usput u F1/13, ondje nije popravljen jer
+  dira SW/policu, ne kartice) · Težina: **visok** — pogađa jedini scenarij zbog kojeg polica postoji ·
   Našao: **brana koja je pala tek kad je F1/13 maknuo fikciju** (v. Lekcija).
 
 - **Opis / izmjereno** (sonda, Chromium iPhone-SE-375, `statistics`, 2026-09-06): predmet se skine
@@ -38,9 +38,29 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 - **Reprodukcija:** skini predmet na polici → zrakoplovni način → otvori `#/subject/<id>/<lekcija>`
   → bilo koji način učenja je prazan.
 
-- **Uzrok:** nije utvrđen u F1/13 (izvan opsega cigle). Sumnja koju treba izmjeriti prije popravka:
-  dual-read (DB → JSON → `.js`) offline stane na prvom koraku i fallback nikad ne krene.
+- **Uzrok (izmjeren, ne pretpostavljen):** NE dual-read. **`sw.js` nikad nije spremao runtime assete.** U `spremi()` je
+  `res.clone()` stajao unutar `.then((c) => c.put(req, res.clone()))` — a dok `caches.open()` čeka, `respondWith` je odgovor već
+  predao stranici i ona mu je potrošila tijelo, pa je klon bacao `TypeError: Response body is already used`. Pad je gutao
+  `.catch(() => {})`. Posljedica od F3 3A: u `sokrat-cache-*` je stajao **samo precache s instalacije** (shell, CSS, manifest);
+  nijedna skripta, ni zagrijani paket načina učenja (`SokratLoad.zagrij` je time bio no-op). „Offline radi" je značilo „HTTP-keš
+  preglednika još drži datoteke" — Chromium ga drži, iOS izbacuje → na iPhoneu je skinut predmet imao gradivo na polici, ali
+  `js/flashcards.js` & co. nisu imali odakle doći → `SokratLoad.paket('study')` pada prije nego loader išta učita, toast
+  „Could not load", špil 0. Isti kasni klon bio je i u navigacijskom putu (shell), ali njega je spašavao precache.
+  Dokaz: presretanje u ŽIVOM SW-u (`sw.evaluate`) — `bodyUsed=true` u trenutku klona, `put` nikad; s klonom odmah `put OK`.
+  U headless Chromiumu se kvar NIJE vidio ni s hladnim startom, dok HTTP-keš nije isključen (CDP `Network.setCacheDisabled`).
+- **Popravak:** ① `sw.js` — klon sinkrono PRIJE `caches.open` (u `spremi()` i u navigaciji); ② `offline-store.js` —
+  `download()` piše „ready" TEK kad `zagrijNacineUcenja()` završi (dotad fire-and-forget: potvrda je stizala dok su se
+  skripte još skidale); ③ `zagrijPoslijeDeploya()` — novi SW briše stari runtime keš, polica preživi, paket ne → pri startu,
+  JEDNOM po verziji (`localStorage sokrat-offline-warm-v`), ponovno zagrij paket za sve s police.
+- **Brane:** `tests/sw.spec.js` „SW stvarno spremi skriptu koju stranica zatraži" (mjeri KEŠ, ne dojam; obrnuto na starom
+  `sw.js` = crveno) · `tests/offline-study.spec.js` „⛔ BUG-045: hladno bez mreže i BEZ HTTP-keša" (nova stranica + CDP
+  cache disabled; obrnuto = špil 0) · `tests/unit/offline-store.test.js` +3 (ready čeka zagrijavanje · pad zagrijavanja ne
+  ruši skidanje · zagrij poslije deploya jednom po verziji).
 
+- **Druga lekcija (voditelj):** `.catch(() => {})` na putu koji „ne smije srušiti odgovor" sakrio je da SW **tri tjedna** ne
+  radi ono zbog čega postoji — a brane su bile zelene jer su mjerile ISHOD (stranica se otvori offline) koji je davao HTTP-keš
+  preglednika, ne SW. Brana mora mjeriti MEHANIZAM koji tvrdi (što je u SW-kešu), ili isključiti sve druge putove do istog
+  ishoda (HTTP-keš). Isti razred kao BUG-023: „zeleno lokalno nije zeleno".
 - **Zašto je ovoliko dugo bio nevidljiv (LEKCIJA):** tvrdnja P4 (`napredak stečen BEZ MREŽE stvarno
   završi na uređaju`) klikala je ✓ i čitala `localStorage`. Do F1/13 je taj gumb bio vezan **ravno
   na `markKnown`**, koji upisuje `cards.index` **i kad špila nema** — pa je test bio zelen nad

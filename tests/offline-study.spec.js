@@ -356,6 +356,59 @@ test.describe('POLICA · P3 (pravilo u SW-u) + P4 (napredak bez mreže)', () => 
     }
   });
 
+  // ── BUG-045 (2026-09-06) — HLADNO OTVARANJE BEZ MREŽE, BEZ HTTP-KEŠA ───────────────
+  // Skinut predmet se na iPhoneu otvarao PRAZAN: gradivo je bilo na polici, ali paket načina
+  // učenja (`js/flashcards.js`…) nije imao odakle doći — SW ga nikad nije spremio (klon
+  // prekasno, v. `sw.js` `spremi()`), a iOS HTTP-keš izbacuje. Tvrdnje iznad to nisu vidjele
+  // jer Chromiumov HTTP-keš skripte drži: zato ovdje HTTP-keš ISKLJUČUJEMO (CDP) i lekciju
+  // otvaramo u NOVOJ stranici (nijedna skripta u memoriji) — jedini put koji mjeri policu, a ne
+  // slučajnost preglednika. Obrnuto (sw.js prije popravka): špil 0, „Could not load" → crveno.
+  test('⛔ BUG-045: skinut predmet se otvori HLADNO bez mreže i bez HTTP-keša (paket načina učenja je u SW-kešu)', async ({ page, context }) => {
+    await page.addInitScript(() => {
+      try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
+    });
+    await page.goto('/index.html');
+    await podKontrolomSW(page);
+    await page.goto('/#/subject/' + PREDMET);
+    await page.waitForFunction(() => !!window.SokratOffline);
+    await cistUredaj(page);
+    await page.reload();
+    await page.waitForFunction(() => !!window.SokratOffline);
+    await page.locator('#offlineControl .offline-btn').click();
+    await expect(page.locator('#offlineControl .offline-row'))
+      .toHaveAttribute('data-offline-state', 'ready', { timeout: 45000 });
+    // „ready" od BUG-045 znači i zagrijan paket načina učenja — ali brana ne vjeruje riječi:
+    // provjeri da je paket `study` STVARNO u SW-kešu prije nego ugasi mrežu.
+    await expect.poll(async () => await page.evaluate(async () => {
+      const imena = await caches.keys();
+      const app = imena.find((k) => k.startsWith('sokrat-cache-'));
+      if (!app) return 0;
+      const ks = await (await caches.open(app)).keys();
+      return ks.filter((k) => /\/js\/flashcards\.js\?/.test(k.url)).length;
+    }), { message: 'paket načina učenja (js/flashcards.js) mora biti u SW-kešu poslije skidanja', timeout: 15000 }).toBe(1);
+    const lekcija = await prvaLekcija(page, PREDMET);
+    expect(lekcija).toBeTruthy();
+    const hladna = await context.newPage();
+    const cdp = await context.newCDPSession(hladna);
+    await cdp.send('Network.enable');
+    await cdp.send('Network.setCacheDisabled', { cacheDisabled: true });   // iOS-ov izbačen HTTP-keš, namjerno
+    await context.setOffline(true);
+    try {
+      await hladna.goto('/#/subject/' + PREDMET + '/' + lekcija, { waitUntil: 'commit' });
+      await hladna.waitForFunction(() => window.AppState && AppState.nav.page === 'study', null, { timeout: 25000 });
+      await hladna.waitForFunction((s) => typeof isSubjectContentLoaded === 'function' && isSubjectContentLoaded(s), PREDMET, { timeout: 20000 });
+      await expect.poll(async () => await hladna.evaluate(() => {
+        const b = document.querySelector('.study-nav-btn[data-section="flashcards"]');
+        if (b) b.click();
+        return window.AppState && AppState.cards && AppState.cards.deck ? AppState.cards.deck.length : 0;
+      }), { message: 'špil skinutog predmeta mora imati kartice i pri hladnom otvaranju bez mreže', timeout: 20000 }).toBeGreaterThan(0);
+    } finally {
+      await context.setOffline(false);
+      await cdp.detach().catch(() => {});
+      await hladna.close();
+    }
+  });
+
   test('skinuto se poslužuje IZ KEŠA, bez ijednog mrežnog poziva (② ne troši tuđi promet)', async ({ page }) => {
     await page.goto('/index.html');
     await podKontrolomSW(page);

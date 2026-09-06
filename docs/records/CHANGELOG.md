@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-06 (FABLE) — **BUG-045: Service Worker nikad nije spremao runtime assete — skinut predmet se offline otvarao prazan**
+
+- **Uzrok (izmjeren u živom SW-u):** `res.clone()` unutar `.then(caches.open)` stizao je kad je stranica već potrošila tijelo → `TypeError`, progutan `.catch(() => {})`. Od F3 3A u runtime kešu je bio samo precache; „offline radi" značilo je „HTTP-keš preglednika ima datoteke", a iOS ga izbacuje.
+- **Popravak:** klon sinkrono prije `caches.open` (asseti i navigacija) · `download()` piše „ready" tek kad je paket načina učenja zagrijan · `zagrijPoslijeDeploya()` jednom po verziji za sve s police.
+- **Brane:** `sw.spec` mjeri da je zatražena skripta U KEŠU (ne dojam) · `offline-study.spec` hladno otvaranje bez mreže i bez HTTP-keša (CDP) · `offline-store.test.js` +3. Obrnuto na starom `sw.js`: oba speca crvena.
+
 ### 2026-09-06 (OPUS) — **B2: bočna traka predmeta OBRISANA** (F4, prvi rez CSS-duga)
 
 Leonova anketa (§6/2): bočna traka predmeta se **briše**, ne vraća — landing i Browse vode do svakog predmeta, a

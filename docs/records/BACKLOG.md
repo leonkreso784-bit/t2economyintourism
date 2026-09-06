@@ -610,6 +610,17 @@ dobije neki upitnik da znamo tko je"* · FMTU-korisnici dobivaju obavijesti o no
 ⚠️ Napomena uz zapisanu odluku „OAuth: NE zasad" (2026-08-30, razlog: nula vanjskih
 korisnika): Leon ju je 2026-09-01 OVIM željama otvorio — okidač ostaje deploy + prvi korisnici.
 
+### 📡 CDN OFFLINE — KaTeX i supabase-js ostaju izvan Service Workera (nalaz uz BUG-045, 2026-09-06)
+
+`sw.js` presreće samo same-origin GET, pa KaTeX (formule) i supabase-js (prijava, DB read-path) offline ovise o
+HTTP-kešu preglednika — istom koji iOS izbacuje i zbog kojeg je BUG-045 postojao. Posljedica danas: skinut
+predmet se offline OTVORI (paket načina učenja je od BUG-045 u SW-kešu), kartice/kviz/dopune rade, ali
+**formule u kvantitativnim predmetima ostaju sirov tekst** dok KaTeX nije u HTTP-kešu; prijava offline ionako
+nema smisla. Popravak nije trivijalan: CDN odgovori su `cors` (SRI + `crossorigin`), pa ih SW smije spremiti
+samo ako ih dohvaća s istim `mode: 'cors'` i ako se `check:cdn` politika (verzioniran URL + SRI) prenese u
+SW; alternativa je vendorati KaTeX (CLAUDE.md dopušta vendorane biblioteke) — tada postaje same-origin i
+polica ga skine kao i sve ostalo. **Odluka čeka Leona** (F5 vježbe/recepti ionako dira KaTeX). Ne blokira.
+
 ### ~~🔍 Sidebar predmeta je NEDOSTIŽAN — `openSidebar()` nitko ne zove (C6/2, 2026-09-01)~~ — **OBRISANO 2026-09-06 (B2)**
 
 Panel `#subjectsSidebar` se renderira (17 predmeta, i18n ga re-renderira), ima close-gumb,
