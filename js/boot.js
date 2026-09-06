@@ -191,4 +191,15 @@
             l.addEventListener('load', function () { l.media = 'all'; });
         })(links[i]);
     }
+
+    /* PRIVREMENO (2026-09-06, grana fix/kadar-nalicje): `?dijagnoza=kartica` učita sondu koja na
+       ekranu Leonova iPhonea ispiše što iOS stvarno radi s naličjem kartice (skrol ne radi, a
+       headless motori skrolaju — tri hipoteze potrošene bez uređaja). Nikad u paketu, nikad bez
+       parametra; briše se prije spajanja u `feat/tinder-kadar`. */
+    if (/[?&]dijagnoza=kartica(&|$)/.test(String(location.search || ''))) {
+        var sonda = document.createElement('script');
+        sonda.src = 'js/dijagnoza-kartica.js?v=' + Date.now();
+        sonda.defer = true;
+        document.head.appendChild(sonda);
+    }
 })();
