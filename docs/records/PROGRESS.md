@@ -74,6 +74,10 @@ fokus ostane na skrivenom gumbu, gdje `naTipku` staje na straži `closest('butto
 je phone-gate ⑩ na **polegnutom** profilu izmjerio karticu **569 od 734 px (77,5 %)** umjesto uobičajenih 710 (96,7 %) i pao; iste
 brane, isto stablo, **dva sljedeća prolaza daju 710** (i `phone.spec` sam i cijela trojka). Nije reproducirano ni jednom više, pa nije
 BUG nego **poznata mjerna nestabilnost polegnutog profila** — tko ju sljedeći put vidi, neka je zapiše ovdje, jer dva nalaza čine uzorak.
+**Isto se, i to na ISTOM profilu, dogodilo u završnoj punoj suiti** (533 prošlo · 126 preskočeno · **1 palo**): `theme-fouc.spec` „uređaj
+dark → carbon od prvog kadra" izmjerio je na polegnutom profilu SVIJETLU pozadinu (`rgb(247,249,252)`), a dva ponovljena prolaza (spec
+sam = 24/24, pa spec + `flashcard-swipe` + `offline-study` = 89/0/3) daju tamnu. Ni ta cigla ne dira temu ni `boot.js`. **Polegnuti
+profil je time dvaput dao jednokratan lažni pad u dvije različite brane** — sljedeći tko ga vidi neka spoji tri nalaza u jedan zapis.
 
 **⚠️ ŠTO JE NAŠLA PUNA SUITA (`test:responsive`, 22,0 min: 530 prošlo · 126 preskočeno · 4 pala, sve četiri ISTI test).**
 `offline-study.spec` ⛔ P4 („napredak stečen BEZ MREŽE stvarno završi na uređaju") pao je na sva četiri profila — i to **s pravom**.
