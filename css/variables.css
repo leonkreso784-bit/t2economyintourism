@@ -51,12 +51,6 @@
    samo komentari), a "prekidac koji nikamo ne vodi" je postao ispravan `setTheme()`.
    Atribut `data-theme` je ziv i nosi 4 teme (tokens.css). */
 
-/* Subject item meta needs higher contrast */
-.subject-item-meta span {
-    color: var(--color-ink-0);
-}
-
-
 /* ===== ACCESSIBILITY ===== */
 .visually-hidden {
     position: absolute;

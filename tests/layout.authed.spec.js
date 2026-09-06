@@ -31,8 +31,9 @@ const SIRINE = [320, 360, 374, 375, 390, 414, 480, 639, 640, 641, 679, 680, 681,
  * ⚠️ Ovaj detektor je prepisan DVAPUT, i oba puta je greška bila poučna:
  *
  *   ① Prva izvedba je preskakala element ako je ON `position:fixed`, ali ne i njegovu djecu →
- *      izvlačna bočna traka (`sidebar.css:8`, fiksna i zatvorena = pomaknuta izvan ekrana)
- *      prijavila je 6 elemenata na SVAKOJ od 21 širine, na obje površine. **Sve je bio šum.**
+ *      tadašnja izvlačna bočna traka predmeta (fiksna i zatvorena = pomaknuta izvan ekrana;
+ *      `css/sidebar.css` je obrisan u B2, 2026-09-06) prijavila je 6 elemenata na SVAKOJ od
+ *      21 širine, na obje površine. **Sve je bio šum.**
  *      Brana koja viče na svakom pokretanju biva oslabljena ili ignorirana, a tad je gora od
  *      nikakve — jer i dalje izgleda kao brana.
  *

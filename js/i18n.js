@@ -431,7 +431,6 @@
     'cookie.label': { en: 'Cookie consent', hr: 'Pristanak na kolačiće' },
     // `footer.made.*` obrisani u C2 — „Made with ❤️ for students" je ukras koji ne nosi
     // značenje (izlazni uvjet §7.6.5), a i suzio je publiku na studente.
-    'sidebar.choose': { en: 'Choose Subject', hr: 'Odaberi predmet' },
 
     // ===== Browse drill-down (dinamički renderirano u navigation.js) =====
     'browse.trail.faculty': { en: 'Faculty', hr: 'Fakultet' },
@@ -756,7 +755,6 @@
     // auth nav-gumb ima dinamičan tekst (ime / „Sign in") → prepusti njemu da se osvježi
     if (typeof window.refreshAuthNav === 'function') window.refreshAuthNav();
     // Liste renderirane iz catalog-a (innerHTML) ne hvataju [data-i18n] → re-renderiraj ih na promjenu jezika.
-    if (typeof window.renderSubjectsSidebar === 'function') window.renderSubjectsSidebar();
     // Gumbi filtra nose ime programa i riječ „Svi" → i oni se moraju precrtati na
     // promjenu jezika, inače traka ostane na starom jeziku dok se mreža ispod prevede.
     if (typeof window.renderCatalogPrograms === 'function') window.renderCatalogPrograms();

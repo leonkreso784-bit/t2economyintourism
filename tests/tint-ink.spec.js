@@ -68,12 +68,11 @@ function provjeri(plocice, gdje, tema) {
 }
 
 for (const tema of TEME) {
-  test(`pločice predmeta: glif je čitljiv na landingu i u traci — tema ${tema}`, async ({ page }) => {
+  test(`pločice predmeta: glif je čitljiv na landingu — tema ${tema}`, async ({ page }) => {
     await page.goto('/');
     await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), tema);
     await page.waitForFunction(
       () => document.querySelectorAll('#landingSubjects .landing-subject-icon').length > 0
-        && document.querySelectorAll('#subjectsList .subject-item-icon').length > 0
     );
 
     // ⚠️ ＋ PLOČICA („Tvoj predmet", od 2026-08-16) SE IZUZIMA, i to nije izvlačenje.
@@ -90,7 +89,11 @@ for (const tema of TEME) {
     // ISTE VRSTE. Da je selektor od početka gađao `[data-ink]`, pada ne bi bilo — ali
     // ni gatea, jer bi element bez atributa tiho ispao iz mjerenja. Ovako je glasno.
     provjeri(await ocitajPlocice(page, '#landingSubjects .landing-subject-icon:not(.landing-subject-icon--make)'), 'landing', tema);
-    provjeri(await ocitajPlocice(page, '#subjectsList .subject-item-icon'), 'bočna traka', tema);
+    // ⚠️ B2 (2026-09-06): TREĆA mjerena površina — `#subjectsList .subject-item-icon` —
+    // OTPALA je s bočnom trakom, ne s pravilom. Pravilo („tinta glifa se bira izračunom
+    // iz boje predmeta") i dalje mjere DVIJE preostale površine na kojima boja dolazi iz
+    // podatka: landing (gore, kroz sve teme) i browse (test niže). Mjera se time SUZILA,
+    // ne oslabila: nijedan živi element nije prestao biti mjeren.
   });
 }
 

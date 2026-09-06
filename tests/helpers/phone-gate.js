@@ -40,11 +40,12 @@
 // ondje nema i previdio bočni koji ondje jest.
 //
 // ⚠️ **Vidljivost se RAČUNA, ne pretpostavlja.** Prva verzija ove mjere prijavila je dva
-// nepostojeća kvara i oba su bila pouka: bočna traka `.subjects-sidebar` je
-// `position:fixed` preko cijele visine, ali `translateX(100%)` je drži IZVAN ekrana —
-// brojala se kao kromo od 100 %; a zatvoren `<sokrat-modal>` je `visibility:hidden`, pa
-// je `offsetParent`-provjera (koja fiksne elemente propušta) njegov gumb za zatvaranje
-// prijavila kao interaktivan sadržaj u otoku. Oba su kvara postojala samo u mjeri.
+// nepostojeća kvara i oba su bila pouka: tadašnja bočna traka predmeta (obrisana u B2,
+// 2026-09-06) bila je `position:fixed` preko cijele visine, ali ju je `translateX(100%)`
+// držao IZVAN ekrana — brojala se kao kromo od 100 %; a zatvoren `<sokrat-modal>` je
+// `visibility:hidden`, pa je `offsetParent`-provjera (koja fiksne elemente propušta)
+// njegov gumb za zatvaranje prijavila kao interaktivan sadržaj u otoku. Oba su kvara
+// postojala samo u mjeri.
 // **Gate koji prijavljuje šum se isključi, i tad ne čuva ništa** (ista pouka kao
 // `check:tailwind` §šum).
 'use strict';
@@ -370,7 +371,7 @@ function mjeri(page, rub, faza) {
             let p = el;
             while (p && p !== document.body) {
                 if (p.classList && (p.classList.contains('topbar') || p.classList.contains('pathbar')
-                    || p.id === 'cookieBanner' || p.classList.contains('subjects-sidebar'))) return true;
+                    || p.id === 'cookieBanner')) return true;
                 p = p.parentElement;
             }
             return false;

@@ -52,9 +52,6 @@
 /* Landing. */
 @import "./landing.css";
 
-/* Bočni popis predmeta. */
-@import "./sidebar.css";
-
 /* Browse — od C4b samo KARTICA; skela je u utilityjima (`index.html`, `navigation.js`). */
 @import "./browse.css";
 

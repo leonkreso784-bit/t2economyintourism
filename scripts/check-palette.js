@@ -295,7 +295,6 @@ if (svijetliTekst.length) {
  * ako nova površina traži tamu, ili ovdje stoji obrazloženje, ili popravak ide u CSS. */
 const IZNIMKE = [
   // ── zastori: zatamnjuju sadržaj ISPOD sebe → tamni su u svakoj temi, po definiciji ──
-  '.subjects-overlay',            // css/sidebar.css — iza bočne trake
   'sokrat-modal.sokrat-modal',    // css/sokrat-modal.css — osnovni zastor
   'sokrat-modal.auth-modal',      // css/auth.css — zastor prijave
   'sokrat-modal.image-modal',     // css/learn.css — zastor svjetlosnog stola

@@ -134,12 +134,10 @@ function navigateTo(page, data = {}) {
         case 'landing':
             // Jezik sučelja = GLOBALNI toggle (ne diramo ga po stranici); chrome se već boja iz i18n inita.
             document.getElementById('landing-page').classList.add('active');
-            closeSidebar();
             break;
         case 'browse':
             renderBrowse();
             document.getElementById('browse-page').classList.add('active');
-            closeSidebar();
             break;
         case 'lessons':
             if (data.subject) {
@@ -148,7 +146,6 @@ function navigateTo(page, data = {}) {
                 renderLessonsPage(data.subject);
             }
             document.getElementById('lessons-page').classList.add('active');
-            closeSidebar();
             break;
         case 'study':
             if (data.subject && data.lesson) {
@@ -164,7 +161,6 @@ function navigateTo(page, data = {}) {
             break;
         case 'materials':
             document.getElementById('materials-page').classList.add('active');
-            closeSidebar();
             // Stranica se PRIKAŽE odmah, sadržaj stiže sa svojim paketom. Da se čekalo prije
             // prikaza, klik na „Moji materijali" ne bi radio ništa vidljivo dok mreža ne
             // odgovori — a stranica ima vlastito prazno stanje i bez podataka.
@@ -704,23 +700,14 @@ function initMaterialsEntries() {
     }
 }
 
-// ========== SIDEBAR ==========
-function openSidebar() {
-    document.getElementById('subjectsSidebar').classList.add('active');
-    document.getElementById('subjectsOverlay').classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeSidebar() {
-    document.getElementById('subjectsSidebar').classList.remove('active');
-    document.getElementById('subjectsOverlay').classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-// Primarni (zadani) program za landing/sidebar showcase. Drugi programi (npr. HRV
+// Primarni (zadani) program za landing showcase. Drugi programi (npr. HRV
 // "hospitality-management-hr") dostupni su kroz Browse drill-down (program-svjestan),
-// pa landing/sidebar pokazuju SAMO primarni → EN iskustvo ostaje nepromijenjeno, bez
+// pa landing pokazuje SAMO primarni → EN iskustvo ostaje nepromijenjeno, bez
 // miješanja jezika. (UI i18n po aktivnom programu = kasniji korak; vidi docs/archive/HRV_PLAN.md.)
+// ⚠️ B2 (2026-09-06): `primarySubjects()` je nakon brisanja bočne trake OSTAO BEZ
+// POZIVATELJA (jedini je bio `renderSubjectsSidebar()`) — izmjereno grepom, ne
+// pretpostavljeno. Namjerno NIJE obrisan u ovoj cigli (opseg = sidebar); zapisano
+// u BACKLOG-u da F4 presudi briše li se ili ga preuzima vitrina landinga.
 const PRIMARY_PROGRAM = 'hospitality-management';
 function primarySubjects() {
     // placement-svjesno (U2.5): subjectsOf pokriva i legacy (programId) i placement[] predmete
@@ -759,42 +746,6 @@ function _t(key, fallback) { return (typeof t === 'function') ? t(key) : (fallba
 function _hr() { return typeof getUiLang === 'function' && getUiLang() === 'hr'; }
 // jezično ispravna jedinica (1 vs množina)
 function _unit(n, base) { return n + ' ' + _t('unit.' + base + (n === 1 ? '.1' : '.n')); }
-
-// ========== SIDEBAR SUBJECT LIST (rendered from catalog) ==========
-function renderSubjectsSidebar() {
-    const list = document.getElementById('subjectsList');
-    if (!list || typeof SOKRAT_CATALOG === 'undefined' || !Array.isArray(SOKRAT_CATALOG.subjects)) {
-        return;
-    }
-
-    const esc = (s) => String(s == null ? '' : s)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-
-    list.innerHTML = primarySubjects().map((s) => {
-        const grad = (Array.isArray(s.iconGradient) && s.iconGradient.length === 2)
-            ? s.iconGradient
-            : [s.color, s.color];
-        const lessonCount = (s.lessons || []).length;
-        const lessonLabel = lessonCount === 1 ? 'Lesson' : 'Lessons';
-        return `
-                <div class="subject-item" data-subject="${esc(s.id)}">
-                    <div class="subject-item-icon" data-ink="${inkForTint(grad[0])}" style="background: linear-gradient(135deg, ${esc(grad[0])}, ${esc(grad[1])});">
-                        <i class="fas ${esc(s.icon)}"></i>
-                    </div>
-                    <div class="subject-item-info">
-                        <h3>${esc(s.name)}</h3>
-                        <p>${esc(s.description)}</p>
-                        <div class="subject-item-meta">
-                            <span><i class="fas fa-book"></i> ${lessonCount} ${lessonLabel}</span>
-                        </div>
-                    </div>
-                    <i class="fas fa-chevron-right subject-arrow"></i>
-                </div>`;
-    }).join('');
-}
 
 // ========== BROWSE (drill-down: Faculty → Program → Year → Subject) ==========
 // Sve se renderira IZ data/catalog.js. Dodavanjem fakulteta/smjera/godine/predmeta
@@ -1622,10 +1573,7 @@ window.showSubjectSelector = showSubjectSelector;
 window.showAboutUs = showAboutUs;
 window.hideAboutUs = hideAboutUs;
 window.navigateTo = navigateTo;
-window.openSidebar = openSidebar;
-window.closeSidebar = closeSidebar;
 window.switchSection = switchSection;
-window.renderSubjectsSidebar = renderSubjectsSidebar;
 window.renderBrowse = renderBrowse;
 window.enterBrowse = enterBrowse;
 window.browseBack = browseBack;

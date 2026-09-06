@@ -55,9 +55,13 @@ const CIGLE = [
      `palette:breakdown` broji kao FATALNO (tekst nevidljiv na svijetloj temi) i time blokiraju
      birač tema. Nađeno tek kad je Leon pitao KADA dolazi birač, pa se brojka morala razložiti
      po ciglama. Leon: „Ubaci" → C6. *Datoteka koju alat ne nabraja ne postoji za plan, koliko
-     god bila živa u pregledniku.* */
+     god bila živa u pregledniku.*
+     ⚠️ B2 (2026-09-06): `css/sidebar.css` je MAKNUT s popisa jer je OBRISAN — bočna traka
+     predmeta bila je nedostižna (`openSidebar()` bez pozivatelja) i Leon je anketom presudio
+     brisanje. Dug koji je ta datoteka nosila nije prebačen na drugu ciglu nego je nestao
+     s površinom; `mjeri()` bi je i dalje prijavljivao kao „NE POSTOJI", a to je šum, ne dug. */
   ['C6  profil, auth, pravne', ['css/profile.css', 'css/auth.css', 'css/legal.css',
-    'css/consent.css', 'css/pages.css', 'css/home-section.css', 'css/sidebar.css']],
+    'css/consent.css', 'css/pages.css', 'css/home-section.css']],
   ['C7  gašenje', ['css/components.css', 'css/variables.css']]
 ];
 

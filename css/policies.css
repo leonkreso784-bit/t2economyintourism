@@ -79,9 +79,7 @@
 /* ===== PRINT ===== */
 @media print {
     .mobile-nav,
-    .landing-page,
-    .subjects-sidebar,
-    .subjects-overlay {
+    .landing-page {
         display: none !important;
     }
 

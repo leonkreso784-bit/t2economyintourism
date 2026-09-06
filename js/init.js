@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCatalogPrograms();   // filter buttons, drawn FROM the catalog (never hardcoded)
     renderLandingSubjects();   // build landing subject showcase from catalog
     initLandingSubjects();     // bind showcase click + search + programme filter
-    renderSubjectsSidebar();   // build sidebar list from catalog BEFORE binding listeners
     initBrowse();              // bind delegated click handler for the browse drill-down
     initMaterialsEntries();    // C0: ulazi u vlastiti materijal
     initTopbar();              // K2b: znak → dom, „Predmeti", natrag u drugom redu
@@ -29,26 +28,6 @@ function setupEventListeners() {
     if (backFromBrowse) {
         backFromBrowse.addEventListener('click', browseBack);
     }
-
-    // Close sidebar (legacy slide-in panel; kept as harmless fallback)
-    const closeSidebarBtn = document.getElementById('closeSidebar');
-    if (closeSidebarBtn) {
-        closeSidebarBtn.addEventListener('click', closeSidebar);
-    }
-
-    // Overlay click closes sidebar
-    const overlay = document.getElementById('subjectsOverlay');
-    if (overlay) {
-        overlay.addEventListener('click', closeSidebar);
-    }
-
-    // Subject items in sidebar (legacy)
-    document.querySelectorAll('.subject-item').forEach(item => {
-        item.addEventListener('click', () => {
-            const subjectId = item.dataset.subject;
-            navigateTo('lessons', { subject: subjectId });
-        });
-    });
 
     // K2a — svi gumbi „natrag" idu kroz JEDAN model (`goBack`): povijest kad iza nas stoji
     // naš unos, inače semantički roditelj koji zna i katalošku i osobnu hijerarhiju.
