@@ -1,6 +1,6 @@
 # PRD — Sokrat Study
 
-**Status:** živi dokument · **Verzija PRD-a:** 0.6 · **Zadnja izmjena:** 2026-08-09
+**Status:** živi dokument · **Verzija PRD-a:** 0.7 · **Zadnja izmjena:** 2026-09-07
 
 ## 1. Vizija
 Sokrat Study je platforma na kojoj **svatko gradi vlastiti materijal i iz njega uči** —
@@ -17,6 +17,10 @@ ne opseg. Korisnik je **bilo tko** — student bilo kojeg fakulteta, srednjoško
 - **Admin/autor (ja, Leon):** dodaje predmete i sadržaj, održava kvalitetu.
 - **Korisnik-autor:** gradi **vlastiti privatni materijal** — ručno u editoru; kasnije i preko
   vlastitog AI-a (MCP, ADR-026). **Bilo tko**, ne nužno student FMTU-a.
+- **Organizacija** (firma · fakultet · škola): ima **svoj odjeljak** — vlastito gradivo, članove,
+  uloge (voditelj vs polaznik) i statistiku ograničenu na sebe. **Prvi platiša** ([ADR-036](../records/DECISIONS.md));
+  firma kupuje onboarding i **zapis o položenom**, ustanova gradivo kolegija i rano upozorenje
+  tko zaostaje. ⚠️ Ovo **nije** osobni otok iz ADR-024 — v. [MONETIZATION §5](./MONETIZATION.md).
 - **(kasnije) Pretplatnik:** plaća premium funkcionalnosti.
 
 ## 3. Što platforma danas radi
@@ -53,7 +57,9 @@ ne opseg. Korisnik je **bilo tko** — student bilo kojeg fakulteta, srednjoško
 | **MCP — AI gradi gradivo** | korisnikov vlastiti AI stvara i mijenja **isključivo njegovo** gradivo; editor postaje alat za **doradu**, ne ishodište ([ADR-030](../records/DECISIONS.md)). **Gotovo kad korisnik iz svog AI-a napravi materijal i odmah iz njega uči, bez otvaranja editora.** ➕ [ADR-031](../records/DECISIONS.md) (2026-08-30) daje mu oblik: **cjevovod** `Learn → kartice → dopune/kviz`, sve u **nacrt**, doseg **samo vlastito gradivo**. ⚠️ Pristup je presuđen — konektor koji korisnik doda jednom (OAuth); seoba je OTKAZANA (2026-09-01) pa OAuth čeka samo **RAČUN blok** (`BACKLOG.md` §RAČUN) | ⬜ |
 | **Objava i dijeljenje** | materijal se smije podijeliti — **link s tajnim tokenom, bez javne biblioteke** | ⬜ |
 | **Natjecanje + društveno** | ljestvice, profili, statistika učenja, anti-cheat | ⬜ |
-| **Monetizacija** | freemium/paywall na **funkcionalnosti**, ne na sadržaju | ⬜ |
+| **Organizacija (najam)** | firma/ustanova dobiva **svoj odjeljak**: članovi, uloge, gradivo u vlasništvu organizacije, statistika u dosegu organizacije ([ADR-036](../records/DECISIONS.md)). **Gotovo kad vlasnik firme doda zaposlenika, dodijeli mu gradivo i vidi njegov napredak — a taj zaposlenik ne vidi ništa izvan svoje organizacije.** | ⬜ |
+| **Exam modul** | platforma se zaključa u ispit: bez navigacije, jedan pokušaj, sat teče; **vrijeme i ocjena se računaju na poslužitelju**. **Gotovo kad voditelj pošalje ispit, polaznik ga riješi pod satom, a voditelj dobije zapis s imenom, rezultatom, datumom i trajanjem koji smije ispisati.** ⚠️ Granica se kaže kupcu: preglednik ne sprječava drugi uređaj | ⬜ |
+| **Monetizacija** | naplaćuje se **funkcionalnost i pristup organizacije, nikad tuđe gradivo**; redoslijed i paketi: [MONETIZATION.md](./MONETIZATION.md) | ⬜ |
 
 ⚠️ **Raniji opis „UGC MVP = korisnik uploada PDF/PPT → AI radi skriptu" je nadglašen.** Izgrađeno je
 **ručno autorstvo** u vlastitom stablu; AI dolazi kasnije i to kroz **korisnikov vlastiti** AI (MCP),
@@ -75,7 +81,9 @@ ne kroz našu cijev — pa ni kvote troška nisu na nama.
 - **Nema uploada dokumenata** (PDF/PPT) ni AI-generiranja sadržaja s naše strane — korisnik svoj
   materijal piše sam, a kasnije ga smije graditi **svojim** AI-em (MCP). Upload slika u osobnom
   materijalu postoji i **privatan je** (bucket `node-images`, owner-prefiks).
-- Nema naplate dok platforma ne dobije skalu.
+- ~~Nema naplate dok platforma ne dobije skalu.~~ **Nadglašeno ([ADR-036](../records/DECISIONS.md)):** naplata kreće od
+  **organizacija prije skale** (firma odlučuje u jednom razgovoru), dok potrošačka naplata i dalje
+  čeka masu. **Objava se ne naplaćuje nikad**, ni brojem ni veličinom.
 - **Nema javnog dijeljenja osobnog materijala** — sve je privatno (ADR-024/025).
 - Nema složenih uloga: postoje **vlasnik podatka** (`owner_id = auth.uid()`) i **administrator**
   javnog kataloga (`profiles.role` + `is_admin()`). Sadržajni suradnik radi kroz PR, ne kroz aplikaciju.
