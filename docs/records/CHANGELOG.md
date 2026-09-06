@@ -16,6 +16,9 @@ razmak/Enter okreće, **Z = znam, X = ne znam**. Svi ulazi (gumb · gesta · tip
 (`window.SokratFlashcards`), iz koje se vežu gumbi i traže tipke — i iz koje će F1/14 čitati tutorial. Mehanika F1/9 netaknuta.
 Brane: unit **162 tvrdnje** (obrnuto na `c3bd1dd` = 74 crvene) · spec **37/0/3** kroz pravi CDP-dodir · `flashcard-kadar` 49/49 ·
 `phone.spec` 12/12 · preflight EXIT 0.
+**Puna suita je usput srušila jednu fikciju:** `offline-study` P4 je klikao ✓ nad **praznim** špilom (stari klik je bio vezan ravno na
+`markKnown`, koji upisuje i bez kartice) — F1/13 sud bez kartice odbija, pa je test pao i pokazao pravi kvar ispod: skinut predmet se na
+hladnoj offline navigaciji otvori prazan (**BUG-045**, otvoren). P4 sad tvrdi `deck > 0` prije klika; suita 530/4 → 530/0.
 
 ## 2026-09-06 (OPUS) — **F1/12: Tinder-KADAR — kartica je EKRAN, ✓ / ✕ pod palcem** (① kadar `bbd2b68` · ② gumbi `48296cf`)
 

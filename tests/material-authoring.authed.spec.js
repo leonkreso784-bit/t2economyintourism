@@ -253,6 +253,12 @@ test.describe('M2 — učenje iz vlastitog materijala', () => {
       // Označi karticu kao naučenu → napredak se mora zapisati pod ključem materijala.
       await gotoSection(page, 'flashcards');
       await page.click('#btnCorrect');
+      // ⚠️ Od F1/13 ✓ LETI (pečat, ~280 ms) i upisuje po slijetanju — čita se STANJE kad stigne,
+      // ne u istom dahu s klikom (ista posljedica koju je puna suita našla u `offline-study.spec`).
+      await expect.poll(
+        async () => await page.evaluate((nodeId) => localStorage.getItem('node:' + nodeId), id),
+        { message: 'napredak materijala se nigdje ne sprema', timeout: 5000 }
+      ).toBeTruthy();
 
       const saved = await page.evaluate((nodeId) => {
         const raw = localStorage.getItem('node:' + nodeId);

@@ -17,6 +17,38 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
+### BUG-045 — Skinut predmet se offline otvori PRAZAN: gradivo ostaje neučitano iako su datoteke u kešu
+
+- Status: 🔴 **otvoren** — nađen usput u F1/13, **nije popravljen ondje** (dira `content-loader` /
+  policu, ne kartice) · Težina: **visok** — pogađa jedini scenarij zbog kojeg polica postoji ·
+  Našao: **brana koja je pala tek kad je F1/13 maknuo fikciju** (v. Lekcija).
+
+- **Opis / izmjereno** (sonda, Chromium iPhone-SE-375, `statistics`, 2026-09-06): predmet se skine
+  (`data-offline-state="ready"`), mreža se ugasi, pa se otvori lekcija:
+
+  | put | `isSubjectContentLoaded` | `AppState.cards.deck` | što piše na kartici |
+  |---|---|---|---|
+  | offline, lekcija otvorena PRVI put (hladna navigacija) | **false** i poslije **30 s** | **0** | „No flashcards available for this lesson." |
+  | lekcija otvorena dok mreža radi, pa mreža ugašena | true | **61** | pravo pitanje |
+
+  Datoteke JESU u kešu — prva tvrdnja istog speca (`⛔ KRITERIJ FAZE`) to dokazuje tako što sama
+  pozove `SokratContent.loadLesson(...)` i dobije gradivo. Ne učita ga dakle **aplikacija na svom
+  putu**, iako keš ima sve.
+
+- **Reprodukcija:** skini predmet na polici → zrakoplovni način → otvori `#/subject/<id>/<lekcija>`
+  → bilo koji način učenja je prazan.
+
+- **Uzrok:** nije utvrđen u F1/13 (izvan opsega cigle). Sumnja koju treba izmjeriti prije popravka:
+  dual-read (DB → JSON → `.js`) offline stane na prvom koraku i fallback nikad ne krene.
+
+- **Zašto je ovoliko dugo bio nevidljiv (LEKCIJA):** tvrdnja P4 (`napredak stečen BEZ MREŽE stvarno
+  završi na uređaju`) klikala je ✓ i čitala `localStorage`. Do F1/13 je taj gumb bio vezan **ravno
+  na `markKnown`**, koji upisuje `cards.index` **i kad špila nema** — pa je test bio zelen nad
+  praznom karticom, mjereći da je *nešto* zapisano, a ne da je zapisan napredak. F1/13 je sud
+  ograničio na neprazan špil (`sudi()`), fikcija je pala, i tek tada se vidjelo da offline nema
+  gradiva. **Tvrdnja koja ne provjeri PREDUVJET svoje radnje mjeri vlastiti nusprodukt** — zato P4
+  od sada tvrdi `deck.length > 0` prije nego išta klikne.
+
 ### BUG-039 — Ljestva širine kviza i dva pravila za male telefone su MRTVI: kasniji širi upit gasi raniji uži
 
 - Status: 🔴 **otvoren** — svjesno odgođen, jer ispravak je **odluka o izgledu**, a našao ga je

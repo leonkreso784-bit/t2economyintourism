@@ -75,7 +75,19 @@ je phone-gate ⑩ na **polegnutom** profilu izmjerio karticu **569 od 734 px (77
 brane, isto stablo, **dva sljedeća prolaza daju 710** (i `phone.spec` sam i cijela trojka). Nije reproducirano ni jednom više, pa nije
 BUG nego **poznata mjerna nestabilnost polegnutog profila** — tko ju sljedeći put vidi, neka je zapiše ovdje, jer dva nalaza čine uzorak.
 
-**Svjesno NE:** tutorial (F1/14) · animacija za listanje gumbom/tipkom (namjerno trenutno, v. gore) · `phone.authed.spec.js` nedirana ·
+**⚠️ ŠTO JE NAŠLA PUNA SUITA (`test:responsive`, 22,0 min: 530 prošlo · 126 preskočeno · 4 pala, sve četiri ISTI test).**
+`offline-study.spec` ⛔ P4 („napredak stečen BEZ MREŽE stvarno završi na uređaju") pao je na sva četiri profila — i to **s pravom**.
+Sonda je pokazala zašto: u tom je testu špil bio **prazan** (kartica je pisala „No flashcards available for this lesson."), a do F1/13
+je klik na ✓ bio vezan **ravno na `markKnown`**, koji upisuje `cards.index` **i kad špila nema**. Test je dakle mjerio da je *nešto*
+zapisano, ne da je zapisan napredak. F1/13 sud ograničava na neprazan špil (`sudi()`), fikcija je pala — a ispod nje se pokazao pravi
+kvar: **skinut predmet se na HLADNOJ offline navigaciji otvori PRAZAN** (`isSubjectContentLoaded` = false i poslije 30 s, špil 0),
+iako su datoteke u kešu (prva tvrdnja istog speca to dokazuje pozivom `SokratContent.loadLesson`). Zapisano kao **BUG-045**
+(otvoren, visok) — **nije popravljen ovdje**, jer dira `content-loader`/policu, ne kartice. P4 od sada: lekcija se otvori **dok mreža
+radi**, klik na ✓ pada **bez mreže**, i test **tvrdi `deck.length > 0` prije nego išta klikne** (tvrdnja koja ne provjeri preduvjet
+svoje radnje mjeri vlastiti nusprodukt). Usput: `material-authoring.authed.spec` čita napredak **kad stigne** (`expect.poll`), jer ✓
+od F1/13 leti ~280 ms pa upisuje. Poslije popravka: `offline-study.spec` **28/28** na sva četiri profila.
+
+**Svjesno NE:** tutorial (F1/14) · animacija za listanje gumbom/tipkom (namjerno trenutno, v. gore) · **BUG-045** (offline gradivo — izvan cigle) · `phone.authed.spec.js` nedirana ·
 **napredak kartica se i dalje pamti po INDEKSU u promiješanom špilu** (`progress.flashcardsLearned` prima `cards.known`, a špil se miješa
 pri svakom ulasku) — zatečeno od prije, „ponovi ne znam" ga samo čini vidljivijim; popravak traži id kartice i ide uz UGC-model, ne ovdje.
 **Gdje se vidi:** grana `feat/tinder-kadar` (preview); produkcija `c53c28c` bez toga.

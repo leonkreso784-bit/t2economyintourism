@@ -297,19 +297,35 @@ test.describe('POLICA · P3 (pravilo u SW-u) + P4 (napredak bez mreže)', () => 
     const prije = await page.evaluate((k) => window.localStorage.getItem(k), kljuc);
 
     const lekcija = await prvaLekcija(page, PREDMET);
+
+    // ⚠️ LEKCIJA SE OTVORI DOK MREŽA JOŠ RADI, i to nije popuštanje nego uvjet da test mjeri ono
+    // što tvrdi. Do F1/13 je klik na ✓ bio vezan RAVNO na `markKnown`, pa je upis nastajao i nad
+    // PRAZNIM špilom — test je bio zelen dok je na kartici pisalo „No flashcards available for this
+    // lesson." Od F1/13 sud bez kartice ne postoji (`sudi()` staje na praznom špilu) i fikcija je
+    // ispala na vidjelo. Izmjereno sondom (2026-09-06): na HLADNOJ offline navigaciji špil ostaje
+    // prazan i 30 s — gradivo se ne učita iako su datoteke u kešu (**BUG-045**, zaseban nalaz);
+    // kad je lekcija jednom otvorena, offline špil ima svih 61 karticu.
+    // Tvrdnja OVOG testa je TRAJNOST napretka bez mreže; da se gradivo posluži iz keša tvrdi prva
+    // tvrdnja u ovom specu.
+    await page.goto('/#/subject/' + PREDMET + '/' + lekcija);
+    await page.waitForFunction(() => window.AppState && AppState.nav.page === 'study', null, { timeout: 25000 });
+    // ⚠️ Klik zna stići PRIJE nego traka načina učenja postoji, i tada tiho ne napravi ništa
+    // (špil se svejedno napuni, jer `initFlashcards` vrti i sam ulazak u lekciju — pa čekanje na
+    // `deck > 0` NIJE dokaz da je mod otvoren). Zato se klik ponavlja dok sekcija stvarno ne bude
+    // otvorena, a tek onda se čeka špil.
+    await expect.poll(async () => await page.evaluate(() => {
+      const b = document.querySelector('.study-nav-btn[data-section="flashcards"]');
+      if (b) b.click();
+      const el = document.getElementById('flashcards');
+      return !!el && el.classList.contains('active') && el.getBoundingClientRect().height > 0;
+    }), { message: 'mod kartica se nije otvorio', timeout: 20000 }).toBe(true);
+    await page.waitForFunction(() => AppState.cards.deck && AppState.cards.deck.length > 0, null, { timeout: 20000 });
+
     await context.setOffline(true);
     try {
-      await page.goto('/#/subject/' + PREDMET + '/' + lekcija);
-      await page.waitForFunction(() => window.AppState && AppState.nav.page === 'study', null, { timeout: 25000 });
-
-      await page.evaluate(() => {
-        const b = document.querySelector('.study-nav-btn[data-section="flashcards"]');
-        if (b) b.click();
-      });
-      await page.waitForFunction(() => {
-        const el = document.getElementById('flashcards');
-        return !!el && el.classList.contains('active') && el.getBoundingClientRect().height > 0;
-      }, null, { timeout: 20000 });
+      // NIKAD SUD NAD PRAZNIM ŠPILOM — inače ovaj test opet počne mjeriti fikciju.
+      const kartica = await page.evaluate(() => AppState.cards.deck.length);
+      expect(kartica, 'bez kartice u špilu ovaj test ne mjeri napredak nego prazan upis').toBeGreaterThan(0);
 
       // Jedna kartica oznacena kao naucena — najmanja radnja koja proizvodi napredak.
       //
@@ -322,7 +338,15 @@ test.describe('POLICA · P3 (pravilo u SW-u) + P4 (napredak bez mreže)', () => 
         const b = document.getElementById('btnCorrect');
         if (b) b.click();
       });
-      await page.waitForTimeout(300);
+
+      // ⚠️ ČEKA SE STANJE, NE VRIJEME. Do F1/13 je ✓ upisivao odmah, pa je fiksnih 300 ms bilo
+      // dovoljno; od F1/13 gumb LETI (pečat „Znam", ~280 ms) i upisuje TEK po slijetanju — 300 ms
+      // je time postalo utrka, i puna suita ju je izgubila na sva četiri profila. Tvrdnja ovog
+      // testa je TRAJNOST napretka bez mreže, a ne koliko brzo stigne, pa se čeka zapis.
+      await expect.poll(
+        async () => await page.evaluate((k) => window.localStorage.getItem(k), kljuc),
+        { message: 'bez mreze se napredak MORA zapisati na uredjaj', timeout: 5000 }
+      ).not.toBe(prije);
 
       const poslije = await page.evaluate((k) => window.localStorage.getItem(k), kljuc);
       expect(poslije, 'bez mreze se napredak MORA zapisati na uredjaj').toBeTruthy();
