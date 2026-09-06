@@ -371,6 +371,14 @@ body:has(.browse-page.active) .footer {
     display: none;
 }
 
+/* F1/12 ①: u modu KARTICA na dodiru kartica JE ekran — ispod nje ne stoji ništa.
+   ⚠️ Ovo NIJE ukras nego UVJET KADRA: footer je **149 px dokumenta** ispod stranice učenja
+   (izmjereno na 393 × 852), pa je stranica u modu kartica skrolala i kad kartica stane u
+   ekran. Ostali načini učenja footer zadržavaju — kadar traži samo onaj koji je ekran. */
+:root[data-uredjaj~="dodir"] body:has(.study-page.active #flashcards.active) .footer {
+    display: none;
+}
+
 /* ⚠️ `.lang-toggle` / `.header-lang-toggle` su OBRISANI u C4a: gađali su prekidač
    jezika u tri zaglavlja (browse/lessons/study) koja je K2b spojio u jednu traku.
    Živi prekidač je `.lang-toggle-label` i stilizira ga `topbar.css`. */

@@ -11,6 +11,7 @@ function initFlashcards() {
     cards.unknown = [];
 
     resetSwipe();            // F1/9: špil se puni iznova → nijedna kartica ne smije ostati „u letu"
+    osvjeziKadar();          // F1/12: rezerva za donju traku ide u CSS PRIJE prvog crtanja kartice
     updateFlashcard();
     updateFlashcardProgress();
     updateFlashcardStats();
@@ -24,6 +25,7 @@ function initFlashcards() {
         document.getElementById('btnWrong').addEventListener('click', markUnknown);
         initSwipe();         // F1/9: dodirna gesta (samo `pointerType === 'touch'`)
         initTipke();         // F1/9 ②: stolni pandan — strelice
+        initKadar();         // F1/12 ①: prati visinu donje trake (okretanje, pragovi, sigurni rub)
         flashcardListenersInitialized = true;
     }
 }
@@ -181,6 +183,61 @@ function markUnknown() {
 function saveFlashcardProgress() {
     progress.flashcardsLearned = [...new Set([...progress.flashcardsLearned, ...AppState.cards.known])];
     saveProgress();
+}
+
+/* ── F1/12 ① — KADAR: JEDINA BROJKA KOJU CSS NE MOŽE SAM (2026-09-06) ───────────
+   Leon, s previewom F1/9: „Treba kartica biti veća … kao na Tinderu."
+   Kadar se crta u CSS-u (`css/flashcards-section.css` §F1/12): ljuska je visoka točno
+   `100dvh − var(--chrome-h)`, a kartica uzima sve što traka napretka i red gumba ne uzmu.
+
+   Odozgo se NIŠTA ne mjeri — `--chrome-h` je token koji već postoji i već je točan na svakom
+   pragu. Odozdo ne postoji ništa slično: visina donje trake (`.study-mobile-nav`) je ZBROJ
+   triju činjenica iz `css/study-chrome.css` — razmaka, `min-height` gumba koji se mijenja na
+   dva praga (≤ 374 px i polegnuto ≤ 900 px) i sigurnog ruba. Napisati taj zbroj kao `calc()`
+   značilo bi ČETVRTU kopiju istih brojeva, koja se tiho razilazi čim netko dirne traku
+   (ADR-027: jedna činjenica, jedno mjesto). Zato se mjeri PRAVI element.
+
+   ⚠️ Mjeri se na tri okidača, i svaki od njih se stvarno dogodio u brani:
+     • ulazak u mod (`initFlashcards`),
+     • promjena veličine / okretanje uređaja (traka mijenja `min-height` na pragovima),
+     • **promjena visine SAME trake** — sigurni rub stigne tek kad ga sustav javi, a mjerač
+       telefona ga postavlja NAKON navigacije (`postaviRub` u `tests/helpers/phone-gate.js`).
+       Bez `ResizeObserver` bi rezerva ostala manja za `--safe-bottom` i stranica bi
+       proskrolala točno za tu razliku.
+   Nikad na `scroll`: skrol ne mijenja ni jednu od ovih visina.
+
+   Kad trake nema (≥ 48rem — tablet i polegnut telefon), svojstvo se BRIŠE, pa vrijedi
+   fallback iz CSS-a (`var(--safe-bottom)`). Brisanje, ne upis nule: nula bi bila tvrdnja da
+   sigurnog ruba nema. */
+let kadarZakazan = false;
+
+function osvjeziKadar() {
+    const korijen = document.documentElement;
+    if (!korijen || !korijen.style || typeof korijen.style.setProperty !== 'function') return;
+    const traka = typeof document.querySelector === 'function' ? document.querySelector('.study-mobile-nav') : null;
+    const r = traka && typeof traka.getBoundingClientRect === 'function' ? traka.getBoundingClientRect() : null;
+    // `Math.ceil`: pola piksela premalo rezerve znači pola piksela skrola, a brana mjeri skrol.
+    if (r && r.height > 0) korijen.style.setProperty('--kartica-dolje', Math.ceil(r.height) + 'px');
+    else korijen.style.removeProperty('--kartica-dolje');
+}
+
+/** Prigušeno na kadar: `resize` i `ResizeObserver` znaju stići u rafalu, a mjeri se raspored. */
+function zakaziKadar() {
+    if (kadarZakazan) return;
+    kadarZakazan = true;
+    const posao = () => { kadarZakazan = false; osvjeziKadar(); };
+    if (typeof requestAnimationFrame === 'function') requestAnimationFrame(posao);
+    else posao();
+}
+
+function initKadar() {
+    osvjeziKadar();
+    if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+        window.addEventListener('resize', zakaziKadar);
+        window.addEventListener('orientationchange', zakaziKadar);
+    }
+    const traka = typeof document.querySelector === 'function' ? document.querySelector('.study-mobile-nav') : null;
+    if (traka && typeof ResizeObserver === 'function') new ResizeObserver(zakaziKadar).observe(traka);
 }
 
 /* ── F1/9 — TINDER-ŠPIL NA DODIRU (2026-09-06) ─────────────────────────────────

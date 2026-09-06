@@ -465,3 +465,172 @@
 :root[data-uredjaj~="dodir"] .flashcard-ghost--2 { transform: translateY(16px) scale(0.92); }
 /* `display:block` gore bi pregazio UA `[hidden]` — vrati ga (isti trik kao auth/consent) */
 :root[data-uredjaj~="dodir"] .flashcard-ghost[hidden] { display: none; }
+
+/* ── F1/12 ① — TINDER-KADAR NA DODIRU (2026-09-06) ─────────────────────────────
+   Leon, s previewom F1/9 u ruci: „Treba kartica biti veća i trebamo promijeniti veličinu
+   kartica da budu kao na Tinderu." Izmjereno PRIJE cigle (`BACKLOG.md` §E): na 393 × 852 je
+   kartica 353 × 200 px = **34 % dostupnog**, a stranica u modu kartica SKROLA (dokument
+   1045 px na ekranu od 852) — prst je dakle radio dva posla: jedan kroz špil, jedan kroz
+   stranicu. Pitanje se crtalo na 12,8 px, odgovor na 12, objašnjenje na 10,4.
+
+   ⚠️ **SAMO NA DODIRU** (`:root[data-uredjaj~="dodir"]`, F1/12 ⓪). Stolno ostaje kakvo jest:
+   ondje je kartica jedna stvar na stranici, a ne sama stranica.
+
+   ── KAKO SE DOBIVA VISINA, I ZAŠTO BAŠ TAKO ──────────────────────────────────────
+   Kadar je **flex-stupac od tri komada**: traka napretka i red gumba uzmu svoje, kartica
+   dobije SVE ostalo (`flex: 1`). Nijedna visina zato nije zapisana kao broj — promijeni li
+   se font ili razmak, kartica se sama prilagodi, a brana ⑩ u `phone.spec.js` mjeri ishod.
+
+   • GORE se ništa ne mjeri: `--chrome-h` (`topbar.css`) je token koji već postoji i već je
+     točan na svakom pragu (u niskom prozoru traka padne na 56 px, putanja na 0).
+   • DOLJE je **`--kartica-dolje`, jedina brojka koju piše JS** (`js/flashcards.js` §F1/12).
+     Visina donje trake nije token nego ZBROJ triju činjenica u `study-chrome.css`: razmaka,
+     `min-height` gumba koji se mijenja na dva praga (≤ 374 px i polegnuto ≤ 900 px) i sigurnog
+     ruba. `calc()` ovdje bio bi ČETVRTA kopija tih brojeva i tiho bi se razišao s njima
+     (ADR-027) — zato se mjeri PRAVI element. Kad trake nema (≥ 48rem, dakle i polegnut
+     telefon), JS ne piše ništa i vrijedi fallback `var(--safe-bottom)`.
+
+   ⚠️ `:has()` umjesto klase koju netko mora dodati i maknuti: aktivan mod već stoji u DOM-u
+   (`#flashcards.active`), pa druga zastavica za istu činjenicu ne može ostati zaključana na
+   krivom modu. Traži Safari 16.4+ — prag koji projekt već ima (`color-mix`, `@property`). */
+
+/* 1. LJUSKA — stranica učenja u modu kartica je TOČNO jedan ekran, i zato ne skrola.
+   ⚠️ `.active` u selektoru NIJE višak: bez njega bi ovaj blok pogodio i SKRIVENU stranicu
+   učenja (sekcija `#flashcards` zadržava `.active` i kad se ode s nje), a `display` iz
+   `variables.css` „Hide all pages by default“ bio bi preglašen → stranica učenja bi se
+   pojavila preko landinga. Stupac se zato i ne ponavlja — `.study-page.active` je već
+   `display: flex; flex-direction: column` (isto mjesto), ovdje se dodaje samo visina. */
+:root[data-uredjaj~="dodir"] .study-page.active:has(#flashcards.active) {
+    height: calc(100dvh - var(--chrome-h));
+    /* Rezervu za donju traku drži OVA ljuska. Zatečeni `calc(80px + safe)` je bio gruba
+       procjena te iste trake; ostane li uz mjerenu, dvije se rezerve ZBROJE i stranica
+       proskrola za razliku. */
+    padding-bottom: var(--kartica-dolje, var(--safe-bottom));
+}
+/* ⚠️ TREĆA REZERVA ZA ISTU TRAKU. `components.css` daje TIJELU `padding-bottom:
+   calc(--safe-bottom + 60px)` po VISINI ekrana (≤ 500 px), zbog donje trake učenja — a na
+   polegnutom telefonu (852 px) te trake NEMA (`md:hidden`), pa je to 81 px dokumenta ispod
+   kadra i jedini razlog zašto je polegnuta stranica i dalje skrolala. Kadar rezervu drži sam
+   (`--kartica-dolje` na ljusci), pa je ovdje nulira; ostali načini učenja je zadržavaju. */
+:root[data-uredjaj~="dodir"] body:has(.study-page.active #flashcards.active) {
+    padding-bottom: 0;
+    /* ⚠️ `body` nosi `transition: var(--transition)`, a to je `all 0.3s` — pa se i ova rezerva
+       ANIMIRA. Dok animacija traje, stranica je stvarno viša od ekrana i stvarno skrola:
+       izmjereno 3,04 px zaostatka 300 ms nakon ulaska u mod, i to je pao gate ⑩. Ostaje samo
+       ono što na `body` ima smisla animirati — prijelaz teme. */
+    transition-property: background-color, color;
+}
+
+/* Traka tabova (≥ 48rem) uzima svoje prije sadržaja; ispod tog praga je nema (`md:hidden`). */
+:root[data-uredjaj~="dodir"] .study-page.active:has(#flashcards.active) > .study-nav { flex: 0 0 auto; }
+:root[data-uredjaj~="dodir"] .study-page.active:has(#flashcards.active) > .study-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    padding-top: 0.5rem;
+    /* v. gore: donji razmak je preselio na ljusku, ovdje bi se udvostručio */
+    padding-bottom: 0;
+    /* Bočno JEDAN razmak, ne tri. Zatečeno je kartica bila uvučena tri puta — ljuska (sigurni
+       rub), sadržaj (0,75rem, iznad 48rem 2rem) i spremnik kartice (0,5rem odn. 1rem) — pa je
+       na polegnutom telefonu ostajala na 638 od 734 sigurnih px. Sigurni rub ostaje netaknut. */
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+:root[data-uredjaj~="dodir"] .study-page.active:has(#flashcards.active) #flashcards.active {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+}
+
+/* 2. STUPAC KARTICE — h1 i statistika otpadaju, kartica uzima sav ostatak. */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    max-width: none;
+    /* v. `.study-content` gore: razmak oko kartice drži SADRŽAJ, ovdje bi bio drugi po redu. */
+    padding: 0;
+}
+/* Naslov „Kartice" je na telefonu ČISTI DUPLIKAT: mod već piše donja navigacija, i to
+   označen kao aktivan. Ime regije zato preuzima `aria-label` na `#flashcards` (i18n
+   `fc.title`) — sakriveni naslov ne bi bio ime, a bez imena sekcija nestaje iz stabla. */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-container > h1 { display: none; }
+/* ⚠️ PRIVREMENO u ①: brojke „znam / ne znam" postaju ZNAČKE NA GUMBIMA u dionici ②, i tek
+   tada blok odlazi iz markupa. Do tada se ovdje samo skriva — `#knownCount`/`#unknownCount`
+   ostaju u DOM-u, pa `updateFlashcardStats()` i dalje ima kamo pisati. */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-stats { display: none; }
+
+/* 3. TRAKA NAPRETKA — jedan redak umjesto stupca (35 → ~21 px s razmakom). */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-progress span { font-size: 0.7rem; }
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-progress .progress-bar {
+    flex: 1 1 auto;
+    margin-top: 0;
+}
+
+/* 4. KARTICA — sve što je ostalo, po širini `vw − 24` (razmak sadržaja s obje strane). */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-wrapper {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-width: none;
+    margin: 0 0 0.5rem;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard {
+    height: 100%;
+    min-height: 0;
+    /* `max-width` ladder (600/700/800/900 px) je pisan za karticu koja je jedan element na
+       stranici; kadru je strop širina omotača. Bez ovoga je polegnuti telefon dobio 600 od
+       852 px = 70 %. */
+    max-width: none;
+    /* Bočni razmak kartice ide van: sjene špila su `inset: 0` nad omotačem, pa su dosad bile
+       8 px ŠIRE od same kartice. Sad su poravnate, a kartica dobije tih 8 px. */
+    margin: 0;
+    padding: 0;
+}
+/* `minmax(0, 1fr)`, ne `auto`: red bi inače narastao do sadržaja i kartica bi probila kadar
+   umjesto da naličje skrola u sebi (BUG-013 grid-stack ostaje, samo dobiva strop). */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-inner {
+    height: 100%;
+    min-height: 0;
+    grid-template-rows: minmax(0, 1fr);
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front,
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back {
+    height: 100%;
+    min-height: 0;
+    padding: 1.25rem 1rem;
+    /* ⚠️ `safe center`, ne `center`. Lice i naličje SU skroleri (`overflow-y: auto`), a
+       centriran sadržaj koji preraste spremnik prelije se na OBJE strane — gornji dio tada
+       nema kako doći na red, jer skrol ne ide u minus. `safe` se u tom slučaju ponaša kao
+       `flex-start`, inače centrira. Preglednik koji ključ ne zna odbaci deklaraciju i vrijedi
+       zatečeni `center` — dakle ponašanje otprije cigle, ne kvar. */
+    justify-content: safe center;
+}
+/* Prazno objašnjenje je do sada bilo prazna kutija s ispunom i razmakom — na kartici od 200 px
+   se gubila, na kartici od 480 px lebdi nasred naličja. */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back .explanation:empty { display: none; }
+
+/* 5. TIPOGRAFIJA — mjere iz plana (pitanje 18–20 px, odgovor 16, objašnjenje 14).
+   Do cigle je pitanje bilo 12,8 px: veličina za popis, ne za karticu koja je ekran. */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front p {
+    font-size: 1.15rem;
+    line-height: 1.35;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back p {
+    font-size: 1rem;
+    line-height: 1.4;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back .explanation {
+    font-size: 0.875rem;
+    padding: 0.75rem;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .card-category { font-size: 0.7rem; }
+:root[data-uredjaj~="dodir"] #flashcards.active .flip-hint { font-size: 0.75rem; }

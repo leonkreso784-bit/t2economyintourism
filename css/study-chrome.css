@@ -31,7 +31,11 @@
    kasnije u bundleu i ima jednaku specifičnost. Isti nalaz kao u C4b, treća ljuska
    po redu. U utilityju bi POBIJEDIO topbar i stranica bi narasla za visinu kroma.
 
-   `padding-bottom` ostaje ovdje jer ga `@media print` u `responsive/05` nulira. */
+   `padding-bottom` ostaje ovdje jer ga `@media print` u `responsive/05` nulira.
+
+   ⚠️ F1/12 ①: u modu KARTICA na dodiru ovu rezervu preuzima kadar
+   (`css/flashcards-section.css` §F1/12) i zamjenjuje je MJERENOM visinom donje trake —
+   inače se dvije rezerve za istu traku zbroje i stranica proskrola za razliku. */
 .study-page {
     padding-bottom: calc(80px + var(--safe-bottom));
 }

@@ -47,9 +47,31 @@ test.beforeEach(({}, testInfo) => {
  *  (4 profila × 10 ekrana ≈ 3 min), pa se ne ponavlja po tvrdnji. */
 const NALAZI = {
     otok: [], kromo: [], sukob: [], prviEkran: [], zaglavlje: [],
-    dno: [], bocno: [], spremnik: [], namjestaj: [], polja: []
+    dno: [], bocno: [], spremnik: [], namjestaj: [], polja: [], kadar: []
 };
 let izmjerenoEkrana = 0;
+
+/* ── ⑩ TINDER-KADAR: PRAG I NJEGOVA JEDINA IMENOVANA IZNIMKA (F1/12) ─────────────
+   Kriterij cigle (RASPORED §F1/12): kartica ≥ **60 % dostupnog** i ≥ **90 % širine**, a
+   stranica u modu kartica **ne skrola**. Prag stoji OVDJE, a ne u mjeraču: `phone-gate.js`
+   vraća brojke, sud je u brani (isti rez kao `KROMO_BUDZET_PCT`).
+
+   ⚠️ **POLEGNUT TELEFON JE IMENOVANA IZNIMKA, NE POPUŠTANJE — i to je izmjereno.**
+   Na 852 × 393 je `.study-mobile-nav` skrivena (`md:hidden`), pa promjenu načina učenja
+   ondje nosi traka tabova `.study-nav` — a ona je U TOKU stranice, dakle **unutar** pojasa
+   koji ova tvrdnja zove „dostupnim" (mjeri se od dna FIKSNOG/LJEPLJIVOG kroma). Račun na
+   izmjerenom: dostupno 316 px − traka tabova ≈ 68 − razmak sadržaja 8 − traka napretka 20
+   − razmak 8 − red gumba 76 = **≈ 136 px za karticu, dakle najviše ≈ 43 %**. Šezdeset posto
+   ondje ne postoji ni uz najtanji mogući kromo — tražiti ga značilo bi tražiti od cigle da
+   makne jedini preklopnik načina učenja koji polegnut telefon ima.
+   Zato polegnuti profil ima **vlastiti prag (35 %)**, dovoljno visok da uhvati regresiju
+   (danas je ondje 43 %, prije cigle 83 % uz stranicu koja skrola), a ostala dva kriterija
+   — širina i „ne skrola" — vrijede ondje **jednako kao u portretu**.
+   Presudu o polegnutom telefonu (je li 43 % dovoljno ili red gumba ondje ide USTRANU)
+   donosi Leon na svom uređaju; do tada je ovo mjera, ne dizajn. */
+const KADAR_MIN_UDIO = 0.60;
+const KADAR_MIN_UDIO_POLEGNUT = 0.35;
+const KADAR_MIN_SIRINA = 0.90;
 
 test.beforeAll(async ({ browser }, testInfo) => {
     // ⚠️ `beforeEach`-preskok NE zaustavlja `beforeAll` — bez ove straže bi se cijelo
@@ -126,6 +148,29 @@ test.beforeAll(async ({ browser }, testInfo) => {
             NALAZI.prviEkran.push(gdje(r) + ' · kromo ' + m.kromoPx + ' px'
                 + (m.bannerPx ? ' + banner ' + m.bannerPx + ' px (' + m.bannerPct + ' %)' : '')
                 + ' od ' + m.vh + ' px');
+        }
+        if (m.kadar) {
+            const k = m.kadar;
+            const polegnut = r.e.w > r.e.h;
+            const minUdio = polegnut ? KADAR_MIN_UDIO_POLEGNUT : KADAR_MIN_UDIO;
+            const udio = k.dostupnoH > 0 ? k.karticaH / k.dostupnoH : 0;
+            const sirina = k.sigurnaW > 0 ? k.karticaW / k.sigurnaW : 0;
+            // ⚠️ Postotak s DECIMALOM, i to nije uljepšavanje: 353 od 393 px je 89,8 %, što
+            // zaokruženo daje poruku „90 %, traži se 90 %" — nalaz koji izgleda kao greška brane.
+            const pct = (x) => (x * 100).toFixed(1).replace('.', ',');
+            if (udio < minUdio) {
+                NALAZI.kadar.push(gdje(r) + ' · kartica ' + k.karticaH + ' od ' + k.dostupnoH
+                    + ' px dostupnog = ' + pct(udio) + ' %, traži se ' + pct(minUdio)
+                    + ' % (kromo do ' + k.kromoDno + ', traka od ' + k.navVrh + ')');
+            }
+            if (sirina < KADAR_MIN_SIRINA) {
+                NALAZI.kadar.push(gdje(r) + ' · kartica ' + k.karticaW + ' od ' + k.sigurnaW
+                    + ' px sigurne širine = ' + pct(sirina) + ' %, traži se ' + pct(KADAR_MIN_SIRINA) + ' %');
+            }
+            if (k.skrola) {
+                NALAZI.kadar.push(gdje(r) + ' · stranica u modu kartica SKROLA: dokument '
+                    + k.docH + ' px, ekran ' + m.vh + ' px');
+            }
         }
         m.namjestaj.forEach((x) => NALAZI.namjestaj.push(gdje(r) + ' · ' + x));
         m.zaglavlja.forEach((x) => NALAZI.zaglavlje.push(gdje(r) + ' · ' + x));
@@ -219,6 +264,25 @@ test('⑨ dodir ne zumira: nijedno tekstualno polje ispod 16 px (F1/10)', async 
     // vidi samo na stranici. Do F1/10 je pravilo bilo iza njuškanja motora koje nijedan naš
     // motor ne zadovoljava — pa je brana koja bi ga mjerila bila nemoguća, ne samo odsutna.
     protivOsnovice('polja', 'NOVA polja ispod 16 px — iOS na dodir zumira (F1/10)');
+});
+
+test('⑩ u modu kartica kartica je EKRAN, a stranica ne skrola (F1/12)', async () => {
+    // Tri mjere jedne stvari — „je li kartica kadar?": koliko dostupnog pojasa uzima, koliko
+    // širine, i skrola li stranica ispod nje. Nijedna sama ne bi bila dovoljna: kartica preko
+    // cijele širine koja je visoka 200 px je traka, a kartica koja ispunjava ekran ali gura
+    // stranicu u skrol znači da kadra nema — samo je pomaknut ispod ruba.
+    //
+    // ⚠️ Obrnuta provjera (2026-09-06, prije ijedne izmjene CSS-a): na stanju `a9e10c1` je ova
+    // tvrdnja dala **9 nalaza** na 4 profila — **sva četiri profila skrolaju** (1069 / 1045 /
+    // 1081 / 1065 px dokumenta), 393 i 430 su ispod praga udjela (34 % i 30 %), a širinu
+    // probijaju 320 (88 %), 393 (89,8 %) i polegnuti (52 %). Detektor koji nije viđen crven
+    // mjeri sebe, ne stranicu.
+    //
+    // ⚠️ Zašto 320 i polegnuti NISU pali na udjelu iako je kartica ondje 200 odn. 280 px: na
+    // 320 je dostupno svega 333 px (kartica = 60,1 %, taman iznad praga), a polegnuti nema donju
+    // traku pa mu je „dostupno" 337 px uz karticu od 280 (83 %). Oba prolaze udio, a padaju na
+    // ono što udio ne vidi — širinu i skrol. Tri mjere, jer nijedna sama ne opisuje kadar.
+    protivOsnovice('kadar', 'kartica na telefonu NIJE kadar (F1/12): premala, preuska ili stranica skrola');
 });
 
 test('⓪ pokrivenost: mjerač je stvarno obišao sve ekrane i sve širine', async () => {

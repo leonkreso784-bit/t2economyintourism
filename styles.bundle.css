@@ -1692,6 +1692,9 @@ section[id$="-page"] {
 body:has(.landing-page.active) .footer, body:has(.browse-page.active) .footer {
   display: none;
 }
+:root[data-uredjaj~="dodir"] body:has(.study-page.active #flashcards.active) .footer {
+  display: none;
+}
 .cta-button {
   display: inline-flex;
   align-items: center;
@@ -2621,6 +2624,105 @@ sokrat-modal.sokrat-confirm-modal > * {
 }
 :root[data-uredjaj~="dodir"] .flashcard-ghost[hidden] {
   display: none;
+}
+:root[data-uredjaj~="dodir"] .study-page.active:has(#flashcards.active) {
+  height: calc(100dvh - var(--chrome-h));
+  padding-bottom: var(--kartica-dolje, var(--safe-bottom));
+}
+:root[data-uredjaj~="dodir"] body:has(.study-page.active #flashcards.active) {
+  padding-bottom: 0;
+  transition-property: background-color, color;
+}
+:root[data-uredjaj~="dodir"] .study-page.active:has(#flashcards.active) > .study-nav {
+  flex: 0 0 auto;
+}
+:root[data-uredjaj~="dodir"] .study-page.active:has(#flashcards.active) > .study-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding-top: 0.5rem;
+  padding-bottom: 0;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+:root[data-uredjaj~="dodir"] .study-page.active:has(#flashcards.active) #flashcards.active {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-width: none;
+  padding: 0;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-container > h1 {
+  display: none;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-stats {
+  display: none;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-progress span {
+  font-size: 0.7rem;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-progress .progress-bar {
+  flex: 1 1 auto;
+  margin-top: 0;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-wrapper {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-width: none;
+  margin: 0 0 0.5rem;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard {
+  height: 100%;
+  min-height: 0;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-inner {
+  height: 100%;
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr);
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front, :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back {
+  height: 100%;
+  min-height: 0;
+  padding: 1.25rem 1rem;
+  justify-content: safe center;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back .explanation:empty {
+  display: none;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front p {
+  font-size: 1.15rem;
+  line-height: 1.35;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back p {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back .explanation {
+  font-size: 0.875rem;
+  padding: 0.75rem;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .card-category {
+  font-size: 0.7rem;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flip-hint {
+  font-size: 0.75rem;
 }
 .quiz-container {
   max-width: 800px;

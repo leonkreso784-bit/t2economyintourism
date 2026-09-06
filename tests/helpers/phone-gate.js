@@ -504,6 +504,47 @@ function mjeri(page, rub, faza) {
         const banner = document.getElementById('cookieBanner');
         const bannerPx = (banner && stvarnoVidljiv(banner)) ? Math.round(banner.getBoundingClientRect().height) : 0;
 
+        // ── ⑩ TINDER-KADAR (cigla F1/12) ───────────────────────────────────────────
+        // Leon (2026-09-06, s previewom F1/9): „Treba kartica biti veća … kao na Tinderu."
+        // Do F1/12 je kartica na 393 px bila 353 × 200 = **34 % dostupnog**, a stranica u modu
+        // kartica je SKROLALA (1045 od 852 px) — korisnik je kroz gradivo prolazio po dvjema
+        // osima: prstom kroz špil i prstom kroz stranicu.
+        //
+        // ⚠️ **DOSTUPNO, a ne EKRAN.** Udio ekrana nije mjera kadra: otok, kromo i donja traka
+        // uzimaju svoje bez obzira na nas, pa bi ista kartica na dva uređaja dala dva broja o
+        // istoj stvari. Mjeri se pojas u kojem kartica UOPĆE SMIJE stajati: od dna gornjeg kroma
+        // (isti `kraj` koji broji tvrdnja ②) do vrha donje trake za promjenu načina učenja; kad
+        // te trake nema (≥ 48rem, dakle i polegnut telefon), donja je granica sigurni rub.
+        //
+        // ⚠️ Mjera NE SUDI — prag i njegova jedina imenovana iznimka (polegnut telefon) stoje u
+        // `phone.spec.js`, uz ostale pragove. Ovdje su samo brojke, kao i svugdje u ovom mjeraču.
+        const fcSekcija = document.getElementById('flashcards');
+        let kadar = null;
+        if (fcSekcija && fcSekcija.classList.contains('active')) {
+            const kartica = document.getElementById('flashcard');
+            const donjaTraka = document.querySelector('.study-mobile-nav');
+            const navVrh = (donjaTraka && stvarnoVidljiv(donjaTraka))
+                ? donjaTraka.getBoundingClientRect().top
+                : vh - R.bottom;
+            const kr = kartica ? kartica.getBoundingClientRect() : null;
+            const docH = document.documentElement.scrollHeight;
+            kadar = {
+                dostupnoH: Math.round(navVrh - kraj),
+                kromoDno: Math.round(kraj),
+                navVrh: Math.round(navVrh),
+                karticaH: kr ? Math.round(kr.height) : 0,
+                karticaW: kr ? Math.round(kr.width) : 0,
+                // ⚠️ Širina se mjeri protiv SIGURNE širine, ne protiv `vw`. U landscapeu izrez
+                // uzme 59 px s obje strane (13,8 % ekrana), a tvrdnja ⑦ upravo TRAŽI da ondje
+                // ne stoji ništa — pa bi „90 % od `vw`" bio kriterij koji se ispunjava samo
+                // kršenjem susjedne tvrdnje. U portretu su bočni rubovi 0 i mjera je ista.
+                sigurnaW: Math.round(vw - R.left - R.right),
+                docH: Math.round(docH),
+                // Stranica koja skrola u modu kartica znači da kadar nije kadar nego isječak.
+                skrola: docH > vh + 1
+            };
+        }
+
         // ── ③ KRATI JEDAN, LOMI SE DRUGI (mehanizam BUG-030) ──────────────────────
         // Kad u istom spremniku jedno dijete krati (`nowrap` + `ellipsis`) a drugo se
         // slobodno lomi, ono koje se lomi ODREĐUJE VISINU, a ono koje krati ne određuje
@@ -725,7 +766,8 @@ function mjeri(page, rub, faza) {
             prviUpotrebljiv: upotrebljivi.length ? ime(upotrebljivi[0].el) : '—',
             namjestaj: namjestaj,
             sitnaPolja: sitnaPolja,
-            zaglavlja: zaglavlja
+            zaglavlja: zaglavlja,
+            kadar: kadar
         };
     }, { rub: rub, faza: faza });
 }
