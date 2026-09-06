@@ -96,6 +96,39 @@ function updateFlashcard() {
     // ADR-009: render LaTeX in question/answer/explanation (KaTeX walks the text nodes).
     if (typeof renderMath === 'function') renderMath(document.getElementById('flashcard'));
     updateDeckGhosts();
+    zakaziPreljev();         // F1/12 ③: novi tekst → izmjeri prelijeva li lice ili naličje
+}
+
+/* ── F1/12 ③ — ZNAK DA IMA JOŠ (Leon s previewom, 2026-09-06) ────────────────────
+   „Neke kartice su presječene i ne vidi se sve kao odgovor na mobitelu." Kadar iz ① daje
+   kartici strop, pa dugo naličje SKROLA u sebi — a na iOS-u skroler nema klizač, pa odrezan
+   kraj izgleda kao kvar, ne kao poziv na skrol. JS zato zna jednu činjenicu koju CSS ne može
+   izmjeriti: prelijeva li se sadržaj (`scrollHeight > clientHeight`). Zapiše je kao atribut
+   `data-preljev` na lice i naličje; sve ostalo (strelica, ljepljivost) crta CSS
+   (`css/flashcards-section.css` §F1/12 ③). Bez preljeva atributa nema, pa ni strelice.
+
+   Mjeri se poslije crtanja (rAF), na dva okidača: novi tekst kartice i promjena visine kadra
+   (`osvjeziKadar` — okretanje, pragovi). Okretanje kartice NE treba mjeriti: grid-stack drži
+   OBJE strane nacrtane, pa je naličje mjerljivo i dok je skriveno. */
+let preljevZakazan = false;
+
+function oznaciPreljev() {
+    ['.flashcard-front', '.flashcard-back'].forEach((sel) => {
+        const el = typeof document.querySelector === 'function' ? document.querySelector(sel) : null;
+        if (!el || typeof el.setAttribute !== 'function') return;
+        // +1: na 2× i 3× gustoći `scrollHeight` zna biti veći za razlomak piksela i bez ikakvog
+        // preljeva — to bi nacrtalo strelicu ispod naličja koje stane cijelo.
+        if (el.scrollHeight > el.clientHeight + 1) el.setAttribute('data-preljev', '');
+        else el.removeAttribute('data-preljev');
+    });
+}
+
+function zakaziPreljev() {
+    if (preljevZakazan) return;
+    preljevZakazan = true;
+    const posao = () => { preljevZakazan = false; oznaciPreljev(); };
+    if (typeof requestAnimationFrame === 'function') requestAnimationFrame(posao);
+    else posao();
 }
 
 /**
@@ -219,6 +252,7 @@ function osvjeziKadar() {
     // `Math.ceil`: pola piksela premalo rezerve znači pola piksela skrola, a brana mjeri skrol.
     if (r && r.height > 0) korijen.style.setProperty('--kartica-dolje', Math.ceil(r.height) + 'px');
     else korijen.style.removeProperty('--kartica-dolje');
+    zakaziPreljev();         // F1/12 ③: nova visina kadra = nova granica preljeva
 }
 
 /** Prigušeno na kadar: `resize` i `ResizeObserver` znaju stići u rafalu, a mjeri se raspored. */

@@ -155,8 +155,22 @@ tvrdi(/\.flashcard-inner\s*\{[^}]*display:\s*grid/.test(fcBezKom),
     'BUG-013: grid-stack naličja je netaknut');
 tvrdi(/grid-template-rows:\s*minmax\(0,\s*1fr\)/.test(BLOK),
     'kadar redu daje STROP (`minmax(0, 1fr)`) — inače kartica naraste do sadržaja umjesto da naličje skrola u sebi');
-tvrdi(/justify-content:\s*safe center/.test(BLOK),
-    '`safe center` na skrolerima — centriran preljev bi gornji dio ostavio nedohvatljivim');
+// F1/12 ③ (Leon s previewom: „neke kartice su presječene i ne vidi se sve kao odgovor"):
+// centriranje NE SMIJE ovisiti o `safe` — motor koji ga ne zna zadrži `center`, a centriran
+// preljev na kartici sa stropom ostavlja vrh odgovora nedosežnim. Umjesto ključa: auto-margine.
+tvrdi(!/safe center/.test(BLOK),
+    '`safe center` je otišao — na motoru bez `safe` vrh preljevenog naličja je nedosežan (F1/12 ③)');
+tvrdi(/\.flashcard-back\s*\{[^}]*justify-content:\s*flex-start/.test(BLOK),
+    'skroleri počinju od vrha (`flex-start`) — skrol od nule uvijek doseže početak');
+tvrdi(/\.flashcard-back > :first-child \{ margin-top: auto; \}/.test(BLOK)
+    && /\.flashcard-back > :last-child \{ margin-bottom: auto; \}/.test(BLOK),
+    'auto-margine na prvom i zadnjem djetetu = centrirano kad stane, od vrha kad prelije');
+tvrdi(/\.flashcard-back\[data-preljev\]::after/.test(BLOK) && /position:\s*sticky/.test(BLOK),
+    'znak „ima još": ljepljiva strelica crta se SAMO uz `data-preljev`');
+tvrdi(/function oznaciPreljev\(\)/.test(FC_JS) && /scrollHeight > el\.clientHeight \+ 1/.test(FC_JS),
+    '`oznaciPreljev()` mjeri preljev (`scrollHeight > clientHeight + 1`) — jedina činjenica koju CSS ne zna');
+tvrdi((FC_JS.match(/zakaziPreljev\(\);/g) || []).length >= 2,
+    'preljev se mjeri na oba okidača: novi tekst (`updateFlashcard`) i nova visina kadra (`osvjeziKadar`)');
 
 console.log('\n── ⑨ RED GUMBA (②): ← ✕ ✓ → ─────────────────────────────────────────────');
 const RED = /<div class="flashcard-controls">([\s\S]*?)<\/div>\s*<\/div>/.exec(HTML);

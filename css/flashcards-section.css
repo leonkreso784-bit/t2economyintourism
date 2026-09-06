@@ -648,12 +648,50 @@
     height: 100%;
     min-height: 0;
     padding: 1.25rem 1rem;
-    /* ⚠️ `safe center`, ne `center`. Lice i naličje SU skroleri (`overflow-y: auto`), a
-       centriran sadržaj koji preraste spremnik prelije se na OBJE strane — gornji dio tada
-       nema kako doći na red, jer skrol ne ide u minus. `safe` se u tom slučaju ponaša kao
-       `flex-start`, inače centrira. Preglednik koji ključ ne zna odbaci deklaraciju i vrijedi
-       zatečeni `center` — dakle ponašanje otprije cigle, ne kvar. */
-    justify-content: safe center;
+    /* ⚠️ F1/12 ③ (Leon s previewom, 2026-09-06): „Neke kartice su presječene i ne vidi se sve
+       kao odgovor na mobitelu. To je veliki problem." Lice i naličje SU skroleri (`overflow-y:
+       auto`), a CENTRIRAN sadržaj koji preraste spremnik prelije se na OBJE strane — gornji dio
+       tada nema kako doći na red, jer skrol ne ide u minus. ① je to rješavao s `safe center`,
+       uz napomenu da preglednik koji ključ ne zna „zadrži `center`, dakle ponašanje otprije
+       cigle" — ali otprije cigle kartica je RASLA s tekstom, a sad ima strop: ondje gdje `safe`
+       ne postoji (iOS prije Safarija koji ga zna) vrh odgovora je odrezan i NEDOSEŽAN.
+       Zato centriranje ne ovisi ni o jednom ključu: `flex-start` + AUTO-MARGINE na prvom i
+       zadnjem djetetu. Auto-margina u flexu uzme višak prostora kad ga ima (= centrirano), a
+       kad sadržaj prelije spremnik višak je nula i sadržaj počinje od vrha (= skrol od nule).
+       Radi u svakom motoru koji zna flex, dakle u svakom koji crta ovu stranicu. */
+    justify-content: flex-start;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front > :first-child,
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back > :first-child { margin-top: auto; }
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front > :last-child,
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back > :last-child { margin-bottom: auto; }
+/* Djeca se ne smiju STISNUTI da bi stala: skroler ih mora pustiti da prerastu i doskrolaju.
+   Zadani `flex-shrink: 1` s `min-height: auto` to obično i daje, ali `.explanation` ima ispunu
+   i rub pa bi se u nekim motorima stisnuo umjesto da gurne skrol. */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front > *,
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back > * { flex-shrink: 0; }
+
+/* ── F1/12 ③ — ZNAK DA IMA JOŠ ────────────────────────────────────────────────
+   Skrol unutar kartice na iOS-u NEMA klizač, pa naličje čiji je kraj odrezan izgleda kao
+   naličje kojem je kraj odrezan — i to je drugi dio Leonova nalaza. JS (`oznaciPreljev()`)
+   stavi `data-preljev` na lice/naličje čiji `scrollHeight` premaši `clientHeight`; CSS crta
+   ljepljivu strelicu na dnu skrolera. `sticky` ju drži na donjem rubu dok se skrola, a kad
+   sadržaj dođe do kraja strelica sjedne na svoje prirodno mjesto — ispod zadnjeg retka — i
+   time sama kaže „to je sve". Nema teksta (i18n), nema ikone iz fonta: dva ruba pod kutom,
+   u boji teksta, pa vrijedi na svakoj tinti (`data-ink`). Ne crta se bez atributa. */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front[data-preljev]::after,
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back[data-preljev]::after {
+    content: "";
+    position: sticky;
+    bottom: 0;
+    flex: 0 0 auto;
+    width: 0.7rem;
+    height: 0.7rem;
+    margin: 0.5rem auto 0;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    opacity: 0.6;
 }
 /* Prazno objašnjenje je do sada bilo prazna kutija s ispunom i razmakom — na kartici od 200 px
    se gubila, na kartici od 480 px lebdi nasred naličja. */

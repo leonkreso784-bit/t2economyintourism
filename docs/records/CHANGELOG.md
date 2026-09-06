@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-06 (FABLE) — **F1/12 ③: naličje se ne reže** (`fix/kadar-nalicje`)
+
+- **Popravak** (Leon s previewom: *„neke kartice su presječene i ne vidi se sve kao odgovor"*): lice i naličje na dodiru centriraju AUTO-MARGINAMA umjesto `safe center` — motor bez `safe` (stariji iOS) je vrh preljevenog odgovora ostavljao nedosežnim; preljev sad počinje od vrha i skrola.
+- **Znak „ima još":** `data-preljev` (JS mjeri `scrollHeight > clientHeight`) → ljepljiva strelica na dnu skrolera, sjedne ispod zadnjeg retka na kraju. Bez teksta, bez ikone iz fonta.
+- Brane: `flashcard-kadar.test.js` 49 → 54 (tvrdnja o `safe center` okrenuta) · preflight EXIT 0. Playwright specovi pri spajanju u `feat/tinder-kadar`.
+
 ## 2026-09-06 (OPUS) — **F1/12: Tinder-KADAR — kartica je EKRAN, ✓ / ✕ pod palcem** (① kadar `bbd2b68` · ② gumbi `48296cf`)
 
 Leon, s previewom F1/9: *„Treba kartica biti veća i trebamo promijeniti veličinu kartica da budu kao na Tinderu."* i *„Know i don't
