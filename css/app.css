@@ -169,7 +169,7 @@
    `.fixed`, za razliku od `hidden`/`text-danger` koji ostaju jer JESU naše klase.
    Izvor kandidata i dalje postoji u kodu (`cs.position !== 'fixed'`, `js/consent.js`) —
    ali od danas taj kandidat proizvodi utility koji doista koristimo, a ne šum. */
-@source not inline("{,!}{block,blur,collapse,container,filter,inline,italic,ordinal,resize,table}");
+@source not inline("{,!}{block,blur,collapse,container,filter,inline,italic,ordinal,resize,table,transform}");
 @source not inline("{,!}{hidden,text-danger}");
 
 /* T4: `visible` je usao iz KODA, i to iz nove podvrste istog kvara. Dosad su kandidati

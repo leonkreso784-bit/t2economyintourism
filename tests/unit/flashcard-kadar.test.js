@@ -162,9 +162,29 @@ tvrdi(!/safe center/.test(BLOK),
     '`safe center` je otišao — na motoru bez `safe` vrh preljevenog naličja je nedosežan (F1/12 ③)');
 tvrdi(/\.flashcard-back\s*\{[^}]*justify-content:\s*flex-start/.test(BLOK),
     'skroleri počinju od vrha (`flex-start`) — skrol od nule uvijek doseže početak');
-tvrdi(/\.flashcard-back > :first-child \{ margin-top: auto; \}/.test(BLOK)
-    && /\.flashcard-back > :last-child \{ margin-bottom: auto; \}/.test(BLOK),
-    'auto-margine na prvom i zadnjem djetetu = centrirano kad stane, od vrha kad prelije');
+tvrdi(/\.flashcard-front > p \{ margin-top: auto; margin-bottom: auto; \}/.test(BLOK)
+    && /\.flashcard-back > p \{ margin-top: auto; \}/.test(BLOK)
+    && /\.flashcard-back > \.explanation \{ margin-bottom: auto; \}/.test(BLOK)
+    && /\.flashcard-back > \.explanation:empty \{[^}]*display: block;[^}]*margin: 0 0 auto;/.test(BLOK)
+    && !/\.explanation:empty \{ display: none; \}/.test(BLOK) && !/:has\(\+ \.explanation:empty\)/.test(BLOK),
+    'auto-margine na DJECI U TOKU (pitanje · odgovor · objašnjenje) — pilula i „okreni" su apsolutni, `:first/:last-child` na njima ne centrira (Leon: „pitanje na vrhu")');
+tvrdi(!/\.flashcard-(front|back) > :(first|last)-child/.test(BLOK),
+    'nema `:first-child`/`:last-child` na stranama — to je gurnulo pitanje preko pilule');
+// F1/12 ④ (Leon: „ne mogu skrolati još uvijek"): u miru RAVNO, 3D samo dok okret traje.
+tvrdi(/\.flashcard:not\(\.is-turning\) \.flashcard-inner \{[^}]*transform: none;[^}]*transform-style: flat;/.test(BLOK),
+    'u miru nema 3D-konteksta (`transform: none` + `transform-style: flat`) — iOS ne skrola naličje unutar okreta');
+tvrdi(/\.flashcard\.flipped:not\(\.is-turning\) \.flashcard-front \{ visibility: hidden; \}/.test(BLOK)
+    && /\.flashcard:not\(\.is-turning\):not\(\.flipped\) \.flashcard-back \{ visibility: hidden; \}/.test(BLOK),
+    'strana koja se ne vidi je `visibility: hidden` — ne prima dodir, ne krade ga skroleru');
+tvrdi(/\.flashcard\.is-restoring \.flashcard-inner \{ transition: none; \}/.test(BLOK),
+    'povratak s naličja: skok u 3D bez prijelaza, pa animacija');
+tvrdi(/function okreni\(zelim\)/.test(FC_JS) && /classList\.add\('is-turning'\)/.test(FC_JS)
+    && /addEventListener\('transitionend', naKraj\)/.test(FC_JS) && /setTimeout\(kraj, OKRET_MS\)/.test(FC_JS),
+    '`okreni()`: `is-turning` prije promjene, skida se na `transitionend` ILI rezervni timer');
+tvrdi(!/classList\.toggle\('flipped'\)/.test(FC_JS),
+    'nitko više ne togglea `flipped` izravno — klik, dodir i tipka idu kroz `okreni()`');
+tvrdi((FC_JS.match(/okreni\(\);/g) || []).length >= 2,
+    '`flipCard` (klik/tipka) i dodir bez pomaka (`swipeUp`) zovu ISTI `okreni()`');
 tvrdi(/\.flashcard-back\[data-preljev\]::after/.test(BLOK) && /position:\s*sticky/.test(BLOK),
     'znak „ima još": ljepljiva strelica crta se SAMO uz `data-preljev`');
 tvrdi(/function oznaciPreljev\(\)/.test(FC_JS) && /scrollHeight > el\.clientHeight \+ 1/.test(FC_JS),

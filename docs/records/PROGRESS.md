@@ -5,7 +5,28 @@ testirano, što slijedi.
 
 ---
 
-## 2026-09-06 (FABLE, voditelj) — F1/12 ③: naličje se više ne reže — centriranje bez `safe`, znak „ima još" (`fix/kadar-nalicje`)
+## 2026-09-06 (FABLE, voditelj) — F1/12 ③ + ④: naličje se ne reže, kartica u miru RAVNA — iOS napokon skrola (`fix/kadar-nalicje`)
+
+**④ (isti sat, Leon s previewom ③ na iPhoneu: *„Sad je pitanje na vrhu a treba bit u sredini"* i *„ne, ne mogu skrolati još uvijek"*).** Dva
+nalaza, dva uzroka. **Pitanje na vrhu** — moja greška iz ③: auto-margine na `:first-child`/`:last-child`, a pilula kategorije i poziv „okreni" su
+`position: absolute` (nisu flex-djeca), pa je jedino dijete u toku ostalo bez gornje margine i otišlo preko pilule. Sad auto-margine nose djeca U
+TOKU: pitanje (obje), odgovor (gornja), objašnjenje (donja); **prazno objašnjenje ostaje u toku kao nulta stavka** (bez ispune/ruba/visine), jer
+nosi donju marginu — prvi pokušaj `p:has(+ .explanation:empty)` Chromium primjenjuje, a **WebKit 2287 ne invalidira `:has()`** kad sestra postane
+prazna (izmjereno: odgovor 176 px ispod sredine). **Ne skrola** — treći uzrok, koji headless ne vidi: naličje je skroler UNUTAR 3D-okreta
+(`preserve-3d` + `rotateY(180deg)` + `backface-visibility: hidden` na obje strane), a iOS dodir na okrenutoj kartici ne dovodi do skrolera (hit-test
+kroz sakrivenu stražnju stranu lica). **Rješenje: 3D samo dok okret traje.** `okreni()` u `flashcards.js` (klik, tipka i dodir bez pomaka idu kroz
+NJEGA — `classList.toggle('flipped')` više nitko ne zove) stavi `is-turning` prije promjene i makne ga na `transitionend` ILI rezervni timer (700 ms,
+`gen`-straža, isti obrazac kao let u F1/9); u miru CSS pod atributom uređaja daje `transform: none` + `transform-style: flat`, `backface-visibility:
+visible`, a strana koja se ne vidi je `visibility: hidden` (ne prima dodir). Povratak s naličja = `is-restoring` (bez prijelaza) → reflow → animacija,
+inače bi se okret zavrtio iz ravnog stanja u krivu stranu. `updateFlashcard` briše sve tri klase i poništava stari okret. Bez `.flashcard-inner`
+(unit-pješčanik) `okreni()` samo mijenja stanje — inače bi `is-turning` čekao `transitionend` koji nikad ne dođe (5 od 79 tvrdnji F1/9 to je
+odmah uhvatilo). **Izmjereno (Chromium + WebKit, 393×852):** pitanje centrirano (0 px od sredine lica) · odgovor s objašnjenjem centriran kao
+skupina · bez objašnjenja 0 px od sredine · dugo naličje kreće 23 px od vrha (= ispuna) i skrola · tijekom okreta `preserve-3d` + `is-turning`, u
+miru `none/flat`, lice `hidden` kad je naličje gore i obrnuto · povratak vraća lice. **Brane:** `flashcard-kadar.test.js` 54 → **61** (auto-margine
+samo na djeci u toku, nema `:first/:last-child`, nulta stavka umjesto `:has`, ravno stanje, `okreni()` kroz sve tri ulazne točke) ·
+`flashcard-swipe.test.js` 79/79 · preflight EXIT 0. **Stolno netaknuto:** sav CSS pod `:root[data-uredjaj~="dodir"]`; JS klase se
+toggleaju i ondje, ali bez CSS-a nemaju učinak. ⚠️ Presuda je i dalje Leonov iPhone — headless WebKit skrolao je i prije ④.
+
 
 Leon s previewom F1/12 na iPhoneu: *„Dobro je napravljeno … Neke kartice su presječene i ne vidi se sve kao odgovor na mobitelu. To je veliki problem."* Reprodukcija u headless Chromiumu I WebKitu (2287, 393×852, ubrizgan odgovor od 650 znakova + objašnjenje): vrh NIJE odrezan, naličje skrola 81 px — oba motora znaju `safe center`. Dva uzroka koja headless ne vidi, a iPhone da: ① iOS koji `safe` NE zna zadrži `center`, a centriran preljev na kartici sa stropom (F1/12 ①) ostavlja VRH odgovora nedosežnim — skrol ne ide u minus; ② skroler na iOS-u nema klizač, pa odrezan kraj ne izgleda kao poziv na skrol nego kao kvar. **Popravak (CSS + 30 r. JS-a, sve pod `:root[data-uredjaj~="dodir"]`):** `flex-start` + AUTO-MARGINE na prvom i zadnjem djetetu lica/naličja (višak prostora → centrirano; preljev → od vrha; radi u svakom motoru s flexom) · `flex-shrink: 0` na djeci (`.explanation` s ispunom se ne smije stisnuti) · `oznaciPreljev()` u `flashcards.js` upiše `data-preljev` na lice/naličje čiji `scrollHeight > clientHeight + 1` (rAF; okidači: novi tekst kartice i `osvjeziKadar`), CSS crta **ljepljivu strelicu** na dnu skrolera (dva ruba pod kutom u `currentColor`, bez teksta i bez ikone iz fonta) koja sjedne ispod zadnjeg retka kad se doskrola. Izmjereno poslije (Chromium + WebKit): `justify-content: flex-start`, odgovor kreće na vrhu naličja (162 px = vrh + ispuna), skrol 103 px, atribut `false` na kartici koja stane i `true` na dugoj, `::after` sticky. **Brane:** `flashcard-kadar.test.js` 49 → **54** (tvrdnja o `safe center` OKRENUTA: sad tvrdi da ga NEMA, plus auto-margine, strelica samo uz atribut, mjerač na oba okidača) · `flashcard-swipe.test.js` zelen · **preflight EXIT 0** · `build:css` + bump. ⚠️ Playwright specovi (phone ⑩, swipe) NISU vrćeni u ovom stablu — port 5050 dijeli agent F1/13; vrte se pri spajanju u `feat/tinder-kadar`. **Otvoreno za Leona:** može li na iPhoneu prstom skrolati UNUTAR okrenute kartice — ako ne, uzrok je treći (iOS i skroler unutar 3D-okreta) i traži ravno stanje poslije okreta. Rađeno u zasebnom worktreeu `sokratstudy.fix` (grana `fix/kadar-nalicje` od `c3bd1dd`) da se ne dira stablo agenta F1/13; spaja se poslije njega. **Zapisano, ne građeno:** Leon isti sat: *„treći gumb kao zvjezdica da se stisne i onda se kartica sejva ili posebno označi"* → nova cigla poslije F1/13 (ulazi u tablicu akcija); otvoreno gdje spremljene kartice žive.
 

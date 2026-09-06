@@ -55,7 +55,58 @@ function flipCard() {
     // na istom elementu) — taj klik je REP GESTE, ne „okreni". Zastavicu diže samo dodirna gesta;
     // sljedeći `pointerdown` je briše, pa klik koji nikad ne stigne ne može progutati idući dodir.
     if (swipe.progutajKlik) { swipe.progutajKlik = false; return; }
-    document.getElementById('flashcard').classList.toggle('flipped');
+    okreni();
+}
+
+/* ── F1/12 ④ — OKRET S RAVNIM MIROM (Leon, iPhone, 06.09.: „ne mogu skrolati još uvijek") ──
+   Na dodiru je kartica u miru RAVNA (CSS §F1/12 ④: bez `preserve-3d`, bez rotacije, nevidljiva
+   strana `visibility: hidden`), jer iOS ne skrola naličje unutar 3D-okreta. 3D postoji samo dok
+   traje animacija: `is-turning` se stavi PRIJE promjene `flipped` i makne na `transitionend`
+   (ili rezervni timer — isti obrazac kao let u F1/9, jer `transitionend` zna izostati).
+   Povratak s naličja ide u dva koraka: `is-restoring` (bez prijelaza) vrati 3D-okrenuto stanje,
+   reflow, pa se `flipped` makne → animacija 180° → 0°. Bez toga bi se okret vrtio iz ravnog
+   stanja u krivu stranu. `gen` štiti od starog timera koji bi maknuo `is-turning` novom okretu.
+   Stolno: klase se toggleaju isto, ali CSS pod atributom uređaja ondje ne postoji → kao dosad. */
+const OKRET_MS = 700;   // > 0.6 s prijelaza `.flashcard-inner`; reduced-motion ga skrati, timer to ne smeta
+let okretGen = 0;
+
+function okreni(zelim) {
+    const el = document.getElementById('flashcard');
+    if (!el || !el.classList) return;
+    const okrenuta = typeof el.classList.contains === 'function' && el.classList.contains('flipped');
+    const cilj = (zelim === undefined) ? !okrenuta : !!zelim;
+    if (cilj === okrenuta) return;
+    okretGen += 1;
+    const gen = okretGen;
+    // Bez `.flashcard-inner` nema što animirati (unit-pješčanik, ogoljen DOM): samo stanje, bez
+    // `is-turning` — klasa koja čeka `transitionend` koji nikad ne dođe ostala bi zauvijek.
+    const inner = typeof el.querySelector === 'function' ? el.querySelector('.flashcard-inner') : null;
+    if (!inner) {
+        if (okrenuta) el.classList.remove('flipped'); else el.classList.add('flipped');
+        return;
+    }
+    el.classList.add('is-turning');
+    if (okrenuta) {
+        el.classList.add('is-restoring');
+        void el.offsetWidth;                 // reflow: skok u 3D-okrenuto se mora NACRTATI prije animacije
+        el.classList.remove('is-restoring');
+        el.classList.remove('flipped');
+    } else {
+        el.classList.add('flipped');
+    }
+    let timer = null;
+    const kraj = () => {
+        if (gen !== okretGen) return;
+        if (inner && typeof inner.removeEventListener === 'function') inner.removeEventListener('transitionend', naKraj);
+        el.classList.remove('is-turning');
+    };
+    const naKraj = (e) => {
+        if (e && (e.target !== inner || (e.propertyName && e.propertyName !== 'transform'))) return;
+        if (timer !== null) clearTimeout(timer);
+        kraj();
+    };
+    if (inner && typeof inner.addEventListener === 'function') inner.addEventListener('transitionend', naKraj);
+    timer = setTimeout(kraj, OKRET_MS);
 }
 
 /**
@@ -91,7 +142,12 @@ function updateFlashcard() {
     document.getElementById('cardAnswer').textContent = card.answer;
     document.getElementById('cardExplanation').textContent = card.explanation || '';
 
-    document.getElementById('flashcard').classList.remove('flipped');
+    // F1/12 ④: nova kartica = lice odmah, bez animacije; stari okret (ako još traje) se poništava.
+    okretGen += 1;
+    const fc = document.getElementById('flashcard');
+    fc.classList.remove('flipped');
+    fc.classList.remove('is-turning');
+    fc.classList.remove('is-restoring');
 
     // ADR-009: render LaTeX in question/answer/explanation (KaTeX walks the text nodes).
     if (typeof renderMath === 'function') renderMath(document.getElementById('flashcard'));
@@ -385,7 +441,7 @@ function swipeUp(e) {
         // dodira (i 3 s kasnije; spor zamah ne), a `pointerdown`/`pointerup` stignu uredno. Da tap ne
         // ovisi o tome hoće li preglednik sintetizirati klik, okreće se na `pointerup`, a klik koji
         // ipak stigne guta zastavica gore (sljedeći `pointerdown` je briše).
-        document.getElementById('flashcard').classList.toggle('flipped');
+        okreni();                        // F1/12 ④: isti okret kao klik — 3D samo dok animacija traje
         return;
     }
     el.classList.remove('is-dragging');
