@@ -1,17 +1,21 @@
 const { test, expect } = require('@playwright/test');
 
 /**
- * F1/9 — kartice kao Tinder-špil na DODIRU, izmjereno PRAVIM dodirom.
+ * F1/13 — palac LISTA, gumbi SUDE; izmjereno PRAVIM dodirom.
  *
  * Dodir ide kroz CDP (`Input.dispatchTouchEvent`), ne kroz sintetički `PointerEvent`: samo tako
  * preglednik sam prevede dodir u pointer-događaje I primijeni `touch-action` — a upravo je
- * `touch-action: pan-y` na kartici tvrdnja koju sintetički događaj ne može izmjeriti (reset F1/11
- * `pan-x pan-y` daje vodoravan dodir pregledniku, koji ga nema kamo dati). Zadnji test to dokazuje
- * protučinjenično: s vraćenim resetom na kartici ista gesta ne upisuje ništa.
+ * `touch-action: pan-y` na kartici I na njezinim skrolerima tvrdnja koju sintetički događaj ne može
+ * izmjeriti (reset F1/11 `pan-x pan-y` daje vodoravan dodir pregledniku, koji ga nema kamo dati).
+ * Zadnji test to dokazuje protučinjenično: s vraćenim resetom na licu/naličju ista gesta ne radi ništa.
  *
- * Gesta u pješčaniku (rubovi: rep-klik, cancel, timer, novi špil usred leta) je u
- * `tests/unit/flashcard-swipe.test.js`; ovdje je ono što traži pravi motor: dodir → gesta → upis →
- * brojka na ekranu, pečat koji raste s prstom, i špil koji se crta samo pod `data-uredjaj~="dodir"` (F1/12 ⓪).
+ * ⚠️ ŠTO SE OD F1/13 MJERI DRUKČIJE (Leon, 2026-09-06, s previewom F1/9): gesta LISTA
+ * (desno = sljedeća, lijevo = prethodna) i **ne upisuje ništa**; sud je na gumbima ✓ / ✕ (i tipkama
+ * Z / X), koji lete naprijed s pečatom. Zato ovdje stoji i tvrdnja koje prije nije bilo: poslije
+ * povlačenja moraju brojke „znam / ne znam" ostati na **0 / 0**.
+ *
+ * Gesta u pješčaniku (rubovi: rep-klik, cancel, timer, novi špil usred leta, tablica akcija) je u
+ * `tests/unit/flashcard-swipe.test.js`; ovdje je ono što traži pravi motor.
  */
 
 const KARTICA = '#flashcard';
@@ -82,6 +86,7 @@ const stanje = (page) => page.evaluate(() => {
         flipped: el.classList.contains('flipped'),
         klase: Array.from(el.classList).filter((k) => /^is-/.test(k)),
         x: el.style.getPropertyValue('--swipe-x'),
+        p: el.style.getPropertyValue('--swipe-p'),
     };
 });
 
@@ -90,35 +95,61 @@ const sletjela = (page) => page.waitForFunction(() => {
     return !c.contains('is-flying') && !c.contains('is-entering') && !c.contains('is-dragging');
 });
 
-test.describe('F1/9 — kartice kao Tinder-špil na dodiru', () => {
+/** Klik na gumb i ODMAH mjera — u istoj zadaći, dakle prije nego let sleti. */
+const sudiPaMjeri = (page, gumb) => page.evaluate((id) => {
+    document.getElementById(id).click();
+    const el = document.getElementById('flashcard');
+    const z = getComputedStyle(el.querySelector('.swipe-stamp--know'));
+    const n = getComputedStyle(el.querySelector('.swipe-stamp--dont'));
+    return {
+        klase: Array.from(el.classList).filter((k) => /^is-/.test(k)),
+        p: el.style.getPropertyValue('--swipe-p'),
+        x: parseFloat(el.style.getPropertyValue('--swipe-x')),
+        znamVid: z.visibility, znamOp: parseFloat(z.opacity),
+        neVid: n.visibility, neOp: parseFloat(n.opacity),
+        index: AppState.cards.index, known: AppState.cards.known.slice(), unknown: AppState.cards.unknown.slice(),
+    };
+}, gumb);
+
+test.describe('F1/13 — palac lista, gumbi sude (dodir)', () => {
     test.beforeEach(async ({ page }) => {
         await otvoriKartice(page);
     });
 
-    test('desno = znam, lijevo = ne znam — upis kroz markKnown/markUnknown, brojke na ekranu', async ({ page }) => {
+    test('desno = SLJEDEĆA, lijevo = PRETHODNA — i nijedno ne upisuje ništa', async ({ page }) => {
         const errors = [];
         page.on('pageerror', (e) => errors.push(e.message));
         expect(await stanje(page)).toMatchObject({ index: 0, known: [], unknown: [], flipped: false, klase: [] });
 
         await povuci(page, 0.6);
         await sletjela(page);
-        await expect(page.locator('#knownCount')).toHaveText('1');
-        expect(await stanje(page)).toMatchObject({ index: 1, known: [0], unknown: [], klase: [], x: '' });
+        expect(await stanje(page)).toMatchObject({ index: 1, known: [], unknown: [], klase: [], x: '', p: '' });
+        // ⚠️ Srce cigle: listanje NIJE sud. Brojke na ✓ / ✕ moraju ostati 0 / 0, i to je ono što je
+        // do F1/13 bilo 1 / 0 — mjeri se ekran, ne samo `AppState`.
+        await expect(page.locator('#knownCount')).toHaveText('0');
+        await expect(page.locator('#unknownCount')).toHaveText('0');
+        expect(await page.evaluate(() => progress.flashcardsLearned.length)).toBe(0);
+
+        await povuci(page, 0.6);
+        await sletjela(page);
+        expect(await stanje(page)).toMatchObject({ index: 2, known: [], unknown: [] });
 
         await povuci(page, -0.6);
         await sletjela(page);
-        await expect(page.locator('#unknownCount')).toHaveText('1');
-        expect(await stanje(page)).toMatchObject({ index: 2, known: [0], unknown: [1], klase: [], x: '' });
-
-        // known se slijeva u progress.flashcardsLearned — isti put kao gumb (saveFlashcardProgress)
-        expect(await page.evaluate(() => progress.flashcardsLearned.includes(0))).toBe(true);
+        expect(await stanje(page)).toMatchObject({ index: 1, known: [], unknown: [], klase: [], x: '' });
+        await expect(page.locator('#knownCount')).toHaveText('0');
+        await expect(page.locator('#unknownCount')).toHaveText('0');
         expect(errors).toEqual([]);
     });
 
-    test('kratko povlačenje se vraća bez upisa; dodir bez pomaka okreće', async ({ page }) => {
+    test('prva kartica + lijevo = ODSKOK (nema ispred čega), kratko povlačenje se vraća, dodir okreće', async ({ page }) => {
+        await povuci(page, -0.6);
+        await page.waitForTimeout(400);
+        expect(await stanje(page)).toMatchObject({ index: 0, known: [], unknown: [], klase: [], x: '' });
+
         await povuci(page, 0.12);
         await sletjela(page);
-        expect(await stanje(page)).toMatchObject({ index: 0, known: [], unknown: [], flipped: false, klase: [], x: '' });
+        expect(await stanje(page)).toMatchObject({ index: 0, klase: [], x: '' });
 
         await dodirni(page);
         await expect(page.locator(KARTICA)).toHaveClass(/flipped/);
@@ -127,28 +158,52 @@ test.describe('F1/9 — kartice kao Tinder-špil na dodiru', () => {
         expect(await stanje(page)).toMatchObject({ index: 0, known: [], unknown: [] });
     });
 
-    test('pečat raste s prstom i vidi se SAMO dok gesta traje', async ({ page }) => {
-        const prst = await povuci(page, 0.2, false);   // prst još drži
+    test('pečata NEMA pod prstom (gesta ne sudi), a ✓ / ✕ lete naprijed s pečatom i upisuju', async ({ page }) => {
+        const prst = await povuci(page, 0.35, false);   // prst još drži
         const usred = await page.evaluate(() => {
             const el = document.getElementById('flashcard');
             const z = getComputedStyle(el.querySelector('.swipe-stamp--know'));
             const n = getComputedStyle(el.querySelector('.swipe-stamp--dont'));
-            return { klase: Array.from(el.classList).filter((k) => /^is-/.test(k)), znamVid: z.visibility, znamOp: parseFloat(z.opacity), neznamOp: parseFloat(n.opacity), x: el.style.getPropertyValue('--swipe-x') };
+            return { klase: Array.from(el.classList).filter((k) => /^is-/.test(k)), znamVid: z.visibility, neVid: n.visibility, x: el.style.getPropertyValue('--swipe-x'), p: el.style.getPropertyValue('--swipe-p') };
         });
         expect(usred.klase).toEqual(['is-dragging']);
-        expect(usred.znamVid).toBe('visible');
-        expect(usred.znamOp).toBeGreaterThan(0.3);
-        expect(usred.neznamOp).toBe(0);
         expect(parseFloat(usred.x)).toBeGreaterThan(10);
-
+        expect(usred.p).toBe('');                        // sud se pod prstom ne piše
+        expect(usred.znamVid).toBe('hidden');
+        expect(usred.neVid).toBe('hidden');
         await podigni(prst);
         await sletjela(page);
+
+        // ✓ = znam: let NAPRIJED (+x), pečat „Znam" pun, „Ne znam" nevidljiv, upis TEK po slijetanju
+        const znam = await sudiPaMjeri(page, 'btnCorrect');
+        expect(znam.klase.sort()).toEqual(['is-flying', 'is-sud']);
+        expect(znam.p).toBe('1');
+        expect(znam.x).toBeGreaterThan(0);
+        expect(znam.znamVid).toBe('visible');
+        expect(znam.znamOp).toBe(1);
+        expect(znam.neOp).toBe(0);
+        expect(znam.known).toEqual([]);                  // upis čeka slijetanje
+        await sletjela(page);
+        await expect(page.locator('#knownCount')).toHaveText('1');
+        expect(await stanje(page)).toMatchObject({ index: 2, known: [1], klase: [] });
+        expect(await page.evaluate(() => progress.flashcardsLearned.includes(1))).toBe(true);
+
+        // ✕ = ne znam: ISTI smjer leta (naprijed), suprotan pečat
+        const ne = await sudiPaMjeri(page, 'btnWrong');
+        expect(ne.klase.sort()).toEqual(['is-flying', 'is-sud']);
+        expect(ne.p).toBe('-1');
+        expect(ne.x).toBeGreaterThan(0);
+        expect(ne.neVid).toBe('visible');
+        expect(ne.neOp).toBe(1);
+        expect(ne.znamOp).toBe(0);
+        await sletjela(page);
+        await expect(page.locator('#unknownCount')).toHaveText('1');
+        expect(await stanje(page)).toMatchObject({ index: 3, unknown: [2], klase: [] });
         const poslije = await page.evaluate(() => getComputedStyle(document.querySelector('.swipe-stamp--know')).visibility);
         expect(poslije).toBe('hidden');
-        expect(await stanje(page)).toMatchObject({ index: 0, known: [], unknown: [] });
     });
 
-    test('špil: dvije sjene ispod kartice na dodiru, nijedna na zadnjoj', async ({ page }) => {
+    test('špil: sjene VIRE DESNO, unutar ekrana, i nijedne na zadnjoj kartici', async ({ page }) => {
         // F1/12 ⓪: CSS špila pita PLATFORMU (`:root[data-uredjaj~="dodir"]`, boot.js), ne medij — tvrdi se ono što CSS čita.
         expect(await page.evaluate(() => ({
             atribut: document.documentElement.getAttribute('data-uredjaj').split(' ').includes('dodir'),
@@ -160,8 +215,18 @@ test.describe('F1/9 — kartice kao Tinder-špil na dodiru', () => {
             sljedeca: (AppState.cards.deck[1].color || AppState.cards.deck[1].catColor || ''),
         }));
         expect(boja.g1).toBe(boja.sljedeca);
+
+        // ⚠️ F1/13: sjene se od kadra (F1/12) više ne vide odozdo — visoka kartica ih proguta. Mjeri se
+        // DESNI RUB: svaka sljedeća viri malo dalje, a najdalja i dalje stoji unutar ekrana.
+        const r = await page.evaluate(() => {
+            const rub = (id) => document.getElementById(id).getBoundingClientRect();
+            return { kartica: rub('flashcard').right, g1: rub('flashcardGhost1').right, g2: rub('flashcardGhost2').right, vw: window.innerWidth, doc: document.documentElement.scrollWidth };
+        });
+        expect(r.g1).toBeGreaterThan(r.kartica);
+        expect(r.g2).toBeGreaterThan(r.g1);
+        expect(r.g2).toBeLessThanOrEqual(r.vw);
         // sjene ne šire stranicu (phone-gate mjeri to i sam; ovdje izravno)
-        expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+        expect(r.doc).toBeLessThanOrEqual(r.vw);
 
         await page.evaluate(() => { AppState.cards.index = AppState.cards.deck.length - 1; updateFlashcard(); });
         await expect(page.locator('.flashcard-ghost:visible')).toHaveCount(0);
@@ -169,32 +234,17 @@ test.describe('F1/9 — kartice kao Tinder-špil na dodiru', () => {
         await expect(page.locator('.flashcard-ghost:visible')).toHaveCount(1);
     });
 
-    test('strelice = stolni pandan palcu: → znam · ← ne znam · razmak okreće (F1/9 ②)', async ({ page }) => {
-        await page.keyboard.press('ArrowRight');
-        await sletjela(page);
-        await expect(page.locator('#knownCount')).toHaveText('1');
-        expect(await stanje(page)).toMatchObject({ index: 1, known: [0], klase: [] });
-        await page.keyboard.press('ArrowLeft');
-        await sletjela(page);
-        await expect(page.locator('#unknownCount')).toHaveText('1');
-        expect(await stanje(page)).toMatchObject({ index: 2, unknown: [1], klase: [] });
-        await page.keyboard.press('Space');
-        await expect(page.locator(KARTICA)).toHaveClass(/flipped/);
-        await page.keyboard.press('Enter');
-        await expect(page.locator(KARTICA)).not.toHaveClass(/flipped/);
-        // u polju za unos strelica je strelica: kviz-tražilica nije tu, ali gumb „Znam" jest → fokusiraj ga
-        await page.focus('#btnCorrect');
-        await page.keyboard.press('ArrowRight');
-        await page.waitForTimeout(150);
-        expect(await stanje(page)).toMatchObject({ index: 2, known: [0], unknown: [1] });
-    });
-
-    test('prefers-reduced-motion: upis bez leta', async ({ page }) => {
+    test('prefers-reduced-motion: listanje i upis bez leta', async ({ page }) => {
         await page.emulateMedia({ reducedMotion: 'reduce' });
         await povuci(page, 0.6);
         await sletjela(page);
+        expect(await stanje(page)).toMatchObject({ index: 1, known: [], klase: [] });
+        await page.click('#btnCorrect');
         await expect(page.locator('#knownCount')).toHaveText('1');
-        expect(await stanje(page)).toMatchObject({ index: 1, known: [0], klase: [] });
+        // Upis je i bez leta trenutan, ali klasa ulaska (što gasi prijelaze) živi još dva kadra —
+        // mjeri se STANJE poslije nje, inače brana hvata sam sebe u utrci s rAF-om.
+        await sletjela(page);
+        expect(await stanje(page)).toMatchObject({ index: 2, known: [1], klase: [] });
     });
 
     test('protučinjenično: `touch-action` se čita na SKROLERU (lice/naličje), ne na kartici — reset ondje gasi gestu', async ({ page }) => {
@@ -203,21 +253,63 @@ test.describe('F1/9 — kartice kao Tinder-špil na dodiru', () => {
         await page.evaluate(() => { document.getElementById('flashcard').style.touchAction = 'pan-x pan-y'; });
         await povuci(page, 0.6);
         await sletjela(page);
-        expect(await stanje(page)).toMatchObject({ index: 1, known: [0], klase: [] });
-        // ② reset na licu i naličju = preglednik uzme vodoravni dodir za pomicanje → `pointercancel` → nema upisa
+        expect(await stanje(page)).toMatchObject({ index: 1, klase: [] });
+        // ② reset na licu i naličju = preglednik uzme vodoravni dodir za pomicanje → `pointercancel` → gesta ne radi
         await page.evaluate(() => {
             document.getElementById('flashcard').style.removeProperty('touch-action');
             document.querySelectorAll('.flashcard-front, .flashcard-back').forEach((el) => { el.style.touchAction = 'pan-x pan-y'; });
         });
         await povuci(page, 0.6);
         await page.waitForTimeout(400);
-        expect(await stanje(page)).toMatchObject({ index: 1, known: [0], unknown: [], klase: [] });
-        // ③ vraćeno: ista gesta opet upisuje
+        expect(await stanje(page)).toMatchObject({ index: 1, known: [], unknown: [], klase: [] });
+        // ③ vraćeno: ista gesta opet lista
         await page.evaluate(() => {
             document.querySelectorAll('.flashcard-front, .flashcard-back').forEach((el) => el.style.removeProperty('touch-action'));
         });
         await povuci(page, 0.6);
         await sletjela(page);
-        expect(await stanje(page)).toMatchObject({ index: 2, known: [0, 1] });
+        expect(await stanje(page)).toMatchObject({ index: 2 });
+    });
+});
+
+/* ── STOLNO: SVE TIPKAMA (Leon: „da se sve može tipkama kontrolirati") ──────────
+   Stolni kontekst ne ovisi o iPhone profilu, pa se mjeri jednom — isti rez koji `uredjaj.spec.js`
+   već koristi za svoj stolni describe. */
+test.describe('F1/13 — stolno: sve tipkama (1280×800, bez dodira)', () => {
+    test.use({ hasTouch: false, isMobile: false, viewport: { width: 1280, height: 800 } });
+
+    test('← → listaju · razmak/Enter okreće · Z = znam · X = ne znam', async ({ page }, testInfo) => {
+        test.skip(testInfo.project.name !== 'iPhone-SE-375', 'stolni kontekst je isti u svakom profilu');
+        const errors = [];
+        page.on('pageerror', (e) => errors.push(e.message));
+        await otvoriKartice(page);
+
+        await page.keyboard.press('ArrowRight');
+        expect(await stanje(page)).toMatchObject({ index: 1, known: [], unknown: [] });
+        await page.keyboard.press('ArrowRight');
+        expect(await stanje(page)).toMatchObject({ index: 2, known: [], unknown: [] });
+        await page.keyboard.press('ArrowLeft');
+        expect(await stanje(page)).toMatchObject({ index: 1, known: [], unknown: [] });
+        await expect(page.locator('#knownCount')).toHaveText('0');
+
+        await page.keyboard.press('Space');
+        await expect(page.locator(KARTICA)).toHaveClass(/flipped/);
+        await page.keyboard.press('Enter');
+        await expect(page.locator(KARTICA)).not.toHaveClass(/flipped/);
+
+        await page.keyboard.press('z');
+        await sletjela(page);
+        await expect(page.locator('#knownCount')).toHaveText('1');
+        expect(await stanje(page)).toMatchObject({ index: 2, known: [1] });
+        await page.keyboard.press('x');
+        await sletjela(page);
+        await expect(page.locator('#unknownCount')).toHaveText('1');
+        expect(await stanje(page)).toMatchObject({ index: 3, unknown: [2] });
+
+        // strelice-gumbi su na stolnom VIDLJIVI i klikaju isto (na dodiru ih CSS sklanja)
+        await expect(page.locator('#btnPrev')).toBeVisible();
+        await page.click('#btnPrev');
+        expect(await stanje(page)).toMatchObject({ index: 2 });
+        expect(errors).toEqual([]);
     });
 });

@@ -167,6 +167,7 @@
     'fc.know': { en: 'Know', hr: 'Znam' },
     'fc.prev': { en: 'Previous card', hr: 'Prethodna kartica' },   // a11y aria-label (F3 3E)
     'fc.next': { en: 'Next card', hr: 'Sljedeća kartica' },        // a11y aria-label (F3 3E)
+    'fc.flip': { en: 'Flip card', hr: 'Okreni karticu' },          // F1/13: ime radnje u tablici AKCIJE (tutorial F1/14 ga čita)
 
     // Zajednički gumbi
     'common.previous': { en: 'Previous', hr: 'Prethodno' },

@@ -2574,7 +2574,12 @@ sokrat-modal.sokrat-confirm-modal > * {
   transition: none;
 }
 .flashcard.is-entering {
-  transform: translateY(8px) scale(0.96);
+  transform-origin: right center;
+  transform: translateX(5px) scale(0.97);
+}
+.flashcard.is-entering.is-slijeva {
+  transform-origin: left center;
+  transform: translateX(-24px) scale(0.97);
 }
 .swipe-stamp {
   position: absolute;
@@ -2602,13 +2607,13 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--color-on-danger);
   transform: rotate(8deg);
 }
-.flashcard.is-dragging .swipe-stamp, .flashcard.is-flying .swipe-stamp {
+.flashcard.is-sud .swipe-stamp {
   visibility: visible;
 }
-.flashcard.is-dragging .swipe-stamp--know, .flashcard.is-flying .swipe-stamp--know {
+.flashcard.is-sud .swipe-stamp--know {
   opacity: clamp(0, var(--swipe-p, 0), 1);
 }
-.flashcard.is-dragging .swipe-stamp--dont, .flashcard.is-flying .swipe-stamp--dont {
+.flashcard.is-sud .swipe-stamp--dont {
   opacity: clamp(0, calc(-1 * var(--swipe-p, 0)), 1);
 }
 .flashcard-ghost {
@@ -2633,11 +2638,14 @@ sokrat-modal.sokrat-confirm-modal > * {
 :root[data-uredjaj~="dodir"] .flashcard-ghost[data-ink] {
   background: var(--item-acc);
 }
+:root[data-uredjaj~="dodir"] .flashcard-ghost {
+  transform-origin: right center;
+}
 :root[data-uredjaj~="dodir"] .flashcard-ghost--1 {
-  transform: translateY(8px) scale(0.96);
+  transform: translateX(5px) scale(0.97);
 }
 :root[data-uredjaj~="dodir"] .flashcard-ghost--2 {
-  transform: translateY(16px) scale(0.92);
+  transform: translateX(10px) scale(0.94);
 }
 :root[data-uredjaj~="dodir"] .flashcard-ghost[hidden] {
   display: none;

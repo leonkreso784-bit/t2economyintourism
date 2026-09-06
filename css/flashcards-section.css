@@ -456,10 +456,14 @@
     pointer-events: none;
 }
 /* Nova kartica ulazi bez ijednog prijelaza (ni okretanja naličja natrag, ni leta s ruba); klasa
-   živi jedan kadar, a mali skok iz položaja gornje sjene je ono što se vidi kad se skine. */
+   živi jedan kadar, a mali skok iz položaja gornje sjene je ono što se vidi kad se skine.
+   F1/13: ULAZ IMA SMJER. Naprijed kartica dolazi iz špila, dakle S DESNA i s istim `transform-origin`
+   kao sjene (`right center`) — inače bi „skok" krenuo s druge strane od one na kojoj špil stoji.
+   Natrag (`is-slijeva`, palac lijevo ili ←) dolazi S LIJEVA, jer je prethodna kartica ondje i otišla. */
 .flashcard.is-entering,
 .flashcard.is-entering .flashcard-inner { transition: none; }
-.flashcard.is-entering { transform: translateY(8px) scale(0.96); }
+.flashcard.is-entering { transform-origin: right center; transform: translateX(5px) scale(0.97); }
+.flashcard.is-entering.is-slijeva { transform-origin: left center; transform: translateX(-24px) scale(0.97); }
 
 .swipe-stamp {
     position: absolute;
@@ -479,12 +483,13 @@
 /* Semantika = PUNA ISPUNA, tinta po temi (ADR-032) — isti par tokena kao gumbi „Znam / Ne znam". */
 .swipe-stamp--know { left: 1rem; background: var(--color-ok); color: var(--color-on-ok); }
 .swipe-stamp--dont { right: 1rem; background: var(--color-danger); color: var(--color-on-danger); transform: rotate(8deg); }
-.flashcard.is-dragging .swipe-stamp,
-.flashcard.is-flying .swipe-stamp { visibility: visible; }
-.flashcard.is-dragging .swipe-stamp--know,
-.flashcard.is-flying .swipe-stamp--know { opacity: clamp(0, var(--swipe-p, 0), 1); }
-.flashcard.is-dragging .swipe-stamp--dont,
-.flashcard.is-flying .swipe-stamp--dont { opacity: clamp(0, calc(-1 * var(--swipe-p, 0)), 1); }
+/* ⚠️ F1/13: PEČAT SE VIŠE NE VIDI DOK PRST VUČE. Gesta od F1/13 LISTA (desno = sljedeća, lijevo =
+   prethodna) i ništa ne upisuje, pa bi pečat „Znam" pod palcem obećavao sud kojeg nema. Vidi se samo
+   u letu koji sud NOSI (`is-sud`, s gumba ✓ / ✕ ili tipke Z / X); `--swipe-p` je tada +1 / −1 i
+   bira KOJI pečat, dok `--swipe-x` govori samo kamo kartica leti (uvijek naprijed). */
+.flashcard.is-sud .swipe-stamp { visibility: visible; }
+.flashcard.is-sud .swipe-stamp--know { opacity: clamp(0, var(--swipe-p, 0), 1); }
+.flashcard.is-sud .swipe-stamp--dont { opacity: clamp(0, calc(-1 * var(--swipe-p, 0)), 1); }
 
 .flashcard-ghost { display: none; }
 /* F1/12 ⓪ (2026-09-06): špil je ODLUKA O SUČELJU (na dodiru kartice su špil, na mišu jedna kartica), pa
@@ -506,8 +511,16 @@
     pointer-events: none;
 }
 :root[data-uredjaj~="dodir"] .flashcard-ghost[data-ink] { background: var(--item-acc); }
-:root[data-uredjaj~="dodir"] .flashcard-ghost--1 { transform: translateY(8px) scale(0.96); }
-:root[data-uredjaj~="dodir"] .flashcard-ghost--2 { transform: translateY(16px) scale(0.92); }
+/* ⚠️ F1/13 — ŠPIL VIRI DESNO, NE ODOZDO, i to je posljedica MJERE iz F1/12: kartica je od kadra
+   visoka 485–578 px, pa `scale(0.96)` sama po sebi uvuče sjenu 11–14 px s SVAKE strane — pomak od
+   8 / 16 px prema dolje ostaje UNUTAR kartice i špil se prestane vidjeti (izmjereno u F1/12).
+   Zato `transform-origin: right center`: skaliranje tada ne miče desni rub, pa je „koliko viri"
+   točno `translateX` — isti broj na 320 px i na 852 px, umjesto da ovisi o širini kartice.
+   Peek je 5 / 10 px, a bočni razmak sadržaja je 12 px (`.study-content` u kadru) — sjene zato
+   nikad ne dođu do sigurnog ruba (phone-gate ⑦ traži da ondje ne stoji ništa). */
+:root[data-uredjaj~="dodir"] .flashcard-ghost { transform-origin: right center; }
+:root[data-uredjaj~="dodir"] .flashcard-ghost--1 { transform: translateX(5px) scale(0.97); }
+:root[data-uredjaj~="dodir"] .flashcard-ghost--2 { transform: translateX(10px) scale(0.94); }
 /* `display:block` gore bi pregazio UA `[hidden]` — vrati ga (isti trik kao auth/consent) */
 :root[data-uredjaj~="dodir"] .flashcard-ghost[hidden] { display: none; }
 

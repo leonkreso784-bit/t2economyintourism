@@ -1,23 +1,27 @@
 /* eslint-disable no-console */
-// ===== KARTICE KAO TINDER-ŠPIL NA DODIRU (F1/9) — gesta u pješčaniku · JEDAN put upisa · CSS/markup =====
+// ===== PALAC LISTA, GUMBI SUDE (F1/13) — gesta u pješčaniku · TABLICA akcija · JEDAN put upisa · CSS/markup =====
 // Pokreni: node tests/unit/flashcard-swipe.test.js  (uključeno u `npm run test:unit`)
 //
-// ZAŠTO POSTOJI: Leon (2026-09-05): „na mobitelu bi napravio za kartice kao tinder način otvaranja i
-// gledanja". Gesta je NOVI ulaz u postojeće stanje (`AppState.cards.known/unknown` → statistika →
-// `saveFlashcardProgress` → cloud-sync), pa je najskuplji mogući kvar tihi DRUGI put upisa: kartica
-// upisana dvaput, ili upisana bez `saveProgress`, ili upisana u špil koji je u međuvremenu zamijenjen.
-// Ekran to ne pokazuje (brojka izgleda točno), zato se ovdje BROJI:
+// ZAŠTO POSTOJI: Leon (2026-09-06, s previewom F1/9 u ruci): „Ako se povuče lijevo vraća se na
+// prijašnju, desno ide na sljedeću. Kada se okrene daje odgovor. Know i don't know stoje dolje kao
+// što Tinder ima lajk i ✕." Gesta time prestaje biti SUD i postaje LISTANJE, a sud seli na gumbe —
+// mehanika F1/9 (pointer-put samo za dodir, `pointerup`-okretanje, `gen`, rezervni timer) ostaje ista.
 //
-//   ① gesta u pješčaniku (`vm`): miš ne pokreće ništa · dodir ispod praga se vraća bez upisa · dodir
-//      iznad praga leti pa upiše TOČNO JEDNOM (stigao `transitionend` ili odbrojavanje, ma koji prvi) ·
-//      okomit pomak se prepušta pregledniku · `pointercancel` ne upisuje · rep-klik geste ne okreće
-//      karticu, a klik koji nikad ne stigne ne guta idući dodir · novi špil usred leta poništava let ·
-//      `prefers-reduced-motion` = upis odmah, bez leta;
-//   ② izvor: `cards.known.push` / `cards.unknown.push` postoje TOČNO jednom (u `markKnown` /
-//      `markUnknown`), a gesta ih zove po referenci — ne kopira;
-//   ③ CSS i markup: `touch-action: pan-y` na kartici (jedino odstupanje od reseta `pan-x pan-y`, F1/11),
-//      sjene špila samo pod `:root[data-uredjaj~="dodir"]` (F1/12 ⓪, ne medij) i skrivene bez sljedeće kartice, pečati skriveni
-//      `visibility`-jem dok gesta ne traje, oba i18n ključa postoje.
+// Najskuplji mogući kvar je i dalje tihi DRUGI put upisa (kartica upisana dvaput, upisana bez
+// `saveProgress`, ili upisana u špil koji je u međuvremenu zamijenjen) — ekran to ne pokazuje, brojka
+// izgleda točno. Od F1/13 mu se pridružuje drugi, jednako tih: **gesta koja i dalje sudi**. Zato:
+//
+//   ① gesta u pješčaniku (`vm`): miš ne pokreće ništa · desno = SLJEDEĆA bez ijednog upisa · lijevo =
+//      PRETHODNA · prva kartica + lijevo = ODSKOK · kratko povlačenje se vraća · dodir bez pomaka
+//      okreće na `pointerup` · okomit pomak je preglednikov · `pointercancel` ne upisuje · rep-klik ne
+//      okreće · novi špil usred leta poništava let · `prefers-reduced-motion` = bez leta;
+//   ② SUD: ✓ / ✕ (gumb ili tipka Z / X) lete NAPRIJED s pečatom i tek po slijetanju zovu
+//      `markKnown` / `markUnknown` — pečat se vidi SAMO u tom letu, nikad pod prstom;
+//   ③ TABLICA `AKCIJE` = jedini izvor (ADR-027): svaki `gumb` postoji u markupu i obrnuto, svaki
+//      `i18n` ključ postoji u rječniku, nijedna tipka se ne ponavlja i nijedna nije s modifikatorom;
+//   ④ izvor: `cards.known.push` / `cards.unknown.push` postoje TOČNO jednom, a sud ih zove po referenci;
+//   ⑤ CSS i markup: `touch-action: pan-y` na kartici I na skrolerima (F1/9 nalaz ①), sjene špila samo
+//      pod `:root[data-uredjaj~="dodir"]` i s pomakom UDESNO (F1/13), pečat vezan uz `is-sud`.
 //
 // Pravi dodir (CDP `Input.dispatchTouchEvent`, Chromium s `hasTouch`) mjeri `tests/flashcard-swipe.spec.js`.
 
@@ -45,7 +49,7 @@ function element(id) {
     const slusaci = {};
     const attrs = {};
     const el = {
-        id, hidden: false, offsetWidth: 300, textContent: '',
+        id, hidden: false, disabled: false, offsetWidth: 300, textContent: '',
         classList: {
             add: (...k) => k.forEach((x) => klase.add(x)),
             remove: (...k) => k.forEach((x) => klase.delete(x)),
@@ -62,6 +66,7 @@ function element(id) {
         setPointerCapture: (pid) => { attrs.capture = pid; },
         setAttribute: (k, v) => { attrs[k] = String(v); },
         removeAttribute: (k) => { delete attrs[k]; },
+        focus: () => { attrs.fokus = (attrs.fokus || 0) + 1; },
         klase, stil, slusaci, attrs,
         posalji(t, ev) {
             const s = (slusaci[t] || []).slice();
@@ -149,12 +154,15 @@ function svijet(opts) {
         const ev = Object.assign({ key, target: { closest: () => null }, preventDefault: () => { brojac.preventDefault++; } }, extra || {});
         (docSlusaci.keydown || []).forEach((fn) => fn(ev));
     };
-    return { ctx, els, fc, brojac, kadar, odbroji, zivihTimera, stanje, prst, klik, tipka, docSlusaci };
+    /** Slijetanje do kraja: `transitionend` + dva kadra (klasa ulaska živi jedan kadar). */
+    const sleti = () => { fc.posalji('transitionend'); kadar(); kadar(); };
+    return { ctx, els, fc, brojac, kadar, odbroji, zivihTimera, stanje, prst, klik, tipka, sleti, docSlusaci };
 }
 
-console.log('\n=== kartice kao Tinder-špil (F1/9): gesta · jedan put upisa · CSS/markup ===\n');
+console.log('\n=== palac LISTA, gumbi SUDE (F1/13): gesta · tablica · jedan put upisa · CSS/markup ===\n');
 
-// ── ① GESTA U PJEŠČANIKU ──────────────────────────────────────────────────────
+// ── ① GESTA LISTA (ne sudi) ───────────────────────────────────────────────────
+console.log('── ① GESTA: desno = sljedeća · lijevo = prethodna · dodir = okreni ────────');
 {
     const s = svijet();
     s.ctx.initFlashcards();
@@ -173,26 +181,29 @@ console.log('\n=== kartice kao Tinder-špil (F1/9): gesta · jedan put upisa · 
     tvrdi(isto(s.stanje(), { index: 0, known: [], unknown: [], klase: [], stil: {}, flipped: false }) && s.fc.attrs.capture === undefined,
         'miš: povlačenje NE pokreće gestu (stolno = kao danas)', s.stanje());
 
-    // dodir usred povlačenja: klasa, capture, tri varijable
+    // dodir usred povlačenja: klasa i DVIJE brojke — `--swipe-p` više NIJE nagib nego SUD (F1/13)
     s.prst({ dx: 50, koraci: 1, kraj: 'none' });
     const usred = s.stanje();
     // Bez eksplicitnog `setPointerCapture`: dodir ima implicitni capture na cilju pointerdown-a; izmjereno
     // (CDP-sonda 2026-09-06) da let i upis rade bez njega.
     tvrdi(isto(usred.klase, ['is-dragging']) && s.fc.attrs.capture === undefined, 'dodir: prvi vodoravni pomak > SLOP → `is-dragging`, BEZ setPointerCapture', usred);
-    tvrdi(usred.stil['--swipe-x'] === '50px' && usred.stil['--swipe-p'] === '0.500' && /deg$/.test(usred.stil['--swipe-rot']),
-        'JS piše tri brojke: `--swipe-x` 50px · `--swipe-p` 0.500 (prag 100 = širina/3) · `--swipe-rot` u deg', usred.stil);
-    // ...i puštanje iznad praga: let, upis TEK po slijetanju (put nosi ZADNJI pomak, ne koordinata `pointerup`-a)
+    tvrdi(usred.stil['--swipe-x'] === '50px' && /deg$/.test(usred.stil['--swipe-rot']) && usred.stil['--swipe-p'] === undefined,
+        'JS pod prstom piše SAMO pomak i nagib — `--swipe-p` (sud) se NE piše, jer gesta ne sudi', usred.stil);
+
+    // ...i puštanje iznad praga: let, LISTANJE tek po slijetanju
     s.fc.posalji('pointermove', { pointerId: 7, pointerType: 'touch', clientX: 300, clientY: 200 });
     s.fc.posalji('pointerup', { pointerId: 7, pointerType: 'touch', clientX: 300, clientY: 200 });
     const let1 = s.stanje();
-    tvrdi(isto(let1.klase, ['is-flying']) && parseFloat(let1.stil['--swipe-x']) > 393 && let1.known.length === 0 && let1.index === 0,
-        'desno iznad praga: `is-flying`, kartica leti izvan ekrana, upis JOŠ nije (čeka slijetanje)', let1);
+    tvrdi(isto(let1.klase, ['is-flying']) && parseFloat(let1.stil['--swipe-x']) > 393 && let1.index === 0,
+        'desno iznad praga: `is-flying`, kartica leti izvan ekrana, kartica se JOŠ nije promijenila', let1);
+    tvrdi(let1.stil['--swipe-p'] === undefined, 'let listanja NEMA `--swipe-p` (bez suda nema pečata)', let1.stil);
     tvrdi(s.zivihTimera() === 1, 'let ima rezervno odbrojavanje (1 živ timer)');
     s.fc.posalji('transitionend');
-    const sleti = s.stanje();
-    tvrdi(isto(sleti.klase, ['is-entering']) && isto(sleti.stil, {}) && isto(sleti.known, [0]) && sleti.index === 1,
-        '`transitionend` → slijetanje: known [0], kartica 1, varijable obrisane, `is-entering` na jedan kadar', sleti);
-    tvrdi(s.brojac.saveProgress === 1 && s.brojac.track === 1, 'upis je prošao kroz markKnown (saveProgress 1 · trackFlashcardReview 1)', s.brojac);
+    const sleti1 = s.stanje();
+    tvrdi(isto(sleti1.klase, ['is-entering']) && isto(sleti1.stil, {}) && sleti1.index === 1,
+        '`transitionend` → slijetanje: SLJEDEĆA kartica (index 1), varijable obrisane, `is-entering` na jedan kadar', sleti1);
+    tvrdi(isto(sleti1.known, []) && isto(sleti1.unknown, []) && s.brojac.saveProgress === 0 && s.brojac.track === 0,
+        '⚠️ DESNO NE UPISUJE NIŠTA: known/unknown prazni, `saveProgress` 0, `trackFlashcardReview` 0 (listanje ≠ sud)', s.brojac);
     tvrdi(s.zivihTimera() === 0, 'rezervno odbrojavanje je ugašeno kad je `transitionend` stigao prvi');
     s.kadar(); s.kadar();
     tvrdi(isto(s.stanje().klase, []), 'dva kadra poslije: bez klasa (prijelazi opet rade)');
@@ -201,21 +212,34 @@ console.log('\n=== kartice kao Tinder-špil (F1/9): gesta · jedan put upisa · 
     tvrdi(s.stanje().flipped, '…a idući klik okreće (zastavica se troši jednom)');
     s.klik();
 
-    // lijevo
-    s.prst({ dx: -200 });
+    // lijevo = PRETHODNA, i ulazi S LIJEVA
+    s.prst({ dx: -200, kraj: 'none' });
+    s.fc.posalji('pointerup', { pointerId: 7, pointerType: 'touch', clientX: -100, clientY: 200 });
+    tvrdi(isto(s.stanje().klase, ['is-flying']) && parseFloat(s.stanje().stil['--swipe-x']) < -393,
+        'lijevo iznad praga: let na LIJEVU stranu', s.stanje());
     s.fc.posalji('transitionend');
+    const natrag = s.stanje();
+    tvrdi(natrag.index === 0 && isto(natrag.klase, ['is-entering', 'is-slijeva']),
+        'lijevo → PRETHODNA kartica (index 0) i ulazak S LIJEVA (`is-slijeva`)', natrag);
+    tvrdi(isto(natrag.known, []) && isto(natrag.unknown, []) && s.brojac.saveProgress === 0,
+        'ni lijevo ne upisuje ništa', s.brojac);
     s.kadar(); s.kadar();
-    const lijevo = s.stanje();
-    tvrdi(isto(lijevo.unknown, [1]) && lijevo.index === 2 && isto(lijevo.known, [0]) && s.brojac.saveProgress === 1,
-        'lijevo iznad praga → markUnknown: unknown [1], kartica 2 (bez saveProgress — kao gumb „Ne znam")', lijevo);
+    tvrdi(isto(s.stanje().klase, []), '`is-slijeva` se skida istim kadrom kao `is-entering`');
 
-    // kratko: povratak bez upisa
+    // PRVA KARTICA + LIJEVO = ODSKOK (prije prve nema ničega)
+    s.prst({ dx: -200 });
+    const odskok = s.stanje();
+    tvrdi(isto(odskok.klase, []) && isto(odskok.stil, {}) && odskok.index === 0,
+        'prva kartica + lijevo = ODSKOK: bez leta, bez klasa, index ostaje 0', odskok);
+    tvrdi(s.zivihTimera() === 0, 'odskok ne pokreće nikakav timer (nije let)');
+
+    // kratko: povratak bez ičega
     s.prst({ dx: 40, koraci: 2, kraj: 'none' });
     tvrdi(isto(s.stanje().klase, ['is-dragging']), 'kratko povlačenje: usred = `is-dragging`');
     s.fc.posalji('pointerup', { pointerId: 7, pointerType: 'touch', clientX: 140, clientY: 200 });
     const kratko = s.stanje();
-    tvrdi(isto(kratko.klase, []) && isto(kratko.stil, {}) && kratko.index === 2 && isto(kratko.known, [0]) && isto(kratko.unknown, [1]),
-        'ispod praga → povratak: bez klasa, bez varijabli, bez upisa', kratko);
+    tvrdi(isto(kratko.klase, []) && isto(kratko.stil, {}) && kratko.index === 0,
+        'ispod praga → povratak: bez klasa, bez varijabli, ista kartica', kratko);
     s.klik();
     tvrdi(!s.stanje().flipped, 'rep-klik kratkog povlačenja također ne okreće');
     s.klik();
@@ -227,7 +251,7 @@ console.log('\n=== kartice kao Tinder-špil (F1/9): gesta · jedan put upisa · 
     tvrdi(isto(s.stanje().klase, []), 'pretežno okomit pomak: gesta se NE pokreće (skrol je preglednikov)');
     s.fc.posalji('pointermove', { pointerId: 7, pointerType: 'touch', clientX: 250, clientY: 260 });
     s.fc.posalji('pointerup', { pointerId: 7, pointerType: 'touch', clientX: 250, clientY: 260 });
-    tvrdi(isto(s.stanje().klase, []) && s.stanje().index === 2, '…ni kasniji vodoravni pomak iste geste je ne oživi');
+    tvrdi(isto(s.stanje().klase, []) && s.stanje().index === 0, '…ni kasniji vodoravni pomak iste geste je ne oživi');
     s.klik();
     tvrdi(s.stanje().flipped, 'klik poslije okomitog pomaka okreće (ništa nije progutano)');
     s.klik();
@@ -235,16 +259,16 @@ console.log('\n=== kartice kao Tinder-špil (F1/9): gesta · jedan put upisa · 
     // pointercancel usred povlačenja
     s.prst({ dx: 150, kraj: 'cancel' });
     const otkaz = s.stanje();
-    tvrdi(isto(otkaz.klase, []) && isto(otkaz.stil, {}) && otkaz.index === 2 && isto(otkaz.known, [0]) && isto(otkaz.unknown, [1]),
-        '`pointercancel` usred povlačenja: povratak bez upisa (preglednik je uzeo pokazivač)', otkaz);
+    tvrdi(isto(otkaz.klase, []) && isto(otkaz.stil, {}) && otkaz.index === 0,
+        '`pointercancel` usred povlačenja: povratak bez listanja (preglednik je uzeo pokazivač)', otkaz);
 
-    // rezervno odbrojavanje umjesto transitionend — i kasni transitionend ne upisuje drugi put
+    // rezervno odbrojavanje umjesto transitionend — i kasni transitionend ne lista drugi put
     s.prst({ dx: 200 });
     s.odbroji();
     const rez = s.stanje();
-    tvrdi(isto(rez.known, [0, 2]) && rez.index === 3 && isto(rez.klase, ['is-entering']), 'bez `transitionend`: odbrojavanje slijeće i upisuje', rez);
+    tvrdi(rez.index === 1 && isto(rez.klase, ['is-entering']), 'bez `transitionend`: odbrojavanje slijeće i lista', rez);
     s.fc.posalji('transitionend');
-    tvrdi(isto(s.stanje().known, [0, 2]) && s.stanje().index === 3 && s.brojac.saveProgress === 2, 'kasni `transitionend` NE upisuje drugi put', s.stanje());
+    tvrdi(s.stanje().index === 1, 'kasni `transitionend` NE lista drugi put', s.stanje());
     s.kadar(); s.kadar();
 
     // dodir bez pomaka okreće na `pointerup` (Chromium poslije brzog zamaha POTISNE click sljedećeg dodira —
@@ -262,13 +286,13 @@ console.log('\n=== kartice kao Tinder-špil (F1/9): gesta · jedan put upisa · 
     // dodir tijekom leta se ignorira; novi špil usred leta poništava let
     s.prst({ dx: 200 });
     s.prst({ dx: -200, id: 9 });
-    tvrdi(isto(s.stanje().klase, ['is-flying']) && s.stanje().index === 3, 'dodir TIJEKOM leta se ignorira', s.stanje());
+    tvrdi(isto(s.stanje().klase, ['is-flying']) && s.stanje().index === 1, 'dodir TIJEKOM leta se ignorira', s.stanje());
     s.ctx.initFlashcards();
     const nov = s.stanje();
     tvrdi(isto(nov.klase, []) && isto(nov.stil, {}) && nov.index === 0 && isto(nov.known, []), 'initFlashcards usred leta: let poništen, špil čist', nov);
     s.fc.posalji('transitionend');
     s.odbroji();
-    tvrdi(isto(s.stanje().known, []) && s.stanje().index === 0, 'zakašnjeli `transitionend`/timer starog leta NE upisuje u novi špil', s.stanje());
+    tvrdi(s.stanje().index === 0, 'zakašnjeli `transitionend`/timer starog leta NE lista u novom špilu', s.stanje());
     tvrdi(s.els.flashcardGhost1.hidden === false, 'sjene opet vidljive za novi špil');
 
     // zadnja kartica: sjene se skrivaju
@@ -280,48 +304,113 @@ console.log('\n=== kartice kao Tinder-špil (F1/9): gesta · jedan put upisa · 
     tvrdi(!s.els.flashcardGhost1.hidden && s.els.flashcardGhost2.hidden, 'pretposljednja: jedna sjena');
 }
 
-// prefers-reduced-motion: bez leta, upis odmah
+// prefers-reduced-motion: bez leta, listanje odmah
 {
     const s = svijet({ bezPokreta: true });
     s.ctx.initFlashcards();
     s.prst({ dx: 200 });
     const st = s.stanje();
-    tvrdi(isto(st.known, [0]) && st.index === 1 && isto(st.klase, ['is-entering']) && s.zivihTimera() === 0,
-        'reduced-motion: nema `is-flying` ni timera — upis odmah, kartica zamijenjena', st);
+    tvrdi(st.index === 1 && isto(st.klase, ['is-entering']) && s.zivihTimera() === 0,
+        'reduced-motion: nema `is-flying` ni timera — sljedeća kartica odmah', st);
     s.kadar(); s.kadar();
     tvrdi(isto(s.stanje().klase, []), 'reduced-motion: klasa ulaska nestaje za dva kadra');
+    s.els.btnCorrect.posalji('click', {});
+    const sud = s.stanje();
+    tvrdi(isto(sud.known, [1]) && sud.index === 2 && s.brojac.saveProgress === 1,
+        'reduced-motion: ✓ upisuje odmah, bez leta i bez pečata', sud);
 }
 
-// ── ①b STRELICE = STOLNI PANDAN PALCU (F1/9 ②) ────────────────────────────────
+// ── ② SUD: GUMBI ✓ / ✕ (i tipke Z / X) ────────────────────────────────────────
+console.log('\n── ② SUD: ✓ / ✕ lete NAPRIJED s pečatom, upisuju po slijetanju ───────────');
+{
+    const s = svijet();
+    s.ctx.initFlashcards();
+    s.els.btnCorrect.posalji('click', {});
+    const letZnam = s.stanje();
+    tvrdi(isto(letZnam.klase, ['is-flying', 'is-sud']) && letZnam.stil['--swipe-p'] === '1'
+        && parseFloat(letZnam.stil['--swipe-x']) > 0,
+        '✓ = let NAPRIJED (`--swipe-x` > 0) s klasom `is-sud` i sudom `--swipe-p` = 1', letZnam);
+    tvrdi(isto(letZnam.known, []) && s.brojac.saveProgress === 0, '…upis JOŠ nije (čeka slijetanje)', letZnam);
+    s.sleti();
+    const znam = s.stanje();
+    tvrdi(isto(znam.known, [0]) && znam.index === 1 && isto(znam.klase, []) && isto(znam.stil, {}),
+        '…slijetanje: known [0], sljedeća kartica, klase i varijable očišćene (i `is-sud`)', znam);
+    tvrdi(s.brojac.saveProgress === 1 && s.brojac.track === 1, 'upis je prošao kroz markKnown (saveProgress 1 · trackFlashcardReview 1)', s.brojac);
+    tvrdi(s.els.knownCount.textContent === 1 && s.els.unknownCount.textContent === 0,
+        'značke na gumbima pokazuju 1 / 0 (`updateFlashcardStats` je jedini pisac)', [s.els.knownCount.textContent, s.els.unknownCount.textContent]);
+
+    s.els.btnWrong.posalji('click', {});
+    const letNe = s.stanje();
+    tvrdi(isto(letNe.klase, ['is-flying', 'is-sud']) && letNe.stil['--swipe-p'] === '-1'
+        && parseFloat(letNe.stil['--swipe-x']) > 0,
+        '✕ leti ISTO NAPRIJED (i ono ide na sljedeću), a sud je −1 → drugi pečat', letNe);
+    s.sleti();
+    const neznam = s.stanje();
+    tvrdi(isto(neznam.unknown, [1]) && neznam.index === 2 && isto(neznam.known, [0]) && s.brojac.saveProgress === 1,
+        '✕ → markUnknown: unknown [1], sljedeća kartica, BEZ saveProgress (kao i dosad)', neznam);
+
+    // drugi klik tijekom leta se ignorira — jedan upis po letu
+    s.els.btnCorrect.posalji('click', {});
+    s.els.btnWrong.posalji('click', {});
+    tvrdi(isto(s.stanje().klase, ['is-flying', 'is-sud']) && s.stanje().stil['--swipe-p'] === '1',
+        'drugi sud TIJEKOM leta se ignorira (straža `swipe.leti` = jedan upis po letu)', s.stanje());
+    s.sleti();
+    tvrdi(isto(s.stanje().known, [0, 2]) && isto(s.stanje().unknown, [1]) && s.stanje().index === 3, '…let upisuje jednom', s.stanje());
+
+    // ✓ na kartici koja je već „ne znam" — swap logika ostaje netaknuta
+    s.ctx.AppState.cards.index = 1;
+    s.els.btnCorrect.posalji('click', {});
+    s.sleti();
+    tvrdi(isto(s.stanje().known, [0, 2, 1]) && isto(s.stanje().unknown, []),
+        '✓ nad karticom iz „ne znam" ju PREMJEŠTA (swap), ne duplicira', s.stanje());
+
+    // ← / → (gumbi) listaju ODMAH, bez leta: kroz špil se ide brzo
+    const prije = s.stanje().index;
+    s.els.btnNext.posalji('click', {});
+    tvrdi(s.stanje().index === prije + 1 && isto(s.stanje().klase, []),
+        'gumb → lista ODMAH (bez leta): sljedeća kartica u istom pozivu', s.stanje());
+    s.els.btnPrev.posalji('click', {});
+    s.els.btnPrev.posalji('click', {});
+    tvrdi(s.stanje().index === prije - 1 && isto(s.stanje().klase, []),
+        'gumb ← lista odmah i dva puta zaredom (let bi drugi klik pojeo)', s.stanje());
+}
+
+// ── ③ TIPKE IZ TABLICE (stolno = sve tipkama) ─────────────────────────────────
+console.log('\n── ③ TIPKE: ← → · razmak/Enter · X · Z ───────────────────────────────────');
 {
     const s = svijet();
     s.ctx.initFlashcards();
     tvrdi((s.docSlusaci.keydown || []).length === 1, 'initFlashcards veže TOČNO jedan `keydown` na document');
     s.tipka('ArrowRight');
-    tvrdi(isto(s.stanje().klase, ['is-flying']) && s.brojac.preventDefault === 1, '→ pokreće isti let kao palac (preventDefault: stranica se ne skrola)', s.stanje());
-    s.fc.posalji('transitionend'); s.kadar(); s.kadar();
-    tvrdi(isto(s.stanje().known, [0]) && s.stanje().index === 1 && s.brojac.saveProgress === 1, '→ = znam kroz markKnown', s.stanje());
+    tvrdi(s.stanje().index === 1 && isto(s.stanje().klase, []) && s.brojac.preventDefault === 1,
+        '→ = sljedeća, odmah (preventDefault: stranica se ne skrola)', s.stanje());
     s.tipka('ArrowLeft');
-    s.fc.posalji('transitionend'); s.kadar(); s.kadar();
-    tvrdi(isto(s.stanje().unknown, [1]) && s.stanje().index === 2, '← = ne znam kroz markUnknown', s.stanje());
+    tvrdi(s.stanje().index === 0 && isto(s.stanje().known, []) && s.brojac.saveProgress === 0,
+        '← = prethodna, i ništa se ne upisuje', s.stanje());
+    s.tipka('ArrowLeft');
+    tvrdi(s.stanje().index === 0, '← na prvoj kartici ne radi ništa (nema ispred čega)');
     s.tipka(' ');
     tvrdi(s.stanje().flipped, 'razmak okreće');
     s.tipka('Enter');
     tvrdi(!s.stanje().flipped, 'Enter okreće natrag');
-    s.tipka('ArrowRight');
-    s.tipka('ArrowRight');
-    tvrdi(isto(s.stanje().klase, ['is-flying']) && s.stanje().index === 2, 'druga strelica TIJEKOM leta se ignorira (jedan upis po letu)', s.stanje());
-    s.fc.posalji('transitionend'); s.kadar(); s.kadar();
-    tvrdi(isto(s.stanje().known, [0, 2]) && s.stanje().index === 3, '…let upisuje jednom', s.stanje());
+
+    s.tipka('z');
+    tvrdi(isto(s.stanje().klase, ['is-flying', 'is-sud']) && s.stanje().stil['--swipe-p'] === '1', 'Z = ZNAM: isti let s pečatom kao gumb ✓', s.stanje());
+    s.sleti();
+    tvrdi(isto(s.stanje().known, [0]) && s.stanje().index === 1 && s.brojac.saveProgress === 1, '…Z upisuje kroz markKnown', s.stanje());
+    s.tipka('X');
+    tvrdi(s.stanje().stil['--swipe-p'] === '-1', 'X = NE ZNAM, i veliko slovo radi isto (Shift ne mijenja radnju)', s.stanje());
+    s.sleti();
+    tvrdi(isto(s.stanje().unknown, [1]) && s.stanje().index === 2, '…X upisuje kroz markUnknown', s.stanje());
 
     const prije = JSON.stringify(s.stanje());
     s.tipka('ArrowRight', { ctrlKey: true });
-    s.tipka('ArrowRight', { metaKey: true });
-    s.tipka('ArrowRight', { altKey: true });
+    s.tipka('z', { metaKey: true });
+    s.tipka('x', { altKey: true });
     tvrdi(JSON.stringify(s.stanje()) === prije, 'modifikator (Ctrl/⌘/Alt) → ništa (prečaci preglednika)');
     s.tipka('ArrowRight', { target: { closest: (sel) => (/input/.test(sel) ? {} : null) } });
     tvrdi(JSON.stringify(s.stanje()) === prije, 'fokus u polju za unos → ništa');
-    s.tipka('ArrowRight', { target: { closest: (sel) => (/button/.test(sel) ? {} : null) } });
+    s.tipka('z', { target: { closest: (sel) => (/button/.test(sel) ? {} : null) } });
     tvrdi(JSON.stringify(s.stanje()) === prije, 'fokus na gumbu → ništa (gumb ima svoje tipke)');
     s.ctx.AppState.nav.section = 'quiz';
     s.tipka('ArrowRight');
@@ -331,14 +420,16 @@ console.log('\n=== kartice kao Tinder-špil (F1/9): gesta · jedan put upisa · 
     s.tipka('ArrowRight');
     tvrdi(JSON.stringify(s.stanje()) === prije, 'druga stranica → ništa');
     s.ctx.AppState.nav.page = 'study';
-    s.tipka('x');
-    tvrdi(JSON.stringify(s.stanje()) === prije && s.brojac.preventDefault === 5, 'druga tipka → ništa, i bez preventDefault', s.brojac.preventDefault);
+    const pdPrije = s.brojac.preventDefault;
+    s.tipka('q');
+    tvrdi(JSON.stringify(s.stanje()) === prije && s.brojac.preventDefault === pdPrije, 'tipka izvan tablice → ništa, i bez preventDefault', s.brojac.preventDefault);
 }
 {
     const s = svijet({ modal: {} });
     s.ctx.initFlashcards();
     s.tipka('ArrowRight');
-    tvrdi(isto(s.stanje().klase, []) && s.stanje().index === 0, 'otvoren modal (upit vrati element) → strelice ne diraju kartice');
+    s.tipka('z');
+    tvrdi(isto(s.stanje().klase, []) && s.stanje().index === 0, 'otvoren modal (upit vrati element) → tipke ne diraju kartice');
     // Zatvoren `<sokrat-modal>` ostaje u DOM-u s `aria-hidden="true"` i `visibility:hidden` — geometrija ga
     // ne razlikuje od otvorenog (i dalje ima pravokutnik), atribut da. Zato upit MORA isključiti aria-hidden.
     tvrdi(/querySelector\('\[aria-modal="true"\]:not\(\[aria-hidden="true"\]\)'\)/.test(FC),
@@ -350,22 +441,68 @@ console.log('\n=== kartice kao Tinder-špil (F1/9): gesta · jedan put upisa · 
     s.ctx.document.body = { classList: { contains: (k) => k === 'modal-open' } };
     s.ctx.initFlashcards();
     s.tipka('ArrowRight');
-    tvrdi(isto(s.stanje().klase, []) && s.stanje().index === 0, '`body.modal-open` bez elementa → strelice ne diraju kartice');
+    tvrdi(isto(s.stanje().klase, []) && s.stanje().index === 0, '`body.modal-open` bez elementa → tipke ne diraju kartice');
 }
 
-// ── ② IZVOR: JEDAN PUT UPISA ──────────────────────────────────────────────────
+// ── ④ TABLICA AKCIJA = JEDINI IZVOR (ADR-027) ────────────────────────────────
+console.log('\n── ④ TABLICA AKCIJA: gumb · gesta · tipke · i18n ─────────────────────────');
+{
+    const s = svijet();
+    s.ctx.initFlashcards();
+    const A = s.ctx.window.SokratFlashcards && s.ctx.window.SokratFlashcards.AKCIJE;
+    const html = citaj('index.html');
+    const i18n = citaj('js', 'i18n.js');
+    tvrdi(!!A && Object.isFrozen(A), 'tablica je izložena read-only na `window.SokratFlashcards.AKCIJE` (F1/14 čita odavde)');
+    const id = A ? Object.keys(A).sort() : [];
+    console.log('  · doseg: ' + id.length + ' radnji — ' + id.join(' · '));
+    tvrdi(isto(id, ['neznam', 'okreni', 'prethodna', 'sljedeca', 'znam']),
+        'pet radnji: prethodna · sljedeca · okreni · znam · neznam', id);
+
+    const gumbi = id.map((k) => A[k].gumb).filter(Boolean).sort();
+    tvrdi(isto(gumbi, ['btnCorrect', 'btnNext', 'btnPrev', 'btnWrong']), 'četiri radnje imaju gumb (okretanje ga nema — kartica JE gumb)', gumbi);
+    const nemaUMarkupu = gumbi.filter((g) => html.indexOf('id="' + g + '"') < 0);
+    tvrdi(nemaUMarkupu.length === 0, 'svaki `gumb` iz tablice POSTOJI u markupu', nemaUMarkupu);
+    // …i obrnuto: nijedan gumb reda kontrola nije ostao izvan tablice (inače bi imao tihi drugi put)
+    const RED = /<div class="flashcard-controls">([\s\S]*?)<\/div>\s*<\/div>/.exec(html);
+    const uMarkupu = RED ? (RED[1].match(/id="(btn[A-Za-z]+)"/g) || []).map((x) => x.slice(4, -1)).sort() : [];
+    tvrdi(isto(uMarkupu, gumbi), 'i obrnuto: svaki gumb iz reda kontrola stoji u tablici', [uMarkupu, gumbi]);
+
+    const bezKljuca = id.filter((k) => i18n.indexOf("'" + A[k].i18n + "':") < 0);
+    tvrdi(bezKljuca.length === 0, 'svaki `i18n` ključ iz tablice postoji u js/i18n.js', bezKljuca.map((k) => A[k].i18n));
+
+    const sveTipke = id.reduce((n, k) => n.concat(A[k].tipke.slice()), []);
+    tvrdi(sveTipke.length === new Set(sveTipke).size, 'nijedna tipka se ne ponavlja u dvije radnje', sveTipke);
+    const sModifikatorom = sveTipke.filter((t) => /\+|Control|Meta|Alt|Shift/.test(t));
+    tvrdi(sModifikatorom.length === 0, 'nijedna tipka nije s modifikatorom (⌘/Ctrl/Alt su prečaci preglednika)', sModifikatorom);
+    tvrdi(sveTipke.filter((t) => t.length === 1).every((t) => t === t.toLowerCase()),
+        'jednoslovne tipke su zapisane MALIM slovom (normalizacija je u kodu, ne u tablici)', sveTipke);
+    const geste = id.map((k) => A[k].gesta).filter(Boolean).sort();
+    tvrdi(isto(geste, ['desno', 'dodir', 'lijevo']), 'tri geste: desno = sljedeća · lijevo = prethodna · dodir = okreni (sud NEMA gestu)', geste);
+    tvrdi(A && A.znam.gesta === null && A.neznam.gesta === null,
+        '⚠️ ni „znam" ni „ne znam" nemaju gestu — od F1/13 se sudi ISKLJUČIVO gumbom ili tipkom');
+    tvrdi(id.every((k) => typeof A[k].radnja === 'function' && Object.isFrozen(A[k])), 'svaki redak je zamrznut i nosi izvršnu `radnja`');
+}
+
+// ── ⑤ IZVOR: JEDAN PUT UPISA ──────────────────────────────────────────────────
+console.log('\n── ⑤ IZVOR: jedan put upisa, jedan put do novog špila ────────────────────');
 {
     const bez = FC.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
     const n = (re) => (bez.match(re) || []).length;
     tvrdi(n(/cards\.known\.push\(/g) === 1, '`cards.known.push` postoji TOČNO jednom (markKnown)', n(/cards\.known\.push\(/g));
     tvrdi(n(/cards\.unknown\.push\(/g) === 1, '`cards.unknown.push` postoji TOČNO jednom (markUnknown)', n(/cards\.unknown\.push\(/g));
     tvrdi(n(/(?<!function )saveFlashcardProgress\(\)/g) === 1, '`saveFlashcardProgress()` se zove s jednog mjesta (markKnown)', n(/(?<!function )saveFlashcardProgress\(\)/g));
-    tvrdi(/smjer > 0 \? markKnown : markUnknown/.test(bez), 'gesta bira `markKnown`/`markUnknown` po referenci — ne kopira upis');
+    tvrdi(/sud > 0 \? markKnown : markUnknown/.test(bez), 'sud bira `markKnown`/`markUnknown` po referenci — ne kopira upis');
     tvrdi(!/style\.transform\s*=/.test(bez), 'JS ne piše `transform` — samo CSS-varijable (crtanje je u CSS-u)');
     tvrdi(!/setPointerCapture/.test(bez), 'nema `setPointerCapture` (implicitni capture dodira je dovoljan — izmjereno)');
+    tvrdi(n(/cards\.deck = /g) === 1 && /function postaviSpil\(/.test(bez),
+        'špil se postavlja s JEDNOG mjesta (`postaviSpil`) — ulazak u mod i izbornik kraja idu istim putem', n(/cards\.deck = /g));
+    tvrdi(/function resetSwipe\(\)[\s\S]*?swipe\.gen\+\+/.test(bez), '`resetSwipe` diže naraštaj (`gen`) — zakašnjeli let ne upisuje u novi špil');
+    tvrdi(/'is-dragging', 'is-flying', 'is-entering', 'is-sud', 'is-slijeva'/.test(bez),
+        '`resetSwipe` briše SVIH pet klasa geste (nove `is-sud`/`is-slijeva` uključene)');
 }
 
-// ── ③ CSS + MARKUP ────────────────────────────────────────────────────────────
+// ── ⑥ CSS + MARKUP ────────────────────────────────────────────────────────────
+console.log('\n── ⑥ CSS + MARKUP: pan-y · špil desno · pečat samo u sudu ────────────────');
 {
     const css = citaj('css', 'flashcards-section.css').replace(/\/\*[\s\S]*?\*\//g, '');
     const bundle = citaj('styles.bundle.css').replace(/\/\*[\s\S]*?\*\//g, '');
@@ -383,11 +520,29 @@ console.log('\n=== kartice kao Tinder-špil (F1/9): gesta · jedan put upisa · 
     tvrdi(new RegExp(esc(DODIR) + ' \\.flashcard-ghost\\s*\\{[^}]*display:\\s*block').test(css), 'sjene se crtaju pod `' + DODIR + ' .flashcard-ghost` (platforma zna uređaj, F1/12 ⓪)');
     tvrdi(new RegExp(esc(DODIR) + ' \\.flashcard-ghost\\[hidden\\]\\s*\\{\\s*display:\\s*none').test(css), 'sjene bez sljedeće kartice: `[hidden]` vraća `display: none` (UA pravilo bi bilo pregaženo)');
     tvrdi(!/@media\s*\(pointer:\s*coarse\)/.test(css), 'flashcards-section.css: F1/9 blok više NE pita `@media (pointer: coarse)` — odluka o sučelju, ne sposobnost motora');
+
+    // F1/13: špil viri UDESNO, i to `transform-origin`-om — inače „koliko viri" ovisi o širini kartice
+    tvrdi(new RegExp(esc(DODIR) + ' \\.flashcard-ghost\\s*\\{\\s*transform-origin:\\s*right center').test(css),
+        'sjene imaju `transform-origin: right center` — skaliranje ne miče desni rub, pa je peek točan broj px');
+    const g1 = /\.flashcard-ghost--1 \{ transform: translateX\((\d+)px\) scale\(([\d.]+)\)/.exec(css);
+    const g2 = /\.flashcard-ghost--2 \{ transform: translateX\((\d+)px\) scale\(([\d.]+)\)/.exec(css);
+    tvrdi(!!g1 && !!g2 && Number(g1[1]) > 0 && Number(g2[1]) > Number(g1[1]),
+        'sjene vire UDESNO, i druga dalje od prve (F1/13: odozdo se na visokoj kartici više ne vide)', [g1 && g1[1], g2 && g2[1]]);
+    tvrdi(!!g2 && Number(g2[1]) <= 12,
+        'najdalja sjena viri najviše 12 px = bočni razmak sadržaja u kadru → nikad ne dođe do sigurnog ruba (phone-gate ⑦)', g2 && g2[1]);
+    tvrdi(!/translateY\(8px\) scale\(0\.96\)/.test(css), 'stari pomak sjena PREMA DOLJE je maknut (na kartici od 578 px ne viri ništa)');
+
+    // pečat: samo u letu koji nosi sud
     tvrdi(/\.swipe-stamp\s*\{[^}]*visibility:\s*hidden/.test(css), 'pečati: `visibility: hidden` u mirovanju (ne ulaze u mjere kontrasta)');
-    tvrdi(/is-dragging \.swipe-stamp,\s*\.flashcard\.is-flying \.swipe-stamp\s*\{\s*visibility:\s*visible/.test(css), 'pečati vidljivi samo pod `is-dragging`/`is-flying`');
+    tvrdi(/\.flashcard\.is-sud \.swipe-stamp\s*\{\s*visibility:\s*visible/.test(css), 'pečat je vidljiv SAMO pod `is-sud` (let s gumba ✓ / ✕)');
+    tvrdi(!/is-dragging \.swipe-stamp/.test(css), '⚠️ pečata VIŠE NEMA pod prstom (`is-dragging`) — gesta lista, ne sudi');
+    tvrdi(!/\.flashcard\.is-flying \.swipe-stamp\s*\{/.test(css), '…ni u svakom letu (`is-flying`) — let listanja je bez pečata');
     tvrdi(/\.swipe-stamp--know\s*\{[^}]*var\(--color-ok\)[^}]*var\(--color-on-ok\)/.test(css) && /\.swipe-stamp--dont\s*\{[^}]*var\(--color-danger\)[^}]*var\(--color-on-danger\)/.test(css),
         'pečati = puna ispuna + tinta po temi (ADR-032): ok/on-ok · danger/on-danger');
-    tvrdi(/prefers-reduced-motion/.test(bez_(css)) === false, 'CSS ne nosi vlastiti reduced-motion blok (politika je jedna, u policies.css; JS gasi let)');
+    tvrdi(/\.flashcard\.is-entering \{ transform-origin: right center/.test(css)
+        && /\.flashcard\.is-entering\.is-slijeva \{ transform-origin: left center/.test(css),
+        'ulazak ima smjer: naprijed iz špila (desno), natrag s lijeva (`is-slijeva`)');
+
     for (const g of ['flashcardGhost1', 'flashcardGhost2']) {
         const tag = html.match(new RegExp('<div[^>]*id="' + g + '"[^>]*>')) || [''];
         tvrdi(/aria-hidden="true"/.test(tag[0]) && /\bhidden\b/.test(tag[0]) && /flashcard-ghost--[12]/.test(tag[0]), 'index.html: #' + g + ' = sjena, aria-hidden + hidden', tag[0]);
@@ -402,7 +557,6 @@ console.log('\n=== kartice kao Tinder-špil (F1/9): gesta · jedan put upisa · 
     const unutar = html.slice(html.indexOf('id="flashcard"'), html.indexOf('class="flashcard-inner"'));
     tvrdi(unutar.indexOf('swipe-stamp--know') >= 0 && unutar.indexOf('swipe-stamp--dont') >= 0, 'pečati su unutar #flashcard, a IZVAN .flashcard-inner (ne okreću se s karticom)');
 }
-function bez_(css) { return css; }
 
 console.log('\n' + (pao ? '❌ ' + pao + ' od ' + ukupno + ' palo' : '✅ svih ' + ukupno + ' prošlo') + '\n');
 process.exit(pao ? 1 : 0);

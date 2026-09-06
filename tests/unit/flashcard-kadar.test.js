@@ -113,8 +113,12 @@ tvrdi(/body:has\(\.landing-page\.active\) \.footer/.test(footerBlok),
 
 console.log('\n── ⑤ MJERAČ: kad se mjeri i kad se NE mjeri ──────────────────────────────');
 const initFc = /function initFlashcards\(\)[\s\S]*?\n\}/.exec(FC_JS);
-tvrdi(!!initFc && /osvjeziKadar\(\);/.test(initFc[0]),
-    '`initFlashcards` mjeri rezervu prije prvog crtanja kartice');
+// ⚠️ F1/13: mjerenje je iz `initFlashcards` preselilo u `postaviSpil`, jer novi špil sad ne pravi
+// samo ulazak u mod nego i sve tri radnje izbornika kraja špila. Tvrdnja PRATI činjenicu (jedno
+// mjesto), umjesto da traži staru liniju na starom mjestu; oba `exec` su pod stražom (brojač).
+const spil = /function postaviSpil\([\s\S]*?\n\}/.exec(FC_JS);
+tvrdi(!!initFc && /postaviSpil\(/.test(initFc[0]) && !!spil && /osvjeziKadar\(\);/.test(spil[0]),
+    '`initFlashcards` → `postaviSpil` mjeri rezervu prije prvog crtanja kartice');
 tvrdi(!!initFc && /if \(!flashcardListenersInitialized\)[\s\S]*initKadar\(\);/.test(initFc[0]),
     '`initKadar` se veže SAMO jednom (unutar `flashcardListenersInitialized`)');
 tvrdi(/addEventListener\('resize', zakaziKadar\)/.test(FC_JS) && /addEventListener\('orientationchange', zakaziKadar\)/.test(FC_JS),
@@ -225,13 +229,14 @@ console.log('\n── ⑫ STRELICE: sklonjene, ali žive (F1/13 ih ne mora vrać
 tvrdi(new RegExp(PREFIKS.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ' #flashcards\\.active \\.flashcard-controls \\.control-btn\\.prev').test(BLOK)
     && /\.control-btn\.next \{ display: none/.test(BLOK),
     'na dodiru se ← i → skrivaju CSS-om (ne vade iz markupa)');
-tvrdi(/getElementById\('btnPrev'\)\.addEventListener\('click', prevCard\)/.test(FC_JS)
-    && /getElementById\('btnNext'\)\.addEventListener\('click', nextCard\)/.test(FC_JS),
-    'ista dva gumba su i dalje VEZANA u JS-u — skrivena, ne uklonjena');
-tvrdi(/getElementById\('btnCorrect'\)\.addEventListener\('click', markKnown\)/.test(FC_JS)
-    && /getElementById\('btnWrong'\)\.addEventListener\('click', markUnknown\)/.test(FC_JS),
+// ⚠️ F1/13: gumbi se vežu PO TABLICI `AKCIJE` (id u markupu → radnja u tablici), pa uz id više
+// ne stoji ime funkcije. Ovdje se i dalje tvrdi ISTO: sva četiri gumba su živa i vezana.
+tvrdi(/gumb: 'btnPrev'/.test(FC_JS) && /gumb: 'btnNext'/.test(FC_JS) && /vezeGumbe\(AKCIJE\)/.test(FC_JS),
+    'ista dva gumba su i dalje VEZANA u JS-u (kroz tablicu akcija) — skrivena, ne uklonjena');
+tvrdi(/gumb: 'btnCorrect'/.test(FC_JS) && /gumb: 'btnWrong'/.test(FC_JS)
+    && /sud > 0 \? markKnown : markUnknown/.test(FC_JS),
     'klik na ✓ / ✕ ide kroz POSTOJEĆI put upisa (`markKnown`/`markUnknown`), bez dvojnika');
-tvrdi(/function naTipku\(e\)/.test(FC_JS) && /ArrowRight/.test(FC_JS),
+tvrdi(/function naTipku\(e\)/.test(FC_JS) && /'ArrowRight'/.test(FC_JS),
     'tipke iz F1/9 (→ ← razmak) su netaknute');
 
 console.log('\n── ⑧ BUNDLE: `npm run build:css` je pokrenut ─────────────────────────────');

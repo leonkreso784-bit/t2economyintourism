@@ -2,10 +2,58 @@
 
 let flashcardListenersInitialized = false;
 
+/* ── F1/13 — TABLICA AKCIJA: JEDNA ČINJENICA, JEDNO MJESTO (2026-09-06) ──────
+   Leon: „Ako se povuče lijevo vraća se na prijašnju, desno ide na sljedeću. Kada se okrene
+   daje odgovor. Know i don't know stoje dolje kao što Tinder ima lajk i ✕." + „da se sve
+   može tipkama kontrolirati".
+
+   Pet radnji, a svaka ima do četiri ulaza: gumb u markupu, gestu palcem, tipku i ime. Do
+   F1/13 su ti ulazi stajali na tri mjesta — `addEventListener` po id-u, `switch` u `naTipku`
+   i `aria-label` u markupu — i ništa nije jamčilo da govore o ISTOJ radnji. Ovdje stoje
+   jednom: gumbe veže `initFlashcards` po tablici, tipku traži `naTipku` u tablici, a
+   tutorial (F1/14) će iz nje čitati natpise — bez druge kopije popisa (ADR-027).
+
+   ⚠️ `radnja` je CIJELA radnja, ne primitiv: „znam" je let s pečatom PA `markKnown`, ne samo
+   upis — inače bi gumb i tipka pod istim imenom radili dvije različite stvari.
+   ⚠️ Tipke su bez modifikatora (⌘/Ctrl/Alt su prečaci preglednika) i ne smiju se preklapati;
+   `tests/unit/flashcard-swipe.test.js` oboje BROJI, kao i to da svaki `gumb` postoji u markupu.
+   **Z = „znam", X = ✕** (Leon): hrvatska QWERTZ tipkovnica ima oboje pod lijevom rukom. */
+const AKCIJE = Object.freeze({
+    prethodna: Object.freeze({ gumb: 'btnPrev',    gesta: 'lijevo', tipke: Object.freeze(['ArrowLeft']),  i18n: 'fc.prev',     radnja: () => idiNatrag() }),
+    sljedeca:  Object.freeze({ gumb: 'btnNext',    gesta: 'desno',  tipke: Object.freeze(['ArrowRight']), i18n: 'fc.next',     radnja: () => idiNaprijed() }),
+    okreni:    Object.freeze({ gumb: null,         gesta: 'dodir',  tipke: Object.freeze([' ', 'Enter']), i18n: 'fc.flip',     radnja: () => okreni() }),
+    znam:      Object.freeze({ gumb: 'btnCorrect', gesta: null,     tipke: Object.freeze(['z']),          i18n: 'fc.know',     radnja: () => sudi(1) }),
+    neznam:    Object.freeze({ gumb: 'btnWrong',   gesta: null,     tipke: Object.freeze(['x']),          i18n: 'fc.dontKnow', radnja: () => sudi(-1) })
+});
+
 function initFlashcards() {
+    const deck = getAllFlashcards();
+    shuffleArray(deck);
+    postaviSpil(deck);
+
+    // Only add event listeners once to prevent duplicates
+    if (!flashcardListenersInitialized) {
+        document.getElementById('flashcard').addEventListener('click', flipCard);
+        // F1/13: gumbi se vežu PO TABLICI — id u markupu, radnja u tablici. Dotad je svaki
+        // gumb imao vlastiti redak s vlastitim imenom funkcije, pa se ulaz i značenje radnje
+        // dalo razići a da nijedna brana to ne vidi.
+        vezeGumbe(AKCIJE);
+        initSwipe();         // F1/9: dodirna gesta (samo `pointerType === 'touch'`)
+        initTipke();         // F1/9 ② → F1/13: tipke iz tablice (← → · razmak/Enter · X · Z)
+        initKadar();         // F1/12 ①: prati visinu donje trake (okretanje, pragovi, sigurni rub)
+        flashcardListenersInitialized = true;
+    }
+}
+
+/**
+ * F1/13 — JEDAN PUT DO NOVOG ŠPILA. Ulazak u mod (`initFlashcards`) i sve tri radnje izbornika
+ * kraja špila zovu isto: `resetSwipe` (nijedna kartica ne smije ostati „u letu"), mjerenje kadra
+ * PRIJE prvog crtanja (F1/12) i tri osvježenja. Upisani napredak (`progress.flashcardsLearned`,
+ * `saveFlashcardProgress`) se OVDJE ne dira — mijenja se špil, ne ono što je zapisano.
+ */
+function postaviSpil(deck) {
     const cards = AppState.cards;
-    cards.deck = getAllFlashcards();
-    shuffleArray(cards.deck);
+    cards.deck = deck || [];
     cards.index = 0;
     cards.known = [];
     cards.unknown = [];
@@ -15,19 +63,16 @@ function initFlashcards() {
     updateFlashcard();
     updateFlashcardProgress();
     updateFlashcardStats();
-    
-    // Only add event listeners once to prevent duplicates
-    if (!flashcardListenersInitialized) {
-        document.getElementById('flashcard').addEventListener('click', flipCard);
-        document.getElementById('btnPrev').addEventListener('click', prevCard);
-        document.getElementById('btnNext').addEventListener('click', nextCard);
-        document.getElementById('btnCorrect').addEventListener('click', markKnown);
-        document.getElementById('btnWrong').addEventListener('click', markUnknown);
-        initSwipe();         // F1/9: dodirna gesta (samo `pointerType === 'touch'`)
-        initTipke();         // F1/9 ②: stolni pandan — strelice
-        initKadar();         // F1/12 ①: prati visinu donje trake (okretanje, pragovi, sigurni rub)
-        flashcardListenersInitialized = true;
-    }
+}
+
+/** Veži klik na svaki gumb koji tablica imenuje (id u markupu → radnja u tablici). */
+function vezeGumbe(tablica) {
+    Object.keys(tablica).forEach((id) => {
+        const a = tablica[id];
+        if (!a.gumb) return;
+        const g = document.getElementById(a.gumb);
+        if (g && typeof g.addEventListener === 'function') g.addEventListener('click', () => a.radnja());
+    });
 }
 
 function getAllFlashcards() {
@@ -166,7 +211,7 @@ function markKnown() {
     updateFlashcardStats();
     saveFlashcardProgress();
     trackFlashcardReview();
-    nextCard();
+    idiNaprijed();
 }
 
 function markUnknown() {
@@ -177,7 +222,7 @@ function markUnknown() {
         if (idx > -1) cards.known.splice(idx, 1);
     }
     updateFlashcardStats();
-    nextCard();
+    idiNaprijed();
 }
 
 function saveFlashcardProgress() {
@@ -248,9 +293,11 @@ function initKadar() {
    ŠTO JE GESTA, A ŠTO NIJE
    • dodir bez pomaka = okreni — na `pointerup`, jer Chromium poslije brzog zamaha potisne `click`
      sljedećeg dodira (izmjereno na goloj stranici); miš i dalje okreće klikom;
-   • povlačenje DESNO = znam, LIJEVO = ne znam — gesta ZOVE `markKnown` / `markUnknown`, nikad ne
-     duplicira upis: jedini put u `cards.known` / `cards.unknown` / `saveFlashcardProgress` ostaju te
-     dvije funkcije (`tests/unit/flashcard-swipe.test.js` to BROJI, ne tvrdi);
+   • **F1/13 (Leon, isti dan, s previewom): povlačenje DESNO = SLJEDEĆA, LIJEVO = PRETHODNA** —
+     gesta LISTA i ne upisuje ništa; sudi se gumbima ✓ / ✕ (i tipkama Z / X), koji lete naprijed
+     s pečatom i tek po slijetanju zovu `markKnown` / `markUnknown`. Jedini put u `cards.known` /
+     `cards.unknown` / `saveFlashcardProgress` ostaju te dvije funkcije
+     (`tests/unit/flashcard-swipe.test.js` to BROJI, ne tvrdi);
    • samo `pointerType === 'touch'` — miš i olovka ostaju kod današnjeg prikaza (stolno = kao danas);
    • okomit pomak nije gesta: `touch-action: pan-y` na kartici (CSS) pušta preglednik da skrola, a
      nama stižu samo vodoravni pomaci; što prije `SLOP`-a krene više okomito, prepušta se pregledniku;
@@ -281,11 +328,12 @@ function swipePrag(el) {
     return Math.max(swipe.PRAG_MIN, Math.round((el.offsetWidth || 0) / 3));
 }
 
+/* F1/13: povlačenje više NE nosi sud, pa ne piše ni `--swipe-p` — prst samo pomiče i naginje
+   karticu. `--swipe-p` od F1/13 znači SUD (+1 znam · −1 ne znam) i piše ga isključivo `swipeLet`
+   kad let dolazi s gumba ✓ / ✕; pečat se zato više ne može pojaviti usred listanja. */
 function swipePostavi(el, dx) {
-    const p = Math.max(-1, Math.min(1, dx / swipePrag(el)));
     el.style.setProperty('--swipe-x', dx + 'px');
     el.style.setProperty('--swipe-rot', Math.max(-14, Math.min(14, dx / 14)).toFixed(2) + 'deg');
-    el.style.setProperty('--swipe-p', p.toFixed(3));
 }
 
 function swipeOcisti(el) {
@@ -302,7 +350,7 @@ function resetSwipe() {
     if (swipe.timer) { clearTimeout(swipe.timer); swipe.timer = 0; }
     if (swipe.naKraj) { el.removeEventListener('transitionend', swipe.naKraj); swipe.naKraj = null; }
     swipe.id = null; swipe.aktivno = false; swipe.leti = false; swipe.progutajKlik = false;
-    el.classList.remove('is-dragging', 'is-flying', 'is-entering');
+    el.classList.remove('is-dragging', 'is-flying', 'is-entering', 'is-sud', 'is-slijeva');
     swipeOcisti(el);
 }
 
@@ -355,8 +403,12 @@ function swipeUp(e) {
         return;
     }
     el.classList.remove('is-dragging');
-    if (Math.abs(dx) >= swipePrag(el)) swipeLet(el, dx > 0 ? 1 : -1);
-    else swipeOcisti(el);                  // povratak: bez varijabli prijelaz iz CSS-a vrati karticu
+    if (Math.abs(dx) < swipePrag(el)) { swipeOcisti(el); return; }   // ispod praga: povratak (prijelaz iz CSS-a)
+    // F1/13 — RUB ŠPILA: prije prve kartice nema ničega, pa lijevo ondje ODSKOČI (isti povratak
+    // kao kratko povlačenje, bez leta i bez upisa). Desno na zadnjoj vodi u izbornik kraja špila,
+    // što je posao `idiNaprijed()` — gesta o tome ne zna ništa.
+    if (dx < 0 && AppState.cards.index <= 0) { swipeOcisti(el); return; }
+    swipeLet(el, dx > 0 ? 1 : -1, dx > 0 ? idiNaprijed : idiNatrag, 0);
 }
 
 function swipeCancel(e) {
@@ -370,16 +422,22 @@ function swipeCancel(e) {
     swipeOcisti(el);                       // preglednik je uzeo pokazivač (skrol, sustav) → ništa se ne upisuje
 }
 
-function swipeLet(el, smjer) {
-    const upis = smjer > 0 ? markKnown : markUnknown;
+/**
+ * Let kartice van ekrana, pa `poslije()` po slijetanju.
+ * @param {number} smjer  +1 desno, −1 lijevo — KUDA kartica odlazi.
+ * @param {Function} poslije  što se dogodi kad sleti (listanje ili upis) — točno jednom.
+ * @param {number} sud  F1/13: 0 = listanje (bez pečata) · +1 = znam · −1 = ne znam. SMJER I SUD SU
+ *   DVIJE STVARI: ✕ leti NAPRIJED (smjer +1, jer i ono ide na sljedeću) a nosi pečat „Ne znam".
+ */
+function swipeLet(el, smjer, poslije, sud) {
     const bezPokreta = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (bezPokreta) { swipeOcisti(el); swipeSleti(el, upis); return; }
+    if (bezPokreta) { swipeOcisti(el); swipeSleti(el, poslije); return; }
     swipe.leti = true;
     const gen = swipe.gen;
     const daleko = (el.offsetWidth || 0) + (window.innerWidth || 0);
     el.style.setProperty('--swipe-x', (smjer * daleko) + 'px');
     el.style.setProperty('--swipe-rot', (smjer * 18) + 'deg');
-    el.style.setProperty('--swipe-p', String(smjer));
+    if (sud) { el.style.setProperty('--swipe-p', String(sud)); el.classList.add('is-sud'); }
     el.classList.add('is-flying');
     const kraj = () => {
         if (gen !== swipe.gen || !swipe.leti) return;   // let je poništen (novi špil) ili već sletio
@@ -387,7 +445,7 @@ function swipeLet(el, smjer) {
         swipe.naKraj = null;
         if (swipe.timer) { clearTimeout(swipe.timer); swipe.timer = 0; }
         swipe.leti = false;
-        swipeSleti(el, upis);
+        swipeSleti(el, poslije);
     };
     const naKraj = (ev) => { if (!ev || ev.target === el) kraj(); };
     swipe.naKraj = naKraj;
@@ -395,22 +453,72 @@ function swipeLet(el, smjer) {
     swipe.timer = setTimeout(kraj, swipe.LET_MS);
 }
 
-/** Slijetanje: prijelazi ugašeni (`is-entering`), let/varijable obrisani, UPIS kroz postojeću funkciju, pa kadar poslije prijelazi natrag. */
-function swipeSleti(el, upis) {
+/** Slijetanje: prijelazi ugašeni (`is-entering`), let/varijable obrisani, radnja kroz postojeću
+ *  funkciju (listanje ili upis), pa kadar poslije prijelazi natrag. `is-slijeva` (ulazak s LIJEVE
+ *  strane) dodaje `idiNatrag()` dok ova klasa stoji — zato ga isti rAF i skida. */
+function swipeSleti(el, poslije) {
     el.classList.add('is-entering');
-    el.classList.remove('is-flying');
+    el.classList.remove('is-flying', 'is-sud');
     swipeOcisti(el);
-    upis();
-    const skini = () => el.classList.remove('is-entering');
+    poslije();
+    const skini = () => el.classList.remove('is-entering', 'is-slijeva');
     if (typeof requestAnimationFrame === 'function') requestAnimationFrame(() => requestAnimationFrame(skini));
     else skini();
 }
 
-/* ── F1/9 ② — STOLNI PANDAN PALCU: STRELICE ─────────────────────────────────────
-   Leon (2026-09-06): špil „samo na mobitelu … ali ako imaš viziju probaj nešto". Stolno zadržava
-   IZGLED (jedna kartica, gumbi, bez špila), ali dobiva isti TOK bez ijednog klika: → = znam,
-   ← = ne znam, razmak / Enter = okreni — uz isti let kartice i pečat kao kod povlačenja, pa se odluka
-   VIDI, ne samo upiše. Radi samo dok je otvoren mod kartica; nikad iznad polja za unos, gumba,
+/* ── F1/13 — RADNJE: LISTANJE, SUD, OKRETANJE ─────────────────────────────
+   Sve što korisnik može napraviti s karticom prolazi kroz ove tri funkcije — gumb, gesta i tipka
+   zovu ISTU, preko tablice `AKCIJE`. Pravilo: **listanje je trenutno, sud leti.**
+
+   ⚠️ Zašto gumb ← / → i tipka ← / → NE lete, a gesta i ✓ / ✕ lete:
+     • gesta MORA razriješiti pomak — prst je karticu već odveo s mjesta, pa ona ili odleti ili se
+       vrati; to je fizika, ne ukras;
+     • sud SMIJE stajati 280 ms — upis je jednokratan i let ga štiti od dvostrukog okidanja (straža
+       `swipe.leti`), a pečat je jedina potvrda koju korisnik dobije;
+     • listanje NE SMIJE — kroz špil se ide brzo i uzastopno, a let bi svaku drugu tipku pojeo
+       (straža koja štiti upis ovdje bi smetala). Zato gumb i tipka listaju odmah. */
+
+/** Naprijed: sljedeća kartica; na zadnjoj — izbornik kraja špila (F1/13 ②). */
+function idiNaprijed() {
+    const cards = AppState.cards;
+    if (!cards.deck || !cards.deck.length) return;
+    if (cards.index >= cards.deck.length - 1) return;   // ② ovdje otvara izbornik kraja špila
+    nextCard();
+}
+
+/** Natrag: prethodna kartica; na prvoj ne radi ništa (gesta ondje odskoči, v. `swipeUp`). */
+function idiNatrag() {
+    const cards = AppState.cards;
+    if (!cards.deck || !cards.deck.length) return;
+    if (cards.index <= 0) return;
+    const el = swipeEl();
+    // Ulazak S LIJEVE strane ima smisla samo kad kartica UPRAVO slijeće (`is-entering`, jedan kadar);
+    // isti rAF u `swipeSleti` ga i skida, pa klasa ne moze ostati visjeti poslije klika na strelicu.
+    if (el && el.classList.contains('is-entering')) el.classList.add('is-slijeva');
+    prevCard();
+}
+
+/** Sud: ✓ / ✕ — let NAPRIJED s pečatom, upis (`markKnown`/`markUnknown`) tek po slijetanju. */
+function sudi(sud) {
+    const el = swipeEl();
+    if (!el || swipe.leti || swipe.aktivno) return;
+    const cards = AppState.cards;
+    if (!cards.deck || !cards.deck.length) return;
+    swipeLet(el, 1, sud > 0 ? markKnown : markUnknown, sud);
+}
+
+/** Okretanje tipkom/gestom: zastavica repa geste se TROŠI ovdje, da tipka nikad ne bude progutana. */
+function okreni() {
+    swipe.progutajKlik = false;
+    flipCard();
+}
+
+/* ── F1/13 — TIPKE: SVE IZ TABLICE (2026-09-06) ──────────────────────────
+   Leon: „dobro bi bilo da i na kompu imamo strelicu … da se sve može tipkama kontrolirati."
+   ← / → = prethodna / sljedeća · razmak / Enter = okreni · **X = ne znam · Z = znam**. Popis više
+   nije `switch` nego TABLICA (gore) — tipka se u njoj TRAŽI, pa nova radnja ne može dobiti tipku
+   koju nitko ne vidi u tutorialu.
+   Straže su iz F1/9 i ostaju: samo dok je otvoren mod kartica; nikad iznad polja za unos, gumba,
    poveznice ili otvorenog modala (ondje tipke već znače nešto drugo) i nikad s modifikatorom
    (⌘ / Ctrl / Alt = prečaci preglednika). Gumbi i klik ostaju netaknuti. */
 function initTipke() {
@@ -418,9 +526,18 @@ function initTipke() {
     document.addEventListener('keydown', naTipku);
 }
 
+/** Tipka → radnja iz tablice. Jednoslovne se normaliziraju (Shift+X je i dalje X), imenovane ne. */
+function akcijaZaTipku(key) {
+    if (typeof key !== 'string') return null;
+    const k = key.length === 1 ? key.toLowerCase() : key;
+    const id = Object.keys(AKCIJE).find((x) => AKCIJE[x].tipke.indexOf(k) >= 0);
+    return id ? AKCIJE[id] : null;
+}
+
 function naTipku(e) {
     if (e.altKey || e.ctrlKey || e.metaKey) return;
-    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft' && e.key !== ' ' && e.key !== 'Enter') return;
+    const akcija = akcijaZaTipku(e.key);
+    if (!akcija) return;
     const nav = AppState.nav;
     if (!nav || nav.page !== 'study' || nav.section !== 'flashcards') return;
     const meta = e.target;
@@ -433,7 +550,9 @@ function naTipku(e) {
     if (!el || swipe.leti || swipe.aktivno) return;
     if (!AppState.cards.deck || !AppState.cards.deck.length) return;
     if (typeof e.preventDefault === 'function') e.preventDefault();
-    if (e.key === 'ArrowRight') swipeLet(el, 1);
-    else if (e.key === 'ArrowLeft') swipeLet(el, -1);
-    else { swipe.progutajKlik = false; flipCard(); }
+    akcija.radnja();
 }
+
+/* Read-only izvoz: tutorial (F1/14) i brane čitaju TABLICU, nikad markup ni `switch` (ADR-027).
+   `SokratFlashcards` je na `window` (kao `SokratBlocks`/`SokratContent`), ne goli `const`. */
+if (typeof window !== 'undefined') window.SokratFlashcards = Object.freeze({ AKCIJE: AKCIJE });
