@@ -37,7 +37,7 @@
         var r = back ? back.getBoundingClientRect() : null;
         var pod = r ? document.elementFromPoint((r.left + r.right) / 2, (r.top + r.bottom) / 2 + 40) : null;
         var o = {
-            ua: navigator.userAgent.replace(/^.*\((.*?)\).*$/, '$1'),
+            ua: (/(([^)]*))/.exec(navigator.userAgent) || [])[1] || navigator.userAgent,
             uredjaj: document.documentElement.getAttribute('data-uredjaj'),
             vp: window.innerWidth + 'x' + window.innerHeight,
             docH: document.documentElement.scrollHeight,
