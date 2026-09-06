@@ -183,7 +183,7 @@ Aktivni spec: **`docs/plan/RASPORED.md`** (2026-09-04) — cijela preostala list
 **sedam faza kroz sesije**: F1 uređaj · F2 račun (R2+R3 + CSS profila) · F3 dvojezičnost ·
 F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **§6 rasporeda: nula otvorenih (anketa 06.09.).**
 
-**F1 uređaj: F1/1–11 ✅ · F1/12⓪ uređaj · F1/12 kadar · F1/13 listanje · F1/14 tutorial = Tinder-kadar (Leon 06.09., plan u RASPORED-u).** iPhone još presuđuje F1/7 `?bez=` A/B i F1/11 štipanje (ADR-034).
+**F1 uređaj: F1/1–11 ✅ · F1/12⓪ uređaj ✅ · F1/12 kadar · F1/13 listanje · F1/14 tutorial = Tinder-kadar (Leon 06.09., plan u RASPORED-u).** iPhone još presuđuje F1/7 `?bez=` A/B i F1/11 štipanje (ADR-034).
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 

@@ -11,7 +11,7 @@ const { test, expect } = require('@playwright/test');
  *
  * Gesta u pješčaniku (rubovi: rep-klik, cancel, timer, novi špil usred leta) je u
  * `tests/unit/flashcard-swipe.test.js`; ovdje je ono što traži pravi motor: dodir → gesta → upis →
- * brojka na ekranu, pečat koji raste s prstom, i špil koji se crta samo pod `pointer: coarse`.
+ * brojka na ekranu, pečat koji raste s prstom, i špil koji se crta samo pod `data-uredjaj~="dodir"` (F1/12 ⓪).
  */
 
 const KARTICA = '#flashcard';
@@ -149,7 +149,11 @@ test.describe('F1/9 — kartice kao Tinder-špil na dodiru', () => {
     });
 
     test('špil: dvije sjene ispod kartice na dodiru, nijedna na zadnjoj', async ({ page }) => {
-        expect(await page.evaluate(() => matchMedia('(pointer: coarse)').matches)).toBe(true);
+        // F1/12 ⓪: CSS špila pita PLATFORMU (`:root[data-uredjaj~="dodir"]`, boot.js), ne medij — tvrdi se ono što CSS čita.
+        expect(await page.evaluate(() => ({
+            atribut: document.documentElement.getAttribute('data-uredjaj').split(' ').includes('dodir'),
+            objekt: window.SokratUredjaj.dodir,
+        }))).toEqual({ atribut: true, objekt: true });
         await expect(page.locator('.flashcard-ghost:visible')).toHaveCount(2);
         const boja = await page.evaluate(() => ({
             g1: document.getElementById('flashcardGhost1').style.getPropertyValue('--item-acc'),

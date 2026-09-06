@@ -55,5 +55,9 @@ declare global {
     // dohvaća — i18n je mora precrtati kao i ostale liste građene iz kataloga.
     renderPathbar?: () => void;
     initTopbar?: () => void;
+
+    // F1/12 ⓪ — platforma zna uređaj (js/boot.js, PRIJE crtanja). ZAMRZNUT; osvježenje = NOVI objekt,
+    // pa se čita `window.SokratUredjaj.x` svaki put, ne drži referenca. CSS-pandan: `:root[data-uredjaj~="dodir"]`.
+    SokratUredjaj?: Readonly<{ dodir: boolean; hover: boolean; hibrid: boolean; razred: 'telefon' | 'tablet' | 'stolno'; os: 'ios' | 'drugo'; pwa: boolean }>;
   }
 }

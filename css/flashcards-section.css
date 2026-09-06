@@ -384,7 +384,7 @@
    i dalje skrola stranicu (preglednik), vodoravni ostaje kartici (nama). Štipanje i dvostruki dodir
    ostaju ugašeni — `pan-y` ne sadrži `pinch-zoom`; `tests/unit/touch-zoom.test.js` to broji.
 
-   Špil (dvije kartice koje vire ispod) postoji samo na DODIRU (`pointer: coarse`) — stolno zadržava
+   Špil (dvije kartice koje vire ispod) postoji samo na DODIRU (`:root[data-uredjaj~="dodir"]`, F1/12 ⓪) — stolno zadržava
    današnji prikaz: jedna kartica, klik, gumbi (+ strelice, F1/9 ②). Pečati „Znam / Ne znam" su
    vidljivi SAMO dok gesta ili let traju (`visibility`, ne samo `opacity`: skriveni tekst ne smije
    ući ni u jednu mjeru kontrasta). */
@@ -442,23 +442,26 @@
 .flashcard.is-flying .swipe-stamp--dont { opacity: clamp(0, calc(-1 * var(--swipe-p, 0)), 1); }
 
 .flashcard-ghost { display: none; }
-@media (pointer: coarse) {
-    .flashcard-wrapper { position: relative; }
-    .flashcard { z-index: 1; }
-    .flashcard-ghost {
-        display: block;
-        position: absolute;
-        inset: 0;
-        z-index: 0;
-        border-radius: var(--radius-lg);
-        /* isti fallback kao lice kartice bez boje; s bojom `applyAccent` postavi `--item-acc` + `data-ink` */
-        background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-600));
-        box-shadow: var(--shadow-e2);
-        pointer-events: none;
-    }
-    .flashcard-ghost[data-ink] { background: var(--item-acc); }
-    .flashcard-ghost--1 { transform: translateY(8px) scale(0.96); }
-    .flashcard-ghost--2 { transform: translateY(16px) scale(0.92); }
-    /* `display:block` gore bi pregazio UA `[hidden]` — vrati ga (isti trik kao auth/consent) */
-    .flashcard-ghost[hidden] { display: none; }
+/* F1/12 ⓪ (2026-09-06): špil je ODLUKA O SUČELJU (na dodiru kartice su špil, na mišu jedna kartica), pa
+   pita PLATFORMU — `:root[data-uredjaj~="dodir"]`, koji `js/boot.js` upiše PRIJE prvog crtanja — a ne
+   medij. Do tada je ovaj blok bio `@media (pointer: coarse)`: ista istina na drugom mjestu. Medij ostaje
+   samo za SPOSOBNOST preglednika (polja 16 px u `variables.css`, `(hover: hover)` omoti iz builda).
+   Brana: `tests/unit/uredjaj.test.js` (nula `@media (pointer…)` ovdje, osnovica imenuje ostatak). */
+:root[data-uredjaj~="dodir"] .flashcard-wrapper { position: relative; }
+:root[data-uredjaj~="dodir"] .flashcard { z-index: 1; }
+:root[data-uredjaj~="dodir"] .flashcard-ghost {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: var(--radius-lg);
+    /* isti fallback kao lice kartice bez boje; s bojom `applyAccent` postavi `--item-acc` + `data-ink` */
+    background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-600));
+    box-shadow: var(--shadow-e2);
+    pointer-events: none;
 }
+:root[data-uredjaj~="dodir"] .flashcard-ghost[data-ink] { background: var(--item-acc); }
+:root[data-uredjaj~="dodir"] .flashcard-ghost--1 { transform: translateY(8px) scale(0.96); }
+:root[data-uredjaj~="dodir"] .flashcard-ghost--2 { transform: translateY(16px) scale(0.92); }
+/* `display:block` gore bi pregazio UA `[hidden]` — vrati ga (isti trik kao auth/consent) */
+:root[data-uredjaj~="dodir"] .flashcard-ghost[hidden] { display: none; }

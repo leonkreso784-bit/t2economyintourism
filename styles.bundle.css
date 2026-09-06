@@ -2594,35 +2594,33 @@ sokrat-modal.sokrat-confirm-modal > * {
 .flashcard-ghost {
   display: none;
 }
-@media (pointer: coarse) {
-  .flashcard-wrapper {
-    position: relative;
-  }
-  .flashcard {
-    z-index: 1;
-  }
-  .flashcard-ghost {
-    display: block;
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    border-radius: var(--radius-lg);
-    background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-600));
-    box-shadow: var(--shadow-e2);
-    pointer-events: none;
-  }
-  .flashcard-ghost[data-ink] {
-    background: var(--item-acc);
-  }
-  .flashcard-ghost--1 {
-    transform: translateY(8px) scale(0.96);
-  }
-  .flashcard-ghost--2 {
-    transform: translateY(16px) scale(0.92);
-  }
-  .flashcard-ghost[hidden] {
-    display: none;
-  }
+:root[data-uredjaj~="dodir"] .flashcard-wrapper {
+  position: relative;
+}
+:root[data-uredjaj~="dodir"] .flashcard {
+  z-index: 1;
+}
+:root[data-uredjaj~="dodir"] .flashcard-ghost {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-600));
+  box-shadow: var(--shadow-e2);
+  pointer-events: none;
+}
+:root[data-uredjaj~="dodir"] .flashcard-ghost[data-ink] {
+  background: var(--item-acc);
+}
+:root[data-uredjaj~="dodir"] .flashcard-ghost--1 {
+  transform: translateY(8px) scale(0.96);
+}
+:root[data-uredjaj~="dodir"] .flashcard-ghost--2 {
+  transform: translateY(16px) scale(0.92);
+}
+:root[data-uredjaj~="dodir"] .flashcard-ghost[hidden] {
+  display: none;
 }
 .quiz-container {
   max-width: 800px;

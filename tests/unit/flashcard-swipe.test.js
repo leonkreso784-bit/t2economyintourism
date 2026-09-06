@@ -16,7 +16,7 @@
 //   ② izvor: `cards.known.push` / `cards.unknown.push` postoje TOČNO jednom (u `markKnown` /
 //      `markUnknown`), a gesta ih zove po referenci — ne kopira;
 //   ③ CSS i markup: `touch-action: pan-y` na kartici (jedino odstupanje od reseta `pan-x pan-y`, F1/11),
-//      sjene špila samo pod `pointer: coarse` i skrivene bez sljedeće kartice, pečati skriveni
+//      sjene špila samo pod `:root[data-uredjaj~="dodir"]` (F1/12 ⓪, ne medij) i skrivene bez sljedeće kartice, pečati skriveni
 //      `visibility`-jem dok gesta ne traje, oba i18n ključa postoje.
 //
 // Pravi dodir (CDP `Input.dispatchTouchEvent`, Chromium s `hasTouch`) mjeri `tests/flashcard-swipe.spec.js`.
@@ -377,9 +377,12 @@ console.log('\n=== kartice kao Tinder-špil (F1/9): gesta · jedan put upisa · 
         'flashcards-section.css: `touch-action: pan-y` na `.flashcard` I na skrolerima `.flashcard-front`/`.flashcard-back`');
     tvrdi(/touch-action:\s*pan-y\s*[;}]/.test(bundle), 'bundle nosi `touch-action: pan-y` (build:css je pokrenut)');
     tvrdi(/\.flashcard-ghost\s*\{\s*display:\s*none;?\s*\}/.test(css), 'sjene su `display: none` izvan dodira');
-    const coarse = css.slice(css.indexOf('@media (pointer: coarse)'));
-    tvrdi(coarse.indexOf('.flashcard-ghost') >= 0 && /display:\s*block/.test(coarse), 'sjene se crtaju pod `@media (pointer: coarse)`');
-    tvrdi(/\.flashcard-ghost\[hidden\]\s*\{\s*display:\s*none/.test(coarse), 'sjene bez sljedeće kartice: `[hidden]` vraća `display: none` (UA pravilo bi bilo pregaženo)');
+    // F1/12 ⓪: špil je odluka o SUČELJU → pita platformu (`data-uredjaj`, boot.js), ne medij `(pointer: coarse)`.
+    const DODIR = ':root[data-uredjaj~="dodir"]';
+    const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    tvrdi(new RegExp(esc(DODIR) + ' \\.flashcard-ghost\\s*\\{[^}]*display:\\s*block').test(css), 'sjene se crtaju pod `' + DODIR + ' .flashcard-ghost` (platforma zna uređaj, F1/12 ⓪)');
+    tvrdi(new RegExp(esc(DODIR) + ' \\.flashcard-ghost\\[hidden\\]\\s*\\{\\s*display:\\s*none').test(css), 'sjene bez sljedeće kartice: `[hidden]` vraća `display: none` (UA pravilo bi bilo pregaženo)');
+    tvrdi(!/@media\s*\(pointer:\s*coarse\)/.test(css), 'flashcards-section.css: F1/9 blok više NE pita `@media (pointer: coarse)` — odluka o sučelju, ne sposobnost motora');
     tvrdi(/\.swipe-stamp\s*\{[^}]*visibility:\s*hidden/.test(css), 'pečati: `visibility: hidden` u mirovanju (ne ulaze u mjere kontrasta)');
     tvrdi(/is-dragging \.swipe-stamp,\s*\.flashcard\.is-flying \.swipe-stamp\s*\{\s*visibility:\s*visible/.test(css), 'pečati vidljivi samo pod `is-dragging`/`is-flying`');
     tvrdi(/\.swipe-stamp--know\s*\{[^}]*var\(--color-ok\)[^}]*var\(--color-on-ok\)/.test(css) && /\.swipe-stamp--dont\s*\{[^}]*var\(--color-danger\)[^}]*var\(--color-on-danger\)/.test(css),

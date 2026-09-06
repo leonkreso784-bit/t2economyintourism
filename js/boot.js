@@ -73,6 +73,87 @@
     window.__sokratPrimijeniTemu = primijeniTemu;
     primijeniTemu();
 
+    /* ===== F1/12 ⓪ · UREĐAJ — platforma ZNA na čemu je, na JEDNOM mjestu (2026-09-06) =====
+       Leon: „Platforma mora znati na kakvom je uređaju korisnik." Do ove cigle se to pitalo na četiri
+       mjesta na četiri načina — CSS `@media (pointer: coarse)` (F1/9 špil, F1/10 polja), `(hover: hover)`
+       (F1/8), JS `GestureEvent` (`no-zoom.js`), `prefers-color-scheme` gore (F1/3) — a je li aplikacija
+       INSTALIRANA nije znao nitko, iako Leon testira baš instaliranu.
+
+       UGOVOR: CSS pita `:root[data-uredjaj~="dodir"]`, JS pita `SokratUredjaj.dodir`. Nitko drugi u
+       `js/**` ne zove `matchMedia` za pointer / any-pointer / hover / any-hover / display-mode i nitko
+       drugi ne njuška `GestureEvent` (brana: `tests/unit/uredjaj.test.js`, statički nad `js/**` i `css/**`).
+
+       ⚠️ ŠTO IDE OVAMO, A ŠTO OSTAJE MEDIJ U CSS-u — razlika koja odlučuje:
+       • ODLUKA O SUČELJU (špil kartica na dodiru, red gumba, tipke, tutorial) → atribut / objekt ODAVDE;
+       • SPOSOBNOST PREGLEDNIKA — činjenica o motoru, ne naša odluka — OSTAJE `@media`: iOS zumira polje
+         ispod 16 px (`(pointer: coarse)` u `variables.css`, F1/10) · `:hover` ima smisla samo gdje hover
+         postoji (`(hover: hover)` omoti koje `scripts/hover-css.js` gradi u build-vremenu, F1/8).
+
+       Polja: `dodir` (pointer: coarse) · `hover` (hover: hover) · `hibrid` (laptop s dodirom: any-pointer:
+       coarse + hover: hover) · `razred` telefon | tablet | stolno — ISTI pragovi kao CSS (`PRAGOVI`, brana ih
+       uspoređuje s `css/**`) · `os` ios | drugo — `ios` = `GestureEvent` postoji, isti i JEDINI test motora
+       koji repo ima (F1/11 ②; ⚠️ istinit je i u stolnom Safariju, pa `os` smije voditi samo štipanje, nikad
+       izgled — izgled pita `dodir`) · `pwa` (display-mode: standalone). Atribut nosi tokene sposobnosti
+       koje JESU (odsutna = nema tokena), razred uvijek, `ios` i `pwa` kad jesu. Objekt je ZAMRZNUT;
+       osvježenje na promjenu medija (tablet dobije miš, prozor prijeđe prag) je NOVI zamrznut objekt —
+       čitaj `SokratUredjaj.x` svaki put, ne drži referencu. Ovdje, a ne u `defer` skripti: špil se crta iz
+       atributa, pa atribut mora stajati PRIJE prvog crtanja. Bez mreže, bez UA-njuškanja. */
+    var PRAGOVI = { tablet: 768, stolno: 1024 };
+
+    function medij(upit) {
+        try { return window.matchMedia ? window.matchMedia(upit) : null; } catch (e) { return null; }
+    }
+    function istina(upit) { var m = medij(upit); return !!(m && m.matches); }
+    /* Širina kroz ISTI upit koji CSS koristi (`min-width`), pa razred i stilovi ne mogu razići ni na
+       zumu ni uz klizač; bez `matchMedia` (nema ga samo prastari motor) pada na `innerWidth`. */
+    function sirinaBar(px) {
+        var m = medij('(min-width: ' + px + 'px)');
+        if (m) return !!m.matches;
+        var w = window.innerWidth || (document.documentElement && document.documentElement.clientWidth) || 0;
+        return w >= px;
+    }
+    function izracunajUredjaj() {
+        var hover = istina('(hover: hover)');
+        return {
+            dodir: istina('(pointer: coarse)'),
+            hover: hover,
+            hibrid: hover && istina('(any-pointer: coarse)'),
+            razred: sirinaBar(PRAGOVI.stolno) ? 'stolno' : (sirinaBar(PRAGOVI.tablet) ? 'tablet' : 'telefon'),
+            os: typeof window.GestureEvent !== 'undefined' ? 'ios' : 'drugo',
+            pwa: istina('(display-mode: standalone)')
+        };
+    }
+    function tokeniUredjaja(u) {
+        var t = [];
+        if (u.dodir) t.push('dodir');
+        if (u.hover) t.push('hover');
+        if (u.hibrid) t.push('hibrid');
+        t.push(u.razred);
+        if (u.os === 'ios') t.push('ios');
+        if (u.pwa) t.push('pwa');
+        return t.join(' ');
+    }
+    function primijeniUredjaj() {
+        var u = Object.freeze(izracunajUredjaj());
+        var html = document.documentElement;
+        var tokeni = tokeniUredjaja(u);
+        // Samo kad se RAZLIKUJE — isti razlog kao kod teme (badava preračun stila).
+        if (html.getAttribute('data-uredjaj') !== tokeni) html.setAttribute('data-uredjaj', tokeni);
+        window.SokratUredjaj = u;
+        return u;
+    }
+    primijeniUredjaj();
+    /* Svaki upit dobije slušača; promjena preračuna SVE (šest upita, jeftino) — tablet dobije miš,
+       prozor prijeđe prag, aplikacija se otvori kao PWA. `addListener` = Safari < 14. */
+    var upiti = ['(pointer: coarse)', '(hover: hover)', '(any-pointer: coarse)', '(display-mode: standalone)',
+        '(min-width: ' + PRAGOVI.tablet + 'px)', '(min-width: ' + PRAGOVI.stolno + 'px)'];
+    for (var k = 0; k < upiti.length; k++) {
+        var mq = medij(upiti[k]);
+        if (!mq) continue;
+        if (mq.addEventListener) mq.addEventListener('change', primijeniUredjaj);
+        else if (mq.addListener) mq.addListener(primijeniUredjaj);
+    }
+
     /* F1/7 ② · `?bez=zamucenja,sjena` → `<html data-bez="zamucenja sjena">` PRIJE prvog crtanja.
        Protučinjenični prekidač za mjerenje na PRAVOM uređaju: `css/bez.css` gasi sumnjivca
        (zamućenje · sjene · prijelazi · pozadina landinga), Leon na iPhoneu kaže koji je scenarij

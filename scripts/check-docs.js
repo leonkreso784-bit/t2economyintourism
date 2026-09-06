@@ -17,6 +17,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 const ROOT = path.join(__dirname, '..');
 const DOCS = path.join(ROOT, 'docs');
@@ -294,8 +295,19 @@ if (fs.existsSync(CLAUDE_MD)) {
 // pišu neodređeno.*
 //
 // ⚠️ Preskaču se i uzorci s `<`, `*` i `?` (npr. `data/<subj>-hr/`) — placeholderi.
+//
+// ⚠️ GITIGNORIRANA putanja je RUNTIME-ARTEFAKT, ne tvrdnja o repozitoriju (2026-09-06, F1/12 ⓪):
+// `tests/.auth/admin.json` je sesija koju `auth.setup.js` zapiše na stroju koji je vrtio
+// `test:authed` — TESTING.md ju imenuje i doslovno kaže „(gitignored)". Brana ju je brojala kao
+// duha, pa je preflight u SVAKOM svježem klonu i `git worktree`-u padao (na razvojnom stroju je
+// prolazio samo zato što je datoteka ondje slučajno postojala). Git je autoritet: `check-ignore`
+// zna je li putanja ignorirana i kad na disku ne postoji. Neuspjeh gita = putanja se NE preskače.
+const ignoriranGitom = (cilj) => {
+  try { execFileSync('git', ['check-ignore', '-q', cilj], { cwd: ROOT, stdio: 'ignore' }); return true; } catch (e) { return false; }
+};
 const PATH_RE = /`((?:js|css|tests|scripts|data|schema|supabase|assets)\/[A-Za-z0-9._/-]+\.[a-z]{2,5})`/g;
 const duhovi = [];
+let ignoriranih = 0;
 const TVRDI_O_DISKU = (f) => {
   const r = rel(f);
   return r === 'CLAUDE.md' || r.indexOf('docs/workflow/') === 0 ||
@@ -308,6 +320,7 @@ allMd.filter(TVRDI_O_DISKU).forEach((f) => {
     const cilj = m[1];
     if (/[<>*?]/.test(cilj)) continue;
     if (!fs.existsSync(path.join(ROOT, cilj))) {
+      if (ignoriranGitom(cilj)) { ignoriranih++; continue; }
       duhovi.push(rel(f) + '  →  ' + cilj);
     }
   }
@@ -322,6 +335,7 @@ if (duhovi.length) {
 console.log('\n=== check:docs ===');
 console.log('  .md dokumenata : ' + allMd.length);
 console.log('  poveznica      : ' + links);
+if (ignoriranih) console.log('  runtime-putanja: ' + ignoriranih + ' (gitignorirane, nisu duhovi)');
 if (problems.length === 0) {
   console.log('\n✅ dokumentacija je konzistentna\n');
   process.exit(0);

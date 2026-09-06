@@ -100,7 +100,8 @@ function updateFlashcard() {
  * F1/9 — ŠPIL: dvije kartice koje vire ispod trenutne nose boju SVOJE kartice (isti
  * `applyAccent` kao i lice), da se na telefonu vidi što slijedi i kojoj sekciji pripada.
  * Bez sljedeće kartice sjena se skriva (`hidden`), pa zadnja kartica stoji sama — kao i
- * dosad na stolnom, gdje sjene ne postoje uopće (CSS ih crta samo pod `pointer: coarse`).
+ * dosad na stolnom, gdje sjene ne postoje uopće (CSS ih crta samo pod `:root[data-uredjaj~="dodir"]`,
+ * F1/12 ⓪ — platforma zna uređaj na jednom mjestu).
  */
 function updateDeckGhosts() {
     const cards = AppState.cards;

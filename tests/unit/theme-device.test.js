@@ -38,7 +38,8 @@ function svijet(o) {
     let postavljanja = 0;
     const html = {
         getAttribute: (k) => (k in attrs ? attrs[k] : null),
-        setAttribute: (k, v) => { attrs[k] = String(v); postavljanja++; },
+        // F1/12 ⓪: boot.js na <html> piše i `data-uredjaj` — broji se SAMO tema, tvrdnja dolje je o njoj.
+        setAttribute: (k, v) => { attrs[k] = String(v); if (k === 'data-theme') postavljanja++; },
         style: {},
     };
     const slusaci = {};

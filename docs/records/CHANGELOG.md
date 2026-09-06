@@ -5,6 +5,30 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-06 (FABLE) — **F1/12 ⓪: platforma ZNA uređaj — jedno mjesto (`boot.js` → `<html data-uredjaj>` + zamrznut `SokratUredjaj`)**
+
+Leon: *„Platforma mora znati na kakvom je uređaju korisnik."* Do sada se to pitalo na četiri mjesta na četiri načina — CSS
+`@media (pointer: coarse)` (F1/9 špil, F1/10 polja), `(hover: hover)` (F1/8), JS `GestureEvent` (`no-zoom.js`), `prefers-color-scheme`
+(`boot.js`) — a je li aplikacija INSTALIRANA nije znao nitko, iako Leon testira baš instaliranu. Sad `js/boot.js` (sinkron, prije
+prvog crtanja, na svih 6 stranica) jednom izračuna `dodir` · `hover` · `hibrid` (laptop s dodirom) · `razred` telefon | tablet | stolno
+(`PRAGOVI` 768 / 1024 = dva najčešća praga u `css/**`, brana to broji: 45 i 15 od 105) · `os` ios | drugo (`GestureEvent`, isti test kao
+dosad u no-zoom.js) · `pwa` (display-mode: standalone) → `<html data-uredjaj="dodir telefon ios pwa">` (odsutna sposobnost = nema
+tokena) + **zamrznut `window.SokratUredjaj`**; promjena medija (tablet dobije miš, prozor prijeđe prag) = novi zamrznut objekt.
+**Ugovor:** CSS pita `:root[data-uredjaj~="dodir"]`, JS `SokratUredjaj.dodir` — nitko drugi u `js/**` ne zove `matchMedia` za
+pointer/hover/display-mode ni ne njuška `GestureEvent` (statička brana). **Razlika koja odlučuje:** odluka o SUČELJU → atribut;
+SPOSOBNOST preglednika (iOS zumira polje < 16 px, `:hover` samo gdje hover postoji) → ostaje `@media`, imenovana u osnovici s razlogom.
+**Seli:** F1/9 špil kartica s medija na atribut (7 selektora) · `no-zoom.js` čita `SokratUredjaj.os` umjesto vlastitog `GestureEvent`
+testa (boot sinkron + no-zoom `defer` → izvršni red zajamčen na svih 6 stranica). **Usput nađeno i popravljeno:** izvadak tokena za
+pravne stranice (`build-css.js`) kupio je svako pravilo koje počinje s `:root` — pravne stranice su nosile `data-bez` prekidač (18
+redaka `bez.css`) koji im nitko nije namijenio, a dobile bi i špil kartica; sad uzima samo token-blokove bez potomka i pada glasno. **Usput ②:** `check:docs` je u svježem worktreeu padao na `tests/.auth/admin.json` (TESTING.md ju imenuje i kaže „gitignored") — gitignorirana putanja je runtime-artefakt, ne duh; brana sad pita `git check-ignore` (na razvojnom stroju je prolazila samo jer datoteka ondje slučajno postoji).
+Brane: `tests/unit/uredjaj.test.js` (77 tvrdnji; ugovor nad 46 datoteka `js/**` i 34 `css/**` s osnovicom od 7 imenovanih blokova —
+1 sposobnost + 6 naslijeđa za F4/3; obrnuto kroz `git worktree` na `900f142` = **46 crvenih**) · `tests/uredjaj.spec.js` (4 iPhone
+profila + stolni kontekst s promjenom prozora uživo: 13 prošlo, 3 preskočena) · `flashcard-swipe.spec` 28/28 · `app-state.spec` 16/16 ·
+`phone.spec` **11/11** (osnovica prazna, 0 nalaza; 33 preskočena = ostala tri profila, po dizajnu brane) · `touch-zoom` ③ vrti boot + no-zoom istim redom · preflight EXIT 0, bump.
+**Svjesno NE:** šest naslijeđenih `@media (hover: none)…` blokova ostaje do F4/3 (mijenjali bi piksele) · birač tema (F2/1) nediran ·
+phone-gate bez nove tvrdnje (spec mjeri ista 4 profila). **Gdje se vidi:** grana `feat/tinder-kadar` (lokalno); produkcija `c53c28c`
+bez toga. U konzoli na telefonu `SokratUredjaj` kaže što platforma misli da je uređaj — to Leon vidi na svom iPhoneu.
+
 ## 2026-09-06 (FABLE) — **F1/9: kartice kao Tinder-špil na dodiru — palac desno = znam, lijevo = ne znam · špil od tri · strelice kao stolni pandan**
 
 Leon (05.09.): *„na mobitelu bi napravio za kartice kao tinder način"*; (06.09., usred rada): *„samo na mobitelu … ali ako imaš viziju

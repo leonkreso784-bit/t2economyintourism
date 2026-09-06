@@ -157,9 +157,14 @@ function extractTokens(css, version) {
    * njega bi zadane vrijednosti dobile istu težinu kao teme i, stojeći prvo,
    * bile pregažene… ili, stojeći zadnje, pregazile SVE teme.
    * Prva verzija ove funkcije tražila je samo `^:root` i tiho ispustila zadanu
-   * paletu (u izlazu nije bilo ni jedne krede), a teme složila PRIJE nje. */
+   * paletu (u izlazu nije bilo ni jedne krede), a teme složila PRIJE nje.
+   * ⚠️ F1/12 ⓪ (2026-09-06): `:root[data-uredjaj~="dodir"] .flashcard-ghost { … }` je PRAVILO
+   * SUČELJA vezano na `<html>`, ne token-blok — a `:root[^{]*\{` ga je pokupio i pravne stranice
+   * su dobile špil kartica. Token-blok je `:root` (+ atributi, + zarezi) BEZ potomka: selektor
+   * s razmakom/kombinatorom iza `:root…` ne ulazi. Brana dolje pada glasno ako bi ušao. */
   const blocks = [];
-  const re = /^(?:@layer theme\s*\{|:root[^{]*\{)/gm;
+  const ROOT_SEL = ':root(?:\\[[^\\]]*\\])*';
+  const re = new RegExp('^(?:@layer theme\\s*\\{|' + ROOT_SEL + '(?:\\s*,\\s*' + ROOT_SEL + ')*\\s*\\{)', 'gm');
   let m;
   while ((m = re.exec(css)) !== null) {
     let depth = 0;
@@ -177,6 +182,9 @@ function extractTokens(css, version) {
   if (/@layer theme/.test(spojeno) && spojeno.indexOf('@layer theme') > spojeno.indexOf('[data-theme=')) {
     problemi.push('zadana paleta stoji IZA tema — pregazila bi ih');
   }
+  // Pravilo sučelja (`:root[data-uredjaj~=…] .x`) nije token: prelude s razmakom iza `:root…`.
+  const sPotomkom = blocks.map((b) => b.slice(0, b.indexOf('{')).trim()).filter((p) => /:root(?:\[[^\]]*\])*\s+\S/.test(p));
+  if (sPotomkom.length) problemi.push('blok s potomkom nije token-blok: ' + sPotomkom.join(' | '));
   if (problemi.length) {
     console.error(`❌ ${TOKENS_OUT_REL}: izvadak nije upotrebljiv.`);
     problemi.forEach((p) => console.error('   · ' + p));

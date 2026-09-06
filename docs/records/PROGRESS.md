@@ -5,6 +5,27 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-06 (FABLE) — F1/12 ⓪: platforma zna uređaj na JEDNOM mjestu (`data-uredjaj` + `SokratUredjaj` iz `boot.js`) — preduvjet za Tinder-kadar
+
+Noćna cigla bez Leona (spava; sve na grani `feat/tinder-kadar`, ništa pushano). `boot.js` prije prvog crtanja izračuna `dodir · hover ·
+hibrid · razred · os · pwa` iz `matchMedia` + `GestureEvent`, upiše `<html data-uredjaj="…">` i zamrznut `window.SokratUredjaj`, i
+osvježava na `change` šest upita novim zamrznutim objektom. Ugovor: CSS `:root[data-uredjaj~="dodir"]`, JS `SokratUredjaj.dodir`;
+statička brana nad `js/**` (nula `matchMedia` za pointer/hover/display-mode, nula `GestureEvent` izvan boota) i `css/**` (svaki
+`@media (pointer…|hover…)` ili je `(hover: hover)` omot = sposobnost, ili je IMENOVAN u osnovici s razlogom: 1 sposobnost — 16 px polja —
+i 6 naslijeđa `(hover: none)…` iz responsive/03/06 koja sele u F4/3). F1/9 špil preseljen s medija na atribut; `no-zoom.js` čita `os`.
+**Dvije stvari koje je našla tek brana:** ① izvadak tokena (`build-css.js`) je regexom `:root[^{]*\{` kupio SVE što počinje s `:root`
+— pravne stranice su cijelo vrijeme nosile `data-bez` prekidač (18 redaka) i dobile bi špil kartica; sad uzima samo token-blokove bez
+potomka i pada glasno; ② na pravnim stranicama `no-zoom.js` stoji u `<head>` PRIJE boota — i to je u redu, jer `defer` čeka kraj
+parsiranja, a sinkroni boot se izvrši tijekom; brana traži baš `defer` (ne `async`), ne mjesto u dokumentu. **Treća, izvan cigle:**
+`check:docs` u svježem worktreeu pada na gitignoriranu `tests/.auth/admin.json` (runtime-artefakt, ne duh) → brana pita `git check-ignore`;
+na razvojnom stroju je prolazila samo jer datoteka ondje slučajno postoji. Brane: unit 77 tvrdnji
+(obrnuto `git worktree` na `900f142` = 46 crvenih) · `uredjaj.spec` 13 + 3 preskočena (Chromium: iPhone profili `dodir` bez `hover`,
+852 polegnut = `tablet` kao i CSS; stolno 1280 → `hover stolno`, `setViewportSize` preko pragova osvježi razred uživo) ·
+`flashcard-swipe.spec` 28/28 · `app-state.spec` 16/16 · `phone.spec` **11/11** (osnovica prazna, 0 nalaza; 33 preskočena = ostala tri profila, po dizajnu brane) · preflight EXIT 0, bump. **Pretpostavke bez Leona:** datum
+isporuke = stvarni datum stroja (06.09., ne 07.09. iz naloga) · `os = ios` doslovno = `GestureEvent` (kako nalog traži; istinit i u
+stolnom Safariju → smije voditi samo štipanje) · šest naslijeđenih medija ostaje (F4/3), phone-gate bez nove tvrdnje. Kod F1/12 kadra
+i F1/13 nije diran.
+
 ## 2026-09-06 (FABLE) — Leon s previewom F1/9 → Tinder-KADAR (palac lista, gumbi sude, kartica = ekran): IZMJERENO + PLAN, bez koda
 
 Leon: *„Ako se povuče lijevo vraća se na prijašnju, desno ide na sljedeću. Kada se okrene daje odgovor. Know i don't know stoje dolje

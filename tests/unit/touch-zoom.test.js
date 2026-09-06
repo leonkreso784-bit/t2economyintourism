@@ -29,7 +29,8 @@
 //      a `pan-x pan-y` ga na uređaju nije zaustavio. Ostaje ono što WebKit sluša: `gesturestart` /
 //      `gesturechange` + `touchmove` sa `scale !== 1`, `preventDefault()` uz `passive: false`. Veže se
 //      SAMO gdje `GestureEvent` postoji — Chrome ga nema, a nepasivan `touchmove` bi mu badava usporio
-//      skrol. Vlastita datoteka na svih 6 stranica (`defer`), jer pravne nemaju `boot.js` (ADR-027).
+//      skrol. Vlastita datoteka na svih 6 stranica (`defer`). ⚠️ F1/12 ⓪: motor prepoznaje `boot.js`
+//      (`SokratUredjaj.os === 'ios'` = `GestureEvent`), no-zoom samo ČITA — pa se u pješčaniku vrte oba.
 //
 // a11y: axe `meta-viewport` (WCAG 1.4.4, AA) na ovu metu PADA — imenovano isključenje s razlogom
 // ADR-034 stoji u `tests/helpers/axe-gate.js` (`ISKLJUCENO_ODLUKOM`), ne u osnovici.
@@ -161,18 +162,29 @@ tvrdi(fsImportant === 0, 'bundle: nula `font-size … !important` (bilo 1, iz is
 // ③ iOS JS-sloj — svih 6 stranica ga učitava, a u sandboxu radi točno ono što tvrdi
 const vm = require('vm');
 const NOZOOM = citaj('js', 'no-zoom.js');
+const BOOT = citaj('js', 'boot.js');
 for (const f of APP.concat(PRAVNE)) {
     const tagovi = citaj(f).match(/<script[^>]*\ssrc="js\/no-zoom\.js\?v=\d+"[^>]*>/g) || [];
     tvrdi(tagovi.length === 1 && /\bdefer\b/.test(tagovi[0]), f + ': učitava `js/no-zoom.js` točno jednom, s `?v=` i `defer`, nađeno ' + tagovi.length);
 }
-/** Lažni svijet: `document` pamti slušače; `posalji` glumi preglednik i vraća je li događaj otkazan. */
-function svijetGeste(imaGestureEvent) {
+/** Lažni svijet: `document` pamti slušače; `posalji` glumi preglednik i vraća je li događaj otkazan.
+ *  F1/12 ⓪: motor prepoznaje `boot.js` (`SokratUredjaj.os`), `no-zoom.js` samo čita — pa se vrte OBA, istim
+ *  redom kao na stranici (boot sinkron prije `defer` no-zooma; redoslijed čuva `uredjaj.test.js`).
+ *  `bezBoota` glumi boot koji nije prošao: tada se ne smije vezati ništa. */
+function svijetGeste(imaGestureEvent, bezBoota) {
     const slusaci = [];
-    const document = { addEventListener: (tip, fn, opts) => slusaci.push({ tip, fn, opts }) };
-    const ctx = { document, console };
+    const attrs = { 'data-theme': 'academic' };
+    const html = { getAttribute: (k) => (k in attrs ? attrs[k] : null), setAttribute: (k, v) => { attrs[k] = String(v); }, style: {} };
+    const document = {
+        documentElement: html, body: { classList: { remove() {} } }, querySelectorAll: () => [],
+        addEventListener: (tip, fn, opts) => slusaci.push({ tip, fn, opts }),
+    };
+    const ctx = { document, console, localStorage: { getItem: () => null, setItem() {}, removeItem() {} }, location: { hash: '', search: '' } };
     ctx.window = ctx;
+    ctx.matchMedia = () => ({ matches: false, addEventListener() {} });
     if (imaGestureEvent) ctx.GestureEvent = function GestureEvent() {};
     vm.createContext(ctx);
+    if (!bezBoota) vm.runInContext(BOOT, ctx, { filename: 'boot.js' });
     vm.runInContext(NOZOOM, ctx, { filename: 'no-zoom.js' });
     const posalji = (tip, e) => {
         let otkazano = false;
@@ -185,6 +197,8 @@ function svijetGeste(imaGestureEvent) {
 {
     const bez = svijetGeste(false);
     tvrdi(bez.slusaci.length === 0, 'bez `GestureEvent` (Chrome/Android): NIJEDAN slušač — meta ondje radi, nepasivan touchmove bi usporio skrol');
+    const bezBoota = svijetGeste(true, true);
+    tvrdi(bezBoota.slusaci.length === 0, 'bez `boot.js` (nema `SokratUredjaj`): NIJEDAN slušač — no-zoom ne njuška motor sam (F1/12 ⓪, jedno mjesto)');
     const s = svijetGeste(true);
     const tipovi = s.slusaci.map((x) => x.tip).sort().join(',');
     tvrdi(tipovi === 'gesturechange,gesturestart,touchmove', 's `GestureEvent` (WebKit): slušači gesturestart + gesturechange + touchmove, nađeno: ' + tipovi);
