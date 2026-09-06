@@ -29,6 +29,37 @@ profila + stolni kontekst s promjenom prozora uživo: 13 prošlo, 3 preskočena)
 phone-gate bez nove tvrdnje (spec mjeri ista 4 profila). **Gdje se vidi:** grana `feat/tinder-kadar` (lokalno); produkcija `c53c28c`
 bez toga. U konzoli na telefonu `SokratUredjaj` kaže što platforma misli da je uređaj — to Leon vidi na svom iPhoneu.
 
+## 2026-09-06 (FABLE) — **Birač tema: natpis je samo „Automatski" — sufiks s temom uređaja otpada** (RASPORED §6/7, odluka (a))
+
+Leon (06.09., slika profila na tamnom telefonu): *„glupo je imati ovu Automatic · Carbon, uopće ne kužim koji je
+smisao toga."* F1/3 je gumbu dopisivao ` · ` + ime teme koju uređaj TRENUTNO bira, uz obrazloženje *„inače je gumb
+obećanje bez sadržaja"* — a posljedica je bila da na tamnom uređaju „Automatic · Carbon" stoji odmah do gumba
+„Carbon" i čita se kao **peta tema**, dakle kao duplikat. Sad je natpis točno **„Automatski" / „Automatic"**;
+**gumb OSTAJE** — on je jedini način da se jednom napravljen izbor poništi i da se praćenje uređaja vrati. Što gumb
+radi kaže **opis iznad birača** (`profile.appearanceDesc`: *„Automatski prati uređaj, kao i naši mailovi"*), pa je
+objašnjenje na jednom mjestu umjesto na dva. Usput popravljen i **rezervni (fallback) tekst** tog opisa u
+`js/profile.js` — glasio je *„Pick a theme…"* i uređaj nije spominjao, pa bi stranica bez `i18n.js` gumb ostavila
+neobjašnjenim. Znanje o uređaju (`window.__sokratTemaUredjaja`, `boot.js`) **nije dirano** — čeka F1/12 ⓪.
+Brana: `tests/unit/theme-picker-label.test.js` — 18 tvrdnji, birač se **stvarno crta** u `vm`-pješčaniku (tamni i
+svijetli uređaj, HR i EN, bez rječnika, izabran `carbon`) uz dvije ograde u izvoru; obrnuto kroz staro stablo =
+**11 crvenih**. Preflight EXIT 0, bump.
+**Gdje se vidi:** grana `feat/nocna-b` → spaja se u `feat/tinder-kadar`; produkcija `c53c28c` bez toga.
+
+## 2026-09-06 (FABLE) — **`check:docs` je padao u svakom svježem klonu: generiran i gitignoriran artefakt nije duh-datoteka**
+
+Nađeno usput, pri prvom preflightu u novom `git worktree`-u: `check:docs` je prijavio **DUH-DATOTEKA →
+`tests/.auth/admin.json`**, a to je sesija koju `npm run test:authed` TEK proizvede i koju `.gitignore` drži izvan
+repozitorija. Na stroju gdje su ti testovi jednom vrćeni datoteka postoji, drugdje ne — pa je brana **prolazila
+točno ondje gdje je napisana, a padala svugdje drugdje**, bez ijednog kvara u repozitoriju. Brana koja ovisi o
+povijesti stroja ne mjeri repozitorij, a ova je uz to i **zadnja mreža pred `main`** (pre-push hook vrti preflight).
+Popravak: prije presude se pita **git** (`git check-ignore --stdin`, jedan poziv za sve kandidate) — što `.gitignore`
+pokriva, to repozitorij i NE SMIJE imati; ako gita nema, ne prašta se ništa (pada zatvoreno). Popis imena u skripti
+namjerno nije uzet — razišao bi se pri prvom sljedećem artefaktu (ADR-027).
+Brana: `tests/unit/check-docs-gate.test.js` (6 tvrdnji u lažnom stablu: gitignoriran nije duh · obrisan jest · točno
+jedan duh · **bez `.gitignore`-a oba** = dokaz da se git stvarno pita · bez gita oba; obrnuto na starom `check-docs.js`
+= **2 crvene**). Preflight EXIT 0 (dotad 1). Bez bumpa — `scripts/**` i `tests/**` nisu na posjetiteljevu putu.
+**Gdje se vidi:** samo u branama, grana `feat/nocna-b` (nijedna korisnička datoteka nije dirana).
+
 ## 2026-09-06 (FABLE) — **F1/9: kartice kao Tinder-špil na dodiru — palac desno = znam, lijevo = ne znam · špil od tri · strelice kao stolni pandan**
 
 Leon (05.09.): *„na mobitelu bi napravio za kartice kao tinder način"*; (06.09., usred rada): *„samo na mobitelu … ali ako imaš viziju

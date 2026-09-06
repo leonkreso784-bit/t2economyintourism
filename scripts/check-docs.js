@@ -17,7 +17,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execFileSync } = require('child_process');
+const { spawnSync } = require('child_process');
 
 const ROOT = path.join(__dirname, '..');
 const DOCS = path.join(ROOT, 'docs');
@@ -296,18 +296,16 @@ if (fs.existsSync(CLAUDE_MD)) {
 //
 // ⚠️ Preskaču se i uzorci s `<`, `*` i `?` (npr. `data/<subj>-hr/`) — placeholderi.
 //
-// ⚠️ GITIGNORIRANA putanja je RUNTIME-ARTEFAKT, ne tvrdnja o repozitoriju (2026-09-06, F1/12 ⓪):
-// `tests/.auth/admin.json` je sesija koju `auth.setup.js` zapiše na stroju koji je vrtio
-// `test:authed` — TESTING.md ju imenuje i doslovno kaže „(gitignored)". Brana ju je brojala kao
-// duha, pa je preflight u SVAKOM svježem klonu i `git worktree`-u padao (na razvojnom stroju je
-// prolazio samo zato što je datoteka ondje slučajno postojala). Git je autoritet: `check-ignore`
-// zna je li putanja ignorirana i kad na disku ne postoji. Neuspjeh gita = putanja se NE preskače.
-const ignoriranGitom = (cilj) => {
-  try { execFileSync('git', ['check-ignore', '-q', cilj], { cwd: ROOT, stdio: 'ignore' }); return true; } catch (e) { return false; }
-};
+// ⚠️ GENERIRANO I GITIGNORIRANO NIJE DUH (2026-09-06). `TESTING.md` imenuje
+// `tests/.auth/admin.json` — sesiju koju `test:authed` TEK proizvede i koju `.gitignore`
+// drži izvan repozitorija. Na stroju gdje su ti testovi jednom vrćeni datoteka postoji, na
+// svježem klonu (i u svakom novom `git worktree`) ne — pa je brana prolazila TOČNO ondje
+// gdje je napisana, a padala svugdje drugdje, bez ijednog kvara u repozitoriju. Brana koja
+// ovisi o povijesti stroja ne mjeri repozitorij. Što je generirano piše u `.gitignore`, pa
+// se pita GIT, a ne popis imena u ovoj skripti (koji bi se razišao pri prvom sljedećem
+// artefaktu). Ako git nije dostupan, ne prašta se ništa — brana pada zatvoreno.
 const PATH_RE = /`((?:js|css|tests|scripts|data|schema|supabase|assets)\/[A-Za-z0-9._/-]+\.[a-z]{2,5})`/g;
-const duhovi = [];
-let ignoriranih = 0;
+const kandidati = [];
 const TVRDI_O_DISKU = (f) => {
   const r = rel(f);
   return r === 'CLAUDE.md' || r.indexOf('docs/workflow/') === 0 ||
@@ -320,11 +318,23 @@ allMd.filter(TVRDI_O_DISKU).forEach((f) => {
     const cilj = m[1];
     if (/[<>*?]/.test(cilj)) continue;
     if (!fs.existsSync(path.join(ROOT, cilj))) {
-      if (ignoriranGitom(cilj)) { ignoriranih++; continue; }
-      duhovi.push(rel(f) + '  →  ' + cilj);
+      kandidati.push({ izvor: rel(f), cilj });
     }
   }
 });
+/** Skup putanja koje `.gitignore` pokriva — dakle onih koje repozitorij i NE SMIJE imati. */
+function gitIgnorira(putevi) {
+  if (!putevi.length) return new Set();
+  const r = spawnSync('git', ['check-ignore', '--stdin'],
+    { cwd: ROOT, input: putevi.join('\n'), encoding: 'utf8' });
+  // 0 = bar jedan ignoriran · 1 = nijedan · ostalo (uklj. „nije git repo") = ne praštamo
+  if (r.error || (r.status !== 0 && r.status !== 1)) return new Set();
+  return new Set(String(r.stdout || '').split('\n').map((s) => s.trim()).filter(Boolean));
+}
+const ignorirani = gitIgnorira(Array.from(new Set(kandidati.map((k) => k.cilj))));
+const duhovi = kandidati
+  .filter((k) => !ignorirani.has(k.cilj))
+  .map((k) => k.izvor + '  →  ' + k.cilj);
 if (duhovi.length) {
   const jedinstveni = Array.from(new Set(duhovi)).sort();
   problems.push('DUH-DATOTEKA (' + jedinstveni.length + ')' +
@@ -335,7 +345,6 @@ if (duhovi.length) {
 console.log('\n=== check:docs ===');
 console.log('  .md dokumenata : ' + allMd.length);
 console.log('  poveznica      : ' + links);
-if (ignoriranih) console.log('  runtime-putanja: ' + ignoriranih + ' (gitignorirane, nisu duhovi)');
 if (problems.length === 0) {
   console.log('\n✅ dokumentacija je konzistentna\n');
   process.exit(0);
