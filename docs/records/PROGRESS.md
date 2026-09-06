@@ -5,6 +5,10 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-06 (FABLE, voditelj noći) — noćni cjevovod: ⓪ + B1 spojeni u `feat/tinder-kadar` · B2 sidebar NIJE (Opus limit sesije)
+
+Leon (ponoć): *„ti si voditelj projekta dok spavam, odradi veći dio posla, ništa ne deployaj, pazi na usage, možeš vojsku agenata"*. Dva kolosijeka umjesto vojske (sudari datoteka + usage): **A** `feat/tinder-kadar` (Fable agent, F1/12 ⓪ — vlastiti unos iznad) i **B** `feat/nocna-b` (Opus agent): **B1 birač tema „Automatski"** (§6/7, `4c9e4f1`: `profile.js` bez sufiksa uređaja, `theme-picker-label.test.js` 206 r.) + **fix `check:docs`** (`3bfe40a`, gitignoriran artefakt nije duh, s testom `check-docs-gate.test.js`) — isti kvar je neovisno našao i agent A (preflight je u svakom svježem worktreeu padao). Opus agent je ~05 h umro na limitu sesije („resets 7:30") dok je pisao dnevnik → ovaj unos piše voditelj; **B2 sidebar OBRISATI nije počeo** (ostaje odlučen, §6/2). Pregled ⓪ (moj, ne agentov): preflight EXIT 0, uređaj + swipe + phone 52 passed / 0 failed. **Spajanje B → A** (`e0ab952`): 12 sudara — 9 bump-tokena (ours, pa novi bump), `check-docs.js` (B-ov, jer ima test), `package.json` (oba nova testa u lancu), CHANGELOG (oba unosa); preflight EXIT 0. Usage ujutro: Fable 69 % tjedno, svi modeli 35 %. **Gdje se vidi:** grana `feat/tinder-kadar` (preview); produkcija `c53c28c` bez toga. `feat/racun-r1` nije dirana.
+
 ## 2026-09-06 (FABLE) — F1/12 ⓪: platforma zna uređaj na JEDNOM mjestu (`data-uredjaj` + `SokratUredjaj` iz `boot.js`) — preduvjet za Tinder-kadar
 
 Noćna cigla bez Leona (spava; sve na grani `feat/tinder-kadar`, ništa pushano). `boot.js` prije prvog crtanja izračuna `dodir · hover ·
