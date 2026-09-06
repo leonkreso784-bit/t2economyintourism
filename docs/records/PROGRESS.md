@@ -5,6 +5,89 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-06 (OPUS, agent F1/12) — Tinder-KADAR: kartica je EKRAN, ✓ / ✕ pod palcem (dvije dionice, dva commita)
+
+Leon, s previewom F1/9 u ruci: *„Treba kartica biti veća i trebamo promijeniti veličinu kartica da budu kao na Tinderu."* i *„Know i
+don't know stoje dolje kao što Tinder ima lajk i ✕ … dobro bi bilo da i na kompu imamo strelicu, i strelica treba biti desno a ✕
+lijevo."* Dvije dionice, svaka svoj commit: **① kadar** (`bbd2b68`) · **② gumbi** (`48296cf`). Sve na grani `feat/tinder-kadar`,
+ništa pushano.
+
+**Izmjereno — ista brana, ista 4 profila, prije i poslije** (kartica · udio dostupnog · sigurna širina · visina dokumenta prema ekranu):
+
+| profil | PRIJE (`a9e10c1`) | POSLIJE (`48296cf`) |
+|---|---|---|
+| 320×568 | 280×232 · 73 % · 87,5 % · **1069 / 568 skrola** | 296×213 · 67 % · 92,5 % · 568 / 568 |
+| 393×852 | 353×200 · **34 %** · 89,8 % · **1045 / 852 skrola** | 369×485 · **82 %** · 93,9 % · 852 / 852 |
+| 430×932 | 390×200 · **30 %** · 91 % · **1081 / 932 skrola** | 406×565 · **85 %** · 94,4 % · 932 / 932 |
+| 852×393 polegnut | 447×280 · 89 % · **60,9 %** · **1043 / 393 skrola** | 710×146 · 46 % · **96,7 %** · 393 / 393 |
+
+Fontovi na dodiru: pitanje **12,8 → 18,4 px** · odgovor **12 → 16** · objašnjenje **10,4 → 14**. `h1` otpada (ime regije preuzima
+`aria-label` kroz i18n), blok statistike otpada (brojke su značke na ✓ / ✕), četiri pravokutna gumba u dva reda (112 px) postala su
+jedan red krugova (56 px na kompu, 64 na dodiru).
+
+**Kadar je flex-stupac od tri komada** — traka napretka i red gumba uzmu svoje, kartica dobije sve ostalo. Nijedna visina nije
+zapisana kao broj. Gore se ništa ne mjeri (`--chrome-h` je token koji je već točan na svakom pragu: u niskom prozoru traka padne na 56,
+putanja na 0); dolje JS mjeri **jednu jedinu brojku** — `--kartica-dolje`, visinu donje trake — jer je ona zbroj triju činjenica u
+`study-chrome.css` (razmak, `min-height` gumba na dva praga, sigurni rub), pa bi `calc()` bio četvrta kopija koja se tiho razilazi
+(ADR-027). Bez trake se svojstvo BRIŠE i vrijedi `var(--safe-bottom)` iz CSS-a; mjeri se na ulazak u mod, `resize`,
+`orientationchange` i `ResizeObserver` nad samom trakom, nikad na `scroll`.
+
+**Skrol nije dolazio od kartice nego od TRI REZERVE ZA ISTU TRAKU** — i to je glavni nalaz cigle. Kartica je stala u ekran i prije
+nego je narasla, a stranica je i dalje skrolala jer je ispod nje stajalo: ① `.study-page` (`80px + safe`) + `.study-content`
+(`70px + safe + 1rem`) — dvije procjene iste trake, ② globalni **footer, 149 px dokumenta** ispod stranice učenja, ③
+`body { padding-bottom: calc(safe + 60px) }` iz `components.css` — po VISINI ekrana, dakle **81 px na polegnutom telefonu, gdje donje
+trake uopće nema**. Zadnja se usput i ANIMIRALA (`body { transition: all }`): 3,04 px zaostatka još 300 ms nakon ulaska u mod, i to je
+obaralo branu. Kadar sad drži jednu rezervu, mjerenu, a `transition-property` na tijelu ostaje samo prijelaz teme.
+
+**Dvije zamke koje je našlo mjerenje, ne čitanje kaskade:**
+① `.study-page:has(#flashcards.active)` bez `.active` na ljusci **otvara stranicu učenja preko landinga** — sekcija `#flashcards`
+zadržava klasu i kad se ode s nje, a `display: flex` iz kadra pregazi „Hide all pages by default". Selektor je zato
+`.study-page.active:has(…)`, i to je zasebna tvrdnja u unit-brani.
+② Širina se NE mjeri protiv `vw`. U landscapeu izrez uzme 59 px s obje strane (13,8 % ekrana), a tvrdnja ⑦ iste brane traži da ondje
+ne stoji ništa — „90 % od `vw`" bio bi kriterij koji se ispunjava samo kršenjem susjedne tvrdnje. Mjeri se **sigurna širina**.
+
+**Brane (stvarni izlazi):**
+- **`phone.spec` ⑩** — nova tvrdnja *„u modu kartica kartica je EKRAN, a stranica ne skrola"*: udio ≥ 60 % dostupnog · širina ≥ 90 %
+  sigurne širine · dokument ≤ ekran. **Obrnuto**: ista brana puštena kroz `git worktree` na `a9e10c1` = **9 nalaza** (sva četiri
+  profila skrolaju, 393 i 430 na 34 % i 30 % udjela, širinu probijaju 320/393/polegnuti). Poslije ① ostao je **1** (320×568 na 47 %),
+  poslije ② **nula**. Mjerač sad i ISPISUJE izmjereno po profilu — kadar je jedina tvrdnja s ciljnim brojem, pa se bez ispisa ne vidi
+  ide li stanje gore ili dolje između dvije zelene brane.
+- **`tests/unit/flashcard-kadar.test.js`** (novo, **49 tvrdnji**, u lancu `test:unit`): svaki selektor kadra nosi
+  `:root[data-uredjaj~="dodir"]` · ljuska traži `.active` · rezerva postoji na točno dva mjesta i nigdje kao broj · footer u popisu
+  `pages.css` · mjerač na četiri okidača, nikad na `scroll` · red gumba ← ✕ ✓ → u markupu · značke na svom gumbu · četiri i18n imena i
+  četiri `aria-hidden` ikone · nijedan obrub, krugovi, značka bez vlastite plohe · strelice skrivene ali vezane · `touch-action: pan-y`
+  i grid-stack netaknuti. **Obrnuto `git worktree` na `a9e10c1` = 30 crvenih od 49.**
+- **`css:diff`** (1280×800, ruta `#/subject/te2/first-midterm/flashcards`): **16 elemenata**, i svih 16 su red gumba
+  (`.flashcard-controls` + 4 gumba + 4 ikone) i posljedica njegove visine (sekcija 533 → 500 px jer je blok statistike otišao).
+  Nijedna razlika izvan reda gumba — kadar je cijeli pod atributom uređaja.
+- `flashcard-swipe.spec` + `uredjaj.spec`: **41 prošlo, 0 palo, 3 preskočena** (stolni projekt) · `check:contrast` 358 provjera kroz
+  5 tema ✅ · `check:orphan-css` 12 = osnovica · **preflight EXIT 0** prije oba commita · puna `npm run test:responsive` (29,4 min): **521 prošlo · 123 preskočena · 4 pala, i sve četiri su ISTI test** — v. odlomak ispod; poslije popravka `app-state.spec` daje **16/16**, ostatak suite nije ponovno vrćen.
+
+**⚠️ POSLJEDICA KOJU MORA ZNATI TKO GRADI F1/13: na dodiru VIŠE NEMA povratka na prethodnu karticu.**
+Strelice su sklonjene (spec F1/12 traži baš to), a gesta još znači „znam / ne znam" (F1/9) — dakle između ove cigle i F1/13 se špil
+na telefonu ide samo naprijed. Našla je to puna `test:responsive`, ne oko: `app-state.spec` je na sva ČETIRI iPhone profila 2 minute
+čekao actionability klika na `#btnPrev`. Test je prepravljen na `dispatchEvent` (mjeri STANJE `AppState.cards`, ne dohvatljivost
+gumba — to je posao phone-gatea) uz zapis zašto; gumb i slušač su i dalje ondje i unit-brana ih broji.
+
+**Tri brane su usput bile i same krive, i to je dio njihove vrijednosti:** ① unit-brana je rezala CSS-blok od BILJEGA u komentaru,
+pa je komentar ostao bez početka i pola proze ušlo u popis selektora; ② parser pravila je imao sidro `(^|\})`, koje je pojelo
+zatvarajuću vitičastu zagradu prethodnog pravila — brana je čitala **svako drugo** pravilo i tvrdila da `.control-btn.wrong` nema
+ispunu; ③ `exec(…)[0]` bez straže je brana rušio umjesto da broji crvene, pa se obrnuta provjera na starom stablu nije mogla ni
+izvesti (isti nalaz koji `uredjaj.test.js` već ima zapisan za PRAGOVE).
+
+**Pretpostavke koje Leon potvrđuje na uređaju:** ① **stolni red ← · ✕ · ✓ · →** je pretpostavka iz plana (Leon je rekao samo *„strelica
+desno, ✕ lijevo"*); ② veličina krugova (56 komp / 64 dodir) i razmak 2,5rem; ③ **polegnut telefon**: ondje preklopnik načina učenja
+(`.study-nav`) stoji U TOKU stranice, pa je 60 % dostupnog matematički nemoguće — izmjereni strop je ≈ 43 %. Brana ima **imenovanu
+iznimku (35 %)** s razlogom u kodu; presuda je li 43 % dovoljno (ili red gumba ondje ide USTRANU) je Leonova.
+
+**Svjesno NE:** značenje geste ostaje F1/9 (desno = znam) — listanje je F1/13 · tutorial F1/14 · ostali načini učenja zadržavaju
+footer i zatečene rezerve · `phone.authed.spec.js` nije diran (ne obilazi načine učenja, pa mjera ⑩ ondje ne nastaje) ·
+`.stat.correct` / `.stat.wrong` nedirani (isti blok nosi ekran dopuna, BUG-038). **Gdje se vidi:** grana `feat/tinder-kadar`
+(preview); produkcija `c53c28c` bez toga.
+
+⚠️ Poruka commita ② navodi za 320×568 „prije 280×200 = 63 %" — to je bila procjena iz prve, djelomične obrnute provjere; **mjerodavna
+je tablica gore** (280×232 = 73 %), iz obrnute provjere puštene s konačnom branom.
+
 ## 2026-09-06 (FABLE, voditelj noći) — noćni cjevovod: ⓪ + B1 spojeni u `feat/tinder-kadar` · B2 sidebar NIJE (Opus limit sesije)
 
 Leon (ponoć): *„ti si voditelj projekta dok spavam, odradi veći dio posla, ništa ne deployaj, pazi na usage, možeš vojsku agenata"*. Dva kolosijeka umjesto vojske (sudari datoteka + usage): **A** `feat/tinder-kadar` (Fable agent, F1/12 ⓪ — vlastiti unos iznad) i **B** `feat/nocna-b` (Opus agent): **B1 birač tema „Automatski"** (§6/7, `4c9e4f1`: `profile.js` bez sufiksa uređaja, `theme-picker-label.test.js` 206 r.) + **fix `check:docs`** (`3bfe40a`, gitignoriran artefakt nije duh, s testom `check-docs-gate.test.js`) — isti kvar je neovisno našao i agent A (preflight je u svakom svježem worktreeu padao). Opus agent je ~05 h umro na limitu sesije („resets 7:30") dok je pisao dnevnik → ovaj unos piše voditelj; **B2 sidebar OBRISATI nije počeo** (ostaje odlučen, §6/2). Pregled ⓪ (moj, ne agentov): preflight EXIT 0, uređaj + swipe + phone 52 passed / 0 failed. **Spajanje B → A** (`e0ab952`): 12 sudara — 9 bump-tokena (ours, pa novi bump), `check-docs.js` (B-ov, jer ima test), `package.json` (oba nova testa u lancu), CHANGELOG (oba unosa); preflight EXIT 0. Usage ujutro: Fable 69 % tjedno, svi modeli 35 %. **Gdje se vidi:** grana `feat/tinder-kadar` (preview); produkcija `c53c28c` bez toga. `feat/racun-r1` nije dirana.

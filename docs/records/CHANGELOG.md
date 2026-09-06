@@ -5,6 +5,48 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-06 (OPUS) — **F1/12: Tinder-KADAR — kartica je EKRAN, ✓ / ✕ pod palcem** (① kadar `bbd2b68` · ② gumbi `48296cf`)
+
+Leon, s previewom F1/9: *„Treba kartica biti veća i trebamo promijeniti veličinu kartica da budu kao na Tinderu."* i *„Know i don't
+know stoje dolje kao što Tinder ima lajk i ✕ … strelica treba biti desno a ✕ lijevo."*
+
+**① KADAR (samo na dodiru, `:root[data-uredjaj~="dodir"]` — stolno nedirano).** Na 393×852 je kartica bila 353×200 = **34 % dostupnog**
+prostora, a stranica u modu kartica je **skrolala** (dokument 1045 px na ekranu od 852) — prst je radio dva posla, jedan kroz špil i
+jedan kroz stranicu; pitanje se crtalo na 12,8 px. Sad je **369×485 = 82 % dostupnog, 94 % sigurne širine, dokument = ekran**
+(320×568: 67 % · 430×932: 85 % · 852×393: 46 %, nijedan ne skrola). Kadar je **flex-stupac od tri komada** — traka napretka i red
+gumba uzmu svoje, kartica dobije `flex: 1` — pa nijedna visina nije zapisana kao broj. Gore se ništa ne mjeri (`--chrome-h` je token
+koji je već točan na svakom pragu); dolje JS piše **jednu brojku**, `--kartica-dolje`, jer je visina donje trake zbroj triju činjenica
+u `study-chrome.css` i `calc()` bi bio njihova četvrta kopija (ADR-027). `h1` otpada (ime regije preuzima `aria-label` kroz i18n
+`fc.title`); fontovi 12,8 / 12 / 10,4 → **18,4 / 16 / 14 px**; `minmax(0, 1fr)` daje redu strop pa naličje skrola u sebi (grid-stack
+BUG-013 ostaje); `justify-content: safe center`, jer centriran preljev na skroleru ostavlja vrh nedohvatljivim.
+**Skrol nije dolazio od kartice nego od TRI REZERVE ZA ISTU DONJU TRAKU:** `.study-page` (`80px + safe`) uz `.study-content`
+(`70px + safe + 1rem`) — dvije procjene iste trake · globalni **footer = 149 px dokumenta** ispod stranice učenja ·
+`body { padding-bottom: calc(safe + 60px) }` po VISINI ekrana = **81 px na polegnutom telefonu, gdje te trake uopće nema**. Zadnja se
+usput i animirala (`body { transition: all }`): 3,04 px zaostatka 300 ms nakon ulaska u mod, dovoljno da stranica stvarno skrola.
+
+**② GUMBI.** Red je **isti na oba uređaja — ← ✕ ✓ →** — a na dodiru se strelice samo sklone, ostaju u markupu i vezane u JS-u (F1/13
+ih ne smije morati vraćati). Četiri pravokutna gumba u dva reda (112 px) postala su jedan red krugova: 56 px na kompu, 64 na dodiru.
+**Semantika = puna ispuna (ADR-032):** do sad je ovdje stajala vlas-crta (`transparent` + 2 px obrub), rješenje kvara iz C2 gdje je
+tinta preko IZMIŠLJENE plohe padala ispod 4,5. Puna ispuna taj kvar nema jer podloga nije izmišljena — `--color-ok` / `--color-danger`
+su plohe koje `check:contrast` mjeri po temi, a tinta im je vlastiti par (`--color-on-ok` / `--color-on-danger`), isti koji od F1/9
+nose pečati na kartici. **Brojke „znam / ne znam" su značke na ✓ i ✕** (isti id-evi, `updateFlashcardStats` ostaje jedini pisac), pa
+je zaseban blok statistike izašao iz markupa; značka je gola brojka bez vlastite plohe, jer `color-mix(currentColor …)` nad punom
+ispunom vuče podlogu prema tinti i omjer pada ondje gdje ga nitko ne mjeri. Ime gumba nosi `aria-label` kroz i18n na sva četiri, ikona
+je `aria-hidden`. **Sve je pod `.flashcard-controls`, nikad pod golim `.control-btn`** — istu komponentu nosi ekran dopuna, koji dijeli
+i klasu `.next`.
+
+**Brane:** `phone.spec` dobiva tvrdnju **⑩** *„u modu kartica kartica je EKRAN, a stranica ne skrola"* (udio ≥ 60 % dostupnog · širina
+≥ 90 % **sigurne** širine — u landscapeu izrez uzme 13,8 % ekrana, a tvrdnja ⑦ traži da ondje nema ničega · dokument ≤ ekran);
+**obrnuto kroz `git worktree` na `a9e10c1` = 9 nalaza**, poslije ① jedan, poslije ② nula, osnovica ostaje prazna. Polegnut telefon ima
+**imenovanu iznimku (35 %)**: ondje je preklopnik načina učenja u toku stranice, pa je izmjereni strop ≈ 43 %. Novi
+`tests/unit/flashcard-kadar.test.js` (**49 tvrdnji**, obrnuto **30 crvenih**) drži ono što piksel ne vidi: doseg selektora, `.active`
+na ljusci, jedna mjerena rezerva, red gumba, značke, aria, nijedan obrub. `css:diff` na 1280×800 uz klik u mod kartica: **16
+elemenata, svih 16 red gumba i posljedica njegove visine** — nijedna razlika izvan njega. `flashcard-swipe.spec` + `uredjaj.spec`
+41/0/3 · `check:contrast` 358 provjera kroz 5 tema · preflight EXIT 0, bump.
+
+**Svjesno NE:** značenje geste ostaje F1/9 (desno = znam) — listanje je F1/13 · tutorial F1/14 · ostali načini učenja zadržavaju
+footer i zatečene rezerve. **Gdje se vidi:** grana `feat/tinder-kadar` (preview); produkcija `c53c28c` bez toga.
+
 ## 2026-09-06 (FABLE) — **F1/12 ⓪: platforma ZNA uređaj — jedno mjesto (`boot.js` → `<html data-uredjaj>` + zamrznut `SokratUredjaj`)**
 
 Leon: *„Platforma mora znati na kakvom je uređaju korisnik."* Do sada se to pitalo na četiri mjesta na četiri načina — CSS

@@ -203,7 +203,12 @@ test('flashcards tijek kroz AppState.cards: known → unknown → prev → premj
     .toEqual({ i: 2, u: [1] });
 
   // 3) Natrag na karticu 1 pa je označi known → mora NESTATI iz unknown (swap logika)
-  await page.click('#btnPrev');
+  // ⚠️ `dispatchEvent`, ne `click` — i to je POSLJEDICA, ne zaobilaženje. Od F1/12 ② je `#btnPrev`
+  // na DODIRU sklonjen (`display: none`; palac lista tek od F1/13), a sva četiri profila ove suite
+  // SU dodir — pa klik nema u što pogoditi i test je 2 min čekao actionability. Gumb i njegov
+  // slušač postoje i dalje (`flashcard-kadar.test.js` to broji), a ova tvrdnja mjeri STANJE
+  // (`AppState.cards`), ne dohvatljivost gumba — to je posao phone-gatea i `reachability`.
+  await page.dispatchEvent('#btnPrev', 'click');
   expect(await page.evaluate(() => window.AppState.cards.index)).toBe(1);
   await page.click('#btnCorrect');
   await expect(page.locator('#knownCount')).toHaveText('2');

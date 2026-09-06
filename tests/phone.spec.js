@@ -283,16 +283,16 @@ test('⑩ u modu kartica kartica je EKRAN, a stranica ne skrola (F1/12)', async 
     // cijele širine koja je visoka 200 px je traka, a kartica koja ispunjava ekran ali gura
     // stranicu u skrol znači da kadra nema — samo je pomaknut ispod ruba.
     //
-    // ⚠️ Obrnuta provjera (2026-09-06, prije ijedne izmjene CSS-a): na stanju `a9e10c1` je ova
-    // tvrdnja dala **9 nalaza** na 4 profila — **sva četiri profila skrolaju** (1069 / 1045 /
-    // 1081 / 1065 px dokumenta), 393 i 430 su ispod praga udjela (34 % i 30 %), a širinu
-    // probijaju 320 (88 %), 393 (89,8 %) i polegnuti (52 %). Detektor koji nije viđen crven
-    // mjeri sebe, ne stranicu.
+    // ⚠️ Obrnuta provjera (2026-09-06, OVA brana puštena na stablo `a9e10c1` kroz `git worktree`):
+    // **9 nalaza** na 4 profila — **sva četiri profila skrolaju** (dokument 1069 / 1045 / 1081 /
+    // 1043 px), 393 i 430 su ispod praga udjela (34,0 % i 29,9 %), a širinu probijaju 320 (87,5 %),
+    // 393 (89,8 %) i polegnuti (60,9 %). Detektor koji nije viđen crven mjeri sebe, ne stranicu.
     //
-    // ⚠️ Zašto 320 i polegnuti NISU pali na udjelu iako je kartica ondje 200 odn. 280 px: na
-    // 320 je dostupno svega 333 px (kartica = 60,1 %, taman iznad praga), a polegnuti nema donju
-    // traku pa mu je „dostupno" 337 px uz karticu od 280 (83 %). Oba prolaze udio, a padaju na
-    // ono što udio ne vidi — širinu i skrol. Tri mjere, jer nijedna sama ne opisuje kadar.
+    // ⚠️ Zašto 320 i polegnuti NISU pali na udjelu: na 320 je zatečena kartica 232 px na 316 px
+    // dostupnog (73 %) — ondje je kadar bio najbliži cilju, a stranica je svejedno skrolala 501 px;
+    // polegnuti nema donju traku pa mu je „dostupno" isto 316 px uz karticu od 280 (89 %). Oba su
+    // prolazila udio, a padala na ono što udio ne vidi — širinu i skrol. Tri mjere, jer nijedna
+    // sama ne opisuje kadar.
     protivOsnovice('kadar', 'kartica na telefonu NIJE kadar (F1/12): premala, preuska ili stranica skrola');
 });
 

@@ -123,7 +123,11 @@ tvrdi(/new ResizeObserver\(zakaziKadar\)/.test(FC_JS),
     'mjeri se i kad se promijeni SAMA traka — sigurni rub stigne poslije prve slike');
 tvrdi(!/addEventListener\('scroll',\s*zakaziKadar/.test(FC_JS),
     'NE mjeri se na `scroll` — skrol ne mijenja nijednu od ovih visina');
-tvrdi(/requestAnimationFrame/.test(/function zakaziKadar\(\)[\s\S]*?\n\}/.exec(FC_JS)[0]),
+// ⚠️ `exec(…)[0]` bez straže je RUŠENJE, ne crvena tvrdnja — a brana koja se sruši ne može se
+// obrnuto provjeriti (`git worktree` na stablu prije cigle broji crvene, a ondje te funkcije NEMA;
+// uhvaćeno upravo tako). Isto je `uredjaj.test.js` već zapisao za PRAGOVE: brana mora ostati BROJAČ.
+const zakazi = /function zakaziKadar\(\)[\s\S]*?\n\}/.exec(FC_JS);
+tvrdi(!!zakazi && /requestAnimationFrame/.test(zakazi[0]),
     'mjerenje je prigušeno na kadar (rafal `resize`/`ResizeObserver` ne mjeri raspored deset puta)');
 
 console.log('\n── ⑥ MARKUP: što kadar sakriva, JS mora i dalje imati ────────────────────');

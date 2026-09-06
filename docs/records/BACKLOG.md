@@ -209,6 +209,25 @@ odluka, ne rezerva. Referenca Tinder (opće poznato, NIJE mjereno): kartica ≈ 
 okrugli, radius 16–20 px. Sonde (gitignored, `.jank/probes/`): `kartica-mjera.js` (kadar) · `kartice-duljine.js` (gradivo) — brana
 dolazi u F1/12 kao mjera phone-gatea, ne kao zasebna sonda.
 
+**📐 IZMJERENO POSLIJE F1/12 (2026-09-06, ① `bbd2b68` + ② `48296cf`).** Ista brana, ista četiri profila — ali sad ju vozi
+`tests/phone.spec.js` ⑩, ne sonda: mjera je ušla u branu, kako je i planirano. „Dostupno" je od dna gornjeg kroma do vrha donje
+trake, a gdje te trake nema (≥ 48rem, dakle i polegnut telefon) do sigurnog ruba — zato je za polegnuti 316, a ne 337 kao u sondi.
+
+| profil | kartica PRIJE | kartica POSLIJE | udio dostupnog | sigurna širina | dokument / ekran |
+|---|---|---|---|---|---|
+| SE 320×568 | 280×232 | **296×213** | 73 % → 67 % | 87,5 % → **92,5 %** | 1069 → **568** / 568 |
+| 15 Pro 393×852 | 353×200 | **369×485** | 34 % → **82 %** | 89,8 % → **93,9 %** | 1045 → **852** / 852 |
+| 15 Pro Max 430×932 | 390×200 | **406×565** | 30 % → **85 %** | 91 % → **94,4 %** | 1081 → **932** / 932 |
+| polegnut 852×393 | 447×280 | **710×146** | 89 % → 46 % | 60,9 % → **96,7 %** | 1043 → **393** / 393 |
+
+Fontovi na dodiru: pitanje **12,8 → 18,4 px** · odgovor **12 → 16** · objašnjenje **10,4 → 14**; red gumba 112 px u dva reda → **64 px
+u jednom** (krugovi ✕ ✓, strelice sklonjene); h1 (43 px) i blok statistike (21 px) otpali.
+**Cilj iz plana je promašen na dvije strane, i obje su mjerene:** na 393 je izašlo **485 px umjesto ≈ 464** (jer su otpali i h1 i
+stats, a traka napretka je stisnuta na jedan redak), a na SE i polegnutom je izašlo manje — na 320×568 (koji sonda NIJE mjerila; ona
+je gledala 375×667) dostupno je svega 316 px, a na polegnutom preklopnik načina učenja stoji U TOKU stranice pa je strop ≈ 43 %.
+**Skrol nije bio kartica nego tri rezerve za istu donju traku** (dvije procjene u ljusci, footer 149 px, `body` 81 px po visini
+ekrana) — detalji u CHANGELOG-u i `css/flashcards-section.css` §F1/12.
+
 **F. ZOOM NA DODIR** (Leon, 2026-09-05: *„Još jedan veliki bug. Kada se više puta takne na jedno mjesto
 može se zoomat, to se mora riješit."*). **Dva uzroka — jedan izmjeren, drugi ovdje nemjerljiv:**
 ① **Polja za unos ispod 16 px** — iOS Safari pri fokusu polja s izračunatim `font-size < 16px` sam zumira
