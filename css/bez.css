@@ -42,3 +42,38 @@
 :root[data-bez~="pozadine"] .landing-page.active {
     background-image: none !important;
 }
+
+/* ── SKROL NALIČJA NA iPHONEU (F1/12 ④→⑤, 2026-09-06) ─────────────────────────────
+   Leon, s previewom: „ne možeš skrolat uopće — kada skrolaš cijela stranica se miče, a ne ono
+   što je u kartici." Headless Chromium i WebKit skrolaju; iOS ne prepoznaje naličje kao
+   skroler za prst. Tri hipoteze već potrošene (`safe center`, afordanca, 3D-okret). Ovo su
+   preostali sumnjivci, svaki sa SVOJIM prekidačem, da Leon na telefonu isključi jednog po
+   jednog (`?bez=pany`, `?bez=perspektive,transformacije`, `?bez=overflowauto`). */
+
+/* `touch-action: pan-y` na skrolerima (F1/9, nalaz ①) — u Chromiumu nužan za palac; sumnja da
+   iOS baš zbog njega ne daje okomiti pan skroleru nego stranici. Prekidač vraća reset F1/11.
+   ⚠️ Redoslijed `pan-y pan-x` je NAMJERAN: brana `touch-zoom.test.js` broji doslovni
+   `pan-x pan-y` u bundleu (reset smije postojati točno jednom); značenje je isto, a ovo je
+   pokus na previewu, ne drugi reset. */
+:root[data-bez~="pany"] .flashcard,
+:root[data-bez~="pany"] .flashcard-front,
+:root[data-bez~="pany"] .flashcard-back {
+    touch-action: pan-y pan-x !important;
+}
+
+/* `perspective: 1000px` na omotaču = 3D-kontekst i u miru, iako je kartica od ④ ravna */
+:root[data-bez~="perspektive"] .flashcard-wrapper {
+    perspective: none !important;
+}
+
+/* kartica je UVIJEK transformirani element (`--swipe-x` iz F1/9) + prijelaz na transformu */
+:root[data-bez~="transformacije"] .flashcard {
+    transform: none !important;
+    transition: none !important;
+}
+
+/* `overflow-y: auto` → `scroll`: iOS zna skroler s `auto` bez klizača tretirati drukčije */
+:root[data-bez~="overflowauto"] .flashcard-front,
+:root[data-bez~="overflowauto"] .flashcard-back {
+    overflow-y: scroll !important;
+}

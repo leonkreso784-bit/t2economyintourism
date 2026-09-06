@@ -9696,6 +9696,19 @@ body.mm-dragging {
 :root[data-bez~="pozadine"] .landing-page.active {
   background-image: none !important;
 }
+:root[data-bez~="pany"] .flashcard, :root[data-bez~="pany"] .flashcard-front, :root[data-bez~="pany"] .flashcard-back {
+  touch-action: pan-y pan-x !important;
+}
+:root[data-bez~="perspektive"] .flashcard-wrapper {
+  perspective: none !important;
+}
+:root[data-bez~="transformacije"] .flashcard {
+  transform: none !important;
+  transition: none !important;
+}
+:root[data-bez~="overflowauto"] .flashcard-front, :root[data-bez~="overflowauto"] .flashcard-back {
+  overflow-y: scroll !important;
+}
 .absolute {
   position: absolute;
 }
