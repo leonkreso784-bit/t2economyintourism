@@ -47,7 +47,7 @@
 > `content-review` (`.claude/agents/`). Što fali: **autor-agent** (kalup kroz `agent-builder`), **izvor** po predmetu (HR skripte/PDF u
 > `_materials/` = autoritet, ADR-020 — bez izvora agent izmišlja), **`verify-subject.js`** (dvo-ključni verifier točnosti) i Leonova presuda
 > po predmetu. Nedostaje 10 HR predmeta (tablica dolje): 5 S3 + `accounting-hr` (study) + 4 kvantitativna (S4/S5 → po anketi 2026-09-06
-> **čekaju F5 recepte**). Kad dođe na red: prvo `verify-subject.js`, pa autor-agent, pa jedan pilot-predmet iz HR skripte.
+> **čekaju F5 recepte**). Kad dođe na red: prvo `verify-subject.js`, pa autor-agent, pa jedan pilot-predmet iz HR skripte. ⚠️ **Bez API ključa** (Leon isti dan: *„ne da mi se puniti API ključ"*) — korak 3 generatora (Sonnet API) i verifier se rade kao Claude Code subagenti (Fable/Opus u pretplati) koji pišu isti JSON koji `assemble-subject.js` očekuje; validatori i assemble ostaju.
 > Content-suradnik je **otkazan** (Leon, 2026-09-04) → ploču od danas vodimo mi, a ne on.
 > Model rada koji je uz njega postojao je povijest: [archive/TEAM.md](../archive/TEAM.md), odluka
 > [ADR-023](../records/DECISIONS.md) (označena otkazanom).
