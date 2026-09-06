@@ -183,7 +183,7 @@ Aktivni spec: **`docs/plan/RASPORED.md`** (2026-09-04) — cijela preostala list
 **sedam faza kroz sesije**: F1 uređaj · F2 račun (R2+R3 + CSS profila) · F3 dvojezičnost ·
 F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **§6 rasporeda: nula otvorenih (anketa 06.09.).**
 
-**F1 uređaj: F1/1–11 ✅ · F1/12⓪ ✅ · F1/12 kadar ✅ · F1/13 listanje · F1/14 tutorial (plan u RASPORED-u).** iPhone presuđuje F1/7 `?bez=` A/B, F1/11 štipanje (ADR-034) i F1/12 polegnuti telefon.
+**F1 uređaj: F1/1–11 ✅ · F1/12⓪ ✅ · F1/12 kadar ✅ · F1/13 listanje ✅ · F1/14 tutorial (plan u RASPORED-u).** Od F1/13 gesta LISTA a gumbi ✓/✕ SUDE; ulazi (gumb·gesta·tipka·ime) stoje u tablici `AKCIJE` (`window.SokratFlashcards`) iz koje F1/14 čita. iPhone presuđuje F1/7 `?bez=` A/B, F1/11 štipanje (ADR-034), F1/12 polegnuti telefon i F1/13 osjećaj listanja.
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 

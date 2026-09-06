@@ -5,6 +5,18 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+### 2026-09-06 (OPUS) — **F1/13: palac LISTA, gumbi SUDE + izbornik kraja špila** (① `de2c883` · ② `d30b336`)
+
+Leon, s previewom F1/9: *„Ako se povuče lijevo vraća se na prijašnju, desno ide na sljedeću … Know i don't know stoje dolje kao što
+Tinder ima lajk i ✕."* Gesta prestaje biti sud i postaje **listanje** (desno = sljedeća, lijevo = prethodna, dodir = okreni), a sud
+seli na **✓ / ✕**, koji lete naprijed s pečatom i tek po slijetanju zovu `markKnown` / `markUnknown`. Prva kartica + lijevo = odskok;
+**zadnja + desno = izbornik kraja špila** (ispočetka · promiješaj · ponovi ne-znam) — **ploča u mjestu kartice**, ne modal, da kadar iz
+F1/12 ostane netaknut (spec mjeri: ploča unutar omotača kartice, dokument ≤ ekran). Stolno dobiva **sve tipkama**: ← → listaju,
+razmak/Enter okreće, **Z = znam, X = ne znam**. Svi ulazi (gumb · gesta · tipka · ime) stoje u **jednoj zamrznutoj tablici `AKCIJE`**
+(`window.SokratFlashcards`), iz koje se vežu gumbi i traže tipke — i iz koje će F1/14 čitati tutorial. Mehanika F1/9 netaknuta.
+Brane: unit **162 tvrdnje** (obrnuto na `c3bd1dd` = 74 crvene) · spec **37/0/3** kroz pravi CDP-dodir · `flashcard-kadar` 49/49 ·
+`phone.spec` 12/12 · preflight EXIT 0.
+
 ## 2026-09-06 (OPUS) — **F1/12: Tinder-KADAR — kartica je EKRAN, ✓ / ✕ pod palcem** (① kadar `bbd2b68` · ② gumbi `48296cf`)
 
 Leon, s previewom F1/9: *„Treba kartica biti veća i trebamo promijeniti veličinu kartica da budu kao na Tinderu."* i *„Know i don't

@@ -5,6 +5,81 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-06 (OPUS, agent F1/13) — Palac LISTA, gumbi SUDE + izbornik kraja špila (dvije dionice, dva commita)
+
+Leon, s previewom F1/9: *„Ako se povuče lijevo vraća se na prijašnju, desno ide na sljedeću. Kada se okrene daje odgovor. Know i don't
+know stoje dolje kao što Tinder ima lajk i ✕."* i (§6/8) *„Kada ode desno do zadnje kartice bude izbornik da se krene ispočetka i da se
+promiješaju kartice, ponovi ne znam. Bilo bi dobro da i na kompu imamo strelicu … da se sve može tipkama kontrolirati."*
+Dvije dionice, dva commita: **① značenje geste + tablica akcija + tipke** (`de2c883`) · **② izbornik kraja špila** (`d30b336`).
+Sve na grani `feat/tinder-kadar`, ništa pushano.
+
+**Mijenja se ZNAČENJE, mehanika F1/9 je netaknuta** (pointer-put samo za `pointerType === 'touch'`, `touch-action: pan-y` na kartici I
+na oba skrolera, okretanje na `pointerup`, `progutajKlik`, `SLOP`/`PRAG`/`LET_MS`, `transitionend` + rezervni timer, `gen`-straža,
+tri CSS-varijable + klase). Novo je tko što znači:
+
+| ulaz | prije (F1/9) | sad (F1/13) |
+|---|---|---|
+| palac desno | znam (upis) | **sljedeća** — bez ijednog upisa |
+| palac lijevo | ne znam (upis) | **prethodna**; na prvoj kartici **odskok** |
+| dodir | okreni | okreni (nedirano) |
+| ✓ / ✕ | upis bez leta | **let naprijed s pečatom**, upis po slijetanju |
+| → / ← | znam / ne znam | **listanje, trenutno** |
+| Z / X | — | **znam / ne znam** (isti let kao gumb) |
+| zadnja + desno | ništa | **izbornik kraja špila** |
+
+**Tri odluke koje nisu bile u nalogu, i zašto:**
+① **Listanje je trenutno, sud leti.** Gesta mora razriješiti pomak (prst je karticu već odveo s mjesta — ili odleti ili se vrati), a
+sud smije stajati 280 ms jer je jednokratan i let ga štiti od dvostrukog okidanja. Listanje ne smije: kroz špil se ide brzo i
+uzastopno, a straža `swipe.leti` koja čuva upis ovdje bi svaku drugu tipku pojela. Uz to bi let na `prevCard` obarao `app-state.spec`,
+koji mjeri stanje odmah nakon `dispatchEvent` — brana je time ostala **netaknuta i zelena**, umjesto da je „popravljena" pod novi kod.
+② **`--swipe-p` mijenja značenje: bio je NAGIB pod prstom, sad je SUD** (+1 znam / −1 ne znam) i piše ga isključivo let s gumba. Time
+smjer leta i sud postaju dvije stvari — ✕ leti **naprijed** (+1, jer i ono ide na sljedeću) a nosi pečat „Ne znam". Pečat se zato više
+ne može pojaviti usred listanja, i to je jedina stvar koju bi korisnik osjetio kao lažno obećanje.
+③ **Sjene špila vire DESNO, i to preko `transform-origin: right center`.** Odozdo se od F1/12 nisu vidjele **uopće**: kartica je
+485–578 px visoka, pa `scale(0.96)` sama uvuče sjenu 11–14 px sa svake strane i pomak od 8/16 px prema dolje ostaje unutar kartice.
+S `right center` skaliranje ne miče desni rub, pa je „koliko viri" **točno `translateX`** — isti broj na 320 px i na 852 px, umjesto
+da ovisi o širini kartice. Peek je 5 / 10 px, a bočni razmak sadržaja u kadru je 12 px → sjene nikad ne dođu do sigurnog ruba
+(phone-gate ⑦). Spec to i mjeri: desni rub sjene > desnog ruba kartice, i unutar ekrana.
+
+**TABLICA AKCIJA (ADR-027).** `AKCIJE` u `js/flashcards.js`: `id → { gumb · gesta · tipke · i18n · radnja }` za pet radnji
+(prethodna · sljedeća · okreni · znam · ne-znam), zamrznuta i izložena read-only na `window.SokratFlashcards`. Iz nje se **vežu gumbi**
+(`vezeGumbe`) i **traži tipka** (`naTipku` više nema `switch`), a **F1/14 (tutorial) iz nje čita natpise** — bez druge kopije popisa.
+Druga tablica, `KRAJ`, nosi tri radnje izbornika. Brana broji: svaki `gumb` postoji u markupu **i obrnuto** (nijedan gumb reda kontrola
+nije ostao izvan tablice), svaki `i18n` ključ postoji u rječniku, nijedna tipka se ne ponavlja i nijedna nije s modifikatorom.
+⚠️ Usput nađeno: **`js/navigation.js` ima lokalni `const natrag`**, pa je gate „gole reference preko granice paketa" prijavio moj
+top-level `function natrag()` kao sudar. Nije to lažni alarm koji ide u osnovicu nego dva različita `natrag` u istom kodu → preimenovano
+u `idiNaprijed` / `idiNatrag`.
+
+**IZBORNIK KRAJA ŠPILA je PLOČA, ne modal** — i to je posljedica F1/12. Kartica je ondje postala cijeli kadar, a `phone.spec` ⑩ mjeri
+da uzima ≥ 60 % dostupnog i da stranica **ne skrola**; `<sokrat-modal>` preko cijelog ekrana uzeo bi stranicu pod sebe
+(`body.modal-open`) i tu mjeru izvadio iz okvira. Ploča stoji u **mjestu kartice** (`inset: 0` nad `.flashcard-wrapper`) → kadar je isti
+sa i bez nje, i spec to **mjeri**: sva četiri ruba ploče unutar omotača kartice, dokument ≤ ekran, `body.modal-open` odsutan. Tri radnje
+(ispočetka · promiješaj · ponovi ne-znam) idu kroz **`postaviSpil`**, isti put kojim se špil postavlja pri ulasku u mod; **nijedna ne
+dira upisani napredak** (`saveFlashcardProgress` se ne zove, `progress.flashcardsLearned` ostaje). „Ponovi ne znam" čita `cards.unknown`
+**prije** `postaviSpil`, jer taj put briše indekse; bez ijedne takve kartice radnja se **ne skriva nego onemogućuje**, a razlog piše
+ispod (i18n `fc.end.none`). Fokus ulazi u prvu dostupnu radnju, Escape zatvara i vraća ga **na karticu** (`tabindex="-1"`) — bez toga
+fokus ostane na skrivenom gumbu, gdje `naTipku` staje na straži `closest('button')` i tipke tiho prestanu raditi.
+
+**Brane (stvarni izlazi):**
+- **`tests/unit/flashcard-swipe.test.js` PREPISAN** na novo značenje: **162 tvrdnje** (bilo 79). Obrnuto kroz `git worktree` na
+  `c3bd1dd` = **74 crvene od 162** (poslije dionice ① bilo je 44 od 121); brana ostaje BROJAČ — na starom stablu ne puca, nego broji.
+- **`tests/flashcard-swipe.spec.js` PREPISAN** (pravi dodir kroz CDP `Input.dispatchTouchEvent`, 4 iPhone profila + stolni kontekst
+  1280×800): **37 prošlo, 3 preskočena** (stolni se mjeri jednom, isti rez kao `uredjaj.spec`), 0 palo.
+- `tests/unit/flashcard-kadar.test.js` **49/49** — dvije tvrdnje slijede činjenicu koja je preselila (mjerenje kadra iz
+  `initFlashcards` u `postaviSpil`; vezanje gumba iz četiri `addEventListener` retka u tablicu). Ista brana, isti broj, novo mjesto.
+- `phone.spec` **12/12** (kadar: 320 → 67 % · 393 → 82 % · 430 → 85 % · polegnuto → 97 % sigurne širine, dokument = ekran),
+  `uredjaj.spec` + `app-state.spec` **41 prošlo / 0 palo**, `loader-packages` 13/13, **preflight EXIT 0** prije oba commita, bump.
+
+**⚠️ Jedan nalaz koji se NIJE ponovio, pa ostaje zapisan a ne popravljen:** u prvom prolazu trojke (`uredjaj` + `phone` + `app-state`)
+je phone-gate ⑩ na **polegnutom** profilu izmjerio karticu **569 od 734 px (77,5 %)** umjesto uobičajenih 710 (96,7 %) i pao; iste
+brane, isto stablo, **dva sljedeća prolaza daju 710** (i `phone.spec` sam i cijela trojka). Nije reproducirano ni jednom više, pa nije
+BUG nego **poznata mjerna nestabilnost polegnutog profila** — tko ju sljedeći put vidi, neka je zapiše ovdje, jer dva nalaza čine uzorak.
+
+**Svjesno NE:** tutorial (F1/14) · animacija za listanje gumbom/tipkom (namjerno trenutno, v. gore) · `phone.authed.spec.js` nedirana ·
+**napredak kartica se i dalje pamti po INDEKSU u promiješanom špilu** (`progress.flashcardsLearned` prima `cards.known`, a špil se miješa
+pri svakom ulasku) — zatečeno od prije, „ponovi ne znam" ga samo čini vidljivijim; popravak traži id kartice i ide uz UGC-model, ne ovdje.
+**Gdje se vidi:** grana `feat/tinder-kadar` (preview); produkcija `c53c28c` bez toga.
+
 ## 2026-09-06 (OPUS, agent F1/12) — Tinder-KADAR: kartica je EKRAN, ✓ / ✕ pod palcem (dvije dionice, dva commita)
 
 Leon, s previewom F1/9 u ruci: *„Treba kartica biti veća i trebamo promijeniti veličinu kartica da budu kao na Tinderu."* i *„Know i
