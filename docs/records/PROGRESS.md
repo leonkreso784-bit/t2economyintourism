@@ -15,6 +15,13 @@ unutarnji skrol; cilj ≈ 464 px visine na 393 (≥ 60 % dostupnog, bez skrola s
 ✓ / ✕ okrugli, h1 i stats otpadaju, fiksna visina + skrol naličja, nova mjera phone-gatea koja je danas crvena) · **F1/13 LISTANJE**
 (desno = sljedeća, lijevo = prethodna, dodir okreće, sud samo gumbima; F1/9 brane se PREPISUJU). Novo pitanje **§6/8** (kraj špila,
 prečaci za ✓ / ✕). Kod nije diran; F1/9 ostaje na grani kao mehanika koju F1/13 preusmjerava.
+**Leonovi odgovori isti sat:** kraj špila = **izbornik** (ispočetka · promiješaj · ponovi ne-znam) · na kompu isti red gumba, **✕ lijevo,
+strelica desno** (pretpostavka reda ← · ✕ · ✓ · →, potvrđuje u cigli) · **sve tipkama** (← → · razmak · X = ne znam · Z = znam) · **tutorial
+pri prvom ulasku**, zaseban za telefon i komp, *„kasnije, ali platforma to treba predvidjeti"* → **F1/14** (kasnije) i ugovor za F1/12–13:
+akcije u JEDNOJ tablici (`id → gumb · gesta · tipka · i18n`) iz koje se crtaju gumbi, vežu tipke i sastavlja tutorial. §6/8 zatvoreno → pet otvorenih.
+**I još:** *„Platforma mora znati na kakvom je uređaju korisnik"* → **F1/12 ⓪** (preduvjet): `boot.js` prije crtanja odluči `dodir · hover · hibrid ·
+razred · os · pwa` → `<html data-uredjaj>` + `window.SokratUredjaj`; CSS i JS pitaju samo to, nitko drugi ne zove `matchMedia` za pointer/hover
+(brana statička); danas se to pita na četiri mjesta na četiri načina, a nitko ne zna je li aplikacija instalirana.
 
 ## 2026-09-06 (FABLE) — F1/9: kartice kao Tinder-špil na dodiru (palac · špil · pečati) + strelice kao stolni pandan — F1 uređaj ima sve cigle
 
