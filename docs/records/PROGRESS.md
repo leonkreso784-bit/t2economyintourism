@@ -5,6 +5,16 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-06 (FABLE) — Leonove stavke poslije F1/5, SAMO ZAPISANE (*„Ovo samo zapiši, nemoj ništa raditi"*)
+
+Leon (slika birača tema na tamnom telefonu, gleda produkciju): *„Zapiši: trebamo promijeniti FAQ, about us srediti malo,
+glavni kontakt sokrat@sokratstudy.com. Frontend nije prilagođen, teme ne odgovaraju, taj dio je uvijek bijela tema. I glupo
+je imati Automatic · Carbon, ne kužim smisao."* Zapisano: **sadržaj → RASPORED F3/1 dopuna** (kontakt na 8 mjesta, Porkbun
+prosljeđivanje provjeriti prije zamjene; FAQ novi tekst; About = `#/about`; sve PRIJE prijevoda) · **„uvijek bijela"** =
+produkcija `c53c28c` bez F1/5, cigla je na grani (potvrda nalaza, ne nova cigla) · **„Automatic · Carbon"** = sufiks iz
+F1/3 (`profile.js`), izgleda kao duplikat → **§6/7**, preporuka: natpis samo „Automatski". CLAUDE.md: šest pitanja.
+Kod nije diran.
+
 ## 2026-09-06 (FABLE) — F1/5: pravne stranice prate uređaj (`boot.js` sinkron + `data-theme` na 4 stranice) — kraj poliranja F1 osim Tindera
 
 Isti mehanizam kao `index.html`, bez nove kopije: `tokens.static.css` je sve četiri teme nosio od MREŽE, `legal.css` nema

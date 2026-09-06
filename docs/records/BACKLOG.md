@@ -222,6 +222,12 @@ obrnuto: bez njega landing pada, moderate/AA) · `touch-zoom.test.js` 35 tvrdnji
 obilazak (`skenirajSveTeme`) živi jedino u prijavljenoj suiti — landing/browse/study/lekcije se u `carbon`/`chalk`/`mint`
 ne skeniraju axeom (kontrast im mjeri `check:contrast:live`, ali ne role/labele po temi — te su theme-neovisne). Cijena
 prebacivanja: 7 ploha × 5 tema u odjavljenoj suiti (danas 34 s → ~2,5 min). Odluka kad zatreba, ne sad.
+**Leon, 06.09. poslije F1/5 (gleda PRODUKCIJU, uz *„samo zapiši, nemoj ništa raditi"*):** ① *„frontend nije prilagođen,
+teme ne odgovaraju, taj dio je uvijek bijela tema"* = pravne stranice na `c53c28c`, gdje F1/5 nije — nalaz potvrđuje ciglu,
+ne otvara novu. ② *„glupo je imati Automatic · Carbon, ne kužim smisao"* — sufiks je F1/3 odluka iz `profile.js` („gumb bez
+sadržaja"); na tamnom uređaju izgleda kao duplikat Carbona → RASPORED §6/7, F2/1. ③ **Sadržaj:** FAQ promijeniti · About
+us srediti · **glavni kontakt `sokrat@sokratstudy.com`** (Gmail danas na 8 mjesta; Porkbun fwd provjeriti prije zamjene) →
+RASPORED F3/1 dopuna, PRIJE prijevoda. Ništa od toga nije rađeno.
 **Leon na iPhoneu (05.09. kasno navečer):** dodir u polje i dvostruki dodir **potvrđeno ugašeni** (*„više ne, sređeno je,
 good job"*), **štipanje s dva prsta i dalje zumira** → `touch-action: pan-x pan-y` Safari za štipanje NE drži (na uređaju;
 headless to ne može reći) → **F1/11 ② `js/no-zoom.js`**: `gesturestart`/`gesturechange` + `touchmove` sa `scale !== 1`,
