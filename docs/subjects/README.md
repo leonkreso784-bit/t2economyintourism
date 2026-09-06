@@ -41,6 +41,13 @@
 ## HR program „Menadžment u Hotelijerstvu" (klon, ADR-012) — STATUSNA PLOČA
 
 > ### ⚰️ HR-STAZA JE OD 2026-09-04 BEZ VLASNIKA
+>
+> **💡 Leon, 2026-09-06 (KASNIJE, nije cigla):** *„još jedan bot koji radi lokalno posao koji je Saša radio — dodaje predmete iz hrvatskog"*.
+> Što već postoji: generator-cjevovod (`pdf-text` → `build-topics` → `generate-subject` → `assemble-subject` → gate) i recenzent
+> `content-review` (`.claude/agents/`). Što fali: **autor-agent** (kalup kroz `agent-builder`), **izvor** po predmetu (HR skripte/PDF u
+> `_materials/` = autoritet, ADR-020 — bez izvora agent izmišlja), **`verify-subject.js`** (dvo-ključni verifier točnosti) i Leonova presuda
+> po predmetu. Nedostaje 10 HR predmeta (tablica dolje): 5 S3 + `accounting-hr` (study) + 4 kvantitativna (S4/S5 → po anketi 2026-09-06
+> **čekaju F5 recepte**). Kad dođe na red: prvo `verify-subject.js`, pa autor-agent, pa jedan pilot-predmet iz HR skripte.
 > Content-suradnik je **otkazan** (Leon, 2026-09-04) → ploču od danas vodimo mi, a ne on.
 > Model rada koji je uz njega postojao je povijest: [archive/TEAM.md](../archive/TEAM.md), odluka
 > [ADR-023](../records/DECISIONS.md) (označena otkazanom).
