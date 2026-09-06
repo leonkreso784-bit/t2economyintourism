@@ -26,6 +26,8 @@ const AKCIJE = Object.freeze({
     neznam:    Object.freeze({ gumb: 'btnWrong',   gesta: null,     tipke: Object.freeze(['x']),          i18n: 'fc.dontKnow', radnja: () => sudi(-1) })
 });
 
+/* ⚠️ F1/13 `okreni()` (tipka/gesta: troši rep geste pa `flipCard`) i F1/12 ④ `okretKartice()` (SAM okret,
+   3D samo dok animacija traje) su DVIJE funkcije: prva je ulaz, druga izvedba — `flipCard` zove drugu. */
 /* Radnje IZBORNIKA KRAJA ŠPILA — zasebna tablica, jer se ne vežu na gestu ni na tipku nego samo
    na svoj gumb, i žive samo dok je izbornik otvoren. Ista pravila: id iz markupa, ime iz i18n-a,
    radnja izvršna (F1/13 ②). Sve tri idu kroz `postaviSpil` i NIJEDNA ne dira upisani napredak. */
@@ -112,7 +114,58 @@ function flipCard() {
     // na istom elementu) — taj klik je REP GESTE, ne „okreni". Zastavicu diže samo dodirna gesta;
     // sljedeći `pointerdown` je briše, pa klik koji nikad ne stigne ne može progutati idući dodir.
     if (swipe.progutajKlik) { swipe.progutajKlik = false; return; }
-    document.getElementById('flashcard').classList.toggle('flipped');
+    okretKartice();
+}
+
+/* ── F1/12 ④ — OKRET S RAVNIM MIROM — `okretKartice()` (Leon, iPhone, 06.09.: „ne mogu skrolati još uvijek") ──
+   Na dodiru je kartica u miru RAVNA (CSS §F1/12 ④: bez `preserve-3d`, bez rotacije, nevidljiva
+   strana `visibility: hidden`), jer iOS ne skrola naličje unutar 3D-okreta. 3D postoji samo dok
+   traje animacija: `is-turning` se stavi PRIJE promjene `flipped` i makne na `transitionend`
+   (ili rezervni timer — isti obrazac kao let u F1/9, jer `transitionend` zna izostati).
+   Povratak s naličja ide u dva koraka: `is-restoring` (bez prijelaza) vrati 3D-okrenuto stanje,
+   reflow, pa se `flipped` makne → animacija 180° → 0°. Bez toga bi se okret vrtio iz ravnog
+   stanja u krivu stranu. `gen` štiti od starog timera koji bi maknuo `is-turning` novom okretu.
+   Stolno: klase se toggleaju isto, ali CSS pod atributom uređaja ondje ne postoji → kao dosad. */
+const OKRET_MS = 700;   // > 0.6 s prijelaza `.flashcard-inner`; reduced-motion ga skrati, timer to ne smeta
+let okretGen = 0;
+
+function okretKartice(zelim) {
+    const el = document.getElementById('flashcard');
+    if (!el || !el.classList) return;
+    const okrenuta = typeof el.classList.contains === 'function' && el.classList.contains('flipped');
+    const cilj = (zelim === undefined) ? !okrenuta : !!zelim;
+    if (cilj === okrenuta) return;
+    okretGen += 1;
+    const gen = okretGen;
+    // Bez `.flashcard-inner` nema što animirati (unit-pješčanik, ogoljen DOM): samo stanje, bez
+    // `is-turning` — klasa koja čeka `transitionend` koji nikad ne dođe ostala bi zauvijek.
+    const inner = typeof el.querySelector === 'function' ? el.querySelector('.flashcard-inner') : null;
+    if (!inner) {
+        if (okrenuta) el.classList.remove('flipped'); else el.classList.add('flipped');
+        return;
+    }
+    el.classList.add('is-turning');
+    if (okrenuta) {
+        el.classList.add('is-restoring');
+        void el.offsetWidth;                 // reflow: skok u 3D-okrenuto se mora NACRTATI prije animacije
+        el.classList.remove('is-restoring');
+        el.classList.remove('flipped');
+    } else {
+        el.classList.add('flipped');
+    }
+    let timer = null;
+    const kraj = () => {
+        if (gen !== okretGen) return;
+        if (inner && typeof inner.removeEventListener === 'function') inner.removeEventListener('transitionend', naKraj);
+        el.classList.remove('is-turning');
+    };
+    const naKraj = (e) => {
+        if (e && (e.target !== inner || (e.propertyName && e.propertyName !== 'transform'))) return;
+        if (timer !== null) clearTimeout(timer);
+        kraj();
+    };
+    if (inner && typeof inner.addEventListener === 'function') inner.addEventListener('transitionend', naKraj);
+    timer = setTimeout(kraj, OKRET_MS);
 }
 
 /**
@@ -148,11 +201,49 @@ function updateFlashcard() {
     document.getElementById('cardAnswer').textContent = card.answer;
     document.getElementById('cardExplanation').textContent = card.explanation || '';
 
-    document.getElementById('flashcard').classList.remove('flipped');
+    // F1/12 ④: nova kartica = lice odmah, bez animacije; stari okret (ako još traje) se poništava.
+    okretGen += 1;
+    const fc = document.getElementById('flashcard');
+    fc.classList.remove('flipped');
+    fc.classList.remove('is-turning');
+    fc.classList.remove('is-restoring');
 
     // ADR-009: render LaTeX in question/answer/explanation (KaTeX walks the text nodes).
     if (typeof renderMath === 'function') renderMath(document.getElementById('flashcard'));
     updateDeckGhosts();
+    zakaziPreljev();         // F1/12 ③: novi tekst → izmjeri prelijeva li lice ili naličje
+}
+
+/* ── F1/12 ③ — ZNAK DA IMA JOŠ (Leon s previewom, 2026-09-06) ────────────────────
+   „Neke kartice su presječene i ne vidi se sve kao odgovor na mobitelu." Kadar iz ① daje
+   kartici strop, pa dugo naličje SKROLA u sebi — a na iOS-u skroler nema klizač, pa odrezan
+   kraj izgleda kao kvar, ne kao poziv na skrol. JS zato zna jednu činjenicu koju CSS ne može
+   izmjeriti: prelijeva li se sadržaj (`scrollHeight > clientHeight`). Zapiše je kao atribut
+   `data-preljev` na lice i naličje; sve ostalo (strelica, ljepljivost) crta CSS
+   (`css/flashcards-section.css` §F1/12 ③). Bez preljeva atributa nema, pa ni strelice.
+
+   Mjeri se poslije crtanja (rAF), na dva okidača: novi tekst kartice i promjena visine kadra
+   (`osvjeziKadar` — okretanje, pragovi). Okretanje kartice NE treba mjeriti: grid-stack drži
+   OBJE strane nacrtane, pa je naličje mjerljivo i dok je skriveno. */
+let preljevZakazan = false;
+
+function oznaciPreljev() {
+    ['.flashcard-front', '.flashcard-back'].forEach((sel) => {
+        const el = typeof document.querySelector === 'function' ? document.querySelector(sel) : null;
+        if (!el || typeof el.setAttribute !== 'function') return;
+        // +1: na 2× i 3× gustoći `scrollHeight` zna biti veći za razlomak piksela i bez ikakvog
+        // preljeva — to bi nacrtalo strelicu ispod naličja koje stane cijelo.
+        if (el.scrollHeight > el.clientHeight + 1) el.setAttribute('data-preljev', '');
+        else el.removeAttribute('data-preljev');
+    });
+}
+
+function zakaziPreljev() {
+    if (preljevZakazan) return;
+    preljevZakazan = true;
+    const posao = () => { preljevZakazan = false; oznaciPreljev(); };
+    if (typeof requestAnimationFrame === 'function') requestAnimationFrame(posao);
+    else posao();
 }
 
 /**
@@ -276,6 +367,7 @@ function osvjeziKadar() {
     // `Math.ceil`: pola piksela premalo rezerve znači pola piksela skrola, a brana mjeri skrol.
     if (r && r.height > 0) korijen.style.setProperty('--kartica-dolje', Math.ceil(r.height) + 'px');
     else korijen.style.removeProperty('--kartica-dolje');
+    zakaziPreljev();         // F1/12 ③: nova visina kadra = nova granica preljeva
 }
 
 /** Prigušeno na kadar: `resize` i `ResizeObserver` znaju stići u rafalu, a mjeri se raspored. */
@@ -412,7 +504,7 @@ function swipeUp(e) {
         // dodira (i 3 s kasnije; spor zamah ne), a `pointerdown`/`pointerup` stignu uredno. Da tap ne
         // ovisi o tome hoće li preglednik sintetizirati klik, okreće se na `pointerup`, a klik koji
         // ipak stigne guta zastavica gore (sljedeći `pointerdown` je briše).
-        document.getElementById('flashcard').classList.toggle('flipped');
+        okretKartice();                  // F1/12 ④: isti okret kao klik — 3D samo dok animacija traje
         return;
     }
     el.classList.remove('is-dragging');

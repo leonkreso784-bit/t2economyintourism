@@ -736,16 +736,98 @@
     height: 100%;
     min-height: 0;
     padding: 1.25rem 1rem;
-    /* ⚠️ `safe center`, ne `center`. Lice i naličje SU skroleri (`overflow-y: auto`), a
-       centriran sadržaj koji preraste spremnik prelije se na OBJE strane — gornji dio tada
-       nema kako doći na red, jer skrol ne ide u minus. `safe` se u tom slučaju ponaša kao
-       `flex-start`, inače centrira. Preglednik koji ključ ne zna odbaci deklaraciju i vrijedi
-       zatečeni `center` — dakle ponašanje otprije cigle, ne kvar. */
-    justify-content: safe center;
+    /* ⚠️ F1/12 ③ (Leon s previewom, 2026-09-06): „Neke kartice su presječene i ne vidi se sve
+       kao odgovor na mobitelu. To je veliki problem." Lice i naličje SU skroleri (`overflow-y:
+       auto`), a CENTRIRAN sadržaj koji preraste spremnik prelije se na OBJE strane — gornji dio
+       tada nema kako doći na red, jer skrol ne ide u minus. ① je to rješavao s `safe center`,
+       uz napomenu da preglednik koji ključ ne zna „zadrži `center`, dakle ponašanje otprije
+       cigle" — ali otprije cigle kartica je RASLA s tekstom, a sad ima strop: ondje gdje `safe`
+       ne postoji (iOS prije Safarija koji ga zna) vrh odgovora je odrezan i NEDOSEŽAN.
+       Zato centriranje ne ovisi ni o jednom ključu: `flex-start` + AUTO-MARGINE na prvom i
+       zadnjem djetetu. Auto-margina u flexu uzme višak prostora kad ga ima (= centrirano), a
+       kad sadržaj prelije spremnik višak je nula i sadržaj počinje od vrha (= skrol od nule).
+       Radi u svakom motoru koji zna flex, dakle u svakom koji crta ovu stranicu. */
+    justify-content: flex-start;
 }
-/* Prazno objašnjenje je do sada bilo prazna kutija s ispunom i razmakom — na kartici od 200 px
-   se gubila, na kartici od 480 px lebdi nasred naličja. */
-:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back .explanation:empty { display: none; }
+/* ⚠️ Auto-margine idu na djecu U TOKU, ne na `:first-child`/`:last-child`: pilula kategorije i
+   poziv „okreni" su `position: absolute` (gore-lijevo / dolje), pa nisu flex-djeca — auto-margina
+   na njima ne radi ništa, a jedino dijete u toku (pitanje) ostane bez gornje i ode na VRH, preko
+   pilule. Leon je to vidio prvi (iPhone, 06.09.): „sad je pitanje na vrhu a treba bit u sredini". */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front > p { margin-top: auto; margin-bottom: auto; }
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back > p { margin-top: auto; }
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back > .explanation { margin-bottom: auto; }
+/* ⚠️ Prazno objašnjenje NE smije ispasti iz toka (`display: none`): ono nosi donju auto-marginu,
+   pa bi bez njega sav višak otišao IZNAD odgovora i odgovor sjeo na dno. Prvi pokušaj je bio
+   `p:has(+ .explanation:empty) { margin-bottom: auto }` — Chromium ga primijeni, a WebKit (2287)
+   NE invalidira `:has()` kad sestra postane prazna (izmjereno: odgovor 176 px ispod sredine).
+   Zato prazno objašnjenje ostaje u toku kao NULTA stavka: bez ispune, ruba, visine i gornjeg
+   razmaka, samo s auto-marginom prema dolje. Vidi se isto kao da ga nema. */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back > .explanation:empty {
+    display: block;
+    height: 0;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    margin: 0 0 auto;
+    background: transparent;
+    overflow: hidden;
+}
+/* Djeca se ne smiju STISNUTI da bi stala: skroler ih mora pustiti da prerastu i doskrolaju.
+   Zadani `flex-shrink: 1` s `min-height: auto` to obično i daje, ali `.explanation` ima ispunu
+   i rub pa bi se u nekim motorima stisnuo umjesto da gurne skrol. */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front > *,
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back > * { flex-shrink: 0; }
+
+/* ── F1/12 ③ — ZNAK DA IMA JOŠ ────────────────────────────────────────────────
+   Skrol unutar kartice na iOS-u NEMA klizač, pa naličje čiji je kraj odrezan izgleda kao
+   naličje kojem je kraj odrezan — i to je drugi dio Leonova nalaza. JS (`oznaciPreljev()`)
+   stavi `data-preljev` na lice/naličje čiji `scrollHeight` premaši `clientHeight`; CSS crta
+   ljepljivu strelicu na dnu skrolera. `sticky` ju drži na donjem rubu dok se skrola, a kad
+   sadržaj dođe do kraja strelica sjedne na svoje prirodno mjesto — ispod zadnjeg retka — i
+   time sama kaže „to je sve". Nema teksta (i18n), nema ikone iz fonta: dva ruba pod kutom,
+   u boji teksta, pa vrijedi na svakoj tinti (`data-ink`). Ne crta se bez atributa. */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front[data-preljev]::after,
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back[data-preljev]::after {
+    content: "";
+    position: sticky;
+    bottom: 0;
+    flex: 0 0 auto;
+    width: 0.7rem;
+    height: 0.7rem;
+    margin: 0.5rem auto 0;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    opacity: 0.6;
+}
+
+/* ── F1/12 ④ — RAVNO STANJE POSLIJE OKRETA (Leon, iPhone, 06.09.: „ne mogu skrolati još uvijek") ──
+   Naličje je skroler unutar 3D-okreta: `.flashcard-inner { transform-style: preserve-3d }` s
+   `rotateY(180deg)`, a obje strane nose `backface-visibility: hidden`. Headless WebKit to skrola;
+   iOS Safari NE — dodir na okrenutoj kartici ne dolazi do skrolera (hit-test kroz sakrivenu
+   stražnju stranu lica, poznata slabost WebKita s `backface-visibility` u 3D-kontekstu). Zato
+   je 3D SAMO DOK OKRET TRAJE (`.is-turning`, JS `okreni()`), a u miru je kartica RAVNA: nema
+   `preserve-3d`, nema rotacije, strana koja se ne vidi je `visibility: hidden` — dakle ne prima
+   dodir i ne može ga ukrasti skroleru. Animacija okreta ostaje ista; mijenja se samo što je
+   ispod prsta kad se ništa ne miče. Samo na dodiru — stolno nema ovaj kvar. */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard:not(.is-turning) .flashcard-inner {
+    transform: none;
+    transform-style: flat;
+    transition: none;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard:not(.is-turning) .flashcard-front,
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard:not(.is-turning) .flashcard-back {
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard:not(.is-turning):not(.flipped) .flashcard-back { visibility: hidden; }
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard.flipped:not(.is-turning) .flashcard-back { transform: none; }
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard.flipped:not(.is-turning) .flashcard-front { visibility: hidden; }
+/* Povratak s naličja: prvo SKOK u 3D-okrenuto bez animacije (`.is-restoring`), pa tek onda
+   animacija natrag — inače bi okret krenuo iz ravnog stanja i zavrtio se u krivu stranu. */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard.is-restoring .flashcard-inner { transition: none; }
+/* Prazno objašnjenje: do ① prazna kutija s ispunom; od ① `display: none`; od ④ NULTA STAVKA U
+   TOKU (v. dolje, uz auto-margine) — jer nosi donju auto-marginu centriranja. */
 
 /* 5. TIPOGRAFIJA — mjere iz plana (pitanje 18–20 px, odgovor 16, objašnjenje 14).
    Do cigle je pitanje bilo 12,8 px: veličina za popis, ne za karticu koja je ekran. */

@@ -2779,10 +2779,64 @@ sokrat-modal.sokrat-confirm-modal > * {
   height: 100%;
   min-height: 0;
   padding: 1.25rem 1rem;
-  justify-content: safe center;
+  justify-content: flex-start;
 }
-:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back .explanation:empty {
-  display: none;
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front > p {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back > p {
+  margin-top: auto;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back > .explanation {
+  margin-bottom: auto;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back > .explanation:empty {
+  display: block;
+  height: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  margin: 0 0 auto;
+  background: transparent;
+  overflow: hidden;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front > *, :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back > * {
+  flex-shrink: 0;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front[data-preljev]::after, :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back[data-preljev]::after {
+  content: "";
+  position: sticky;
+  bottom: 0;
+  flex: 0 0 auto;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: 0.5rem auto 0;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  opacity: 0.6;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard:not(.is-turning) .flashcard-inner {
+  transform: none;
+  transform-style: flat;
+  transition: none;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard:not(.is-turning) .flashcard-front, :root[data-uredjaj~="dodir"] #flashcards.active .flashcard:not(.is-turning) .flashcard-back {
+  backface-visibility: visible;
+  -webkit-backface-visibility: visible;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard:not(.is-turning):not(.flipped) .flashcard-back {
+  visibility: hidden;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard.flipped:not(.is-turning) .flashcard-back {
+  transform: none;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard.flipped:not(.is-turning) .flashcard-front {
+  visibility: hidden;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard.is-restoring .flashcard-inner {
+  transition: none;
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front p {
   font-size: 1.15rem;

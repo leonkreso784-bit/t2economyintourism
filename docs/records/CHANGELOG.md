@@ -20,6 +20,13 @@ Brane: unit **162 tvrdnje** (obrnuto na `c3bd1dd` = 74 crvene) · spec **37/0/3*
 `markKnown`, koji upisuje i bez kartice) — F1/13 sud bez kartice odbija, pa je test pao i pokazao pravi kvar ispod: skinut predmet se na
 hladnoj offline navigaciji otvori prazan (**BUG-045**, otvoren). P4 sad tvrdi `deck > 0` prije klika; suita 530/4 → 530/0.
 
+## 2026-09-06 (FABLE) — **F1/12 ③: naličje se ne reže** (`fix/kadar-nalicje`)
+
+- **Popravak** (Leon s previewom: *„neke kartice su presječene i ne vidi se sve kao odgovor"*): lice i naličje na dodiru centriraju AUTO-MARGINAMA umjesto `safe center` — motor bez `safe` (stariji iOS) je vrh preljevenog odgovora ostavljao nedosežnim; preljev sad počinje od vrha i skrola.
+- **Znak „ima još":** `data-preljev` (JS mjeri `scrollHeight > clientHeight`) → ljepljiva strelica na dnu skrolera, sjedne ispod zadnjeg retka na kraju. Bez teksta, bez ikone iz fonta.
+- Brane: `flashcard-kadar.test.js` 49 → 54 (tvrdnja o `safe center` okrenuta) · preflight EXIT 0. Playwright specovi pri spajanju u `feat/tinder-kadar`.
+- **④ (Leon na iPhoneu: *„pitanje na vrhu"* · *„ne mogu skrolati još uvijek"*):** auto-margine sele na djecu U TOKU (pilula i „okreni" su apsolutni) — pitanje opet u sredini; prazno objašnjenje = nulta stavka u toku (WebKit ne invalidira `:has()`). **Kartica je u miru RAVNA, 3D samo dok okret traje** (`okreni()` + `is-turning`/`is-restoring`, `transitionend` ili timer): iOS ne dovodi dodir do skrolera unutar 3D-okreta. `flashcard-kadar.test.js` 54 → 61, swipe 79/79.
+
 ## 2026-09-06 (OPUS) — **F1/12: Tinder-KADAR — kartica je EKRAN, ✓ / ✕ pod palcem** (① kadar `bbd2b68` · ② gumbi `48296cf`)
 
 Leon, s previewom F1/9: *„Treba kartica biti veća i trebamo promijeniti veličinu kartica da budu kao na Tinderu."* i *„Know i don't
