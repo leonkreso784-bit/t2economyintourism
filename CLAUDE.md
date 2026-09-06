@@ -184,7 +184,7 @@ Aktivni spec: **`docs/plan/RASPORED.md`** (2026-09-04) — cijela preostala list
 F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **Šest pitanja čeka Leonovu riječ — §6 rasporeda.**
 
 **ⓑ trzanje = F1/7 ✅** (landing `scroll`, paint 240 → 0; `?bez=` A/B čeka iPhone).
-**Četiri nova (2026-09-05):** F1/8 ✅ · **F1/9** Tinder-špil · F1/10 ✅ · F1/11 ✅ (ADR-034).
+**Četiri nova (2026-09-05):** F1/8 ✅ · **F1/9** Tinder-špil · F1/10 ✅ · F1/11 ✅ (ADR-034). **F1/4 + F1/5 ✅ (2026-09-06) → F1 gotov osim F1/9.**
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 
