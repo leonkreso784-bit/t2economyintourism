@@ -5,6 +5,20 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+### 2026-09-06 (OPUS) — **B2: bočna traka predmeta OBRISANA** (F4, prvi rez CSS-duga)
+
+Leonova anketa (§6/2): bočna traka predmeta se **briše**, ne vraća — landing i Browse vode do svakog predmeta, a
+`openSidebar()` nije imao nijednog pozivatelja (nalaz C6/2). Van idu `css/sidebar.css` (**255 redaka**), `<aside>`
++ zastor iz `index.html`, `openSidebar`/`closeSidebar`/`renderSubjectsSidebar` sa svim pozivima i `window`-izvozima,
+i18n ključ `sidebar.choose`, te tragovi u `policies.css`, `variables.css`, `check-palette.js` i `css-debt.js`.
+**`tests/sidebar.spec.js` nije obrisan nego OKRENUT u branu ODSUTNOSTI** (statički trag u izvoru + živa stranica +
+jedna pozitivna tvrdnja da landing i dalje crta katalog) — mrtva se površina najlakše vraća prijepisom.
+Bundle **242 984 → 238 457 B**, prvi kadar **120.3 → 119.8 KiB** mrežom, `check:hover` 143 → 140 selektora,
+`check:i18n` 421 → 418 (osnovica `index.html` 50 → 47). **`css:diff` = 0 razlika** kroz 4 rute × 3 širine
+(13 470 usporedbi) protiv poravnate reference; izravna usporedba s `f3d1100` javlja 3 razlike koje su **pomak
+strukturnog ključa** nakon uklanjanja 189 čvorova, ne promjena prikaza. Obrnuta provjera nove brane na starom
+stablu: **2/2 crvene**, 37 imenovanih tragova. Preflight EXIT 0.
+
 ### 2026-09-06 (OPUS) — **F1/13: palac LISTA, gumbi SUDE + izbornik kraja špila** (① `de2c883` · ② `d30b336`)
 
 Leon, s previewom F1/9: *„Ako se povuče lijevo vraća se na prijašnju, desno ide na sljedeću … Know i don't know stoje dolje kao što

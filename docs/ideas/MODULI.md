@@ -92,7 +92,7 @@ danas nitko ne testira jednostavno nestaju.**
 ### 4. Datoteke rastu jer ih se ne može razbiti
 
 [js/navigation.js](../../js/navigation.js) ima **1580 redaka** i radi rutiranje, mrvice,
-pathbar, sidebar, obnovu pozicije i ulaze u materijale. Razbiti je danas znači **dodati još
+pathbar, obnovu pozicije i ulaze u materijale. Razbiti je danas znači **dodati još
 script tagova u dvije HTML datoteke i pogoditi redoslijed** — dakle povećati problem iz §1 i §2.
 Zato ne rastu funkcije nego datoteke.
 

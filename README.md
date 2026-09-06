@@ -92,7 +92,7 @@ This is currently my passion project and hobby, but I'm committed to turning it 
 ├── css/                       # Modular stylesheets
 │   ├── variables.css          # Design system (colors, spacing, typography)
 │   ├── landing.css            # Landing page
-│   ├── sidebar.css, browse.css, pages.css, components.css
+│   ├── browse.css, pages.css, components.css
 │   ├── flashcards-section.css, quiz-section.css, ...
 │   ├── responsive/            # Mobile-first media queries (6 modular files)
 │   └── sokrat-*.css           # Web Components styles

@@ -153,7 +153,10 @@ Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live ve
 - ✅ A2 — `js/config.js` čita iz catalog-a (subjectDataMap + getSubjectData);
   svi data-*.js izloženi na `window`; verificirano `scripts/verify-catalog.js` (0 grešaka)
 - ✅ A3 — sidebar render iz catalog-a (`renderSubjectsSidebar()`); uklonjen ručni
-  HTML; `iconGradient` u catalogu; verificirano Playwrightom (sidebar.spec.js)
+  HTML; `iconGradient` u catalogu; verificirano Playwrightom (sidebar.spec.js).
+  ⚠️ **Bočna traka je OBRISANA 2026-09-06** (B2; bila je nedostižna, Leonova anketa) —
+  `iconGradient` i render iz kataloga žive dalje na landingu i u Browseu, a
+  `tests/sidebar.spec.js` od tada mjeri njezinu ODSUTNOST.
 - ✅ A4 — **lazy loading** (`js/content-loader.js`: `loadSubjectContent()` učita sadržaj predmeta
   tek na otvaranje; statički `data-*.js` maknuti iz `index.html`). Šav prema `/api` (Blok B). Test `lazy-load.spec.js`.
 - ✅ A5 — UI hijerarhije = **puni drill-down nav** (`#browse-page`, M0.5, ADR-007); test `browse.spec.js`

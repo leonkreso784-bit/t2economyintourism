@@ -610,13 +610,26 @@ dobije neki upitnik da znamo tko je"* · FMTU-korisnici dobivaju obavijesti o no
 ⚠️ Napomena uz zapisanu odluku „OAuth: NE zasad" (2026-08-30, razlog: nula vanjskih
 korisnika): Leon ju je 2026-09-01 OVIM željama otvorio — okidač ostaje deploy + prvi korisnici.
 
-### 🔍 Sidebar predmeta je NEDOSTIŽAN — `openSidebar()` nitko ne zove (C6/2, 2026-09-01)
+### ~~🔍 Sidebar predmeta je NEDOSTIŽAN — `openSidebar()` nitko ne zove (C6/2, 2026-09-01)~~ — **OBRISANO 2026-09-06 (B2)**
 
 Panel `#subjectsSidebar` se renderira (17 predmeta, i18n ga re-renderira), ima close-gumb,
 overlay i escape — ali nijedan gumb/ruta/`data-action` ga ne otvara; `window.openSidebar`
 nema nijednog pozivatelja. Vjerojatno zaostatak otkad browse drill-down (K1) bira predmete.
 **Produktna odluka:** obrisati (markup + `sidebar.css` + `renderSubjectsSidebar`) ili vratiti
 kao brzi izbornik. CSS mu je od C6/2 konsolidiran u `sidebar.css` pa je rez cist u oba smjera.
+
+**✅ ODLUKA I IZVEDBA (Leon, anketa 2026-09-06, §6/2 rasporeda): OBRISANO.** Markup, `css/sidebar.css`
+(255 r.), `openSidebar`/`closeSidebar`/`renderSubjectsSidebar` i ključ `sidebar.choose` su van;
+`tests/sidebar.spec.js` je OKRENUT u branu koja tvrdi ODSUTNOST (prijepis iz gita pada). `css:diff`:
+0 razlika kroz 4 rute × 3 širine. Zapis ostaje jer nosi **zašto**, ne stanje.
+
+**⚠️ OSTATAK KOJI JE REZ OSTAVIO ZA F4:** `primarySubjects()` i `PRIMARY_PROGRAM` u `js/navigation.js`
+nakon brisanja **nemaju nijednog pozivatelja** (jedini je bio `renderSubjectsSidebar()`; `compute-stats.js`
+drži vlastitu kopiju konstante). Nisu obrisani jer su bili izvan opsega cigle B2 — presuditi: briše li se,
+ili ih preuzima vitrina landinga (koja danas filtrira program drugim putem).
+
+**⚠️ Usput izmjereno:** `closeSidebar()` **nije imao nul-stražu** — brisanje samog markupa, bez JS-a,
+bacalo bi `TypeError` na svakoj navigaciji. Markup i kôd su zato morali otići zajedno.
 
 ## ✅ RIJEŠENO 2026-08-30 — semantičke ispune: **ODLUKA JE ① (tokeni), i preporuka je ODBIJENA**
 

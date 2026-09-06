@@ -240,7 +240,7 @@ je funkcijom `smiri()`. Ali taj je spec uvozio **samo `gateViolations`** i skeni
 
 ## Po predmetu (nakon izmjene catalog-a / sadržaja)
 Za **svaki** pogođeni predmet:
-- [ ] Predmet se pojavljuje u sidebaru ( ispravan naziv, ikona, boja).
+- [ ] Predmet se pojavljuje na landingu i u Browse drill-downu (ispravan naziv, ikona, boja).
 - [ ] Sve lekcije se prikazuju; "coming soon" lekcije se ponašaju kako treba.
 - [ ] **Learn:** sve kategorije prikazane, slike se otvaraju u modalu.
 - [ ] **Flashcards:** okreću se, Know/Don't Know broji, navigacija radi.

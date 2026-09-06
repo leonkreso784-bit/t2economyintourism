@@ -5,6 +5,84 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-06 (OPUS, agent B2) — Bočna traka predmeta: OBRISANA (F4, prvi rez CSS-duga)
+
+Leon, anketa 2026-09-06 (§6/2 rasporeda): **OBRISATI** — do svakog predmeta se dolazi landingom i browseom.
+Povod je nalaz C6/2: `openSidebar()` nije imao **nijednog pozivatelja**, pa je panel bio nedostižan, a jedini
+tko ga je ikad otvarao bio je njegov vlastiti test. Grana `feat/tinder-kadar`, ništa pushano.
+
+**Što je otišlo** (kod, jedan commit):
+
+| datoteka | rez |
+|---|---|
+| `css/sidebar.css` | **obrisana — 255 redaka** (`@import` iz `css/app.css` isto) |
+| `index.html` | `<aside class="subjects-sidebar">` + zastor + gumb zatvaranja = **19 redaka** → nadgrobni komentar od 5 |
+| `js/navigation.js` | `openSidebar` · `closeSidebar` · 4 poziva iz `navigateTo` · `renderSubjectsSidebar` · 3 `window`-izvoza = **−58 redaka** |
+| `js/init.js` | poziv crtača + 3 vezanja (gumb · zastor · `.subject-item`) = **−21 redak** |
+| `js/i18n.js` | ključ `sidebar.choose` (HR+EN) + re-render na promjenu jezika |
+| `css/policies.css` · `css/variables.css` | print-blok · siroče `.subject-item-meta span` |
+| `scripts/check-palette.js` · `scripts/css-debt.js` | iznimka `.subjects-overlay` · `sidebar.css` s popisa C6 |
+| `tests/tint-ink.spec.js` · `tests/helpers/phone-gate.js` · `tests/layout.authed.spec.js` | treća mjerena površina · član popisa kroma · datiran primjer u pouci |
+
+**`tests/sidebar.spec.js` nije obrisan nego OKRENUT** (40 → 120 redaka): mrtva se površina najlakše vraća
+**prijepisom**, pa brana sad tvrdi ODSUTNOST, i to dvama neovisnim mjerama — ① statički (17 tragova kroz
+`index.html`, sve `css/**`, bundle i `js/**`, uz **komentare odbačene prije mjerenja**, jer nadgrobni zapisi
+namjerno spominju `openSidebar()`) i ② živo (nula elemenata, nula globala na `window`). Uz njih stoji **jedna
+POZITIVNA tvrdnja** (landing i dalje crta kartice iz kataloga) — brana koja mjeri samo odsutnost prolazi i nad
+ruševinom — i tvrdnja o **opsegu** (≥ 30 pregledanih datoteka), jer mjerač koji ništa ne otvori prolazi prazan.
+
+**⚠️ Prvo pokretanje nove brane odmah je dalo nalaz:** `subject-arrow` je javio **tri lažna pogotka**
+(`css/landing.css`, `js/navigation.js`, bundle) jer živa landing-kartica ima `.landing-subject-arrow` —
+**traženje PODNISKE hvata i ono što nije iste vrste** (ista pouka kao `tint-ink.spec.js`). Trag je izbačen s
+popisa uz obrazloženje; strelica ionako ne može preživjeti sama, bez `.subject-item` s kojim je visjela.
+
+**Brane — prije → poslije:**
+
+| mjera | prije | poslije |
+|---|---|---|
+| `check:orphan-css` | 12 / osnovica 12 | **12 / 12** (nijedna obrisana klasa nije bila u osnovici — sve su bile ŽIVE) |
+| `check:palette` | 0 / 0 | **0 / 0** (uklonjena iznimka `.subjects-overlay` nije stvorila nalaz) |
+| `check:i18n` | 421 nositelja · `index.html` **50** | **418** · `index.html` **47** (osnovica spuštena `--update`) |
+| `check:budget` (prvi kadar) | 362.1 KiB sirovo · **120.3 KiB** mrežom · zaliha 79.7 | 359.1 · **119.8** · zaliha **80.2 KiB** |
+| `check:hover` | 143 hover-selektora u 1731 pravilu | **140 u 1697** |
+| `styles.bundle.css` | 242 984 B | **238 457 B** (−4 527 B) |
+| `npm run preflight` | — | **EXIT 0** |
+
+**`css:diff` — dokaz da se ništa vidljivo nije pomaknulo, i zašto je trebao drugi krug.** Izravno protiv
+`f3d1100` alat javi **3 razlike**, sve na istom ključu `body[0]>div[1]`: u referenci je ondje `.subjects-overlay`,
+u radnom stablu `.cookie-banner`. To NIJE promjena prikaza nego **pomak indeksa** — `css-diff` ključuje elemente
+strukturnom putanjom, a rez je odnio **189 čvorova** (`↳ MARKUP: 189 samo u referenci, 7 samo u radnom`), pa alat
+pod istim ključem uspoređuje **različite elemente**. Zato je izrađena **poravnata referenca** (`f3d1100` iz kojeg
+je izvađen samo markup trake): obje strane tada imaju identičnu strukturu, a razlikuju se samo u CSS-u i JS-u.
+Rezultat: **0 razlika** na `/` (1006 elemenata × 3 širine) i **0 razlika** na `#/subjects` (1018), `#/subject/te2`
+(1035) i `#/subject/te2/first-midterm` (1431) — **13 470 usporedbi ukupno**.
+
+**⚠️ NALAZ iz izrade te reference:** `closeSidebar()` u `f3d1100` **nema nul-stražu** —
+`document.getElementById('subjectsSidebar').classList` baca `TypeError` čim markupa nema. Referenca bez markupa
+zato nikad nije napuštala landing i dala je **834 lažne razlike** dok straža nije dodana. Praktična posljedica za
+naš rez: markup i JS su morali otići **zajedno**; brisanje samo jednoga srušilo bi svaku navigaciju.
+
+**Playwright:** `sidebar` + `tint-ink` + `landing` = **48 prošlo / 0 palo** (4 iPhone profila) ·
+`phone` + `app-state` + `uredjaj` + `a11y` = **47 / 1 / 60 preskočeno**; jedini pad je **poznata nestabilnost
+⑩** (polegnuti profil: 87,7 % sigurne širine uz traženih 90 %, dok ispis ISTOG prolaza za tu širinu javlja 97 %) —
+ponovljeno `phone.spec` samo = **12/12 zeleno**, ista pojava zapisana i u F1/13.
+
+**Obrnuta provjera nove brane** (`git worktree --detach f3d1100`, spec prekopiran u staro stablo):
+**2 / 2 crvene**. Prva pada već na `css/sidebar.css` postoji; kad se u referenci obriše samo ta datoteka, ① nabroji
+**37 imenovanih tragova** (markup, bundle, `css/app.css`, `policies.css`, `variables.css`, `js/**`). Worktree i
+junction na `node_modules` uklonjeni; `node_modules` provjeren nakon uklanjanja (netaknut).
+
+**Svjesno NIJE:**
+- **`primarySubjects()` + `PRIMARY_PROGRAM` u `js/navigation.js` su nakon reza MRTVI** — jedini pozivatelj bio je
+  `renderSubjectsSidebar()` (izmjereno grepom kroz cijelo stablo; `scripts/compute-stats.js` ima **vlastitu**
+  kopiju konstante). Nalog za ovu ciglu ih je izuzeo, pa su ostali uz komentar i unos u BACKLOG-u — presuda je F4.
+- `npm run test:authed` / `layout.authed.spec.js` **NISU vrćeni**: ovaj worktree nema `.env` (ključevi žive u
+  glavnom stablu, koje ova cigla ne smije dirati). Izmjena u tom specu je **samo komentar**.
+- Tablice palete u `BACKLOG.md` koje nabrajaju `sidebar.css` ostaju kao **zapis** (§records nije izvor istine);
+  `HISTORY.md` M0-redak također — on opisuje što se dogodilo tada i time ne laže.
+
+---
+
 ## 2026-09-06 (OPUS, agent F1/13) — Palac LISTA, gumbi SUDE + izbornik kraja špila (dvije dionice, dva commita)
 
 Leon, s previewom F1/9: *„Ako se povuče lijevo vraća se na prijašnju, desno ide na sljedeću. Kada se okrene daje odgovor. Know i don't

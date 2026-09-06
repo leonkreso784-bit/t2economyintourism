@@ -108,7 +108,7 @@ prepisuje profil nosi i njegov CSS — inače se ista datoteka prepisuje dvaput.
 |---|---|---|
 | **F2/1** | **Tema prati račun.** `localStorage` ostaje **prvi kadar** (odluka mora pasti prije crtanja, `boot.js`), račun postaje izvor istine koji ga pri prijavi pregazi i pri promjeni upiše. **Odluka (Leon, 2026-09-06): odjava BRIŠE lokalni izbor** — neprijavljeni posjetitelj na tom uređaju vidi zadano (prati uređaj), *„tuđi izbor ne smije preživjeti odjavu"*; račun izbor čuva za iduću prijavu. ⚠️ **Birač (Leon, 2026-09-06, slika profila):** *„glupo je imati ovu Automatic · Carbon, uopće ne kužim koji je smisao toga"* — gumb „Automatski" nosi sufiks s onim što uređaj trenutno bira (`profile.js`, F1/3: *„inače je gumb obećanje bez sadržaja"*), pa na tamnom telefonu glasi „Automatic · Carbon" i izgleda kao peta tema / duplikat Carbona. **§6/7 odgovoreno 2026-09-06 (anketa): natpis samo „Automatski"** — gumb ostaje (jedini način da se izbor poništi), sufiks otpada; birač se ovdje ionako prekraja. **✅ Natpis je isporučen 2026-09-06** (`feat/nocna-b`, izvan faze — sufiks je jedan izraz, ne čeka prekrajanje birača): `themeCardHtml()` više ne čita `__sokratTemaUredjaja`, gumb i ponašanje su netaknuti, a rezervni (fallback) opis više ne proturječi rječniku. Ostatak F2/1 — račun kao izvor istine i odjava koja briše lokalni izbor — je i dalje otvoren. | …korisnik postavi temu na jednom uređaju i zatekne ju na drugom čim se prijavi |
 | **F2/2** | **Profilna slika** — bucket po obrascu `node-images`: vlasnički prefiks + RLS. | …korisnik stavi svoju sliku i vidi ju odmah, a tuđi prefiks mu je nedostupan |
-| **F2/3** | **Uređivanje profila + `css/profile.css`, `auth.css`, `pages.css`, `consent.css`, `legal.css`, `home-section.css`, `sidebar.css`** (bivši C6). | …korisnik promijeni ime i vidi svoj profil onako kako ga vide drugi |
+| **F2/3** | **Uređivanje profila + `css/profile.css`, `auth.css`, `pages.css`, `consent.css`, `legal.css`, `home-section.css`** (bivši C6; ⚠️ `sidebar.css` je ispao s popisa — datoteka je OBRISANA 2026-09-06, B2). | …korisnik promijeni ime i vidi svoj profil onako kako ga vide drugi |
 | **F2/4** | **Mail-obavijesti** — Edge Function (ADR-016), pristanak iz upitnika, odjava jednim klikom iz maila, admin-forma. Prvi segment: FMTU. | …primi mail o novom predmetu SAMO ako je pristao, i odjavi se jednim klikom iz samog maila |
 
 **Pitanje za F2/1 odgovoreno (Leon, 2026-09-06): vraća se na zadanu.** Neprijavljeni korisnik na tuđem
@@ -214,8 +214,11 @@ ništa, ali ništa ni ne nestaje samo od sebe.
   učitavanje po ruti spustilo skripte, oni su vjerojatno najveći preostali teret prvog kadra.
 - **Zaštita prijave od nasilnog pogađanja** (rate-limiting na Supabase Authu).
 - **Nježna uputa pri prijavi slabom lozinkom** — `data.weakPassword` se danas svjesno ignorira.
-- **Sidebar predmeta** — `openSidebar()` nema nijednog pozivatelja. **Odluka (Leon, 2026-09-06,
-  anketa): OBRISATI** — `openSidebar()`, `sidebar.css`, markup i i18n ključevi idu van u F4 (uz `check:orphan-css` osnovicu).
+- ~~**Sidebar predmeta** — `openSidebar()` nema nijednog pozivatelja. **Odluka (Leon, 2026-09-06,
+  anketa): OBRISATI**~~ → **✅ OBRISANO 2026-09-06 (B2).** Van su otišli `css/sidebar.css` (255 r.),
+  markup, `openSidebar`/`closeSidebar`/`renderSubjectsSidebar` i ključ `sidebar.choose`;
+  `tests/sidebar.spec.js` je OKRENUT u branu odsutnosti. `check:orphan-css` se nije ni pomaknuo
+  (12/12) — obrisane klase nisu bile siročad nego ŽIVE, samo nedostižne.
 - **Baza i Storage:** siročad u Storageu · staging poravnati sa `supabase/f1-nodes.sql` ·
   `set_updated_at` ima promjenjiv `search_path` (jedini nenamjeran sigurnosni WARN).
   ⚠️ `is_admin()` se **ne smije** revokeati `authenticated`-u — zovu ga RLS politike kao pozivatelja.
@@ -250,7 +253,7 @@ Zapisano da se ne otvara iznova, ne da se planira.
 Osam pitanja koja mijenjaju izvedbu, a ne mogu se razumno pretpostaviti — **svih osam odgovoreno** (zadnjih pet anketom, 2026-09-06); ostaju kao zapis zašto je što odlučeno:
 
 1. ~~**Neprijavljen korisnik na tuđem uređaju** — zadnja lokalna tema ili zadana?~~ **Odgovoreno 2026-09-06: zadana** — odjava briše lokalni izbor, *„tuđi izbor ne smije preživjeti odjavu"*. *(F2/1)*
-2. ~~**Sidebar predmeta** — obrisati ili vratiti kao brzi izbornik?~~ **Odgovoreno 2026-09-06 (anketa): OBRISATI** — landing i browse vode do svakog predmeta; `openSidebar()`, `sidebar.css` i markup odlaze u F4 čišćenje. *(F4)*
+2. ~~**Sidebar predmeta** — obrisati ili vratiti kao brzi izbornik?~~ **Odgovoreno 2026-09-06 (anketa): OBRISATI** — landing i browse vode do svakog predmeta. **✅ IZVEDENO isti dan (B2):** `openSidebar()`, `sidebar.css`, markup i i18n ključ su van, a `tests/sidebar.spec.js` od tada mjeri njihovu ODSUTNOST (`css:diff` 0 razlika kroz 4 rute). *(F4)*
 3. ~~**Opseg frontenda vježbi** — tokeni i razmaci, ili prepravak interakcije?~~ **Odgovoreno 2026-09-06 (anketa): SAMO tokeni i razmaci** — engine i tijek ostaju, izgled se poravna (boje, razmaci, kadar na telefonu). *(F5/3)*
 4. ~~**Facebook prijava** — čeka Metine ključeve; kod se vraća jednom zastavicom.~~ **Odgovoreno 2026-09-06 (anketa): ODUSTATI za sad** — Google pokriva većinu; ostatak koda iza zastavice se briše u F2, vraća se jednom zastavicom ako ikad zatreba. *(F2)*
 5. ~~**Četiri kvantitativna HR predmeta** — radimo ih mi, ili padaju?~~ **Odgovoreno 2026-09-06 (anketa): ČEKAJU F5 recepte** — prebrojavanje recepata (F5/1) pokaže mogu li im vježbe biti čisti podatak; tek onda se zna cijena. Ne radimo ih sami sad, ne padaju. *(F5/1)*
