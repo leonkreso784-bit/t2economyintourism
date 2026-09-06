@@ -171,6 +171,20 @@ današnji prikaz + tipkovnicu · `prefers-reduced-motion` gasi let kartice · be
 `markKnown` / `markUnknown`** — gesta ih zove, ne duplicira.
 **Otvoreno (RASPORED §6/6):** zamjenjuje li špil današnji prikaz na telefonu ili je prekidač; nosi li
 smjer značenje. **Mjesto: F1/9.**
+**✅ ISPORUČENO 2026-09-06 (F1/9).** Leon isti dan: *„samo na mobitelu … ako imaš viziju probaj nešto"* → gesta samo za
+`pointerType === 'touch'`, špil samo `pointer: coarse`; **vizija za komp = strelice** (→ znam · ← ne znam · razmak/Enter okreće, isti
+let i pečat). Otvoreno pitanje palo odlukom: gesta je DODATAK uz gumbe → prekidač nepotreban; desno = znam. Mjere: SLOP 10 px · prag
+= širina kartice / 3, najmanje 90 px · let 280 ms + rezervni timer 320 ms · `touch-action: pan-y` na kartici I na licu/naličju.
+**Dva nalaza samo iz PRAVOG dodira (CDP `Input.dispatchTouchEvent`; pješčanik ih ne vidi):** ① `touch-action` se čita od dodirnutog
+elementa do PRVOG skrolera (CSS Pointer Events), a `.flashcard-front/back` SU skroleri (`overflow-y: auto`, BUG-013) → `pan-y` samo na
+`.flashcard` nikad ne dođe na red, preglednik uzme vodoravni dodir za pomicanje i pošalje `pointercancel` na prvom pomaku; ② Chromium
+poslije BRZOG vodoravnog zamaha (fling) potisne `click` sljedećeg dodira — gola stranica bez našeg JS-a: brz zamah → tap = ništa (i
+3 s kasnije), spor zamah (30 ms/korak, drži 250 ms) → tap radi; `pointerdown`/`pointerup` stižu uvijek → okretanje na dodir ide na
+`pointerup`, rep-klik se guta. `setPointerCapture` je bio prvi osumnjičeni i OBOREN (maknut: implicitni capture dodira dovoljan).
+Brane: unit 78 tvrdnji (obrnuto 48 crvenih) · spec 7 testova × 4 iPhone profila s CDP-dodirom (protučinjenično: reset `pan-x pan-y`
+samo na `.flashcard` = gesta radi, isti reset na licu/naličju = `pointercancel`, nema upisa). ⚠️ **Safari nije mjeren** — headless nema iOS-ov gesture-put (isti razlog kao F1/11); ne zna se potiskuje li
+WebKit tap poslije zamaha, ali `pointerup`-put to čini nevažnim → presuda palcem = Leonov iPhone. Nije mijenjano: gumbi, tijek
+`markKnown`/`markUnknown`, cloud-sync.
 
 **F. ZOOM NA DODIR** (Leon, 2026-09-05: *„Još jedan veliki bug. Kada se više puta takne na jedno mjesto
 može se zoomat, to se mora riješit."*). **Dva uzroka — jedan izmjeren, drugi ovdje nemjerljiv:**

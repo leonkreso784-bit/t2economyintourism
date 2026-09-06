@@ -5,6 +5,25 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-06 (FABLE) — F1/9: kartice kao Tinder-špil na dodiru (palac · špil · pečati) + strelice kao stolni pandan — F1 uređaj ima sve cigle
+
+Leon: *„pregledaj stanje … kreni s izradom"*, pa usred rada: *„samo na mobitelu, ne vidim kako bi radilo na kompu … ali ako imaš
+viziju probaj nešto"*. Gesta u `js/flashcards.js` samo za dodir: `pointerdown` pamti ishodište → prvi pretežno vodoravni pomak > 10 px
+uzima pokazivač → JS piše `--swipe-x/rot/p` i klase, crtanje je u CSS-u; iznad praga (širina/3, min 90 px) let pa upis kroz POSTOJEĆI
+`markKnown`/`markUnknown` (`transitionend` ILI rezervni timer, točno jednom; `gen` čuva da let poništen novim špilom ne upiše u tuđi);
+ispod praga povratak; okomito = preglednikov skrol; rep-klik geste ne okreće (a klik koji nikad ne stigne ne guta idući dodir);
+reduced-motion = bez leta. Špil = dvije sjene u boji sljedećih kartica, samo `pointer: coarse`; pečati = puna ispuna ok/danger.
+**Vizija za komp (Leonovo „probaj nešto"):** strelice → / ← / razmak = isti tok i isti let, samo u modu kartica, nikad iznad polja,
+gumba ili modala. `touch-action: pan-y` na kartici I na licu/naličju = jedino odstupanje od reseta F1/11 (`touch-zoom` brana zelena).
+**Prvi spec je pao 24/28 i to je bila najkorisnija minuta cigle** — pješčanik je bio zelen, pravi dodir ne: ① `touch-action` se čita od
+dodirnutog elementa do PRVOG skrolera, a lice/naličje SU skroleri (BUG-013) → `pan-y` samo na `.flashcard` nikad ne dođe na red,
+`pointercancel` na prvom pomaku; ② Chromium poslije brzog vodoravnog zamaha POTISNE `click` sljedećeg dodira (gola stranica, bez našeg
+JS-a: brz zamah → tap = ništa, i 3 s kasnije; spor zamah → tap radi) → okretanje na dodir seli na `pointerup`, klik koji ipak stigne se
+guta. Usput oboreno: `setPointerCapture` nije bio uzrok (maknut jer je implicitni capture dodira dovoljan). Brane: unit 78 tvrdnji
+(obrnuto `git worktree` 48 crvenih) · spec s PRAVIM dodirom kroz CDP na 4 iPhone profila, uklj. protučinjenično: reset `pan-x pan-y`
+samo na `.flashcard` ne mijenja ništa, na licu/naličju gasi gestu. Preflight EXIT 0, bump. **§6/6 riješeno odlukom:** gesta je dodatak uz gumbe → prekidač nepotreban. Presuda palcem =
+Leonov iPhone (headless nema Safarijev gesture-put); deploy = njegova riječ. F1 uređaj: sve cigle isporučene.
+
 ## 2026-09-06 (FABLE) — Leonove stavke poslije F1/5, SAMO ZAPISANE (*„Ovo samo zapiši, nemoj ništa raditi"*)
 
 Leon (slika birača tema na tamnom telefonu, gleda produkciju): *„Zapiši: trebamo promijeniti FAQ, about us srediti malo,

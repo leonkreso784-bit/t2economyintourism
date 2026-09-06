@@ -5,6 +5,24 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-06 (FABLE) — **F1/9: kartice kao Tinder-špil na dodiru — palac desno = znam, lijevo = ne znam · špil od tri · strelice kao stolni pandan**
+
+Leon (05.09.): *„na mobitelu bi napravio za kartice kao tinder način"*; (06.09., usred rada): *„samo na mobitelu … ali ako imaš viziju
+probaj nešto"*. Do sada u modovima učenja nije bilo nijedne dodirne geste. Sad `#flashcard` na DODIRU (samo `pointerType === 'touch'`)
+prati prst: povlačenje iznad praga (trećina širine, najmanje 90 px) = let van ekrana pa upis kroz **postojeći `markKnown` /
+`markUnknown`** (jedini put upisa — brana to broji), ispod praga = povratak, dodir bez pomaka = okreni kao i dosad; dvije **sjene špila**
+u boji sljedećih kartica (samo `pointer: coarse`); **pečati** „Znam / Ne znam" rastu s prstom (puna ispuna, ADR-032; `visibility` u
+mirovanju). **Strelice** → / ← / razmak na stolnom = isti tok bez klika, samo u modu kartica i nikad iznad polja, gumba ili modala.
+`touch-action: pan-y` na kartici i na licu/naličju je jedino odstupanje od reseta F1/11 (štipanje ostaje ugašeno). `prefers-reduced-motion`
+= bez leta. Bez biblioteke: JS piše tri CSS-varijable i tri klase, crtanje je u `flashcards-section.css`.
+**Dva nalaza koje je dao samo pravi dodir:** `touch-action` se čita do PRVOG skrolera (lice/naličje su skroleri → pravilo samo na
+`.flashcard` nikad ne dođe na red, `pointercancel` na prvom pomaku) · Chromium poslije brzog zamaha potisne `click` sljedećeg dodira
+(izmjereno na goloj stranici) → okretanje na dodir ide na `pointerup`, ne na `click`.
+Brane: `tests/unit/flashcard-swipe.test.js` (78 tvrdnji; obrnuto kroz `git worktree` 48 crvenih) · `tests/flashcard-swipe.spec.js` (PRAVI
+dodir kroz CDP `Input.dispatchTouchEvent` na 4 iPhone profila, uklj. protučinjenično: reset `pan-x pan-y` samo na `.flashcard` ne mijenja ništa, na licu/naličju gasi gestu).
+Preflight EXIT 0, bump. **Gdje se vidi:** grana `feat/racun-r1` (preview); produkcija `c53c28c` bez toga. **F1 uređaj time ima sve cigle
+isporučene**; presude s iPhonea (štipanje · `?bez=` · palac) i deploy = Leonova riječ.
+
 ## 2026-09-06 (FABLE) — **F1/5: pravne stranice prate uređaj — `boot.js` + `data-theme` na `contact/faq/privacy/terms`**
 
 Od F1/3 aplikacija bez izbora prati uređaj, a četiri pravne stranice nisu imale ni `data-theme` ni `boot.js`: korisnik na

@@ -374,3 +374,91 @@
     .flashcard-back p { font-size: 0.75rem; line-height: 1.3; }
     .flashcard-back .explanation { font-size: 0.65rem; }
 }
+
+/* ── F1/9 — TINDER-ŠPIL NA DODIRU (2026-09-06) ─────────────────────────────────
+   Leon: „na mobitelu bi napravio za kartice kao tinder način otvaranja i gledanja".
+   JS (`js/flashcards.js` §F1/9) piše SAMO tri brojke — `--swipe-x` (px), `--swipe-rot` (deg),
+   `--swipe-p` (−1…1, koliko je odluka blizu) — i tri stanja kao klase; sve crtanje je ovdje.
+
+   `touch-action: pan-y` je JEDINO odstupanje od reseta `pan-x pan-y` (F1/11, ADR-034): okomit pomak
+   i dalje skrola stranicu (preglednik), vodoravni ostaje kartici (nama). Štipanje i dvostruki dodir
+   ostaju ugašeni — `pan-y` ne sadrži `pinch-zoom`; `tests/unit/touch-zoom.test.js` to broji.
+
+   Špil (dvije kartice koje vire ispod) postoji samo na DODIRU (`pointer: coarse`) — stolno zadržava
+   današnji prikaz: jedna kartica, klik, gumbi (+ strelice, F1/9 ②). Pečati „Znam / Ne znam" su
+   vidljivi SAMO dok gesta ili let traju (`visibility`, ne samo `opacity`: skriveni tekst ne smije
+   ući ni u jednu mjeru kontrasta). */
+.flashcard {
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+/* ⚠️ `touch-action` se NE nasljeđuje prema dolje nego se ČITA PREMA GORE — od dodirnutog elementa
+   do PRVOG skrolera (CSS Pointer Events §touch-action: „find the nearest ancestor that has a default
+   touch behavior"). Lice i naličje SU skroleri (`overflow-y: auto`, BUG-013), pa preglednik stane na
+   njima, vidi reset `pan-x pan-y` i vodoravni dodir uzme za pomicanje → `pointercancel` na prvom
+   pomaku, a `.flashcard` nikad ne dođe na red. Izmjereno 2026-09-06 CDP-dodirom (sonda): `pan-y`
+   samo na `.flashcard` = gesta nikad ne počne. Zato pravilo stoji i na skrolerima. */
+.flashcard,
+.flashcard-front,
+.flashcard-back { touch-action: pan-y; }
+.flashcard.is-dragging {
+    transition: none;
+    transform: translateX(var(--swipe-x, 0px)) rotate(var(--swipe-rot, 0deg));
+}
+.flashcard.is-flying {
+    transition: transform 0.28s ease-in, opacity 0.28s ease-in;
+    transform: translateX(var(--swipe-x, 0px)) rotate(var(--swipe-rot, 0deg));
+    opacity: 0;
+    pointer-events: none;
+}
+/* Nova kartica ulazi bez ijednog prijelaza (ni okretanja naličja natrag, ni leta s ruba); klasa
+   živi jedan kadar, a mali skok iz položaja gornje sjene je ono što se vidi kad se skine. */
+.flashcard.is-entering,
+.flashcard.is-entering .flashcard-inner { transition: none; }
+.flashcard.is-entering { transform: translateY(8px) scale(0.96); }
+
+.swipe-stamp {
+    position: absolute;
+    top: 1rem;
+    z-index: 2;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+    transform: rotate(-8deg);
+}
+/* Semantika = PUNA ISPUNA, tinta po temi (ADR-032) — isti par tokena kao gumbi „Znam / Ne znam". */
+.swipe-stamp--know { left: 1rem; background: var(--color-ok); color: var(--color-on-ok); }
+.swipe-stamp--dont { right: 1rem; background: var(--color-danger); color: var(--color-on-danger); transform: rotate(8deg); }
+.flashcard.is-dragging .swipe-stamp,
+.flashcard.is-flying .swipe-stamp { visibility: visible; }
+.flashcard.is-dragging .swipe-stamp--know,
+.flashcard.is-flying .swipe-stamp--know { opacity: clamp(0, var(--swipe-p, 0), 1); }
+.flashcard.is-dragging .swipe-stamp--dont,
+.flashcard.is-flying .swipe-stamp--dont { opacity: clamp(0, calc(-1 * var(--swipe-p, 0)), 1); }
+
+.flashcard-ghost { display: none; }
+@media (pointer: coarse) {
+    .flashcard-wrapper { position: relative; }
+    .flashcard { z-index: 1; }
+    .flashcard-ghost {
+        display: block;
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        border-radius: var(--radius-lg);
+        /* isti fallback kao lice kartice bez boje; s bojom `applyAccent` postavi `--item-acc` + `data-ink` */
+        background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-600));
+        box-shadow: var(--shadow-e2);
+        pointer-events: none;
+    }
+    .flashcard-ghost[data-ink] { background: var(--item-acc); }
+    .flashcard-ghost--1 { transform: translateY(8px) scale(0.96); }
+    .flashcard-ghost--2 { transform: translateY(16px) scale(0.92); }
+    /* `display:block` gore bi pregazio UA `[hidden]` — vrati ga (isti trik kao auth/consent) */
+    .flashcard-ghost[hidden] { display: none; }
+}
