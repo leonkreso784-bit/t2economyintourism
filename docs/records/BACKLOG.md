@@ -185,6 +185,29 @@ Brane: unit 78 tvrdnji (obrnuto 48 crvenih) · spec 7 testova × 4 iPhone profil
 samo na `.flashcard` = gesta radi, isti reset na licu/naličju = `pointercancel`, nema upisa). ⚠️ **Safari nije mjeren** — headless nema iOS-ov gesture-put (isti razlog kao F1/11); ne zna se potiskuje li
 WebKit tap poslije zamaha, ali `pointerup`-put to čini nevažnim → presuda palcem = Leonov iPhone. Nije mijenjano: gumbi, tijek
 `markKnown`/`markUnknown`, cloud-sync.
+**📏 MJERENJE ZA TINDER-KADAR (2026-09-06 navečer; Leon s previewom F1/9: *„kartica treba biti veća… kao na Tinderu… velik posao,
+prvo mjerenje i plan"*).** Sonda: Chromium, 4 iPhone profila kao u `playwright.config`, sigurna zona kao phone-gate (`--safe-*`),
+uzorci teksta iz `data/json/**` bez `final`-kopija (= **2 773 kartice u 24 predmeta**; s kopijama bi bilo 5 737 — `final` je
+`Object.assign(M1, M2)`). Mjerač je ispisao što je dotaknuo: 4 profila, 72 datoteke.
+
+| profil | dostupno (dno kroma → vrh nav) | kartica danas | udio dostupnog | stranica skrola? | naličje traži pri 16 px: med / p95 / max |
+|---|---|---|---|---|---|
+| SE 375×667 | 411 px (y 159 → 570) | 335×200 | 49 % | da (1037 px) | 194 / 360 / 438 |
+| 15 Pro 393×852 | 588 px (y 167 → 755) | 353×200 | 34 % | da (1045 px) | 194 / 340 / 398 |
+| 15 Pro Max 430×932 | 668 px (y 167 → 835) | 390×200 | 30 % | da (1081 px) | 194 / 319 / 378 |
+| landscape 852×393 | 337 px (y 56 → 393) | 447×280 | 83 % | da (1043 px) | 274 / 293 / 357 |
+
+Fontovi na telefonu DANAS: pitanje **12,8 px** · odgovor **12 px** · objašnjenje **10,4 px** · gumbi 13,6 px (landscape 22,4 / 19,2 /
+12). Oko kartice: h1 27 px · traka napretka 35 px · četiri gumba 50 px u dva reda (112 px) · stats 21 px + razmaci ≈ 16 px svaki.
+Gradivo: pitanje med 48 · p90 71 · p95 79 · max 134 zn. (najduže pri 20 px = 104 px visine na 393) · odgovor med 184 · p95 392 · max
+497 zn. (1 182 od 2 773 > 200 zn. — kartica-standard „< 200" vrijedi za pola kataloga) · naličje (odgovor + objašnjenje) med 225 · p95
+474 · max 656 zn.; 2 332 kartice imaju objašnjenje.
+**Izvedeni cilj (F1/12):** širina `vw − 32` · visina = dostupno − traka napretka (≈ 24) − red gumba (≈ 72 + 16) − razmaci → **≈ 287
+(SE) · 464 (393) · 544 (430)** = 70–81 % dostupnog; h1 otpada (43 px s razmakom); stats → značke na gumbima. Pri 16 px naličje **stane
+cijelo na 393 i 430** (max 398 < 464); na SE p95 (360 > 287) traži unutarnji skrol → fiksna visina + `overflow-y: auto` naličja je
+odluka, ne rezerva. Referenca Tinder (opće poznato, NIJE mjereno): kartica ≈ 90 % širine · ≈ 65 % visine ekrana, gumbi 56–64 px
+okrugli, radius 16–20 px. Sonde (gitignored, `.jank/probes/`): `kartica-mjera.js` (kadar) · `kartice-duljine.js` (gradivo) — brana
+dolazi u F1/12 kao mjera phone-gatea, ne kao zasebna sonda.
 
 **F. ZOOM NA DODIR** (Leon, 2026-09-05: *„Još jedan veliki bug. Kada se više puta takne na jedno mjesto
 može se zoomat, to se mora riješit."*). **Dva uzroka — jedan izmjeren, drugi ovdje nemjerljiv:**

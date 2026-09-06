@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-06 (FABLE) — Leon s previewom F1/9 → Tinder-KADAR (palac lista, gumbi sude, kartica = ekran): IZMJERENO + PLAN, bez koda
+
+Leon: *„Ako se povuče lijevo vraća se na prijašnju, desno ide na sljedeću. Kada se okrene daje odgovor. Know i don't know stoje dolje
+kao što Tinder ima lajk i ✕. Kartica treba biti veća, veličina kao na Tinderu. Velik posao — prvo mjerenje i plan."* Mjerenje
+(BACKLOG §E, sonde u `.jank/probes/`): na 393×852 kartica je 353×200 = **34 % dostupnog** prostora, stranica skrola, pitanje 12,8 px /
+odgovor 12 px; gradivo 2 773 kartice (bez `final`-kopija), naličje p95 474 zn. → pri 16 px stane cijelo na 393/430, na SE 375 traži
+unutarnji skrol; cilj ≈ 464 px visine na 393 (≥ 60 % dostupnog, bez skrola stranice). Plan (RASPORED): **F1/12 KADAR** (kartica = ekran,
+✓ / ✕ okrugli, h1 i stats otpadaju, fiksna visina + skrol naličja, nova mjera phone-gatea koja je danas crvena) · **F1/13 LISTANJE**
+(desno = sljedeća, lijevo = prethodna, dodir okreće, sud samo gumbima; F1/9 brane se PREPISUJU). Novo pitanje **§6/8** (kraj špila,
+prečaci za ✓ / ✕). Kod nije diran; F1/9 ostaje na grani kao mehanika koju F1/13 preusmjerava.
+
 ## 2026-09-06 (FABLE) — F1/9: kartice kao Tinder-špil na dodiru (palac · špil · pečati) + strelice kao stolni pandan — F1 uređaj ima sve cigle
 
 Leon: *„pregledaj stanje … kreni s izradom"*, pa usred rada: *„samo na mobitelu, ne vidim kako bi radilo na kompu … ali ako imaš
