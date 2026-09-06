@@ -5,6 +5,22 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-06 (FABLE) — **Birač tema: natpis je samo „Automatski" — sufiks s temom uređaja otpada** (RASPORED §6/7, odluka (a))
+
+Leon (06.09., slika profila na tamnom telefonu): *„glupo je imati ovu Automatic · Carbon, uopće ne kužim koji je
+smisao toga."* F1/3 je gumbu dopisivao ` · ` + ime teme koju uređaj TRENUTNO bira, uz obrazloženje *„inače je gumb
+obećanje bez sadržaja"* — a posljedica je bila da na tamnom uređaju „Automatic · Carbon" stoji odmah do gumba
+„Carbon" i čita se kao **peta tema**, dakle kao duplikat. Sad je natpis točno **„Automatski" / „Automatic"**;
+**gumb OSTAJE** — on je jedini način da se jednom napravljen izbor poništi i da se praćenje uređaja vrati. Što gumb
+radi kaže **opis iznad birača** (`profile.appearanceDesc`: *„Automatski prati uređaj, kao i naši mailovi"*), pa je
+objašnjenje na jednom mjestu umjesto na dva. Usput popravljen i **rezervni (fallback) tekst** tog opisa u
+`js/profile.js` — glasio je *„Pick a theme…"* i uređaj nije spominjao, pa bi stranica bez `i18n.js` gumb ostavila
+neobjašnjenim. Znanje o uređaju (`window.__sokratTemaUredjaja`, `boot.js`) **nije dirano** — čeka F1/12 ⓪.
+Brana: `tests/unit/theme-picker-label.test.js` — 18 tvrdnji, birač se **stvarno crta** u `vm`-pješčaniku (tamni i
+svijetli uređaj, HR i EN, bez rječnika, izabran `carbon`) uz dvije ograde u izvoru; obrnuto kroz staro stablo =
+**11 crvenih**. Preflight EXIT 0, bump.
+**Gdje se vidi:** grana `feat/nocna-b` → spaja se u `feat/tinder-kadar`; produkcija `c53c28c` bez toga.
+
 ## 2026-09-06 (FABLE) — **`check:docs` je padao u svakom svježem klonu: generiran i gitignoriran artefakt nije duh-datoteka**
 
 Nađeno usput, pri prvom preflightu u novom `git worktree`-u: `check:docs` je prijavio **DUH-DATOTEKA →
