@@ -45,6 +45,9 @@
 .flashcard-wrapper {
     perspective: 1000px;
     margin-bottom: 1.5rem;
+    /* F1/13 ②: sidro za izbornik kraja špila (`.deck-end`, `inset: 0`). Ploča NE smije biti dijete
+       `.flashcard` — ondje bi ju okretalo naličje (`preserve-3d`) i nosio let (`is-flying`). */
+    position: relative;
 }
 
 .flashcard {
@@ -523,6 +526,78 @@
 :root[data-uredjaj~="dodir"] .flashcard-ghost--2 { transform: translateX(10px) scale(0.94); }
 /* `display:block` gore bi pregazio UA `[hidden]` — vrati ga (isti trik kao auth/consent) */
 :root[data-uredjaj~="dodir"] .flashcard-ghost[hidden] { display: none; }
+
+/* ── F1/13 ② — IZBORNIK KRAJA ŠPILA (2026-09-06) ───────────────────────────────
+   Leon: „Kada ode desno do zadnje kartice bude izbornik da se krene ispočetka i da se
+   promiješaju kartice, ponovi ne znam."
+
+   ⚠️ PLOČA, NE MODAL — i to je posljedica F1/12. Kartica je ondje postala cijeli kadar, a
+   `phone.spec` ⑩ mjeri da je ≥ 60 % dostupnog i da stranica NE SKROLA; `<sokrat-modal>` preko
+   cijelog ekrana uzeo bi stranicu pod sebe (`body.modal-open`) i tu mjeru izvadio iz okvira.
+   Ploča stoji u MJESTU KARTICE (`inset: 0` nad `.flashcard-wrapper`), pa je kadar isti sa i bez
+   nje — a modal ostaje ono što jest: odluka koja prekida, ne odredište.
+   ⚠️ Nema prefiksa `:root[data-uredjaj~="dodir"]`: na kraj špila se dolazi i strelicom → na kompu. */
+.deck-end {
+    position: absolute;
+    inset: 0;
+    z-index: 3;                 /* iznad kartice (1) i pečata (2) */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.5rem 1rem;
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-1);
+    box-shadow: var(--shadow-e2);
+    overflow-y: auto;
+}
+/* `display: flex` gore bi pregazio UA pravilo za `[hidden]` — isti trik kao kod sjena špila. */
+.deck-end[hidden] { display: none; }
+
+.deck-end-title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-ink-0);
+}
+
+.deck-end-btn {
+    width: 100%;
+    max-width: 18rem;
+    min-height: var(--touch-target);
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: var(--radius-md);
+    background: var(--color-surface-2);
+    color: var(--color-ink-0);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+/* Hover ne mijenja značenje nego dubinu — ploha marke i njezina vlastita tinta (ADR-032).
+   (Omot `(hover: hover)` + `:where(:root:not([data-hover-paused]))` dodaje `build:css`.) */
+.deck-end-btn:hover {
+    background: var(--color-brand-500);
+    color: var(--color-on-brand);
+}
+
+/* „Ponovi ne znam" bez ijedne takve kartice: radnja se ne skriva nego ONEMOGUĆUJE, a razlog piše
+   ispod (`.deck-end-hint`) — skrivena radnja ostavlja korisnika da nagađa što nedostaje. */
+.deck-end-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.deck-end-hint {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--color-ink-2);
+    text-align: center;
+}
 
 /* ── F1/12 ① — TINDER-KADAR NA DODIRU (2026-09-06) ─────────────────────────────
    Leon, s previewom F1/9 u ruci: „Treba kartica biti veća i trebamo promijeniti veličinu

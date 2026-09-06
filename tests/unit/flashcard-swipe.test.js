@@ -84,7 +84,9 @@ function svijet(opts) {
     const els = {};
     ['flashcard', 'btnPrev', 'btnNext', 'btnCorrect', 'btnWrong', 'cardCategory', 'cardQuestion', 'cardAnswer',
         'cardExplanation', 'cardProgress', 'cardProgressBar', 'knownCount', 'unknownCount',
-        'flashcardGhost1', 'flashcardGhost2'].forEach((id) => { els[id] = element(id); });
+        'flashcardGhost1', 'flashcardGhost2',
+        // F1/13 ②: izbornik kraja špila
+        'deckEnd', 'deckEndHint', 'btnKrajIspocetka', 'btnKrajPromijesaj', 'btnKrajPonovi'].forEach((id) => { els[id] = element(id); });
     const rafs = [];
     const timers = [];
     const docSlusaci = {};
@@ -102,7 +104,9 @@ function svijet(opts) {
         },
         AppState: { cards: {}, nav: { data: sadrzaj, page: 'study', section: 'flashcards' } },
         getCategories: (c) => Object.keys(c),
-        shuffleArray: () => {},
+        // Miješalica je u pravom svijetu slučajna; ovdje je ILI ništa ILI zadana zamjena, da se
+        // „promiješaj" može DOKAZATI (isti skup, drugi redoslijed), a ne samo pozvati.
+        shuffleArray: (d) => { if (opts.mijesaj) opts.mijesaj(d); },
         progress: { flashcardsLearned: [] },
         saveProgress: () => { brojac.saveProgress++; },
         trackFlashcardReview: () => { brojac.track++; },
@@ -122,6 +126,8 @@ function svijet(opts) {
             else { el.removeAttribute('data-ink'); el.style.removeProperty('--item-acc'); }
         },
     };
+    els.deckEnd.hidden = true;     // u markupu stoji `hidden` (zatvoren izbornik)
+    els.deckEndHint.hidden = true;
     vm.createContext(ctx);
     vm.runInContext(FC, ctx, { filename: 'flashcards.js' });
     const fc = els.flashcard;
@@ -444,7 +450,94 @@ console.log('\n── ③ TIPKE: ← → · razmak/Enter · X · Z ────�
     tvrdi(isto(s.stanje().klase, []) && s.stanje().index === 0, '`body.modal-open` bez elementa → tipke ne diraju kartice');
 }
 
-// ── ④ TABLICA AKCIJA = JEDINI IZVOR (ADR-027) ────────────────────────────────
+// ── ④ IZBORNIK KRAJA ŠPILA ────────────────────────────────────────────────────
+console.log('\n── ④ KRAJ ŠPILA: ispočetka · promiješaj · ponovi ne-znam ─────────────────');
+{
+    // Miješalica koja se DA promatrati: obrće špil. `initFlashcards` je time deterministički
+    // (q5…q1), pa se „promiješaj" vidi kao promjena redoslijeda, a ne kao slučajnost.
+    const s = svijet({ mijesaj: (d) => d.reverse() });
+    s.ctx.initFlashcards();
+    const pitanja = () => s.ctx.AppState.cards.deck.map((c) => c.question);
+    const pocetni = pitanja();
+    tvrdi(isto(pocetni, ['q5', 'q4', 'q3', 'q2', 'q1']), 'pješčanik: špil je obrnut (miješalica se vidi)', pocetni);
+    tvrdi(s.els.deckEnd.hidden === true, 'izbornik je u početku zatvoren');
+
+    // do zadnje kartice, pa još jednom desno
+    s.tipka('ArrowRight'); s.tipka('ArrowRight'); s.tipka('ArrowRight'); s.tipka('ArrowRight');
+    tvrdi(s.stanje().index === 4 && s.els.deckEnd.hidden === true, 'zadnja kartica: izbornik JOŠ nije otvoren', s.stanje().index);
+    s.tipka('ArrowRight');
+    tvrdi(s.els.deckEnd.hidden === false, '⚠️ zadnja kartica + desno → IZBORNIK KRAJA ŠPILA se otvara');
+    tvrdi(s.stanje().index === 4, '…a špil ostaje na zadnjoj kartici (izbornik je NAD njom, ne umjesto nje)');
+    tvrdi(s.els.btnKrajIspocetka.attrs.fokus === 1, 'fokus ulazi u prvu radnju (ispočetka)', s.els.btnKrajIspocetka.attrs);
+    tvrdi(s.els.btnKrajPonovi.disabled === true && s.els.deckEndHint.hidden === false,
+        'bez ijedne kartice „ne znam": radnja je ONEMOGUĆENA, a razlog se vidi (i18n `fc.end.none`)');
+
+    // dok je otvoren, ni gesta ni tipke ne diraju špil
+    s.prst({ dx: 200 });
+    s.tipka('ArrowLeft');
+    tvrdi(s.stanje().index === 4 && isto(s.stanje().klase, []), 'dok je izbornik otvoren, gesta i tipke ne diraju kartice', s.stanje());
+
+    // Escape zatvara i vraća fokus na karticu
+    const fokusPrije = s.fc.attrs.fokus || 0;
+    s.els.deckEnd.posalji('keydown', { key: 'Escape', target: s.els.btnKrajIspocetka, preventDefault: () => {} });
+    tvrdi(s.els.deckEnd.hidden === true && (s.fc.attrs.fokus || 0) === fokusPrije + 1,
+        'Escape zatvara izbornik i VRAĆA fokus na karticu (inače tipke tiho stanu na straži `closest(button)`)');
+    tvrdi(s.stanje().index === 4, '…i vraća na zadnju karticu, ne na početak');
+
+    // strelice unutar ploče biraju radnju (kružno), Enter je posao samog <button>-a
+    s.tipka('ArrowRight');                       // ponovno otvori
+    s.els.deckEnd.posalji('keydown', { key: 'ArrowDown', target: s.els.btnKrajIspocetka, preventDefault: () => {} });
+    tvrdi(s.els.btnKrajPromijesaj.attrs.fokus === 1, '↓ pomiče izbor na sljedeću radnju', s.els.btnKrajPromijesaj.attrs);
+    s.els.deckEnd.posalji('keydown', { key: 'ArrowUp', target: s.els.btnKrajPromijesaj, preventDefault: () => {} });
+    tvrdi(s.els.btnKrajIspocetka.attrs.fokus === 3, '↑ vraća izbor natrag (i otvaranje je već jednom fokusiralo)', s.els.btnKrajIspocetka.attrs);
+    s.els.deckEnd.posalji('keydown', { key: 'ArrowDown', target: s.els.btnKrajPonovi, preventDefault: () => {} });
+    tvrdi(s.els.btnKrajIspocetka.attrs.fokus === 4, '…izbor je kružan i PRESKAČE onemogućenu radnju', s.els.btnKrajIspocetka.attrs);
+
+    // ISPOČETKA: isti špil, ista karta prva, izbornik zatvoren
+    s.els.btnKrajIspocetka.posalji('click', {});
+    tvrdi(s.stanje().index === 0 && isto(pitanja(), pocetni) && s.els.deckEnd.hidden === true,
+        '„ispočetka": index 0, ISTI redoslijed, izbornik zatvoren', pitanja());
+    tvrdi(s.brojac.saveProgress === 0 && isto(s.ctx.progress.flashcardsLearned, []),
+        'nijedna radnja izbornika ne dira UPISANI napredak (`saveFlashcardProgress` se ne zove)', s.brojac);
+
+    // PROMIJEŠAJ: isti skup, drugi redoslijed
+    s.ctx.AppState.cards.index = 4;
+    s.tipka('ArrowRight');
+    s.els.btnKrajPromijesaj.posalji('click', {});
+    const promijesan = pitanja();
+    tvrdi(s.stanje().index === 0 && !isto(promijesan, pocetni) && isto(promijesan.slice().sort(), pocetni.slice().sort()),
+        '„promiješaj": isti skup kartica, drugi redoslijed', promijesan);
+    tvrdi(s.els.deckEnd.hidden === true, '…i izbornik se zatvorio');
+}
+{
+    // PONOVI NE-ZNAM: špil samo iz `cards.unknown`, pročitan PRIJE nego ga `postaviSpil` obriše
+    const s = svijet();
+    s.ctx.initFlashcards();
+    s.tipka('x'); s.sleti();                     // q1 → ne znam
+    s.tipka('z'); s.sleti();                     // q2 → znam
+    s.tipka('x'); s.sleti();                     // q3 → ne znam
+    tvrdi(isto(s.stanje().unknown, [0, 2]) && isto(s.stanje().known, [1]), 'priprema: dvije „ne znam", jedna „znam"', s.stanje());
+    s.ctx.AppState.cards.index = 4;
+    s.tipka('ArrowRight');
+    tvrdi(s.els.btnKrajPonovi.disabled === false && s.els.deckEndHint.hidden === true,
+        'kad „ne znam" postoji, radnja je omogućena i razloga nema');
+    s.els.btnKrajPonovi.posalji('click', {});
+    const spil = s.ctx.AppState.cards.deck.map((c) => c.question);
+    tvrdi(isto(spil, ['q1', 'q3']), '„ponovi ne znam": špil je TOČNO skup „ne znam" (pročitan prije brisanja)', spil);
+    tvrdi(s.stanje().index === 0 && isto(s.stanje().unknown, []) && isto(s.stanje().known, []),
+        '…novi špil kreće od nule: brojke sesije se resetiraju s njim', s.stanje());
+    tvrdi(isto(s.ctx.progress.flashcardsLearned, [1]),
+        '…a UPISANI napredak (`flashcardsLearned`) ostaje netaknut', s.ctx.progress.flashcardsLearned);
+    tvrdi(s.els.deckEnd.hidden === true, '…izbornik zatvoren');
+    // ✓ na zadnjoj kartici NOVOG špila vodi ravno u izbornik (sud ide „naprijed" kao i listanje)
+    s.tipka('ArrowRight');
+    s.els.btnCorrect.posalji('click', {});
+    s.sleti();
+    tvrdi(s.els.deckEnd.hidden === false && isto(s.stanje().known, [1]),
+        'sud na ZADNJOJ kartici upiše pa otvori izbornik (isti „naprijed" za listanje i za sud)', s.stanje());
+}
+
+// ── ⑤ TABLICA AKCIJA = JEDINI IZVOR (ADR-027) ────────────────────────────────
 console.log('\n── ④ TABLICA AKCIJA: gumb · gesta · tipke · i18n ─────────────────────────');
 {
     const s = svijet();
@@ -481,6 +574,17 @@ console.log('\n── ④ TABLICA AKCIJA: gumb · gesta · tipke · i18n ──�
     tvrdi(A && A.znam.gesta === null && A.neznam.gesta === null,
         '⚠️ ni „znam" ni „ne znam" nemaju gestu — od F1/13 se sudi ISKLJUČIVO gumbom ili tipkom');
     tvrdi(id.every((k) => typeof A[k].radnja === 'function' && Object.isFrozen(A[k])), 'svaki redak je zamrznut i nosi izvršnu `radnja`');
+
+    // …i ista pravila za tablicu izbornika kraja špila
+    const K = s.ctx.window.SokratFlashcards && s.ctx.window.SokratFlashcards.KRAJ;
+    tvrdi(!!K && Object.isFrozen(K) && isto(Object.keys(K).sort(), ['ispocetka', 'ponovi', 'promijesaj']),
+        'tablica KRAJ ima tri radnje i izložena je read-only', K && Object.keys(K));
+    const kGumbi = K ? Object.keys(K).map((k) => K[k].gumb) : [];
+    tvrdi(kGumbi.every((g) => html.indexOf('id="' + g + '"') >= 0), 'svaki gumb izbornika postoji u markupu', kGumbi);
+    tvrdi(K && Object.keys(K).every((k) => i18n.indexOf("'" + K[k].i18n + "':") >= 0),
+        'svaki i18n ključ izbornika postoji u rječniku', K && Object.keys(K).map((k) => K[k].i18n));
+    tvrdi(K && Object.keys(K).every((k) => typeof K[k].radnja === 'function' && K[k].tipke === undefined),
+        'radnje izbornika nemaju vlastite tipke (u ploči strelice biraju, Enter pokreće sam `<button>`)');
 }
 
 // ── ⑤ IZVOR: JEDAN PUT UPISA ──────────────────────────────────────────────────
@@ -556,6 +660,28 @@ console.log('\n── ⑥ CSS + MARKUP: pan-y · špil desno · pečat samo u su
     tvrdi(/'fc\.know':/.test(i18n) && /'fc\.dontKnow':/.test(i18n), 'oba ključa postoje u js/i18n.js');
     const unutar = html.slice(html.indexOf('id="flashcard"'), html.indexOf('class="flashcard-inner"'));
     tvrdi(unutar.indexOf('swipe-stamp--know') >= 0 && unutar.indexOf('swipe-stamp--dont') >= 0, 'pečati su unutar #flashcard, a IZVAN .flashcard-inner (ne okreću se s karticom)');
+
+    // ── izbornik kraja špila: PLOČA U MJESTU KARTICE, ne modal preko ekrana ──────────
+    const omot = html.slice(html.indexOf('class="flashcard-wrapper"'), html.indexOf('class="flashcard-controls"'));
+    tvrdi(omot.indexOf('id="deckEnd"') >= 0, 'izbornik stoji U OMOTAČU kartice (isti kadar, F1/12 ⑩ ostaje mjerljiv)');
+    tvrdi(omot.indexOf('id="deckEnd"') > omot.indexOf('id="flashcard"'), '…i POSLIJE kartice (crta se preko nje)');
+    tvrdi(html.slice(html.indexOf('id="flashcard"'), html.indexOf('id="deckEnd"')).indexOf('</div>') >= 0,
+        '…ali NIJE dijete `.flashcard` (ondje bi ga okretalo naličje i nosio let)');
+    tvrdi(/<div class="deck-end" id="deckEnd"[^>]*\bhidden\b/.test(html), 'izbornik je u markupu ZATVOREN (`hidden`)');
+    tvrdi(/id="deckEnd"[^>]*data-i18n-aria="fc\.end\.title"/.test(html) && /id="deckEnd"[^>]*role="group"/.test(html),
+        'izbornik ima ulogu i ime kroz i18n (bez imena ispada iz stabla pristupačnosti)');
+    tvrdi((html.match(/class="deck-end-btn"/g) || []).length === 3, 'tri radnje u markupu', (html.match(/class="deck-end-btn"/g) || []).length);
+    tvrdi(/<div class="flashcard" id="flashcard" tabindex="-1">/.test(html),
+        'kartica je programski fokusabilna (`tabindex="-1"`) — ondje se fokus vraća poslije Escapea');
+    tvrdi(!/sokrat-modal[^>]*deck-end|deck-end[^>]*sokrat-modal/.test(html), 'izbornik NIJE `<sokrat-modal>` (modal blokira stranicu i probija kadar)');
+
+    tvrdi(/\.deck-end \{[^}]*position: absolute[^}]*inset: 0/.test(css), '.deck-end: `position: absolute; inset: 0` — točno mjesto kartice');
+    tvrdi(/\.deck-end\[hidden\] \{ display: none/.test(css), '.deck-end[hidden] vraća `display: none` (flex bi pregazio UA pravilo)');
+    tvrdi(/\.flashcard-wrapper \{[^}]*position: relative/.test(css), 'omotač je sidro (`position: relative`) — inače bi ploča bježala na stranicu');
+    const deckSel = (css.match(/[^{}]*\.deck-end[^{}]*\{/g) || []).map((x) => x.replace('{', '').trim());
+    tvrdi(deckSel.length > 0 && deckSel.every((sel) => sel.indexOf(':root[data-uredjaj') < 0),
+        'nijedno pravilo izbornika nije pod atributom uređaja — na kraj špila se dolazi i strelicom → na kompu', deckSel);
+    tvrdi(css.indexOf('.deck-end-btn:disabled') >= 0, 'onemogućena radnja ima svoj izgled (ne skriva se)');
 }
 
 console.log('\n' + (pao ? '❌ ' + pao + ' od ' + ukupno + ' palo' : '✅ svih ' + ukupno + ' prošlo') + '\n');

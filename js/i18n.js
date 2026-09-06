@@ -169,6 +169,13 @@
     'fc.next': { en: 'Next card', hr: 'Sljedeća kartica' },        // a11y aria-label (F3 3E)
     'fc.flip': { en: 'Flip card', hr: 'Okreni karticu' },          // F1/13: ime radnje u tablici AKCIJE (tutorial F1/14 ga čita)
 
+    // F1/13 ②: izbornik kraja špila (Leon: „ispočetka, promiješaj, ponovi ne znam")
+    'fc.end.title': { en: 'End of deck', hr: 'Kraj špila' },
+    'fc.end.restart': { en: 'Start over', hr: 'Ispočetka' },
+    'fc.end.shuffle': { en: 'Shuffle', hr: 'Promiješaj' },
+    'fc.end.repeat': { en: "Repeat the ones I don't know", hr: 'Ponovi „ne znam"' },
+    'fc.end.none': { en: 'Nothing is marked as not known yet.', hr: 'Još nema kartica označenih s „ne znam".' },
+
     // Zajednički gumbi
     'common.previous': { en: 'Previous', hr: 'Prethodno' },
     'common.next': { en: 'Next', hr: 'Dalje' },

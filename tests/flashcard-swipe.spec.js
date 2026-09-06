@@ -90,6 +90,13 @@ const stanje = (page) => page.evaluate(() => {
     };
 });
 
+/** Skoči na zadnju karticu špila (izbornik kraja se inače dočeka tek nakon N povlačenja). */
+const naZadnju = (page) => page.evaluate(() => {
+    AppState.cards.index = AppState.cards.deck.length - 1;
+    updateFlashcard();
+    updateFlashcardProgress();
+});
+
 const sletjela = (page) => page.waitForFunction(() => {
     const c = document.getElementById('flashcard').classList;
     return !c.contains('is-flying') && !c.contains('is-entering') && !c.contains('is-dragging');
@@ -247,6 +254,93 @@ test.describe('F1/13 — palac lista, gumbi sude (dodir)', () => {
         expect(await stanje(page)).toMatchObject({ index: 2, known: [1], klase: [] });
     });
 
+    test('zadnja kartica + desno = IZBORNIK KRAJA ŠPILA; Escape vraća na karticu', async ({ page }) => {
+        const errors = [];
+        page.on('pageerror', (e) => errors.push(e.message));
+        await naZadnju(page);
+        await expect(page.locator('#deckEnd')).toBeHidden();
+        await povuci(page, 0.6);
+        await expect(page.locator('#deckEnd')).toBeVisible();
+        await expect(page.locator('.deck-end-btn')).toHaveCount(3);
+        // fokus ulazi u prvu DOSTUPNU radnju; „ponovi ne znam" je bez ijedne takve kartice onemogućen
+        expect(await page.evaluate(() => document.activeElement.id)).toBe('btnKrajIspocetka');
+        await expect(page.locator('#btnKrajPonovi')).toBeDisabled();
+        await expect(page.locator('#deckEndHint')).toBeVisible();
+
+        // ⚠️ DOKAZ da kadar (F1/12 ⑩) ostaje netaknut: ploča je U OKVIRU KARTICE i stranica ne skrola.
+        const okvir = await page.evaluate(() => {
+            const w = document.querySelector('.flashcard-wrapper').getBoundingClientRect();
+            const p = document.getElementById('deckEnd').getBoundingClientRect();
+            return {
+                izvan: [p.top < w.top - 1, p.bottom > w.bottom + 1, p.left < w.left - 1, p.right > w.right + 1],
+                doc: document.documentElement.scrollHeight, vh: window.innerHeight,
+                modalOpen: document.body.classList.contains('modal-open'),
+            };
+        });
+        expect(okvir.izvan).toEqual([false, false, false, false]);
+        expect(okvir.doc).toBeLessThanOrEqual(okvir.vh);
+        expect(okvir.modalOpen).toBe(false);
+
+        // dok stoji, gesta ne dira špil
+        const prije = (await stanje(page)).index;
+        await povuci(page, -0.6);
+        await page.waitForTimeout(300);
+        expect((await stanje(page)).index).toBe(prije);
+
+        await page.keyboard.press('Escape');
+        await expect(page.locator('#deckEnd')).toBeHidden();
+        expect(await page.evaluate(() => document.activeElement.id)).toBe('flashcard');
+        expect((await stanje(page)).index).toBe(prije);
+        expect(errors).toEqual([]);
+    });
+
+    test('izbornik: ispočetka · promiješaj — isti skup, novi špil, upisani napredak netaknut', async ({ page }) => {
+        const spil = () => page.evaluate(() => AppState.cards.deck.map((c) => c.question));
+        const pocetni = await spil();
+        await naZadnju(page);
+        await povuci(page, 0.6);
+        await expect(page.locator('#deckEnd')).toBeVisible();
+        await page.click('#btnKrajIspocetka');
+        await expect(page.locator('#deckEnd')).toBeHidden();
+        expect(await spil()).toEqual(pocetni);
+        expect(await stanje(page)).toMatchObject({ index: 0, known: [], unknown: [] });
+
+        await naZadnju(page);
+        await povuci(page, 0.6);
+        await page.click('#btnKrajPromijesaj');
+        const promijesan = await spil();
+        expect(promijesan.slice().sort()).toEqual(pocetni.slice().sort());
+        // Redoslijed se traži drukčiji samo kad ima dovoljno kartica da slučajnost nije objašnjenje.
+        if (pocetni.length >= 8) expect(promijesan).not.toEqual(pocetni);
+        expect(await stanje(page)).toMatchObject({ index: 0 });
+        expect(await page.evaluate(() => progress.flashcardsLearned.length)).toBe(0);
+    });
+
+    test('izbornik: „ponovi ne znam" — špil je TOČNO skup ne-znam, a upisani napredak ostaje', async ({ page }) => {
+        // dvije kartice u „ne znam", jedna u „znam" (gumbi, jer gesta od F1/13 ne sudi)
+        const ne1 = await page.evaluate(() => AppState.cards.deck[0].question);
+        await page.click('#btnWrong');
+        await sletjela(page);
+        await page.click('#btnCorrect');
+        await sletjela(page);
+        const ne2 = await page.evaluate(() => AppState.cards.deck[AppState.cards.index].question);
+        await page.click('#btnWrong');
+        await sletjela(page);
+        expect(await stanje(page)).toMatchObject({ known: [1], unknown: [0, 2] });
+
+        await naZadnju(page);
+        await povuci(page, 0.6);
+        await expect(page.locator('#btnKrajPonovi')).toBeEnabled();
+        await expect(page.locator('#deckEndHint')).toBeHidden();
+        await page.click('#btnKrajPonovi');
+        await expect(page.locator('#deckEnd')).toBeHidden();
+        expect(await page.evaluate(() => AppState.cards.deck.map((c) => c.question))).toEqual([ne1, ne2]);
+        expect(await stanje(page)).toMatchObject({ index: 0, known: [], unknown: [] });
+        // upisani napredak (kartica označena sa „znam") NIJE dirnut
+        expect(await page.evaluate(() => progress.flashcardsLearned)).toEqual([1]);
+        await expect(page.locator('#knownCount')).toHaveText('0');
+    });
+
     test('protučinjenično: `touch-action` se čita na SKROLERU (lice/naličje), ne na kartici — reset ondje gasi gestu', async ({ page }) => {
         // ① reset samo na `.flashcard` = ništa se ne mijenja: preglednik stane na prvom skroleru
         //    (`.flashcard-front`, `overflow-y: auto`) i ondje još vidi `pan-y`. Zato pravilo mora stajati i na skrolerima.
@@ -310,6 +404,21 @@ test.describe('F1/13 — stolno: sve tipkama (1280×800, bez dodira)', () => {
         await expect(page.locator('#btnPrev')).toBeVisible();
         await page.click('#btnPrev');
         expect(await stanje(page)).toMatchObject({ index: 2 });
+
+        // …i na kraj špila se dolazi i s kompa: → na zadnjoj kartici otvara izbornik, strelice
+        // biraju radnju, Enter ju pokreće (to radi sam `<button>`).
+        // ⚠️ Fokus je poslije klika NA GUMBU, a straža iz F1/9 ondje tipke namjerno ne uzima
+        // (gumb ima svoje). Zato se fokus prvo vrati na karticu — isto što radi .
+        await page.evaluate(() => document.getElementById('flashcard').focus());
+        await page.evaluate(() => { AppState.cards.index = AppState.cards.deck.length - 1; updateFlashcard(); });
+        await page.keyboard.press('ArrowRight');
+        await expect(page.locator('#deckEnd')).toBeVisible();
+        expect(await page.evaluate(() => document.activeElement.id)).toBe('btnKrajIspocetka');
+        await page.keyboard.press('ArrowDown');
+        expect(await page.evaluate(() => document.activeElement.id)).toBe('btnKrajPromijesaj');
+        await page.keyboard.press('Enter');
+        await expect(page.locator('#deckEnd')).toBeHidden();
+        expect(await stanje(page)).toMatchObject({ index: 0 });
         expect(errors).toEqual([]);
     });
 });

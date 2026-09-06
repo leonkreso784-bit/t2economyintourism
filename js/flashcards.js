@@ -26,6 +26,15 @@ const AKCIJE = Object.freeze({
     neznam:    Object.freeze({ gumb: 'btnWrong',   gesta: null,     tipke: Object.freeze(['x']),          i18n: 'fc.dontKnow', radnja: () => sudi(-1) })
 });
 
+/* Radnje IZBORNIKA KRAJA ŠPILA — zasebna tablica, jer se ne vežu na gestu ni na tipku nego samo
+   na svoj gumb, i žive samo dok je izbornik otvoren. Ista pravila: id iz markupa, ime iz i18n-a,
+   radnja izvršna (F1/13 ②). Sve tri idu kroz `postaviSpil` i NIJEDNA ne dira upisani napredak. */
+const KRAJ = Object.freeze({
+    ispocetka:  Object.freeze({ gumb: 'btnKrajIspocetka',  i18n: 'fc.end.restart', radnja: () => krajIspocetka() }),
+    promijesaj: Object.freeze({ gumb: 'btnKrajPromijesaj', i18n: 'fc.end.shuffle', radnja: () => krajPromijesaj() }),
+    ponovi:     Object.freeze({ gumb: 'btnKrajPonovi',     i18n: 'fc.end.repeat',  radnja: () => krajPonovi() })
+});
+
 function initFlashcards() {
     const deck = getAllFlashcards();
     shuffleArray(deck);
@@ -38,6 +47,8 @@ function initFlashcards() {
         // gumb imao vlastiti redak s vlastitim imenom funkcije, pa se ulaz i značenje radnje
         // dalo razići a da nijedna brana to ne vidi.
         vezeGumbe(AKCIJE);
+        vezeGumbe(KRAJ);     // F1/13 ②: tri radnje izbornika kraja špila
+        initKraj();          // …i njegove tipke (strelice biraju, Escape vraća na karticu)
         initSwipe();         // F1/9: dodirna gesta (samo `pointerType === 'touch'`)
         initTipke();         // F1/9 ② → F1/13: tipke iz tablice (← → · razmak/Enter · X · Z)
         initKadar();         // F1/12 ①: prati visinu donje trake (okretanje, pragovi, sigurni rub)
@@ -59,6 +70,7 @@ function postaviSpil(deck) {
     cards.unknown = [];
 
     resetSwipe();            // F1/9: špil se puni iznova → nijedna kartica ne smije ostati „u letu"
+    zatvoriKraj();           // F1/13 ②: novi špil nikad ne ostaje iza izbornika kraja
     osvjeziKadar();          // F1/12: rezerva za donju traku ide u CSS PRIJE prvog crtanja kartice
     updateFlashcard();
     updateFlashcardProgress();
@@ -365,6 +377,7 @@ function initSwipe() {
 
 function swipeDown(e) {
     if (e.pointerType !== 'touch' || e.isPrimary === false || swipe.leti) return;
+    if (krajOtvoren()) return;             // ploča kraja špila stoji NAD karticom — prst ondje bira radnju
     swipe.progutajKlik = false;            // nova gesta: rep prethodne (ako ga je bilo) je već prošao
     swipe.id = e.pointerId; swipe.x0 = e.clientX; swipe.y0 = e.clientY;
     swipe.dx = 0; swipe.aktivno = false;
@@ -478,11 +491,11 @@ function swipeSleti(el, poslije) {
      • listanje NE SMIJE — kroz špil se ide brzo i uzastopno, a let bi svaku drugu tipku pojeo
        (straža koja štiti upis ovdje bi smetala). Zato gumb i tipka listaju odmah. */
 
-/** Naprijed: sljedeća kartica; na zadnjoj — izbornik kraja špila (F1/13 ②). */
+/** Naprijed: sljedeća kartica; na zadnjoj — IZBORNIK KRAJA ŠPILA (F1/13 ②). */
 function idiNaprijed() {
     const cards = AppState.cards;
     if (!cards.deck || !cards.deck.length) return;
-    if (cards.index >= cards.deck.length - 1) return;   // ② ovdje otvara izbornik kraja špila
+    if (cards.index >= cards.deck.length - 1) { otvoriKraj(); return; }
     nextCard();
 }
 
@@ -549,10 +562,109 @@ function naTipku(e) {
     const el = swipeEl();
     if (!el || swipe.leti || swipe.aktivno) return;
     if (!AppState.cards.deck || !AppState.cards.deck.length) return;
+    // Dok je izbornik kraja otvoren, tipke pripadaju NJEMU (`initKraj`): strelice biraju radnju,
+    // Enter ju pokreće, Escape se vraća na karticu. Straža `closest('button')` gore hvata samo
+    // slučaj kad je fokus doista na gumbu — a fokus se zna izgubiti (klik u prazno).
+    if (krajOtvoren()) return;
     if (typeof e.preventDefault === 'function') e.preventDefault();
     akcija.radnja();
 }
 
+/* ── F1/13 ② — IZBORNIK KRAJA ŠPILA (2026-09-06) ───────────────────────────────
+   Leon (§6/8, isti dan): „Kada ode desno do zadnje kartice bude izbornik da se krene ispočetka i
+   da se promiješaju kartice, ponovi ne znam."
+
+   Tri radnje, sve tri kroz `postaviSpil` — dakle isti put kojim se špil postavlja pri ulasku u mod
+   (`resetSwipe`, mjerenje kadra, tri osvježenja). **Nijedna ne dira upisani napredak:**
+   `progress.flashcardsLearned` i `saveFlashcardProgress` se ovdje ne zovu; mijenja se ŠPIL, a ne
+   ono što je o njemu zapisano.
+
+   ⚠️ „Ponovi ne znam" mora pročitati `cards.unknown` PRIJE `postaviSpil`, jer taj put briše i
+   `known` i `unknown` (indeksi vrijede za stari špil).
+   ⚠️ Prazan „ne znam" ne skriva radnju nego ju ONEMOGUĆUJE i ispisuje razlog (i18n `fc.end.none`) —
+   skrivena radnja ostavlja korisnika da nagađa što nedostaje.
+   ⚠️ Fokus: pri otvaranju ulazi u prvu DOSTUPNU radnju, pri zatvaranju se vraća na karticu
+   (`tabindex="-1"`). Bez toga fokus ostaje na skrivenom gumbu — a ondje `naTipku` staje na straži
+   `closest('button')`, pa tipke tiho prestanu raditi. */
+function krajEl() { return typeof document.getElementById === 'function' ? document.getElementById('deckEnd') : null; }
+
+function krajOtvoren() {
+    const k = krajEl();
+    return !!k && !k.hidden;
+}
+
+/** Gumbi izbornika, redom iz tablice — jedan izvor i za vezanje i za kretanje strelicama. */
+function krajGumbi() {
+    return Object.keys(KRAJ)
+        .map((id) => document.getElementById(KRAJ[id].gumb))
+        .filter((g) => g);
+}
+
+function otvoriKraj() {
+    const k = krajEl();
+    if (!k || krajOtvoren()) return;
+    const cards = AppState.cards;
+    const imaNeznanih = !!(cards.unknown && cards.unknown.length);
+    const ponovi = document.getElementById(KRAJ.ponovi.gumb);
+    if (ponovi) ponovi.disabled = !imaNeznanih;
+    const razlog = document.getElementById('deckEndHint');
+    if (razlog) razlog.hidden = imaNeznanih;
+    k.hidden = false;
+    const prva = krajGumbi().filter((g) => !g.disabled)[0];
+    if (prva && typeof prva.focus === 'function') prva.focus();
+}
+
+/** Zatvori i vrati fokus na karticu; vraća je li uopće bio otvoren (Escape to treba znati). */
+function zatvoriKraj() {
+    const k = krajEl();
+    if (!k || k.hidden) return false;
+    k.hidden = true;
+    const el = swipeEl();
+    if (el && typeof el.focus === 'function') el.focus();
+    return true;
+}
+
+function krajIspocetka() { postaviSpil((AppState.cards.deck || []).slice()); }
+
+function krajPromijesaj() {
+    const spil = (AppState.cards.deck || []).slice();
+    shuffleArray(spil);              // isti miješalac kao `initFlashcards` — jedno mjesto
+    postaviSpil(spil);
+}
+
+function krajPonovi() {
+    const cards = AppState.cards;
+    const spil = (cards.unknown || []).map((i) => cards.deck[i]).filter((c) => c);
+    if (!spil.length) return;        // gumb je onemogućen; straža je za tipkovnicu i za nas
+    postaviSpil(spil);
+}
+
+/** Strelice biraju radnju (gore/dolje = lijevo/desno: ploča je stupac, ali obje osi znače isto),
+ *  Enter/razmak ju pokreću (to radi sam `<button>`), Escape vraća na zadnju karticu. */
+function initKraj() {
+    const k = krajEl();
+    if (!k || typeof k.addEventListener !== 'function') return;
+    k.addEventListener('keydown', naTipkuKraj);
+}
+
+function naTipkuKraj(e) {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    if (e.key === 'Escape') {
+        if (typeof e.preventDefault === 'function') e.preventDefault();
+        zatvoriKraj();
+        return;
+    }
+    const dolje = e.key === 'ArrowDown' || e.key === 'ArrowRight';
+    const gore = e.key === 'ArrowUp' || e.key === 'ArrowLeft';
+    if (!dolje && !gore) return;
+    const gumbi = krajGumbi().filter((g) => !g.disabled);
+    if (!gumbi.length) return;
+    if (typeof e.preventDefault === 'function') e.preventDefault();
+    const sad = gumbi.indexOf(e.target);
+    const idx = sad < 0 ? 0 : (sad + (dolje ? 1 : -1) + gumbi.length) % gumbi.length;
+    if (typeof gumbi[idx].focus === 'function') gumbi[idx].focus();
+}
+
 /* Read-only izvoz: tutorial (F1/14) i brane čitaju TABLICU, nikad markup ni `switch` (ADR-027).
    `SokratFlashcards` je na `window` (kao `SokratBlocks`/`SokratContent`), ne goli `const`. */
-if (typeof window !== 'undefined') window.SokratFlashcards = Object.freeze({ AKCIJE: AKCIJE });
+if (typeof window !== 'undefined') window.SokratFlashcards = Object.freeze({ AKCIJE: AKCIJE, KRAJ: KRAJ });
