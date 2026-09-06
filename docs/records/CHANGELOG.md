@@ -33,6 +33,21 @@ test prvo (crveno na `main`-u, zeleno poslije), svoj commit.
 ### Dodano
 - Dva nova unit-testa u `test:unit` (`flashcard-identity`, `loader-retry`) + 8 tvrdnji u `cloud-sync.test.js`.
 
+## 2026-09-06 (FABLE) — **`check:docs` je padao u svakom svježem klonu: generiran i gitignoriran artefakt nije duh-datoteka**
+
+Nađeno usput, pri prvom preflightu u novom `git worktree`-u: `check:docs` je prijavio **DUH-DATOTEKA →
+`tests/.auth/admin.json`**, a to je sesija koju `npm run test:authed` TEK proizvede i koju `.gitignore` drži izvan
+repozitorija. Na stroju gdje su ti testovi jednom vrćeni datoteka postoji, drugdje ne — pa je brana **prolazila
+točno ondje gdje je napisana, a padala svugdje drugdje**, bez ijednog kvara u repozitoriju. Brana koja ovisi o
+povijesti stroja ne mjeri repozitorij, a ova je uz to i **zadnja mreža pred `main`** (pre-push hook vrti preflight).
+Popravak: prije presude se pita **git** (`git check-ignore --stdin`, jedan poziv za sve kandidate) — što `.gitignore`
+pokriva, to repozitorij i NE SMIJE imati; ako gita nema, ne prašta se ništa (pada zatvoreno). Popis imena u skripti
+namjerno nije uzet — razišao bi se pri prvom sljedećem artefaktu (ADR-027).
+Brana: `tests/unit/check-docs-gate.test.js` (6 tvrdnji u lažnom stablu: gitignoriran nije duh · obrisan jest · točno
+jedan duh · **bez `.gitignore`-a oba** = dokaz da se git stvarno pita · bez gita oba; obrnuto na starom `check-docs.js`
+= **2 crvene**). Preflight EXIT 0 (dotad 1). Bez bumpa — `scripts/**` i `tests/**` nisu na posjetiteljevu putu.
+**Gdje se vidi:** samo u branama, grana `feat/nocna-b` (nijedna korisnička datoteka nije dirana).
+
 ## 2026-09-05 (FABLE) — **F1/8 ②: hover na mišu se naoruža tek prvim pomakom** (ljepljivi hover zatvoren na oba ulaza; BUG-044 riješen)
 
 ### Popravljeno
