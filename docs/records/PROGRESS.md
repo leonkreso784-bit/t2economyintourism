@@ -22,6 +22,10 @@ akcije u JEDNOJ tablici (`id → gumb · gesta · tipka · i18n`) iz koje se crt
 **I još:** *„Platforma mora znati na kakvom je uređaju korisnik"* → **F1/12 ⓪** (preduvjet): `boot.js` prije crtanja odluči `dodir · hover · hibrid ·
 razred · os · pwa` → `<html data-uredjaj>` + `window.SokratUredjaj`; CSS i JS pitaju samo to, nitko drugi ne zove `matchMedia` za pointer/hover
 (brana statička); danas se to pita na četiri mjesta na četiri načina, a nitko ne zna je li aplikacija instalirana.
+**Anketa (Leon: *„daj mi to kao anketu"*) — pet otvorenih pitanja §6, pet odgovora, sva po preporuci:** sidebar predmeta **obrisati**
+(F4) · frontend vježbi **samo tokeni i razmaci** (F5/3) · Facebook **odustati za sad** (F2, zastavica se briše) · četiri kvantitativna HR
+predmeta **čekaju F5 recepte** (F5/1 presuđuje) · birač tema **samo „Automatski"** (F2/1). §6 time nema otvorenih pitanja; RASPORED nosi
+odgovore u redovima F5/1, F5/3, F2/1 i u sitnom dugu.
 
 ## 2026-09-06 (FABLE) — F1/9: kartice kao Tinder-špil na dodiru (palac · špil · pečati) + strelice kao stolni pandan — F1 uređaj ima sve cigle
 

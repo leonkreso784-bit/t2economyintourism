@@ -181,7 +181,7 @@ Oba speca u `docs/archive/`; što je točno isporučeno zna CHANGELOG. **Next.js
 **🚚 SEOBA je OTKAZANA** (Leon, 2026-09-01) → `BACKLOG.md` §SELF-HOST = arhiv odluke, ne plan.
 Aktivni spec: **`docs/plan/RASPORED.md`** (2026-09-04) — cijela preostala lista razrezana na
 **sedam faza kroz sesije**: F1 uređaj · F2 račun (R2+R3 + CSS profila) · F3 dvojezičnost ·
-F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **Pet pitanja čeka Leonovu riječ — §6 rasporeda.**
+F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **§6 rasporeda: nula otvorenih (anketa 06.09.).**
 
 **F1 uređaj: F1/1–11 ✅ · F1/12⓪ uređaj · F1/12 kadar · F1/13 listanje · F1/14 tutorial = Tinder-kadar (Leon 06.09., plan u RASPORED-u).** iPhone još presuđuje F1/7 `?bez=` A/B i F1/11 štipanje (ADR-034).
 
@@ -227,7 +227,7 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
 - **Semantika je UVIJEK PUNA ISPUNA — obrub NIJE zamjena za nju** (ADR-032, Leon: *„ne smije biti
   obruba uopće"*). Prilagođava se **tinta, ne ispuna**: `--color-on-ok`/`--color-on-danger` po
   temi, izmjereno: bijelo pada u `chalk`/`mint`, tamno prolazi (brojke u spec-arhivi). Isto vrijedi za KARTICE, gdje boja dolazi izvana → `inkForTint()` (već postoji, C5a/4).
-- **OAuth:** Google isporučen u R1; Facebook čeka Metine ključeve (§6). „Sign in with ChatGPT" se NE obećava.
+- **OAuth:** Google isporučen u R1; Facebook otpao 2026-09-06 (anketa, §6). „Sign in with ChatGPT" se NE obećava.
 - **„Povijest učenja" OSTAJE, ali plitko.** Smisao dobiva tek s objavom materijala i mnogo
   sadržaja. **Ne razvijati sad, ne brisati** — `.history-item*` su namjerno mrtva, ne siročad.
 
