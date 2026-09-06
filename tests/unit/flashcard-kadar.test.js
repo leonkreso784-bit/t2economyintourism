@@ -60,6 +60,7 @@ const I18N = citaj('js', 'i18n.js');
 const BUNDLE = postoji('styles.bundle.css') ? citaj('styles.bundle.css') : '';
 
 const PREFIKS = ':root[data-uredjaj~="dodir"]';
+const fcBezKomAll = bezKomentara(FC_CSS);
 const BILJEG = '── F1/12 ① — TINDER-KADAR NA DODIRU';
 
 console.log('\n── ① DOSEG: kadar ne izlazi izvan dodira ─────────────────────────────────');
@@ -143,7 +144,7 @@ tvrdi(/getElementById\('knownCount'\)/.test(FC_JS) && /getElementById\('unknownC
     'JS i dalje piše u te id-eve (kadar ih smije premjestiti, ne izgubiti)');
 
 console.log('\n── ⑦ NASLIJEĐENO: što kadar nije smio pokvariti ──────────────────────────');
-const fcBezKom = bezKomentara(FC_CSS);
+const fcBezKom = fcBezKomAll;
 tvrdi(/\.flashcard,\s*\.flashcard-front,\s*\.flashcard-back\s*\{\s*touch-action:\s*pan-y/.test(fcBezKom),
     'F1/9 nalaz ①: `touch-action: pan-y` stoji na kartici I na oba skrolera (inače gesta dobije `pointercancel`)');
 tvrdi(/\.flashcard-inner\s*\{[^}]*display:\s*grid/.test(fcBezKom),
@@ -152,6 +153,82 @@ tvrdi(/grid-template-rows:\s*minmax\(0,\s*1fr\)/.test(BLOK),
     'kadar redu daje STROP (`minmax(0, 1fr)`) — inače kartica naraste do sadržaja umjesto da naličje skrola u sebi');
 tvrdi(/justify-content:\s*safe center/.test(BLOK),
     '`safe center` na skrolerima — centriran preljev bi gornji dio ostavio nedohvatljivim');
+
+console.log('\n── ⑨ RED GUMBA (②): ← ✕ ✓ → ─────────────────────────────────────────────');
+const RED = /<div class="flashcard-controls">([\s\S]*?)<\/div>\s*<\/div>/.exec(HTML);
+const redoslijed = RED ? (RED[1].match(/id="(btnPrev|btnWrong|btnCorrect|btnNext)"/g) || []).map((x) => x.slice(4, -1)) : [];
+console.log('  · doseg: red gumba u markupu = ' + redoslijed.join(' · '));
+tvrdi(redoslijed.join(',') === 'btnPrev,btnWrong,btnCorrect,btnNext',
+    'redoslijed u MARKUPU je ← ✕ ✓ → (Leon: „strelica treba biti desno a ✕ lijevo")', redoslijed);
+tvrdi(RED && /id="btnWrong"[\s\S]*?id="unknownCount"[\s\S]*?<\/button>/.test(RED[1])
+    && /id="btnCorrect"[\s\S]*?id="knownCount"[\s\S]*?<\/button>/.test(RED[1]),
+    'značke sjede na SVOM gumbu: `#unknownCount` na ✕, `#knownCount` na ✓');
+tvrdi(RED && (RED[1].match(/data-i18n-aria="fc\.(prev|next|know|dontKnow)"/g) || []).length === 4,
+    'sva četiri gumba imaju ime kroz i18n (`data-i18n-aria`) — ikona nije ime');
+tvrdi(RED && (RED[1].match(/<i class="fas[^>]*aria-hidden="true"/g) || []).length === 4,
+    'sve četiri ikone su `aria-hidden` — inače bi ligatura ušla u ime gumba');
+tvrdi(!/class="flashcard-stats/.test(HTML) && fcBezKomAll.indexOf('.flashcard-stats') < 0,
+    'blok statistike je otišao IZ MARKUPA I IZ CSS-a (brojke su sad značke) — nema klase-siročeta');
+tvrdi(/\.stat\.correct\s*\{/.test(fcBezKomAll) && /\.stat\.wrong\s*\{/.test(fcBezKomAll),
+    '`.stat.correct` / `.stat.wrong` OSTAJU — isti blok nosi ekran dopuna (`.fill-stats`, BUG-038)');
+
+console.log('\n── ⑩ GUMBI NE SMIJU POBJEĆI NA EKRAN DOPUNA ─────────────────────────────');
+// `.control-btn` je ZAJEDNIČKA komponenta: `.fill-controls` ima savjet · preskoči · sljedeće,
+// a `.next` dijeli i klasu. Pravilo koje mijenja OBLIK, a nije omeđeno `.flashcard-controls`,
+// ondje pretvara široke gumbe s natpisom u krugove — i nijedna brana to ne mjeri.
+const PRAVILA = [];
+{
+    const cistiSve = bezKomentara(FC_CSS);
+    // ⚠️ BEZ sidra na `}`: prva verzija je glasila `(^|\})\s*(…)` i time pojela zatvarajucu
+    // viticu prethodnog pravila, pa je sljedece ostalo bez sidra — brana je citala SVAKO DRUGO
+    // pravilo i tvrdila da je `.control-btn.wrong` nema. Selektor ionako ne smije sadrzavati viticu,
+    // a ugnijezdena pravila u `@media` ovako izlaze sama (zaglavlje upita nikad ne zatvori viticu).
+    const re = /([^{}]+)\{([^{}]*)\}/g;
+    let m;
+    while ((m = re.exec(cistiSve))) {
+        const sel = m[1].trim().replace(/\s+/g, ' ');
+        if (sel && sel[0] !== '@') PRAVILA.push({ sel: sel, tijelo: m[2] });
+    }
+}
+const OBLIK = /border-radius:\s*50%|(^|;)\s*(width|height):\s*\d|background:\s*var\(--color-(ok|danger)\)/;
+const pobjegli = PRAVILA.filter((r) => /\.control-btn/.test(r.sel) && OBLIK.test(r.tijelo)
+    && r.sel.indexOf('.flashcard-controls') < 0);
+console.log('  · doseg: ' + PRAVILA.length + ' pravila u datoteci · '
+    + PRAVILA.filter((r) => /\.control-btn/.test(r.sel)).length + ' ih dira `.control-btn`');
+tvrdi(pobjegli.length === 0, 'svako pravilo koje mijenja OBLIK ili SEMANTIČKU ISPUNU gumba omeđeno je `.flashcard-controls`', pobjegli.map((r) => r.sel));
+
+console.log('\n── ⑪ SEMANTIKA = PUNA ISPUNA, NIKAD OBRUB (ADR-032) ─────────────────────');
+const gumb = (klasa) => PRAVILA.find((r) => r.sel === '.flashcard-controls .control-btn.' + klasa);
+tvrdi(gumb('wrong') && /background:\s*var\(--color-danger\)/.test(gumb('wrong').tijelo)
+    && /color:\s*var\(--color-on-danger\)/.test(gumb('wrong').tijelo),
+    '✕ = puna `--color-danger` + tinta `--color-on-danger` (bijelo pada u chalk/mint)');
+tvrdi(gumb('correct') && /background:\s*var\(--color-ok\)/.test(gumb('correct').tijelo)
+    && /color:\s*var\(--color-on-ok\)/.test(gumb('correct').tijelo),
+    '✓ = puna `--color-ok` + tinta `--color-on-ok`');
+const obrub = (tijelo) => {
+    const m = /(^|;)\s*border:\s*([^;]+)/.exec(tijelo);
+    return m ? m[2].trim() : '';
+};
+const sObrubom = PRAVILA.filter((r) => /\.flashcard-controls/.test(r.sel)
+    && obrub(r.tijelo) && !/^(none|0|0px)$/.test(obrub(r.tijelo)));
+tvrdi(sObrubom.length === 0, 'nijedan gumb kadra nema obrub (ADR-032: „ne smije biti obruba uopće")', sObrubom.map((r) => r.sel));
+const okrugli = PRAVILA.find((r) => r.sel === '.flashcard-controls .control-btn');
+tvrdi(okrugli && /border-radius:\s*50%/.test(okrugli.tijelo), 'gumbi su KRUGOVI, ne pravokutnici');
+tvrdi(!/color-mix\([^)]*currentColor/.test(BLOK) && !(okrugli && /color-mix/.test(okrugli.tijelo)),
+    'značka nema vlastitu plohu — tinta preko ispune je ČETVRTA ploha koju `check:contrast` ne mjeri (pouka C2)');
+
+console.log('\n── ⑫ STRELICE: sklonjene, ali žive (F1/13 ih ne mora vraćati) ───────────');
+tvrdi(new RegExp(PREFIKS.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ' #flashcards\\.active \\.flashcard-controls \\.control-btn\\.prev').test(BLOK)
+    && /\.control-btn\.next \{ display: none/.test(BLOK),
+    'na dodiru se ← i → skrivaju CSS-om (ne vade iz markupa)');
+tvrdi(/getElementById\('btnPrev'\)\.addEventListener\('click', prevCard\)/.test(FC_JS)
+    && /getElementById\('btnNext'\)\.addEventListener\('click', nextCard\)/.test(FC_JS),
+    'ista dva gumba su i dalje VEZANA u JS-u — skrivena, ne uklonjena');
+tvrdi(/getElementById\('btnCorrect'\)\.addEventListener\('click', markKnown\)/.test(FC_JS)
+    && /getElementById\('btnWrong'\)\.addEventListener\('click', markUnknown\)/.test(FC_JS),
+    'klik na ✓ / ✕ ide kroz POSTOJEĆI put upisa (`markKnown`/`markUnknown`), bez dvojnika');
+tvrdi(/function naTipku\(e\)/.test(FC_JS) && /ArrowRight/.test(FC_JS),
+    'tipke iz F1/9 (→ ← razmak) su netaknute');
 
 console.log('\n── ⑧ BUNDLE: `npm run build:css` je pokrenut ─────────────────────────────');
 tvrdi(BUNDLE.indexOf('.study-page.active:has(#flashcards.active)') >= 0,

@@ -180,6 +180,17 @@ test.beforeAll(async ({ browser }, testInfo) => {
         r.r.spremnik.forEach((x) => NALAZI.spremnik.push(gdje(r) + ' · ' + x));
     });
 
+    // ⚠️ Mjerač mora ispisati i ŠTO je izmjerio, ne samo je li pao: kadar je jedina tvrdnja
+    // ove brane koja ima ciljni broj, pa se bez ispisa ne vidi ide li stanje gore ili dolje
+    // između dvije zelene brane. (Isti razlog kao „doseg" u unit-branama.)
+    const kadri = snimka.filter((r) => r.m.kadar).map((r) => {
+        const k = r.m.kadar;
+        return gdje(r) + ' ' + k.karticaW + '×' + k.karticaH + ' px · '
+            + Math.round(k.karticaH / (k.dostupnoH || 1) * 100) + ' % od ' + k.dostupnoH + ' dostupnog · '
+            + Math.round(k.karticaW / (k.sigurnaW || 1) * 100) + ' % sigurne širine · dokument ' + k.docH;
+    });
+    if (kadri.length) console.log('  · kadar (F1/12): ' + kadri.join('\n                   '));
+
     if (G.spremiOsnovicu('javno', NALAZI)) {
         console.log('⚠️  phone-baseline.json PREPISAN (javno) — provjeri diff prije commita.');
     }

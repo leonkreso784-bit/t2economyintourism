@@ -184,10 +184,20 @@
     color: var(--color-ink-1);
 }
 
+/* ── F1/12 ② — RED GUMBA: ← ✕ ✓ → (2026-09-06) ────────────────────────────────
+   Leon: „Know i don't know stoje dolje kao što Tinder ima lajk i ✕ … dobro bi bilo da i na
+   kompu imamo strelicu, i strelica treba biti desno a ✕ lijevo." Red je zato ISTI na oba
+   uređaja; na dodiru se strelice samo sklone (F1/13 lista palcem), a ✕ i ✓ ostaju pod palcem.
+
+   ⚠️ **SVE JE POD `.flashcard-controls`, nikad pod golim `.control-btn`.** Istu komponentu
+   nosi i ekran dopuna (`.fill-controls`: savjet · preskoči · **sljedeće**, koje dijeli i klasu
+   `.next`), pa bi neomeđeno pravilo ondje pretvorilo široke gumbe s natpisom u krugove.
+   Zatečena `.control-btn` osnovica (razmak, radijus, `min-height`) ostaje njihova. */
 .flashcard-controls {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
     margin-bottom: 1rem;
 }
 
@@ -207,34 +217,69 @@
     min-height: var(--touch-target);
 }
 
-/* ⚠️ TINTA JE NEVALIDIRANA PODLOGA — zato je otišla (C2, 2026-08-13).
-   Ovdje je stajalo `background: rgba(34,197,94,.1)` uz `color: var(--color-ok)`. Problem
-   nije bio token nego to što `check:contrast` mjeri boje na PLOHAMA koje poznaje
-   (`surface-0/1/2`), a tinta je četvrta, izmišljena ploha koju nitko ne mjeri. Na tamnoj
-   podlozi je razlika bila nevažna; na svijetloj je efektivna pozadina posvijetlila i
-   omjer pao ispod 4.5 — axe je oborio i „Znam" i „Savjet".
-
-   Rješenje NIJE tamniji tekst (na tamnim temama bi bilo obrnuto) nego **plaha koju gate
-   poznaje**: pozadina je sad `--bg-tertiary`, a značenje nose OBRUB i BOJA TEKSTA.
-   To je usput i bliže Appleovoj disciplini — vlas-crta umjesto ispune. */
-.control-btn.wrong {
-    background: transparent;
-    color: var(--color-danger-ink);
-    border: 2px solid var(--color-danger);
+/* Krug, ne pravokutnik: sud je jedna gesta i zaslužuje metu, ne natpis. Ime gumba nosi
+   `aria-label` kroz i18n (`data-i18n-aria`), ikona je `aria-hidden` — isti obrazac koji su
+   strelice ovdje imale od F3 3E. */
+.flashcard-controls .control-btn {
+    width: 3.5rem;
+    height: 3.5rem;
+    min-height: 0;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    flex-direction: column;
+    gap: 0.05rem;
 }
 
-.control-btn.wrong:hover { background: var(--color-danger); color: var(--color-on-brand); }
-
-/* `transparent`, ne `--bg-tertiary`: na tercijarnoj plohi je zelena davala **4.80** —
-   prolazi, ali bez rezerve, pa je svaki idući pomak palete gura ispod praga. Ovako tekst
-   sjedi na plohi sekcije, koju `check:contrast` mjeri izravno u svim temama. */
-.control-btn.correct {
-    background: transparent;
-    color: var(--color-ok);
-    border: 2px solid var(--color-ok);
+.flashcard-controls .control-btn i {
+    font-size: 1.15rem;
+    line-height: 1;
 }
 
-.control-btn.correct:hover { background: var(--color-ok); color: var(--color-on-brand); }
+/* ⚠️ ZNAČKA JE GOLA BROJKA, BEZ VLASTITE PLOHE — i to je izravna pouka pravila iznad njega
+   (C2, 2026-08-13): tinta preko ispune je ČETVRTA ploha koju `check:contrast` ne mjeri, a
+   `color-mix(currentColor …)` nad punom ispunom vuče podlogu prema tinti i omjer pada baš
+   ondje gdje ga nitko ne gleda. Brojka zato sjedi na ISTOJ ispuni i u ISTOJ tinti koje gate
+   već mjeri (`--color-ok` / `--color-on-ok`, `--color-danger` / `--color-on-danger`). */
+.flashcard-controls .control-btn-count {
+    font-size: 0.65rem;
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ⚠️ ADR-032: SEMANTIKA JE PUNA ISPUNA, OBRUB NIJE ZAMJENA ZA NJU (Leon: „ne smije biti
+   obruba uopće"). Do F1/12 je ovdje stajala vlas-crta — `background: transparent` + 2 px
+   obrub — i to je bilo rješenje kvara iz C2: tinta preko izmišljene plohe pada ispod 4.5.
+   Puna ispuna taj kvar nema jer podloga NIJE izmišljena: `--color-ok` / `--color-danger` su
+   plohe koje `check:contrast` mjeri po temi, a tinta im je vlastiti par (`--color-on-ok` /
+   `--color-on-danger`) — isti par koji od F1/9 nose pečati „Znam / Ne znam" na kartici.
+   Bijelo bi ovdje palo u `chalk`/`mint`; zato tinta, a ne bijela. */
+.flashcard-controls .control-btn.wrong {
+    background: var(--color-danger);
+    color: var(--color-on-danger);
+}
+
+.flashcard-controls .control-btn.correct {
+    background: var(--color-ok);
+    color: var(--color-on-ok);
+}
+
+/* Hover NE mijenja značenje nego samo dubinu — ispuna ostaje ista, gumb se digne.
+   (Omot `(hover: hover)` + `:where(:root:not([data-hover-paused]))` dodaje `build:css`.) */
+.flashcard-controls .control-btn.wrong:hover,
+.flashcard-controls .control-btn.correct:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-e2);
+}
+
+/* Strelice su POMOĆNE: manji krug, ploha teme. `.next` dijeli klasu s gumbom „Sljedeće" na
+   ekranu dopuna, pa i ovo pravilo mora ostati pod `.flashcard-controls`. */
+.flashcard-controls .control-btn.prev,
+.flashcard-controls .control-btn.next {
+    width: 2.75rem;
+    height: 2.75rem;
+}
 
 .control-btn.prev,
 .control-btn.next {
@@ -558,10 +603,6 @@
    označen kao aktivan. Ime regije zato preuzima `aria-label` na `#flashcards` (i18n
    `fc.title`) — sakriveni naslov ne bi bio ime, a bez imena sekcija nestaje iz stabla. */
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-container > h1 { display: none; }
-/* ⚠️ PRIVREMENO u ①: brojke „znam / ne znam" postaju ZNAČKE NA GUMBIMA u dionici ②, i tek
-   tada blok odlazi iz markupa. Do tada se ovdje samo skriva — `#knownCount`/`#unknownCount`
-   ostaju u DOM-u, pa `updateFlashcardStats()` i dalje ima kamo pisati. */
-:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-stats { display: none; }
 
 /* 3. TRAKA NAPRETKA — jedan redak umjesto stupca (35 → ~21 px s razmakom). */
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-progress {
@@ -634,3 +675,27 @@
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .card-category { font-size: 0.7rem; }
 :root[data-uredjaj~="dodir"] #flashcards.active .flip-hint { font-size: 0.75rem; }
+
+/* ── F1/12 ② NA DODIRU — ✕ i ✓ pod palcem, strelice se sklone ──────────────────
+   Leon: „Know i don't know stoje dolje kao što Tinder ima lajk i ✕." Oblik gumba, boje i
+   redoslijed su zajednički s kompom (§F1/12 ② gore, bez prefiksa) — ovdje se mijenja samo
+   ono što PALAC traži: veći krug, veći razmak i nijedan gumb koji nije sud.
+
+   ⚠️ Strelice se skrivaju CSS-om, a NE vade iz markupa: `prevCard`/`nextCard` ostaju vezani i
+   dohvatljivi, pa F1/13 (palac lista, gumbi sude) ne mora ništa vraćati — samo prestati
+   skrivati. Isti razlog zašto se ni sud ne premješta s gumba na gestu u ovoj cigli. */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls {
+    /* Razmak ispod kartice drži omotač, rezervu za donju traku ljuska — treći razmak bi
+       kadru uzeo 16 px koje kartica traži na najužem ekranu (320 × 568). */
+    margin: 0;
+    padding: 0;
+    max-width: none;
+    gap: 2.5rem;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn {
+    width: 4rem;
+    height: 4rem;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn i { font-size: 1.35rem; }
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn.prev,
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn.next { display: none; }

@@ -2296,9 +2296,10 @@ sokrat-modal.sokrat-confirm-modal > * {
   color: var(--color-ink-1);
 }
 .flashcard-controls {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 1rem;
 }
 .control-btn {
@@ -2316,27 +2317,43 @@ sokrat-modal.sokrat-confirm-modal > * {
   transition: var(--transition);
   min-height: var(--touch-target);
 }
-.control-btn.wrong {
-  background: transparent;
-  color: var(--color-danger-ink);
-  border: 2px solid var(--color-danger);
+.flashcard-controls .control-btn {
+  width: 3.5rem;
+  height: 3.5rem;
+  min-height: 0;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+.flashcard-controls .control-btn i {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+.flashcard-controls .control-btn-count {
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.flashcard-controls .control-btn.wrong {
+  background: var(--color-danger);
+  color: var(--color-on-danger);
+}
+.flashcard-controls .control-btn.correct {
+  background: var(--color-ok);
+  color: var(--color-on-ok);
 }
 @media (hover: hover) {
-  :where(:root:not([data-hover-paused])) .control-btn.wrong:hover {
-    background: var(--color-danger);
-    color: var(--color-on-brand);
+  :where(:root:not([data-hover-paused])) .flashcard-controls .control-btn.wrong:hover, :where(:root:not([data-hover-paused])) .flashcard-controls .control-btn.correct:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-e2);
   }
 }
-.control-btn.correct {
-  background: transparent;
-  color: var(--color-ok);
-  border: 2px solid var(--color-ok);
-}
-@media (hover: hover) {
-  :where(:root:not([data-hover-paused])) .control-btn.correct:hover {
-    background: var(--color-ok);
-    color: var(--color-on-brand);
-  }
+.flashcard-controls .control-btn.prev, .flashcard-controls .control-btn.next {
+  width: 2.75rem;
+  height: 2.75rem;
 }
 .control-btn.prev, .control-btn.next {
   background: var(--color-surface-2);
@@ -2663,9 +2680,6 @@ sokrat-modal.sokrat-confirm-modal > * {
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-container > h1 {
   display: none;
 }
-:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-stats {
-  display: none;
-}
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-progress {
   display: flex;
   align-items: center;
@@ -2723,6 +2737,22 @@ sokrat-modal.sokrat-confirm-modal > * {
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flip-hint {
   font-size: 0.75rem;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls {
+  margin: 0;
+  padding: 0;
+  max-width: none;
+  gap: 2.5rem;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn {
+  width: 4rem;
+  height: 4rem;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn i {
+  font-size: 1.35rem;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn.prev, :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn.next {
+  display: none;
 }
 .quiz-container {
   max-width: 800px;
