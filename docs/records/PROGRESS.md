@@ -5,6 +5,70 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-07 (OPUS) — Model monetizacije zaključan (ADR-035 + ADR-036) · činjenice o inkubatoru provjerene · KÔD NIJE DIRAN
+
+Sesija je bila **planiranje s Leonom, bez ijedne izmjene koda**. Vrijedan dio nisu odluke nego
+**četiri mjerenja koja su oborila pretpostavke** — tri moje, jedna zajednička.
+
+**① „Nitko ne koristi platformu" je bio krivo mjeren nalaz.** Produkcijska baza: **5 računa, 2
+prijave u 30 dana, prvi račun 12.06.** Zvuči kao nula potražnje — ali **registracija je pogrešna
+mjera za ovaj proizvod**: sinkronizacija je offline-first, sve radi bez računa, pa *„nitko se ne
+prijavljuje jer nema potrebe"* nije izgovor nego opis onoga što je sagrađeno. Ono što stvarno
+nedostaje je **aktivacija i povratak** (je li itko otvorio špil i vratio se drugi dan), a to se
+danas nigdje ne mjeri — **Vercel Web Analytics nije uključen** (404 na projektu). Leonov GA4 pokazuje
+~500 pregleda u tjedan dana, hladno i bez marketinga.
+
+**② „Prodaj Hotel Sim, ne gradi ga" — oboreno.** Simulacija se ne može prodati bez demoa koji
+uvjerljivo igra, a to je već većina posla: zajednički bazen potražnje je tržišna ravnoteža, runde su
+**nova backend-forma** (zakazano razrješenje), a balans traži profesora kao suautora kroz mjesece.
+**[HOTEL_SIM.md](../ideas/HOTEL_SIM.md) je preklasificiran: nije proizvod za inkubator**, nego drugi čin i kandidat za diplomski.
+
+**③ „Prodaj fakultetu unutar programa" — Leon oborio, i bio u pravu.** Javna nabava i akademski
+ciklusi ne staju u šest mjeseci. Kupac koji odlučuje u **jednom razgovoru** su **male firme**
+(onboarding zaposlenika, evidencija o položenom). Iz toga je izašao cijeli model.
+
+**④ Cijene konkurencije nisu javne.** Cesim Hospitality i HOTS prodaju se **isključivo na upit** —
+što samo po sebi znači skupo i bez sidra; jedini vidljiv broj je **~£950** za srodnu simulaciju, a
+Cesim navodi **1000+ visokoškolskih ustanova**. Zato cijena za ustanove u dokumentu **ostaje prazna
+dok Leon ne pita FMTU što danas plaćaju** — brojka se ne izmišlja.
+
+**Isporučeno (docs, commit `27d495a`, grana `feat/racun-r1`, NIJE pushano):**
+- **[ADR-035](./DECISIONS.md)** — proizvod je **tržište studentskog gradiva** (objavi · prodaj · natječi se);
+  24 predmeta su **početna zaliha**, ne priča. Povod: „prodaja korisničkog sadržaja" nije postojala
+  **nigdje** u repozitoriju, a dijeljenje i natjecanje su od prvog dana stajali kao „⬜ ideja" — pa se
+  proizvod u razgovoru opetovano opisivao preko kataloga, jedine stvari koja je bila zapisana do kraja.
+- **[ADR-036](./DECISIONS.md)** — monetizacija: najam je **ORGANIZACIJA** (firma · fakultet · škola), **firme
+  prve**, **objava se ne naplaćuje** (ponuda je oskudan resurs), **prodaju prvo organizacije**
+  (isplata fizičkim osobama = porezna mašina), **exam modul** mjeren na poslužitelju.
+- **[MONETIZATION.md](../product/MONETIZATION.md) prepisan** — 5 platiša, 4 toka prihoda, organizacija kao najam,
+  exam modul s poštenom granicom, paketi kao hipoteze, unit economics (**profitabilan na drugom
+  kupcu**: Supabase Pro + Vercel Pro ≈ 45 USD/mj), faze naplate, pravno (**tržište te čini
+  POSREDNIKOM** → Connect/MoR), matura kao hipoteza. Stara konverzija 3–8 % označena kao optimistična
+  uz realnih 1–3 %.
+- **[PRD.md](../product/PRD.md) 0.6 → 0.7** — organizacija kao korisnik, dvije nove faze **s kriterijima prihvaćanja**
+  (organizacija, exam modul), ne-cilj *„nema naplate dok platforma ne dobije skalu"* izrijekom nadglašen.
+
+**⚠️ Višenajmnost NIJE osobni otok.** Organizacija traži entitet, članove, uloge i statistiku u svom
+dosegu; [ADR-024](./DECISIONS.md) veže sve uz jednog vlasnika (`owner_id = auth.uid()`). Projektira se unaprijed ili
+se gradi dvaput — to je prvi pravi backend-posao iza MCP-a.
+
+**Inkubator — provjereno kod izvora (startup.rijeka.hr, Novi list):** prijave **nisu bile otvorene**
+07.09.; poziv izlazi početkom rujna, otvoren ~mjesec dana; program **listopad, 6 mjeseci** (skraćeno
+s osam kod 17. generacije); besplatan; nagrade **15/7/3 tisuće €** za pokretanje poduzeća u Rijeci;
+17. generacija: **19 timova, 8 na Demo danu**. ⚠️ **Tvrdi uvjet: samo fizičke osobe BEZ registriranog
+subjekta u trenutku prijave** → firma se osniva tek nagradom, a naplata unutar programa ide kroz
+**pismo namjere ili ugovor o djelu**. Dosad su pobjeđivali lokalni servisi i hrana (VFX studio,
+fizioterapija, ravioli) — **gradski program nagrađuje dokaziv put do prihoda, ne tehniku**.
+STEP RI je druga faza (2027., traži postojeću tvrtku); Big Bang Camp 2026 propušten (rok 24.07.).
+
+**Sljedeće:** nazvati **051/209 940** za obavijest o pozivu · STEP RI iskaz interesa (besplatan,
+bez roka) · uključiti mjerenje aktivacije i povratka prije listopada · pa **gradnja** — F1 kartice
+i skrol naličja na iPhoneu čekaju Leonovu presudu s uređaja, dalje MCP.
+
+**Nije dirano:** nijedna `.js`/`.css`/`data*` datoteka → **bump nije trebao**. `check:docs`
+(56 dok., 369 poveznica) + `check:state` zeleni. **`PROGRESS.md` i `BACKLOG.md` u radnoj kopiji
+nose tuđe MATURA retke** — ovaj unos je u indeks ušao bez njih.
+
 ## 2026-09-06 (FABLE) — Leon s previewom F1/9 → Tinder-KADAR (palac lista, gumbi sude, kartica = ekran): IZMJERENO + PLAN, bez koda
 
 Leon: *„Ako se povuče lijevo vraća se na prijašnju, desno ide na sljedeću. Kada se okrene daje odgovor. Know i don't know stoje dolje
