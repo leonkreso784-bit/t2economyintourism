@@ -5,6 +5,34 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-07 (OPUS, druga sesija) — Mjerenje aktivacije i povratka isporučeno · gate pristanka obrnuto provjeren
+
+Nastavak iste sesije, sad s kodom. Zadatak je izabran iz nalaza ① prethodnog unosa: **registracija je
+pogrešna mjera**, a ono što stvarno nedostaje — aktivacija i povratak — nije se mjerilo nigdje.
+
+**Što je otkrilo istraživanje prije pisanja koda.** `grep` po `js/*.js` daje `gtag(` **samo u
+`js/consent.js`** (5 mjesta), a `gtag('event', …)` **nigdje**: platforma nema nijedan imenovani GA4
+događaj, samo pregled stranice. Druga, korisnija činjenica: `switchSection()`
+([navigation.js:1546](../../js/navigation.js#L1546)) je **jedino grlo** kroz koje se ulazi u svih sedam
+načina učenja — pa aktivacija traži **jednu** kuku, ne deset.
+
+**Odluka koja nije bila očita.** Brojač različitih dana je trag posjetitelja kroz vrijeme, dakle isto
+što i kolačić → **ne zapisuje se bez pristanka**, jednako kao što se bez njega ne učitava GA. Cijena
+je poštena i zapisana uz kod: **tko odbije kolačiće, u brojci povratka ne postoji.** Alternativa
+(anonimni brojač bez privole) bila bi točnija brojka i lošija privola.
+
+**Obrnuta provjera, jer zelena brana zna lagati.** Dvije mutacije nad pravim kodom: uklonjen uvjet
+pristanka → **4 crvene tvrdnje** (uključujući *„odbijen pristanak → nula događaja"*, koja je odmah
+pokazala odbijeni događaj u `dataLayeru`); uklonjena kuka iz `switchSection()` → **2 crvene**. Obje
+vraćene iz kopije, brana opet zelena. Bez ovoga bi test dokazivao samo da se izvršava.
+
+**Gate:** `npm run preflight` EXIT 0 (78 + 27 tvrdnji u zadnja dva testa), `npm run bump` (106 tokena).
+**Gdje se vidi:** grana `feat/mjerenje-aktivacije`, lokalno — nije pushano, produkcija je bez toga.
+
+**Slijedi:** deploy čeka Leonovu riječ; nakon njega F1/15 i presude s iPhonea.
+
+---
+
 ## 2026-09-07 (OPUS) — Model monetizacije zaključan (ADR-035 + ADR-036) · činjenice o inkubatoru provjerene · KÔD NIJE DIRAN
 
 Sesija je bila **planiranje s Leonom, bez ijedne izmjene koda**. Vrijedan dio nisu odluke nego

@@ -47,6 +47,15 @@ preskače svjesno, a ne zaboravom.
 | **F6** | **MCP** — cjevovod stvaranja | glavni put nastanka gradiva (ADR-030/031); konektor traži OAuth, koji F2 dovršava | …svom AI-ju da materijal kroz chat i dobije nacrt lekcije, kartica i kviza — a da mi tu datoteku nikad ne vidimo |
 | **F7** | **OBJAVA** — dijeljenje i povijest | dijeljenje daje smisao povijesti učenja i grafikonima napretka, pa idu zajedno | …podijeli svoj materijal linkom i vidi kad je zadnji put što učio |
 
+> **⚠️ IZVAN FAZA — MJERENJE AKTIVACIJE I POVRATKA (07.09.).** Preskočilo je red jer ima **datum, a ne
+> mjesto u fazi**: val korisnika dolazi s početkom fakulteta, a do danas se mjerio samo **dolazak**
+> (GA4 šalje pregled stranice i tu prestaje; Vercel Web Analytics je ugašen). Bez ovoga listopad
+> prođe bez traga — ne bi se znalo je li itko od tih posjetitelja **počeo učiti**, ni je li se
+> **vratio drugi dan**, a to su jedine dvije brojke koje razlikuju posjet od proizvoda.
+> **Gotovo kad** se u GA4 vidi koliko je posjetitelja otvorilo način učenja i koliki im je redni
+> različit dan. Isporučeno kao jedna cigla: `window.SokratMetrika` u `js/consent.js` (isti gate
+> pristanka kao GA i Sentry) + jedna kuka u `switchSection()`.
+
 ---
 
 ## 3 · Faze u detalje

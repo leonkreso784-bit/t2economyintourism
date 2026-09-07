@@ -5,6 +5,19 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-07 (OPUS) — **Mjerenje aktivacije i povratka: `SokratMetrika` u `js/consent.js` + jedna kuka u `switchSection()`**
+
+Do danas se mjerio **samo dolazak**: `gtag('config')` pošalje pregled stranice i mjerenje je gotovo, a Vercel Web Analytics je ugašen
+(404 na projektu). GA4 pokazuje ~500 pregleda u tjedan dana, ali nijedna brojka ne razlikuje posjetitelja koji je otišao od onoga koji je
+**počeo učiti**, ni njega od onoga koji se **vratio drugi dan**. Val korisnika dolazi s početkom fakulteta → bez ovoga listopad prolazi bez traga.
+Dodana su dva događaja, oba kroz **isti gate pristanka** kao GA i Sentry: **`ucenje`** (način + predmet) šalje ga `switchSection()` —
+jedino grlo kroz koje se ulazi u svaki mod, pa instrumentacija ne dira deset datoteka; **`povratak`** (`dan`, `od_prvog`) broji **različite
+dane** iz `localStorage` (`sokrat-dani`). ⚠️ **Dani se broje TEK nakon pristanka** — brojač kroz vrijeme je isto što i kolačić; tko odbije,
+u brojci ne postoji. Svjesna cijena, zapisana uz kod. Isti dan × više učitavanja = isti `dan` (mjeri se korisnik po vrijednosti, ne broj događaja).
+Brana: `tests/unit/metrika.test.js` (27 tvrdnji: curenje kroz gate · zapis bez pristanka · brojanje po danu, ne po učitavanju · pokvaren
+zapis · privatni način · kuka statički u izvoru). **Obrnuto provjerena dvjema mutacijama:** uklonjen gate → 4 crvene; uklonjena kuka → 2 crvene.
+Preflight EXIT 0, bump. **Gdje se vidi:** grana `feat/mjerenje-aktivacije` (preview); produkcija `c53c28c` bez toga — dok se ne deploya, mjerenja nema.
+
 ## 2026-09-06 (FABLE) — **F1/9: kartice kao Tinder-špil na dodiru — palac desno = znam, lijevo = ne znam · špil od tri · strelice kao stolni pandan**
 
 Leon (05.09.): *„na mobitelu bi napravio za kartice kao tinder način"*; (06.09., usred rada): *„samo na mobitelu … ali ako imaš viziju
