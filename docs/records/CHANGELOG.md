@@ -5,6 +5,20 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-07 (OPUS) — **F1/12 ⑦: stranica u modu kartica je ZAKLJUČANA na dodiru — uklonjen konkurent skroleru naličja, ne još jedno svojstvo**
+
+Leon, s previewom ⑥, velikim slovima: *„skrol gore-dolje je APSOLUTNA KATASTROFA i ne radi dobro opet jer se miješa s cijelom
+stranicom."* Pet pokušaja (③ ④ afordanca ⑤ + A/B) tražilo je KOJE svojstvo iOS-u krade skrol; nijedan reproduciran na mojoj strani, a
+A/B na uređaju davao je različite odgovore za istu stvar. Zajednički nazivnik SVIH Leonovih prijava od prvog dana nije *„naličje ne
+skrola"* nego *„STRANICA se miče"*. Na iOS-u dokument ima s čime se micati i kad mu visina „stane": Safari skuplja trake pa `100dvh`
+(ljuska kadra, redak 637) raste **usred geste**, a rubber-band vuče dokument i bez preljeva — i prst na naličju hrani dokument, ne
+skroler u njemu. To ujedno objašnjava nekonzistentan A/B: ishod je ovisio o stanju trake, ne o prekidaču. Popravak zato ne traži
+dalje svojstvo nego **uklanja konkurenta**: `body` u modu kartica na dodiru = `position: fixed; inset: 0; overflow: hidden` (tehnika
+kojom modali na iOS-u zaključavaju stranicu — sam `overflow: hidden` ondje ne drži dodir, `position: fixed` drži), pa jedini skroler
+pod prstom ostaje naličje. Isti `body:has(…)` selektor koji već nulira treću rezervu; samo dok je mod aktivan, samo na dodiru, stolno
+bit-identično. Brana ⑬ u `flashcard-kadar.test.js` traži pravilo u izvoru (headless ga nikad ne bi tražio). Preflight EXIT 0, phone.spec.
+**Gdje se vidi:** `feat/tinder-kadar` (preview). **Ako ni ovo ne prođe na uređaju — nije CSS**, i onda je sonda jedini sljedeći korak.
+
 ## 2026-09-07 (OPUS) — **F1/12 ⑥: strelice ← → ostaju i na dodiru, jedan red ← ✕ ✓ → · skrol naličja PARKIRAN Leonovom odlukom**
 
 **Presuda s iPhonea za ⑤:** palac lijevo-desno *„radi savršeno"*, **skrol naličja i dalje ne** (*„kosi se s cijelom stranicom"*).

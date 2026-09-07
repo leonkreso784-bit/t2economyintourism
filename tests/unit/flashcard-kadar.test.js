@@ -279,6 +279,18 @@ tvrdi(!/\.control-btn\.(prev|next)[^{]*\{[^}]*display:\s*none/.test(BLOK),
         ? (2 * parseFloat(mjeraSuda[1]) + 2 * parseFloat(mjera[1]) + 3 * parseFloat(razmak[1])) * 16 : NaN;
     tvrdi(ukupno <= 320 - 32, 'red ← ✕ ✓ → stane na 320 px uz 16 px ruba sa svake strane', { ukupno });
 }
+
+console.log('\n── ⑬ ZAKLJUČANA STRANICA u modu kartica na dodiru (⑦, Leon 07.09.) ──────────');
+// Konkurent skroleru naličja na iOS-u je DOKUMENT (trake koje se skupljaju, rubber-band). Tijelo se
+// zato u modu kartica fiksira na viewport; nestane li to, naličje na iPhoneu opet „miješa se sa
+// stranicom", a nijedan headless motor to ne vidi — zato tvrdnja stoji u izvoru.
+{
+    const CSS_SVE = require('fs').readFileSync(require('path').join(__dirname, '..', '..', 'css', 'flashcards-section.css'), 'utf8');
+    const lock = CSS_SVE.match(/:root\[data-uredjaj~="dodir"\] body:has\(\.study-page\.active #flashcards\.active\) \{([^}]*)\}/);
+    tvrdi(!!lock, 'postoji pravilo za `body` dok je mod kartica aktivan (samo na dodiru)');
+    tvrdi(lock && /position:\s*fixed/.test(lock[1]) && /inset:\s*0/.test(lock[1]) && /overflow:\s*hidden/.test(lock[1]),
+        'tijelo je `position: fixed; inset: 0; overflow: hidden` — dokument nema s čime konkurirati naličju');
+}
 // ⚠️ F1/13: gumbi se vežu PO TABLICI `AKCIJE` (id u markupu → radnja u tablici), pa uz id više
 // ne stoji ime funkcije. Ovdje se i dalje tvrdi ISTO: sva četiri gumba su živa i vezana.
 tvrdi(/gumb: 'btnPrev'/.test(FC_JS) && /gumb: 'btnNext'/.test(FC_JS) && /vezeGumbe\(AKCIJE\)/.test(FC_JS),

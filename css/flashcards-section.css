@@ -652,6 +652,22 @@
        izmjereno 3,04 px zaostatka 300 ms nakon ulaska u mod, i to je pao gate ⑩. Ostaje samo
        ono što na `body` ima smisla animirati — prijelaz teme. */
     transition-property: background-color, color;
+    /* ── F1/12 ⑦ — STRANICA U MODU KARTICA JE ZAKLJUČANA (Leon, iPhone, 07.09. kasno navečer:
+       „skrol gore-dolje je APSOLUTNA KATASTROFA … miješa se s cijelom stranicom") ─────────────
+       Pet pokušaja tražilo je KOJE svojstvo iOS-u krade skrol naličja; nijedan reproduciran na mojoj
+       strani, a A/B na uređaju davao je različite odgovore za istu stvar. Zajednički nazivnik svih
+       prijava: NE „naličje ne skrola" nego „STRANICA se miče". Na iOS-u dokument ima s čime se micati
+       i kad mu visina „stane": Safari skuplja trake pa `100dvh` raste USRED geste, a rubber-band
+       vuče dokument i bez preljeva — i prst na naličju onda hrani dokument, ne skroler u njemu.
+       Zato se ne traži dalje svojstvo nego se UKLANJA KONKURENT: tijelo je fiksirano na viewport
+       (tehnika kojom modali na iOS-u zaključavaju stranicu — `overflow: hidden` sam ondje ne drži
+       dodir, `position: fixed` drži), pa jedini skroler pod prstom ostaje naličje. Vrijedi samo dok
+       je mod kartica aktivan (`:has`), samo na dodiru; stolno bit-identično. Napuštanjem moda tijelo
+       se vraća, a `switchSection()` ionako skrola na vrh. Ako ni ovo ne prođe na uređaju, nije CSS. */
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    min-height: 0;
 }
 
 /* Traka tabova (≥ 48rem) uzima svoje prije sadržaja; ispod tog praga je nema (`md:hidden`). */

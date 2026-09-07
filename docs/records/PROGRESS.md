@@ -61,6 +61,20 @@ provjerena.
 dvije mutacije: osnovna verzija prolazi, ⑥ prolazi u izolaciji dvaput, ⑥ s razmakom 2,5 rem prolazi, druga
 puna vrtnja 12/12. Dakle **flake na rubu praga, ne ⑥** — kartica u polegnutom položaju stoji 1–2 px iznad
 granice od 90 % i ovisi o trenutku mjerenja. Zapisano u BACKLOG-u; ne popravlja se „na oko".
+**⑦ — parkiranje nije izdržalo večer.** Leon, velikim slovima: *„skrol gore-dolje je APSOLUTNA
+KATASTROFA … miješa se s cijelom stranicom."* Ovaj put nisam tražio šesto svojstvo. Pročitao sam
+sve njegove prijave od prvog dana zaredom: nijedna ne kaže *„naličje ne skrola"* — sve kažu
+*„stranica se miče"*. To je drugi kvar od onoga koji sam pet puta popravljao. Ljuska kadra je
+`100dvh` (redak 637): na iOS-u ta visina **raste usred geste** dok Safari skuplja trake, a
+rubber-band vuče dokument i bez preljeva — prst na naličju hrani dokument. I A/B je zato bio
+nekonzistentan: ishod je ovisio o stanju trake, ne o prekidaču. Popravak: `body` u modu kartica na
+dodiru je `position: fixed; inset: 0; overflow: hidden` — dokument fizički nema što skrolati, pa
+jedini skroler pod prstom ostaje naličje. Brana ⑬ traži pravilo u izvoru. **Ako ni ovo ne prođe —
+nije CSS**, i sonda je jedini idući korak; to sam mu i rekao.
+**Harness usput:** puna paralelna vrtnja `phone.spec` opet pala na ⑩/852 px, sad **471 px = 64,2 %** = širina
+bez kadar-pravila → snimka prije nego kadar sjedne (pod opterećenjem), ne kriva kartica; sam projekt SE-375
+12/12 × 2, izolacija prolazi. Zapisano u BACKLOG-u kao otvoreno: brana treba čekati kadar, ne sekciju.
+
 **Dalje: PROFIL (F2), sljedeća sesija** — Leonova riječ.
 
 ---

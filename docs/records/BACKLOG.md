@@ -22,12 +22,20 @@
 > nepotrebnog posla“.** Ako se ikad otvori: **prvi korak je sonda `?dijagnoza=kartica`** (fix-grana `51f3ff7`, bilježi
 > dodir/pokazivač/skrol s `defaultPrevented` i element pod prstom), **ne peti popravak**. Otvoreno pitanje koje sonda
 > razlučuje: uzima li iOS dodir kao skrol STRANICE (hit-test promašuje skroler) ili ga uopće ne uzima kao skrol.
+> **Dopuna iste večeri (⑦):** parkiranje nije izdržalo; zajednički nazivnik svih prijava je „STRANICA se miče“ → dokument
+> je konkurent (trake koje se skupljaju mijenjaju `100dvh` usred geste, rubber-band). Umjesto šestog svojstva: `body`
+> u modu kartica na dodiru `position: fixed; inset: 0; overflow: hidden`. **Presuda opet Leonova.** Ne prođe li — sonda.
 >
 > **Uz to, rub brane (07.09.):** `phone.spec` ⑩ na **852 px polegnuto** (projekt iPhone-SE-375) mjeri karticu
 > **659 od 734 px = 89,8–90,0 %** — točno na pragu. Pala jednom u punoj vrtnji, prošla u izolaciji 3× i u
 > drugoj punoj vrtnji; osnovna verzija bez ⑥ isto prolazi. Ne popravljati prag ni karticu „na oko“: ili
 > izmjeriti gdje polegnuti gubi tih ~75 px (852 − 2×59 sigurnih = 734, kartica 659), ili zapisati polegnuti
 > kao svjesnu iznimku s brojkom. Dok se ne odluči, jedan crveni ⑩ na 852 px u punoj vrtnji = ovaj flake, ne regresija.
+> **Dopuna (⑦, ista noć):** puna paralelna vrtnja (4 projekta) pala je opet na ⑩/852 px, ali s **471 od 734 = 64,2 %** — to je
+> širina BEZ kadar-pravila (`.flashcard-wrapper max-width: 70 %`), dakle snimka uzeta prije nego su se pravila primijenila,
+> ne kriva kartica. Sam projekt iPhone-SE-375: **12/12 × 2**, ⑩ u izolaciji prolazi. Sumnja: vrijeme snimke pod opterećenjem
+> radnika (`otvoriNacin` vrati prije nego kadar sjedne), i to je HARNESS, ne CSS. Otvoreno: `phone.spec` treba čekati
+> na kadar (npr. `max-width: none` na omotaču) prije snimke, umjesto na sekciju. Do tada: puna vrtnja ⑩ nije dokaz ni za ni protiv.
 
 ### 🔴 LEONOVI NALAZI S UREDAJA — 2026-09-04 (nedirnuto, ceka svoj red)
 

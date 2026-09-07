@@ -2502,6 +2502,10 @@ sokrat-modal.sokrat-confirm-modal > * {
 :root[data-uredjaj~="dodir"] body:has(.study-page.active #flashcards.active) {
   padding-bottom: 0;
   transition-property: background-color, color;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  min-height: 0;
 }
 :root[data-uredjaj~="dodir"] .study-page.active:has(#flashcards.active) > .study-nav {
   flex: 0 0 auto;
