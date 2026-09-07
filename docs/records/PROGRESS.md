@@ -44,6 +44,25 @@ preview nosi sve troje.
 **Gdje se vidi:** grana `feat/tinder-kadar` (preview). **Presuda:** Leonov iPhone, četiri stvari
 odjednom — skrol naličja · palac · statična stranica · izbornik kraja.
 
+**Presuda je stigla:** palac *„radi savršeno"*, skrol naličja **i dalje ne** — *„kosi se s cijelom
+stranicom"*. Leon parkira: *„ajmo ostavit za sada kartice kakve jesu, ovo je previše nepotrebnog
+posla za sada."* Prihvaćam bez natezanja: četiri pokušaja bez reprodukcije na mojoj strani je
+dovoljno; ako se ikad vrati, prvi korak je sonda, ne popravak. ⑤ ostaje (nema cijene).
+
+**⑥ — strelice i na dodiru, u istom redu.** *„Neka ostanu gumbi ne znam / znam svugdje i strelice;
+na mobitelu mora samo biti popravljeno da stoji sve kako treba."* Do sada su se ← → na dodiru
+sklanjale (F1/13). Sad: ← ✕ ✓ → kao na kompu, strelice 2,75 rem (44 px) uz sud 4 rem, razmak 2,5 →
+1,25 rem jer 2×64 + 2×44 + 3×40 = 336 px ne stane na 320 — a s 20 px razmaka stane (276). Brana ⑫
+u `flashcard-kadar.test.js` **okrenuta** (skrivanje = crveno; mjera strelica; zbroj na 320) i obrnuto
+provjerena.
+
+**Nalaz usput, zapisan da se ne izgubi:** puna vrtnja `phone.spec` pala je JEDNOM na ⑩ (iPhone-SE-375,
+širina 852 px polegnuto): *kartica 659 od 734 px = 89,8 %, traži se 90,0 %*. Bisekcija kroz `git stash` i
+dvije mutacije: osnovna verzija prolazi, ⑥ prolazi u izolaciji dvaput, ⑥ s razmakom 2,5 rem prolazi, druga
+puna vrtnja 12/12. Dakle **flake na rubu praga, ne ⑥** — kartica u polegnutom položaju stoji 1–2 px iznad
+granice od 90 % i ovisi o trenutku mjerenja. Zapisano u BACKLOG-u; ne popravlja se „na oko".
+**Dalje: PROFIL (F2), sljedeća sesija** — Leonova riječ.
+
 ---
 
 ## 2026-09-06 (FABLE, voditelj) — BUG-045: SW nikad nije spremao runtime assete — klon prekasno, `catch(() => {})` ga gutao

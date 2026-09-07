@@ -13,6 +13,16 @@
 > Njihovi zapisi ostaju **ovdje i nedirnuti** jer nose obrazloženje i mjerenja; spec nosi **redoslijed
 > i dokaz**. Kad cigla padne, ovdje se stavlja ✅ s brojkom — ne briše se.
 
+> ### ⏸️ 2026-09-07 — SKROL NALIČJA NA iPHONEU: PARKIRANO LEONOVOM ODLUKOM, NE RIJEŠENO
+> Četiri pokušaja (F1/12 ③ centriranje · ④ ravna kartica u miru · afordanca · ⑤ perspektiva samo u okretu +
+> `overflow: scroll` + `overscroll-behavior`) — **nijedan reproduciran na mojoj strani**: headless Chromium i WebKit
+> skrolaju naličje, iOS ne. Jedino mjerenje s uređaja (Leon, 07.09., prekidači s `fix/kadar-nalicje`): sva četiri
+> ugašena (`pany,perspektive,transformacije,overflowauto`) → skrola; sam `pany` → ne; ⑤ na tinder-grani → palac
+> radi, skrol ne (*„kosi se s cijelom stranicom“*). **Leon: „ajmo ostavit za sada kartice kakve jesu, ovo je previše
+> nepotrebnog posla“.** Ako se ikad otvori: **prvi korak je sonda `?dijagnoza=kartica`** (fix-grana `51f3ff7`, bilježi
+> dodir/pokazivač/skrol s `defaultPrevented` i element pod prstom), **ne peti popravak**. Otvoreno pitanje koje sonda
+> razlučuje: uzima li iOS dodir kao skrol STRANICE (hit-test promašuje skroler) ili ga uopće ne uzima kao skrol.
+
 ### 🔴 LEONOVI NALAZI S UREDAJA — 2026-09-04 (nedirnuto, ceka svoj red)
 
 **A. ODLUKA: TEMA PRATI RACUN, NE UREDAJ** (Leon, 2026-09-04: *„tema treba pratiti racun"*).

@@ -259,10 +259,26 @@ tvrdi(okrugli && /border-radius:\s*50%/.test(okrugli.tijelo), 'gumbi su KRUGOVI,
 tvrdi(!/color-mix\([^)]*currentColor/.test(BLOK) && !(okrugli && /color-mix/.test(okrugli.tijelo)),
     'značka nema vlastitu plohu — tinta preko ispune je ČETVRTA ploha koju `check:contrast` ne mjeri (pouka C2)');
 
-console.log('\n── ⑫ STRELICE: sklonjene, ali žive (F1/13 ih ne mora vraćati) ───────────');
-tvrdi(new RegExp(PREFIKS.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ' #flashcards\\.active \\.flashcard-controls \\.control-btn\\.prev').test(BLOK)
-    && /\.control-btn\.next \{ display: none/.test(BLOK),
-    'na dodiru se ← i → skrivaju CSS-om (ne vade iz markupa)');
+console.log('\n── ⑫ STRELICE: i na dodiru VIDLJIVE, u istom redu, manje od suda (⑥, Leon 07.09.) ──');
+// ⚠️ OKRENUTO 2026-09-07: do ⑥ se ovdje tvrdilo da se ← i → na dodiru SKRIVAJU (F1/13 lista
+// palcem). Leon, kad je palac proradio: „neka ostanu gumbi ne znam / znam svugdje i strelice".
+// Vrati li netko `display: none` na strelice pod `dodir`, ova tvrdnja pada — to je odluka, ne dug.
+tvrdi(!/\.control-btn\.(prev|next)[^{]*\{[^}]*display:\s*none/.test(BLOK),
+    'na dodiru se ← i → NE skrivaju (Leon 07.09.: gumbi znam/ne znam svugdje I strelice)');
+{
+    const strelice = BLOK.match(/\.flashcard-controls \.control-btn\.prev,\s*\n[^{]*\.control-btn\.next \{([^}]*)\}/);
+    const mjera = strelice && /width:\s*([\d.]+)rem/.exec(strelice[1]);
+    const sud = BLOK.match(/\.flashcard-controls \.control-btn \{([^}]*)\}/);
+    const mjeraSuda = sud && /width:\s*([\d.]+)rem/.exec(sud[1]);
+    tvrdi(mjera && mjeraSuda && parseFloat(mjera[1]) < parseFloat(mjeraSuda[1]) && parseFloat(mjera[1]) * 16 >= 44,
+        'strelice na dodiru su MANJE od ✕/✓ i još ≥ 44 px (dodirna meta)', { strelice: mjera && mjera[1], sud: mjeraSuda && mjeraSuda[1] });
+    // Četiri gumba moraju stati na 320 px: 2 suda + 2 strelice + 3 razmaka.
+    const red = BLOK.match(/#flashcards\.active \.flashcard-controls \{([^}]*)\}/);
+    const razmak = red && /gap:\s*([\d.]+)rem/.exec(red[1]);
+    const ukupno = mjera && mjeraSuda && razmak
+        ? (2 * parseFloat(mjeraSuda[1]) + 2 * parseFloat(mjera[1]) + 3 * parseFloat(razmak[1])) * 16 : NaN;
+    tvrdi(ukupno <= 320 - 32, 'red ← ✕ ✓ → stane na 320 px uz 16 px ruba sa svake strane', { ukupno });
+}
 // ⚠️ F1/13: gumbi se vežu PO TABLICI `AKCIJE` (id u markupu → radnja u tablici), pa uz id više
 // ne stoji ime funkcije. Ovdje se i dalje tvrdi ISTO: sva četiri gumba su živa i vezana.
 tvrdi(/gumb: 'btnPrev'/.test(FC_JS) && /gumb: 'btnNext'/.test(FC_JS) && /vezeGumbe\(AKCIJE\)/.test(FC_JS),

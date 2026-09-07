@@ -5,6 +5,20 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-07 (OPUS) — **F1/12 ⑥: strelice ← → ostaju i na dodiru, jedan red ← ✕ ✓ → · skrol naličja PARKIRAN Leonovom odlukom**
+
+**Presuda s iPhonea za ⑤:** palac lijevo-desno *„radi savršeno"*, **skrol naličja i dalje ne** (*„kosi se s cijelom stranicom"*).
+Leon: *„ajmo ostavit za sada kartice kakve jesu … ovo je previše nepotrebnog posla za sada."* ⑤ ostaje u kodu (nema cijene, a
+`overscroll-behavior` je ono što je tražio), kvar ostaje **otvoren, parkiran** — sljedeći korak, ako se ikad otvori, je sonda
+`?dijagnoza=kartica` s fix-grane, ne peti popravak. **⑥ (isti dan):** *„neka ostanu gumbi ne znam / znam svugdje i strelice — na
+mobitelu mora samo biti popravljeno da stoji sve kako treba."* Do sada su se ← i → na dodiru sklanjale (F1/13: špil se lista palcem);
+od ⑥ su vidljive i na dodiru, **isti red kao na kompu ← ✕ ✓ →** (redoslijed u markupu), strelice **2,75 rem** (44 px, dodirna meta)
+naspram suda 4 rem, razmak s 2,5 na **1,25 rem** — jer četiri gumba moraju stati na 320 px (216 + 60 = 276 px; s 2,5 rem bi red
+preljevao ekran, a phone-gate mjeri baš vodoravni preljev). Gesta ostaje uz gumbe (F1/9: dodatak, ne zamjena). Brana
+`flashcard-kadar.test.js` ⑫ **okrenuta**: tvrdi da se strelice NE skrivaju, da su manje od suda i ≥ 44 px, i da red stane na 320 px;
+obrnuto: `display: none` vraćen → crveno. Preflight EXIT 0, build:css, bump. **Gdje se vidi:** grana `feat/tinder-kadar` (preview).
+**Dalje: PROFIL (F2), sljedeća sesija** (Leon).
+
 ## 2026-09-07 (OPUS) — **F1/12 ⑤: skrol naličja na iPhoneu — prvi popravak IZMJEREN NA UREĐAJU, ne u headlessu · stranica se ne miče (`overscroll-behavior`)**
 
 Tri prethodna „popravka" (③ centriranje, ④ ravna kartica u miru, afordanca) bila su hipoteze testirane na motorima koji kvar ne

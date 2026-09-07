@@ -883,12 +883,26 @@
     margin: 0;
     padding: 0;
     max-width: none;
-    gap: 2.5rem;
+    /* ⑥ (Leon, 2026-09-07): ČETIRI gumba u redu i na dodiru → razmak mora stati na 320 px:
+       2 × 64 + 2 × 44 = 216 px gumba + 3 × 20 = 276 px < 320. S 2,5 rem razmaka (do ⑥, dva
+       gumba) bilo bi 336 px i red bi preljevao ekran — phone-gate mjeri baš vodoravni preljev. */
+    gap: 1.25rem;
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn {
     width: 4rem;
     height: 4rem;
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn i { font-size: 1.35rem; }
+/* ── F1/12 ⑥ — STRELICE OSTAJU I NA DODIRU, U ISTOM REDU (Leon, 2026-09-07) ──────────────
+   Do ⑥ su se ← i → na dodiru sklanjale (`display: none`, F1/13: špil se lista palcem). Leon,
+   nakon što je palac proradio: *„neka ostanu gumbi ne znam / znam svugdje i strelice — na mobitelu
+   mora samo biti popravljeno da stoji sve kako treba."* Dakle isti red kao na kompu, ← ✕ ✓ →
+   (redoslijed je u markupu), strelice MANJE od suda (2,75 rem = 44 px, dodirna meta i dalje ≥ 44)
+   da ✕ i ✓ ostanu ono što je pod palcem. Gesta ostaje uz gumbe (F1/9: DODATAK, ne zamjena). */
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn.prev,
-:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn.next { display: none; }
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn.next {
+    width: 2.75rem;
+    height: 2.75rem;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn.prev i,
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn.next i { font-size: 1.1rem; }

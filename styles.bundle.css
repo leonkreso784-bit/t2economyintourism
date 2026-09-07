@@ -2659,7 +2659,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   margin: 0;
   padding: 0;
   max-width: none;
-  gap: 2.5rem;
+  gap: 1.25rem;
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn {
   width: 4rem;
@@ -2669,7 +2669,11 @@ sokrat-modal.sokrat-confirm-modal > * {
   font-size: 1.35rem;
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn.prev, :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn.next {
-  display: none;
+  width: 2.75rem;
+  height: 2.75rem;
+}
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn.prev i, :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn.next i {
+  font-size: 1.1rem;
 }
 .quiz-container {
   max-width: 800px;

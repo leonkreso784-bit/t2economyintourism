@@ -20,7 +20,7 @@
  * ===================================================================== */
 'use strict';
 
-const SW_VERSION = '20260907234047'; // bumpan `npm run bump` (usklađen s ?v= i CONTENT_VERSION)
+const SW_VERSION = '20260907235211'; // bumpan `npm run bump` (usklađen s ?v= i CONTENT_VERSION)
 const CACHE = 'sokrat-cache-' + SW_VERSION;
 
 // ⚠️ NIJE verzioniran, i to je cijela poanta: brisač u `activate` gađa prefiks

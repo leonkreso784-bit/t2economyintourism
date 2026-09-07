@@ -400,7 +400,7 @@ test.describe('F1/13 — stolno: sve tipkama (1280×800, bez dodira)', () => {
         await expect(page.locator('#unknownCount')).toHaveText('1');
         expect(await stanje(page)).toMatchObject({ index: 3, unknown: [2] });
 
-        // strelice-gumbi su na stolnom VIDLJIVI i klikaju isto (na dodiru ih CSS sklanja)
+        // strelice-gumbi su na stolnom VIDLJIVI i klikaju isto (od ⑥ i na dodiru — Leon 07.09.)
         await expect(page.locator('#btnPrev')).toBeVisible();
         await page.click('#btnPrev');
         expect(await stanje(page)).toMatchObject({ index: 2 });
