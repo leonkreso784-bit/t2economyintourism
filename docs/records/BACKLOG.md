@@ -25,6 +25,7 @@
 > **Dopuna iste večeri (⑦):** parkiranje nije izdržalo; zajednički nazivnik svih prijava je „STRANICA se miče“ → dokument
 > je konkurent (trake koje se skupljaju mijenjaju `100dvh` usred geste, rubber-band). Umjesto šestog svojstva: `body`
 > u modu kartica na dodiru `position: fixed; inset: 0; overflow: hidden`. **Presuda opet Leonova.** Ne prođe li — sonda.
+> **Presuda (08.09.):** ⑦ = DJELOMIČNO — *„može se scrollat ali jako teško"*; prvi put uopće skrola. ⚠️ **CI crven na `fb49d4d`** (a11y SE-375, study page sve sekcije), `e223b05` zelen → uzrok ⑦; lokalno 1/14 uz ponavljanje. NIJE istraženo. Prije mergea: riješiti ili vratiti ⑦.
 >
 > **Uz to, rub brane (07.09.):** `phone.spec` ⑩ na **852 px polegnuto** (projekt iPhone-SE-375) mjeri karticu
 > **659 od 734 px = 89,8–90,0 %** — točno na pragu. Pala jednom u punoj vrtnji, prošla u izolaciji 3× i u

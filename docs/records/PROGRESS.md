@@ -75,6 +75,8 @@ nije CSS**, i sonda je jedini idući korak; to sam mu i rekao.
 bez kadar-pravila → snimka prije nego kadar sjedne (pod opterećenjem), ne kriva kartica; sam projekt SE-375
 12/12 × 2, izolacija prolazi. Zapisano u BACKLOG-u kao otvoreno: brana treba čekati kadar, ne sekciju.
 
+**PRESUDA ZA ⑦ (Leon, 08.09. iza ponoći):** *„još uvijek scroll nije dobar na mobitelu. Može se scrollat ali jako teško, ne dopušta skrolanje još uvijek."* → **djelomično**: prvi put uopće skrola (teorija o konkurentu drži), ali nešto još otežava — NIJE istraženo (Leon: usage pun, compact). **CI je CRVEN na vrhu grane `fb49d4d`:** `tests/a11y.spec.js:42` „study page — sve sekcije" na iPhone-SE-375 (Playwright shard 1/2); **`e223b05` (⑤+⑥) je CI ZELEN** → uzrok je u ⑦-commitu (`body` fiksiran + `overflow: hidden`). Lokalno: 1× prošlo, uz `--repeat-each=2` **1 od 14 palo** — nestabilno ili stvarno, ne zna se koje axe-pravilo (nije pročitano). **Prije bilo kakvog mergea `feat/tinder-kadar`:** ili riješiti a11y uz ⑦, ili vratiti ⑦ (jedan commit). Kartice: **STOP do daljnjeg, sljedeća sesija = PROFIL (F2).**
+
 **Dalje: PROFIL (F2), sljedeća sesija** — Leonova riječ.
 
 ---

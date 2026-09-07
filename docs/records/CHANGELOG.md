@@ -17,7 +17,7 @@ dalje svojstvo nego **uklanja konkurenta**: `body` u modu kartica na dodiru = `p
 kojom modali na iOS-u zaključavaju stranicu — sam `overflow: hidden` ondje ne drži dodir, `position: fixed` drži), pa jedini skroler
 pod prstom ostaje naličje. Isti `body:has(…)` selektor koji već nulira treću rezervu; samo dok je mod aktivan, samo na dodiru, stolno
 bit-identično. Brana ⑬ u `flashcard-kadar.test.js` traži pravilo u izvoru (headless ga nikad ne bi tražio). Preflight EXIT 0, phone.spec.
-**Gdje se vidi:** `feat/tinder-kadar` (preview). **Ako ni ovo ne prođe na uređaju — nije CSS**, i onda je sonda jedini sljedeći korak.
+**Gdje se vidi:** `feat/tinder-kadar` (preview). **Ako ni ovo ne prođe na uređaju — nije CSS**, i onda je sonda jedini sljedeći korak. **PRESUDA ZA ⑦ (Leon, 08.09. iza ponoći):** *„još uvijek scroll nije dobar na mobitelu. Može se scrollat ali jako teško, ne dopušta skrolanje još uvijek."* → **djelomično**: prvi put uopće skrola (teorija o konkurentu drži), ali nešto još otežava — NIJE istraženo (Leon: usage pun, compact). **CI je CRVEN na vrhu grane `fb49d4d`:** `tests/a11y.spec.js:42` „study page — sve sekcije" na iPhone-SE-375 (Playwright shard 1/2); **`e223b05` (⑤+⑥) je CI ZELEN** → uzrok je u ⑦-commitu (`body` fiksiran + `overflow: hidden`). Lokalno: 1× prošlo, uz `--repeat-each=2` **1 od 14 palo** — nestabilno ili stvarno, ne zna se koje axe-pravilo (nije pročitano). **Prije bilo kakvog mergea `feat/tinder-kadar`:** ili riješiti a11y uz ⑦, ili vratiti ⑦ (jedan commit). Kartice: **STOP do daljnjeg, sljedeća sesija = PROFIL (F2).**
 
 ## 2026-09-07 (OPUS) — **F1/12 ⑥: strelice ← → ostaju i na dodiru, jedan red ← ✕ ✓ → · skrol naličja PARKIRAN Leonovom odlukom**
 
