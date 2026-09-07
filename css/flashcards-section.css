@@ -826,6 +826,29 @@
 /* Povratak s naličja: prvo SKOK u 3D-okrenuto bez animacije (`.is-restoring`), pa tek onda
    animacija natrag — inače bi okret krenuo iz ravnog stanja i zavrtio se u krivu stranu. */
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard.is-restoring .flashcard-inner { transition: none; }
+
+/* ── F1/12 ⑤ — SKROLER BEZ 3D-KONTEKSTA IZNAD SEBE + STRANICA KOJA SE NE MIČE (Leon, iPhone, 07.09.) ──
+   ④ nije bilo dovoljno. Ovo je PRVI popravak izmjeren na uređaju, ne u headlessu: sa
+   `?bez=pany,perspektive,transformacije,overflowauto` naličje skrola, sa samim `?bez=pany` NE.
+   Dakle uzrok NIJE `touch-action: pan-y` (koji palac treba, F1/9) nego nešto od preostala tri —
+   a ta tri gestu ne diraju, pa se u MIRU gase. `.flashcard` u miru ionako nema transform
+   (`transformacije` je gasio samo prijelaz), pa stvarna kandidata ostaju dva:
+   - `perspective: 1000px` na omotaču = 3D-kontekst iznad skrolera i kad je kartica ravna (④).
+     Seli na SAMU KARTICU i SAMO DOK OKRET TRAJE — `.flashcard-inner` joj je izravno dijete, pa
+     okret dobiva istu dubinu, a u miru iznad naličja nema ničega trodimenzionalnog.
+   - `overflow-y: auto` → `scroll`; iOS ne crta klizač, razlike na ekranu nema.
+   ⚠️ KOJI OD DVA, NIJE IZDVOJENO — svaki daljnji A/B košta Leonov pokušaj na telefonu, a nijedan
+   nema cijenu u mirovanju. Prekidači na `fix/kadar-nalicje` ostaju za naknadno izdvajanje.
+   Uz to `overscroll-behavior: contain`: kad naličje dođe do kraja, pomak se NE lanča na stranicu
+   (korijen uz to ne odskače — `variables.css`). Leon: „STRANICA MORA BITI STATIČNA".
+   Stolno bit-identično: sve pod `dodir`. */
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-wrapper { perspective: none; }
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard.is-turning { perspective: 1000px; }
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front,
+:root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back {
+    overflow-y: scroll;
+    overscroll-behavior: contain;
+}
 /* Prazno objašnjenje: do ① prazna kutija s ispunom; od ① `display: none`; od ④ NULTA STAVKA U
    TOKU (v. dolje, uz auto-margine) — jer nosi donju auto-marginu centriranja. */
 

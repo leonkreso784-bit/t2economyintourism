@@ -5,6 +5,47 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-07 (OPUS) — F1/12 ⑤: skrol naličja — prvi put presuđuje uređaj, ne headless · „stranica mora biti statična"
+
+Leon je na previewu `feat/tinder-kadar` (s ③ + ④) ponovno dobio naličje koje ne skrola: *„opet se ne
+može skrolat, ovo postaje frustrirajuće"*. Treći put isti kvar, i **treći put moji popravci su bili
+hipoteze provjerene na motoru koji kvar ne reproducira** — to je prvo što sam mu ovaj put rekao,
+umjesto četvrtog popravka.
+
+**Što se promijenilo u metodi.** Prije koda sam pročitao svaki sloj između prsta i skrolera na toj
+grani: JS ne blokira (`swipeMove` na prvi okomit pomak pušta pokazivač; `no-zoom.js` otkazuje
+`touchmove` samo uz `scale !== 1`, jedan prst je 1), CSS dopušta (`pan-y` cijelim lancem, `overflow-y:
+auto`, ④ ravna kartica). Na papiru mora skrolati → papir više ne vrijedi → **jedan link sa sva četiri
+prekidača** s fix-grane, umjesto četiri koja je Leon prošli put preskočio.
+
+**Dva mjerenja s uređaja, oba Leonova:**
+① `?bez=pany,perspektive,transformacije,overflowauto` → **skrola**; palac mrtav (očekivano, `pany`).
+② `?bez=pany` → **NE skrola**, i „cijela stranica se pomiče" — uz zahtjev velikim slovima:
+   **STRANICA MORA BITI STATIČNA.**
+Zaključak iz ①+②: `touch-action` nije krivac (i gesta ga treba); krivac je među `perspektive` /
+`transformacije` / `overflowauto`, koji gestu ne diraju. `.flashcard` u miru nema transform, pa
+ostaju **perspektiva omotača** i **`overflow: auto`** — oba ugašena u miru, pod `dodir`.
+**Nisam izdvojio koji je od dva.** Svjesno: svaki daljnji A/B košta Leonov pokušaj na telefonu, a
+nijedan od dva nema cijenu u mirovanju. Prekidači ostaju na `fix/kadar-nalicje`; izdvajanje kad
+bude jeftino.
+
+**Statična stranica** = `overscroll-behavior: none` (iOS rubber-band i lančanje), uz `touch-action`
+reset u `variables.css` kao ista politika (ADR-034). Prvi pokušaj na `:root` pao je na
+`uredjaj.test.js`: izvadak tokena za pravne stranice uzima gole `:root…{}` blokove — brana je
+uhvatila točno ono za što postoji. Pravilo je na `body` (presedan: `pages.css`).
+
+**Usput razjašnjeno Leonu:** „strelice razbacane" na previewu mjerenja = stara grana (F1/12 živi na
+tinder-grani, ne na `feat/racun-r1`); „nema izbornika kraja špila" na fix-grani = ista stvar u
+drugom smjeru (F1/13 ② je na tinder-grani). Popravak zato ide NA `feat/tinder-kadar`, da jedan
+preview nosi sve troje.
+
+**Gate:** build:css · bump · preflight EXIT 0 (nakon popravka selektora) · `flashcard-swipe.spec`
+(CDP-dodir, Chromium) — palac na Chromiumu i dalje radi s perspektivom samo u okretu.
+**Gdje se vidi:** grana `feat/tinder-kadar` (preview). **Presuda:** Leonov iPhone, četiri stvari
+odjednom — skrol naličja · palac · statična stranica · izbornik kraja.
+
+---
+
 ## 2026-09-06 (FABLE, voditelj) — BUG-045: SW nikad nije spremao runtime assete — klon prekasno, `catch(() => {})` ga gutao
 
 Leon (anketa 2): *sljedeće = BUG-045*. Agent F1/13 ga je našao kao „skinut predmet se offline otvori prazan" i sumnjao na dual-read. **Mjerenje umjesto sumnje** (Chromium, sonde u `Temp/claude/b45`): ① hladno otvaranje bez mreže — u istoj stranici, u NOVOJ stranici, odmah po „ready" i poslije zagrijavanja — sve **prolazi** (61 kartica); ② `Network.setCacheDisabled` (iOS-ov izbačen HTTP-keš) — i dalje prolazi, jer SW-ov vlastiti `fetch` još ide kroz HTTP-keš; ③ **popis SW-keša poslije online posjeta + skidanja: samo 4 unosa precachea, nijedna skripta**; ④ evaluacija UNUTAR živog SW-a: `odgovoriNaAsset` s lažnim eventom SPREMA, s pravim eventom ne; ⑤ presretanje `spremi()` na pravom zahtjevu: `bodyUsed=true` u trenutku klona, `TypeError: Response body is already used`, progutan. **Uzrok:** `res.clone()` unutar `.then(caches.open)`, dakle NAKON što je `respondWith` odgovor predao stranici. Od F3 3A SW nije spremio nijedan runtime asset; offline je „radio" na HTTP-kešu preglednika, koji iOS izbacuje — pa paket načina učenja na iPhoneu nije imao odakle doći, `SokratLoad.paket('study')` pada prije loadera, špil 0. **Popravak** (`sw.js` klon sinkrono u `spremi()` i navigaciji · `offline-store.js` „ready" tek kad `zagrijNacineUcenja()` završi · `zagrijPoslijeDeploya()` jednom po verziji, jer novi SW briše runtime keš a polica preživi). **Brane:** `sw.spec` +1 (mjeri KEŠ: obje zatražene skripte u `sokrat-cache-*`) · `offline-study.spec` +1 (hladna nova stranica + CDP bez HTTP-keša + offline → špil > 0) · `offline-store.test.js` 26 → 29. Obrnuta provjera na starom `sw.js`: v. brojke u commit-poruci. **Pouka:** brana koja mjeri ISHOD koji može dati i drugi mehanizam (HTTP-keš) ne mjeri SW; `catch(() => {})` na „ne smije srušiti odgovor" putu sakrio je tri tjedna mrtav keš. **Svjesno NE:** CDN (KaTeX, supabase-js) ostaje izvan SW-a (cross-origin) — kartice bez KaTeX-a offline rade, formule ne; zapisano u BACKLOG-u.

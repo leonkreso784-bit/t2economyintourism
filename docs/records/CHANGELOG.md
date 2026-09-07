@@ -5,6 +5,25 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-07 (OPUS) — **F1/12 ⑤: skrol naličja na iPhoneu — prvi popravak IZMJEREN NA UREĐAJU, ne u headlessu · stranica se ne miče (`overscroll-behavior`)**
+
+Tri prethodna „popravka" (③ centriranje, ④ ravna kartica u miru, afordanca) bila su hipoteze testirane na motorima koji kvar ne
+vide — headless Chromium i WebKit oba skrolaju naličje. Ovaj put presudio je Leonov iPhone kroz prekidače s `fix/kadar-nalicje`:
+**`?bez=pany,perspektive,transformacije,overflowauto` → naličje SKROLA** (palac mrtav, očekivano: `pany` vraća reset pa preglednik
+uzme vodoravni pomak); **`?bez=pany` sam → NE skrola**, stranica se miče. Zaključak: uzrok NIJE `touch-action: pan-y` (koji gesta
+treba, F1/9) nego nešto od preostala tri — a ta tri gestu ne diraju, pa se u stanju mirovanja gase. `.flashcard` u miru ionako nema
+transform (`transformacije` je gasio samo prijelaz) → dva stvarna kandidata: **`perspective: 1000px` na omotaču** (3D-kontekst iznad
+skrolera i kad je kartica ravna) i **`overflow-y: auto`**. Popravak (sve pod `dodir`, stolno bit-identično): `perspective` seli s omotača na
+**samu karticu i samo dok okret traje** (`.is-turning`; `.flashcard-inner` joj je izravno dijete, dubina okreta ista) · `overflow-y: scroll` ·
+`overscroll-behavior: contain` na stranama. **⚠️ Koji od dva je krivac NIJE izdvojeno** — svaki daljnji A/B košta Leonov pokušaj, a
+nijedan od dva nema cijenu u mirovanju; prekidači ostaju na fix-grani za naknadno izdvajanje.
+**Uz to, Leonov zahtjev (07.09., velikim slovima): „STRANICA MORA BITI STATIČNA, NE SMIJE SE NIKAKO POMICAT."** iOS odskoči cijelu
+stranicu na svako povlačenje koje nijedan skroler ne uzme, i kad stranica nema što skrolati — to je ono što je vidio kao „cijela stranica
+se miče". `:root[data-uredjaj~="dodir"] body { overscroll-behavior: none }` u `variables.css`, uz `touch-action` reset (ista politika,
+ADR-034). Na `body`, ne na `:root`: prvi pokušaj je pao na `uredjaj.test.js` — `build:css` vadi gole `:root…{}` blokove kao tokene za
+pravne stranice, i pravilo sučelja bi završilo ondje. Preflight EXIT 0, build:css, bump. **Gdje se vidi:** grana `feat/tinder-kadar`
+(preview); produkcija `c53c28c` bez toga. **Presuda je Leonova, na iPhoneu:** skrol naličja · palac · statična stranica · izbornik kraja špila.
+
 ## 2026-09-06 (FABLE) — **BUG-045: Service Worker nikad nije spremao runtime assete — skinut predmet se offline otvarao prazan**
 
 - **Uzrok (izmjeren u živom SW-u):** `res.clone()` unutar `.then(caches.open)` stizao je kad je stranica već potrošila tijelo → `TypeError`, progutan `.catch(() => {})`. Od F3 3A u runtime kešu je bio samo precache; „offline radi" značilo je „HTTP-keš preglednika ima datoteke", a iOS ga izbacuje.

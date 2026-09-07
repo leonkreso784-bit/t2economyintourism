@@ -85,6 +85,19 @@
     touch-action: pan-x pan-y;
 }
 
+/* F1/12 ⑤ (Leon, iPhone, 2026-09-07: „STRANICA MORA BITI STATIČNA, NE SMIJE SE NIKAKO POMICAT"):
+   iOS ODSKOČI (rubber-band) cijelu stranicu na svako povlačenje koje nijedan skroler ne uzme —
+   i to je ono što Leon vidi kao „cijela stranica se miče", i kad stranica nema što skrolati.
+   Ista politika kao `touch-action` gore (ADR-034: stranica na prste ne reagira ničim što nije
+   skrol sadržaja), isti dom. Samo na dodiru, da stolno ostane bit-identično (`css:diff`).
+   Skrol sadržaja ostaje netaknut — gasi se samo pomak PREKO ruba i lančanje. Safari od 16.0;
+   stariji motor pravilo ne zna i ponaša se kao do sada.
+   ⚠️ Na `body`, ne na `:root`: `build:css` VADI gole `:root…{}` blokove kao tokene za pravne
+   stranice, a `uredjaj.test.js` pada ako ondje završi pravilo sučelja (prvi pokušaj je pao baš
+   tako). `body` se na viewport propagira po specifikaciji (kao `overflow`), isti oblik kao
+   `pages.css` (`:root[…dodir] body:has(…)`). */
+:root[data-uredjaj~="dodir"] body { overscroll-behavior: none; }
+
 img {
     max-width: 100%;
     height: auto;
