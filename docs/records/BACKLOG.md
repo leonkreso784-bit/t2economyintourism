@@ -22,6 +22,12 @@
 > nepotrebnog posla“.** Ako se ikad otvori: **prvi korak je sonda `?dijagnoza=kartica`** (fix-grana `51f3ff7`, bilježi
 > dodir/pokazivač/skrol s `defaultPrevented` i element pod prstom), **ne peti popravak**. Otvoreno pitanje koje sonda
 > razlučuje: uzima li iOS dodir kao skrol STRANICE (hit-test promašuje skroler) ili ga uopće ne uzima kao skrol.
+>
+> **Uz to, rub brane (07.09.):** `phone.spec` ⑩ na **852 px polegnuto** (projekt iPhone-SE-375) mjeri karticu
+> **659 od 734 px = 89,8–90,0 %** — točno na pragu. Pala jednom u punoj vrtnji, prošla u izolaciji 3× i u
+> drugoj punoj vrtnji; osnovna verzija bez ⑥ isto prolazi. Ne popravljati prag ni karticu „na oko“: ili
+> izmjeriti gdje polegnuti gubi tih ~75 px (852 − 2×59 sigurnih = 734, kartica 659), ili zapisati polegnuti
+> kao svjesnu iznimku s brojkom. Dok se ne odluči, jedan crveni ⑩ na 852 px u punoj vrtnji = ovaj flake, ne regresija.
 
 ### 🔴 LEONOVI NALAZI S UREDAJA — 2026-09-04 (nedirnuto, ceka svoj red)
 
