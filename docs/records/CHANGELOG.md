@@ -5,6 +5,37 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+### 2026-09-08 — **Traka dobiva dva odredišta; „Počni učiti" obrisan** (F2/0)
+
+#### Promijenjeno
+- **Gore stoje „Moji materijali" i profil, a CTA „Počni učiti" je obrisan** (Leon: *„najbeskorisnije
+  smeće koje zauzima prostor gore. Gore treba biti profil i UGC."*). CTA je bio **duplikat** — i bez
+  njega landing nosi tri `.start-trigger`-a, a kartica „Kreni učiti" stoji ≈400 px ispod trake.
+  ⚠️ **Ovo OKREĆE T2**, koji je „Moje materijale" odande maknuo (*„taj gumb je na landingu i na profilu
+  i to je DOVOLJNO"*); komentar u `css/topbar.css` koji je to tvrdio je prepisan, ne zaobiđen.
+- **Zatvorena je cijena zapisana u specu §9.6:** iz unutrašnjosti aplikacije (katalog, lekcija, učenje,
+  Studio) u vlastito gradivo se išlo SAMO preko landinga ili profila. Sad se ide izravno, sa svake stranice.
+- **S CTA-om je otišao i prag od 360 px** — postojao je samo zato što je engleski „Start studying"
+  (126 px) prelijevao traku ondje gdje je hrvatski (103 px) nije.
+
+#### Popravljeno
+- **Gumbi u traci se na telefonu mogu pogoditi prstom: 44×44 px** (bilo **35×40** i **32×40**, izmjereno
+  na 320/360/375/393/430). Kvar je **stariji od ove cigle** — `#authNavBtn` je takav i na produkciji —
+  ali se dotad nije vidio jer je traka imala jedan gumb koji se rijetko tapka. Visina stane u traku od
+  56 px, pa `--chrome-h` i budžet kroma (T3) ostaju netaknuti.
+- **`check:docs` više ne pada u svježem klonu** (preneseno s parkirane grane, `3bfe40a`): gitignoriran
+  artefakt `tests/.auth/admin.json` nije duh-datoteka. ⚠️ Bez ovoga `main` **danas ne prolazi preflight**.
+
+#### Brane
+- **`tests/layout-guard.spec.js` je PREPISAN, ne obrisan.** Stara tvrdnja je čuvala `.topbar-cta`; nova
+  čuva ono zbog čega je nastala (BUG-029): **nijedan par vidljivih gumba u traci se ne preklapa**, na 33
+  širine × 2 jezika. Stari test taj kvar zapravo ne bi uhvatio — mjerio je vlastiti okvir jednog gumba,
+  a preklop je odnos dvaju. **Obrnuto provjereno:** ubačen `margin-left: -20px` → brana crvena na točnoj
+  tvrdnji („gumbi u traci se preklapaju @ 320px / en"), pa vraćeno → zelena.
+- Ulaz u katalog (vrata u herou) traži se sad **bezuvjetno**, na svakoj širini — prije samo ispod praga.
+- `a11y` je uhvatio pravi kvar: ispod 559 px oznaka odlazi pa je gumb ostao **bez pristupačnog imena**
+  (`button-name`, critical). Ime i vidljivi tekst od sada čitaju **isti ključ** `lnav.materials`.
+
 ## 2026-09-05 (FABLE) — **F1/8 ②: hover na mišu se naoruža tek prvim pomakom** (ljepljivi hover zatvoren na oba ulaza; BUG-044 riješen)
 
 ### Popravljeno

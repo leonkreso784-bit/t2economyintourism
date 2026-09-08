@@ -7585,30 +7585,6 @@ body.no-pathbar {
   font-size: 0.8rem;
   letter-spacing: 0.04em;
 }
-.topbar-cta {
-  display: none;
-  font: inherit;
-  font-size: 0.875rem;
-  font-weight: 600;
-  line-height: 1;
-  white-space: nowrap;
-  color: var(--color-on-brand);
-  background: var(--color-brand-500);
-  border: 1px solid var(--color-brand-500);
-  border-radius: var(--radius-full);
-  padding: 0.6rem 1.1rem;
-  cursor: pointer;
-  transition: var(--transition);
-}
-@media (hover: hover) {
-  :where(:root:not([data-hover-paused])) .topbar-cta:hover {
-    background: var(--color-brand-400);
-    border-color: var(--color-brand-400);
-  }
-}
-body.on-landing .topbar-cta {
-  display: inline-flex;
-}
 .topbar-iconbtn {
   width: 40px;
   height: 40px;
@@ -7725,16 +7701,14 @@ body.no-pathbar .pathbar {
     display: none;
   }
   .topbar-btn {
+    min-width: 44px;
+    height: 44px;
     padding: 0 0.6rem;
+    justify-content: center;
   }
 }
 @media (max-width: 639px) {
   .topbar-logo .logo-text {
-    display: none;
-  }
-}
-@media (max-width: 359px) {
-  body.on-landing .topbar-cta {
     display: none;
   }
 }

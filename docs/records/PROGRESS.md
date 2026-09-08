@@ -5,6 +5,39 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-08 (OPUS) — F2/0: traka dobiva dva odredišta („Moji materijali" + profil), CTA obrisan
+
+**Povod je Leonov, i jasan:** *„ovaj gumb počni učiti je najbeskorisnije smeće koje zauzima prostor gore.
+Gore treba biti profil i UGC."* Provjereno prije dodirivanja koda: CTA je doista bio duplikat — landing
+nosi **tri** `.start-trigger`-a, a kartica „Kreni učiti" stoji ≈400 px ispod same trake.
+
+**Ovo je okrenuta odluka, ne previd.** Cigla T2 je „Moje materijale" iz trake maknula Leonovim riječima
+(*„taj gumb je na landingu i na profilu i to je DOVOLJNO"*), a `css/topbar.css` je nosio komentar da ulaz
+u vlastito gradivo NE stoji u traci nigdje. Taj je komentar **prepisan**, jer je danas neistinit; razlog
+za promjenu je što profil upravo postaje pravo odredište (F2), pa traka više ne vodi u pododjeljak
+postavki. Usput je time zatvorena cijena koju je spec §9.6 zapisao kao svjesnu.
+
+**Dvije stvari koje su ispale iz mjerenja, ne iz razmišljanja:**
+1. **Gumb je na telefonu ostao bez imena.** Ispod 559 px `.topbar-btn-label` ima `display: none`, ikona je
+   `aria-hidden` → axe `button-name`, **critical, na svih 7 a11y površina**. Popravak veže `aria-label` na
+   ISTI ključ kao vidljivi tekst, pa se ne mogu razići ni nakon promjene jezika.
+2. **Dodir je bio premali: 35×40 i 32×40 px.** Izmjereno na pet širina, ne procijenjeno. Kvar je stariji
+   od ove cigle (profil je takav i na produkciji), ali dva odredišta gore znače da su to sad vrata u sve.
+   Sad 44×44; stane u traku od 56 px pa budžet kroma ostaje netaknut.
+
+**Uzgred nađeno:** `main` **danas ne prolazi `check:docs`** — pada na `tests/.auth/admin.json`, artefaktu
+koji `test:authed` tek proizvede. Popravak postoji od 06.09. ali je ostao na parkiranoj grani; prenesen je
+ovamo (`3bfe40a` → `5233a0a`) jer bez njega nijedan preflight na ovoj grani ne bi bio istinit.
+
+**Dokazi:** `preflight` EXIT 0 · `a11y` 7/7 · `layout-guard` + `phone.spec` + `landing` = **43 prošlo, 0 palo**
+· dodir izmjeren 44×44 na 320/360/375/393/430 · **obrnuta provjera brane**: ubačen preklop → crveno na
+točnoj tvrdnji, vraćeno → zeleno.
+
+**Slijedi:** F2 profil — zid vlastitog sadržaja (ADR-029 ostaje: radionica i profil su dvije površine
+nad istim sadržajem), zasebna tablica identiteta, rez F2/3 na tri cigle.
+
+---
+
 ## 2026-09-05 (FABLE) — F1/8 ② isporučen: hover na mišu se naoruža tek prvim pomakom (JS pauza + CSS prefiks + sonda + 28 tvrdnji)
 
 Leon: *„pregledaj i analiziraj sve i kreni na sljedeću ciglu"* → F1/8 ② po planu iz memorije. **Nalaz koji plan

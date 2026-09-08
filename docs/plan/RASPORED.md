@@ -99,21 +99,56 @@ nema trzanja. To je jedini prihvatljiv dokaz; mjera na razvojnom stroju je donja
 Nastavak bloka koji je R1 otvorio. **Profil i `css/profile.css` su ista površina**, pa cigla koja
 prepisuje profil nosi i njegov CSS — inače se ista datoteka prepisuje dvaput.
 
+### 🎯 Oblik profila je odlučen (Leon, 2026-09-08)
+
+*„Profil mora biti na isti način kao i Facebook, i privatni sadržaji koje korisnik radi; kasnije će se
+expandat da se može objavljivat sadržaj."*
+
+**Profil postaje ZID, radionica ostaje radionica — i to ne ruši ADR-029, nego ga izvodi.** Facebook sam
+radi oboje: objave stoje na profilu, ali ih pišeš i slažeš drugdje. Isto se preslikava ovdje:
+
+| površina | uloga | što je unutra |
+|---|---|---|
+| `#profile-page` | **tko si i što si napravio** | naslovna, avatar, ime, opis, brojke, **zid materijala**, pa postavke |
+| `#materials-page` | **gdje to gradiš** | polica (skinuto) + stablo mapa + uređivanje |
+
+⚠️ **ADR-029 ostaje netaknut**: vlastito gradivo je i dalje **ravnopravno odredište**, ne pododjeljak
+profila. Od 2026-09-08 ima i **ulaz u traci na svakoj stranici** (F2/0), pa je istaknutije nego ikad.
+
+**Zid je gotovo besplatan:** `nodes` već nosi `name`, `icon`, `color`, `updated_at`, `kind='study'` — kartice
+zida dobivaju izgled bez ijednog novog stupca (boja se ionako nasljeđuje od sekcije, ADR-025).
+
+⚠️ **Identitet NE SMIJE u tablicu `profiles`.** Ona ima točno `user_id · role · created_at` i iz nje čita
+`is_admin()`, kojeg zovu RLS-politike. Dvije zamke: ① politika za samo-uređivanje daje korisniku pravo da
+si upiše `role = 'admin'` osim ako se to izričito zabrani; ② F7 traži **javno čitanje** profila, a javna
+`SELECT`-politika nad `profiles` odala bi **tko su administratori**. Zato ime/opis/slike idu u **zasebnu
+tablicu javnog identiteta**, uz upis kroz `SECURITY DEFINER` RPC (kao svaki upis u ADR-024).
+`user_metadata` (gdje `display_name` stoji danas) radi savršeno dok si sam sebi publika, ali je u tvom
+JWT-u i **nitko ga drugi ne može pročitati** — pa F7 ionako traži tablicu; jeftinije je sad.
+
+**Javnog pogleda na profil NEMA u F2.** Danas nitko ne može vidjeti tuđi profil; zid je privatan, a
+javnu stranu otvara **F7 objava** (ADR-035/036). U F2 se gradi oblik, ne publika.
+
 | cigla | posao | gotovo kad |
 |---|---|---|
-| **F2/1** | **Tema prati račun.** `localStorage` ostaje **prvi kadar** (odluka mora pasti prije crtanja, `boot.js`), račun postaje izvor istine koji ga pri prijavi pregazi i pri promjeni upiše. | …korisnik postavi temu na jednom uređaju i zatekne ju na drugom čim se prijavi |
-| **F2/2** | **Profilna slika** — bucket po obrascu `node-images`: vlasnički prefiks + RLS. | …korisnik stavi svoju sliku i vidi ju odmah, a tuđi prefiks mu je nedostupan |
-| **F2/3** | **Uređivanje profila + `css/profile.css`, `auth.css`, `pages.css`, `consent.css`, `legal.css`, `home-section.css`, `sidebar.css`** (bivši C6). | …korisnik promijeni ime i vidi svoj profil onako kako ga vide drugi |
+| **F2/0** ✅ | **Traka dobiva dva odredišta** — „Moji materijali" + profil; CTA „Počni učiti" obrisan (duplikat: tri `.start-trigger`-a ostaju na landingu). Dodir dignut na 44×44. **Isporučeno 2026-09-08.** | …u vlastito gradivo se ide sa **svake** stranice, a ne samo s landinga ili iz profila |
+| **F2/1** | **Tema prati račun.** `localStorage` ostaje **prvi kadar** (odluka mora pasti prije crtanja, `boot.js`), račun postaje izvor istine koji ga pri prijavi pregazi i pri promjeni upiše. **Odjava BRIŠE lokalni izbor** (Leon, 2026-09-06: *„tuđi izbor ne smije preživjeti odjavu"*) — račun ga čuva za iduću prijavu. Birač: natpis samo **„Automatski"**, bez sufiksa s trenutnom temom (§6/7). | …korisnik postavi temu na jednom uređaju i zatekne ju na drugom čim se prijavi |
+| **F2/2** | **Profilna slika + naslovna** — bucket po obrascu `node-images`: vlasnički prefiks + RLS. | …korisnik stavi svoju sliku i vidi ju odmah, a tuđi prefiks mu je nedostupan |
+| **F2/3a** | **Kostur zida** — naslovna, avatar, ime, opis, `[Uredi profil]`; postavke (tema, lozinka, GDPR, odjava) sele **ispod** zida. | …profil se otvara kao stranica o korisniku, a ne kao popis postavki |
+| **F2/3b** | **Spremište identiteta** — zasebna tablica + `SECURITY DEFINER` RPC koji **nikad ne dira `role`**. | …korisnik promijeni ime i opis, a `profiles.role` ostaje nedodirljiv (obrnuto provjereno) |
+| **F2/3c** | **CSS profila i susjeda** — `css/profile.css`, `auth.css`, `pages.css`, `consent.css`, `legal.css`, `home-section.css`, `sidebar.css` (bivši C6). | …profil izgleda kao ostatak platforme |
 | **F2/4** | **Mail-obavijesti** — Edge Function (ADR-016), pristanak iz upitnika, odjava jednim klikom iz maila, admin-forma. Prvi segment: FMTU. | …primi mail o novom predmetu SAMO ako je pristao, i odjavi se jednim klikom iz samog maila |
+| **F2/5** | **Zid + radionica** — rešetka vlastitih materijala na profilu (`nodes`, `kind='study'`) i `css/my-materials.css` za policu i stablo. Isti sadržaj, dva pogleda. | …korisnik otvori svoj profil i vidi što je napravio, a materijali izgledaju kao proizvod, ne kao administracija |
 
-**Otvoreno pitanje za F2/1 (čeka Leona):** što s **neprijavljenim** korisnikom na tuđem uređaju —
-ostaje li mu zadnja lokalna tema ili se vraća na zadanu? Bez odgovora se cigla može izvesti, ali s
-pretpostavkom koja se poslije mijenja teško.
+⚠️ **F2/3 je namjerno razrezan na tri.** Kao jedna cigla dirao bi zajednički šav (sedam CSS datoteka +
+novo spremište + novi raspored) — točno onaj oblik zahvata na kojem je tempo već dvaput pukao. Commit
+ide nakon svake, gate na svakoj.
 
 **Ne popušta ni ovdje:** identitet isključivo iz JWT-a (`getUser()`) · `service_role` samo u Edge
 Functions · RLS i `publish_document` nedirnuti · osobni graditelj ostaje zaseban otok.
 
-**Izlaz iz faze:** cijeli krug računa radi na pravom uređaju — prijava, tema, slika, ime, mail.
+**Izlaz iz faze:** cijeli krug računa radi na pravom uređaju — prijava, tema, slika, ime, mail —
+i korisnik otvori **svoj profil** i ondje vidi što je napravio, u obliku koji ne izgleda kao alat.
 
 ---
 

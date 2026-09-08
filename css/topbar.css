@@ -191,39 +191,14 @@ body.no-pathbar {
     letter-spacing: 0.04em;
 }
 
-/* Jedina radnja landinga. Drugdje je nema — poziv „počni učiti" na stranici na kojoj
-   već učiš je šum. ⚠️ Tekst na ispuni marke IDE KROZ `--color-on-brand`, nikad `white`:
-   promjena palete pomaknula je marku u svijetlu kredu i bijelo na njoj daje 1.68
-   (§7.7, tvrda zabrana #1 u `check:palette`). */
-.topbar-cta {
-    display: none;
-    font: inherit;
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1;
-    white-space: nowrap;
-    color: var(--color-on-brand);
-    background: var(--color-brand-500);
-    border: 1px solid var(--color-brand-500);
-    border-radius: var(--radius-full);
-    padding: 0.6rem 1.1rem;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.topbar-cta:hover {
-    background: var(--color-brand-400);
-    border-color: var(--color-brand-400);
-}
-
-body.on-landing .topbar-cta {
-    display: inline-flex;
-}
-
-/* T2: pravilo `body.on-landing #topbarMaterials { display: none }` je obrisano jer je
-   gumb obrisan. Odluka koju je nosilo i dalje vrijedi i sada je općenitija: ulaz u
-   vlastito gradivo NE stoji u traci NIGDJE (ne samo na landingu) — ondje su to VRATA U
-   HEROU, a dva ulaza na isti ekran natječu se međusobno. */
+/* ⚠️ `.topbar-cta` („Počni učiti") JE OBRISAN 2026-09-08, sa svojim pravilima i svojim
+   pragom od 360 px. Leon: *„ovaj gumb počni učiti je najbeskorisnije smeće koje zauzima
+   prostor gore. Gore treba biti profil i UGC."* Bio je DUPLIKAT: landing nosi tri
+   `.start-trigger`-a, a kartica „Kreni učiti" stoji ≈400 px ispod trake.
+   S njim je nestala i posebna iznimka za uske ekrane — ona je postojala samo zato što je
+   engleski „Start studying" (126 px) prelijevao traku ondje gdje je hrvatski (103 px) nije.
+   ⚠️ Ovim je pao i T2-ov zaključak da ulaz u vlastito gradivo NE stoji u traci nigdje:
+   od danas stoji, i to na SVAKOJ stranici (`#topbarMaterials`, `index.html`). */
 
 .topbar-iconbtn {
     width: 40px;
@@ -380,8 +355,19 @@ body.no-pathbar .pathbar {
         display: none;
     }
 
+    /* ⚠️ PRST, NE OKO (izmjereno 2026-09-08, ne procijenjeno). Bez ovoga su gumbi u traci
+       na telefonu bili 35x40 i 32x40 px — ispod 44x44 koje traži dodir. Kvar je STARIJI od
+       ove cigle (`#authNavBtn` je takav bio i na produkciji), ali se dotad nije vidio jer je
+       traka imala jedan gumb koji se rijetko tapka; od trenutka kad su gore DVA ODREDIŠTA,
+       to su vrata u sve i moraju se moći pogoditi.
+       Visina 44 stane u traku od 56 px (`--topbar-h` u ovom istom mediju), pa se `--chrome-h`
+       NE mijenja i budžet kroma (T3) ostaje netaknut — inače bi popravak dodira platio
+       visinom sadržaja. */
     .topbar-btn {
+        min-width: 44px;
+        height: 44px;
         padding: 0 0.6rem;
+        justify-content: center;
     }
 
 }
@@ -397,19 +383,6 @@ body.no-pathbar .pathbar {
    uvijek — on je konstanta marke (§7.13). */
 @media (max-width: 639px) {
     .topbar-logo .logo-text {
-        display: none;
-    }
-}
-
-/* Ispod 360 px CTA odlazi iz trake (Leon, 2026-08-19). Nije ušteda piksela nego ista
-   odluka koja je odande maknula „Moje materijale": ulaz na landing su VRATA U HEROU.
-   Landing ima tri `.start-trigger`-a (traka, vrata, podnožje), pa se ovim ne gubi
-   nijedan put — gubi se onaj koji je na 320 px gurao „Predmete" pod prekidač jezika.
-   ⚠️ Mjera je izmjerena, ne odabrana: engleski „Start studying" je 126 px, hrvatski
-   „Počni učiti" 103 — razlika 23 px, a preklop je bio 21. Zato je kvar postojao SAMO
-   na engleskom, koji je zadani jezik sučelja. */
-@media (max-width: 359px) {
-    body.on-landing .topbar-cta {
         display: none;
     }
 }
