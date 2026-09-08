@@ -159,6 +159,33 @@ sharding: 533 testa u jednom procesu je uzrok, a ne simptom.
 run: build **0.4 min** · shardovi **11.2 / 10.0 min** — stari job je bio 97 % Playwright.
 Rast suite se apsorbira **novim shardom** u matrici, nikad većim timeoutom.
 
+## ⚠️ BRISES LI ELEMENT SUCELJA, NE TRAZI NJEGOVO IME (2026-09-08, F2/0)
+
+Obrisan je CTA `#topbarStart` / `.topbar-cta` iz trake. Prije koda je potrazeno tko ga
+spominje — `grep -rn 'topbarStart\|topbar-cta'` — i naden je **jedan** spec. Pokrenut je taj
+spec i jos nekoliko po dojmu: **43 prosla, 0 palo.** Tvrdnja je bila istinita i beskorisna.
+
+**CI je zatim oborio OBA sharda** na `tests/materials-entry.spec.js`, koji taj gumb gada kao
+`.topbar .start-trigger`, a susjednu odluku kao `.topbar [data-goto-materials]`. **Nijedno od
+toga nije sadrzavalo ime elementa**, pa ga pretraga nije mogla vidjeti — a lokalni izbor
+testova bio je izveden iz te iste slijepe pretrage. Zeleno lokalno nije bilo lazno; bilo je
+**odgovor na krivo pitanje**.
+
+**Pravilo:** element sucelja se ne trazi po imenu nego po **svemu cime se moze pogoditi** —
+id, klasa, atribut, uloga, tekst — a zatim se vrte **svi testovi koji spominju tu povrsinu**:
+
+```bash
+grep -rln 'topbar' tests/          # 9 datoteka, ne 2
+npx playwright test $(grep -rln 'topbar' tests/*.spec.js | tr '
+' ' ')
+```
+
+Isto vrijedi obrnuto: ako brana tvrdi da neceg NEMA (`toBe(0)`), ona **kodira odluku**, ne
+svojstvo. Kad se odluka okrene, takva se brana ne brise nego **okrece** — i to je prilika da
+postane stroza (`toBe(0)` → `toBe(1)`, jer „tocno jedan" cuva i od dvostrukog ulaza).
+
+---
+
 ## ⚠️ ZELENA BRANA NIJE DOKAZ AKO NE GLEDA (2026-08-31, C5b/0)
 
 Prethodno poglavlje govori o brani koja **promijeni ishod** bez promjene u proizvodu. Ovo je
