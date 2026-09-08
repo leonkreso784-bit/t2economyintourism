@@ -34,9 +34,8 @@ ovamo (`3bfe40a` → `5233a0a`) jer bez njega nijedan preflight na ovoj grani ne
 (CTA kojeg više nema) i `expect('.topbar [data-goto-materials]').toBe(0)`. **Moja pretraga referenci
 tražila je `topbarStart` i `topbar-cta`, a taj spec ne koristi nijedno** — pa ga nisam ni pokrenuo.
 Lokalnih „43 prošlo, 0 palo" bilo je istinito, ali o podskupu koji je odabrala ta ista slijepa pretraga.
-**Pouka za idući put:** kad se briše element sučelja, ne traže se njegova IMENA nego sve što ga može
-gađati — klasa, id, atribut, uloga — i pokreću se SVI testovi koji spominju tu površinu (`grep -rln
-'topbar' tests/` daje devet datoteka, ne dvije). Tvrdnje su prepisane u istom duhu kao layout-guard:
+**Pouka je zapisana ondje gdje se čita** — `docs/workflow/TESTING.md` §„Brišeš li element sučelja, ne
+traži njegovo ime" (ADR-027: jedna činjenica, jedno mjesto). Tvrdnje su prepisane u duhu layout-guarda:
 ne obrisane nego okrenute, i strože — ulaz u traci mora biti **točno jedan**, na svakoj stranici, i
 mora stvarno voditi na policu iz dubine aplikacije.
 
