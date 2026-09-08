@@ -528,6 +528,8 @@ function mjeri(page, rub, faza) {
                 ? donjaTraka.getBoundingClientRect().top
                 : vh - R.bottom;
             const kr = kartica ? kartica.getBoundingClientRect() : null;
+            const sudEl = document.querySelector('.flashcard-controls');
+            const sudR = (sudEl && stvarnoVidljiv(sudEl)) ? sudEl.getBoundingClientRect() : null;
             const docH = document.documentElement.scrollHeight;
             kadar = {
                 dostupnoH: Math.round(navVrh - kraj),
@@ -541,8 +543,16 @@ function mjeri(page, rub, faza) {
                 // kršenjem susjedne tvrdnje. U portretu su bočni rubovi 0 i mjera je ista.
                 sigurnaW: Math.round(vw - R.left - R.right),
                 docH: Math.round(docH),
-                // Stranica koja skrola u modu kartica znači da kadar nije kadar nego isječak.
-                skrola: docH > vh + 1
+                // ⚠️ OKRENUTO U ⑨ (08.09.). Do tada je ovdje stajalo `skrola: docH > vh + 1` —
+                // „stranica koja skrola znači da kadar nije kadar nego isječak". To je vrijedilo
+                // dok je kartica imala strop; ⑨ je strop namjerno ukinuo (duga kartica raste, a
+                // skrol se vraća dokumentu), pa bi ta mjera od danas prijavljivala DIZAJN.
+                // Ono što je ostalo istina i mora se mjeriti: sud (← ✕ ✓ →) je JEDINI dio koji
+                // ne smije otići s ekrana — Leon: „bitno je samo da su strelice, ✕ i kvačica na
+                // dobrom mjestu na telefonu". Ljepljivost mu to jamči; ovdje se to PROVJERAVA.
+                sudDno: sudR ? Math.round(sudR.bottom) : 0,
+                sudVrh: sudR ? Math.round(sudR.top) : 0,
+                sudIzvan: !sudR || sudR.bottom > vh + 1 || sudR.top < -1
             };
         }
 

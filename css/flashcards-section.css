@@ -580,6 +580,17 @@
 /* `display: flex` gore bi pregazio UA pravilo za `[hidden]` — isti trik kao kod sjena špila. */
 .deck-end[hidden] { display: none; }
 
+/* ⚠️ ⑨: NA DODIRU JE IZBORNIK KRAJA ŠPILA ZASLON, NE NALJEPNICA NA KARTICI. Dok je kartica imala
+   strop, „mjesto kartice“ (`inset: 0` nad omotačem) bilo je isto što i vidljivi pojas. Od ⑨ kartica
+   smije prerasti ekran — a ploča bi rasla s njom i odnijela svoja tri gumba ispod ruba (izmjereno:
+   dokument 514 px na ekranu od 393, polegnut telefon). Zato je na dodiru vezana za POJAS KOJI SE
+   VIDI: od kroma do donje trake, s istim `--kartica-dolje` koji ljuska drži kao rezervu. Stolno
+   ostaje netaknuto — ondje kartica i dalje ima strop. */
+:root[data-uredjaj~="dodir"] #flashcards.active .deck-end {
+    position: fixed;
+    inset: var(--chrome-h) 0.75rem var(--kartica-dolje, var(--safe-bottom));
+}
+
 .deck-end-title {
     margin: 0;
     font-size: 1.05rem;
@@ -659,7 +670,10 @@
    pojavila preko landinga. Stupac se zato i ne ponavlja — `.study-page.active` je već
    `display: flex; flex-direction: column` (isto mjesto), ovdje se dodaje samo visina. */
 :root[data-uredjaj~="dodir"] .study-page.active:has(#flashcards.active) {
-    height: calc(100dvh - var(--chrome-h));
+    /* ⚠️ ⑨ (Leon, 08.09.): `height` → `min-height`. Kadar je i dalje TOČNO jedan ekran za karticu
+       koja stane, a duga ga smije PRERASTI. Do ⑨ je ovdje stajao strop, pa je višak morao skrolati
+       unutar kartice — a taj unutarnji skroler je bio uzrok svih prijava o gesti (v. ⑨ niže). */
+    min-height: calc(100dvh - var(--chrome-h));
     /* Rezervu za donju traku drži OVA ljuska. Zatečeni `calc(80px + safe)` je bio gruba
        procjena te iste trake; ostane li uz mjerenu, dvije se rezerve ZBROJE i stranica
        proskrola za razliku. */
@@ -688,11 +702,14 @@
        (tehnika kojom modali na iOS-u zaključavaju stranicu — `overflow: hidden` sam ondje ne drži
        dodir, `position: fixed` drži), pa jedini skroler pod prstom ostaje naličje. Vrijedi samo dok
        je mod kartica aktivan (`:has`), samo na dodiru; stolno bit-identično. Napuštanjem moda tijelo
-       se vraća, a `switchSection()` ionako skrola na vrh. Ako ni ovo ne prođe na uređaju, nije CSS. */
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    min-height: 0;
+       se vraća, a `switchSection()` ionako skrola na vrh. Ako ni ovo ne prođe na uređaju, nije CSS.
+
+       ⚠️ ⑦ JE POVUČEN U ⑨ (Leon, 08.09.: „možemo li napraviti da uopće nema scrolla i da se cijela
+       stranica povećava … makni barem skrolanje lijevo-desno, ovo postaje JAKO frustrirajuće").
+       Zaključavanje je postojalo ISKLJUČIVO zato da dokument ne konkurira skroleru U KARTICI. Od ⑨
+       tog skrolera nema — skrol je vraćen dokumentu, jedinom kojem iOS nikad ne otima dodir — pa bi
+       fiksirano tijelo sad radilo suprotno od cilja: odrezalo bi dugu karticu bez ijednog načina da
+       joj se dođe do kraja. Ostaje samo ono što je i prije ⑦ bilo ovdje. */
 }
 
 /* Traka tabova (≥ 48rem) uzima svoje prije sadržaja; ispod tog praga je nema (`md:hidden`). */
@@ -700,8 +717,9 @@
 :root[data-uredjaj~="dodir"] .study-page.active:has(#flashcards.active) > .study-content {
     display: flex;
     flex-direction: column;
+    /* ⑨: `min-height: 0` (dopuštenje da se stisne ISPOD sadržaja) je van cijelim stupcem — višak
+       više ne ide u skroler nego u visinu dokumenta. */
     flex: 1 1 auto;
-    min-height: 0;
     padding-top: 0.5rem;
     /* v. gore: donji razmak je preselio na ljusku, ovdje bi se udvostručio */
     padding-bottom: 0;
@@ -715,7 +733,6 @@
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
-    min-height: 0;
 }
 
 /* 2. STUPAC KARTICE — h1 i statistika otpadaju, kartica uzima sav ostatak. */
@@ -723,7 +740,6 @@
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
-    min-height: 0;
     max-width: none;
     /* v. `.study-content` gore: razmak oko kartice drži SADRŽAJ, ovdje bi bio drugi po redu. */
     padding: 0;
@@ -746,16 +762,30 @@
     margin-top: 0;
 }
 
+
 /* 4. KARTICA — sve što je ostalo, po širini `vw − 24` (razmak sadržaja s obje strane). */
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-wrapper {
+    /* ⑨: stupac, da kartica u njemu može i ISPUNITI ekran (kratka) i PRERASTI ga (duga). Visina se
+       od ⑨ nigdje u ovom lancu ne izražava postotkom: postotak traži definitivnu visinu roditelja,
+       a nju od ⑨ nemaju ni ljuska ni omotač — `height: 100%` bi ovdje tiho pao na `auto`. */
+    display: flex;
+    flex-direction: column;
     flex: 1 1 auto;
-    min-height: 0;
     max-width: none;
     margin: 0 0 0.5rem;
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard {
-    height: 100%;
-    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    /* ⚠️ `min-height: auto`, NE `0`. Osnovno pravilo (C5a) drži pod od 280 px — smišljen za
+       karticu koja je JEDAN element na stranici, a u kadru je to pod ISPOD kojeg polegnut telefon
+       (393 px visine minus kromo, traka i sud = ~244 px) više ne stane, pa stranica proskrola i
+       kad sadržaja nema (izmjereno: dokument 514 na 393). `0` bi ga maknuo, ali bi ujedno ugasio
+       AUTOMATSKI minimum — kartica bi se opet smjela stisnuti ISPOD sadržaja, a `overflow: hidden`
+       na njoj znači da bi višak bio nevidljiv i nedosežan (to je bio kvar ③). `auto` skida pod, a
+       zadržava minimum po sadržaju. */
+    min-height: auto;
     /* `max-width` ladder (600/700/800/900 px) je pisan za karticu koja je jedan element na
        stranici; kadru je strop širina omotača. Bez ovoga je polegnuti telefon dobio 600 od
        852 px = 70 %. */
@@ -765,17 +795,21 @@
     margin: 0;
     padding: 0;
 }
-/* `minmax(0, 1fr)`, ne `auto`: red bi inače narastao do sadržaja i kartica bi probila kadar
-   umjesto da naličje skrola u sebi (BUG-013 grid-stack ostaje, samo dobiva strop). */
+/* ⑨ OKREĆE STROP U POD. `1fr` je `minmax(auto, 1fr)`: red ISPUNI slobodnu visinu kad sadržaja
+   ima malo, a NARASTE do sadržaja kad ga ima previše. Do ⑨ je ovdje bio `minmax(0, 1fr)` — strop
+   koji je višak tjerao u skroler unutar kartice, i time ga uopće stvarao. BUG-013 grid-stack
+   ostaje; obje strane dijele ISTU ćeliju, pa red naraste do više od njih i kartica se pri okretu
+   ne trza u visinu. */
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-inner {
-    height: 100%;
-    min-height: 0;
-    grid-template-rows: minmax(0, 1fr);
+    flex: 1 1 auto;
+    min-height: auto;
+    grid-template-rows: 1fr;
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front,
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back {
-    height: 100%;
-    min-height: 0;
+    /* ⑨: visine nema — obje su stavke iste ćelije mreže i rastežu se same (`stretch`). Pod od
+       280 px iz osnovnog pravila se skida iz istog razloga kao na kartici (v. gore). */
+    min-height: auto;
     padding: 1.25rem 1rem;
     /* ⚠️ F1/12 ③ (Leon s previewom, 2026-09-06): „Neke kartice su presječene i ne vidi se sve
        kao odgovor na mobitelu. To je veliki problem." Lice i naličje SU skroleri (`overflow-y:
@@ -885,10 +919,21 @@
    Stolno bit-identično: sve pod `dodir`. */
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-wrapper { perspective: none; }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard.is-turning { perspective: 1000px; }
+/* ⚠️ ⑨ — OVDJE JE DO 08.09. STAJAO `overflow-y: scroll` (+ `overscroll-behavior: contain`).
+   Van je zbog DRUGE OSI KOJU NITKO NIJE NAPISAO: čim jedna os prestane biti `visible`, CSS drugu
+   s `visible` sam prebaci na `auto` — pa je naličje bilo skroler i VODORAVNO, bez ijednog piksela
+   za skrolati. Preglednik zato na početku svake geste zaključa os NA TOM ELEMENTU i, uz
+   `touch-action: pan-y`, koso započetu gestu ne pusti nikamo do podizanja prsta. Bez unutarnjeg
+   skrolera te druge osi nema: gore-dolje je dokument (put kojem iOS nikad ne otima dodir),
+   lijevo-desno je isključivo naše, i nitko o istoj gesti ne presuđuje dvaput.
+   ⚠️ Stolno je NEDIRNUTO: ondje kartica ima strop (`max-width` ladder) i `overflow-y: auto` iz
+   osnovnog pravila, pa `oznaciPreljev()` i strelica „ima još" ondje i dalje imaju posla.
+   ⚠️ IZMJERENO: brisanje NIJE dovoljno. `overflow-y: auto` stoji i u OSNOVNOM pravilu lica i
+   naličja (gore, C5a), pa se bez izričitog gašenja ovdje sve vraća na `auto / auto` — sonda je to
+   pokazala prvim mjerenjem, s već obrisanim pravilom. Zato `visible`, i to na OBJE osi odjednom. */
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front,
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back {
-    overflow-y: scroll;
-    overscroll-behavior: contain;
+    overflow: visible;
 }
 /* Prazno objašnjenje: do ① prazna kutija s ispunom; od ① `display: none`; od ④ NULTA STAVKA U
    TOKU (v. dolje, uz auto-margine) — jer nosi donju auto-marginu centriranja. */
@@ -922,8 +967,18 @@
     /* Razmak ispod kartice drži omotač, rezervu za donju traku ljuska — treći razmak bi
        kadru uzeo 16 px koje kartica traži na najužem ekranu (320 × 568). */
     margin: 0;
-    padding: 0;
     max-width: none;
+    /* ⑨: SUD JE UVIJEK POD PALCEM. Čim kartica smije prerasti ekran (⑨), ovaj bi red na dugoj
+       kartici pao ispod ruba — a to je JEDINO što je Leon tražio da ostane na mjestu („bitno je
+       samo da su strelice, ✕ i kvačica na dobrom mjestu na telefonu"). Zato je ljepljiv, a
+       `bottom` čita ISTI `--kartica-dolje` koji ljuska drži kao rezervu — pa sjedne TOČNO iznad
+       donje trake, ne ispod nje. Ispuna je puna jer sadržaj kartice sad prolazi ISPOD reda; 0,25rem
+       razmaka je sve što kadar smije dati (v. gore — 16 px bi uzelo kartici na 320 × 568). */
+    position: sticky;
+    bottom: var(--kartica-dolje, var(--safe-bottom));
+    z-index: 2;
+    padding: 0.25rem 0;
+    background: var(--color-surface-0);
     /* ⑥ (Leon, 2026-09-07): ČETIRI gumba u redu i na dodiru → razmak mora stati na 320 px:
        2 × 64 + 2 × 44 = 216 px gumba + 3 × 20 = 276 px < 320. S 2,5 rem razmaka (do ⑥, dva
        gumba) bilo bi 336 px i red bi preljevao ekran — phone-gate mjeri baš vodoravni preljev. */

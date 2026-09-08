@@ -37,6 +37,17 @@
 > **razdvojiti ih po licu** — lice nosi gestu, naličje samo skrol — dakle redizajn, ne šesto svojstvo. Sonda više nije prvi korak;
 > odgovor je poznat.
 >
+> **⑨ (08.09.) — UZROK JE UKLONJEN, NE ZAOBIĐEN.** Gornji zapis ostaje jer nosi ZAŠTO, ali njegov
+> zaključak („jedini put je razdvojiti gestu i skrol po licu = redizajn") je **ispunjen s druge strane**:
+> Leon je predložio da se makne SKROL, a ne gesta. Kartica na dodiru više nije skroler (`overflow: visible`,
+> `min-height: auto`, mreža `1fr` umjesto `minmax(0, 1fr)`, ljuska `min-height` umjesto `height`), tijelo je
+> otključano (⑦ povučen), a skrol pripada dokumentu — jedinom kojem iOS ne otima dodir. **Fantomske
+> vodoravne osi time nema**, pa nema ni dva suca nad istom gestom. Cijena je da stranica u modu kartica
+> SMIJE skrolati; zato je red ← ✕ ✓ → ljepljiv, a izbornik kraja špila vezan za vidljivi pojas.
+> Izmjereno: duga kartica (3357 znakova) 1495 px, dokument 1769, sud nepomičan na 725–789 px kroz cijeli
+> skrol; kratka kartica dokument 852 = točno ekran. Brana ⑩ u `phone.spec.js` više ne tvrdi „stranica ne
+> skrola" nego **„sud ostaje na ekranu"**.
+
 > **⭐ OTVORENO PITANJE PROIZVODA (Leon, 08.09.): „nije bilo opcije na kraju da se pomiješaju kartice i opet se počne ispočetka."**
 > Izmjereno: izbornik kraja špila **radi**, ali se otvara tek **nakon zadnje kartice** (56. sud u marketingu M1; ploča 369×578 px,
 > sva tri gumba na mjestu). Usred špila danas NEMA načina da se promiješa ili krene ispočetka. Prijedlog: mala stalna kontrola uz

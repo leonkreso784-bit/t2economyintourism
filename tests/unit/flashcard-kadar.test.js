@@ -82,8 +82,14 @@ const ljuska = SEL.filter((s) => s.indexOf('.study-page') >= 0);
 tvrdi(ljuska.length > 0, 'kadar uopće dira ljusku stranice učenja', ljuska.length);
 const bezActive = ljuska.filter((s) => s.indexOf('.study-page.active') < 0);
 tvrdi(bezActive.length === 0, 'svako pravilo nad ljuskom traži `.study-page.active` (inače se skrivena stranica pojavi preko landinga)', bezActive);
-tvrdi(/\.study-page\.active:has\(#flashcards\.active\)\s*\{[^}]*height:\s*calc\(100dvh - var\(--chrome-h\)\)/.test(BLOK),
-    'visina ljuske = `calc(100dvh - var(--chrome-h))` — gornji kromo se ČITA IZ TOKENA, ne mjeri');
+// ⚠️ OKRENUTO U ⑨ (08.09.): do tada je ovdje stajao `height`, dakle STROP — kadar je bio točno
+// jedan ekran i višak je morao skrolati UNUTAR kartice. Od ⑨ je isti izraz `min-height`: kratka
+// kartica i dalje dobiva točno ekran, duga ga smije prerasti i pustiti dokument da skrola.
+// Regex traži `min-height` IMENOM, jer bi ga `height:` (podniz) inače lažno prošao.
+tvrdi(/\.study-page\.active:has\(#flashcards\.active\)\s*\{[^}]*min-height:\s*calc\(100dvh - var\(--chrome-h\)\)/.test(BLOK),
+    'ljuska ima POD (`min-height: calc(100dvh - var(--chrome-h))`) — kadar za kratku, rast za dugu karticu');
+tvrdi(!/\.study-page\.active:has\(#flashcards\.active\)\s*\{[^}]*[^-]height:\s*calc\(100dvh/.test(BLOK),
+    'ljuska NEMA strop (`height: calc(100dvh …)`) — inače se višak opet vraća u skroler unutar kartice');
 tvrdi(!/@media[^{]*\((pointer|hover|any-pointer|any-hover)\s*:/.test(BLOK),
     'kadar ne pita medij za pointer/hover — to je ugovor F1/12 ⓪ (atribut, ne `@media`)');
 
@@ -157,8 +163,11 @@ tvrdi(/\.flashcard,\s*\.flashcard-front,\s*\.flashcard-back\s*\{\s*touch-action:
     'F1/9 nalaz ①: `touch-action: pan-y` stoji na kartici I na oba skrolera (inače gesta dobije `pointercancel`)');
 tvrdi(/\.flashcard-inner\s*\{[^}]*display:\s*grid/.test(fcBezKom),
     'BUG-013: grid-stack naličja je netaknut');
-tvrdi(/grid-template-rows:\s*minmax\(0,\s*1fr\)/.test(BLOK),
-    'kadar redu daje STROP (`minmax(0, 1fr)`) — inače kartica naraste do sadržaja umjesto da naličje skrola u sebi');
+// ⚠️ OKRENUTO U ⑨: `minmax(0, 1fr)` je bio STROP i time JEDINI razlog zašto je unutar kartice
+// uopće postojao skroler. Sad je `1fr` (= `minmax(auto, 1fr)`): red ispuni slobodnu visinu kad je
+// sadržaja malo, a naraste do sadržaja kad ga ima previše.
+tvrdi(/grid-template-rows:\s*1fr\s*;/.test(BLOK) && !/grid-template-rows:\s*minmax\(0/.test(BLOK),
+    'kadar redu daje POD (`1fr`), ne strop (`minmax(0, 1fr)`) — kartica naraste do sadržaja');
 // F1/12 ③ (Leon s previewom: „neke kartice su presječene i ne vidi se sve kao odgovor"):
 // centriranje NE SMIJE ovisiti o `safe` — motor koji ga ne zna zadrži `center`, a centriran
 // preljev na kartici sa stropom ostavlja vrh odgovora nedosežnim. Umjesto ključa: auto-margine.
@@ -280,16 +289,23 @@ tvrdi(!/\.control-btn\.(prev|next)[^{]*\{[^}]*display:\s*none/.test(BLOK),
     tvrdi(ukupno <= 320 - 32, 'red ← ✕ ✓ → stane na 320 px uz 16 px ruba sa svake strane', { ukupno });
 }
 
-console.log('\n── ⑬ ZAKLJUČANA STRANICA u modu kartica na dodiru (⑦, Leon 07.09.) ──────────');
-// Konkurent skroleru naličja na iOS-u je DOKUMENT (trake koje se skupljaju, rubber-band). Tijelo se
-// zato u modu kartica fiksira na viewport; nestane li to, naličje na iPhoneu opet „miješa se sa
-// stranicom", a nijedan headless motor to ne vidi — zato tvrdnja stoji u izvoru.
+console.log('\n── ⑬ TIJELO JE OTKLJUČANO — skrol pripada DOKUMENTU (⑨ povlači ⑦) ──────────');
+// ⚠️ OKRENUTO 08.09. Do ⑨ se ovdje tvrdilo suprotno: tijelo je `position: fixed; inset: 0;
+// overflow: hidden` (⑦), da dokument ne konkurira skroleru U KARTICI. Od ⑨ tog skrolera nema —
+// gore-dolje je posao dokumenta, jedinog kojem iOS nikad ne otima dodir. Fiksirano tijelo bi sad
+// bilo suprotno od cilja: duga kartica bi bila odrezana bez ijednog načina da joj se dođe do kraja.
+// Ostaje sve što je pravilo imalo PRIJE ⑦ (rezerva 0, prijelaz samo za temu).
 {
     const CSS_SVE = require('fs').readFileSync(require('path').join(__dirname, '..', '..', 'css', 'flashcards-section.css'), 'utf8');
     const lock = CSS_SVE.match(/:root\[data-uredjaj~="dodir"\] body:has\(\.study-page\.active #flashcards\.active\) \{([^}]*)\}/);
     tvrdi(!!lock, 'postoji pravilo za `body` dok je mod kartica aktivan (samo na dodiru)');
-    tvrdi(lock && /position:\s*fixed/.test(lock[1]) && /inset:\s*0/.test(lock[1]) && /overflow:\s*hidden/.test(lock[1]),
-        'tijelo je `position: fixed; inset: 0; overflow: hidden` — dokument nema s čime konkurirati naličju');
+    // ⚠️ Komentar U PRAVILU nabraja `position: fixed` i `overflow: hidden` — objasnjava zasto ih
+    // VISE NEMA. Tvrdnja zato gleda KOD bez komentara, inace bi vjecno bila crvena.
+    const kod = lock ? lock[1].replace(/\/\*[\s\S]*?\*\//g, '') : '';
+    tvrdi(lock && !/position:\s*fixed/.test(kod) && !/overflow:\s*hidden/.test(kod),
+        'tijelo NIJE fiksirano ni skriveno — dokument SMIJE skrolati, jer duga kartica ga prerasta');
+    tvrdi(lock && /padding-bottom:\s*0/.test(kod),
+        'treća rezerva za donju traku je i dalje nulirana (rezervu drži ljuska, ne tijelo)');
 }
 // ⚠️ F1/13: gumbi se vežu PO TABLICI `AKCIJE` (id u markupu → radnja u tablici), pa uz id više
 // ne stoji ime funkcije. Ovdje se i dalje tvrdi ISTO: sva četiri gumba su živa i vezana.
@@ -300,6 +316,38 @@ tvrdi(/gumb: 'btnCorrect'/.test(FC_JS) && /gumb: 'btnWrong'/.test(FC_JS)
     'klik na ✓ / ✕ ide kroz POSTOJEĆI put upisa (`markKnown`/`markUnknown`), bez dvojnika');
 tvrdi(/function naTipku\(e\)/.test(FC_JS) && /'ArrowRight'/.test(FC_JS),
     'tipke iz F1/9 (→ ← razmak) su netaknute');
+
+console.log('\n── ⑭ KARTICA NIJE SKROLER, SUD JE LJEPLJIV (⑨, Leon 08.09.) ─────────────');
+/* Leon: „možemo li napraviti da uopće nema scrolla i da se cijela stranica povećava … makni barem
+   skrolanje lijevo-desno jer ovo postaje JAKO frustrirajuće."
+   Uzrok je bio DRUGA OS KOJU NITKO NIJE NAPISAO: čim jedna os prestane biti `visible`, CSS drugu
+   s `visible` prebaci na `auto` — pa je naličje bilo skroler i vodoravno, bez ijednog piksela za
+   skrolati, a preglednik na njemu zaključava os na početku svake geste. Zato ⑨ traži `visible`
+   IZRIČITO: brisanje pravila nije dovoljno, `overflow-y: auto` stoji i u osnovnom pravilu kartice
+   (izmjereno sondom — prvo mjerenje s obrisanim pravilom vratilo je `auto / auto`). */
+{
+    const lica = BLOK.match(/\.flashcard-front,\s*[^{]*\.flashcard-back \{([^}]*)\}/g) || [];
+    const sve = lica.join('\n');
+    tvrdi(/overflow:\s*visible/.test(sve),
+        'lice i naličje su `overflow: visible` — nema skrolera u kartici, pa ni druge osi koju nitko nije tražio');
+    tvrdi(!/overflow-y:\s*(scroll|auto)/.test(sve) && !/overscroll-behavior/.test(sve),
+        'u kadru nema `overflow-y: scroll/auto` ni `overscroll-behavior` — inače se fantomska vodoravna os vraća');
+    tvrdi(!/height:\s*100%/.test(BLOK),
+        'nigdje u kadru nema postotne visine — postotak traži definitivnu visinu roditelja, a od ⑨ je nemaju ni ljuska ni omotač');
+}
+/* Sud mora ostati pod palcem i kad kartica preraste ekran — to je jedino što je Leon tražio da
+   OSTANE na mjestu. Ljepljivost je jedini način koji ne traži drugu kopiju visine donje trake:
+   `bottom` čita ISTI `--kartica-dolje` koji ljuska drži kao rezervu. */
+{
+    const red = BLOK.match(/#flashcards\.active \.flashcard-controls \{([^}]*)\}/g) || [];
+    const sve = red.join('\n');
+    tvrdi(/position:\s*sticky/.test(sve),
+        'red ← ✕ ✓ → je ljepljiv — duga kartica ga ne gura ispod ruba ekrana');
+    tvrdi(/bottom:\s*var\(--kartica-dolje/.test(sve),
+        '`bottom` čita `--kartica-dolje` (ISTI izmjereni broj koji drži ljuska) — sud sjedne IZNAD donje trake, ne ispod nje');
+    tvrdi(/background:\s*var\(--/.test(sve),
+        'ljepljivi red ima punu ispunu iz tokena — sadržaj kartice prolazi ispod njega');
+}
 
 console.log('\n── ⑧ BUNDLE: `npm run build:css` je pokrenut ─────────────────────────────');
 tvrdi(BUNDLE.indexOf('.study-page.active:has(#flashcards.active)') >= 0,

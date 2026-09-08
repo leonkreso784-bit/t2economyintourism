@@ -267,18 +267,26 @@ test.describe('F1/13 — palac lista, gumbi sude (dodir)', () => {
         await expect(page.locator('#btnKrajPonovi')).toBeDisabled();
         await expect(page.locator('#deckEndHint')).toBeVisible();
 
-        // ⚠️ DOKAZ da kadar (F1/12 ⑩) ostaje netaknut: ploča je U OKVIRU KARTICE i stranica ne skrola.
+        /* ⚠️ OKRENUTO U ⑨ (08.09.), i to je NALAZ. Do ⑨ je ovdje stajalo „ploča je U OKVIRU KARTICE
+           i stranica ne skrola" — a to je vrijedilo samo zato što je kartica imala strop, pa su
+           „mjesto kartice" i „vidljivi pojas" bili ISTI pravokutnik. Od ⑨ kartica smije prerasti
+           ekran; da je ploča ostala vezana za nju, rasla bi s njom i odnijela svoja tri gumba ispod
+           ruba — izmjereno u polegnutom telefonu: dokument 514 px na ekranu od 393. Tvrdnja je zato
+           prešla na ono što STVARNO mora vrijediti kad stranica smije rasti: izbornik je CIJEL na
+           ekranu i sva tri gumba se daju dohvatiti bez skrolanja. „Stranica ne skrola" više NIJE
+           tvrdnja ovog testa — ⑨ ju je namjerno ukinuo. */
         const okvir = await page.evaluate(() => {
-            const w = document.querySelector('.flashcard-wrapper').getBoundingClientRect();
             const p = document.getElementById('deckEnd').getBoundingClientRect();
+            const naEkranu = (r) => r.top >= -1 && r.bottom <= window.innerHeight + 1
+                && r.left >= -1 && r.right <= window.innerWidth + 1;
             return {
-                izvan: [p.top < w.top - 1, p.bottom > w.bottom + 1, p.left < w.left - 1, p.right > w.right + 1],
-                doc: document.documentElement.scrollHeight, vh: window.innerHeight,
+                izvanEkrana: [p.top < -1, p.bottom > window.innerHeight + 1, p.left < -1, p.right > window.innerWidth + 1],
+                gumbi: Array.from(document.querySelectorAll('.deck-end-btn')).map((g) => naEkranu(g.getBoundingClientRect())),
                 modalOpen: document.body.classList.contains('modal-open'),
             };
         });
-        expect(okvir.izvan).toEqual([false, false, false, false]);
-        expect(okvir.doc).toBeLessThanOrEqual(okvir.vh);
+        expect(okvir.izvanEkrana).toEqual([false, false, false, false]);
+        expect(okvir.gumbi).toEqual([true, true, true]);
         expect(okvir.modalOpen).toBe(false);
 
         // dok stoji, gesta ne dira špil
@@ -341,28 +349,96 @@ test.describe('F1/13 — palac lista, gumbi sude (dodir)', () => {
         await expect(page.locator('#knownCount')).toHaveText('0');
     });
 
-    test('protučinjenično: `touch-action` se čita na SKROLERU (lice/naličje), ne na kartici — reset ondje gasi gestu', async ({ page }) => {
-        // ① reset samo na `.flashcard` = ništa se ne mijenja: preglednik stane na prvom skroleru
-        //    (`.flashcard-front`, `overflow-y: auto`) i ondje još vidi `pan-y`. Zato pravilo mora stajati i na skrolerima.
+    /* ⑨ — DUGA KARTICA, end-to-end (Leon, 08.09.: „možemo li napraviti da uopće nema scrolla i da
+       se cijela stranica povećava … makni barem skrolanje lijevo-desno jer ovo postaje JAKO
+       frustrirajuće"). Sve ostale tvrdnje ove datoteke rade s karticama koje stanu na ekran — a ⑨
+       mijenja upravo ono što se događa kad NE stanu, pa bez ovog testa promjena nema branu na
+       pravom dodirnom profilu. Tekst se ubacuje kroz PRAVI put crtanja (`updateFlashcard`), ne u
+       DOM: inače bi test mjerio svoj vlastiti `innerHTML`, ne ono što korisnik dobije. */
+    test('⑨ duga kartica: stranica RASTE, u kartici nema skrolera, sud ostaje na ekranu', async ({ page }) => {
+        const prije = await page.evaluate(() => document.documentElement.scrollHeight);
+        await page.evaluate(() => {
+            const c = AppState.cards.deck[AppState.cards.index];
+            c.answer = 'Odgovor koji se ne da sazeti u jedan redak, pa kartica mora narasti. '.repeat(20);
+            c.explanation = 'Objasnjenje koje ide jos dalje i nosi primjer, broj i posljedicu. '.repeat(26);
+            updateFlashcard();
+        });
+        await page.waitForTimeout(250);
+        const m = await page.evaluate(() => {
+            const back = document.querySelector('.flashcard-back');
+            const cs = getComputedStyle(back);
+            return {
+                doc: document.documentElement.scrollHeight, vh: window.innerHeight,
+                overflow: cs.overflowX + '/' + cs.overflowY,
+                // ⚠️ OVO je bio kvar: druga os koju nitko nije napisao. Nula znači da je nema.
+                fantomskaOs: back.scrollWidth - back.clientWidth,
+                skrolUKartici: back.scrollHeight - back.clientHeight,
+            };
+        });
+        expect(m.overflow).toBe('visible/visible');
+        expect(m.fantomskaOs).toBe(0);
+        expect(m.skrolUKartici).toBe(0);
+        expect(m.doc).toBeGreaterThan(m.vh);        // skrol je preuzeo DOKUMENT
+        expect(m.doc).toBeGreaterThan(prije);       // i to zbog kartice, ne od prije
+        /* Sud mora ostati na ekranu na SVAKOM mjestu skrola — to je jedino što je Leon tražio da
+           stoji. ⚠️ Mjeriti SAMO na dnu ne dokazuje ništa: ondje je i običan (neljepljiv) red na
+           ekranu, jer je zadnji element stranice. Izmjereno: s `position: static` test na dnu
+           PROLAZI. Zato vrh (0) i sredina — ondje neljepljiv red pada ispod ruba. */
+        const naTri = [];
+        for (const gdje of ['vrh', 'sredina', 'dno']) {
+            await page.evaluate((g) => {
+                const max = document.documentElement.scrollHeight - window.innerHeight;
+                window.scrollTo(0, g === 'vrh' ? 0 : g === 'sredina' ? Math.round(max / 2) : max);
+            }, gdje);
+            await page.waitForTimeout(150);
+            naTri.push(await page.evaluate((g) => {
+                const r = document.querySelector('.flashcard-controls').getBoundingClientRect();
+                const ok = document.getElementById('btnCorrect').getBoundingClientRect();
+                const pod = document.elementFromPoint(ok.left + ok.width / 2, ok.top + ok.height / 2);
+                return { gdje: g, naEkranu: r.top >= -1 && r.bottom <= window.innerHeight + 1,
+                         dohvatljiv: !!(pod && pod.closest('#btnCorrect')) };
+            }, gdje));
+        }
+        expect(naTri).toEqual([
+            { gdje: 'vrh', naEkranu: true, dohvatljiv: true },
+            { gdje: 'sredina', naEkranu: true, dohvatljiv: true },
+            { gdje: 'dno', naEkranu: true, dohvatljiv: true },
+        ]);
+    });
+
+    /* ⚠️ OKRENUTO U ⑨ (08.09.), i to je NALAZ, ne održavanje testa. Do ⑨ su lice i naličje BILI
+       skroleri (`overflow-y: scroll`), pa je preglednik čitao `touch-action` do PRVOG skrolera i
+       ondje stao: reset na licu/naličju gasio je gestu, a reset na kartici nije značio ništa. Od ⑨
+       u kartici nema skrolera, pa se lanac čita sve do dokumenta, a vrijedi PRESJEK cijelog lanca.
+       Gesta je time ROBUSNIJA nego prije: preživi reset na bilo kojoj JEDNOJ karici lanca i umre
+       tek kad `pan-y` nestane sa SVIH — što je i dalje dokaz da pravilo nosi teret, samo drugi. */
+    test('protučinjenično: od ⑨ se `touch-action` čita KROZ LANAC — gestu gasi tek reset na SVIMA', async ({ page }) => {
+        // ① reset samo na `.flashcard`: lice još kaže `pan-y`, presjek ostaje `pan-y` → gesta živi
         await page.evaluate(() => { document.getElementById('flashcard').style.touchAction = 'pan-x pan-y'; });
         await povuci(page, 0.6);
         await sletjela(page);
         expect(await stanje(page)).toMatchObject({ index: 1, klase: [] });
-        // ② reset na licu i naličju = preglednik uzme vodoravni dodir za pomicanje → `pointercancel` → gesta ne radi
+        // ② reset samo na licu/naličju: DO ⑨ je gesta ovdje umirala; sad je drži kartica
         await page.evaluate(() => {
             document.getElementById('flashcard').style.removeProperty('touch-action');
             document.querySelectorAll('.flashcard-front, .flashcard-back').forEach((el) => { el.style.touchAction = 'pan-x pan-y'; });
         });
         await povuci(page, 0.6);
+        await sletjela(page);
+        expect(await stanje(page)).toMatchObject({ index: 2, klase: [] });
+        // ③ reset na CIJELOM lancu = preglednik uzme vodoravni dodir → `pointercancel` → gesta stane
+        await page.evaluate(() => { document.getElementById('flashcard').style.touchAction = 'pan-x pan-y'; });
+        await povuci(page, 0.6);
         await page.waitForTimeout(400);
-        expect(await stanje(page)).toMatchObject({ index: 1, known: [], unknown: [], klase: [] });
-        // ③ vraćeno: ista gesta opet lista
+        expect(await stanje(page)).toMatchObject({ index: 2, known: [], unknown: [], klase: [] });
+        // ④ vraćeno: ista gesta opet lista
         await page.evaluate(() => {
+            document.getElementById('flashcard').style.removeProperty('touch-action');
             document.querySelectorAll('.flashcard-front, .flashcard-back').forEach((el) => el.style.removeProperty('touch-action'));
         });
         await povuci(page, 0.6);
         await sletjela(page);
-        expect(await stanje(page)).toMatchObject({ index: 2 });
+        expect(await stanje(page)).toMatchObject({ index: 3 });
     });
 });
 

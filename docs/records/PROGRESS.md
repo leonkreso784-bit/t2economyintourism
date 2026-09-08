@@ -5,6 +5,53 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-08 (OPUS) — F1/12 ⑨: uzrok se ne zaobilazi nego uklanja — kartica prestaje biti skroler
+
+Leon, poslije previewa ⑧: *„možemo li napraviti da uopće nema scrolla i da se cijela stranica povećava
+kada je kartica koja ima previše znakova … makni barem skrolanje lijevo-desno jer ovo postaje JAKO
+frustrirajuće."* Prijedlog je tehnički čišći od svega što smo probali u ⑤–⑧, i to iz jednog razloga:
+**ako kartica nije skroler, nema se tko svađati s gestom.**
+
+**① Zašto je to isti nalaz kao ⑧, samo s druge strane.** ⑧ je izmjerio da naličje ima `overflow-x: auto`
+koji nitko nije napisao (CSS ga sam postavi čim druga os nije `visible`) i zapisao pravilo: *isti element
+ne može biti i okomiti skroler i vodoravna gesta; jedini put je razdvojiti ih.* Tada je razdvajanje
+značilo „premjesti gestu" = redizajn. Leon je predložio drugu polovicu istog reza: **premjesti SKROL** —
+s kartice na dokument, kojem iOS nikad ne otima dodir.
+
+**② Izvedba.** Šest izmjena u kadru, sve pod atributom uređaja: ljuska dobiva `min-height` umjesto
+`height`; mreža `1fr` umjesto `minmax(0, 1fr)`; lice/naličje `overflow: visible` + `min-height: auto`
+(pod od 280 px iz osnovnog pravila se skida, automatski minimum ostaje); tijelo se otključava (⑦ povučen);
+red sudova postaje ljepljiv; izbornik kraja špila se veže za vidljivi pojas.
+
+**③ Mjerenje (sonda, 393×852, kartica od 3357 znakova kroz `updateFlashcard`).** Duga: kartica
+578 → **1495 px**, dokument 852 → **1769** (skrola 917), skroler u kartici **`visible / visible`, nula na
+obje osi**, red ← ✕ ✓ → **725–789 px i prije i poslije 844 px skrola**, ✓ dohvatljiv pod prstom. Kratka:
+kartica 578, dokument **852 = točno ekran**. Dakle kadar je ostao kadar, a rast se događa samo kad treba.
+
+**④ Dvije greške koje je uhvatilo mjerenje, ne razmišljanje.**
+- **Brisanje pravila nije bilo dovoljno.** Maknuo sam `overflow-y: scroll` iz kadra i sonda je vratila
+  `auto / auto`: `overflow-y: auto` stoji i u OSNOVNOM pravilu kartice. Trebalo je izričito `visible`.
+- **Prvi e2e test je mjerio prazno.** Skrol sam provjeravao samo na dnu stranice — ondje je i neljepljiv
+  red na ekranu jer je zadnji element. S `position: static` je test **prolazio**. Sad mjeri vrh, sredinu i
+  dno; mutacija je crvena.
+
+**⑤ Tri brane su OKRENUTE, i to je nalaz, ne održavanje.** „Ljuska ima strop" → ima pod · „tijelo je
+zaključano (⑦)" → otključano je · phone-gate ⑩ „stranica ne skrola" → **„sud ostaje na ekranu"**. Zadnja
+je najvažnija: stara mjera bi od danas prijavljivala DIZAJN. Uz njih i protučinjenični test o
+`touch-action`: dok su lica bila skroleri, preglednik je lanac čitao do prvog skrolera i ondje stao (reset
+ondje je gasio gestu); od ⑨ se čita cijeli lanac do dokumenta, pa gesta **preživi** reset na bilo kojoj
+jednoj karici, a umire tek kad `pan-y` nestane sa svih. Gesta je time robusnija nego prije.
+
+**⑥ Rub koji je ⑨ otvorio i zatvorio.** U polegnutom telefonu (393 px visine) kartica više nije smjela
+pasti ispod osnovnih 280 px, pa je stranica skrolala i kad sadržaja nema (dokument 514). Popravak je
+`min-height: auto`, ne `0` — nula bi maknula pod, ali i automatski minimum, pa bi se sadržaj opet rezao
+pod `overflow: hidden` (to je bio kvar ③). Drugi rub: izbornik kraja špila je rastao s karticom i nosio
+gumbe ispod ruba; na dodiru je sad zaslon (`position: fixed` nad vidljivim pojasom), a tvrdnja u
+`flashcard-swipe.spec.js` mjeri **ekran**, ne više okvir kartice.
+
+**Brane:** `flashcard-kadar.test.js` 73/73 (dvije mutacije crvene) · `flashcard-swipe.spec.js` 41/41 na 4
+dodirna profila · `phone.spec.js` 12/12 · `uredjaj` + `a11y` 20/20 · `build:css` + `bump` · **preflight EXIT 0**.
+
 ## 2026-09-08 (OPUS) — F1/12 ⑧: gesta vs skrol — izmjeren razlog, popravljena naša polovica, druga polovica dokazano neizvediva bez redizajna
 
 Leon je sam opisao kvar točno: *„sustav ne prepoznaje kada je skrol a kada se dira sama kartica."* Sonda je to potvrdila u

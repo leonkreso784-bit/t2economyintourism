@@ -5,6 +5,48 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-08 (OPUS) — **F1/12 ⑨: kartica prestaje biti skroler, skrol se vraća dokumentu**
+
+Leon: *„možemo li napraviti da uopće nema scrolla i da se cijela stranica povećava kada je kartica koja
+ima previše znakova, jer skrolanje gore-dolje još uvijek ne radi dobro. Makni barem skrolanje lijevo-desno
+da funkcionira jer ovo postaje JAKO frustrirajuće."*
+
+⑧ je popravio našu polovicu (kosi pomak = skrol) i zapisao da drugu polovicu **ne rješava šesto svojstvo**
+nego samo razdvajanje geste i skrola. Leonov prijedlog je upravo to razdvajanje, samo s druge strane: ne
+premještati gestu, nego **maknuti skroler**. Time nestaje i fantomska vodoravna os koja je bila uzrok.
+
+**Što je izvedeno (sve pod `:root[data-uredjaj~="dodir"]`, stolno bit-identično):**
+- ljuska: `height: calc(100dvh − chrome)` → **`min-height`** — kadar za karticu koja stane, rast za onu koja ne stane;
+- mreža kartice: `minmax(0, 1fr)` → **`1fr`** (= `minmax(auto, 1fr)`) — strop postaje pod;
+- lice i naličje: **`overflow: visible`**, bez `overscroll-behavior`; pod od 280 px iz osnovnog pravila
+  se skida s **`min-height: auto`** (ne `0` — nula bi ugasila i automatski minimum, pa bi se sadržaj opet rezao);
+- **tijelo se otključava** — ⑦ (`position: fixed; inset: 0; overflow: hidden`) je postojao SAMO da dokument
+  ne konkurira skroleru u kartici, a tog skrolera više nema;
+- **red ← ✕ ✓ → postaje ljepljiv** (`position: sticky; bottom: var(--kartica-dolje)`) — inače bi ga duga
+  kartica gurnula ispod ruba, a to je jedino što je Leon tražio da ostane na mjestu;
+- **izbornik kraja špila je na dodiru vezan za vidljivi pojas** (`position: fixed`), a ne više za „mjesto
+  kartice" — inače bi na dugoj kartici rastao s njom i odnio svoja tri gumba ispod ruba.
+
+**Izmjereno (393×852, kartica od 3357 znakova kroz pravi put crtanja):** kartica 578 → **1495 px** ·
+dokument 852 → **1769 px** (skrola 917) · skroler u kartici **`visible / visible`, nula na obje osi** ·
+red ← ✕ ✓ → **725–789 px i prije i poslije 844 px skrola** · ✓ dohvatljiv pod prstom. Kratka kartica:
+kartica 578, dokument **852 = točno ekran** — kadar je ostao kadar.
+
+**Dvije stvari koje je ispravilo mjerenje, ne razmišljanje:** ① brisanje pravila NIJE bilo dovoljno —
+`overflow-y: auto` stoji i u osnovnom pravilu kartice, pa se sve vraćalo na `auto / auto` (sonda je to
+pokazala prvim mjerenjem); ② prvi e2e test je skrol mjerio SAMO na dnu, gdje je i neljepljiv red na ekranu
+— s `position: static` je **prolazio**. Mjeri se na vrhu, sredini i dnu.
+
+**Tri brane su OKRENUTE, jer su opisivale stari dizajn:** „ljuska ima strop" → ima pod · „tijelo je
+zaključano" → otključano je · phone-gate ⑩ „stranica ne skrola" → **„sud ostaje na ekranu"** (stara bi
+mjera od danas prijavljivala dizajn). Isto i protučinjenični test o `touch-action`: do ⑨ se čitao do prvog
+skrolera i ondje stao, od ⑨ se čita kroz cijeli lanac — **gesta je time robusnija**, umire tek kad `pan-y`
+nestane sa svih. Nova brana ⑭ (6 tvrdnji) + e2e test duge kartice na 4 dodirna profila.
+
+**Brane:** `flashcard-kadar.test.js` **73/73** (2 mutacije crvene) · `flashcard-swipe.spec.js` **41/41** ·
+`phone.spec.js` **12/12** · `uredjaj` + `a11y` **20/20** · e2e duge kartice obrnuto provjeren
+(`position: static` → crveno) · `build:css` + `bump` · **preflight EXIT 0**.
+
 ## 2026-09-08 (OPUS) — **F1/12 ⑧: kosi pomak je SKROL, ne gesta · izmjeren razlog zašto skrol ostaje težak · KARTICE ZATVORENE**
 
 Leon, s previewom: *„skrol gore-dolje još uvijek ne radi dobro. Razlog: sustav ne prepoznaje kada je skrol a kada se dira sama kartica

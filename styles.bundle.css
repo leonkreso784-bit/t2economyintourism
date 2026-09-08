@@ -2470,6 +2470,10 @@ sokrat-modal.sokrat-confirm-modal > * {
 .deck-end[hidden] {
   display: none;
 }
+:root[data-uredjaj~="dodir"] #flashcards.active .deck-end {
+  position: fixed;
+  inset: var(--chrome-h) 0.75rem var(--kartica-dolje, var(--safe-bottom));
+}
 .deck-end-title {
   margin: 0;
   font-size: 1.05rem;
@@ -2508,16 +2512,12 @@ sokrat-modal.sokrat-confirm-modal > * {
   text-align: center;
 }
 :root[data-uredjaj~="dodir"] .study-page.active:has(#flashcards.active) {
-  height: calc(100dvh - var(--chrome-h));
+  min-height: calc(100dvh - var(--chrome-h));
   padding-bottom: var(--kartica-dolje, var(--safe-bottom));
 }
 :root[data-uredjaj~="dodir"] body:has(.study-page.active #flashcards.active) {
   padding-bottom: 0;
   transition-property: background-color, color;
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-  min-height: 0;
 }
 :root[data-uredjaj~="dodir"] .study-page.active:has(#flashcards.active) > .study-nav {
   flex: 0 0 auto;
@@ -2526,7 +2526,6 @@ sokrat-modal.sokrat-confirm-modal > * {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  min-height: 0;
   padding-top: 0.5rem;
   padding-bottom: 0;
   padding-left: 0.75rem;
@@ -2536,13 +2535,11 @@ sokrat-modal.sokrat-confirm-modal > * {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  min-height: 0;
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-container {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  min-height: 0;
   max-width: none;
   padding: 0;
 }
@@ -2563,26 +2560,28 @@ sokrat-modal.sokrat-confirm-modal > * {
   margin-top: 0;
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-wrapper {
+  display: flex;
+  flex-direction: column;
   flex: 1 1 auto;
-  min-height: 0;
   max-width: none;
   margin: 0 0 0.5rem;
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard {
-  height: 100%;
-  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: auto;
   max-width: none;
   margin: 0;
   padding: 0;
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-inner {
-  height: 100%;
-  min-height: 0;
-  grid-template-rows: minmax(0, 1fr);
+  flex: 1 1 auto;
+  min-height: auto;
+  grid-template-rows: 1fr;
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front, :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back {
-  height: 100%;
-  min-height: 0;
+  min-height: auto;
   padding: 1.25rem 1rem;
   justify-content: flex-start;
 }
@@ -2650,8 +2649,7 @@ sokrat-modal.sokrat-confirm-modal > * {
   perspective: 1000px;
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front, :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-back {
-  overflow-y: scroll;
-  overscroll-behavior: contain;
+  overflow: visible;
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-front p {
   font-size: 1.15rem;
@@ -2673,8 +2671,12 @@ sokrat-modal.sokrat-confirm-modal > * {
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls {
   margin: 0;
-  padding: 0;
   max-width: none;
+  position: sticky;
+  bottom: var(--kartica-dolje, var(--safe-bottom));
+  z-index: 2;
+  padding: 0.25rem 0;
+  background: var(--color-surface-0);
   gap: 1.25rem;
 }
 :root[data-uredjaj~="dodir"] #flashcards.active .flashcard-controls .control-btn {

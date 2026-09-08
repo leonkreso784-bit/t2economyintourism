@@ -678,9 +678,19 @@ console.log('\n── ⑥ CSS + MARKUP: pan-y · špil desno · pečat samo u su
     tvrdi(/\.deck-end \{[^}]*position: absolute[^}]*inset: 0/.test(css), '.deck-end: `position: absolute; inset: 0` — točno mjesto kartice');
     tvrdi(/\.deck-end\[hidden\] \{ display: none/.test(css), '.deck-end[hidden] vraća `display: none` (flex bi pregazio UA pravilo)');
     tvrdi(/\.flashcard-wrapper \{[^}]*position: relative/.test(css), 'omotač je sidro (`position: relative`) — inače bi ploča bježala na stranicu');
+    /* ⚠️ SUŽENO U ⑨ (08.09.). Do tada je ovdje stajalo „nijedno pravilo izbornika nije pod atributom
+       uređaja". Namjera je ista i ostaje: na kraj špila se dolazi i strelicom, dakle na kompu, pa
+       izbornik ne smije postojati SAMO na dodiru. Ali ⑨ je dodao jedan dodirni override mjesta: kad
+       kartica smije prerasti ekran, ploča vezana za „mjesto kartice" raste s njom i odnese svoja tri
+       gumba ispod ruba (izmjereno u polegnutom telefonu: dokument 514 px na ekranu od 393), pa je na
+       dodiru vezana za vidljivi pojas. Tvrdnja zato više ne broji selektore nego traži ono što je
+       stvarno važno: ① izbornik postoji BEZ atributa uređaja i ② nijedno dodirno pravilo ga ne SKRIVA. */
     const deckSel = (css.match(/[^{}]*\.deck-end[^{}]*\{/g) || []).map((x) => x.replace('{', '').trim());
-    tvrdi(deckSel.length > 0 && deckSel.every((sel) => sel.indexOf(':root[data-uredjaj') < 0),
-        'nijedno pravilo izbornika nije pod atributom uređaja — na kraj špila se dolazi i strelicom → na kompu', deckSel);
+    tvrdi(deckSel.some((sel) => sel.indexOf(':root[data-uredjaj') < 0),
+        'izbornik postoji BEZ atributa uređaja — na kraj špila se dolazi i strelicom → na kompu', deckSel);
+    const dodirnaDeck = (css.match(/:root\[data-uredjaj~="dodir"\][^{}]*\.deck-end[^{}]*\{[^}]*\}/g) || []).join(' ');
+    tvrdi(!/display:\s*none/.test(dodirnaDeck) && !/visibility:\s*hidden/.test(dodirnaDeck),
+        'nijedno dodirno pravilo ne SKRIVA izbornik (override smije samo premjestiti ploču)', dodirnaDeck);
     tvrdi(css.indexOf('.deck-end-btn:disabled') >= 0, 'onemogućena radnja ima svoj izgled (ne skriva se)');
 }
 

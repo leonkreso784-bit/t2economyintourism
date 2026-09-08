@@ -167,9 +167,10 @@ test.beforeAll(async ({ browser }, testInfo) => {
                 NALAZI.kadar.push(gdje(r) + ' · kartica ' + k.karticaW + ' od ' + k.sigurnaW
                     + ' px sigurne širine = ' + pct(sirina) + ' %, traži se ' + pct(KADAR_MIN_SIRINA) + ' %');
             }
-            if (k.skrola) {
-                NALAZI.kadar.push(gdje(r) + ' · stranica u modu kartica SKROLA: dokument '
-                    + k.docH + ' px, ekran ' + m.vh + ' px');
+            if (k.sudIzvan) {
+                NALAZI.kadar.push(gdje(r) + ' · sud (← ✕ ✓ →) NIJE cijel na ekranu: '
+                    + k.sudVrh + '–' + k.sudDno + ' px na ekranu od ' + m.vh
+                    + ' px (dokument ' + k.docH + ')');
             }
         }
         m.namjestaj.forEach((x) => NALAZI.namjestaj.push(gdje(r) + ' · ' + x));
@@ -277,11 +278,18 @@ test('⑨ dodir ne zumira: nijedno tekstualno polje ispod 16 px (F1/10)', async 
     protivOsnovice('polja', 'NOVA polja ispod 16 px — iOS na dodir zumira (F1/10)');
 });
 
-test('⑩ u modu kartica kartica je EKRAN, a stranica ne skrola (F1/12)', async () => {
+test('⑩ u modu kartica kartica je EKRAN, a sud ostaje na ekranu (F1/12 ⑨)', async () => {
     // Tri mjere jedne stvari — „je li kartica kadar?": koliko dostupnog pojasa uzima, koliko
-    // širine, i skrola li stranica ispod nje. Nijedna sama ne bi bila dovoljna: kartica preko
-    // cijele širine koja je visoka 200 px je traka, a kartica koja ispunjava ekran ali gura
-    // stranicu u skrol znači da kadra nema — samo je pomaknut ispod ruba.
+    // širine, i je li sud (← ✕ ✓ →) cijel na ekranu.
+    //
+    // ⚠️ TREĆA MJERA JE OKRENUTA U ⑨ (08.09.), na Leonov zahtjev: „možemo li napraviti da uopće
+    // nema scrolla i da se cijela stranica povećava". Do ⑨ je ovdje stajalo „stranica ne skrola",
+    // i to je bilo točno JER je kartica imala strop, pa je višak morao skrolati unutar nje — a
+    // baš je taj unutarnji skroler bio uzrok svih prijava o gesti (imao je i vodoravnu os koju
+    // nitko nije napisao). ⑨ je strop ukinuo: duga kartica sad raste, dokument skrola, i to je
+    // DIZAJN, ne kvar — stara bi mjera od danas prijavljivala ispravno stanje. Ostaje ono što
+    // je i dalje istina i što je Leon jedino tražio da ostane na mjestu: sud se ne smije
+    // maknuti s ekrana. To jamči ljepljivost reda, a ova ga mjera provjerava na svakoj širini.
     //
     // ⚠️ Obrnuta provjera (2026-09-06, OVA brana puštena na stablo `a9e10c1` kroz `git worktree`):
     // **9 nalaza** na 4 profila — **sva četiri profila skrolaju** (dokument 1069 / 1045 / 1081 /
