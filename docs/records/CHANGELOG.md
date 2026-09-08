@@ -35,6 +35,14 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 - Ulaz u katalog (vrata u herou) traži se sad **bezuvjetno**, na svakoj širini — prije samo ispod praga.
 - `a11y` je uhvatio pravi kvar: ispod 559 px oznaka odlazi pa je gumb ostao **bez pristupačnog imena**
   (`button-name`, critical). Ime i vidljivi tekst od sada čitaju **isti ključ** `lnav.materials`.
+- **`tests/materials-entry.spec.js` je okrenut u drugom prolazu** — dvije tvrdnje ondje su doslovno
+  kodirale T2 (*„ulaz u materijale NIJE u traci"* i klik na CTA u traci). Sad tvrde suprotno i **strože
+  nego prije**: ulaz je u traci **točno jedan** (dva bi se natjecala i vratila kvar koji je K2b uklonio),
+  stoji na svakoj stranici, **stvarno vodi na policu iz dubine aplikacije**, a stari put preko landinga
+  nije izgubljen. ⚠️ **Ovo je CI našao, ne ja** — moja pretraga referenci gađala je `topbarStart` i
+  `topbar-cta`, a taj spec koristi `.topbar .start-trigger` i `[data-goto-materials]`, pa ga nijedan
+  uzorak nije mogao vidjeti; lokalno „43 prošlo" bilo je istinito, ali o podskupu koji je odabrala
+  ta ista slijepa pretraga.
 
 ## 2026-09-05 (FABLE) — **F1/8 ②: hover na mišu se naoruža tek prvim pomakom** (ljepljivi hover zatvoren na oba ulaza; BUG-044 riješen)
 

@@ -29,7 +29,19 @@ postavki. Usput je time zatvorena cijena koju je spec §9.6 zapisao kao svjesnu.
 koji `test:authed` tek proizvede. Popravak postoji od 06.09. ali je ostao na parkiranoj grani; prenesen je
 ovamo (`3bfe40a` → `5233a0a`) jer bez njega nijedan preflight na ovoj grani ne bi bio istinit.
 
+**⚠️ Treća stvar, i nju je našao CI a ne ja.** Nakon preview-pusha su oba Playwright sharda pala na
+`materials-entry.spec.js`: dvije tvrdnje ondje doslovno kodiraju T2 — klik na `.topbar .start-trigger`
+(CTA kojeg više nema) i `expect('.topbar [data-goto-materials]').toBe(0)`. **Moja pretraga referenci
+tražila je `topbarStart` i `topbar-cta`, a taj spec ne koristi nijedno** — pa ga nisam ni pokrenuo.
+Lokalnih „43 prošlo, 0 palo" bilo je istinito, ali o podskupu koji je odabrala ta ista slijepa pretraga.
+**Pouka za idući put:** kad se briše element sučelja, ne traže se njegova IMENA nego sve što ga može
+gađati — klasa, id, atribut, uloga — i pokreću se SVI testovi koji spominju tu površinu (`grep -rln
+'topbar' tests/` daje devet datoteka, ne dvije). Tvrdnje su prepisane u istom duhu kao layout-guard:
+ne obrisane nego okrenute, i strože — ulaz u traci mora biti **točno jedan**, na svakoj stranici, i
+mora stvarno voditi na policu iz dubine aplikacije.
+
 **Dokazi:** `preflight` EXIT 0 · `a11y` 7/7 · `layout-guard` + `phone.spec` + `landing` = **43 prošlo, 0 palo**
+· nakon popravka `materials-entry` + `about` + `reachability` + `landing` + `layout-guard` = **59 prošlo, 0 palo**
 · dodir izmjeren 44×44 na 320/360/375/393/430 · **obrnuta provjera brane**: ubačen preklop → crveno na
 točnoj tvrdnji, vraćeno → zeleno.
 
