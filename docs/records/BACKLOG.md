@@ -37,6 +37,10 @@
 > **razdvojiti ih po licu** — lice nosi gestu, naličje samo skrol — dakle redizajn, ne šesto svojstvo. Sonda više nije prvi korak;
 > odgovor je poznat.
 >
+> ⏸️ **CIJELO POGLAVLJE JE PARKIRANO 08.09.** (Leon) — zapisi ispod ostaju kao ZASTO, ali nisu
+> plan: kod je na grani `feat/tinder-kadar`, **nista od toga nije na produkciji**, a nastavak zivi u
+> [archive/KARTICE_TELEFON.md](../archive/KARTICE_TELEFON.md).
+>
 > **⑨ (08.09.) — UZROK JE UKLONJEN, NE ZAOBIĐEN.** Gornji zapis ostaje jer nosi ZAŠTO, ali njegov
 > zaključak („jedini put je razdvojiti gestu i skrol po licu = redizajn") je **ispunjen s druge strane**:
 > Leon je predložio da se makne SKROL, a ne gesta. Kartica na dodiru više nije skroler (`overflow: visible`,
