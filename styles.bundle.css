@@ -2037,6 +2037,18 @@ sokrat-modal.sokrat-confirm-modal > * {
 .flashcard[data-ink] .flashcard-back .explanation {
   color: var(--color-ink-0);
 }
+.flashcard[data-ink="dark"] .card-category {
+  background: color-mix(in srgb, #ffffff 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background: color-mix(in srgb, var(--color-on-tint-light) 20%, transparent);
+  }
+}
+.flashcard[data-ink="light"] .card-category {
+  background: color-mix(in srgb, #000000 20%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    background: color-mix(in srgb, var(--color-on-tint-dark) 20%, transparent);
+  }
+}
 .card-category {
   position: absolute;
   top: 0.75rem;
