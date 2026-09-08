@@ -27,6 +27,21 @@
 > u modu kartica na dodiru `position: fixed; inset: 0; overflow: hidden`. **Presuda opet Leonova.** Ne prođe li — sonda.
 > **Presuda (08.09.):** ⑦ = DJELOMIČNO — *„može se scrollat ali jako teško"*; prvi put uopće skrola. ⚠️ **CI crven na `fb49d4d`** (a11y SE-375) — **ISTRAŽENO 08.09.: ⑦ je NEVIN.** Pad je `color-contrast` na piluli kategorije (**BUG-046**), a koja se kartica zatekne prva bira **miješanje špila bez sjemena** → 42,9 % pokretanja. Popravljeno (pilula miješa suprotnu tintu) + deterministična brana `card-tint-contrast.test.js`; a11y 20/20 u 10 pokretanja. ⑦ ostaje.
 >
+> **ZATVORENO 08.09. (Leon: „ne mora biti skrolanja na mobitelu … samo da završimo").** Uzrok je izmjeren i više nije hipoteza:
+> naličje ima `overflow-x: auto` **koji nitko nije napisao** (CSS ga sam postavi čim druga os nije `visible`), pa je skroler i
+> vodoravno. Zato o istoj gesti odlučuju dva arbitra u prvih par piksela: preglednik zaključa os na početku i uz `touch-action:
+> pan-y` koso započetu gestu **ne pusti da skrola do podizanja prsta**, a naš JS je gestu uzimao na dlaku prevage. Naša polovica je
+> popravljena (`PREVAGA: 1.5`, brana ⑦ u `flashcard-swipe.test.js`). **Druga polovica je izmjerena i odbačena:** `overflow-x:
+> hidden` + `touch-action: pan-y pan-x` na skroleru = **7 crvenih u `flashcard-swipe.spec.js`** (preglednik uzme dodir, gesta umre).
+> **Pravilo koje ostaje:** isti element ne može biti i okomiti skroler i vodoravna gesta. Ako se ikad otvori, jedini put je
+> **razdvojiti ih po licu** — lice nosi gestu, naličje samo skrol — dakle redizajn, ne šesto svojstvo. Sonda više nije prvi korak;
+> odgovor je poznat.
+>
+> **⭐ OTVORENO PITANJE PROIZVODA (Leon, 08.09.): „nije bilo opcije na kraju da se pomiješaju kartice i opet se počne ispočetka."**
+> Izmjereno: izbornik kraja špila **radi**, ali se otvara tek **nakon zadnje kartice** (56. sud u marketingu M1; ploča 369×578 px,
+> sva tri gumba na mjestu). Usred špila danas NEMA načina da se promiješa ili krene ispočetka. Prijedlog: mala stalna kontrola uz
+> traku napretka (miješanje / ispočetka), ne novi zaslon. Odluka je Leonova; veže se uz F1/15 (zvjezdica) jer dira isti red.
+
 > **Uz to, rub brane (07.09.):** `phone.spec` ⑩ na **852 px polegnuto** (projekt iPhone-SE-375) mjeri karticu
 > **659 od 734 px = 89,8–90,0 %** — točno na pragu. Pala jednom u punoj vrtnji, prošla u izolaciji 3× i u
 > drugoj punoj vrtnji; osnovna verzija bez ⑥ isto prolazi. Ne popravljati prag ni karticu „na oko“: ili

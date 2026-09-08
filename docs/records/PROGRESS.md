@@ -5,6 +5,41 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-08 (OPUS) — F1/12 ⑧: gesta vs skrol — izmjeren razlog, popravljena naša polovica, druga polovica dokazano neizvediva bez redizajna
+
+Leon je sam opisao kvar točno: *„sustav ne prepoznaje kada je skrol a kada se dira sama kartica."* Sonda je to potvrdila u
+brojkama i pokazala uzrok koji **nitko nije napisao**.
+
+**① Nalaz.** Na naličju (393×852): `touch-action: pan-y`, `overflow-y: scroll` i **`overflow-x: auto`**. Drugu os postavlja sam
+CSS (čim jedna os nije `visible`, druga s `visible` pada na `auto`), pa je naličje skroler i vodoravno — bez ijednog piksela za
+skrolati. Time dva arbitra odlučuju u prvih par piksela, neovisno jedan o drugome:
+- **preglednik** zaključa os na početku geste; `pan-y` znači „vodoravno ovdje ne smiješ", pa gesta koja krene koso **ne može
+  skrolati do podizanja prsta** — a palac po ekranu ide u luku;
+- **naš JS** je uzimao gestu na 10 px čim je `|dx|` bio za dlaku veći od `|dy|`.
+
+**② Popravljena naša polovica.** `PREVAGA: 1.5` — gesta traži jasnu vodoravnu prevagu, sve ispod je skrol. Brana ⑦ u
+`flashcard-swipe.test.js` (koso 30/25 = miruje · ravno 60/10 = gesta · konstanta je imenovana i sud je čita).
+
+**③ Druga polovica: izmjerena i odbačena.** Hipoteza je bila da se `pan-y` smije skinuti ako se prije toga ugasi vodoravni
+skroler (`overflow-x: hidden`). Pokus je trajao 20 minuta i **pao na prvoj brani: 7 crvenih u `flashcard-swipe.spec.js`** (pravi
+CDP-dodir) — čim skroler smije vodoravno, preglednik uzme dodir i gesta umre; to je isti nalaz koji spec već čuva kao
+protučinjeničnu tvrdnju („reset na skroleru gasi gestu"). CSS vraćen isti sat. **Zapisano kao pravilo, ne kao pokušaj:** isti
+element ne može biti i okomiti skroler i vodoravna gesta; jedini preostali put je razdvojiti ih po licu (lice = gesta, naličje =
+skrol), dakle redizajn.
+
+**④ Ono što je Leon rekao da je BITNO — izmjereno, ništa se nije diralo.** Red ← ✕ ✓ → na pet profila (320 · 375 · 393 · 430 ·
+852 polegnut): jedan red, ista okomita sredina, strelice 44 px, sud 64 px, zbroj gumba 216 px, bez vodoravnog preljeva, 8 px ispod
+kartice, dokument ne skrola. Na svih pet.
+
+**⑤ Izbornik kraja špila — nije pokvaren.** Strojno prođen špil na 393×852: izbornik se otvorio **nakon 56. suda**, ploča 369×578
+px, `Ispočetka` · `Promiješaj` · `Ponovi ne-znam` (treći ugašen jer je sve bilo znam). Dakle jedini ulaz je **prolazak kroz cijeli
+špil** — usred učenja nema miješanja ni ponovnog početka. Pitanje proizvoda, u `BACKLOG.md`.
+
+**Brane:** `flashcard-swipe.test.js` 165/165 · `flashcard-kadar.test.js` 65/65 · `touch-zoom.test.js` zelen ·
+`flashcard-swipe.spec.js` (CDP dodir, iPhone-15Pro-393) **9 prošlo / 1 preskočen** · `build:css` + `bump` · **preflight EXIT 0**.
+
+**Kartice su ZATVORENE Leonovom odlukom.** Sljedeće: **PROFIL (F2)**.
+
 ## 2026-09-08 (OPUS) — istraga crvenog CI-ja: ⑦ je nevin, nađen BUG-046, brana koja ne ovisi o sreći
 
 Leon: *„pregledaj i analiziraj problem detaljno."* Sinoć sam u zapis stavio presudu **„CI je crven, uzrok je ⑦,

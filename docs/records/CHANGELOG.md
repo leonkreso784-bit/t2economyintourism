@@ -5,6 +5,39 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-08 (OPUS) — **F1/12 ⑧: kosi pomak je SKROL, ne gesta · izmjeren razlog zašto skrol ostaje težak · KARTICE ZATVORENE**
+
+Leon, s previewom: *„skrol gore-dolje još uvijek ne radi dobro. Razlog: sustav ne prepoznaje kada je skrol a kada se dira sama kartica
+da ide lijevo ili desno."* — i to je, izmjereno, točan opis.
+
+**Nalaz (sonda na naličju, 393×852):** `touch-action: pan-y` · `overflow-y: scroll` · **`overflow-x: auto`**. Tu vodoravnu os
+**nitko nije napisao** — CSS je sam prebaci s `visible` na `auto` čim druga os prestane biti `visible`. Naličje je time skroler i
+lijevo-desno, iako ondje nema što skrolati (`scrollWidth == clientWidth`). Odatle **dva suca koji odlučuju u prvih par piksela i ne
+razgovaraju**: preglednik zaključa os na početku geste i drži je do podizanja prsta (`pan-y` mu kaže „vodoravno ne smiješ" → gesta
+koja krene koso više ne može skrolati; palac nikad ne kreće savršeno okomito), a naš JS je uzimao gestu čim je `|dx|` bio za
+**dlaku** veći od `|dy|`.
+
+**Popravljeno ono što je naše:** `PREVAGA: 1.5` u `js/flashcards.js` — pomak je gesta tek ako je `|dx|` bar 1,5× veći od `|dy|`,
+inače je skrol i preglednikov posao. Prednost ide skrolu jer je češći, a gesta ima dva pandana (✓ / ✕ i strelice). Brana ⑦ u
+`flashcard-swipe.test.js`: koso (30/25) = kartica miruje · ravno (60/10) = gesta · prevaga je **imenovana konstanta** koju sud čita.
+
+**Izmjereno i ODBAČENO isti dan:** pokušaj da se druga polovica kvara riješi u CSS-u — ugasiti vodoravni skroler
+(`overflow-x: hidden`) pa skroleru dopustiti obje osi (`touch-action: pan-y pan-x`) — **PAO je na prvoj brani: 7 crvenih u
+`flashcard-swipe.spec.js`** (pravi CDP-dodir): čim skroler smije vodoravno, preglednik uzme dodir i **gesta umre**. Vraćeno u istom
+satu. **Zaključak koji ostaje zapisan: isti element ne može biti i okomiti skroler i vodoravna gesta.** Jedini preostali put je
+maknuti gestu SA skrolera (lice = gesta, naličje = samo skrol) — to je redizajn, ne zakrpa.
+
+**Leonova odluka (08.09.):** *„ne mora biti skrolanja na mobitelu, bitno je samo da su strelice, ✕ i kvačica na dobrom mjestu."*
+**Izmjereno na pet profila** (320×568 · 375×667 · 393×852 · 430×932 · 852×393 polegnut): red ← ✕ ✓ → je **jedan red, ista
+sredina, strelice 44 px, sud 64 px, bez vodoravnog preljeva, 8 px ispod kartice, stranica ne skrola** — na svakom profilu. Ništa
+nije trebalo dirati.
+
+**Usput izmjereno (drugi Leonov nalaz):** izbornik kraja špila **radi** — otvara se nakon **56. suda** (cijeli špil te lekcije),
+ploča 369×578 px, sva tri gumba na mjestu. Nije pokvaren nego **dostupan samo na kraju špila**: usred učenja danas nema načina da se
+promiješa ili krene ispočetka. To je otvoreno pitanje proizvoda, zapisano u `BACKLOG.md`.
+
+**Kartice su ZATVORENE** (Leon: *„samo da završimo s ovim šugavim karticama da možemo dalje"*). Dalje: **PROFIL (F2)**.
+
 ## 2026-09-08 (OPUS) — **BUG-046: pilula kategorije pada AA na obojenoj kartici · ⑦ je NEVIN — crveni CI je bila kocka, ne regresija**
 
 Leon: *„pregledaj i analiziraj problem detaljno."* Presuda od 07.09. („CI je crven, uzrok je ⑦") **oborena je protučinjeničnim

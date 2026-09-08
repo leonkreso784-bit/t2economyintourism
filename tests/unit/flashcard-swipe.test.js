@@ -684,5 +684,36 @@ console.log('\n── ⑥ CSS + MARKUP: pan-y · špil desno · pečat samo u su
     tvrdi(css.indexOf('.deck-end-btn:disabled') >= 0, 'onemogućena radnja ima svoj izgled (ne skriva se)');
 }
 
+console.log('\n── ⑦ KOSI POMAK JE SKROL, NE GESTA (F1/12 ⑧) ─────────────────────────────');
+{
+    /* Leon, 2026-09-08, s previewom: „sustav ne prepoznaje kada je skrol a kada se dira sama
+       kartica da ide lijevo ili desno." Do tada je uvjet glasio `|dy| > |dx|` — dakle DLAKA
+       prevage je bila dovoljna da pomak postane gesta. Palac po ekranu ide u LUKU, pa je i
+       namjeran skrol redovito kretao koso: kartica bi krenula ustranu umjesto da tekst skrola.
+       Od sada gesta traži JASNU prevagu (`PREVAGA`), a sve ispod nje je skrol i preglednikov posao.
+       Prednost ide skrolu jer je češći, a gesta ima dva pandana (✓ / ✕ i strelice).
+       ⚠️ Druga polovica istog kvara — da preglednik na koso započet OKOMIT pomak odbije skrolati,
+       jer `touch-action: pan-y` ondje ne dopušta vodoravno — NIJE popravljiva u JS-u: pokušaj da
+       se skroleru dopuste obje osi izmjeren je i PAO (7 crvenih u `flashcard-swipe.spec.js` —
+       preglednik tada uzme dodir i gesta umre). Zapis: `BACKLOG.md`. */
+    const s = svijet();
+    s.ctx.initFlashcards();
+
+    s.prst({ dx: 30, dy: 25, koraci: 2, kraj: 'none' });          // palac koji skrola, u luku
+    const koso = s.stanje();
+    tvrdi(isto(koso.klase, []) && koso.stil['--swipe-x'] === undefined,
+        'kosi pomak (30 px vodoravno, 25 okomito) NIJE gesta — kartica miruje, skrol ostaje pregledniku', koso);
+
+    s.prst({ id: 8, dx: 60, dy: 10, koraci: 2, kraj: 'none' });   // jasno vodoravno
+    const ravno = s.stanje();
+    tvrdi(isto(ravno.klase, ['is-dragging']) && ravno.stil['--swipe-x'] === '60px',
+        'jasno vodoravan pomak (60/10) JEST gesta — kartica ide za prstom', ravno);
+
+    const src = citaj('js', 'flashcards.js');
+    tvrdi(/PREVAGA:\s*1\.5/.test(src) && /Math\.abs\(dx\)\s*<\s*swipe\.PREVAGA\s*\*\s*Math\.abs\(dy\)/.test(src),
+        'prevaga je IMENOVANA konstanta i sud je cita (goli broj u uvjetu bi se razisao s ovom branom)');
+}
+
+
 console.log('\n' + (pao ? '❌ ' + pao + ' od ' + ukupno + ' palo' : '✅ svih ' + ukupno + ' prošlo') + '\n');
 process.exit(pao ? 1 : 0);

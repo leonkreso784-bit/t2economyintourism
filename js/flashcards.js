@@ -421,6 +421,12 @@ function initKadar() {
    „vraćala" s ruba ekrana. `prefers-reduced-motion` → leta nema, upis odmah, kartica se samo zamijeni. */
 const swipe = {
     SLOP: 10,        // px prije nego pomak postane gesta (ispod = dodir → okretanje)
+    // F1/12 ⑧: koliko VODORAVNIJI pomak mora biti da bi bio gesta, a ne skrol. Do 08.09. je
+    // pisalo `|dy| > |dx|`, dakle dlaka prevage je bila dovoljna — a palac po ekranu ide u LUKU,
+    // pa je i namjeran skrol redovito kretao koso i kartica bi krenula ustranu. Leon: „sustav ne
+    // prepoznaje kada je skrol a kada se dira sama kartica“. Prednost ide SKROLU jer je češći i
+    // jer je gesta prečac, ne jedini put (✓/✗ i strelice rade isto).
+    PREVAGA: 1.5,   // |dx| mora biti bar 1,5x veci od |dy| (v. gore)
     PRAG_MIN: 90,    // px — najmanji put koji znači odluku; trećina kartice je više na širim ekranima
     LET_MS: 320,     // rezerva za `transitionend` (let u CSS-u traje 280 ms)
     id: null, x0: 0, y0: 0, dx: 0, aktivno: false, leti: false, progutajKlik: false, timer: 0, gen: 0, naKraj: null
@@ -481,7 +487,7 @@ function swipeMove(e) {
     const dx = e.clientX - swipe.x0, dy = e.clientY - swipe.y0;
     if (!swipe.aktivno) {
         if (Math.abs(dx) < swipe.SLOP && Math.abs(dy) < swipe.SLOP) return;
-        if (Math.abs(dy) > Math.abs(dx)) { swipe.id = null; return; }   // okomito = skrol, preglednikov posao
+        if (Math.abs(dx) < swipe.PREVAGA * Math.abs(dy)) { swipe.id = null; return; }   // nije JASNO vodoravno = skrol, preglednikov posao
         swipe.aktivno = true;
         el.classList.add('is-dragging');
         // Bez `setPointerCapture`: dodirni pokazivač ima IMPLICITNI capture na cilju `pointerdown`-a
