@@ -176,16 +176,17 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 i dvaput vratio uvjerljiv krivi broj umjesto da padne.
 **K5** (editor dvojezično) čeka i ne blokira ništa.
 
-### 🎯 FRONTEND REDIZAJN + MREŽA = ✅ **NA PRODUKCIJI (2026-09-01)** — dalje: **RASPORED F1**
+### 🎯 FRONTEND REDIZAJN + MREŽA = ✅ **NA PRODUKCIJI (2026-09-01)** — dalje: **RASPORED F2 (račun)**
 
 Oba speca u `docs/archive/`; što je točno isporučeno zna CHANGELOG. **Next.js odbijen (ADR-028).**
 **🚚 SEOBA je OTKAZANA** (Leon, 2026-09-01) → `BACKLOG.md` §SELF-HOST = arhiv odluke, ne plan.
 Aktivni spec: **`docs/plan/RASPORED.md`** (2026-09-04) — cijela preostala lista razrezana na
 **sedam faza kroz sesije**: F1 uređaj · F2 račun (R2+R3 + CSS profila) · F3 dvojezičnost ·
-F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **Šest pitanja čeka Leonovu riječ — §6 rasporeda.**
+F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **§6: nula otvorenih (anketa 06.09.).**
 
-**ⓑ trzanje IZMJERENO** (F1/6, `jank-probe`): samo landing preboji, uzrok `background-attachment: fixed` → F1/7; Chromium-mjera, iPhone presuđuje Leon (`BACKLOG.md` §B).
-**Tri nova (2026-09-05):** hover = **F1/8 ✅** · Tinder-špil = **F1/9** · zoom na dodir = **F1/10 ✅** (BUG-043).
+**F1 je isporučen; ostalo je poglavlje KARTICA, koje je Leon 08.09. PARKIRAO** — kod je na grani
+`feat/tinder-kadar` (ondje je CI crven: ⑨ je ukinuo obuzdavanje kartice), **ne otvarati bez njegove riječi**;
+ondje su parkirani i BUG-045/046. **F2 je počeo:** F2/0 ✅ traka nosi dva odredišta (`feat/traka-odredista`).
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 
@@ -193,6 +194,7 @@ F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **Šest pi
   Dvije tamne palete zaredom pale su na živom ekranu. Smjer izgleda je **APPLE** (Leon: *„apple
   smjer, naravno"*): grotesk svugdje (**serif nadglašen**), praznina, tipografija nosi, monokrom
   + jedan akcent. Spec §7.3–7.8.
+- **Traka nosi TOČNO DVA odredišta: vlastito gradivo i profil** (F2/0 — **okreće T2**, Leon: *„gore treba biti profil i UGC"*). Ulaz je u TRAJNOM KROMU, na svakoj stranici; **drugi ulaz u istu traku vraća kvar koji je K2b uklonio**, zato brana traži točno jedan.
 - **🔒 ZNAK JE NEPROMJENJIV** (Leon: *„sokrat logo je nezamjenjiv"*) — ne prepravlja se nego
   dobiva PROSTOR, i **zadržava indigo kroz sve teme = konstanta marke**.
 - **Broj predmeta se NIKAD ne piše rukom.** Jedini ručno pisan je statični fallback u
