@@ -5,6 +5,27 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-08 (OPUS) — ⏸️ **KARTICE PARKIRANE Leonovom odlukom**
+
+*„Makni sve što smo za kartice napravili, arhiviraj, nije bitno iskreno … kartice ostaju kakve jesu i
+ovo što smo sada radili možemo arhivirati da u neko drugo vrijeme dovršimo. Sljedeća sesija se odvija
+samo na profil i poboljšanje frontenda s vlastitim sadržajem unutar toga."*
+
+**Ništa nije obrisano ni vraćeno.** Rad stoji na grani `feat/tinder-kadar` (`9b7272c`, pushana) i nije
+na produkciji. Poglavlje je izašlo iz aktivnog plana u
+[archive/KARTICE_TELEFON.md](../archive/KARTICE_TELEFON.md), gdje su i **osam pravila koja ga
+nadživljavaju** (skroler vs gesta, druga os koju CSS sam upali, `min-height: auto` vs `0`, brisanje ≠
+gašenje pravila, test skrola mjeren samo na dnu, `touch-action` kroz lanac, `incomplete` nije prolaz,
+presuda pripada uređaju) i popis onoga što je ostalo.
+
+⚠️ **Uz kartice su parkirana i dva popravka koja s njima nemaju veze:** **BUG-046** (kontrast pilule
+kategorije, 11 od 20 boja gradiva ispod AA) i **BUG-045** (SW runtime-keš). Oba gotova, oba s branama,
+oba izvan produkcije.
+
+**RASPORED:** F1/12 · F1/13 · F1/14 · F1/15 ⏸️ · **F2 dobiva F2/5 — frontend vlastitog sadržaja**
+(`css/my-materials.css`, polica i „moji materijali"), jer je to isti korisnikov kutak i isti CSS-dug
+kao profil. **Sljedeća sesija = samo F2.**
+
 ## 2026-09-08 (OPUS) — **F1/12 ⑨: kartica prestaje biti skroler, skrol se vraća dokumentu**
 
 Leon: *„možemo li napraviti da uopće nema scrolla i da se cijela stranica povećava kada je kartica koja

@@ -124,6 +124,7 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 
 | Dokument | Status |
 |---|---|
+| [KARTICE_TELEFON.md](./archive/KARTICE_TELEFON.md) | Tinder-kadar na telefonu (F1/12 · F1/13) — ⏸️ **PARKIRANO 2026-09-08**, NIJE ispunjeno; kod na grani `feat/tinder-kadar`, osam pravila koja nadživljavaju poglavlje |
 | [FRONTEND_REDIZAJN.md](./archive/FRONTEND_REDIZAJN.md) | Frontend redizajn (Tailwind, C0–C7 + KOSTUR/TELEFON/POLICA) — **ispunjen i NA PRODUKCIJI 2026-09-01** |
 | [RJESAVANJE-PROBLEMA-9MJ.md](./archive/RJESAVANJE-PROBLEMA-9MJ.md) | Faza MREŽA (blokovi A–E + deploy-gated izlaz) — **ispunjena deployem 2026-09-01** |
 | [MATERIJAL_FAZA.md](./archive/MATERIJAL_FAZA.md) | Faza „Materijal od nule do učenja" — **ispunjena i na produkciji 2026-08-07**; svih 5 kriterija iz `product/UGC_SPEC.md` |

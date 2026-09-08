@@ -183,7 +183,7 @@ Aktivni spec: **`docs/plan/RASPORED.md`** (2026-09-04) — cijela preostala list
 **sedam faza kroz sesije**: F1 uređaj · F2 račun (R2+R3 + CSS profila) · F3 dvojezičnost ·
 F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **§6 rasporeda: nula otvorenih (anketa 06.09.).**
 
-**F1 uređaj: F1/1–13 ✅ · F1/14 tutorial · F1/15 zvjezdica (plan). B2 sidebar ✅. BUG-045 ✅.** Od F1/13 gesta LISTA, gumbi ✓/✕ SUDE (tablica `AKCIJE` na `window.SokratFlashcards` = izvor za F1/14). **F1/12 ⑨ (Leon, 08.09.): kartica na dodiru NIJE SKROLER** — skrol je dokumentov, fantomske vodoravne osi nema, red ← ✕ ✓ → ljepljiv. Stranica u modu kartica SMIJE skrolati (brana ⑩ mjeri „sud na ekranu"). Dalje: **F2 PROFIL**.
+**F1 uređaj: isporučen osim KARTICA.** ⏸️ **KARTICE SU PARKIRANE 08.09.** (Leon: *„makni sve što smo za kartice napravili, arhiviraj … kartice ostaju kakve jesu"*) — F1/12 · F1/13 · F1/14 · F1/15 izlaze iz plana u **`docs/archive/KARTICE_TELEFON.md`**. Kod je na grani `feat/tinder-kadar`; ⚠️ ondje su parkirani i **BUG-046** i **BUG-045**, gotovi i izvan produkcije. **Sljedeća sesija = SAMO F2: profil + frontend vlastitog sadržaja** (Leon, 08.09.).
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 

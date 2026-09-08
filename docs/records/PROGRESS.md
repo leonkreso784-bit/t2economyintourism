@@ -5,6 +5,25 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-08 (OPUS) — ⏸️ kartice parkirane; sljedeća sesija je SAMO profil + vlastiti sadržaj
+
+Leonova odluka na kraju dana: *„makni sve što smo za kartice napravili, arhiviraj, nije bitno iskreno
+… kartice ostaju kakve jesu."* Poglavlje je trajalo šest sesija i devet popravaka, a zadnji nalaz
+(skrol naličja na iPhoneu) tražio je redizajn, ne zakrpu.
+
+**Što je učinjeno s tim radom:** ništa nije obrisano ni vraćeno — grana `feat/tinder-kadar`
+(`9b7272c`) je pushana i sama je arhiva. Napisan je
+[archive/KARTICE_TELEFON.md](../archive/KARTICE_TELEFON.md): gdje je kod, što je izmjereno, **osam
+pravila koja nadživljavaju poglavlje**, i točan popis onoga što je ostalo (⑨ nije prošao Leonov
+iPhone; F1/14 tutorial; F1/15 zvjezdica; miješanje usred špila). F1/12–F1/15 izlaze iz `RASPORED.md`.
+
+⚠️ **Zapisano da se ne izgubi:** na istoj su grani i **BUG-046** i **BUG-045** — gotovi, s branama,
+izvan produkcije, i s karticama nemaju veze.
+
+**Sljedeća sesija = SAMO F2**, i to u dva dijela koja je Leon spojio: **profil** (F2/1–F2/4) i
+**frontend vlastitog sadržaja** (novi F2/5 — `css/my-materials.css`, polica, „moji materijali").
+Isti korisnikov kutak, isti CSS-dug, jedan prolaz.
+
 ## 2026-09-08 (OPUS) — F1/12 ⑨: uzrok se ne zaobilazi nego uklanja — kartica prestaje biti skroler
 
 Leon, poslije previewa ⑧: *„možemo li napraviti da uopće nema scrolla i da se cijela stranica povećava
