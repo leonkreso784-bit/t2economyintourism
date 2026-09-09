@@ -186,7 +186,7 @@ F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **§6: nul
 
 **F1 je isporučen; ostalo je poglavlje KARTICA, koje je Leon 08.09. PARKIRAO** — kod je na grani
 `feat/tinder-kadar` (ondje je CI crven: ⑨ je ukinuo obuzdavanje kartice), **ne otvarati bez njegove riječi**;
-ondje su parkirani i BUG-045/046. **F2 je počeo:** F2/0 ✅ traka nosi dva odredišta (`feat/traka-odredista`).
+ondje su parkirani i BUG-045/046. **F2 teče:** F2/0 ✅ · F2/3a ✅ zid · F2/3b ✅ identitet (`feat/profil-zid`).
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 
@@ -261,8 +261,8 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
   ostaje); klijentski dvojnik (D4, `js/auth.js`) svejedno stoji.
   ⚠️ **NE „popravljaj" `js/auth.js:343`** — tvrdnja o `WeakPasswordError` je **oborena**: u
   zakucanom `supabase-js@2.110.8` slaba lozinka dolazi kao `data.weakPassword` uz `error: null`.
-- **Sitni dug (ne blokira):** siročad u Storageu · staging poravnati s `supabase/f1-nodes.sql` ·
-  `set_updated_at` ima promjenjiv `search_path` (jedini sigurnosni WARN koji nije namjeran). ⚠️ **`is_admin()` se NE smije
+- **Sitni dug (ne blokira):** siročad u Storageu · PROD čeka `f1-nodes.sql` + `f2-profile-identity.sql` (oba samo na stagingu) ·
+  `set_updated_at` ima promjenjiv `search_path` (jedini nenamjeran WARN). ⚠️ **`is_admin()` se NE smije
   revokeati `authenticated`-u** — zovu ga RLS politike kao pozivatelj.
 - **Napomene:** Supabase org je `pro` i **plaća se do daljnjeg** (Leon, 2026-09-01) →
   free-tier spavanje nije prijetnja · `content_versions`/`node_content_versions` =
