@@ -5,6 +5,28 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+### 2026-09-09 — **Identitet dobiva svoju tablicu; `role` ostaje nedodirljiv** (F2/3b)
+
+#### Dodano
+- **`public.profile_identity`** (`supabase/f2-profile-identity.sql`) — ime, opis i (prazne, za F2/2)
+  putanje slika. Owner-RLS **samo za čitanje**; upis isključivo kroz `set_profile_identity`
+  (`SECURITY DEFINER`, `auth.uid()`, `search_path` postavljen). Granice **60/280 znakova provodi baza**,
+  ne `maxlength` u formi. Primijenjeno na **STAGING**; PROD čeka izričit OK.
+- **`tests/profile-identity.authed.spec.js`** — pet tvrdnji, sve **obrnute**: izravan INSERT/UPDATE/DELETE
+  nad tablicom se odbija · tuđi red je nevidljiv · **UPDATE nad `profiles` vraća 0 redaka, a `role` je
+  isti prije i poslije upisa identiteta** · duljine ruši baza.
+
+#### Promijenjeno
+- **Profil čita ime i opis iz tablice**, s `user_metadata` kao rezervom. ⚠️ Rezerva **nije skela**:
+  produkcija tablicu (još) nema, a `signUp` i dalje piše ime u metapodatke. `user_metadata.display_name`
+  ostaje **izvedeni preslik za gornju traku** — `getDisplayName()` čita JWT da za svako ime ne otvara
+  krug prema bazi.
+
+#### Popravljeno
+- **Zid se više ne prekriva korisniku koji piše.** Dohvat identiteta završavao je ponovnim crtanjem, a
+  ono briše `#profileContent` s otvorenom formom u njemu. Sad se ponovno crta samo ako bi se nešto
+  promijenilo, i nikad dok je forma otvorena.
+
 ### 2026-09-09 — **Profil postaje ZID: tko si gore, postavke ispod** (F2/3a)
 
 #### Promijenjeno

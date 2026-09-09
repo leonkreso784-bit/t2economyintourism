@@ -69,6 +69,67 @@ function wireThemePicker(root) {
     });
 }
 
+// ── SPREMIŠTE IDENTITETA (F2/3b, 2026-09-09) ─────────────────────────
+// Ime i opis žive u `public.profile_identity` — zasebna tablica, owner-RLS, upis samo
+// kroz `set_profile_identity` RPC. ⚠️ NE u `profiles`: iz nje čita `is_admin()`, pa bi
+// pravo na upis vlastitog imena ondje otvorilo i vrata prema `role`. Puni ZAŠTO stoji u
+// `supabase/f2-profile-identity.sql`.
+//
+// ⚠️ REZERVNI PUT (`user_metadata`) NIJE PRIVREMENA SKELA I NE BRIŠE SE — dva razloga:
+//   ① PRODUKCIJA ovu tablicu (još) NEMA; migracija ide uz Leonov izričit OK. Isti kod
+//     vozi ondje, pa se profil ne smije srediti u prazan ekran zato što baza nije migrirana.
+//   ② `signUp` i dalje piše ime u `user_metadata`, pa NOVI račun tablicu nema dok jednom
+//     ne spremi profil.
+let _identity = null;        // red iz baze (ili `{}` kad ga nema), `null` = nemamo ga
+let _identityFor = null;     // za kojeg korisnika keš vrijedi
+
+/** Ime i opis za crtanje: baza ako je stigla, inače `user_metadata`. */
+function identityOf(user) {
+    const meta = user.user_metadata || {};
+    const red = (_identityFor === user.id && _identity) ? _identity : null;
+    // OAuth (R1) ne piše `display_name` nego `full_name`/`name` — isti redoslijed kao auth.js.
+    return {
+        name: String((red && red.display_name) || meta.display_name || meta.full_name || meta.name || '').trim(),
+        bio: String((red && red.bio) || meta.bio || '').trim()
+    };
+}
+
+/** Dohvati red identiteta pa PONOVNO nacrtaj. Tiše pada nego što ruši stranicu. */
+async function loadIdentity(user) {
+    const client = (typeof SokratAuth !== 'undefined') ? SokratAuth.getClient() : null;
+    // Keš se označi kao popunjen i kad dohvat NE uspije — inače bi svako crtanje otvorilo
+    // novi krug prema bazi (i, preko `renderProfilePage`, beskonačnu petlju).
+    if (!client) { _identityFor = user.id; _identity = null; return; }
+    const prije = identityOf(user);
+    let red = null;
+    try {
+        const { data, error } = await client
+            .from('profile_identity')
+            .select('display_name, bio, avatar_path, cover_path')
+            .eq('user_id', user.id)
+            .maybeSingle();
+        red = error ? null : (data || {});
+    } catch (err) {
+        red = null;                       // tablice nema (PROD) → rezervni put
+    }
+    _identityFor = user.id;
+    _identity = red;
+
+    // Crtaj PONOVNO samo ako bi se nešto promijenilo — inače svako otvaranje profila
+    // baci jedan bespotreban bljesak (JWT i tablica se u pravilu SLAŽU).
+    const poslije = identityOf(user);
+    if (poslije.name === prije.name && poslije.bio === prije.bio) return;
+
+    // ⚠️ I onda — nikad preko čovjeka koji upravo piše. `renderProfilePage` prepisuje
+    // `#profileContent`, a s njim i otvorenu formu i tekst u njoj. Izmjerila brana:
+    // klik na „Uredi profil" → red stigne → forma nestane → sljedeći upis čeka polje
+    // koje više ne postoji (test je visio do isteka od 120 s). Zid se osvježi kad zatvori.
+    const forma = document.getElementById('profileEditForm');
+    if (forma && !forma.hidden) return;
+
+    renderProfilePage();
+}
+
 // ── ZID (F2/3a, 2026-09-09) ──────────────────────────────────
 // Do danas je profil bio POPIS POSTAVKI: prvo što je korisnik vidio o sebi bio je
 // gumb „Promijeni lozinku". Leon (2026-09-08): „profil mora biti na isti način kao
@@ -79,8 +140,7 @@ function wireThemePicker(root) {
 // ⚠️ Zid VLASTITOG GRADIVA (rešetka `nodes`) dolazi u F2/5 — mjesto mu je odmah
 //    ispod identiteta, ondje gdje danas stoji poveznica na „Moje materijale".
 function wallHtml(user, displayName, memberSince) {
-    const opis = (user.user_metadata && user.user_metadata.bio)
-        ? String(user.user_metadata.bio).trim() : '';
+    const opis = identityOf(user).bio;
     return '<div class="profile-wall">' +
         '  <div class="profile-cover"></div>' +
         '  <div class="profile-identity">' +
@@ -150,9 +210,8 @@ function renderProfilePage() {
     const memberSince = created
         ? created.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
         : '—';
-    // Ime iz registracije (user_metadata.display_name); stariji računi ga nemaju → email kao naslov.
-    const displayName = (user.user_metadata && user.user_metadata.display_name)
-        ? String(user.user_metadata.display_name).trim() : '';
+    // Ime iz `profile_identity`, s `user_metadata` kao rezervom; nema ni jednog → email kao naslov.
+    const displayName = identityOf(user).name;
 
     root.innerHTML =
         '<div class="profile-stack">' +
@@ -277,14 +336,13 @@ function renderProfilePage() {
         document.getElementById('profileEditForm').hidden = true;
     });
     document.getElementById('profileEditForm').addEventListener('submit', saveProfileIdentity);
+
+    // Prvi kadar crta ono što znamo bez mreže (JWT), pa se dopuni kad red stigne.
+    if (_identityFor !== user.id) loadIdentity(user);
 }
 
-// F2/3a: ime i opis idu u `user_metadata` — isti put kojim ondje već stoji
-// `display_name` iz registracije. To NIJE trajno rješenje: metapodaci žive u
-// korisnikovom JWT-u, pa ih **nitko drugi ne može pročitati** — čim profil postane
-// javan (F7), trebaju tablicu. F2/3b ih seli u zasebnu tablicu javnog identiteta
-// (⚠️ NE u `profiles` — iz nje čita `is_admin()`), uz `SECURITY DEFINER` RPC koji
-// nikad ne dira `role`. Ovaj obrazac — forma → spremi → ponovno crtanje — ostaje isti.
+// F2/3b: izvor istine je `profile_identity`, upis ide kroz `set_profile_identity` RPC.
+// RPC strukturno NE MOŽE dirati `role` — ta kolona stoji u drugoj tablici koju ne spominje.
 async function saveProfileIdentity(e) {
     e.preventDefault();
     const client = (typeof SokratAuth !== 'undefined') ? SokratAuth.getClient() : null;
@@ -299,19 +357,42 @@ async function saveProfileIdentity(e) {
 
     const novoIme = ime.value.trim();
     const noviOpis = opis.value.trim();
-    const { error } = await client.auth.updateUser({ data: { display_name: novoIme, bio: noviOpis } });
-    if (error) {
+
+    const { data: red, error: rpcErr } = await client.rpc('set_profile_identity', {
+        p_display_name: novoIme, p_bio: noviOpis
+    });
+    // PostgREST za nepostojeću funkciju vraća PGRST202 — to je NEMIGRIRANA BAZA, ne kvar
+    // unosa: tada spremanje pada na `user_metadata` umjesto da se tiho izgubi. Svaka druga
+    // greška (duga polja, istekla sesija) je prava i pokazuje se korisniku.
+    const rpcNedostaje = !!rpcErr && (rpcErr.code === 'PGRST202'
+        || /find the function|does not exist/i.test(rpcErr.message || ''));
+    if (rpcErr && !rpcNedostaje) {
         status.classList.add('is-error');
-        status.textContent = (typeof SokratAuth !== 'undefined' && SokratAuth.authError)
-            ? SokratAuth.authError(error) : error.message;
+        status.textContent = rpcErr.message;
         return;
     }
 
-    // Osvježi LOKALNU kopiju prije crtanja. `updateUser` vraća novog korisnika, ali
+    // ⚠️ `user_metadata` se upisuje I DALJE, i to nije zaboravljen duplikat: gornju traku
+    // crta `SokratAuth.getDisplayName()`, koji čita JWT da za svako ime ne bi otvarao krug
+    // prema bazi. Tablica je izvor istine, ovo je njezin IZVEDENI preslik — a jedini
+    // upisivač tog preslika je ova funkcija.
+    const { error: metaErr } = await client.auth.updateUser({ data: { display_name: novoIme, bio: noviOpis } });
+    if (metaErr && rpcNedostaje) {
+        status.classList.add('is-error');
+        status.textContent = (typeof SokratAuth !== 'undefined' && SokratAuth.authError)
+            ? SokratAuth.authError(metaErr) : metaErr.message;
+        return;
+    }
+
+    // Osvježi LOKALNE kopije prije crtanja. `updateUser` vraća novog korisnika, ali
     // `SokratAuth.getUser()` ga dobiva tek kroz događaj `USER_UPDATED` — bez ovoga bi
     // prvi kadar poslije spremanja pokazao STARO ime, pa bi ga događaj naknadno zamijenio.
     const user = SokratAuth.getUser();
-    if (user) user.user_metadata = Object.assign({}, user.user_metadata, { display_name: novoIme, bio: noviOpis });
+    if (user) {
+        user.user_metadata = Object.assign({}, user.user_metadata, { display_name: novoIme, bio: noviOpis });
+        _identityFor = user.id;
+        _identity = rpcNedostaje ? null : (Array.isArray(red) ? red[0] : red);
+    }
     renderProfilePage();
     if (typeof showToast === 'function') showToast(pt('profile.editSaved', 'Profile updated.'));
 }

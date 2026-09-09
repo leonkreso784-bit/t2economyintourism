@@ -5,6 +5,54 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-09 (OPUS) — F2/3b: ime i opis dobivaju svoju tablicu, `role` ostaje zatvoren
+
+**Cijela cigla je jedna sigurnosna tvrdnja:** korisnik mora smjeti pisati svoje ime, a ne smije
+smjeti ni pokušati pisati svoju ulogu. Da su ime i `role` u istoj tablici, prvo bi tražilo
+UPDATE-politiku nad `profiles` — a jedini pouzdan način da druga kolona time ne postane dohvatljiva
+jest da uopće ne bude ondje. **Struktura, ne oprez.**
+
+**Izmjereno prije pisanja, na živoj shemi (staging):** `profiles` danas ima **točno jednu politiku**,
+`profiles_select_own` (SELECT). **Nijedne upisne.** Dakle rizik iz §F2 („politika za samo-uređivanje daje
+korisniku pravo da si upiše `role = 'admin'`") nije zatečeno stanje nego ono što bi F2/3b bio uveo da je
+identitet otišao ondje. Sad se to pitanje ne postavlja.
+
+**Isporučeno:**
+- `supabase/f2-profile-identity.sql` — `profile_identity` (`display_name` · `bio` · **`avatar_path` ·
+  `cover_path`** · vremena), owner-RLS **samo za čitanje**, upis isključivo kroz `set_profile_identity`
+  (`SECURITY DEFINER`, `search_path` postavljen, granice 60/280 provodi BAZA). Primijenjeno na
+  **STAGING**; PROD čeka Leonov izričit OK.
+- Stupci za slike stoje prazni od prvog dana **namjerno**: puni ih F2/2, a druga migracija nad
+  produkcijom košta više nego dva prazna stupca. U njima stoji PUTANJA, nikad slika ni potpisani URL.
+- Prijenos zatečenih imena iz `user_metadata` (idempotentan). Na stagingu je upisao **0 redaka** i to je
+  točno: jedini kandidat ima prazno ime, a filtar prazna imena odbija.
+- `js/profile.js` čita identitet iz tablice, piše kroz RPC. ⚠️ **Rezervni put (`user_metadata`) ostaje i
+  nije skela:** PROD tablicu (još) nema, a `signUp` i dalje piše ime u metapodatke — novi račun je nema
+  dok jednom ne spremi. `user_metadata.display_name` se i dalje upisuje kao **izvedeni preslik za gornju
+  traku** (`getDisplayName()` čita JWT da za svako ime ne otvara krug prema bazi); jedini upisivač tog
+  preslika je `saveProfileIdentity`.
+
+**Kvar koji je našla brana, i ne bi ga našao pregled koda:** dohvat identiteta završava ponovnim
+crtanjem profila, a ono prepisuje `#profileContent` — **zajedno s otvorenom formom i tekstom u njoj.**
+Test je visio do isteka od 120 s jer je polje nestalo između klika i upisa. Popravak ima dva sloja:
+ponovno crtanje se preskače ako se ništa ne bi promijenilo (JWT i tablica se u pravilu slažu), i **nikad
+se ne crta preko čovjeka koji piše**.
+
+**Brane:** `preflight` **EXIT 0** · `authenticated` **11/11** (nova `profile-identity.authed.spec.js` 5 +
+`profile-wall.authed` 5 + setup). Nova brana mjeri **OBRNUTO**, kroz HTTP kao korisnik: izravni
+INSERT/UPDATE/DELETE nad tablicom se odbijaju · tuđi red je nevidljiv · **UPDATE nad `profiles` vraća
+0 redaka i `role` je isti prije i poslije upisa identiteta** · granice duljine ruši baza, ne `maxlength`.
+⚠️ Pokušaj upisa u `role` namjerno piše **istu vrijednost** koja ondje već stoji — da brana prijavi
+otvorena vrata, a ne da usput odjavi test-računu administraciju.
+
+**Supabase advisors poslije migracije:** `touch_profile_identity` se **ne pojavljuje** u
+`function_search_path_mutable` (postavljen izričito); jedini takav i dalje je zatečeni `set_updated_at`.
+`set_profile_identity` ulazi u istu, namjernu obitelj kao devet postojećih RPC-ova (ADR-024).
+
+**Slijedi:** F2/2 — slike (naslovna + portret), i tek tada se odlučuje javni vs privatni bucket.
+
+---
+
 ## 2026-09-09 (OPUS) — F2/3a: profil postaje ZID (identitet gore, administracija ispod)
 
 **Povod je Leonov:** *„profil mora biti na isti način kao i Facebook … i privatni sadržaji koje
