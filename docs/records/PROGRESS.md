@@ -5,6 +5,51 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-09 (OPUS) — F2/3a: profil postaje ZID (identitet gore, administracija ispod)
+
+**Povod je Leonov:** *„profil mora biti na isti način kao i Facebook … i privatni sadržaji koje
+korisnik radi."* Oblik je odlučen 08.09. i zapisan u `RASPORED.md` §F2 (zid + radionica); ova cigla
+gradi **kostur zida**, ne njegov sadržaj.
+
+**Što je bilo prije:** prva stvar koju je korisnik vidio o sebi bio je gumb „Promijeni lozinku",
+a ime mu je stajalo kao **naslov te kartice**. Sad je redoslijed: naslovna · portret · ime · opis ·
+`[Uredi profil]` → vlastito gradivo → naslov **„Postavke"** → račun, admin, sync, napredak, tema,
+privatnost. Taj naslov je **granica**: sve ispod njega je administracija.
+
+**Namjerno JOŠ NIJE u ovoj cigli:** slike (F2/2 — naslovna i portret su prazne plohe), rešetka
+vlastitog gradiva (F2/5 — mjesto joj je odmah ispod identiteta), zasebno spremište identiteta
+(F2/3b). Ime i opis danas idu u `user_metadata` — isti put kojim ondje već stoji `display_name`
+iz registracije. ⚠️ To **nije** trajno: metapodaci žive u korisnikovom JWT-u pa ih **nitko drugi ne
+može pročitati**, a `profiles` ne dolazi u obzir jer iz nje čita `is_admin()`.
+
+**Dvije stvari su ispale iz MJERENJA, ne iz razmišljanja — i obje su pronađene tek na jednoj širini:**
+
+1. **Portret je prestao preklapati naslovnu na 393 px, a na 320 i 375 je radio.** Uzrok nije margina
+   nego njezin susjed: `.profile-identity` poravnava po DNU (`align-items: flex-end`), a pod `flex-end`
+   se stavka položi dnom na redak — negativna gornja margina tada ne podigne ništa. Na užim ekranima
+   se tekst lomio u SVOJ redak, portret ostajao sam i margina je radila; na 393 tekst stane uz njega.
+   Popravak je `align-self: flex-start`. **Da je brana mjerila samo jednu širinu, ovo bi otišlo dalje.**
+
+2. **Zid je gurnuo prvu kontrolu ispod pregiba na 320×568** → `phone.authed.spec.js` ② („bar jedna
+   kontrola dohvatljiva bez skrola") pao je crveno. Uzrok: stranica je nosila **tri zaglavlja jedno na
+   drugom** — traka, traka razine i unutarnji `<h1>Moj profil</h1>`. Taj je `<h1>` bio **strogi
+   duplikat**: isti ključ (`profile.title`) već crta `js/navigation.js` u traci razine. Obrisan → zid
+   počinje na 116 px umjesto na 176 px, gumb na 394 umjesto 454. `#materials-page` svoj naslov
+   **zadržava** — ondje nema zida da ga zamijeni.
+
+**Brane (dokaz, ne tvrdnja):** `npm run preflight` → **EXIT 0** · `authenticated` projekt **19/19**
+(nova `profile-wall.authed.spec.js` 5 + `phone.authed` 12 + `a11y.authed` 2) · neprijavljeno **22
+prošlo** (a11y · auth · routes · back-model · layout-guard · materials-entry) + **11** `phone.spec.js`.
+Nova brana piše u `user_metadata` na **STAGING-u** i vraća zatečeno stanje i kad tvrdnja padne.
+
+**Uz pouku iz F2/0:** popis pogođenih specova je ovaj put tražen po **svemu čime se površina gađa**
+(`profileContent`, `profile-card`, `profile-avatar`, `navigateTo('profile')`, `#profile-page`), ne po
+imenu — pet datoteka, od kojih bi pretraga po imenu našla dvije.
+
+**Slijedi:** F2/3b (zasebna tablica identiteta + `SECURITY DEFINER` RPC koji nikad ne dira `role`).
+
+---
+
 ## 2026-09-08 (OPUS) — F2/0: traka dobiva dva odredišta („Moji materijali" + profil), CTA obrisan
 
 **Povod je Leonov, i jasan:** *„ovaj gumb počni učiti je najbeskorisnije smeće koje zauzima prostor gore.

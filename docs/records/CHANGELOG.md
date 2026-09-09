@@ -5,6 +5,34 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+### 2026-09-09 — **Profil postaje ZID: tko si gore, postavke ispod** (F2/3a)
+
+#### Promijenjeno
+- **`#profile-page` se otvara kao stranica o korisniku, a ne kao popis postavki** (Leon: *„profil mora
+  biti na isti način kao i Facebook"*). Gore: naslovna, portret, ime, opis i `[Uredi profil]`; ispod
+  njih vlastito gradivo; pa naslov **„Postavke"** i tek onda račun, admin, sync, napredak, tema i
+  privatnost. Do danas je prva stvar o sebi bila gumb „Promijeni lozinku".
+- **Ime i opis se uređuju s profila** — forma piše u `user_metadata` (isti put kojim ondje već stoji
+  `display_name` iz registracije). ⚠️ Privremeno po dizajnu: F2/3b to seli u zasebnu tablicu javnog
+  identiteta, jer metapodaci žive u korisnikovom JWT-u i **nitko ih drugi ne može pročitati**
+  (a `profiles` ne dolazi u obzir — iz nje čita `is_admin()`).
+- **Unutarnji naslov „Moj profil" je obrisan.** Isti ključ već crta traka razine, pa je stranica nosila
+  **tri zaglavlja jedno na drugom**. `#materials-page` svoj naslov zadržava — ondje nema zida.
+
+#### Popravljeno
+- **Prva kontrola profila više ne pada ispod pregiba na 320×568** (izmjereno: gumb s 454 px na 394 px;
+  zid počinje na 116 umjesto 176). Regres je uveo sam zid, a **našla ga je brana `phone.authed` ②**.
+- **Portret preklapa naslovnu na SVIM širinama.** Radilo na 320/375, nestalo na 393: `align-items:
+  flex-end` poništava negativnu gornju marginu čim tekst stane u isti redak. Rješenje `align-self:
+  flex-start`.
+
+#### Brane
+- **`tests/profile-wall.authed.spec.js`** (novo, STAGING): identitet stoji iznad granice postavki na
+  320/375/393/430 · portret preklapa naslovnu i ne visi izvan zida · `[Uredi profil]` je 44×44 i unutar
+  ekrana · forma se otvara sa zatečenim vrijednostima · spremanje mijenja zid. Piše u `user_metadata`
+  i **vraća zatečeno stanje i kad tvrdnja padne**.
+- `preflight` EXIT 0 · `authenticated` 19/19 · neprijavljeno 22 + 11 (`phone.spec.js`).
+
 ### 2026-09-08 — **Traka dobiva dva odredišta; „Počni učiti" obrisan** (F2/0)
 
 #### Promijenjeno

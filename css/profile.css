@@ -65,23 +65,120 @@
     color: var(--color-brand-500);
 }
 
+/* ── ZID (F2/3a, 2026-09-09) ─────────────────────────────────
+   Leon (2026-09-08): „profil mora biti na isti način kao i Facebook". Naslovna i
+   portret su OVDJE PRAZNE PLOHE — boju daju tokeni, sliku donosi F2/2. Zato je
+   ploha složena iz `color-mix` nad `--color-brand-500`, a ne iz zakucane boje:
+   mora raditi u sve četiri teme, uključujući tamni `carbon` (check:contrast). */
+.profile-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.profile-wall {
+    background: var(--color-surface-1);
+    border: 1px solid var(--color-line);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.profile-cover {
+    height: 128px;
+    background: linear-gradient(135deg,
+        color-mix(in srgb, var(--color-brand-500) 30%, var(--color-surface-1)) 0%,
+        color-mix(in srgb, var(--color-brand-500) 8%, var(--color-surface-1)) 100%);
+}
+
+.profile-identity {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1rem;
+    padding: 0 1.3rem 1.3rem;
+}
+
+/* Portret preklapa naslovnu (negativna margina), pa mu prsten mora biti u boji
+   PLOHE ISPOD — `--color-surface-1`, ne bijela: bijeli prsten je u `carbon` mrlja.
+   ⚠️ `align-self: flex-start` NIJE ukras: spremnik poravnava po DNU (da ime sjedne uz
+   portret), a pod `flex-end` se stavka položi dnom na redak — negativna gornja margina
+   tada ne podigne ništa. Izmjereno branom: preklapanje je radilo na 320/375 (tekst se
+   lomio u svoj redak, portret ostajao sam) i NESTALO na 393 (tekst stane uz portret). */
 .profile-avatar {
-    width: 56px;
-    height: 56px;
+    width: 92px;
+    height: 92px;
+    flex: none;
+    align-self: flex-start;
+    margin-top: -46px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: color-mix(in srgb, var(--color-brand-500) 15%, transparent);
+    border: 4px solid var(--color-surface-1);
+    background: color-mix(in srgb, var(--color-brand-500) 15%, var(--color-surface-1));
     color: var(--color-brand-500);
-    font-size: 1.5rem;
-    margin-bottom: 0.8rem;
+    font-size: 2.1rem;
 }
 
-.profile-email {
-    font-size: 1.05rem;
+.profile-identity-text {
+    flex: 1 1 220px;
+    min-width: 0;
+}
+
+.profile-identity-actions { flex: none; }
+
+.profile-name {
+    font-size: 1.45rem;
+    line-height: 1.2;
     margin: 0 0 0.25rem;
     overflow-wrap: anywhere;
+}
+
+.profile-bio {
+    color: var(--color-ink-0);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin: 0.5rem 0 0;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.profile-bio--empty {
+    color: var(--color-ink-1);
+    font-style: italic;
+}
+
+.profile-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 0 1.3rem 1.3rem;
+}
+
+.profile-edit-form[hidden] { display: none; }
+
+.profile-edit-form textarea {
+    resize: vertical;
+    min-height: 92px;
+    font: inherit;
+}
+
+.profile-edit-status {
+    font-size: 0.85rem;
+    color: var(--color-ink-1);
+    margin: 0;
+}
+
+.profile-edit-status.is-error { color: var(--color-danger-ink); }
+
+/* Granica: sve ispod je administracija. Do F2/3a je bila PRVA stvar na stranici. */
+.profile-settings-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-ink-1);
+    margin: 0.6rem 0 -0.5rem;
 }
 
 .profile-meta {
@@ -287,6 +384,15 @@
     /* Kratica ponovno briše sigurnu zonu — zato je longhand ovdje ponovno ispisan. */
     .profile-content { padding: 1rem; padding-bottom: max(1rem, var(--safe-bottom)); }
     .profile-stat-vals { gap: 0.7rem; }
+    /* Na 320 px identitet stoji U STUPCU: ime i gumb u istom retku ostavljaju imenu
+       ~120 px, pa se lomi na tri retka i gura portret gore. */
+    .profile-cover { height: 96px; }
+    .profile-avatar { width: 76px; height: 76px; margin-top: -38px; font-size: 1.75rem; }
+    .profile-identity { padding: 0 1rem 1rem; }
+    .profile-identity-actions { flex: 1 1 100%; }
+    .profile-identity-actions .cta-button { width: 100%; justify-content: center; }
+    .profile-edit-form { padding: 0 1rem 1rem; }
+    .profile-name { font-size: 1.25rem; }
 }
 
 /* ===== F4 Admin editor (read-only viewer, F4.3b) ===== */
