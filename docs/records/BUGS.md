@@ -203,6 +203,51 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
   lekciju izgleda kao napredak, pa nitko ne pita. Zapis koji sinkronizacija ne razumije (brojevi u nizu za
   stringove) je drugi kvar iz istog uzroka.
 
+### BUG-046 — Pilula kategorije na obojenoj kartici pada AA (3,31–4,28), a a11y-brana je to čitala kao šutnju
+
+- Status: ✅ **POPRAVLJEN 2026-09-08** na grani `feat/tinder-kadar` (**na produkciji kvar i dalje stoji** dok
+  Leon ne odluči o deployu) · Težina: **srednji** (čitljivost, WCAG AA, svaka obojena kartica u katalogu) ·
+  Našao: istraga crvenog CI-ja koji je dan ranije **krivo pripisan** drugoj cigli.
+
+- **Opis / izmjereno:** `.card-category` crta podlogu kao `color-mix(in srgb, currentColor 20%, transparent)` —
+  dakle 20 % ISTE tinte kojom je i tekst u piluli. Na plohi bez boje je to bezopasno; na **punoj ispuni akcenta**
+  (C2/M3b) tamna tinta zatamni podlogu **ispod tamnog teksta**:
+
+  | akcent | pilula | omjer (treba 4,5) |
+  |---|---|---|
+  | `#6366f1` | `#4f52c1` | **3,31** |
+  | `#8b5cf6` | `#6f4ac5` | **3,46** (axe na živoj stranici) |
+  | `#ec4899` | `#bd3a7a` | 4,05 (axe na živoj stranici) |
+  | `#16a34a` | `#12823b` | 4,28 |
+
+  Kroz cijelo gradivo pada **11 od 20 boja**. Vrijedi i na stolnom (pravilo nije pod `dodir`).
+
+- **Zašto brana nije pisnula:** axe na produkciji na `#cardCategory` vraća `incomplete` s porukom *„background
+  color could not be determined because it is overlapped by another element"* (`bgOverlap`) — naličje u
+  `preserve-3d` prekriva lice u hit-testu. Gate sudi po **violationima**, pa je „ne mogu izmjeriti" pročitao kao
+  „nema nalaza". Na produkciji su ondje **četiri** takva elementa: tekst kartice nikad nije bio izmjeren.
+
+- **Kako je izašao na vidjelo:** F1/12 ④/⑤ karticu u miru poravnaju (`transform-style: flat`, `perspective: none`)
+  jer iOS inače ne dovodi dodir do skrolera — i time maknu zaklon. Axe odjednom mjeri i pada. Zato je CI pocrvenio
+  na `fb49d4d` i zato je 07.09. **krivo pripisan ⑦** (fiksirano tijelo).
+
+- **Zašto pada nasumično:** `initFlashcards()` miješa špil bez sjemena; 24 od 56 kartica marketinga M1 nosi boju
+  koja pada = **42,9 % pokretanja**. Izmjereno: grana **3 pada / 6**, produkcija **12/12 zeleno** (isti test).
+
+- **Rješenje:** pilula miješa **SUPROTNU** tintu — `[data-ink="dark"]` → `--color-on-tint-light`, `[data-ink="light"]`
+  → `--color-on-tint-dark`. Pod tamnom tintom pilula posvijetli, pod svijetlom potamni; najgori omjer kroz gradivo
+  **6,61**, nijedna boja ne pada. Kartica bez boje ostaje na `currentColor` (fallback-ugovor M3b).
+  Brana: `tests/unit/card-tint-contrast.test.js` (10 tvrdnji, čita CSS/tokene/prag/boje umjesto da ih prepisuje;
+  obrnuto = 2 crvene koje imenuju 9 boja). A11y-suita **20/20 u 10 pokretanja**.
+
+- **Lekcija ①:** *`incomplete` nije prolaz.* Brana koja sudi samo po nalazima čita „ne mogu izmjeriti" kao „nema
+  što mjeriti" — isti razred propusta zbog kojeg u `check-contrast.js` postoji `parseColor` (prazan rezultat koji
+  znači „ne znam pročitati" ne smije se tumačiti kao „nema što mjeriti").
+- **Lekcija ②:** *popravak koji nešto otkrije nije uzrok onoga što je otkrio.* Crveni CI je bio pripisan zadnjem
+  commitu **bez ijednog mjerenja**; protučinjenični pokus (isti test na produkciji) oborio je to u dvije minute.
+- **Lekcija ③:** brana koja ovisi o **nasumičnom** ulazu (miješan špil) nije brana nego kocka — ista činjenica
+  mora imati determinističku provjeru izvan preglednika.
+
 ### BUG-044 — Ljepljivi hover: poslije dodira koji mijenja rutu, gumb pod prstom svijetli a nije dotaknut
 
 - Status: ✅ **riješen 2026-09-05** — ① dodir (F1/8 ①; Leon na iPhoneu: *„Ne svijetli, odlično"*) + ② miš

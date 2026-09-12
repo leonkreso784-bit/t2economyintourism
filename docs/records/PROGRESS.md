@@ -163,6 +163,50 @@ nad istim sadržajem), zasebna tablica identiteta, rez F2/3 na tri cigle.
 
 ---
 
+## 2026-09-08 (OPUS) — istraga crvenog CI-ja: ⑦ je nevin, nađen BUG-046, brana koja ne ovisi o sreći
+
+Leon: *„pregledaj i analiziraj problem detaljno."* Sinoć sam u zapis stavio presudu **„CI je crven, uzrok je ⑦,
+nije istraženo"**. Ta je presuda bila **pogađanje po zadnjem commitu** — i danas je oborena.
+
+**Metoda: protučinjenični pokus prije ijedne teorije.** Isti test (`a11y.spec.js:42`, iPhone-SE-375) pušten je
+s ponavljanjem na obje strane: **grana `f75b2d7` = 3 pada / 6**, u dvije različite boje; **produkcija `c53c28c`
+= 12/12 zeleno**. Diff između zelenog i crvenog commita dira samo ⑦ blok. To je dovoljno da ⑦ ostane osumnjičen,
+ali ne i osuđen — pa je uslijedila sonda koja čita **stvarne izračunate boje** kroz cijeli špil na obje strane:
+**bit-identične** (tamna tinta, pilula = 20 % iste tinte preko pune ispune akcenta). Kvar je dakle isti, a
+razlikuje se samo **što axe uspije izmjeriti**:
+
+| | axe na `#cardCategory` |
+|---|---|
+| produkcija `c53c28c` | `incomplete` — *„background color could not be determined because it is overlapped by another element"* |
+| grana `f75b2d7` | `violation` — 3.46 (fg `#000000` / bg `#6f4ac5`) |
+
+Zaklon je **naličje u `preserve-3d` koje prekriva lice u hit-testu** — isti onaj zbog kojeg iOS nije dovodio
+dodir do skrolera (F1/12 ④, teorija time neovisno potvrđena u drugom motoru). ④/⑤ su ga maknuli → **brana je
+progledala, nije se pokvarila**. Na produkciji su na kartici **četiri** elementa u kanti `incomplete`, dakle
+tekst kartice ondje nikad nije ni bio izmjeren.
+
+**Zašto pada nasumično:** `initFlashcards()` miješa špil **bez sjemena**, a 24 od 56 kartica marketinga M1 nosi
+boju koja pada = **42,9 %**. Zeleno na `e223b05` bila je sreća, crveno na `fb49d4d` nesreća.
+
+**Kvar (BUG-046, na produkciji):** pilula kategorije miješa 20 % ISTE tinte kojom je i tekst; na punoj ispuni
+akcenta to zatamni podlogu ispod tamnog teksta. Kroz gradivo **11 od 20 boja pada AA**, najgori 3,31.
+**Popravak:** miješa se **suprotna** tinta (tokeni `--color-on-tint-*`) → 0 pada, najgori 6,61.
+
+**Brana koja ne ovisi o sreći:** `tests/unit/card-tint-contrast.test.js` — postotak i tokene čita iz CSS-a, prag
+iz `js/utils.js`, boje iz `data/**`; provjerava **sve boje odjednom**, bez preglednika. Obrnuto (staro pravilo
+vraćeno) = **2 crvene tvrdnje koje imenuju 9 boja**. `npm run build:css` + `npm run bump` (105 tokena).
+**Dokaz:** a11y-suita **20/20 u 10 uzastopnih pokretanja** (prije: 3 pada / 6) · preflight EXIT 0.
+
+**Skrol naličja (⑦) — analiza, bez popravka.** Ostaje DJELOMIČNO (*„može se scrollat ali jako teško"*). Što je
+nakon ove istrage sigurno: ④-teorija (naličje krade dodir) potvrđena je neovisno, i taj otimač je maknut. Ostao
+je drugi, koji nismo dirali: **os se zaključava na prvih 10 px, i to na dva mjesta odjednom** — preglednik
+(`touch-action: pan-y` znači „vodoravno nije tvoje", pa gesta koja krene koso ne smije skrolati do podizanja
+prsta) i JS (`swipeMove` uzima gestu čim je `|dx|` samo dlaku veći od `|dy|`, i poslije se ne predomišlja). To
+objašnjava i A/B: sa `?bez=pany` skrol proradi a swipe nestane — točno kako je Leon i prijavio. Prijedlog kad se
+otvori: **razdvojiti gestu po licu** (naličje = samo skrol, lice = swipe), i prije toga sonda, ne osmi popravak.
+
+**Sljedeće:** PROFIL (F2). Kartice ostaju STOP; ništa nije pushano ni deployano.
+
 ## 2026-09-07 (OPUS, druga sesija) — Mjerenje aktivacije i povratka isporučeno · gate pristanka obrnuto provjeren
 
 Nastavak iste sesije, sad s kodom. Zadatak je izabran iz nalaza ① prethodnog unosa: **registracija je

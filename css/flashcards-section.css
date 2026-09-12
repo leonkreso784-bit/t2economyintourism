@@ -130,6 +130,31 @@
 .flashcard[data-ink] .flashcard-back p { color: inherit; }
 .flashcard[data-ink] .flashcard-back .explanation { color: var(--color-ink-0); }
 
+/* ── PILULA KATEGORIJE NA OBOJENOJ ISPUNI: 20 % SUPROTNE TINTE (2026-09-08) ────
+   Osnovno pravilo (`.card-category` gore) miješa 20 % `currentColor` — dakle 20 % ISTE tinte
+   kojom je i tekst u piluli. Na plohi bez boje to je bezopasno, na PUNOJ ISPUNI akcenta (C2)
+   ide u krivu stranu: tamna tinta zatamni podlogu ispod tamnog teksta. Izmjereno axe-om na
+   živoj stranici: ljubičasta `#8b5cf6` → pilula `#6f4ac5` = **3,46** (treba 4,5), roza
+   `#ec4899` → `#bd3a7a` = 4,05; kroz cijelo gradivo padalo je 11 od 20 boja, najgori 3,31.
+
+   ⚠️ Kvar je bio NA PRODUKCIJI od C2, a brana ga ondje NE VIDI: axe na `#cardCategory` vraća
+   `incomplete — bgOverlap` („podloga se ne da odrediti, element je prekriven"), jer naličje u
+   `preserve-3d` prekriva lice u hit-testu. F1/12 ④/⑤ su karticu u miru poravnali — zbog
+   iOS-skrola — i time maknuli taj zaklon, pa je isti axe počeo mjeriti i padati. Brana je
+   PROGLEDALA, nije se pokvarila; ⑦ (fiksirano tijelo) s tim nema veze.
+
+   Popravak ide SUPROTNO od tinte: pod tamnom tintom pilula posvijetli, pod svijetlom potamni —
+   time raste razmak prema tekstu (najgori omjer kroz gradivo 6,61). Tinte su tokeni, ne
+   zakucane vrijednosti (`check:palette`). Brojke kroz SVE boje kataloga drži
+   `tests/unit/card-tint-contrast.test.js`: a11y-brana ovisi o miješanju špila bez sjemena, pa
+   ovo hvata tek svako drugo pokretanje — deterministična provjera mora stajati izvan nje. */
+.flashcard[data-ink="dark"] .card-category {
+    background: color-mix(in srgb, var(--color-on-tint-light) 20%, transparent);
+}
+.flashcard[data-ink="light"] .card-category {
+    background: color-mix(in srgb, var(--color-on-tint-dark) 20%, transparent);
+}
+
 .card-category {
     position: absolute;
     top: 0.75rem;
