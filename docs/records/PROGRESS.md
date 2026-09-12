@@ -25,6 +25,144 @@ DOSLOVNO kodirala kvar (`flashcardsLearned.includes(0) && includes(1)`); okrenut
 napredak → mjerenje-aktivacije (ostatak F1) → nocna-b (F2/1) → profil-zid (+ migracija na PROD uz OK) →
 cherry-pick BUG-045/046 → tek onda F2/2. Ancestry izmjeren gitom (merge-base, `--contains`), CI stanje
 po grani s GitHub API-ja. Sljedeće: nova sesija po §0, korak 1.
+
+## 2026-09-09 (OPUS) — F2/3b: ime i opis dobivaju svoju tablicu, `role` ostaje zatvoren
+
+**Cijela cigla je jedna sigurnosna tvrdnja:** korisnik mora smjeti pisati svoje ime, a ne smije
+smjeti ni pokušati pisati svoju ulogu. Da su ime i `role` u istoj tablici, prvo bi tražilo
+UPDATE-politiku nad `profiles` — a jedini pouzdan način da druga kolona time ne postane dohvatljiva
+jest da uopće ne bude ondje. **Struktura, ne oprez.**
+
+**Izmjereno prije pisanja, na živoj shemi (staging):** `profiles` danas ima **točno jednu politiku**,
+`profiles_select_own` (SELECT). **Nijedne upisne.** Dakle rizik iz §F2 („politika za samo-uređivanje daje
+korisniku pravo da si upiše `role = 'admin'`") nije zatečeno stanje nego ono što bi F2/3b bio uveo da je
+identitet otišao ondje. Sad se to pitanje ne postavlja.
+
+**Isporučeno:**
+- `supabase/f2-profile-identity.sql` — `profile_identity` (`display_name` · `bio` · **`avatar_path` ·
+  `cover_path`** · vremena), owner-RLS **samo za čitanje**, upis isključivo kroz `set_profile_identity`
+  (`SECURITY DEFINER`, `search_path` postavljen, granice 60/280 provodi BAZA). Primijenjeno na
+  **STAGING**; PROD čeka Leonov izričit OK.
+- Stupci za slike stoje prazni od prvog dana **namjerno**: puni ih F2/2, a druga migracija nad
+  produkcijom košta više nego dva prazna stupca. U njima stoji PUTANJA, nikad slika ni potpisani URL.
+- Prijenos zatečenih imena iz `user_metadata` (idempotentan). Na stagingu je upisao **0 redaka** i to je
+  točno: jedini kandidat ima prazno ime, a filtar prazna imena odbija.
+- `js/profile.js` čita identitet iz tablice, piše kroz RPC. ⚠️ **Rezervni put (`user_metadata`) ostaje i
+  nije skela:** PROD tablicu (još) nema, a `signUp` i dalje piše ime u metapodatke — novi račun je nema
+  dok jednom ne spremi. `user_metadata.display_name` se i dalje upisuje kao **izvedeni preslik za gornju
+  traku** (`getDisplayName()` čita JWT da za svako ime ne otvara krug prema bazi); jedini upisivač tog
+  preslika je `saveProfileIdentity`.
+
+**Kvar koji je našla brana, i ne bi ga našao pregled koda:** dohvat identiteta završava ponovnim
+crtanjem profila, a ono prepisuje `#profileContent` — **zajedno s otvorenom formom i tekstom u njoj.**
+Test je visio do isteka od 120 s jer je polje nestalo između klika i upisa. Popravak ima dva sloja:
+ponovno crtanje se preskače ako se ništa ne bi promijenilo (JWT i tablica se u pravilu slažu), i **nikad
+se ne crta preko čovjeka koji piše**.
+
+**Brane:** `preflight` **EXIT 0** · `authenticated` **11/11** (nova `profile-identity.authed.spec.js` 5 +
+`profile-wall.authed` 5 + setup). Nova brana mjeri **OBRNUTO**, kroz HTTP kao korisnik: izravni
+INSERT/UPDATE/DELETE nad tablicom se odbijaju · tuđi red je nevidljiv · **UPDATE nad `profiles` vraća
+0 redaka i `role` je isti prije i poslije upisa identiteta** · granice duljine ruši baza, ne `maxlength`.
+⚠️ Pokušaj upisa u `role` namjerno piše **istu vrijednost** koja ondje već stoji — da brana prijavi
+otvorena vrata, a ne da usput odjavi test-računu administraciju.
+
+**Supabase advisors poslije migracije:** `touch_profile_identity` se **ne pojavljuje** u
+`function_search_path_mutable` (postavljen izričito); jedini takav i dalje je zatečeni `set_updated_at`.
+`set_profile_identity` ulazi u istu, namjernu obitelj kao devet postojećih RPC-ova (ADR-024).
+
+**Slijedi:** F2/2 — slike (naslovna + portret), i tek tada se odlučuje javni vs privatni bucket.
+
+---
+
+## 2026-09-09 (OPUS) — F2/3a: profil postaje ZID (identitet gore, administracija ispod)
+
+**Povod je Leonov:** *„profil mora biti na isti način kao i Facebook … i privatni sadržaji koje
+korisnik radi."* Oblik je odlučen 08.09. i zapisan u `RASPORED.md` §F2 (zid + radionica); ova cigla
+gradi **kostur zida**, ne njegov sadržaj.
+
+**Što je bilo prije:** prva stvar koju je korisnik vidio o sebi bio je gumb „Promijeni lozinku",
+a ime mu je stajalo kao **naslov te kartice**. Sad je redoslijed: naslovna · portret · ime · opis ·
+`[Uredi profil]` → vlastito gradivo → naslov **„Postavke"** → račun, admin, sync, napredak, tema,
+privatnost. Taj naslov je **granica**: sve ispod njega je administracija.
+
+**Namjerno JOŠ NIJE u ovoj cigli:** slike (F2/2 — naslovna i portret su prazne plohe), rešetka
+vlastitog gradiva (F2/5 — mjesto joj je odmah ispod identiteta), zasebno spremište identiteta
+(F2/3b). Ime i opis danas idu u `user_metadata` — isti put kojim ondje već stoji `display_name`
+iz registracije. ⚠️ To **nije** trajno: metapodaci žive u korisnikovom JWT-u pa ih **nitko drugi ne
+može pročitati**, a `profiles` ne dolazi u obzir jer iz nje čita `is_admin()`.
+
+**Dvije stvari su ispale iz MJERENJA, ne iz razmišljanja — i obje su pronađene tek na jednoj širini:**
+
+1. **Portret je prestao preklapati naslovnu na 393 px, a na 320 i 375 je radio.** Uzrok nije margina
+   nego njezin susjed: `.profile-identity` poravnava po DNU (`align-items: flex-end`), a pod `flex-end`
+   se stavka položi dnom na redak — negativna gornja margina tada ne podigne ništa. Na užim ekranima
+   se tekst lomio u SVOJ redak, portret ostajao sam i margina je radila; na 393 tekst stane uz njega.
+   Popravak je `align-self: flex-start`. **Da je brana mjerila samo jednu širinu, ovo bi otišlo dalje.**
+
+2. **Zid je gurnuo prvu kontrolu ispod pregiba na 320×568** → `phone.authed.spec.js` ② („bar jedna
+   kontrola dohvatljiva bez skrola") pao je crveno. Uzrok: stranica je nosila **tri zaglavlja jedno na
+   drugom** — traka, traka razine i unutarnji `<h1>Moj profil</h1>`. Taj je `<h1>` bio **strogi
+   duplikat**: isti ključ (`profile.title`) već crta `js/navigation.js` u traci razine. Obrisan → zid
+   počinje na 116 px umjesto na 176 px, gumb na 394 umjesto 454. `#materials-page` svoj naslov
+   **zadržava** — ondje nema zida da ga zamijeni.
+
+**Brane (dokaz, ne tvrdnja):** `npm run preflight` → **EXIT 0** · `authenticated` projekt **19/19**
+(nova `profile-wall.authed.spec.js` 5 + `phone.authed` 12 + `a11y.authed` 2) · neprijavljeno **22
+prošlo** (a11y · auth · routes · back-model · layout-guard · materials-entry) + **11** `phone.spec.js`.
+Nova brana piše u `user_metadata` na **STAGING-u** i vraća zatečeno stanje i kad tvrdnja padne.
+
+**Uz pouku iz F2/0:** popis pogođenih specova je ovaj put tražen po **svemu čime se površina gađa**
+(`profileContent`, `profile-card`, `profile-avatar`, `navigateTo('profile')`, `#profile-page`), ne po
+imenu — pet datoteka, od kojih bi pretraga po imenu našla dvije.
+
+**Slijedi:** F2/3b (zasebna tablica identiteta + `SECURITY DEFINER` RPC koji nikad ne dira `role`).
+
+---
+
+## 2026-09-08 (OPUS) — F2/0: traka dobiva dva odredišta („Moji materijali" + profil), CTA obrisan
+
+**Povod je Leonov, i jasan:** *„ovaj gumb počni učiti je najbeskorisnije smeće koje zauzima prostor gore.
+Gore treba biti profil i UGC."* Provjereno prije dodirivanja koda: CTA je doista bio duplikat — landing
+nosi **tri** `.start-trigger`-a, a kartica „Kreni učiti" stoji ≈400 px ispod same trake.
+
+**Ovo je okrenuta odluka, ne previd.** Cigla T2 je „Moje materijale" iz trake maknula Leonovim riječima
+(*„taj gumb je na landingu i na profilu i to je DOVOLJNO"*), a `css/topbar.css` je nosio komentar da ulaz
+u vlastito gradivo NE stoji u traci nigdje. Taj je komentar **prepisan**, jer je danas neistinit; razlog
+za promjenu je što profil upravo postaje pravo odredište (F2), pa traka više ne vodi u pododjeljak
+postavki. Usput je time zatvorena cijena koju je spec §9.6 zapisao kao svjesnu.
+
+**Dvije stvari koje su ispale iz mjerenja, ne iz razmišljanja:**
+1. **Gumb je na telefonu ostao bez imena.** Ispod 559 px `.topbar-btn-label` ima `display: none`, ikona je
+   `aria-hidden` → axe `button-name`, **critical, na svih 7 a11y površina**. Popravak veže `aria-label` na
+   ISTI ključ kao vidljivi tekst, pa se ne mogu razići ni nakon promjene jezika.
+2. **Dodir je bio premali: 35×40 i 32×40 px.** Izmjereno na pet širina, ne procijenjeno. Kvar je stariji
+   od ove cigle (profil je takav i na produkciji), ali dva odredišta gore znače da su to sad vrata u sve.
+   Sad 44×44; stane u traku od 56 px pa budžet kroma ostaje netaknut.
+
+**Uzgred nađeno:** `main` **danas ne prolazi `check:docs`** — pada na `tests/.auth/admin.json`, artefaktu
+koji `test:authed` tek proizvede. Popravak postoji od 06.09. ali je ostao na parkiranoj grani; prenesen je
+ovamo (`3bfe40a` → `5233a0a`) jer bez njega nijedan preflight na ovoj grani ne bi bio istinit.
+
+**⚠️ Treća stvar, i nju je našao CI a ne ja.** Nakon preview-pusha su oba Playwright sharda pala na
+`materials-entry.spec.js`: dvije tvrdnje ondje doslovno kodiraju T2 — klik na `.topbar .start-trigger`
+(CTA kojeg više nema) i `expect('.topbar [data-goto-materials]').toBe(0)`. **Moja pretraga referenci
+tražila je `topbarStart` i `topbar-cta`, a taj spec ne koristi nijedno** — pa ga nisam ni pokrenuo.
+Lokalnih „43 prošlo, 0 palo" bilo je istinito, ali o podskupu koji je odabrala ta ista slijepa pretraga.
+**Pouka je zapisana ondje gdje se čita** — `docs/workflow/TESTING.md` §„Brišeš li element sučelja, ne
+traži njegovo ime" (ADR-027: jedna činjenica, jedno mjesto). Tvrdnje su prepisane u duhu layout-guarda:
+ne obrisane nego okrenute, i strože — ulaz u traci mora biti **točno jedan**, na svakoj stranici, i
+mora stvarno voditi na policu iz dubine aplikacije.
+
+**Dokazi:** `preflight` EXIT 0 · `a11y` 7/7 · `layout-guard` + `phone.spec` + `landing` = **43 prošlo, 0 palo**
+· nakon popravka `materials-entry` + `about` + `reachability` + `landing` + `layout-guard` = **59 prošlo, 0 palo**
+· dodir izmjeren 44×44 na 320/360/375/393/430 · **obrnuta provjera brane**: ubačen preklop → crveno na
+točnoj tvrdnji, vraćeno → zeleno.
+
+**Slijedi:** F2 profil — zid vlastitog sadržaja (ADR-029 ostaje: radionica i profil su dvije površine
+nad istim sadržajem), zasebna tablica identiteta, rez F2/3 na tri cigle.
+
+---
+
 ## 2026-09-07 (OPUS, druga sesija) — Mjerenje aktivacije i povratka isporučeno · gate pristanka obrnuto provjeren
 
 Nastavak iste sesije, sad s kodom. Zadatak je izabran iz nalaza ① prethodnog unosa: **registracija je
@@ -255,6 +393,7 @@ vrćena samo djelomično — browse i back-model na jednom profilu): **571 proš
 preflight EXIT 0, Vercel produkcija `dpl_Dw1caqN4fhLXEpzCbsudu47JwD89` READY za `c53c28c`, jedan spor
 zahtjev na www.sokratstudy.com vraća token `20260905174602` = repo. Otvoreno za Leona na iPhoneu:
 dvostruki dodir (F1/10). Sljedeće: **F1/7** (landing `background-attachment: fixed`).
+
 
 ## 2026-09-05 (FABLE) — F1/8 ② isporučen: hover na mišu se naoruža tek prvim pomakom (JS pauza + CSS prefiks + sonda + 28 tvrdnji)
 

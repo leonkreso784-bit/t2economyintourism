@@ -20,11 +20,11 @@
     <meta name="format-detection" content="telephone=no">
     
     <!-- Favicon & App Icons -->
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260912212300">
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260912212300">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260912212300">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260912212300">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260912212300">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260912213037">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260912213037">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260912213037">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260912213037">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260912213037">
     <link rel="manifest" href="manifest.json">
     
     <!-- SEO & Social -->
@@ -98,7 +98,7 @@
     <!-- Preconnect for faster loading -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <link rel="stylesheet" href="styles.bundle.css?v=20260912212300">
+    <link rel="stylesheet" href="styles.bundle.css?v=20260912213037">
 
     <!-- C2: GOOGLE FONTS SU OTIŠLI. Inter + Space Grotesk = 2 obitelji, 11 težina, dva
          `preconnect`-a i treći poslužitelj na kritičnom putu — a §7.1 ih je imenovao kao
@@ -122,10 +122,10 @@
     <!-- Learn styles are managed in css/learn.css to avoid inline conflicts on mobile. -->
 
     <!-- Cookie consent + Google Analytics (Consent Mode v2; analytics loads only after Accept) -->
-    <link rel="stylesheet" href="css/consent.css?v=20260912212300">
+    <link rel="stylesheet" href="css/consent.css?v=20260912213037">
     <!-- Praćenje grešaka (Faza 2, 2E): učita se prije consent.js; consent-gated + no-op bez DSN-a. -->
-    <script src="js/monitoring.js?v=20260912212300" defer></script>
-    <script src="js/consent.js?v=20260912212300" defer></script>
+    <script src="js/monitoring.js?v=20260912213037" defer></script>
+    <script src="js/consent.js?v=20260912213037" defer></script>
 </head>
 <!-- ⚠️ `no-pathbar` STOJI U MARKUPU, NE ČEKA JS (CLS, 2026-08-24).
      `#landing-page` je u markupu već `active`, a landing NEMA drugi red trake — pa je `<body>`
@@ -140,9 +140,9 @@
 <!-- boot.js je SINKRON (bez defer) pa blokira parser i izvrši se prije prvog crtanja —
      isto jamstvo koje je davao inline blok koji je tu živio do D1 (CSP); zašto odluka
      mora pasti prije crtanja piše u js/boot.js. -->
-<script src="js/boot.js?v=20260912212300"></script>
+<script src="js/boot.js?v=20260912213037"></script>
 <!-- ADR-034: štipanje s dva prsta gasi JS, jer Safari metu ignorira — zašto piše u js/no-zoom.js -->
-<script src="js/no-zoom.js?v=20260912212300" defer></script>
+<script src="js/no-zoom.js?v=20260912213037" defer></script>
     
     <!-- ==================== LANDING PAGE ==================== -->
     <!-- ====================================================================
@@ -181,20 +181,27 @@
     <div class="chrome" id="chrome">
     <header class="topbar" id="top" role="banner">
         <a class="topbar-logo" href="#/" id="topbarHome" aria-label="Sokrat Study">
-            <img src="assets/logo.svg?v=20260912212300" alt="" class="logo-image">
+            <img src="assets/logo.svg?v=20260912213037" alt="" class="logo-image">
             <span class="logo-text">Sokrat Study</span>
         </a>
 
-        <!-- ⚠️ TRAKA VIŠE NEMA NIJEDNO ODREDIŠTE, i to je odluka u dva koraka.
-             „Predmeti" su maknuti 2026-08-19 (Leon: *„najnebitniji gumb ikada"*), a
-             „Moji materijali" ciglom T2 (Leon: *„taj gumb je na landingu i na profilu i
-             to je DOVOLJNO"*). Nijedan ulaz nije izgubljen: katalog vode VRATA U HEROU
-             (`.start-trigger` → `enterBrowse`) i MRVICA, a vlastito gradivo ima **pet**
-             ulaza (landing ×4 — vrata, `own-cta`, podnožje, ＋ pločica — i profil ×1).
-             Ključ `topbar.subjects` OSTAJE u rječniku: on imenuje mrvicu, ne obrisani gumb.
-             ⚠️ Cijena je izrečena u specu §9.6: iz UNUTRAŠNJOSTI aplikacije (katalog,
-             lekcija, učenje, Studio) u vlastite materijale se ide preko landinga ili
-             profila — isti kompromis kao kod „Predmeta". -->
+        <!-- ⚠️ TRAKA IMA TOČNO DVA ODREDIŠTA: vlastito gradivo i profil. To je OKRENUTA
+             odluka, ne previd — T2 je „Moje materijale" odavde maknuo Leonovim riječima
+             (*„taj gumb je na landingu i na profilu i to je DOVOLJNO"*), a 2026-09-08 ih je
+             isti Leon vratio: *„ovaj gumb počni učiti je najbeskorisnije smeće koje zauzima
+             prostor gore. Gore treba biti profil i UGC."* Dva razloga zbog kojih danas stoji
+             suprotno nego u kolovozu:
+             ① CTA je bio DUPLIKAT — i bez njega `.start-trigger` ostaje na landingu TRI puta
+               (vrata u herou, podnožje, „O nama"), a kartica „Kreni učiti" stoji ≈400 px
+               ispod trake. Nijedan put u katalog nije izgubljen.
+               Traka je time trošila jedini stalni prostor na ponavljanje.
+             ② Profil upravo postaje pravo odredište (F2), pa traka više ne vodi u pododjeljak
+               postavki nego u korisnikov kutak.
+             ✅ Time je zatvorena cijena koju je spec §9.6 zapisao kao svjesnu: iz UNUTRAŠNJOSTI
+             aplikacije (katalog, lekcija, učenje, Studio) u vlastite materijale se išlo SAMO
+             preko landinga ili profila. Sad se ide izravno, s bilo koje stranice.
+             Katalog i dalje vode VRATA U HEROU i MRVICA — njemu ulaz nije oduzet.
+             Ključ `topbar.subjects` OSTAJE u rječniku: on imenuje mrvicu, ne obrisani gumb. -->
         <div class="topbar-spacer"></div>
 
         <div class="topbar-actions">
@@ -202,12 +209,21 @@
                 <i class="fas fa-globe" aria-hidden="true"></i>
                 <span class="lang-toggle-label">EN</span>
             </button>
+            <!-- Vlastito gradivo je ODREDISTE u traci, na SVAKOJ stranici. Bez JS-a:
+                 `data-goto-materials` hvata globalni delegat u js/navigation.js.
+                 ⚠️ `aria-label` NIJE ukras nego uvjet: ispod 559 px `.topbar-btn-label` ima
+                 `display: none`, ikona je `aria-hidden`, pa bi gumb na telefonu ostao BEZ
+                 IMENA (axe `button-name`, critical — izmjereno, ne pretpostavljeno). Ime i
+                 vidljivi tekst čitaju ISTI ključ `lnav.materials`, pa se ne mogu razići ni
+                 nakon promjene jezika (inače axe „label-in-name"). -->
+            <button type="button" class="topbar-btn" id="topbarMaterials" data-goto-materials
+                    aria-label="My materials" data-i18n-aria="lnav.materials">
+                <i class="fas fa-folder-tree" aria-hidden="true"></i>
+                <span class="topbar-btn-label" data-i18n="lnav.materials">My materials</span>
+            </button>
             <button type="button" class="topbar-btn auth-entry" id="authNavBtn" hidden>
                 <i class="fas fa-user" aria-hidden="true"></i>
                 <span class="auth-entry-label topbar-btn-label" id="authNavLabel">Sign in</span>
-            </button>
-            <button type="button" class="topbar-cta start-trigger" id="topbarStart">
-                <span data-i18n="cta.start.lower">Start studying</span>
             </button>
         </div>
     </header>
@@ -449,7 +465,7 @@
                 <div class="footer-cols">
                     <div class="footer-brand">
                         <div class="landing-logo">
-                            <img src="assets/logo.svg?v=20260912212300" alt="" class="logo-image">
+                            <img src="assets/logo.svg?v=20260912213037" alt="" class="logo-image">
                             <span class="logo-text">Sokrat Study</span>
                         </div>
                         <p data-i18n="footer.tagline">Write your own study material, or use one that's ready. Free for everyone.</p>
@@ -485,7 +501,7 @@
     <aside class="subjects-sidebar" id="subjectsSidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260912212300" alt="Sokrat Study" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260912213037" alt="Sokrat Study" class="logo-image"></div>
                 <span data-i18n="sidebar.choose">Choose Subject</span>
             </div>
             <button class="close-sidebar-btn" id="closeSidebar" aria-label="Close sidebar">
@@ -1162,7 +1178,7 @@
         <main class="about-content max-w-[600px] mx-auto">
             <h1 class="visually-hidden" data-i18n="about.title">About Sokrat Study</h1>
             <div class="about-hero-section text-center mb-8">
-                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260912212300" alt="Sokrat Study Logo" class="logo-image"></div>
+                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260912213037" alt="Sokrat Study Logo" class="logo-image"></div>
                 <p class="about-tagline" data-i18n="about.tagline">Created by students, for students</p>
 
                 <!-- ⚠️ IZLAZ. Izmjereno prije popravka: cijela stranica imala je TOČNO JEDNU
@@ -1227,10 +1243,13 @@
 
     <!-- ==================== PROFILE PAGE (signed-in account) ==================== -->
     <section id="profile-page" class="profile-page">
-        <header class="profile-header"><!-- K2b: banner je JEDAN i stoji u globalnoj traci -->
-            <h1 data-i18n="profile.title">My Profile</h1>
-            <div style="width: 44px;"></div>
-        </header>
+        <!-- F2/3a: unutarnji naslov „Moj profil" je OBRISAN, i to ga je izmjerila brana, nije
+             ukus. Isti tekst je već crtala traka razine (`js/navigation.js` → `profile.title`),
+             pa je stranica na 320×568 nosila TRI zaglavlja jedno na drugom — zid je time pao
+             ispod pregiba i tvrdnja ② iz `phone.authed.spec.js` („bar jedna kontrola dohvatljiva
+             bez skrola") se srušila. Zid SAM po sebi je zaglavlje: naslovna, portret i ime kažu
+             čija je ovo stranica bolje nego natpis iznad njih.
+             ⚠️ `#materials-page` svoj naslov ZADRŽAVA — ondje nema zida da ga zamijeni. -->
         <main class="profile-content w-full max-w-[860px] mx-auto" id="profileContent">
             <!-- Rendered by renderProfilePage() in js/profile.js -->
         </main>
@@ -1311,38 +1330,38 @@
          (Blok B): loadSubjectContent() later becomes fetch('/api/subject/...'). -->
 
     <!-- Catalog: single source of truth for subjects (must load before js/config.js) -->
-    <script src="data/catalog.js?v=20260912212300"></script>
+    <script src="data/catalog.js?v=20260912213037"></script>
     <!-- Autogeneriran landing broj pitanja (npm run stats). Eager + sitan; čita ga renderLandingMeta(). -->
-    <script src="data/landing-stats.js?v=20260912212300"></script>
+    <script src="data/landing-stats.js?v=20260912213037"></script>
 
     <!-- App modules (split from app.js) -->
     <!-- T6: tema je izrezana iz init.js jer ju treba i editor.html, koji boot aplikacije NE ucitava. -->
-    <script src="js/theme.js?v=20260912212300"></script>
-    <script src="js/i18n.js?v=20260912212300"></script>
+    <script src="js/theme.js?v=20260912213037"></script>
+    <script src="js/i18n.js?v=20260912213037"></script>
     <!-- AppState (S3, Faza 2C): namespace runtime stanja — MORA prije config.js (grupe migriraju iz njega). -->
-    <script src="js/app-state.js?v=20260912212300"></script>
-    <script src="js/config.js?v=20260912212300"></script>
-    <script src="js/content-loader.js?v=20260912212300"></script>
+    <script src="js/app-state.js?v=20260912213037"></script>
+    <script src="js/config.js?v=20260912213037"></script>
+    <script src="js/content-loader.js?v=20260912213037"></script>
     <!-- ContentRepository (S1, Faza 2): jedinstveni šav za dohvat sadržaja (nakon catalog+config+loader). -->
-    <script src="js/content-repo.js?v=20260912212300"></script>
-    <script src="js/components/sokrat-toast.js?v=20260912212300"></script>
-    <script src="js/components/sokrat-modal.js?v=20260912212300"></script>
+    <script src="js/content-repo.js?v=20260912213037"></script>
+    <script src="js/components/sokrat-toast.js?v=20260912213037"></script>
+    <script src="js/components/sokrat-modal.js?v=20260912213037"></script>
     <!-- <sokrat-confirm> (2D.3) — nakon sokrat-modal.js (gradi se na njemu). -->
-    <script src="js/components/sokrat-confirm.js?v=20260912212300"></script>
-    <script src="js/utils.js?v=20260912212300"></script>
-    <script src="js/storage.js?v=20260912212300"></script>
-    <script src="js/analytics.js?v=20260912212300"></script>
+    <script src="js/components/sokrat-confirm.js?v=20260912213037"></script>
+    <script src="js/utils.js?v=20260912213037"></script>
+    <script src="js/storage.js?v=20260912213037"></script>
+    <script src="js/analytics.js?v=20260912213037"></script>
     <!-- UČITAVANJE PO RUTI: `js/loader.js` mora prije `navigation.js` i `auth.js` (oba traže
          pakete). Iz markupa su OTIŠLI: načini učenja (math · blocks-renderer · flashcards ·
          quiz · fill-blanks · learn · progress), slijepa karta, vježbe, polica (offline-store),
          slike osobnog gradiva, „Moji materijali", profil, otkrivanje admina i sinkronizacija
          napretka. Svaki od njih stiže na svom događaju — otvorena lekcija, otvoren tab,
          otvoren profil, prijava. Popis paketa i obrazloženje reza: `js/loader.js`. -->
-    <script src="js/loader.js?v=20260912212300"></script>
-    <script src="js/navigation.js?v=20260912212300"></script>
-    <script src="js/auth.js?v=20260912212300"></script>
-    <script src="js/init.js?v=20260912212300"></script>
+    <script src="js/loader.js?v=20260912213037"></script>
+    <script src="js/navigation.js?v=20260912213037"></script>
+    <script src="js/auth.js?v=20260912213037"></script>
+    <script src="js/init.js?v=20260912213037"></script>
     <!-- Service Worker (F3 3A): offline app-shell; registrira se na load, fail-safe. -->
-    <script src="js/sw-register.js?v=20260912212300" defer></script>
+    <script src="js/sw-register.js?v=20260912213037" defer></script>
 </body>
 </html>

@@ -81,7 +81,10 @@ test('povratak vodi odakle si došao, a ruta se briše iz adrese', async ({ page
   await page.waitForFunction(() => window.enterBrowse);
 
   // landing → browse → materijali → natrag mora vratiti na BROWSE, ne na landing.
-  await page.click('.topbar .start-trigger');   // K2b: landing dijeli globalnu traku
+  // ⚠️ F2/0 (2026-09-08): do tada je ovdje stajalo `.topbar .start-trigger`. CTA je obrisan
+  // iz trake, pa se u browse ide onim putem kojim korisnik STVARNO ide — VRATIMA U HEROU.
+  // Vozilo se mijenja, svojstvo koje test čuva (model vraćanja) ostaje isto.
+  await page.click('.doors .door--primary.start-trigger');
   await page.waitForSelector('#browse-page.active');
 
   // ⚠️ T2: do ove cigle je ovdje stajao klik na `.topbar [data-goto-materials]`. Taj gumb
@@ -118,11 +121,16 @@ test('povratak vodi odakle si došao, a ruta se briše iz adrese', async ({ page
 //    (*„taj gumb je na landingu i na profilu i to je DOVOLJNO"*, spec §9.6). Cijena je
 //    IZRECENA u samom planu: iz UNUTRASNJOSTI aplikacije (katalog, lekcija, ucenje, Studio)
 //    ulaza vise nema; ide se preko landinga ili profila.
+//  • F2/0 (2026-09-08) je T2 OKRENUO, i opet ODLUKOM: Leon je CTA „Pocni uciti" nazvao
+//    *„najbeskorisnijim smecem koje zauzima prostor gore"* i trazio da gore budu profil i UGC.
+//    Time je placena cijena iz §9.6 VRACENA — ulaz je opet u trajnom kromu, dakle dohvatljiv
+//    sa svake stranice. Vraca se tvrdnja koju je K2b vec jednom drzao, samo sto je sada
+//    mjerena i na kartici i unutar aplikacije.
 //
-// Ono sto sada stiti ovaj test je BAS TA CIJENA — da se ne plati slucajno i nezapisano:
-// traka ne smije imati ulaz (inace se odluka tiho vraca), a landing ga mora imati vise puta
-// (inace je odluka tiho pojela jedini put do vlastitog gradiva).
-test('ulaz u materijale NIJE u traci — nose ga landing i profil (T2, spec §9.6)', async ({ page }) => {
+// Ono sto ovaj test sada stiti: ulaz je TOCNO JEDAN u traci (dva bi se natjecala i vratila
+// kvar koji je K2b uklonio), stoji na SVAKOJ stranici, a landing ga i dalje ima vise puta —
+// inace bi selidba u traku tiho pojela ulaze koji su ondje Leonovom odlukom.
+test('ulaz u materijale JE u traci, tocno jedan i na svakoj stranici (F2/0; okrece T2)', async ({ page }) => {
   await page.goto('/');
   await page.waitForFunction(
     () => document.querySelectorAll('#landingSubjects .landing-subject-card').length > 0
@@ -132,23 +140,29 @@ test('ulaz u materijale NIJE u traci — nose ga landing i profil (T2, spec §9.
   // odluka, ne propust. Prva verzija ove tvrdnje brojala je sve i pala na 5: mjerila je
   // tocno, a tvrdila krivo.
   expect(await page.locator('[data-goto-materials]').count()).toBeGreaterThan(1);
-  expect(await page.locator('.topbar [data-goto-materials]').count()).toBe(0);
+  expect(await page.locator('.topbar [data-goto-materials]').count()).toBe(1);
 
-  // Iz unutrasnjosti aplikacije traka NEMA ulaz — na sve tri stranice, jer bi povratak
-  // gumba na bilo koju od njih vratio i kvar koji je T2 mjerio (kromo od 54 % ekrana).
+  // Iz UNUTRASNJOSTI aplikacije traka sad NOSI ulaz — i to je bila cijela svrha F2/0.
+  // Broj je `1`, ne `>= 1`: dva ulaza u istoj traci natjecu se medusobno i vracaju kvar
+  // koji je K2b uklonio (svaka je stranica imala vlastitu kopiju istog trojca kontrola).
   await page.click('#landingSubjects .landing-subject-card[data-landing-subject="te2"]');
   await page.waitForSelector('#lessons-page.active');
-  expect(await page.locator('.topbar [data-goto-materials]').count()).toBe(0);
+  expect(await page.locator('.topbar [data-goto-materials]').count()).toBe(1);
 
   await page.click('#lessons-page .lessons-grid .lesson-card');
   await page.waitForSelector('#study-page.active', { timeout: 8000 });
-  expect(await page.locator('.topbar [data-goto-materials]').count()).toBe(0);
+  expect(await page.locator('.topbar [data-goto-materials]').count()).toBe(1);
 
   await page.evaluate(() => navigateTo('browse'));
   await page.waitForSelector('#browse-page.active');
-  expect(await page.locator('.topbar [data-goto-materials]').count()).toBe(0);
+  expect(await page.locator('.topbar [data-goto-materials]').count()).toBe(1);
 
-  // ...a put do police i dalje POSTOJI i vodi kamo treba — preko landinga.
+  // ...i taj ulaz STVARNO vodi na policu, iz dubine aplikacije, bez povratka na landing.
+  // (Do F2/0 se ovamo moralo preko landinga — to je bila zapisana cijena §9.6.)
+  await page.click('.topbar [data-goto-materials]');
+  await page.waitForSelector('#materials-page.active');
+
+  // ...a stari put preko landinga NIJE izgubljen selidbom u traku.
   await page.evaluate(() => navigateTo('landing'));
   await page.waitForSelector('#landing-page.active');
   await page.click('.doors [data-goto-materials]');

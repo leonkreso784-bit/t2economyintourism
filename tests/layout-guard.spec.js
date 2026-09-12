@@ -1,6 +1,7 @@
 // Layout-regression guard (FOUNDATION_PLAN F1, brick 1D.3). DETERMINISTIČAN (geometrija, ne pikseli) →
 // platform-neovisan, zelen u CI-u bez baseline-slika. Hvata točno BUG-015 klasu: dodavanje nav-elementa
-// (npr. 🌐 toggle) prelomi tijesni landing-nav na nekoj širini i CTA „Start" se odreže.
+// (npr. 🌐 toggle) prelomi tijesni landing-nav na nekoj širini i odredište se odreže ili podvuče
+// pod susjeda.
 //
 // Pixel-perfect toHaveScreenshot je odvojen follow-up (treba Linux baseline; vidi BACKLOG).
 const { test, expect } = require('@playwright/test');
@@ -19,13 +20,25 @@ const WIDTHS = [320, 360, 361, 390, 400, 414, 479, 480, 481, 543, 544, 545, 560,
                 768, 860, 861, 895, 896, 897, 900, 960, 1023, 1024, 1025, 1100, 1200, 1280, 1366, 1440];
 const LANGS = ['en', 'hr'];
 
-test('landing nav: no overflow and CTA never clipped across widths x languages', async ({ page }, testInfo) => {
+test('traka: odredišta nikad odrezana, nikad preklopljena, i ulaz u katalog uvijek postoji', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'iPhone-SE-375', 'layout sweep se vrti jednom');
 
+  // ⚠️ PREDMET TVRDNJE JE PROMIJENJEN 2026-09-08, NIJE OSLABLJEN. Do tada je test čuvao
+  // `.topbar-cta` („Počni učiti"), a taj je gumb obrisan — Leon: *„najbeskorisnije smeće
+  // koje zauzima prostor gore. Gore treba biti profil i UGC."* Da je test samo obrisan s
+  // njim, izgubila bi se zaštita koja je nastala iz BUG-029, a ona se nikad nije ticala
+  // CTA-a nego GEOMETRIJE TRAKE: na 320 px se `.topbar-nav` stisnuo na nulu i „Predmeti"
+  // su isplivali POD prekidač jezika, pa je klik na odredište PREBACIVAO JEZIK.
+  //
+  // Stari test taj kvar zapravo NE BI UHVATIO — mjerio je samo vlastiti okvir CTA-a, a
+  // preklop je odnos DVAJU elemenata. Zato ova inačica mjeri ono što je BUG-029 stvarno
+  // bio: nijedan par vidljivih gumba u traci se ne smije preklapati, ni na jednoj širini,
+  // ni na jednom jeziku. Traka sad nosi dva odredišta umjesto jednog CTA-a, pa je prilika
+  // za taj kvar veća nego prije, ne manja.
   const errors = [];
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
   await page.goto('/');
-  await page.waitForSelector('.topbar .topbar-cta');
+  await page.waitForSelector('.topbar #topbarMaterials');
 
   for (const lang of LANGS) {
     await page.evaluate((l) => window.setUiLang(l, true), lang);
@@ -37,43 +50,50 @@ test('landing nav: no overflow and CTA never clipped across widths x languages',
       const scrollW = await page.evaluate(() => document.documentElement.scrollWidth);
       expect(scrollW, `overflow @ ${w}px / ${lang}`).toBeLessThanOrEqual(w + 1);
 
-      // 2) ULAZ „počni učiti" MORA POSTOJATI — ali od K3a ne nužno u traci.
-      //
-      // ⚠️ TVRDNJA JE PROMIJENJENA, NIJE OSLABLJENA (K3a, BUG-029). Do K3 je test tražio
-      // CTA u traci na SVIM širinama, uključujući 320. To je bilo točno dok je traka na
-      // 320 px imala mjesta — a nije: `.topbar-nav` se stiskao na širinu 0 i „Predmeti"
-      // su isplivali POD prekidač jezika, pa je klik na njih prebacivao jezik. Popravak
-      // je maknuo CTA ispod 360 px, jer su ulaz na landingu **vrata u herou** (ista
-      // odluka koja je odande maknula „Moje materijale").
-      //
-      // Novi oblik je JAČI: čuva staru zaštitu ondje gdje se CTA crta, a ondje gdje se ne
-      // crta traži da ulaz i dalje postoji. Test bi propustio da smo zabunom sakrili CTA
-      // na 400 px — `expect(w).toBeLessThan(360)` to ne dopušta.
-      const cta = await page.$('.topbar .topbar-cta');
-      const uTraci = cta ? await cta.isVisible() : false;
+      // 2) „Moji materijali" su ODREDIŠTE i stoje na SVAKOJ širini. Nemaju prag ispod kojeg
+      //    nestaju — to je bila iznimka CTA-a, koja je otišla s njim. Gumb ne treba JS
+      //    (`data-goto-materials` hvata delegat), pa se smije tražiti bezuvjetno.
+      const mat = await page.$('.topbar #topbarMaterials');
+      expect(mat, `nema #topbarMaterials @ ${w}px / ${lang}`).not.toBeNull();
+      expect(await mat.isVisible(), `#topbarMaterials nevidljiv @ ${w}px / ${lang}`).toBe(true);
+      const mb = await mat.boundingBox();
+      expect(mb.width, `#topbarMaterials širina 0 @ ${w}px / ${lang}`).toBeGreaterThan(0);
+      expect(mb.x + mb.width, `#topbarMaterials desni rub izvan viewporta @ ${w}px / ${lang}`).toBeLessThanOrEqual(w + 1);
+      expect(mb.x, `#topbarMaterials lijevi rub izvan viewporta @ ${w}px / ${lang}`).toBeGreaterThanOrEqual(-1);
+      const rezano = await mat.evaluate((el) => el.scrollWidth > el.clientWidth + 1);
+      expect(rezano, `#topbarMaterials tekst odrezan @ ${w}px / ${lang}`).toBe(false);
 
-      if (uTraci) {
-        const box = await cta.boundingBox();
-        expect(box, `CTA bez box-a @ ${w}px / ${lang}`).not.toBeNull();
-        expect(box.width, `CTA širina 0 @ ${w}px / ${lang}`).toBeGreaterThan(0);
-        expect(box.x + box.width, `CTA desni rub izvan viewporta @ ${w}px / ${lang}`).toBeLessThanOrEqual(w + 1);
-        expect(box.x, `CTA lijevi rub izvan viewporta @ ${w}px / ${lang}`).toBeGreaterThanOrEqual(-1);
+      // 3) BUG-029: nijedan par vidljivih gumba u traci se ne preklapa.
+      //    ⚠️ Profil (`#authNavBtn`) se OTKRIVA iz `js/auth.js` i ovisi o CDN-u supabase-js
+      //    (tihi fallback). Zato ulazi u mjeru SAMO kad je vidljiv — inače bi mrežni
+      //    ispad davao crveni CI koji ne govori ništa o rasporedu. Njegovu VIDLJIVOST
+      //    pokrivaju auth-testovi; ovdje se mjeri isključivo geometrija.
+      const preklopi = await page.evaluate(() => {
+        const els = Array.from(document.querySelectorAll('.topbar-actions > button'))
+          .filter((el) => el.offsetParent !== null && el.getBoundingClientRect().width > 0);
+        const out = [];
+        for (let i = 0; i < els.length; i++) {
+          for (let j = i + 1; j < els.length; j++) {
+            const a = els[i].getBoundingClientRect();
+            const b = els[j].getBoundingClientRect();
+            const dijele = a.left < b.right - 1 && b.left < a.right - 1
+                        && a.top < b.bottom - 1 && b.top < a.bottom - 1;
+            if (dijele) out.push((els[i].id || els[i].className) + ' × ' + (els[j].id || els[j].className));
+          }
+        }
+        return out;
+      });
+      expect(preklopi, `gumbi u traci se preklapaju @ ${w}px / ${lang}`).toEqual([]);
 
-        // 3) Tekst CTA-a nije „odrezan" unutar gumba (scrollWidth <= clientWidth).
-        const clipped = await cta.evaluate((el) => el.scrollWidth > el.clientWidth + 1);
-        expect(clipped, `CTA tekst odrezan @ ${w}px / ${lang}`).toBe(false);
-      } else {
-        // Nestati smije SAMO ondje gdje je tako odlučeno.
-        expect(w, `CTA nestao iz trake na širini na kojoj bi trebao stajati @ ${w}px / ${lang}`).toBeLessThan(360);
-
-        // …i samo ako ulaz preživi drugdje. Vrata u herou su primarni `.start-trigger`.
-        const vrata = await page.$('.doors .door--primary.start-trigger');
-        expect(vrata, `nema vrata u herou @ ${w}px / ${lang}`).not.toBeNull();
-        expect(await vrata.isVisible(), `vrata u herou nisu vidljiva @ ${w}px / ${lang}`).toBe(true);
-        const vb = await vrata.boundingBox();
-        expect(vb.width, `vrata širina 0 @ ${w}px / ${lang}`).toBeGreaterThan(0);
-        expect(vb.x + vb.width, `vrata izvan viewporta @ ${w}px / ${lang}`).toBeLessThanOrEqual(w + 1);
-      }
+      // 4) Ulaz u KATALOG više ne stoji u traci nigdje, pa vrata u herou nisu više
+      //    zamjena za širine ispod praga — ona su JEDINI stalni ulaz i moraju stajati
+      //    na SVAKOJ širini. Tvrdnja je time bezuvjetna, dakle stroža nego prije.
+      const vrata = await page.$('.doors .door--primary.start-trigger');
+      expect(vrata, `nema vrata u herou @ ${w}px / ${lang}`).not.toBeNull();
+      expect(await vrata.isVisible(), `vrata u herou nisu vidljiva @ ${w}px / ${lang}`).toBe(true);
+      const vb = await vrata.boundingBox();
+      expect(vb.width, `vrata širina 0 @ ${w}px / ${lang}`).toBeGreaterThan(0);
+      expect(vb.x + vb.width, `vrata izvan viewporta @ ${w}px / ${lang}`).toBeLessThanOrEqual(w + 1);
     }
   }
 
