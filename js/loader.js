@@ -153,8 +153,15 @@
         if (paketi[ime]) return paketi[ime];
         var popis = PAKETI[ime];
         if (!popis) return Promise.reject(new Error('Nepoznat paket: ' + ime));
-        paketi[ime] = Promise.all(popis.map(ubaci)).then(function () { });
-        return paketi[ime];
+        // ⚠️ PAD SE ZABORAVLJA (BUG-051): `ubaci` već briše svoj URL kad skripta ne stigne,
+        // ali paket je držao ODBIJENO obećanje — pa je svaki sljedeći poziv vraćao staru
+        // grešku bez zahtjeva prema mreži, i nakon što se mreža vratila. Idempotencija
+        // vrijedi za USPJEH; pad smije samo javiti pozivatelju i pustiti idući pokušaj.
+        // Brana: `tests/unit/loader-retry.test.js`.
+        var p = Promise.all(popis.map(ubaci)).then(function () { });
+        p.catch(function () { if (paketi[ime] === p) delete paketi[ime]; });
+        paketi[ime] = p;
+        return p;
     }
 
     /** Je li paket već tu? Za mjesta koja smiju raditi i bez njega (npr. sinkroni render). */
