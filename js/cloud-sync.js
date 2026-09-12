@@ -9,7 +9,7 @@
 // Merge pravila (čuvaju napredak, nikad ne brišu naučeno):
 //   - brojevi → max (brojači su monotoni: naučene kartice, fillSolved, studyTime…)
 //   - polja stringova (npr. flashcardsLearned id-evi) → unija
-//   - ostala polja (npr. quizScores) → dulje polje
+//   - ostala polja (npr. quizScores) → multiskup-maksimum po vrijednosti (BUG-048)
 //   - objekti → rekurzivno isto
 // Ključevi koji se sinkroniziraju: <storageKey>, <storageKey>-analytics,
 // <subjectId>-exercises-progress, sokrat-last-position.
@@ -54,6 +54,29 @@ const CloudSync = (function () {
         return v !== null && typeof v === 'object' && !Array.isArray(v);
     }
 
+    /**
+     * BUG-048: polja koja NISU stringovi (quizScores = brojevi, povijest = objekti) spajaju se
+     * kao MULTISKUP-MAKSIMUM po vrijednosti — svaka vrijednost preživi u onoliko primjeraka
+     * koliko ih ima strana s više. Do 12.09. je pobjeđivalo DULJE polje: dva uređaja s po
+     * jednim kvizom ([80] i [90]) davala su [80]. Skup (Set) ne dolazi u obzir jer bi dva
+     * ista rezultata na istom uređaju ([80, 80]) spljoštio u jedan. Redoslijed: lokalno pa
+     * višak s udaljenog; spajanje sa samim sobom ne raste. Vrijednost = JSON, pa objekti
+     * s istim sadržajem vrijede kao ista vrijednost.
+     */
+    function mergeMultiset(a, b) {
+        const kljuc = function (x) { try { return JSON.stringify(x); } catch (e) { return String(x); } };
+        const uA = {};
+        a.forEach(function (x) { const k = kljuc(x); uA[k] = (uA[k] || 0) + 1; });
+        const out = a.slice();
+        const videno = {};
+        b.forEach(function (x) {
+            const k = kljuc(x);
+            videno[k] = (videno[k] || 0) + 1;
+            if (videno[k] > (uA[k] || 0)) out.push(x);
+        });
+        return out;
+    }
+
     function mergeValues(a, b) {
         if (a === null || a === undefined) return b;
         if (b === null || b === undefined) return a;
@@ -61,7 +84,7 @@ const CloudSync = (function () {
         if (Array.isArray(a) && Array.isArray(b)) {
             const allStrings = a.concat(b).every(function (x) { return typeof x === 'string'; });
             if (allStrings) return Array.from(new Set(a.concat(b)));
-            return b.length > a.length ? b : a;
+            return mergeMultiset(a, b);
         }
         if (isPlainObject(a) && isPlainObject(b)) {
             const out = {};
@@ -104,16 +127,24 @@ const CloudSync = (function () {
             const mergedStr = JSON.stringify(merged);
 
             localStorage.setItem(key, mergedStr);
-            snapshot[key] = mergedStr;
             meta[key] = new Date().toISOString();
 
+            // ⚠️ BUG-049: `snapshot` znači „ovo je u oblaku". Ključ koji tek TREBA gore ne
+            // smije ga dobiti prije nego upsert prođe — inače pad prvog slanja (prijava na
+            // lošoj mreži) učini da `collectChanged` ključ više ne vidi i nikad ga ne pošalje.
             if (mergedStr !== JSON.stringify(rem)) {
-                toPush.push({ user_id: userId, key: key, data: merged });
+                toPush.push({ user_id: userId, key: key, data: merged, _raw: mergedStr });
+            } else {
+                snapshot[key] = mergedStr;
             }
         });
 
         writeMeta(meta);
-        if (toPush.length) await upsertRows(toPush);
+        let poslano = true;
+        if (toPush.length) {
+            poslano = await upsertRows(toPush.map(function (r) { return { user_id: r.user_id, key: r.key, data: r.data }; }));
+            if (poslano) toPush.forEach(function (r) { snapshot[r.key] = r._raw; });
+        }
 
         // Ako je predmet trenutno otvoren, osvježi in-memory stanje iz localStorage.
         try {
@@ -124,7 +155,8 @@ const CloudSync = (function () {
             }
         } catch (e) { /* UI refresh je best-effort */ }
 
-        markSynced();
+        // „Sinkronizirano u HH:MM" samo kad JEST — pali push ostaje u redu za sljedeći interval.
+        if (poslano) markSynced();
     }
 
     // ---------- Diff-push petlja ----------
@@ -235,9 +267,33 @@ const CloudSync = (function () {
         return { ok: true };
     }
 
+    /**
+     * BUG-050 — VLASNIK LOKALNOG NAPRETKA (Leon, 12.09.): odjava ostavlja napredak na
+     * uređaju (toast to obećava), ali sljedeća prijava ga je spajala u KOJI GOD račun —
+     * na zajedničkom računalu B je nasljeđivao A-ovo učenje, i to trajno, u svoj oblak.
+     * Pravilo: lokalni napredak pripada računu koji ga je ZADNJI sinkronizirao.
+     *   ista osoba natrag       → spaja se kao dosad, ništa se ne gubi;
+     *   drugi račun             → lokalno se BRIŠE prije pulla (njegov je oblak izvor);
+     *   gost bez ijednog računa → spaja se u prvi račun („učio kao gost, pa se prijavio").
+     * Biljeg NIJE među `watchedKeys` — nikad ne putuje u oblak.
+     */
+    const OWNER_KEY = 'sokrat-progress-owner';
+
+    function preuzmiUredjaj(noviUserId) {
+        let vlasnik = null;
+        try { vlasnik = localStorage.getItem(OWNER_KEY); } catch (e) { vlasnik = null; }
+        if (vlasnik && vlasnik !== noviUserId) {
+            watchedKeys().forEach(function (k) { localStorage.removeItem(k); });
+            localStorage.removeItem(META_KEY);
+            snapshot = {};
+        }
+        localStorage.setItem(OWNER_KEY, noviUserId);
+    }
+
     function handleAuthChange(user) {
         if (user) {
             if (userId === user.id && timer) return; // SIGNED_IN se zna ponoviti (token refresh, fokus taba)
+            preuzmiUredjaj(user.id);
             userId = user.id;
             pullAndMerge().then(start);
         } else {

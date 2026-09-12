@@ -211,10 +211,16 @@ test('flashcards tijek kroz AppState.cards: known → unknown → prev → premj
   expect(await page.evaluate(() => ({ k: window.AppState.cards.known, u: window.AppState.cards.unknown })))
     .toEqual({ k: [0, 1], u: [] });
 
-  // 4) known se slijeva u progress.flashcardsLearned (saveFlashcardProgress).
+  // 4) known se slijeva u progress.flashcardsLearned (saveFlashcardProgress) — po IDENTITETU kartice,
+  //    ne po poziciji (BUG-047; do 12.09. je ovdje stajalo `includes(0) && includes(1)` i time TVRDILO kvar).
   //    NB: `progress` je top-level let (NE window.progress — to je DOM sekcija id="progress").
-  expect(await page.evaluate(() => progress.flashcardsLearned.includes(0) && progress.flashcardsLearned.includes(1)))
-    .toBe(true);
+  const zapis = await page.evaluate(() => ({
+    learned: progress.flashcardsLearned,
+    id0: cardIdentity(window.AppState.cards.deck[0]),
+    id1: cardIdentity(window.AppState.cards.deck[1])
+  }));
+  expect(zapis.learned).toEqual(expect.arrayContaining([zapis.id0, zapis.id1]));
+  expect(zapis.learned.every((x) => typeof x === 'string')).toBe(true);
 
   expect(errors).toEqual([]);
 });

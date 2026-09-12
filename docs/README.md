@@ -97,7 +97,8 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 | [PROGRESS.md](./records/PROGRESS.md) | Dnevnik rada po sesijama |
 | `RAD.xlsx` (records/) | **Analiza rada** — commiti, isporuke, faze, vizije + 8 grafova; generira `python scripts/rad-xlsx.py` na kraju svake faze (samo odrađeno ulazi) |
 | [DECISIONS.md](./records/DECISIONS.md) | Arhitektonske odluke (ADR-001…033) i zašto |
-| [BUGS.md](./records/BUGS.md) | Bugovi + lekcije naučene |
+| [BUGS.md](./records/BUGS.md) | Bugovi + lekcije naučene — **aktivni + riješeni od 2026-08-31** |
+| [BUGS_ARCHIVE.md](./records/BUGS_ARCHIVE.md) | **Arhiva bugova BUG-001…038** (riješeni do 2026-08-30) — cijeli zapisi s lekcijama, referenca |
 | [BACKLOG.md](./records/BACKLOG.md) | Parkiralište ideja |
 
 ## `subjects/` — predmeti

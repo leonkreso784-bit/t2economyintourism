@@ -15,6 +15,38 @@ fazama kroz sesije da ga imamo da riješimo ovu listu kako treba"*)
 
 ---
 
+## 0 · SPAJANJE — što čeka na granama i kojim redom (sljedeća sesija = POPRAVCI)
+
+> **Zašto ovo poglavlje postoji (2026-09-12).** Rad od 04.09. nastao je u **više radnih stabala
+> istodobno** i živi na granama koje se međusobno NE sadrže: F1 je dovršen na jednoj osnovi, F2
+> je počeo od `main`-a bez nje, kartice su parkirane na trećoj. Svaka grana je za sebe zelena, a
+> zajedno ih nitko nije spojio — pa produkcija (zadnji 🚀 u [CHANGELOG.md](../records/CHANGELOG.md))
+> ne nosi ništa od toga. Leon (12.09.): *„razdvojit sve planove i cigle na strukturni pametan plan
+> pa ću krenuti na drugu sesiju sa popravcima."* Ovo je taj plan. **Koje grane postoje zna
+> `git branch --no-merged main`, CI zna GitHub** — ovdje je samo ŠTO nose i KOJIM REDOM idu.
+
+| grana | nosi | odrezana od | prije spajanja |
+|---|---|---|---|
+| **`fix/napredak-pouzdanost`** | BUG-047…051 (napredak pouzdan: identitet kartice · merge · snapshot · vlasnik · loader) + `check:docs` popravak (cherry-pick `3bfe40a`) | `main` | ništa — CI zelen, preflight 0, suita zelena |
+| **`feat/mjerenje-aktivacije`** | ostatak **F1**: F1/4 · F1/5 · F1/7 · F1/9 · F1/11 · **metrika** `ucenje`/`povratak` (consent-gated) · docs 05.–12.09. (ADR-035/036, matura u archive/, memorija-čišćenje). **Sadrži cijelu `feat/racun-r1`** (samo docs) | `main` | sudari su **tekstualni**: CLAUDE/RASPORED/PROGRESS/CHANGELOG/BUGS + `?v=` tokeni (`npm run bump` iznova). `flashcards.js`: F1/9 dodaje gestu, BUG-047 mijenja samo `saveFlashcardProgress` — različita mjesta |
+| **`feat/nocna-b`** | **F2/1 (6/7)** — birač tema: natpis samo „Automatski" · popravak `check:docs` (isti kao gore) | F1-osnova (`900f142`) | **nije pushana** → nema CI-ja; push prvo. ⚠️ Sadržana je i u `feat/tinder-kadar` — spaja se **ova**, ne tinder |
+| **`feat/profil-zid`** (⊃ `feat/traka-odredista`) | **F2/0** traka s dva odredišta · **F2/3a** profil = zid · **F2/3b** identitet (`profile_identity` + `set_profile_identity` RPC, `supabase/f2-profile-identity.sql`) | `main` (bez F1-osnove!) | ⚠️ **migracija je SAMO na stagingu** → na PROD uz izričit OK i PRIJE deploya, inače profil puca. Docs-sudar s F1-granom: svježija strana nosi istinu (F1 = mjerenje-aktivacije, F2 = ova) |
+| `feat/tinder-kadar` (⊃ `feat/nocna-b`, ⊃ `fix/kadar-nalicje`) | kartice F1/12–13 — **PARKIRANO** (Leon 08.09.; zapis `docs/archive/KARTICE_TELEFON.md` postoji **samo na toj grani**) · **BUG-045** (`3708e2d`, SW runtime-keš) · **BUG-046** (`2641834`, kontrast pilule — kvar JE na produkciji) | F1-osnova | **NE spaja se** (CI crven, nije flake). BUG-045/046 idu **cherry-pickom**, nikad vrh grane |
+| `feat/racun-r1` | samo docs, sve već u `feat/mjerenje-aktivacije` | F1-osnova | obrisati nakon što se ona spoji |
+
+**Redoslijed — prijedlog, svaki korak je svoja cigla:** preflight + `test:responsive` zeleni → **Leonov OK za `main`** → deploy je **zaseban** OK (§1). Nijedan korak se ne spaja „po sjećanju": sudar u docs rješava se tako da **svježija grana pobijedi**, a `check:state`/`check:docs` presuđuju.
+
+1. **`fix/napredak-pouzdanost` → `main`.** Najmanja, neovisna, sama vrijedi korisniku (broj „naučeno" i sync su od danas istiniti).
+2. **`feat/mjerenje-aktivacije` → `main`.** Donosi ostatak F1 i **istinu docs-a** (ovaj RASPORED dolje je stanje s `main`-a — F1 tablica ondje je svježija i pregazit će ovu). Zatim obrisati `feat/racun-r1`.
+3. **`feat/nocna-b` → `main`** (F2/1 6/7). Prvo push, pa CI.
+4. **`feat/profil-zid` → `main`** + migracija `f2-profile-identity.sql` na PROD (izričit OK) → deploy. Zatim obrisati `feat/traka-odredista`.
+5. **Cherry-pick `2641834` (BUG-046) i `3708e2d` (BUG-045)** s parkirane grane — svaki svoj commit, svaki svoj gate.
+6. Tek tada **F2/2 slike** u `.f2` — na `main`-u koji je opet **jedan**. Novo stablo = nova sesija (higijena: jedna sesija po stablu, nova po fazi).
+
+**Što se u toj sesiji NE radi:** ne otvaraju se kartice (parkirano), ne dira se gradivo, ne uvodi se ništa novo — samo se ono što JEST zeleno dovodi na jedno mjesto, korak po korak, s Leonovim OK-om na svakom pushu.
+
+---
+
 ## 1 · Kako se ovaj raspored vozi
 
 Pravila su Leonova i ne mijenjaju se između faza:

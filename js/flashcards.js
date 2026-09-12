@@ -149,7 +149,36 @@ function markUnknown() {
     nextCard();
 }
 
+/**
+ * BUG-047 — IDENTITET KARTICE. „Znam" je do 12.09. spremao POZICIJU u promiješanom špilu:
+ * sutra je na poziciji 0 druga kartica, pa su se obje vodile kao isti broj; napredak je k tome
+ * po PREDMETU, a špil po LEKCIJI, pa su se indeksi triju lekcija miješali u istom nizu. Broj
+ * „naučeno" je bio šum, a sync-unija (pretpostavlja stringove) ga nije ni dohvaćala.
+ *
+ * Identitet: `card.id` (schema v2, 6 znakova) kad postoji. Ne postoji u sedam HR predmeta i
+ * dijelu `accounting`-a (1 175 od 5 737 kartica na dan 12.09.) — ondje deterministički otisak
+ * `kategorija|pitanje` (FNV-1a, base36). Stabilan dok se pitanje ne promijeni; promjena
+ * pitanja = nova kartica, što je za „naučeno" pošteno. `final` = kopija M1⊕M2 → ista kartica
+ * ima isti id u obje lekcije, pa naučeno u midterm-u vrijedi i u finalu. Vraća UVIJEK string.
+ * Brana: `tests/unit/flashcard-identity.test.js`.
+ */
+function cardIdentity(card) {
+    if (card && typeof card.id === 'string' && card.id) return card.id;
+    const s = String(card && card.category || '') + '|' + String(card && card.question || '');
+    let h = 0x811c9dc5;
+    for (let i = 0; i < s.length; i++) {
+        h ^= s.charCodeAt(i);
+        h = Math.imul(h, 0x01000193) >>> 0;
+    }
+    return 'q:' + h.toString(36);
+}
+
 function saveFlashcardProgress() {
-    progress.flashcardsLearned = [...new Set([...progress.flashcardsLearned, ...AppState.cards.known])];
+    const cards = AppState.cards;
+    const znam = cards.known.map(i => cardIdentity(cards.deck[i]));
+    // Stari brojčani zapisi (pozicije) ovdje ispadaju — `loadProgress` ih isto odbacuje, a prvi
+    // upis s bilo kojeg uređaja ih time izbaci i iz oblaka (upsert piše cijeli redak).
+    const stari = (progress.flashcardsLearned || []).filter(x => typeof x === 'string');
+    progress.flashcardsLearned = [...new Set([...stari, ...znam])];
     saveProgress();
 }

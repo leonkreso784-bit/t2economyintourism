@@ -184,8 +184,7 @@ Aktivni spec: **`docs/plan/RASPORED.md`** (2026-09-04) — cijela preostala list
 **sedam faza kroz sesije**: F1 uređaj · F2 račun (R2+R3 + CSS profila) · F3 dvojezičnost ·
 F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **Šest pitanja čeka Leonovu riječ — §6 rasporeda.**
 
-**ⓑ trzanje IZMJERENO** (F1/6, `jank-probe`): samo landing preboji, uzrok `background-attachment: fixed` → F1/7; Chromium-mjera, iPhone presuđuje Leon (`BACKLOG.md` §B).
-**Tri nova (2026-09-05):** hover = **F1/8 ✅** · Tinder-špil = **F1/9** · zoom na dodir = **F1/10 ✅** (BUG-043).
+**🔀 SLJEDEĆA SESIJA = SPAJANJE (Leon 12.09.):** rad od 04.09. živi na granama koje se međusobno NE sadrže (F1 na jednoj osnovi, F2 od `main`-a, kartice parkirane). Plan i redoslijed: **`RASPORED.md` §0** — svaki merge = cigla + Leonov OK; F2/2 tek kad je `main` opet jedan.
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 

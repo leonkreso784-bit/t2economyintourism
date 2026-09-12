@@ -83,9 +83,27 @@ test('id-evi naučenih kartica idu u UNIJU, bez duplikata', () => {
   assert.deepStrictEqual(M(['a', 'b'], ['b', 'c']).sort(), ['a', 'b', 'c']);
 });
 
-test('polja koja nisu stringovi → pobjeđuje DULJE (npr. quizScores)', () => {
-  assert.deepStrictEqual(M([{ s: 1 }], [{ s: 1 }, { s: 2 }]), [{ s: 1 }, { s: 2 }]);
-  assert.deepStrictEqual(M([{ s: 1 }, { s: 2 }], [{ s: 3 }]), [{ s: 1 }, { s: 2 }]);
+// BUG-048: do 12.09. je ovdje stajalo „pobjeđuje DULJE" — i test je to TVRDIO. Dva uređaja
+// s po jednim kvizom ([80] i [90]) davala su [80]: rezultat s drugog uređaja je nestajao,
+// a nijedan test nije pao jer je upravo to očekivao. Pravilo je sad MULTISKUP-MAKSIMUM po
+// vrijednosti: svaka vrijednost preživi u onoliko primjeraka koliko ih ima strana s više.
+test('⛔ polja koja nisu stringovi (quizScores) → NIJEDNA vrijednost ne nestaje (multiskup-max)', () => {
+  assert.deepStrictEqual(M([80], [90]).slice().sort(), [80, 90]);
+  assert.deepStrictEqual(M([90], [80]).slice().sort(), [80, 90]);
+  assert.deepStrictEqual(M([{ s: 1 }, { s: 2 }], [{ s: 3 }]).length, 3);
+});
+
+test('isti rezultat dvaput na JEDNOM uređaju ostaje dvaput (multiskup, ne skup)', () => {
+  assert.deepStrictEqual(M([80, 80], [80]), [80, 80]);
+  assert.deepStrictEqual(M([80], [80, 80]), [80, 80]);
+});
+
+test('spajanje istog stanja sa samim sobom ne raste (idempotentno — inače bi svaki pull duplicirao)', () => {
+  assert.deepStrictEqual(M([80, 90, 80], [80, 90, 80]), [80, 90, 80]);
+});
+
+test('stari brojčani zapisi naučenih kartica (indeksi, BUG-047) se isto spajaju bez gubitka', () => {
+  assert.deepStrictEqual(M([0, 1], [2, 3]).slice().sort(), [0, 1, 2, 3]);
 });
 
 test('objekti se spajaju REKURZIVNO (napredak je ugniježđen po kategorijama)', () => {
@@ -235,6 +253,116 @@ Promise.resolve()
       });
       // I obrnuto: razlika mora otići GORE, inače drugi uređaj nikad ne sazna.
       assert.ok(poslano.length > 0, 'spojeno stanje se mora poslati natrag u oblak');
+    });
+  }))
+
+  // ── BUG-049: PAD PRVOG SLANJA (u pullu) ne smije potrošiti promjenu ────────────
+  // Test iznad štiti `pushChanges`; ovaj štiti `pullAndMerge`, koji je isti kvar imao
+  // na svoj način: `snapshot[key]` se pisao PRIJE upserta. Padne li taj prvi upsert
+  // (prijava na lošoj mreži), ključ za `collectChanged` više nije „promijenjen" —
+  // nikad se ne pošalje, a „sinkronizirano u HH:MM" se svejedno ispiše.
+  .then(() => testAsync('⛔ PAD SLANJA U PULLU: spojeno stanje čeka i ide u sljedećem pokušaju, bez lažnog „sinkronizirano"', function () {
+    const ls = lazniLocalStorage({
+      'statistics-progress': JSON.stringify({ cardsStudied: 40, flashcardsLearned: ['c9'] })
+    });
+    const poslano = [];
+    let padaj = true;
+    const klijent = {
+      from: () => ({
+        select: () => Promise.resolve({
+          data: [{ key: 'statistics-progress', data: { cardsStudied: 12, flashcardsLearned: ['c5'] } }],
+          error: null
+        }),
+        upsert: (rows) => { poslano.push(rows); return Promise.resolve({ error: padaj ? { message: 'offline' } : null }); }
+      })
+    };
+    const sinkInfo = [];
+    const auth = { getClient: () => klijent, setSyncInfo: (s) => sinkInfo.push(s), onChange: () => {} };
+    const CS = new Function(
+      'window', 'document', 'localStorage', 'subjectDataMap', 'SokratAuth', 'setInterval',
+      KOD + '\n;return CloudSync;'
+    )({ addEventListener: () => {}, t: null }, { addEventListener: () => {}, visibilityState: 'visible' },
+      ls, { statistics: { storageKey: 'statistics-progress' } }, auth, () => 1);
+
+    CS.handleAuthChange({ id: 'u1' });
+    return slegni().then(() => {
+      assert.strictEqual(poslano.length, 1, 'pull je morao pokušati poslati spojeno stanje');
+      assert.strictEqual(sinkInfo.length, 0, 'pali upsert se NE smije prikazati kao „sinkronizirano"');
+      padaj = false;
+      return CS.pushNow();
+    }).then(() => {
+      assert.strictEqual(poslano.length, 2, 'poslije pada u pullu sljedeći push MORA ponovno poslati ključ');
+      const red = poslano[1].filter((r) => r.key === 'statistics-progress')[0];
+      assert.ok(red, 'ponovni pokušaj nosi isti ključ');
+      assert.strictEqual(red.data.cardsStudied, 40);
+      ['c5', 'c9'].forEach((id) => assert.ok(red.data.flashcardsLearned.indexOf(id) !== -1, 'izgubljena kartica: ' + id));
+      assert.ok(sinkInfo.length > 0, 'uspjeli push se smije prikazati kao sinkroniziran');
+    });
+  }))
+
+  // ── BUG-050: VLASNIK LOKALNOG NAPRETKA (Leon, 12.09.) ──────────────────────────
+  // Odjava ostavlja napredak na uređaju (toast to i obećava). Ali sljedeća prijava ga je
+  // spajala u KOJI GOD račun — na zajedničkom računalu B je nasljeđivao A-ovo učenje.
+  // Pravilo: lokalni napredak pripada računu koji ga je ZADNJI sinkronizirao.
+  //   ista osoba natrag  → spaja se kao dosad (ništa se ne gubi);
+  //   drugi račun        → lokalno se briše PRIJE pulla;
+  //   gost bez ijednog računa → spaja se u prvi račun (put „učio kao gost, pa se prijavio").
+  .then(() => testAsync('⛔ DRUGI RAČUN na istom pregledniku ne nasljeđuje napredak prethodnog', function () {
+    const ls = lazniLocalStorage({ 'statistics-progress': JSON.stringify({ cardsStudied: 40 }) });
+    const poslano = [];
+    const oblak = { u1: [], u2: [{ key: 'statistics-progress', data: { cardsStudied: 5 } }] };
+    let tko = null;
+    const klijent = {
+      from: () => ({
+        select: () => Promise.resolve({ data: oblak[tko], error: null }),
+        upsert: (rows) => { poslano.push({ tko: tko, rows: rows }); return Promise.resolve({ error: null }); }
+      })
+    };
+    const { CS } = load({ ls: ls, klijent: klijent });
+
+    tko = 'u1';
+    CS.handleAuthChange({ id: 'u1' });                 // A: gost-napredak (40) ide u A
+    return slegni().then(() => {
+      assert.strictEqual(JSON.parse(ls.getItem('statistics-progress')).cardsStudied, 40);
+      CS.handleAuthChange(null);                       // A se odjavi; lokalno ostaje
+      assert.strictEqual(JSON.parse(ls.getItem('statistics-progress')).cardsStudied, 40, 'odjava NE briše (obećanje toasta)');
+      tko = 'u2';
+      CS.handleAuthChange({ id: 'u2' });               // B se prijavi na istom pregledniku
+      return slegni();
+    }).then(() => {
+      assert.strictEqual(JSON.parse(ls.getItem('statistics-progress')).cardsStudied, 5, 'B mora vidjeti SVOJ napredak, ne A-ov');
+      const zaB = poslano.filter((p) => p.tko === 'u2');
+      zaB.forEach((p) => p.rows.forEach((r) => {
+        assert.notStrictEqual(r.data.cardsStudied, 40, 'A-ov napredak ne smije otići u B-ov oblak');
+      }));
+    });
+  }))
+
+  .then(() => testAsync('ISTA OSOBA natrag: lokalni napredak preživi odjavu i spoji se', function () {
+    const ls = lazniLocalStorage();
+    const klijent = lazniKlijent();
+    const { CS } = load({ ls: ls, klijent: klijent });
+    CS.handleAuthChange({ id: 'u1' });
+    return slegni().then(() => {
+      ls.setItem('statistics-progress', JSON.stringify({ cardsStudied: 40 }));   // učio prijavljen
+      CS.handleAuthChange(null);
+      ls.setItem('statistics-progress', JSON.stringify({ cardsStudied: 44 }));   // učio i odjavljen
+      CS.handleAuthChange({ id: 'u1' });
+      return slegni();
+    }).then(() => {
+      assert.strictEqual(JSON.parse(ls.getItem('statistics-progress')).cardsStudied, 44, 'ista osoba ne smije izgubiti ništa');
+    });
+  }))
+
+  .then(() => testAsync('GOST bez ijednog računa: prvi račun dobiva gostov napredak', function () {
+    const ls = lazniLocalStorage({ 'statistics-progress': JSON.stringify({ cardsStudied: 40 }) });
+    const klijent = lazniKlijent();
+    const { CS } = load({ ls: ls, klijent: klijent });
+    CS.handleAuthChange({ id: 'u9' });
+    return slegni().then(() => {
+      assert.strictEqual(JSON.parse(ls.getItem('statistics-progress')).cardsStudied, 40);
+      const red = klijent.poslano[0].filter((r) => r.key === 'statistics-progress')[0];
+      assert.ok(red && red.data.cardsStudied === 40, 'gostov napredak mora otići u prvi račun');
     });
   }))
 
