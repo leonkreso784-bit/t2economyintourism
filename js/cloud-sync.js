@@ -9,7 +9,7 @@
 // Merge pravila (čuvaju napredak, nikad ne brišu naučeno):
 //   - brojevi → max (brojači su monotoni: naučene kartice, fillSolved, studyTime…)
 //   - polja stringova (npr. flashcardsLearned id-evi) → unija
-//   - ostala polja (npr. quizScores) → dulje polje
+//   - ostala polja (npr. quizScores) → multiskup-maksimum po vrijednosti (BUG-048)
 //   - objekti → rekurzivno isto
 // Ključevi koji se sinkroniziraju: <storageKey>, <storageKey>-analytics,
 // <subjectId>-exercises-progress, sokrat-last-position.
@@ -54,6 +54,29 @@ const CloudSync = (function () {
         return v !== null && typeof v === 'object' && !Array.isArray(v);
     }
 
+    /**
+     * BUG-048: polja koja NISU stringovi (quizScores = brojevi, povijest = objekti) spajaju se
+     * kao MULTISKUP-MAKSIMUM po vrijednosti — svaka vrijednost preživi u onoliko primjeraka
+     * koliko ih ima strana s više. Do 12.09. je pobjeđivalo DULJE polje: dva uređaja s po
+     * jednim kvizom ([80] i [90]) davala su [80]. Skup (Set) ne dolazi u obzir jer bi dva
+     * ista rezultata na istom uređaju ([80, 80]) spljoštio u jedan. Redoslijed: lokalno pa
+     * višak s udaljenog; spajanje sa samim sobom ne raste. Vrijednost = JSON, pa objekti
+     * s istim sadržajem vrijede kao ista vrijednost.
+     */
+    function mergeMultiset(a, b) {
+        const kljuc = function (x) { try { return JSON.stringify(x); } catch (e) { return String(x); } };
+        const uA = {};
+        a.forEach(function (x) { const k = kljuc(x); uA[k] = (uA[k] || 0) + 1; });
+        const out = a.slice();
+        const videno = {};
+        b.forEach(function (x) {
+            const k = kljuc(x);
+            videno[k] = (videno[k] || 0) + 1;
+            if (videno[k] > (uA[k] || 0)) out.push(x);
+        });
+        return out;
+    }
+
     function mergeValues(a, b) {
         if (a === null || a === undefined) return b;
         if (b === null || b === undefined) return a;
@@ -61,7 +84,7 @@ const CloudSync = (function () {
         if (Array.isArray(a) && Array.isArray(b)) {
             const allStrings = a.concat(b).every(function (x) { return typeof x === 'string'; });
             if (allStrings) return Array.from(new Set(a.concat(b)));
-            return b.length > a.length ? b : a;
+            return mergeMultiset(a, b);
         }
         if (isPlainObject(a) && isPlainObject(b)) {
             const out = {};

@@ -83,9 +83,27 @@ test('id-evi naučenih kartica idu u UNIJU, bez duplikata', () => {
   assert.deepStrictEqual(M(['a', 'b'], ['b', 'c']).sort(), ['a', 'b', 'c']);
 });
 
-test('polja koja nisu stringovi → pobjeđuje DULJE (npr. quizScores)', () => {
-  assert.deepStrictEqual(M([{ s: 1 }], [{ s: 1 }, { s: 2 }]), [{ s: 1 }, { s: 2 }]);
-  assert.deepStrictEqual(M([{ s: 1 }, { s: 2 }], [{ s: 3 }]), [{ s: 1 }, { s: 2 }]);
+// BUG-048: do 12.09. je ovdje stajalo „pobjeđuje DULJE" — i test je to TVRDIO. Dva uređaja
+// s po jednim kvizom ([80] i [90]) davala su [80]: rezultat s drugog uređaja je nestajao,
+// a nijedan test nije pao jer je upravo to očekivao. Pravilo je sad MULTISKUP-MAKSIMUM po
+// vrijednosti: svaka vrijednost preživi u onoliko primjeraka koliko ih ima strana s više.
+test('⛔ polja koja nisu stringovi (quizScores) → NIJEDNA vrijednost ne nestaje (multiskup-max)', () => {
+  assert.deepStrictEqual(M([80], [90]).slice().sort(), [80, 90]);
+  assert.deepStrictEqual(M([90], [80]).slice().sort(), [80, 90]);
+  assert.deepStrictEqual(M([{ s: 1 }, { s: 2 }], [{ s: 3 }]).length, 3);
+});
+
+test('isti rezultat dvaput na JEDNOM uređaju ostaje dvaput (multiskup, ne skup)', () => {
+  assert.deepStrictEqual(M([80, 80], [80]), [80, 80]);
+  assert.deepStrictEqual(M([80], [80, 80]), [80, 80]);
+});
+
+test('spajanje istog stanja sa samim sobom ne raste (idempotentno — inače bi svaki pull duplicirao)', () => {
+  assert.deepStrictEqual(M([80, 90, 80], [80, 90, 80]), [80, 90, 80]);
+});
+
+test('stari brojčani zapisi naučenih kartica (indeksi, BUG-047) se isto spajaju bez gubitka', () => {
+  assert.deepStrictEqual(M([0, 1], [2, 3]).slice().sort(), [0, 1, 2, 3]);
 });
 
 test('objekti se spajaju REKURZIVNO (napredak je ugniježđen po kategorijama)', () => {
