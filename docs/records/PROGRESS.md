@@ -19,7 +19,12 @@ ostatak (dužina kartica, obećanje na landingu, veličina `navigation.js`, WebK
 ovdje. **Suita:** preflight EXIT 0 (uz cherry-pick `3bfe40a`, bez kojeg `main` u svježem stablu ne prolazi
 `check:docs`) · `test:responsive` 471/4/117 — sve četiri crvene = jedna tvrdnja u `app-state.spec.js` koja je
 DOSLOVNO kodirala kvar (`flashcardsLearned.includes(0) && includes(1)`); okrenuta na identitete → 16/16.
-Sljedeće: Leonov OK za deploy; F2/2 poslije, u svojoj sesiji u `.f2`.
+**Kraj sesije (Leon):** `BUGS.md` razdvojen — BUG-001…038 (riješeni do 30.08.) sele **cijeli** u
+`BUGS_ARCHIVE.md`, živi popis ostaje 373 retka umjesto 1 306; **RASPORED §0 SPAJANJE** = karta grana
+(što nose, od čega su odrezane, što ih blokira) i redoslijed od šest koraka za sljedeću sesiju POPRAVCI:
+napredak → mjerenje-aktivacije (ostatak F1) → nocna-b (F2/1) → profil-zid (+ migracija na PROD uz OK) →
+cherry-pick BUG-045/046 → tek onda F2/2. Ancestry izmjeren gitom (merge-base, `--contains`), CI stanje
+po grani s GitHub API-ja. Sljedeće: nova sesija po §0, korak 1.
 
 ## 2026-09-05 (FABLE) — F1/8 ② isporučen: hover na mišu se naoruža tek prvim pomakom (JS pauza + CSS prefiks + sonda + 28 tvrdnji)
 
