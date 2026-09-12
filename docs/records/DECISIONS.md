@@ -4,6 +4,141 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-036 — Monetizacija: najam je ORGANIZACIJA, firme plaćaju prve, prodaju prvo organizacije
+**Datum:** 2026-09-07 · **Status:** ✅ ODLUČENO (Leon) · **Vezano:** [ADR-035](#adr-035) (proizvod je tržište gradiva), [ADR-029](#adr-029), [ADR-031](#adr-031) (korisnik plaća svoj AI), [ADR-024](#adr-024) (osobni otok) · **Model u cijelosti:** [MONETIZATION.md](../product/MONETIZATION.md)
+
+**Kontekst.** [ADR-035](#adr-035) je definirao **što** je proizvod, ali ne i **tko plaća**. Dotadašnji
+model ([MONETIZATION.md](../product/MONETIZATION.md), 2026-06-27) pretpostavljao je maturu kao tržište i „donesi svoj ključ"
+kao prvi korak naplate — oboje je nadglašeno: matura je ostala hipoteza, a korisnikov AI se kroz MCP
+plaća sam, pa nije proizvod nego pretpostavka arhitekture.
+
+Presudila su dva Leonova nalaza istoga dana. Prvi: **fakultet ne može kupiti unutar šestomjesečnog
+programa** — javna nabava i akademski ciklusi ne staju u tu rupu. Drugi: kupac koji odlučuje u jednom
+razgovoru već postoji, i to su **male firme ljudi koje poznaje**.
+
+**Odluka (Leon):** *„najbolje bi bilo da prodam nekima od svojih kolega koji imaju firme nešto za jako
+male novce. npr. moj prijatelj Sergej ima firmu i da plati da ima svoj vlastiti odjeljak platforme gdje
+mu novi zaposlenici uče o firmi i svemu što se treba raditi, i on prati njihov progress i vrijeme
+rješavanja. Trebamo nadodat exam module gdje se platforma locka na exam samo i ima timer."*
+
+Uz to (isti dan): *„platforma bi trebala biti prilagođena za sve ustanove, ne samo za moj fakultet"* i
+*„ustanova bira, ustanova može dalje to prodavat i mi dobivamo proviziju"*.
+
+**Pet odluka koje iz toga slijede:**
+
+1. **Najam je ORGANIZACIJA — firma · fakultet · škola.** Jedan model, tri tržišta, jedna izgradnja.
+   **Firme idu prve** jer vlasnik odlučuje sam; ustanove kupuju po akademskim ciklusima.
+2. **Objava se NE naplaćuje, ni brojem ni veličinom.** Ponuda je oskudan resurs; naplatiti je znači
+   gušiti jedino čega nemamo. Naplaćuje se **pravo prodaje**, napredni načini učenja i statistika.
+   **Osnovna petlja učenja ostaje besplatna zauvijek** — inače tuđi objavljeni rad izgleda pokvareno i
+   autor prestane objavljivati.
+3. **Organizacija bira po kolegiju:** privatno · javno besplatno · javno naplatno. **Zadano privatno.**
+4. **⚠️ Prodaju PRVO organizacije; pojedinci kasnije.** Čim pojedinac proda, mi smo posrednik koji
+   isplaćuje **fizičke osobe** — porezi, doprinosi, PDV po zemlji kupca, računi. Organizacija ima OIB,
+   izdaje račun i ima knjigovođu. **Provizija 15–20 %** (niže od uobičajenih 30 %: cilj je da objavi,
+   ne da se cjenka).
+5. **Exam modul** — platforma se zaključa u ispit (bez navigacije, jedan pokušaj, sat teče), a **vrijeme
+   i ocjena se računaju na poslužitelju**. Proizvod nije ispit nego **zapis** („ime, test, datum,
+   rezultat, trajanje"), koji je u firmi dijelom zakonska obveza.
+
+**Posljedice:**
+- **⚠️ Višenajmnost NIJE osobni otok.** Organizacija traži entitet, članove, uloge i statistiku u
+  dosegu organizacije — [ADR-024](#adr-024) veže sve uz jednog vlasnika (`owner_id = auth.uid()`). Projektira se
+  unaprijed ili se gradi dvaput.
+- **Exam modul se gradi jednom, služi trima tržištima:** evidencija u firmi · kolokviji na ustanovi ·
+  matura kad na nju dođe red. Njegova granica se **kaže kupcu unaprijed**: preglednik ne može spriječiti
+  drugi uređaj, pa modul dokazuje da je gradivo prođeno, ne da je netko bio sam u sobi.
+- **Prodaja između korisnika nas čini POSREDNIKOM** → Stripe Connect ili MoR koji podnosi marketplace,
+  isplate i PDV na prodavačevoj strani. Zato provizija dolazi kasno u redoslijedu.
+- **Autorstvo jamči organizacija ugovorno** — inače smo uvučeni u spor profesora i ustanove kao platforma.
+- **Naplata prije firme ide kroz pismo namjere ili ugovor o djelu.** Inkubator prima samo fizičke osobe
+  **bez registriranog subjekta u trenutku prijave**, pa se subjekt osniva tek nagradom, na kraju programa.
+- **[HOTEL_SIM.md](../ideas/HOTEL_SIM.md) je preklasificiran: NIJE proizvod za inkubator.** Simulacija se ne može prodati bez
+  demoa koji uvjerljivo igra, a to je već većina posla — uz zajednički bazen potražnje, runde kao novu
+  backend-formu i balans koji traži profesora kao suautora. Ostaje drugi čin i kandidat za diplomski.
+- **Ne mijenja se ništa sigurnosno.** [ADR-024](#adr-024)/[ADR-025](#adr-025)/[ADR-018](#) i MCP-invarijante stoje netaknuti.
+
+---
+
+## ADR-035 — Proizvod je TRŽIŠTE studentskog gradiva: objavi · (možda) prodaj · natječi se. Katalog je POČETNA ZALIHA, ne priča
+**Datum:** 2026-09-06 · **Status:** ✅ ODLUČENO (Leon) · **Vezano:** [ADR-029](#adr-029) (UGC je glavni proizvod), [ADR-030](#adr-030) (MCP je glavni put stvaranja), [ADR-031](#adr-031) (MCP je cjevovod), [ADR-025](#adr-025) (doseg osobnog materijala), [ADR-018](#) (podatak, nikad kod) · **Faza:** F7 objava u [RASPORED.md](../plan/RASPORED.md)
+
+**Kontekst.** [ADR-029](#adr-029) je već presudio da katalog nije srce platforme, a [ADR-030](#adr-030)/[ADR-031](#adr-031)
+da gradivo nastaje kroz korisnikov AI. Ali **kamo to gradivo ide nakon što nastane nije nigdje bilo
+zapisano kao odluka.** „Dijeljenje" i „natjecanje" stoje kao `F4`/`F5` u [VISION.md](../product/VISION.md) i `M3` u
+[ROADMAP.md](../plan/ROADMAP.md) — oba označena **⬜ ideja** od prvog dana. **Prodaja korisničkog sadržaja ne postoji
+nigdje**: [MONETIZATION.md](../product/MONETIZATION.md) govori isključivo o tome kako *mi* naplaćujemo *svoju* uslugu.
+Posljedica te rupe je da se proizvod u razgovoru opetovano opisivao preko 24 predmeta — jedine stvari
+koja je bila zapisana do kraja.
+
+**Odluka (Leon):** *„ovo se ne reklamira kao FMTU, kao ima 24 predmeta. ovo će biti platforma na kojoj
+će ljudi pomoću MCP-a objavljivat svoje radove, možda i prodavat, bit će mogućnost da korisnici
+objavljuju svoje sadržaje i prodaju i da se međusobno natječu unutar sadržaja ili predmeta."*
+
+Proizvod se definira kao **tržište studentskog gradiva** s tri radnje nad vlastitim materijalom:
+**objavi** (iz privatnog u javno) · **prodaj** (opcijski, nije uvjet objave) · **natječi se**
+(rezultati drugih nad istim gradivom ili predmetom). Katalog od 24 predmeta ostaje na produkciji, ali
+mu se uloga **preimenuje**: on je **početna zaliha i dokaz da stroj radi** — nikad naslov priče.
+
+**Posljedice:**
+- **Katalog se ne briše niti umanjuje, ali prestaje biti argument.** Njegova jedina strateška
+  vrijednost od danas je **hladan start**: tržište bez sadržaja je prazna polica, a mi na dan objave
+  imamo 24 predmeta gradiva. Tako se i predstavlja — kao zaliha, ne kao ponuda.
+- **⚠️ „Prodaj" uvodi stranu koju platforma nikad nije imala: novac između dva korisnika.** Time
+  prestajemo biti trgovac vlastite usluge i postajemo **posrednik** — što traži isplate prodavačima,
+  Stripe Connect ili MoR koji podnosi *marketplace*, PDV na prodavačevoj strani i račune. Postojeći
+  [MONETIZATION.md](../product/MONETIZATION.md) §PDV **NE pokriva ovaj slučaj** i mora se dopuniti prije ijedne cigle prodaje.
+  **Otvoreno**, ne odlučeno ovim ADR-om.
+- **⚠️ Autorsko-pravna izloženost skače za red veličine.** [VISION.md](../product/VISION.md) §4.3 je rizik opisao za
+  *privatno* dijeljenje. **Naplata tuđeg gradiva izvedenog iz profesorskih materijala je druga
+  kategorija rizika** i prva stvar koju će pogoditi svaki pravnik. Predodluka: prodaje se **samo
+  vlastito autorstvo**, uz ToS-tvrdnju, prijavu i uklanjanje. Objava bez naplate ostaje blaži režim.
+- **Natjecanje prestaje biti „⬜ ideja".** Bodovi i ljestvice postaju dio definicije proizvoda →
+  **anti-cheat na poslužitelju od prve cigle** ([VISION.md](../product/VISION.md) §4.5), nikad iz klijenta.
+- **Ništa sigurnosno ne popušta.** [ADR-024](#adr-024) (zaseban otok, owner-RLS, upis samo kroz `SECURITY DEFINER`
+  RPC), [ADR-026](#adr-026)/[ADR-030](#adr-030) MCP-invarijante (nikad katalog · nikad `is_admin()` · nikad
+  `service_role`) i [ADR-018](#) (podaci, nikad kod) stoje **netaknuti**. Ovo je odluka o **proizvodu i
+  redoslijedu**, ne o pravima.
+- **Redoslijed:** objava je **F7** u [RASPORED.md](../plan/RASPORED.md) i dolazi iza računa (F2) i MCP-a (F6). **Prodaja i
+  natjecanje dolaze IZA objave** — objava bez njih je upotrebljiv proizvod, obrnuto nije.
+- **Kriterij prihvaćanja (objava):** gotovo kad korisnik svoj materijal iz police objavi javno, drugi
+  ga korisnik nađe i uči iz njega bez ijedne posebne ovlasti, a autor to može povući.
+
+---
+
+## ADR-034 — Stranica se NE zumira: ništa se ne povećava ni smanjuje, sve ostaje na mjestu
+**Datum:** 2026-09-05 · **Status:** ✅ ODLUČENO (Leon) · **provedeno F1/11 iste večeri** (meta na 6 stranica · reset `pan-x pan-y` · `ISKLJUCENO_ODLUKOM` u `axe-gate.js`) — na iPhoneu to NIJE držalo štipanje → **② `js/no-zoom.js`** (JS sloj, `gesturestart` + `touchmove` `scale`); dodir potvrđen ugašenim, štipanje opet presuđuje iPhone · **Vezano:** F1/10 (zoom na dodir), BUG-043, [ADR-027](#adr-027) (rub → test)
+
+**Kontekst.** F1/10 je isti dan zatvorio dva uzroka zooma (polja < 16 px pri fokusu · dvostruki dodir
+kroz `touch-action: manipulation`) i **svjesno odbacio** `user-scalable=no` / `maximum-scale=1`, jer
+gase štipanje — WCAG 1.4.4, axe pravilo `meta-viewport` (razina AA, dakle u našem a11y-gateu). Meta je
+zato namjerno govorila `user-scalable=yes, maximum-scale=5.0`. Leon je nakon deploya `c53c28c`
+presudio suprotno.
+
+**Odluka (Leon):** *„Stranica uopće ne bi trebala imati mogućnost da se nešto povećava ili smanjuje na njoj ikako. Treba ostati na mjestu."*
+
+Dakle **nijedna gesta ne smije mijenjati mjerilo stranice** — ni štipanje, ni dvostruki dodir, ni
+fokus polja. To je odluka o proizvodu koja svjesno **nadjačava** pristupačnosnu preporuku 1.4.4 za
+zumiranje gestom; povećanje teksta ostaje moguće postavkama sustava (iOS Dynamic Type, Android
+veličina fonta) i preglednikovim zumom na stolnom računalu.
+
+**Posljedice:**
+- **F1/11** provodi: `maximum-scale=1, user-scalable=no` u viewport-meti na svih **6** stranica
+  (`index` · `editor` · 4 pravne, koje danas nemaju ni `viewport-fit`) **i** sloj za iOS — Safari na
+  iOS-u od verzije 10 **ignorira `user-scalable=no` za štipanje**, pa meta sama ondje ne radi.
+  Kandidati za mjerenje na uređaju: `touch-action: pan-x pan-y` na korijenu (štipanje otpada, skrol
+  ostaje) i/ili `gesturestart` → `preventDefault()` (Safarijev nestandardni događaj). Što od toga
+  stvarno drži iPhone **zna samo iPhone** — headless ne izvodi štipanje (BUG-043: 24 mjerenja,
+  `visualViewport.scale` uvijek 1).
+- a11y-gate (`tests/helpers/axe-gate.js`): `meta-viewport` je AA → pao bi. Cigla dodaje **imenovanu
+  iznimku s ovim ADR-om kao razlogom**, ne gasi pravilo šutke; `meta-viewport-large` (≥ 5) prestaje
+  biti relevantan.
+- Tvrdnja ⑨ `phone-gate`-a (polja ≥ 16 px na dodiru) **ostaje** — fokus-zoom je i dalje zoom, a meta
+  ga na iOS-u ne gasi.
+- Izlaz iz faze F1 „dodir ne zumira" postaje **„ništa ne zumira"**; presuda ostaje Leonova, na uređaju.
+
+---
+
 ## ADR-033 — Dvojezičnost se PREVODI, ne gasi; jezik sučelja NIKAD ne dira predmete
 **Datum:** 2026-09-01 · **Status:** ✅ ODLUČENO (Leon) · **Vezano:** [ADR-012](#) (sadržaj po programu), [ADR-027](#adr-027) (znanje u kod)
 

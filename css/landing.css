@@ -62,7 +62,15 @@
         /* 4 · papir, fina skala (16px) */
         repeating-linear-gradient(to right, color-mix(in srgb, var(--color-ink-0) 2.5%, transparent) 0 1px, transparent 1px 16px),
         repeating-linear-gradient(to bottom, color-mix(in srgb, var(--color-ink-0) 2.5%, transparent) 0 1px, transparent 1px 16px);
-    background-attachment: fixed, fixed, scroll, scroll, scroll, scroll;
+    /* F1/7 ① — SVE `scroll`, nikad `fixed`. `fixed` je držao zrno i odsjaj prikovane za
+       prozor, a to preglednik plaća PRECRTAVANJEM cijele pozadine na svaki pomak:
+       `scripts/jank-probe.js` (F1/6) izmjerio 240 paintova / 533 Mpx po prolazu (≈ 70 %
+       ekrana svaki kadar) i 28–94 ispuštena kadra na JEDINOJ ruti koja uopće preboji;
+       protučinjenično bez `fixed` = 0 paintova, a bez zamućenja / sjena / prijelaza = isto.
+       `scroll` = kompozitor sloj samo pomiče: odsjaj putuje s herojem, gdje mu i jest
+       mjesto; iOS Safari je `fixed` ionako crtao kao `scroll`, pa iPhone ne mijenja izgled.
+       Brana: `tests/unit/no-fixed-background.test.js` (bundle + izvor, bez komentara). */
+    background-attachment: scroll;
 }
 
 /* Uska kolona, isti rub za sve tri sekcije i podnožje. */

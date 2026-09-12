@@ -33,6 +33,19 @@ test prvo (crveno na `main`-u, zeleno poslije), svoj commit.
 ### Dodano
 - Dva nova unit-testa u `test:unit` (`flashcard-identity`, `loader-retry`) + 8 tvrdnji u `cloud-sync.test.js`.
 
+## 2026-09-07 (OPUS) — **Mjerenje aktivacije i povratka: `SokratMetrika` u `js/consent.js` + jedna kuka u `switchSection()`**
+
+Do danas se mjerio **samo dolazak**: `gtag('config')` pošalje pregled stranice i mjerenje je gotovo, a Vercel Web Analytics je ugašen
+(404 na projektu). GA4 pokazuje ~500 pregleda u tjedan dana, ali nijedna brojka ne razlikuje posjetitelja koji je otišao od onoga koji je
+**počeo učiti**, ni njega od onoga koji se **vratio drugi dan**. Val korisnika dolazi s početkom fakulteta → bez ovoga listopad prolazi bez traga.
+Dodana su dva događaja, oba kroz **isti gate pristanka** kao GA i Sentry: **`ucenje`** (način + predmet) šalje ga `switchSection()` —
+jedino grlo kroz koje se ulazi u svaki mod, pa instrumentacija ne dira deset datoteka; **`povratak`** (`dan`, `od_prvog`) broji **različite
+dane** iz `localStorage` (`sokrat-dani`). ⚠️ **Dani se broje TEK nakon pristanka** — brojač kroz vrijeme je isto što i kolačić; tko odbije,
+u brojci ne postoji. Svjesna cijena, zapisana uz kod. Isti dan × više učitavanja = isti `dan` (mjeri se korisnik po vrijednosti, ne broj događaja).
+Brana: `tests/unit/metrika.test.js` (27 tvrdnji: curenje kroz gate · zapis bez pristanka · brojanje po danu, ne po učitavanju · pokvaren
+zapis · privatni način · kuka statički u izvoru). **Obrnuto provjerena dvjema mutacijama:** uklonjen gate → 4 crvene; uklonjena kuka → 2 crvene.
+Preflight EXIT 0, bump. **Gdje se vidi:** grana `feat/mjerenje-aktivacije` (preview); produkcija `c53c28c` bez toga — dok se ne deploya, mjerenja nema.
+
 ## 2026-09-06 (FABLE) — **`check:docs` je padao u svakom svježem klonu: generiran i gitignoriran artefakt nije duh-datoteka**
 
 Nađeno usput, pri prvom preflightu u novom `git worktree`-u: `check:docs` je prijavio **DUH-DATOTEKA →
@@ -47,6 +60,119 @@ Brana: `tests/unit/check-docs-gate.test.js` (6 tvrdnji u lažnom stablu: gitigno
 jedan duh · **bez `.gitignore`-a oba** = dokaz da se git stvarno pita · bez gita oba; obrnuto na starom `check-docs.js`
 = **2 crvene**). Preflight EXIT 0 (dotad 1). Bez bumpa — `scripts/**` i `tests/**` nisu na posjetiteljevu putu.
 **Gdje se vidi:** samo u branama, grana `feat/nocna-b` (nijedna korisnička datoteka nije dirana).
+## 2026-09-06 (FABLE) — **F1/9: kartice kao Tinder-špil na dodiru — palac desno = znam, lijevo = ne znam · špil od tri · strelice kao stolni pandan**
+
+Leon (05.09.): *„na mobitelu bi napravio za kartice kao tinder način"*; (06.09., usred rada): *„samo na mobitelu … ali ako imaš viziju
+probaj nešto"*. Do sada u modovima učenja nije bilo nijedne dodirne geste. Sad `#flashcard` na DODIRU (samo `pointerType === 'touch'`)
+prati prst: povlačenje iznad praga (trećina širine, najmanje 90 px) = let van ekrana pa upis kroz **postojeći `markKnown` /
+`markUnknown`** (jedini put upisa — brana to broji), ispod praga = povratak, dodir bez pomaka = okreni kao i dosad; dvije **sjene špila**
+u boji sljedećih kartica (samo `pointer: coarse`); **pečati** „Znam / Ne znam" rastu s prstom (puna ispuna, ADR-032; `visibility` u
+mirovanju). **Strelice** → / ← / razmak na stolnom = isti tok bez klika, samo u modu kartica i nikad iznad polja, gumba ili modala.
+`touch-action: pan-y` na kartici i na licu/naličju je jedino odstupanje od reseta F1/11 (štipanje ostaje ugašeno). `prefers-reduced-motion`
+= bez leta. Bez biblioteke: JS piše tri CSS-varijable i tri klase, crtanje je u `flashcards-section.css`.
+**Dva nalaza koje je dao samo pravi dodir:** `touch-action` se čita do PRVOG skrolera (lice/naličje su skroleri → pravilo samo na
+`.flashcard` nikad ne dođe na red, `pointercancel` na prvom pomaku) · Chromium poslije brzog zamaha potisne `click` sljedećeg dodira
+(izmjereno na goloj stranici) → okretanje na dodir ide na `pointerup`, ne na `click`.
+Brane: `tests/unit/flashcard-swipe.test.js` (78 tvrdnji; obrnuto kroz `git worktree` 48 crvenih) · `tests/flashcard-swipe.spec.js` (PRAVI
+dodir kroz CDP `Input.dispatchTouchEvent` na 4 iPhone profila, uklj. protučinjenično: reset `pan-x pan-y` samo na `.flashcard` ne mijenja ništa, na licu/naličju gasi gestu).
+Preflight EXIT 0, bump. **Gdje se vidi:** grana `feat/racun-r1` (preview); produkcija `c53c28c` bez toga. **F1 uređaj time ima sve cigle
+isporučene**; presude s iPhonea (štipanje · `?bez=` · palac) i deploy = Leonova riječ.
+
+## 2026-09-06 (FABLE) — **F1/5: pravne stranice prate uređaj — `boot.js` + `data-theme` na `contact/faq/privacy/terms`**
+
+Od F1/3 aplikacija bez izbora prati uređaj, a četiri pravne stranice nisu imale ni `data-theme` ni `boot.js`: korisnik na
+tamnom telefonu dobivao je crn katalog i **bijela Pravila privatnosti** jednim klikom iz footera. Popravak je isti mehanizam
+kao na `index.html` — `<html data-theme="academic">` + **sinkroni `boot.js`** na vrhu `<body>` (prije prvog crtanja); ništa
+novo u CSS-u, jer `tokens.static.css` sve teme već nosi, a `legal.css` je od MREŽE bez ijednog heksa. Brane:
+`theme-boot-order.test.js` traži boot na SVAKOJ stranici (dotad je preskakao one bez birača — rupa; obrnuto 8 crvenih) ·
+`tests/legal.spec.js` +2 mjere ISCRTANO (dark → `carbon`, light → `academic`, `color-scheme`, pozadina `<body>` == token
+teme) · `check:contrast:live` +4 pravne rute (4 × 4 teme, 0 ispod praga). Preflight EXIT 0, bump.
+**Svjesno NE:** `viewport-fit=cover` na pravnim (nema safe-area razmaka) · prijevod F3/1 (to je F3, ne poliranje).
+**Gdje se vidi:** grana `feat/racun-r1` (preview); produkcija `c53c28c` bez toga.
+
+## 2026-09-06 (FABLE) — **F1/4: popis tema ima JEDNO mjesto (`scripts/teme.js`) — a11y-brana prvi put skenira `carbon`**
+
+Četiri brane su „koje teme postoje" čitale na četiri načina: statička `check-contrast.js` regexom iz `tokens.css`
+(točno), živa `check-contrast-live.js` iz **zakucanog niza** (slučajno točno), `tests/helpers/axe-gate.js` iz zakucanog
+niza s **mrtvim `paper`** i **bez `carbon`** (a11y-suita je pet dana skenirala temu koje nema i preskakala jedinu novu
+tamnu — zelena cijelo vrijeme), `theme-boot-order.test.js` vlastitim regexom. Sad **`scripts/teme.js`** čita
+`:root[data-theme="…"] {` blokove iz tokena (bez komentara — pouka F1/7 ②; nula tema = **baca**, ne vraća `[]`), a sva
+četiri čitatelja idu kroz njega; `boot.js` zadržava svoj niz jer se vrti prije CSS-a, i test ga drži jednakim modulu.
+Brana `tests/unit/theme-list.test.js` (24 tvrdnje; obrnuto kroz `git worktree`: 9 crvenih na starom stablu).
+**Dokaz:** `a11y.authed.spec.js` 3/3 s `[carbon]` na svih 7 ploha, 0 nalaza · `check:contrast:live` 13 ruta × 4 teme iz
+tokena, 0 ispod praga · preflight EXIT 0. **Gdje se vidi:** samo u branama (nijedna korisnička datoteka nije dirana;
+grana `feat/racun-r1`). Bez bumpa — `scripts/**` i `tests/**` nisu na posjetiteljevu putu.
+
+## 2026-09-05 (FABLE) — **Matura = vizija (VISION.md §8) · RAD.xlsx se puni automatski svaki dan (`scripts/rad-dnevno.ps1`)**
+
+Dvije Leonove odluke iste večeri. **① Matura:** *„mature ne diramo, to je vizija"* → odjeljak u
+[VISION.md](../product/VISION.md) §8 (što bi bila, zašto je vizija, kad bi se otvorila), RASPORED §5 pokazuje onamo;
+bez datuma, jer `check:docs` drži `product/` bez kronologije. Ne dobiva spec, ciglu ni fazu. **② Analiza rada:** *„excel
+se popunjava na kraju svakog dana, to treba biti automatski"* → Windows Task Scheduler „Sokrat RAD.xlsx" svaki dan u
+23:45 zove `scripts/rad-dnevno.ps1`: generator → ako se knjiga promijenila, `git commit -- docs/records/RAD.xlsx` na
+tekuću granu (nikad na `main`, nikad push); dnevnik `.jank/rad-dnevno.log`; propušten dan ili otvoren Excel nadoknadi
+sljedeći prolaz (generator čita cijeli git). Prvi prolaz odmah: 123 commita · 89 isporuka · 11 faza · 21 vizija · 8
+grafova → `cbaf4d2`. Ukloni: `schtasks /Delete /F /TN "Sokrat RAD.xlsx"`.
+
+## 2026-09-05 (FABLE) — **F1/11 ②: štipanje s dva prsta gasi JS (`js/no-zoom.js`), jer Safari metu i `touch-action` ne sluša** (ADR-034)
+
+Leon na iPhoneu poslije F1/11 ①: dodir u polje i dvostruki dodir *„više ne, sređeno je, good job"* — ali *„ja bi da maknemo
+mogućnost zumiranja kompletno, da se ne može zumirat ni kada korisnik pokuša — sa dva prsta."* Meta `user-scalable=no`
+Safari za štipanje ignorira od iOS-a 10, a `pan-x pan-y` ga na uređaju nije zaustavio. Ostaje jedini sloj koji WebKit
+sluša: **`js/no-zoom.js`** — `gesturestart` / `gesturechange` + `touchmove` sa `scale !== 1` → `preventDefault()` uz
+`passive: false`; veže se SAMO gdje `GestureEvent` postoji (Chrome/Android slušaju metu, nepasivan `touchmove` bi im badava
+usporio skrol); jedan prst (`scale 1`) se ne dira. Vlastita datoteka s `defer` na svih 6 stranica — pravne nemaju `boot.js`,
+pa kopija u dva mjesta nije opcija (ADR-027) i F1/5 nije preduvjet. Brana: `touch-zoom.test.js` ③ (6 stranica × tag, sandbox
+7 tvrdnji), preflight EXIT 0. **Gdje se vidi:** grana `feat/racun-r1` (preview); produkcija `c53c28c`. **Presuda = Leon, dva prsta.**
+
+## 2026-09-05 (FABLE) — **F1/7: landing se više ne preboji pri skrolu (`fixed` → `scroll`) + `?bez=` prekidač za A/B na iPhoneu**
+
+Leon (04.09.): *„kada se scrolla mora biti savršeno smooth kao da si na najnovijem iPhoneu"*; F1/6 je izmjerio
+JEDINU rutu koja preboji ekran i jedini uzrok. Dva commita:
+- **① `css/landing.css`** (`9139d6f`): `background-attachment: fixed, fixed, scroll…` → `scroll`. Zrno i odsjaj
+  ostaju (brana to tvrdi), samo putuju sa slojem umjesto da se precrtavaju svaki kadar. `jank-probe`, landing,
+  kontrola, isti dan: **paint 240 / 532,7 Mpx → 0 / 0, ispušteni kadrovi 94 → 0.** Brana u `test:unit`:
+  `tests/unit/no-fixed-background.test.js` (bundle + izvor; obrnuto 2 crvene).
+- **② `?bez=` prekidač** (iPhone instrument ne vidi — Safari `fixed` crta kao `scroll`, headless ne skrola prstom):
+  `css/bez.css` (novi modul: `[data-bez~="zamucenja|sjena|prijelaza|pozadine"]`, `!important` namjeran i
+  imenovan za F4/3, inertan bez atributa) · `js/boot.js` PRIJE prvog crtanja upiše `data-bez` iz `?bez=` (sanirano,
+  nadživi `replaceState`) · `scripts/jank-probe.js` **više nema vlastitu tablicu zabrana** — čita popis iz
+  `bez.css` i postavlja isti atribut (ADR-027). Dokazi: `bez-switch.test.js` 26 tvrdnji (obrnuto na HEAD-u 5
+  crvenih) · živa provjera: zamućenje 5 → 0, sjene 27 → 0, prijelazi 187 → 0, pozadina → `none`, kontrola
+  netaknuta, `?bez=nepoznato` inertno · `jank-probe` 5/5 scenarija kroz atribut, paint 0/0 · preflight EXIT 0.
+
+**Gdje se vidi:** grana `feat/racun-r1` (preview); produkcija ostaje `c53c28c`. **Presuda glatkoće na iPhoneu =
+Leon, s prekidačem:** `?bez=zamucenja` · `?bez=sjena` · `?bez=prijelaza` · `?bez=pozadine`.
+
+## 2026-09-05 (FABLE) — **F1/11: ništa ne zumira — meta na 6 stranica + `touch-action: pan-x pan-y` + imenovano isključenje u a11y-brani** (ADR-034)
+
+Leon poslije deploya `c53c28c`: *„Stranica uopće ne bi trebala imati mogućnost da se nešto povećava ili smanjuje na
+njoj ikako."*, pa: *„Ovo što mi se dešava je svugdje, nije samo na Safariju, kreni."* Tri sloja:
+- **Meta** na svih 6 stranica: `minimum-scale=1.0, maximum-scale=1.0, user-scalable=no` (Chrome/Android slušaju,
+  Safari za štipanje ne). Pravne stranice **bez** `viewport-fit=cover` — `legal.css` nema safe-area razmaka, cover bi
+  gurnuo tekst pod izrez; sprega meta ⇔ safe-area je tvrdnja u testu.
+- **Reset** `touch-action: manipulation` → **`pan-x pan-y`** (`variables.css` + `legal.css`): skrol ostaje, dvostruki
+  dodir i štipanje otpadaju. iOS-sloj je bio jedan redak, ne novi mehanizam; drži li štipanje zna samo iPhone (BUG-043).
+- **a11y-brana:** axe `meta-viewport` (AA) na ovu metu pada — obrnuto provjereno (landing crven). Dodano
+  **`ISKLJUCENO_ODLUKOM`** u `tests/helpers/axe-gate.js`: jedno imenovano isključenje s razlogom ADR-034; pravilo se
+  i dalje vrti i ispisuje kao `[a11y-odluka] ISKLJUČENO`, ne nestaje. Ne u osnovicu (ona je za kvarove koji trebaju
+  nestati i ključa po površini — bilo bi deset redaka istog razloga).
+
+Brane: `touch-zoom.test.js` prepisan (35 tvrdnji; obrnuto kroz `git worktree`: 13 crvenih na starom stablu) ·
+`a11y-gate.test.js` +5 (isključenje po id-u, ne po razini) · a11y-suita 7/7 · preflight EXIT 0.
+**Gdje se vidi:** grana `feat/racun-r1` (preview); produkcija ostaje `c53c28c`. **Presuda štipanja = Leon na iPhoneu.**
+
+## 2026-09-05 (FABLE) — 🚀 **F1/10 + F1/8 ① + F1/8 ② NA PRODUKCIJI** (`c53c28c`, Leonov uvjetni OK: *„Kada brana završi i svi testovi prođu deployaj"*)
+
+Uvjet je bila puna responsive suita (pravilo #4, do tada vrćena samo djelomično): **571 prošlo · 0 palo ·
+117 preskočeno**, 24 min. Zatim fast-forward `feat/racun-r1` → `main` preko refspeca (`8b70c15..c53c28c`),
+pre-push kuka vrtjela preflight → EXIT 0. Vercel: produkcijski deployment `dpl_Dw1caqN4fhLXEpzCbsudu47JwD89`
+za `c53c28c`, **READY**; uživo potvrđeno jednim sporim zahtjevom: token `20260905174602` na
+www.sokratstudy.com. Na produkciji su sada: zoom na dodir (F1/10: polja 16 px kroz `(pointer: coarse)`,
+`touch-action` u resetu, brana ⑨) · hover samo gdje hover postoji (F1/8 ①, Leon na iPhoneu: *„Ne svijetli,
+odlično"*) · hover na mišu tek poslije pomaka (F1/8 ②) · `check:hover` u preflightu · `hover-probe` ·
+`hover-arm.test.js` · svi zapisi. ⚠️ Dvostruki dodir na iPhoneu (dio F1/10) ostaje Leonova presuda —
+nemjerljiv u headlessu.
 
 ## 2026-09-05 (FABLE) — **F1/8 ②: hover na mišu se naoruža tek prvim pomakom** (ljepljivi hover zatvoren na oba ulaza; BUG-044 riješen)
 

@@ -118,6 +118,10 @@
 @import "./offline.css";
 @import "./math.css";
 
+/* F1/7 ② · `?bez=…` prekidači za mjerenje na PRAVOM uređaju (zabrane s namjernim `!important`,
+   inertne bez atributa `data-bez`). ZADNJI među našim modulima: mora pobijediti sve iznad. */
+@import "./bez.css";
+
 /* ═══ 3. TAILWIND UTILITYJI ═══ NEUSLOJENI i ZADNJI (obrazloženje u zaglavlju).
    Skeniraju se samo izvori navedeni ispod — `index.html` i `js/` grade markup koji
    `styles.bundle.css` stilizira. Pravne stranice (contact/faq/privacy/terms) NISU

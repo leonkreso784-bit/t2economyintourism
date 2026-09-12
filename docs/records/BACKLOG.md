@@ -75,6 +75,12 @@ fixed` ionako crta kao `scroll`, pa je ovo dokaz troška na Androidu/stolnom Chr
 trzati iz razloga koji ovaj alat ne vidi** (ondje najsumnjivije: `backdrop-filter: blur(12px)` na ljepljivoj
 traci). Zato F1/7 uz popravak landinga nosi i A/B na pravom telefonu (`?bez=…` prekidač na previewu).
 **Mjesto: F1/7** (hipoteza u RASPORED-u).
+**✅ F1/7 ISPORUČEN 2026-09-05 navečer** — ① `css/landing.css` `fixed` → `scroll` (`9139d6f`): kontrola na landingu
+PRIJE paint 240 / 532,7 Mpx, ispušteno 94 → POSLIJE **0 / 0, ispušteno 0** (isti instrument, isti dan); brana
+`no-fixed-background.test.js`. ② `?bez=` prekidač: `css/bez.css` + `boot.js` (`data-bez` prije prvog crtanja) +
+sonda čita modul umjesto vlastite kopije; živa provjera u Chromiumu (393 px): zamućenje 5 → 0 · sjene 27 → 0 ·
+prijelazi 187 → 0 · pozadina → `none`; `jank-probe` 5/5 scenarija paint 0/0. **Čeka: Leonov A/B na iPhoneu**
+(`?bez=zamucenja` najsumnjivije — `backdrop-filter: blur(12px)` na ljepljivoj traci, v. ⚠️ gore).
 
 **C. BIJELI BLJESAK NA PRAVOM UREDAJU TRAJE ~1 s, ne 119 ms** (Leon: *„prvo ce se otvorit
 regularna klasicna tema (bijela) i stajat ce na jednu sekundu mozda manje. Onda ce se vratit
@@ -165,6 +171,43 @@ današnji prikaz + tipkovnicu · `prefers-reduced-motion` gasi let kartice · be
 `markKnown` / `markUnknown`** — gesta ih zove, ne duplicira.
 **Otvoreno (RASPORED §6/6):** zamjenjuje li špil današnji prikaz na telefonu ili je prekidač; nosi li
 smjer značenje. **Mjesto: F1/9.**
+**✅ ISPORUČENO 2026-09-06 (F1/9).** Leon isti dan: *„samo na mobitelu … ako imaš viziju probaj nešto"* → gesta samo za
+`pointerType === 'touch'`, špil samo `pointer: coarse`; **vizija za komp = strelice** (→ znam · ← ne znam · razmak/Enter okreće, isti
+let i pečat). Otvoreno pitanje palo odlukom: gesta je DODATAK uz gumbe → prekidač nepotreban; desno = znam. Mjere: SLOP 10 px · prag
+= širina kartice / 3, najmanje 90 px · let 280 ms + rezervni timer 320 ms · `touch-action: pan-y` na kartici I na licu/naličju.
+**Dva nalaza samo iz PRAVOG dodira (CDP `Input.dispatchTouchEvent`; pješčanik ih ne vidi):** ① `touch-action` se čita od dodirnutog
+elementa do PRVOG skrolera (CSS Pointer Events), a `.flashcard-front/back` SU skroleri (`overflow-y: auto`, BUG-013) → `pan-y` samo na
+`.flashcard` nikad ne dođe na red, preglednik uzme vodoravni dodir za pomicanje i pošalje `pointercancel` na prvom pomaku; ② Chromium
+poslije BRZOG vodoravnog zamaha (fling) potisne `click` sljedećeg dodira — gola stranica bez našeg JS-a: brz zamah → tap = ništa (i
+3 s kasnije), spor zamah (30 ms/korak, drži 250 ms) → tap radi; `pointerdown`/`pointerup` stižu uvijek → okretanje na dodir ide na
+`pointerup`, rep-klik se guta. `setPointerCapture` je bio prvi osumnjičeni i OBOREN (maknut: implicitni capture dodira dovoljan).
+Brane: unit 78 tvrdnji (obrnuto 48 crvenih) · spec 7 testova × 4 iPhone profila s CDP-dodirom (protučinjenično: reset `pan-x pan-y`
+samo na `.flashcard` = gesta radi, isti reset na licu/naličju = `pointercancel`, nema upisa). ⚠️ **Safari nije mjeren** — headless nema iOS-ov gesture-put (isti razlog kao F1/11); ne zna se potiskuje li
+WebKit tap poslije zamaha, ali `pointerup`-put to čini nevažnim → presuda palcem = Leonov iPhone. Nije mijenjano: gumbi, tijek
+`markKnown`/`markUnknown`, cloud-sync.
+**📏 MJERENJE ZA TINDER-KADAR (2026-09-06 navečer; Leon s previewom F1/9: *„kartica treba biti veća… kao na Tinderu… velik posao,
+prvo mjerenje i plan"*).** Sonda: Chromium, 4 iPhone profila kao u `playwright.config`, sigurna zona kao phone-gate (`--safe-*`),
+uzorci teksta iz `data/json/**` bez `final`-kopija (= **2 773 kartice u 24 predmeta**; s kopijama bi bilo 5 737 — `final` je
+`Object.assign(M1, M2)`). Mjerač je ispisao što je dotaknuo: 4 profila, 72 datoteke.
+
+| profil | dostupno (dno kroma → vrh nav) | kartica danas | udio dostupnog | stranica skrola? | naličje traži pri 16 px: med / p95 / max |
+|---|---|---|---|---|---|
+| SE 375×667 | 411 px (y 159 → 570) | 335×200 | 49 % | da (1037 px) | 194 / 360 / 438 |
+| 15 Pro 393×852 | 588 px (y 167 → 755) | 353×200 | 34 % | da (1045 px) | 194 / 340 / 398 |
+| 15 Pro Max 430×932 | 668 px (y 167 → 835) | 390×200 | 30 % | da (1081 px) | 194 / 319 / 378 |
+| landscape 852×393 | 337 px (y 56 → 393) | 447×280 | 83 % | da (1043 px) | 274 / 293 / 357 |
+
+Fontovi na telefonu DANAS: pitanje **12,8 px** · odgovor **12 px** · objašnjenje **10,4 px** · gumbi 13,6 px (landscape 22,4 / 19,2 /
+12). Oko kartice: h1 27 px · traka napretka 35 px · četiri gumba 50 px u dva reda (112 px) · stats 21 px + razmaci ≈ 16 px svaki.
+Gradivo: pitanje med 48 · p90 71 · p95 79 · max 134 zn. (najduže pri 20 px = 104 px visine na 393) · odgovor med 184 · p95 392 · max
+497 zn. (1 182 od 2 773 > 200 zn. — kartica-standard „< 200" vrijedi za pola kataloga) · naličje (odgovor + objašnjenje) med 225 · p95
+474 · max 656 zn.; 2 332 kartice imaju objašnjenje.
+**Izvedeni cilj (F1/12):** širina `vw − 32` · visina = dostupno − traka napretka (≈ 24) − red gumba (≈ 72 + 16) − razmaci → **≈ 287
+(SE) · 464 (393) · 544 (430)** = 70–81 % dostupnog; h1 otpada (43 px s razmakom); stats → značke na gumbima. Pri 16 px naličje **stane
+cijelo na 393 i 430** (max 398 < 464); na SE p95 (360 > 287) traži unutarnji skrol → fiksna visina + `overflow-y: auto` naličja je
+odluka, ne rezerva. Referenca Tinder (opće poznato, NIJE mjereno): kartica ≈ 90 % širine · ≈ 65 % visine ekrana, gumbi 56–64 px
+okrugli, radius 16–20 px. Sonde (gitignored, `.jank/probes/`): `kartica-mjera.js` (kadar) · `kartice-duljine.js` (gradivo) — brana
+dolazi u F1/12 kao mjera phone-gatea, ne kao zasebna sonda.
 
 **F. ZOOM NA DODIR** (Leon, 2026-09-05: *„Još jedan veliki bug. Kada se više puta takne na jedno mjesto
 može se zoomat, to se mora riješit."*). **Dva uzroka — jedan izmjeren, drugi ovdje nemjerljiv:**
@@ -197,6 +240,36 @@ zadovoljava nijedan motor naših brana (`CSS.supports` false u Chromiumu i Playw
 bio nemjerljiv; `(pointer: coarse)` je istina u oba (izmjereno). Brana ⑨ obrnuto: stari bundle 11 × 13 × 4
 crveno → 0. Usput: `phone.authed.spec.js` mjerio je telefon bez `hasTouch` (miš) — popravljen. Dvostruki
 dodir i dalje presuđuje Leon (BUG-043).
+**➕ 2026-09-05 navečer, poslije deploya `c53c28c` — Leon obrće odbijanje:** *„Stranica uopće ne bi trebala imati mogućnost da se nešto povećava ili smanjuje na njoj ikako. Treba ostati na mjestu."*
+→ **ADR-034**, cigla **F1/11** (RASPORED). „Odbačeno: gasi štipanje — pristupačnost" postaje odluka o
+proizvodu: štipanje se gasi NAMJERNO. Teren za ciglu: 6 viewport-meta (`index`/`editor` danas
+`user-scalable=yes, maximum-scale=5.0`; 4 pravne bez `viewport-fit`); iOS Safari od verzije 10 ignorira
+`user-scalable=no` za štipanje → `touch-action: pan-x pan-y` / `gesturestart` mjeriti na uređaju; axe
+`meta-viewport` (AA) traži imenovanu iznimku u `axe-gate.js`. Zapisano — pa **isporučeno iste
+večeri (F1/11):** meta `minimum-scale=1.0, maximum-scale=1.0, user-scalable=no` na 6 stranica (pravne bez
+`viewport-fit=cover` — `legal.css` nema safe-area razmaka, sprega je tvrdnja u testu) · reset `manipulation` →
+`pan-x pan-y` u oba reseta (`manipulation` = pan + pinch-zoom, dakle iOS-sloj je bio jedan redak) ·
+`ISKLJUCENO_ODLUKOM` u `axe-gate.js` (jedno imenovano isključenje s razlogom; pravilo se i dalje vrti i ispisuje;
+obrnuto: bez njega landing pada, moderate/AA) · `touch-zoom.test.js` 35 tvrdnji (obrnuto kroz `git worktree`:
+13 crvenih na starom stablu) · `a11y-gate.test.js` +5 · a11y-suita 7/7 · preflight EXIT 0.
+**Otvoreno: štipanje na iPhoneu** (headless ne štipa) — ako `pan-x pan-y` ne drži, rezerva je `gesturestart` →
+`preventDefault()`, a to traži skriptu na pravnim stranicama → F1/5 (`boot.js`) postaje preduvjet. Usput nađeno:
+`axe-gate.js` `TEME` zakucan (`paper` mrtav, `carbon` nema) → F1/4 (✅ 06.09., `scripts/teme.js`; carbon prvi put skeniran, 0 nalaza).
+⚠️ **Nalaz uz F1/4, ne popravljen:** odjavljeni `tests/a11y.spec.js` skenira SAMO zatečenu temu (`skeniraj`), sve-teme
+obilazak (`skenirajSveTeme`) živi jedino u prijavljenoj suiti — landing/browse/study/lekcije se u `carbon`/`chalk`/`mint`
+ne skeniraju axeom (kontrast im mjeri `check:contrast:live`, ali ne role/labele po temi — te su theme-neovisne). Cijena
+prebacivanja: 7 ploha × 5 tema u odjavljenoj suiti (danas 34 s → ~2,5 min). Odluka kad zatreba, ne sad.
+**Leon, 06.09. poslije F1/5 (gleda PRODUKCIJU, uz *„samo zapiši, nemoj ništa raditi"*):** ① *„frontend nije prilagođen,
+teme ne odgovaraju, taj dio je uvijek bijela tema"* = pravne stranice na `c53c28c`, gdje F1/5 nije — nalaz potvrđuje ciglu,
+ne otvara novu. ② *„glupo je imati Automatic · Carbon, ne kužim smisao"* — sufiks je F1/3 odluka iz `profile.js` („gumb bez
+sadržaja"); na tamnom uređaju izgleda kao duplikat Carbona → RASPORED §6/7, F2/1. ③ **Sadržaj:** FAQ promijeniti · About
+us srediti · **glavni kontakt `sokrat@sokratstudy.com`** (Gmail danas na 8 mjesta; Porkbun fwd provjeriti prije zamjene) →
+RASPORED F3/1 dopuna, PRIJE prijevoda. Ništa od toga nije rađeno.
+**Leon na iPhoneu (05.09. kasno navečer):** dodir u polje i dvostruki dodir **potvrđeno ugašeni** (*„više ne, sređeno je,
+good job"*), **štipanje s dva prsta i dalje zumira** → `touch-action: pan-x pan-y` Safari za štipanje NE drži (na uređaju;
+headless to ne može reći) → **F1/11 ② `js/no-zoom.js`**: `gesturestart`/`gesturechange` + `touchmove` sa `scale !== 1`,
+`preventDefault()` uz `passive: false`, samo gdje `GestureEvent` postoji; vlastita datoteka na 6 stranica (pravne nemaju
+`boot.js`, pa F1/5 nije preduvjet). Brana `touch-zoom.test.js` ③. Presuda opet iPhone.
 
 ---
 
@@ -353,7 +426,7 @@ zrcalno: ondje je tekst tražio **tamniji** indigo, ovdje traži **svjetliji**.
 jedan heks po polovici (`#4f46e5` svijetla / `#818cf8` tamna), ali predlošci su **kopija u
 dashboardu**, pa se mijenjaju na dva mjesta. Zasebna, sitna cigla.
 
-🚧 **RUPA U BRANI KOJU TREBA ZATVORITI ISTOM CIGLOM:** `scripts/check-contrast-live.js:39` ima
+✅ **RUPA ZATVORENA — F1/4, 2026-09-06:** `scripts/teme.js` je jedini čitatelj popisa tema (4 brane kroz njega, `tests/unit/theme-list.test.js` čuva). Bila je: `scripts/check-contrast-live.js:39` ima
 **zakucan popis tema** (`['academic','chalk','mint']`). Doda li se tema samo u `tokens.css` i
 `boot.js`, živa brana ju **neće ni pogledati** i ostat će zelena — tiho. `check:contrast` (staticki)
 čita tokene pa ju vidi sam; `tests/unit/theme-boot-order.test.js` čuva da se popisi u `boot.js` i
@@ -2272,6 +2345,20 @@ određuje upis, i vjeruje nam. Ako matura ikad krene, ADR-020 kreće **prije** n
 
 **Kalendar (Leon, 2026-08-22):** vrhunac korištenja platforme nije rujan nego **pripreme za
 maturu, otprilike 2.–5. mjesec**. To je jedini prirodni rok koji ovaj smjer ima.
+
+> ### ⚠️ DOPUNA 2026-09-01 — obje premise gore su OBORENE mjerenjem
+>
+> Odluka *„ne otvaramo maturu"* **stoji i potvrđena je** (Leon, 2026-09-01: *„neću otvarat
+> maturu"*). Ali **obrazloženje iznad više ne vrijedi**, pa se ne smije koristiti kao razlog:
+>
+> | premisa iznad | što je izmjereno 2026-09-01 |
+> |---|---|
+> | *„bez recepata = stotine ručnih `generate()`"* | **Prošli ispit je FIKSAN** → čisti podatak, bez `generate()`. Recepti **nisu** preduvjet; oni su v2 (beskonačno vježbanje). |
+> | *„ADR-020 mora krenuti prije mature"* | Ostaje točno kao **zahtjev**, ali je **jeftiniji** nego što se mislilo: NCVVO objavljuje **`Kljuc za odgovore.pdf`** uz svaki rok → provjera je usporedba s objavljenim ključem, ne Opusova prosudba. |
+>
+> Puna razrada, mjerenja na pravom ispitu i ostale odluke: **[MATURA-PILOT.md](../archive/MATURA-PILOT.md)**
+> (⏸️ PAUZIRAN). ⛔ Ondje stoji i jedini pravi blokator — **nepotvrđeno pravno pitanje** o objavi
+> NCVVO materijala na tuđoj platformi.
 
 **Status: parkirano.** Ne planirati, ne procjenjivati, ne otvarati prije nego frontend bude
 gotov. Zabilježeno da se ne izgubi i da se zna **koji preduvjet nosi**.

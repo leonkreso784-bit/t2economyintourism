@@ -4,10 +4,10 @@
    Samostalan CSS — ove stranice NE učitavaju styles.css.
    ===================================================== */
 
-/* `touch-action: manipulation` = ista politika kao reset u `variables.css` (F1/10): bez
-   Safarijeva dvostrukog dodira, sa skrolom i štipanjem. Ove stranice ne učitavaju bundle,
+/* `touch-action: pan-x pan-y` = ista politika kao reset u `variables.css` (F1/11, ADR-034):
+   skrol ostaje, dvostruki dodir i štipanje se gase. Ove stranice ne učitavaju bundle,
    pa se pravilo mora ponoviti — čuva ga `tests/unit/touch-zoom.test.js`. */
-* { margin: 0; padding: 0; box-sizing: border-box; touch-action: manipulation; }
+* { margin: 0; padding: 0; box-sizing: border-box; touch-action: pan-x pan-y; }
 
 /* ⚠️ OVDJE VIŠE NEMA NIJEDNE VRIJEDNOSTI BOJE — samo most na tokene.
    Ove četiri stranice ne učitavaju `styles.bundle.css`, pa su dotad držale

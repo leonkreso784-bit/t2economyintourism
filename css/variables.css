@@ -78,14 +78,17 @@
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
-    /* F1/10: gasi Safarijev dvostruki dodir = zoom (Leon: „kad se više puta takne na jedno
-       mjesto može se zoomat"). `manipulation` ZADRŽAVA skrol i štipanje — za razliku od
-       `user-scalable=no`, koji bi uzeo i štipanje (pristupačnost; meta namjerno drži
-       `maximum-scale=5`). Na `*`, ne na `html`: motori različito sastavljaju vrijednost kroz
-       pretke, a ručke za vučenje s `touch-action: none` (klasa) i dalje pobjeđuju.
-       Nemjerljivo u headlessu (gestu izvodi Safarijev UI-proces, ne stranica) — ovdje ga
-       čuva `tests/unit/touch-zoom.test.js`, na ekranu Leon. */
-    touch-action: manipulation;
+    /* F1/10 → F1/11 (ADR-034, Leon 2026-09-05: „stranica uopće ne bi trebala imati mogućnost
+       da se nešto povećava ili smanjuje na njoj ikako"). `pan-x pan-y`: skrol ostaje, a
+       dvostruki dodir I štipanje se gase. F1/10 je istog jutra držao `manipulation`
+       (štipanje ostaje — pristupačnost); navečer obrnuto odlukom o proizvodu. Ovo je sloj
+       UZ metu (`user-scalable=no, maximum-scale=1`), ne umjesto nje: Safari od iOS-a 10
+       tu metu za štipanje IGNORIRA, a `touch-action` je jedini kandidat koji mu ostaje —
+       drži li ga za štipanje zna samo iPhone (headless ne štipa, BUG-043).
+       Na `*`, ne na `html`: motori različito sastavljaju vrijednost kroz pretke, a ručke za
+       vučenje s `touch-action: none` (klasa) i dalje pobjeđuju. Ovdje ga čuva
+       `tests/unit/touch-zoom.test.js` (nula `manipulation`, nula `pinch-zoom`), na ekranu Leon. */
+    touch-action: pan-x pan-y;
 }
 
 img {

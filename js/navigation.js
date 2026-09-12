@@ -1558,6 +1558,13 @@ function switchSection(section) {
 
     AppState.nav.section = section;
 
+    // AKTIVACIJA: ovo je jedino grlo kroz koje se ulazi u SVAKI nacin ucenja, pa je i jedino
+    // mjesto gdje se mjeri razlika izmedu „dosao na stranicu" i „poceo uciti". Tiho bez
+    // pristanka na kolacice; sto se salje i zasto stoji u `js/consent.js` (SokratMetrika).
+    if (window.SokratMetrika) {
+        SokratMetrika.dogadaj('ucenje', { nacin: section, predmet: AppState.nav.subject });
+    }
+
     document.querySelectorAll('.study-nav-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.section === section);
     });

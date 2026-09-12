@@ -19,10 +19,12 @@
  *     (Mpx u CSS px), `DroppedFrame`, `RunTask` > 50 ms
  *   - koliko je piksela stvarno prešlo (skrol koji se nije dogodio = mjera praznog)
  *
- * SCENARIJI („bez" = protučinjenični, ubrizgan `<style>` NAKON učitavanja rute):
- *   kontrola · bez-zamucenja (backdrop-filter) · bez-sjena (box-shadow) ·
- *   bez-fiksne-pozadine (background-attachment) · bez-pozadine (background-image na
- *   landingu: zrno + gradijenti) · bez-prijelaza (transition/animation)
+ * SCENARIJI („bez" = protučinjenični): `kontrola` + jedan po pravilu iz `css/bez.css`
+ *   (`[data-bez~="ime"]` → `bez-ime`; danas: zamucenja · sjena · prijelaza · pozadine).
+ *   F1/7 ②: sonda NE ubrizgava vlastiti CSS nego postavlja ISTI atribut `data-bez` koji
+ *   `?bez=…` daje Leonu na previewu (`js/boot.js`) — jedno mjesto za zabrane (ADR-027), pa je
+ *   ono što ovdje mjerimo i ono što on gleda na iPhoneu doslovno isti CSS. Scenarij
+ *   `bez-fiksne-pozadine` je otpao s F1/7 ① (fiksne pozadine više nema; brana to čuva).
  *
  * ⚠️ Mjera na razvojnom stroju je DONJA GRANICA, ne korisnikova stvarnost (Leonov bljesak
  * je trajao ~1 s dok je moj izmjereni bio 119 ms). Ono što ovdje trza, trza i njemu;
@@ -54,16 +56,16 @@ const DPR = 3;                                       // iPhone 16
 const RUTE_SVE = gate.EKRANI_JAVNI.concat(gate.NACINI);
 const RUTE = arg('rute', RUTE_SVE.join(',')).split(',').map((s) => s.trim()).filter(Boolean);
 
-const SCENARIJI = {
-    'kontrola':            '',
-    'bez-zamucenja':       '*{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}',
-    'bez-sjena':           '*{box-shadow:none!important}',
-    'bez-fiksne-pozadine': '*{background-attachment:scroll!important}',
-    'bez-pozadine':        '.landing-page.active{background-image:none!important}',
-    'bez-prijelaza':       '*,*::before,*::after{transition:none!important;animation:none!important}',
-};
-const SCEN = arg('scenariji', Object.keys(SCENARIJI).join(',')).split(',').map((s) => s.trim()).filter(Boolean);
-for (const s of SCEN) if (!(s in SCENARIJI)) { console.error('nepoznat scenarij: ' + s + ' (imam: ' + Object.keys(SCENARIJI).join(', ') + ')'); process.exit(2); }
+/* Scenariji dolaze iz `css/bez.css` — JEDNO mjesto (ADR-027): `[data-bez~="ime"]` → `bez-ime`.
+   Sonda postavlja atribut, isti koji `?bez=` daje na previewu; zabrane su u tom modulu.
+   Prazan popis = pad, ne „nula scenarija": mjerač koji šuti o dosegu vraća krivi broj. */
+// bez komentara: zaglavlje modula objašnjava obrazac (`[data-bez~="ime"]`) — nije scenarij
+const BEZ_CSS = fs.readFileSync(path.join(__dirname, '..', 'css', 'bez.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+const BEZ_IMENA = Array.from(new Set(Array.from(BEZ_CSS.matchAll(/\[data-bez~="([a-z-]+)"\]/g), (m) => m[1])));
+if (!BEZ_IMENA.length) { console.error('jank-probe: css/bez.css nema nijedan [data-bez~="…"] selektor — nema scenarija'); process.exit(2); }
+const SCENARIJI = ['kontrola'].concat(BEZ_IMENA.map((n) => 'bez-' + n));
+const SCEN = arg('scenariji', SCENARIJI.join(',')).split(',').map((s) => s.trim()).filter(Boolean);
+for (const s of SCEN) if (SCENARIJI.indexOf(s) < 0) { console.error('nepoznat scenarij: ' + s + ' (imam: ' + SCENARIJI.join(', ') + ')'); process.exit(2); }
 
 const TRACE_KAT = ['devtools.timeline', 'disabled-by-default-devtools.timeline', 'disabled-by-default-devtools.timeline.frame'];
 
@@ -108,7 +110,7 @@ async function mjeri(browser, ruta, scen) {
     await page.evaluate(() => { try { localStorage.setItem('sokrat-cookie-consent', 'declined'); } catch (e) { /* */ } });
     await gate.spreman(page);
     await otvori(page, ruta);
-    if (SCENARIJI[scen]) await page.addStyleTag({ content: SCENARIJI[scen] });
+    if (scen !== 'kontrola') await page.evaluate((n) => document.documentElement.setAttribute('data-bez', n), scen.slice(4));
     await page.waitForTimeout(400);
 
     const skrolabilno = await page.evaluate(() => (document.scrollingElement || document.documentElement).scrollHeight - window.innerHeight);

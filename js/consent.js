@@ -6,6 +6,10 @@
  *
  * ⚙️  SETUP: paste your GA4 Measurement ID below (looks like "G-XXXXXXXXXX").
  *     Until a real ID is set, the banner still works but no analytics is loaded.
+ *
+ * Ovdje zivi i `window.SokratMetrika` — jedini nas put do GA4 dogadaja (aktivacija i
+ * povratak). Stoji BAS ovdje jer CLAUDE.md trazi da se ponasanje GA mijenja samo u ovoj
+ * datoteci: gate pristanka i ono sto kroz njega prolazi ne smiju stanovati odvojeno.
  */
 (function () {
     'use strict';
@@ -55,6 +59,7 @@
             ad_personalization: granted ? 'granted' : 'denied',
             analytics_storage: granted ? 'granted' : 'denied'
         });
+        pristanak = !!granted;
         if (granted) loadGoogleAnalytics();
         // Faza 2 (2E): praćenje grešaka (Sentry) slijedi ISTI gate pristanka. No-op ako modul
         // nije učitan (npr. pravne stranice) ili DSN nije konfiguriran.
@@ -62,11 +67,91 @@
             if (granted) window.SokratMonitor.enable();
             else window.SokratMonitor.disable();
         }
+        // Tek SADA brojanje dana: `loadGoogleAnalytics()` je gore vec gurnuo `config` u
+        // dataLayer, pa dogadaj stize iza njega — obrnut redoslijed GA4 ne veze uz mjerenje.
+        if (granted) zabiljeziDan();
     }
 
     function saveChoice(value) {
         try { localStorage.setItem(STORAGE_KEY, value); } catch (e) { /* private mode */ }
     }
+
+    /* ===== MJERENJE AKTIVACIJE I POVRATKA =====
+     * Do danas se mjerio SAMO dolazak: `gtag('config')` posalje pregled stranice i time je
+     * mjerenje gotovo. Za listopadski val je to premalo — pregled ne razlikuje posjetitelja
+     * koji je otvorio stranicu i otisao od onoga koji je poceo uciti, ni njega od onoga koji
+     * se sutra vratio. Bez ove dvije brojke val prolazi bez traga.
+     *
+     * Dvije mjere, obje kroz ISTI gate pristanka kao GA i Sentry:
+     *   ① AKTIVACIJA — dogadaj `ucenje`: posjetitelj je otvorio nacin ucenja. Salje ga
+     *      `switchSection()` u `js/navigation.js` — jedino grlo kroz koje se ulazi u SVAKI mod.
+     *   ② POVRATAK — dogadaj `povratak`: koji je ovo po redu RAZLICIT dan otkad je posjetitelj
+     *      pristao. `dan: 1` je prvi, sve iznad je povratnik.
+     *
+     * ⚠️ ZASTO SE DANI BROJE TEK NAKON PRISTANKA: brojac razlicitih dana u localStorageu je
+     * trag posjetitelja kroz vrijeme, dakle isto sto i kolacic — bez pristanka se NE zapisuje,
+     * jednako kao sto se bez njega ne ucitava GA. Cijena je postena i svjesna: tko odbije, u
+     * ovoj brojci ne postoji.
+     *
+     * ⚠️ Isti dan, vise ucitavanja = vise `povratak` dogadaja s ISTIM `dan`. Namjerno: mjeri se
+     * koliko KORISNIKA ima koju vrijednost `dan`, ne koliko je dogadaja stiglo.
+     */
+    var DANI_KEY = 'sokrat-dani';   // { prvi, zadnji, broj } — samo uz pristanak
+    var pristanak = false;
+    var danPoslan = false;
+
+    function danas() {
+        var d = new Date(), m = d.getMonth() + 1, dan = d.getDate();
+        return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (dan < 10 ? '0' : '') + dan;
+    }
+
+    /** Razmak u danima izmedu dva `YYYY-MM-DD`. Racuna se u UTC-u da ljetno racunanje
+     *  vremena ne pretvori 24 sata u 23 i ne pojede dan. */
+    function razmakDana(od, doDana) {
+        var a = String(od || '').split('-'), b = String(doDana || '').split('-');
+        if (a.length !== 3 || b.length !== 3) return 0;
+        var x = Date.UTC(+a[0], +a[1] - 1, +a[2]), y = Date.UTC(+b[0], +b[1] - 1, +b[2]);
+        if (isNaN(x) || isNaN(y)) return 0;
+        return Math.round((y - x) / 86400000);
+    }
+
+    function citajDane() {
+        try {
+            var sirovo = localStorage.getItem(DANI_KEY);
+            if (!sirovo) return null;
+            var z = JSON.parse(sirovo);
+            if (!z || typeof z !== 'object' || !z.prvi) return null;
+            return { prvi: String(z.prvi), zadnji: String(z.zadnji || z.prvi), broj: Number(z.broj) || 1 };
+        } catch (e) { return null; }   // privatni nacin ili pokvaren zapis — broji se kao prvi dan
+    }
+
+    function pisiDane(z) {
+        try { localStorage.setItem(DANI_KEY, JSON.stringify(z)); } catch (e) { /* private mode */ }
+    }
+
+    function zabiljeziDan() {
+        if (danPoslan) return;
+        danPoslan = true;
+        var d = danas();
+        var z = citajDane();
+        if (!z) z = { prvi: d, zadnji: d, broj: 1 };
+        else if (z.zadnji !== d) { z.broj = z.broj + 1; z.zadnji = d; }
+        pisiDane(z);
+        window.SokratMetrika.dogadaj('povratak', { dan: z.broj, od_prvog: razmakDana(z.prvi, d) });
+    }
+
+    /**
+     * Jedini nas put do GA4 dogadaja. Bez pristanka je TIH — ne salje, ne zapisuje, ne javlja
+     * gresku; pozivatelj ne mora znati je li posjetitelj pristao. Vraca je li dogadaj otisao,
+     * sto brana i koristi kao dokaz.
+     */
+    window.SokratMetrika = {
+        dogadaj: function (ime, params) {
+            if (!pristanak || !ime) return false;
+            window.gtag('event', ime, params || {});
+            return true;
+        }
+    };
 
     function removeBanner() {
         var el = document.getElementById('cookieBanner');
