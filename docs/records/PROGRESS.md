@@ -16,7 +16,10 @@ puštaju se sami, bez F1/F2 tereta); pravilo vlasnika lokalnog napretka kako je 
 loader → N3 snapshot → N2 multiskup → N4 vlasnik → N1 identitet; svaki test crven na `main`-u pa zelen; `test:unit`
 zelen; bump. Odbijeno iz recenzije: „pokušaji s id-om i vremenom" za kvizove (oblik podatka u bazi za isti dobitak);
 ostatak (dužina kartica, obećanje na landingu, veličina `navigation.js`, WebKit u CI-ju) nisu kvarovi i ne diraju se
-ovdje. Sljedeće: Leonov OK za deploy; F2/2 poslije, u svojoj sesiji u `.f2`.
+ovdje. **Suita:** preflight EXIT 0 (uz cherry-pick `3bfe40a`, bez kojeg `main` u svježem stablu ne prolazi
+`check:docs`) · `test:responsive` 471/4/117 — sve četiri crvene = jedna tvrdnja u `app-state.spec.js` koja je
+DOSLOVNO kodirala kvar (`flashcardsLearned.includes(0) && includes(1)`); okrenuta na identitete → 16/16.
+Sljedeće: Leonov OK za deploy; F2/2 poslije, u svojoj sesiji u `.f2`.
 
 ## 2026-09-05 (FABLE) — F1/8 ② isporučen: hover na mišu se naoruža tek prvim pomakom (JS pauza + CSS prefiks + sonda + 28 tvrdnji)
 
