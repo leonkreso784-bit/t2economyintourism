@@ -267,9 +267,33 @@ const CloudSync = (function () {
         return { ok: true };
     }
 
+    /**
+     * BUG-050 — VLASNIK LOKALNOG NAPRETKA (Leon, 12.09.): odjava ostavlja napredak na
+     * uređaju (toast to obećava), ali sljedeća prijava ga je spajala u KOJI GOD račun —
+     * na zajedničkom računalu B je nasljeđivao A-ovo učenje, i to trajno, u svoj oblak.
+     * Pravilo: lokalni napredak pripada računu koji ga je ZADNJI sinkronizirao.
+     *   ista osoba natrag       → spaja se kao dosad, ništa se ne gubi;
+     *   drugi račun             → lokalno se BRIŠE prije pulla (njegov je oblak izvor);
+     *   gost bez ijednog računa → spaja se u prvi račun („učio kao gost, pa se prijavio").
+     * Biljeg NIJE među `watchedKeys` — nikad ne putuje u oblak.
+     */
+    const OWNER_KEY = 'sokrat-progress-owner';
+
+    function preuzmiUredjaj(noviUserId) {
+        let vlasnik = null;
+        try { vlasnik = localStorage.getItem(OWNER_KEY); } catch (e) { vlasnik = null; }
+        if (vlasnik && vlasnik !== noviUserId) {
+            watchedKeys().forEach(function (k) { localStorage.removeItem(k); });
+            localStorage.removeItem(META_KEY);
+            snapshot = {};
+        }
+        localStorage.setItem(OWNER_KEY, noviUserId);
+    }
+
     function handleAuthChange(user) {
         if (user) {
             if (userId === user.id && timer) return; // SIGNED_IN se zna ponoviti (token refresh, fokus taba)
+            preuzmiUredjaj(user.id);
             userId = user.id;
             pullAndMerge().then(start);
         } else {

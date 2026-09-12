@@ -300,6 +300,72 @@ Promise.resolve()
     });
   }))
 
+  // ── BUG-050: VLASNIK LOKALNOG NAPRETKA (Leon, 12.09.) ──────────────────────────
+  // Odjava ostavlja napredak na uređaju (toast to i obećava). Ali sljedeća prijava ga je
+  // spajala u KOJI GOD račun — na zajedničkom računalu B je nasljeđivao A-ovo učenje.
+  // Pravilo: lokalni napredak pripada računu koji ga je ZADNJI sinkronizirao.
+  //   ista osoba natrag  → spaja se kao dosad (ništa se ne gubi);
+  //   drugi račun        → lokalno se briše PRIJE pulla;
+  //   gost bez ijednog računa → spaja se u prvi račun (put „učio kao gost, pa se prijavio").
+  .then(() => testAsync('⛔ DRUGI RAČUN na istom pregledniku ne nasljeđuje napredak prethodnog', function () {
+    const ls = lazniLocalStorage({ 'statistics-progress': JSON.stringify({ cardsStudied: 40 }) });
+    const poslano = [];
+    const oblak = { u1: [], u2: [{ key: 'statistics-progress', data: { cardsStudied: 5 } }] };
+    let tko = null;
+    const klijent = {
+      from: () => ({
+        select: () => Promise.resolve({ data: oblak[tko], error: null }),
+        upsert: (rows) => { poslano.push({ tko: tko, rows: rows }); return Promise.resolve({ error: null }); }
+      })
+    };
+    const { CS } = load({ ls: ls, klijent: klijent });
+
+    tko = 'u1';
+    CS.handleAuthChange({ id: 'u1' });                 // A: gost-napredak (40) ide u A
+    return slegni().then(() => {
+      assert.strictEqual(JSON.parse(ls.getItem('statistics-progress')).cardsStudied, 40);
+      CS.handleAuthChange(null);                       // A se odjavi; lokalno ostaje
+      assert.strictEqual(JSON.parse(ls.getItem('statistics-progress')).cardsStudied, 40, 'odjava NE briše (obećanje toasta)');
+      tko = 'u2';
+      CS.handleAuthChange({ id: 'u2' });               // B se prijavi na istom pregledniku
+      return slegni();
+    }).then(() => {
+      assert.strictEqual(JSON.parse(ls.getItem('statistics-progress')).cardsStudied, 5, 'B mora vidjeti SVOJ napredak, ne A-ov');
+      const zaB = poslano.filter((p) => p.tko === 'u2');
+      zaB.forEach((p) => p.rows.forEach((r) => {
+        assert.notStrictEqual(r.data.cardsStudied, 40, 'A-ov napredak ne smije otići u B-ov oblak');
+      }));
+    });
+  }))
+
+  .then(() => testAsync('ISTA OSOBA natrag: lokalni napredak preživi odjavu i spoji se', function () {
+    const ls = lazniLocalStorage();
+    const klijent = lazniKlijent();
+    const { CS } = load({ ls: ls, klijent: klijent });
+    CS.handleAuthChange({ id: 'u1' });
+    return slegni().then(() => {
+      ls.setItem('statistics-progress', JSON.stringify({ cardsStudied: 40 }));   // učio prijavljen
+      CS.handleAuthChange(null);
+      ls.setItem('statistics-progress', JSON.stringify({ cardsStudied: 44 }));   // učio i odjavljen
+      CS.handleAuthChange({ id: 'u1' });
+      return slegni();
+    }).then(() => {
+      assert.strictEqual(JSON.parse(ls.getItem('statistics-progress')).cardsStudied, 44, 'ista osoba ne smije izgubiti ništa');
+    });
+  }))
+
+  .then(() => testAsync('GOST bez ijednog računa: prvi račun dobiva gostov napredak', function () {
+    const ls = lazniLocalStorage({ 'statistics-progress': JSON.stringify({ cardsStudied: 40 }) });
+    const klijent = lazniKlijent();
+    const { CS } = load({ ls: ls, klijent: klijent });
+    CS.handleAuthChange({ id: 'u9' });
+    return slegni().then(() => {
+      assert.strictEqual(JSON.parse(ls.getItem('statistics-progress')).cardsStudied, 40);
+      const red = klijent.poslano[0].filter((r) => r.key === 'statistics-progress')[0];
+      assert.ok(red && red.data.cardsStudied === 40, 'gostov napredak mora otići u prvi račun');
+    });
+  }))
+
   .then(() => {
     console.log('\n  ' + passed + ' prošlo, ' + failed + ' palo\n');
     process.exit(failed ? 1 : 0);
