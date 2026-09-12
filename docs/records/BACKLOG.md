@@ -2346,6 +2346,20 @@ određuje upis, i vjeruje nam. Ako matura ikad krene, ADR-020 kreće **prije** n
 **Kalendar (Leon, 2026-08-22):** vrhunac korištenja platforme nije rujan nego **pripreme za
 maturu, otprilike 2.–5. mjesec**. To je jedini prirodni rok koji ovaj smjer ima.
 
+> ### ⚠️ DOPUNA 2026-09-01 — obje premise gore su OBORENE mjerenjem
+>
+> Odluka *„ne otvaramo maturu"* **stoji i potvrđena je** (Leon, 2026-09-01: *„neću otvarat
+> maturu"*). Ali **obrazloženje iznad više ne vrijedi**, pa se ne smije koristiti kao razlog:
+>
+> | premisa iznad | što je izmjereno 2026-09-01 |
+> |---|---|
+> | *„bez recepata = stotine ručnih `generate()`"* | **Prošli ispit je FIKSAN** → čisti podatak, bez `generate()`. Recepti **nisu** preduvjet; oni su v2 (beskonačno vježbanje). |
+> | *„ADR-020 mora krenuti prije mature"* | Ostaje točno kao **zahtjev**, ali je **jeftiniji** nego što se mislilo: NCVVO objavljuje **`Kljuc za odgovore.pdf`** uz svaki rok → provjera je usporedba s objavljenim ključem, ne Opusova prosudba. |
+>
+> Puna razrada, mjerenja na pravom ispitu i ostale odluke: **[MATURA-PILOT.md](../archive/MATURA-PILOT.md)**
+> (⏸️ PAUZIRAN). ⛔ Ondje stoji i jedini pravi blokator — **nepotvrđeno pravno pitanje** o objavi
+> NCVVO materijala na tuđoj platformi.
+
 **Status: parkirano.** Ne planirati, ne procjenjivati, ne otvarati prije nego frontend bude
 gotov. Zabilježeno da se ne izgubi i da se zna **koji preduvjet nosi**.
 

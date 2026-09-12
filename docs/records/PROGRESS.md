@@ -576,6 +576,44 @@ odlomak o tri Leonova problema stajao je i u BACKLOG-u i u RASPORED-u.
 
 ---
 
+## 2026-09-01 (OPUS, usporedna sesija) — MATURA: spec napisan, faza NIJE otvorena — mjerenje je oborilo obje premise parkiranja
+
+Leon je zatražio raspravu o pripremama za maturu; ishod je **spec i odluka da se ne otvara**
+(*„neću otvarat maturu"*). Vrijedan dio nije plan nego **mjerenje na pravom NCVVO ispitu**, koje je
+srušilo dvije stvari — jednu tuđu, jednu moju.
+
+**Tuđa:** `BACKLOG` §MATURA (22.8.) parkirao je smjer jer *„vježbu srednjoškolac ne može autorirati"*
+→ recepti su preduvjet. Ali prošli ispit je **fiksan** — ne randomizira se, pokazuje se pravi zadatak
+iz 2019. To je **čisti podatak bez `generate()`**, pa recepti ispadaju s kritičnog puta, a zadaci
+smiju u bazu (`export-content-json.js:11` isključuje vježbe baš zbog `generate()`). Druga premisa
+(ADR-020 prije mature) stoji kao zahtjev, ali je **jeftinija**: NCVVO uz svaki rok objavljuje
+`Kljuc za odgovore.pdf` → provjera je usporedba s objavljenim ključem, ne Opusova prosudba.
+
+**Moja:** tvrdio sam da ekstrakcija teksta radi — mjereno na **katalogu** (proza). Na **ispitu**
+proza se vadi savršeno, ali formule se razmrve (`g x x x ( ) = − − ( ) + ( ) 2 3 5`), a grafovi kao
+odgovori nestanu potpuno. Render kroz **`pdfjs-dist` + Playwright** (obje ovisnosti već postoje;
+ImageMagick otpada — traži Ghostscript kojeg nema) pa čitanje **vidom** daje `g(x) = −2(x−3)(x+5)`
+i sva četiri grafa čitljiva. **Glavni kanal je render, ne tekst.**
+
+Ozbiljnija posljedica ispravka: dvo-prolazni ključ provjerava **odgovor, ne pitanje** — krivo
+rekonstruirana formula dala bi zadatak koji pita drugo, a čiji se „točan" odgovor slaže s ključem,
+i brana bi pokazala **zeleno**. To je BUG-024/025 ponovno. Zato tro-strana provjera: pitanje kroz
+dva neovisna kanala, odgovor protiv službenog ključa.
+
+Ostalo zapisano u specu, ne ovdje: `exam` kao treći način smještaja (postojeća navigacija ignorira
+maturu **po konstrukciji** — `placementsOf()` vraća `[]` bez `programId`) · zašto `exam_attempts`
+mora biti nova tablica (`cloud-sync` spaja **max/unija**, pa 80 % pa 40 % zapiše 80 % — sustav ne
+može zabilježiti da je išlo lošije) · zašto objava rezultata nije u v1 (ocjenjivanje je u klijentu
+→ falsificira se; korisnici su maturanti, velik dio maloljetan).
+
+**Isporučeno:** [MATURA-PILOT.md](../archive/MATURA-PILOT.md) (⏸️ PAUZIRAN) + redak u indeksu +
+dopuna `BACKLOG` §MATURA da oborene premise ne ostanu kao razlog. `check:docs` zelen (53 dok.,
+320 poveznica). **Kôd nije pisan, grana nije otvorena, ništa nije pushano.** ⛔ Otvoreno i jedino
+blokirajuće: **pravno pitanje** o objavi NCVVO materijala — naznaka *„isključivo besplatno u cilju
+kvalitetnije pripreme"* nađena na jednoj stranici roka, ali **doslovan tekst nije potvrđen**.
+
+---
+
 ## 2026-09-01 (FABLE) — Tracnice prebacene: MREZA je isporucila sve blokove, "sto sada" je opet redizajn (C5b/2)
 
 Leonova rijec nakon zatvaranja bloka E. MREZA spec nosi ⏸️ uz obrazlozenje (izlazni uvjeti su

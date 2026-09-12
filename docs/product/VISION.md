@@ -131,4 +131,4 @@ strana (broj pristupnika, sezonska propusnica) stoji u [MONETIZATION.md](./MONET
 kao hipoteza, ne kao posao u planu.
 
 **Dogovor.** Ovaj odjeljak je jedino mjesto na kojem matura živi u proizvodnoj dokumentaciji: ne dobiva
-spec, ciglu ni fazu dok Leon ne kaže drugačije, a `check:docs` i dalje traži točno jedan aktivni plan.
+spec, ciglu ni fazu dok Leon ne kaže drugačije, a `check:docs` i dalje traži točno jedan aktivni plan. Skica v1 (model podataka, cjevovod, mjerenja na pravom ispitu) čuva se kao referenca u [archive/MATURA-PILOT.md](../archive/MATURA-PILOT.md), arhivirana jer je stajala u `plan/` prije ove presude.
