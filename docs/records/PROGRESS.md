@@ -5,6 +5,19 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-12 (FABLE) — Napredak pouzdan: pet kvarova iz vanjske recenzije, svaki test-prvo (grana `fix/napredak-pouzdanost`, novo stablo `sokratstudy.napredak`)
+
+Leon je donio vanjsku recenziju repozitorija s pet kvarova u praćenju napretka. **Prvo provjera protiv koda, ne
+primjena:** svih pet stoji (BUG-047…051), dva su gora nego u recenziji (napredak je po predmetu a špil po lekciji
+→ indeksi triju lekcija u istom nizu; sync-komentar i test pretpostavljali stringove, a u nizu su bili brojevi),
+jedna tvrdnja je netočna („kartice već imaju id" — vrijedi za 80 %; sedam HR predmeta + dio `accounting`-a nemaju).
+Nijedan nije bio u BUGS/BACKLOG-u. **Odluke (Leon):** grana od `main` u novom stablu (popravci studentskog vrućeg puta
+puštaju se sami, bez F1/F2 tereta); pravilo vlasnika lokalnog napretka kako je predloženo. **Redoslijed:** N5
+loader → N3 snapshot → N2 multiskup → N4 vlasnik → N1 identitet; svaki test crven na `main`-u pa zelen; `test:unit`
+zelen; bump. Odbijeno iz recenzije: „pokušaji s id-om i vremenom" za kvizove (oblik podatka u bazi za isti dobitak);
+ostatak (dužina kartica, obećanje na landingu, veličina `navigation.js`, WebKit u CI-ju) nisu kvarovi i ne diraju se
+ovdje. Sljedeće: Leonov OK za deploy; F2/2 poslije, u svojoj sesiji u `.f2`.
+
 ## 2026-09-05 (FABLE) — F1/8 ② isporučen: hover na mišu se naoruža tek prvim pomakom (JS pauza + CSS prefiks + sonda + 28 tvrdnji)
 
 Leon: *„pregledaj i analiziraj sve i kreni na sljedeću ciglu"* → F1/8 ② po planu iz memorije. **Nalaz koji plan

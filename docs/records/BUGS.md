@@ -125,6 +125,84 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Riješeni / Lekcije
 
+> **BUG-047…051 (2026-09-12)** su pet nalaza jedne **vanjske recenzije repozitorija** koju je Leon donio; svih
+> pet je potvrđeno u kodu prije popravka, nijedan nije bio zapisan. Grana `fix/napredak-pouzdanost`, svaki
+> popravak test-prvo (crveno na `main`-u, zeleno poslije). ⚠️ BUG-045/046 žive na parkiranoj grani
+> `feat/tinder-kadar` — brojevi ovdje su preskočeni da se ne sudare.
+
+### BUG-051 — Odbijeni paket ostaje zapamćen: nakon pada mreže `paket()` vraća staru grešku bez ijednog zahtjeva
+
+- Status: ✅ **riješen 2026-09-12** (N5) · Težina: **srednji** · Našao: vanjska recenzija.
+- **Opis.** Mreža otkaže usred otvaranja lekcije → poruka „ne mogu učitati". Mreža se vrati, korisnik opet
+  otvori lekciju → ista poruka, bez ijednog zahtjeva. Pomaže samo osvježavanje stranice.
+- **Uzrok.** `ubaci()` je pri grešci brisao svoj URL iz `uTijeku` (pa bi pojedinačna skripta smjela ponovno),
+  ali `paketi[ime]` je držao ODBIJENO obećanje — idempotencija „drugi poziv vraća isto obećanje" vrijedila je
+  i za pad.
+- **Rješenje.** Pad briše `paketi[ime]` (samo ako je to još isto obećanje). `tests/unit/loader-retry.test.js`:
+  lažni `document` broji koliko je puta stvoren `<script>` za isti paket — pad → 2, uspjeh → 1.
+- **Lekcija.** Keširanje obećanja kešira i njegov neuspjeh. Idempotentno je smjelo biti samo ono što je uspjelo.
+
+### BUG-050 — Odjava ostavlja napredak, sljedeća prijava ga spaja u KOJI GOD račun
+
+- Status: ✅ **riješen 2026-09-12** (N4) · Težina: **visok** (zajedničko računalo: B trajno nasljeđuje A-ovo
+  učenje, u svoj oblak) · Našao: vanjska recenzija (simulacijom).
+- **Opis.** A uči prijavljen, odjavi se (toast: *„Progress stays on this device"*). B se prijavi na istom
+  pregledniku → `pullAndMerge` spoji A-ove lokalne ključeve s B-ovim oblakom i pošalje gore.
+- **Uzrok.** Lokalni napredak nije imao pojam vlasnika; sync je spajao „što je lokalno" s „tko je prijavljen".
+- **Rješenje (pravilo, Leon 12.09.).** Lokalni napredak pripada računu koji ga je ZADNJI sinkronizirao
+  (`sokrat-progress-owner`, nije među `watchedKeys` → nikad u oblak). Ista osoba natrag → spaja se kao dosad;
+  **drugi račun → lokalno se briše prije pulla**; gost bez ijednog računa → spaja se u prvi račun. Tri
+  tvrdnje u `cloud-sync.test.js`.
+- **Lekcija.** „Offline-first" bez vlasnika podataka je „tko god sjedne prvi". Obećanje toasta i dalje vrijedi —
+  do trenutka kad netko drugi sjedne.
+
+### BUG-049 — Pali prvi push (u pullu) se nikad ne ponovi, a „sinkronizirano" se ispiše
+
+- Status: ✅ **riješen 2026-09-12** (N3) · Težina: **visok** (tih gubitak) · Našao: vanjska recenzija.
+- **Opis.** Prijava na lošoj mreži: pull prođe, spojeno stanje se pokuša poslati, upsert padne. Profil piše
+  „sinkronizirano u HH:MM", a ključ nikad ne ode gore — ni u sljedećim intervalima.
+- **Uzrok.** `pullAndMerge` je pisao `snapshot[key]` PRIJE upserta i zvao `markSynced()` bez obzira na ishod;
+  `collectChanged` uspoređuje s `snapshot`-om pa ključ više „nije promijenjen". P4 (POLICA) je isti kvar
+  zatvorio u `pushChanges`, a pull ga je imao na svoj način — test je štitio jedan ulaz od dva.
+- **Rješenje.** Ključ bez razlike prema oblaku dobiva snapshot odmah; ključ koji ide gore tek kad upsert
+  prođe; `markSynced()` samo kad jest. Tvrdnja „PAD SLANJA U PULLU" u `cloud-sync.test.js`.
+- **Lekcija.** Kad se isti kvar zatvori na jednom ulazu, potraži DRUGI ulaz u isto stanje — `snapshot` su
+  pisala dva mjesta, test je čuvao jedno.
+
+### BUG-048 — Spajanje napretka gubi kvizove: nizovi bez stringova → „pobjeđuje dulje", i test to tvrdi
+
+- Status: ✅ **riješen 2026-09-12** (N2) · Težina: **visok** · Našao: vanjska recenzija.
+- **Opis.** Dva uređaja s po jednim kvizom: `[80]` i `[90]` → `[80]`. Rezultat s drugog uređaja nestaje. Isto i
+  za `flashcardsLearned` dok je nosio brojeve (BUG-047).
+- **Uzrok.** `mergeValues`: unija samo kad su SVI elementi stringovi; inače dulji niz, kod jednake duljine
+  lokalni. Test `polja koja nisu stringovi → pobjeđuje DULJE` je to očekivao — zeleno je značilo „gubi kako je
+  zapisano".
+- **Rješenje.** Multiskup-maksimum po vrijednosti (JSON): svaka vrijednost preživi u onoliko primjeraka koliko
+  ih ima strana s više; `[80,80]` ostaje dvaput (skup bi spljoštio); spajanje sa sobom ne raste. Svjesno
+  ograničenje: isti rezultat jednom na svakom od dva uređaja stopi se u jedan. Odbijeno: „pokušaji s id-om i
+  vremenom" (mijenja oblik u bazi i `quiz.js` za isti dobitak).
+- **Lekcija.** Test koji tvrdi rezultat ostari s podacima — svojstvo („ništa ne nestaje") je bilo zapisano
+  u susjednom testu, ali samo za stringove. Provjeri koje VRSTE stvarno prolaze kroz funkciju.
+
+### BUG-047 — Naučena kartica se pamti po POZICIJI u promiješanom špilu; napredak po predmetu, špil po lekciji
+
+- Status: ✅ **riješen 2026-09-12** (N1) · Težina: **visok** (broj „naučeno" je bio šum od prvog dana) ·
+  Našao: vanjska recenzija; opseg (tri lekcije u istom nizu) nađen pri provjeri.
+- **Opis.** `markKnown` gura `cards.index` u `flashcardsLearned`; `initFlashcards` svaki put promiješa. Sutra
+  je na poziciji 0 druga kartica, obje se vode kao „0". Napredak je po PREDMETU (`storageKey`), špil po LEKCIJI →
+  indeksi midterm-1, midterm-2 i final u istom nizu. Sync-unija je pretpostavljala stringove pa brojeve nije
+  ni dohvaćala (BUG-048).
+- **Uzrok.** Kartica nikad nije imala identitet u zapisu napretka; schema v2 id-evi (U2a) su dodani za
+  editor, ne za napredak — i **1 175 od 5 737 kartica ih nema** (sedam HR predmeta + `accounting` M2/Final).
+- **Rješenje.** `cardIdentity()` u `flashcards.js`: `card.id` kad postoji, inače FNV-1a otisak
+  `kategorija|pitanje` (stabilan dok se pitanje ne mijenja); uvijek string. `final` = kopija M1⊕M2 → isti id u
+  obje lekcije, naučeno u midtermu vrijedi u finalu. Stari brojevi ispadaju u `loadProgress` i pri prvom upisu
+  (upsert piše cijeli redak → i iz oblaka); brojka po lekciji = presjek sa špilom; profil broji samo stringove.
+  `tests/unit/flashcard-identity.test.js`, 6 tvrdnji.
+- **Lekcija.** Indeks u promiješanom nizu nije identitet — a „naučeno" koje raste svaki put kad otvoriš
+  lekciju izgleda kao napredak, pa nitko ne pita. Zapis koji sinkronizacija ne razumije (brojevi u nizu za
+  stringove) je drugi kvar iz istog uzroka.
+
 ### BUG-044 — Ljepljivi hover: poslije dodira koji mijenja rutu, gumb pod prstom svijetli a nije dotaknut
 
 - Status: ✅ **riješen 2026-09-05** — ① dodir (F1/8 ①; Leon na iPhoneu: *„Ne svijetli, odlično"*) + ② miš
