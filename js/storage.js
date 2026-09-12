@@ -24,6 +24,13 @@ function loadProgress() {
     // Schema-merge: defaulti + spremljeno → polje koje fali u starom zapisu dobije default.
     progress = Object.assign({}, defaultProgress, (parsed && typeof parsed === 'object') ? parsed : {});
 
+    // BUG-047: do 12.09. su ovdje stajale POZICIJE u promiješanom špilu (brojevi) — šum koji je
+    // rastao svakim otvaranjem. Naučena kartica je od tada STRING (`cardIdentity`, flashcards.js);
+    // brojčani ostaci se odbacuju, jer ne znače nijednu karticu.
+    progress.flashcardsLearned = Array.isArray(progress.flashcardsLearned)
+        ? progress.flashcardsLearned.filter(x => typeof x === 'string')
+        : [];
+
     // Check streak
     if (progress.lastStudy) {
         const lastDate = new Date(progress.lastStudy).toDateString();

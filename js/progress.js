@@ -140,8 +140,12 @@ function renderProgressPage() {
     const nav = AppState.nav;
     if (!nav.data) return;
     
-    const totalFlashcards = getAllFlashcards().length;
-    const learned = progress.flashcardsLearned.length;
+    // BUG-047: napredak je po PREDMETU, špil po LEKCIJI — broji se presjek, inače naučeno u
+    // midterm-2 napuhava postotak midterm-1 (a s pozicijama umjesto identiteta bilo je i gore).
+    const spil = getAllFlashcards();
+    const totalFlashcards = spil.length;
+    const nauceno = new Set(progress.flashcardsLearned);
+    const learned = spil.filter(c => nauceno.has(cardIdentity(c))).length;
     const overallPercent = Math.round((learned / totalFlashcards) * 100) || 0;
     
     document.getElementById('overallPercent').textContent = `${overallPercent}%`;

@@ -232,7 +232,9 @@ function renderProfileStats() {
         try { p = JSON.parse(localStorage.getItem(meta.storageKey) || 'null'); } catch (e) { p = null; }
         if (!p) return;
 
-        const cards = Array.isArray(p.flashcardsLearned) ? p.flashcardsLearned.length : 0;
+        // BUG-047: stari zapisi nose brojčane pozicije (šum) — broje se samo identiteti kartica.
+        const cards = Array.isArray(p.flashcardsLearned)
+            ? p.flashcardsLearned.filter(function (x) { return typeof x === 'string'; }).length : 0;
         const quizzes = Array.isArray(p.quizScores) ? p.quizScores.length : 0;
         const avg = quizzes > 0 ? Math.round(p.quizScores.reduce(function (a, b) { return a + b; }, 0) / quizzes) : null;
         const fill = p.fillSolved || 0;
