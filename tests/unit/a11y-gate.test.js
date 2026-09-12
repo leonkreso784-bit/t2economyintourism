@@ -10,12 +10,14 @@
 // ovdje se dokazuje PRESUDA nad njim i ponašanje osnovice.
 
 const path = require('path');
-const { uGateu, presudiOsnovicom, ucitajOsnovicu } = require('../helpers/axe-gate.js');
+const { uGateu, presudiOsnovicom, ucitajOsnovicu, gateViolations, iskljucenoOdlukom, ISKLJUCENO_ODLUKOM } = require('../helpers/axe-gate.js');
 
 const v = (impact, tags, id) => ({ id: id || 'pravilo-x', impact, tags, nodes: [] });
 
 let failed = 0;
+let ukupno = 0;
 const tvrdi = (uvjet, ime) => {
+  ukupno++;
   if (uvjet) console.log('  ✅ ' + ime);
   else { failed++; console.log('  ❌ ' + ime); }
 };
@@ -77,6 +79,32 @@ const nalaz = { id: 'scrollable-region-focusable', impact: 'serious', nodes: 9 }
   tvrdi(r.rijeseni.length === 0, 'upis druge površine NIJE riješen kad se skenira ova');
 }
 
+console.log('\n=== obrnuta provjera: isključeno ODLUKOM, ne osnovicom (F1/11, ADR-034) ===\n');
+
+// Povod: `user-scalable=no, maximum-scale=1` na svih 6 stranica je Leonova odluka o proizvodu
+// (ADR-034), a axe to prijavljuje kao `meta-viewport` (WCAG 1.4.4, AA) — dakle U GATEU po
+// razini. Osnovica bi tražila deset ključeva (po površini) i proglašavala „riješeno" kad
+// nalaz nestane — a on ne smije nestati. Obrnuto 2026-09-05: bez isključenja landing pada.
+const rez = (violations) => ({ violations });
+const metaViewport = {
+  id: 'meta-viewport', impact: 'moderate', tags: ['cat.sensory-and-visual-cues', 'wcag2aa', 'wcag144'],
+  help: 'Zooming and scaling must not be disabled', nodes: [{ target: ['meta[name="viewport"]'], any: [] }]
+};
+const drugiAA = Object.assign({}, metaViewport, { id: 'color-contrast' });
+
+// ⑬ Popis je TOČNO { meta-viewport } i nosi ADR-034 kao razlog — širenje popisa je nova odluka, ne zakrpa.
+tvrdi(Object.keys(ISKLJUCENO_ODLUKOM).join(',') === 'meta-viewport' && /ADR-034/.test(ISKLJUCENO_ODLUKOM['meta-viewport']),
+  'ISKLJUCENO_ODLUKOM = točno { meta-viewport } s razlogom ADR-034');
+
+// ⑭ meta-viewport JE u gateu po presudi (AA) — vadi ga odluka, ne ljestvica; i ne nestaje nego se ispisuje.
+tvrdi(uGateu(metaViewport) === true, 'meta-viewport (AA, moderate) je po presudi U GATEU — isključenje ga vadi odlukom, ne ljestvicom');
+tvrdi(gateViolations(rez([metaViewport])).length === 0, 'gateViolations: meta-viewport NE pada (ADR-034)');
+tvrdi(iskljucenoOdlukom(rez([metaViewport])).length === 1, 'iskljucenoOdlukom: meta-viewport se ISPISUJE kao isključen, ne nestaje tiho');
+
+// ⑮ Isključenje je po ID-u, ne po razredu: drugi AA nalaz s ISTIM tagovima i dalje pada.
+tvrdi(gateViolations(rez([metaViewport, drugiAA])).map((g) => g.id).join(',') === 'color-contrast',
+  'drugi AA nalaz uz meta-viewport i dalje pada — isključenje je po id-u, ne po razini');
+
 console.log('\n=== obrnuta provjera: ucitajOsnovicu ===\n');
 
 // ⑪ Nedostajuća osnovica RUŠI (ugovor u repou; nestanak je kvar okoline, ne "nula upisa").
@@ -92,5 +120,5 @@ console.log('\n=== obrnuta provjera: ucitajOsnovicu ===\n');
   tvrdi(o && typeof o.tolerirano === 'object', 'commitana osnovica postoji i drži "tolerirano"');
 }
 
-console.log('\n' + (failed ? '❌ ' + failed + ' palo' : '✅ svih 13 prošlo') + '\n');
+console.log('\n' + (failed ? '❌ ' + failed + ' palo' : '✅ svih ' + ukupno + ' prošlo') + '\n');
 process.exit(failed ? 1 : 0);

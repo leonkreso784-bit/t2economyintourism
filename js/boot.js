@@ -73,6 +73,23 @@
     window.__sokratPrimijeniTemu = primijeniTemu;
     primijeniTemu();
 
+    /* F1/7 ② · `?bez=zamucenja,sjena` → `<html data-bez="zamucenja sjena">` PRIJE prvog crtanja.
+       Protučinjenični prekidač za mjerenje na PRAVOM uređaju: `css/bez.css` gasi sumnjivca
+       (zamućenje · sjene · prijelazi · pozadina landinga), Leon na iPhoneu kaže koji je scenarij
+       gladak, tek iz toga popravak — `jank-probe` je Chromium i iPhone ne vidi. Popis imena živi
+       SAMO u `css/bez.css`: ovdje prolazi bilo koje ime iz [a-z-], nepoznato ne pogađa nijedno
+       pravilo. Ovdje, a ne u `defer` skripti, da PRVI kadar već bude „bez" (inače se mjeri
+       prijelaz, ne stanje); atribut nadživi čišćenje adrese (`replaceState` u auth.js) jer je
+       SPA — <html> ostaje. Čuva `tests/unit/bez-switch.test.js`. */
+    var bez = /[?&]bez=([^&#]*)/.exec(String(location.search || ''));
+    if (bez) {
+        var imena = [];
+        try {
+            imena = decodeURIComponent(bez[1]).split(',').filter(function (s) { return /^[a-z-]+$/.test(s); });
+        } catch (e) { /* pokvaren URL-encoding: nema prekidača, tema ide dalje */ }
+        if (imena.length) document.documentElement.setAttribute('data-bez', imena.join(' '));
+    }
+
     /* Dijeljiva ruta (K1) znači da posjetitelj smije ući RAVNO na browse ili lekciju, gdje
        drugi red trake POSTOJI. Odluka se zato mora donijeti prije prvog crtanja, a ne u
        `navigateTo`: `<body class="no-pathbar">` stoji u markupu zbog CLS-a (izmjereno 0.1546

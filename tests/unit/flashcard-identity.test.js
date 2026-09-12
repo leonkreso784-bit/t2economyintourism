@@ -33,9 +33,10 @@ const rd = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 /** Lažni DOM: svaki element je isti bezlični stub — ovdje se ne mjeri ekran nego zapis. */
 function lazniDocument() {
   const el = () => ({
-    textContent: '', innerHTML: '', className: '', style: {}, dataset: {},
+    textContent: '', innerHTML: '', className: '', dataset: {},
+    style: { setProperty() {}, removeProperty() {} },   // F1/9 piše CSS-varijable špila i pri upisu ih briše
     classList: { toggle() {}, remove() {}, add() {} },
-    setAttribute() {}, appendChild() {}, addEventListener() {}, querySelectorAll: () => []
+    setAttribute() {}, removeAttribute() {}, appendChild() {}, addEventListener() {}, querySelectorAll: () => []
   });
   const poId = {};                                   // isti id → isti element, da se zapis može pročitati
   return {

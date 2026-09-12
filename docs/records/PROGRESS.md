@@ -25,6 +25,236 @@ DOSLOVNO kodirala kvar (`flashcardsLearned.includes(0) && includes(1)`); okrenut
 napredak → mjerenje-aktivacije (ostatak F1) → nocna-b (F2/1) → profil-zid (+ migracija na PROD uz OK) →
 cherry-pick BUG-045/046 → tek onda F2/2. Ancestry izmjeren gitom (merge-base, `--contains`), CI stanje
 po grani s GitHub API-ja. Sljedeće: nova sesija po §0, korak 1.
+## 2026-09-07 (OPUS, druga sesija) — Mjerenje aktivacije i povratka isporučeno · gate pristanka obrnuto provjeren
+
+Nastavak iste sesije, sad s kodom. Zadatak je izabran iz nalaza ① prethodnog unosa: **registracija je
+pogrešna mjera**, a ono što stvarno nedostaje — aktivacija i povratak — nije se mjerilo nigdje.
+
+**Što je otkrilo istraživanje prije pisanja koda.** `grep` po `js/*.js` daje `gtag(` **samo u
+`js/consent.js`** (5 mjesta), a `gtag('event', …)` **nigdje**: platforma nema nijedan imenovani GA4
+događaj, samo pregled stranice. Druga, korisnija činjenica: `switchSection()`
+([navigation.js:1546](../../js/navigation.js#L1546)) je **jedino grlo** kroz koje se ulazi u svih sedam
+načina učenja — pa aktivacija traži **jednu** kuku, ne deset.
+
+**Odluka koja nije bila očita.** Brojač različitih dana je trag posjetitelja kroz vrijeme, dakle isto
+što i kolačić → **ne zapisuje se bez pristanka**, jednako kao što se bez njega ne učitava GA. Cijena
+je poštena i zapisana uz kod: **tko odbije kolačiće, u brojci povratka ne postoji.** Alternativa
+(anonimni brojač bez privole) bila bi točnija brojka i lošija privola.
+
+**Obrnuta provjera, jer zelena brana zna lagati.** Dvije mutacije nad pravim kodom: uklonjen uvjet
+pristanka → **4 crvene tvrdnje** (uključujući *„odbijen pristanak → nula događaja"*, koja je odmah
+pokazala odbijeni događaj u `dataLayeru`); uklonjena kuka iz `switchSection()` → **2 crvene**. Obje
+vraćene iz kopije, brana opet zelena. Bez ovoga bi test dokazivao samo da se izvršava.
+
+**Gate:** `npm run preflight` EXIT 0 (78 + 27 tvrdnji u zadnja dva testa), `npm run bump` (106 tokena).
+**Gdje se vidi:** grana `feat/mjerenje-aktivacije`, lokalno — nije pushano, produkcija je bez toga.
+
+**Slijedi:** deploy čeka Leonovu riječ; nakon njega F1/15 i presude s iPhonea.
+
+---
+
+## 2026-09-07 (OPUS) — Model monetizacije zaključan (ADR-035 + ADR-036) · činjenice o inkubatoru provjerene · KÔD NIJE DIRAN
+
+Sesija je bila **planiranje s Leonom, bez ijedne izmjene koda**. Vrijedan dio nisu odluke nego
+**četiri mjerenja koja su oborila pretpostavke** — tri moje, jedna zajednička.
+
+**① „Nitko ne koristi platformu" je bio krivo mjeren nalaz.** Produkcijska baza: **5 računa, 2
+prijave u 30 dana, prvi račun 12.06.** Zvuči kao nula potražnje — ali **registracija je pogrešna
+mjera za ovaj proizvod**: sinkronizacija je offline-first, sve radi bez računa, pa *„nitko se ne
+prijavljuje jer nema potrebe"* nije izgovor nego opis onoga što je sagrađeno. Ono što stvarno
+nedostaje je **aktivacija i povratak** (je li itko otvorio špil i vratio se drugi dan), a to se
+danas nigdje ne mjeri — **Vercel Web Analytics nije uključen** (404 na projektu). Leonov GA4 pokazuje
+~500 pregleda u tjedan dana, hladno i bez marketinga.
+
+**② „Prodaj Hotel Sim, ne gradi ga" — oboreno.** Simulacija se ne može prodati bez demoa koji
+uvjerljivo igra, a to je već većina posla: zajednički bazen potražnje je tržišna ravnoteža, runde su
+**nova backend-forma** (zakazano razrješenje), a balans traži profesora kao suautora kroz mjesece.
+**[HOTEL_SIM.md](../ideas/HOTEL_SIM.md) je preklasificiran: nije proizvod za inkubator**, nego drugi čin i kandidat za diplomski.
+
+**③ „Prodaj fakultetu unutar programa" — Leon oborio, i bio u pravu.** Javna nabava i akademski
+ciklusi ne staju u šest mjeseci. Kupac koji odlučuje u **jednom razgovoru** su **male firme**
+(onboarding zaposlenika, evidencija o položenom). Iz toga je izašao cijeli model.
+
+**④ Cijene konkurencije nisu javne.** Cesim Hospitality i HOTS prodaju se **isključivo na upit** —
+što samo po sebi znači skupo i bez sidra; jedini vidljiv broj je **~£950** za srodnu simulaciju, a
+Cesim navodi **1000+ visokoškolskih ustanova**. Zato cijena za ustanove u dokumentu **ostaje prazna
+dok Leon ne pita FMTU što danas plaćaju** — brojka se ne izmišlja.
+
+**Isporučeno (docs, commit `27d495a`, grana `feat/racun-r1`, NIJE pushano):**
+- **[ADR-035](./DECISIONS.md)** — proizvod je **tržište studentskog gradiva** (objavi · prodaj · natječi se);
+  24 predmeta su **početna zaliha**, ne priča. Povod: „prodaja korisničkog sadržaja" nije postojala
+  **nigdje** u repozitoriju, a dijeljenje i natjecanje su od prvog dana stajali kao „⬜ ideja" — pa se
+  proizvod u razgovoru opetovano opisivao preko kataloga, jedine stvari koja je bila zapisana do kraja.
+- **[ADR-036](./DECISIONS.md)** — monetizacija: najam je **ORGANIZACIJA** (firma · fakultet · škola), **firme
+  prve**, **objava se ne naplaćuje** (ponuda je oskudan resurs), **prodaju prvo organizacije**
+  (isplata fizičkim osobama = porezna mašina), **exam modul** mjeren na poslužitelju.
+- **[MONETIZATION.md](../product/MONETIZATION.md) prepisan** — 5 platiša, 4 toka prihoda, organizacija kao najam,
+  exam modul s poštenom granicom, paketi kao hipoteze, unit economics (**profitabilan na drugom
+  kupcu**: Supabase Pro + Vercel Pro ≈ 45 USD/mj), faze naplate, pravno (**tržište te čini
+  POSREDNIKOM** → Connect/MoR), matura kao hipoteza. Stara konverzija 3–8 % označena kao optimistična
+  uz realnih 1–3 %.
+- **[PRD.md](../product/PRD.md) 0.6 → 0.7** — organizacija kao korisnik, dvije nove faze **s kriterijima prihvaćanja**
+  (organizacija, exam modul), ne-cilj *„nema naplate dok platforma ne dobije skalu"* izrijekom nadglašen.
+
+**⚠️ Višenajmnost NIJE osobni otok.** Organizacija traži entitet, članove, uloge i statistiku u svom
+dosegu; [ADR-024](./DECISIONS.md) veže sve uz jednog vlasnika (`owner_id = auth.uid()`). Projektira se unaprijed ili
+se gradi dvaput — to je prvi pravi backend-posao iza MCP-a.
+
+**Inkubator — provjereno kod izvora (startup.rijeka.hr, Novi list):** prijave **nisu bile otvorene**
+07.09.; poziv izlazi početkom rujna, otvoren ~mjesec dana; program **listopad, 6 mjeseci** (skraćeno
+s osam kod 17. generacije); besplatan; nagrade **15/7/3 tisuće €** za pokretanje poduzeća u Rijeci;
+17. generacija: **19 timova, 8 na Demo danu**. ⚠️ **Tvrdi uvjet: samo fizičke osobe BEZ registriranog
+subjekta u trenutku prijave** → firma se osniva tek nagradom, a naplata unutar programa ide kroz
+**pismo namjere ili ugovor o djelu**. Dosad su pobjeđivali lokalni servisi i hrana (VFX studio,
+fizioterapija, ravioli) — **gradski program nagrađuje dokaziv put do prihoda, ne tehniku**.
+STEP RI je druga faza (2027., traži postojeću tvrtku); Big Bang Camp 2026 propušten (rok 24.07.).
+
+**Sljedeće:** nazvati **051/209 940** za obavijest o pozivu · STEP RI iskaz interesa (besplatan,
+bez roka) · uključiti mjerenje aktivacije i povratka prije listopada · pa **gradnja** — F1 kartice
+i skrol naličja na iPhoneu čekaju Leonovu presudu s uređaja, dalje MCP.
+
+**Nije dirano:** nijedna `.js`/`.css`/`data*` datoteka → **bump nije trebao**. `check:docs`
+(56 dok., 369 poveznica) + `check:state` zeleni. **`PROGRESS.md` i `BACKLOG.md` u radnoj kopiji
+nose tuđe MATURA retke** — ovaj unos je u indeks ušao bez njih.
+
+## 2026-09-06 (FABLE) — Leon s previewom F1/9 → Tinder-KADAR (palac lista, gumbi sude, kartica = ekran): IZMJERENO + PLAN, bez koda
+
+Leon: *„Ako se povuče lijevo vraća se na prijašnju, desno ide na sljedeću. Kada se okrene daje odgovor. Know i don't know stoje dolje
+kao što Tinder ima lajk i ✕. Kartica treba biti veća, veličina kao na Tinderu. Velik posao — prvo mjerenje i plan."* Mjerenje
+(BACKLOG §E, sonde u `.jank/probes/`): na 393×852 kartica je 353×200 = **34 % dostupnog** prostora, stranica skrola, pitanje 12,8 px /
+odgovor 12 px; gradivo 2 773 kartice (bez `final`-kopija), naličje p95 474 zn. → pri 16 px stane cijelo na 393/430, na SE 375 traži
+unutarnji skrol; cilj ≈ 464 px visine na 393 (≥ 60 % dostupnog, bez skrola stranice). Plan (RASPORED): **F1/12 KADAR** (kartica = ekran,
+✓ / ✕ okrugli, h1 i stats otpadaju, fiksna visina + skrol naličja, nova mjera phone-gatea koja je danas crvena) · **F1/13 LISTANJE**
+(desno = sljedeća, lijevo = prethodna, dodir okreće, sud samo gumbima; F1/9 brane se PREPISUJU). Novo pitanje **§6/8** (kraj špila,
+prečaci za ✓ / ✕). Kod nije diran; F1/9 ostaje na grani kao mehanika koju F1/13 preusmjerava.
+**Leonovi odgovori isti sat:** kraj špila = **izbornik** (ispočetka · promiješaj · ponovi ne-znam) · na kompu isti red gumba, **✕ lijevo,
+strelica desno** (pretpostavka reda ← · ✕ · ✓ · →, potvrđuje u cigli) · **sve tipkama** (← → · razmak · X = ne znam · Z = znam) · **tutorial
+pri prvom ulasku**, zaseban za telefon i komp, *„kasnije, ali platforma to treba predvidjeti"* → **F1/14** (kasnije) i ugovor za F1/12–13:
+akcije u JEDNOJ tablici (`id → gumb · gesta · tipka · i18n`) iz koje se crtaju gumbi, vežu tipke i sastavlja tutorial. §6/8 zatvoreno → pet otvorenih.
+**I još:** *„Platforma mora znati na kakvom je uređaju korisnik"* → **F1/12 ⓪** (preduvjet): `boot.js` prije crtanja odluči `dodir · hover · hibrid ·
+razred · os · pwa` → `<html data-uredjaj>` + `window.SokratUredjaj`; CSS i JS pitaju samo to, nitko drugi ne zove `matchMedia` za pointer/hover
+(brana statička); danas se to pita na četiri mjesta na četiri načina, a nitko ne zna je li aplikacija instalirana.
+**Anketa (Leon: *„daj mi to kao anketu"*) — pet otvorenih pitanja §6, pet odgovora, sva po preporuci:** sidebar predmeta **obrisati**
+(F4) · frontend vježbi **samo tokeni i razmaci** (F5/3) · Facebook **odustati za sad** (F2, zastavica se briše) · četiri kvantitativna HR
+predmeta **čekaju F5 recepte** (F5/1 presuđuje) · birač tema **samo „Automatski"** (F2/1). §6 time nema otvorenih pitanja; RASPORED nosi
+odgovore u redovima F5/1, F5/3, F2/1 i u sitnom dugu.
+
+## 2026-09-06 (FABLE) — F1/9: kartice kao Tinder-špil na dodiru (palac · špil · pečati) + strelice kao stolni pandan — F1 uređaj ima sve cigle
+
+Leon: *„pregledaj stanje … kreni s izradom"*, pa usred rada: *„samo na mobitelu, ne vidim kako bi radilo na kompu … ali ako imaš
+viziju probaj nešto"*. Gesta u `js/flashcards.js` samo za dodir: `pointerdown` pamti ishodište → prvi pretežno vodoravni pomak > 10 px
+uzima pokazivač → JS piše `--swipe-x/rot/p` i klase, crtanje je u CSS-u; iznad praga (širina/3, min 90 px) let pa upis kroz POSTOJEĆI
+`markKnown`/`markUnknown` (`transitionend` ILI rezervni timer, točno jednom; `gen` čuva da let poništen novim špilom ne upiše u tuđi);
+ispod praga povratak; okomito = preglednikov skrol; rep-klik geste ne okreće (a klik koji nikad ne stigne ne guta idući dodir);
+reduced-motion = bez leta. Špil = dvije sjene u boji sljedećih kartica, samo `pointer: coarse`; pečati = puna ispuna ok/danger.
+**Vizija za komp (Leonovo „probaj nešto"):** strelice → / ← / razmak = isti tok i isti let, samo u modu kartica, nikad iznad polja,
+gumba ili modala. `touch-action: pan-y` na kartici I na licu/naličju = jedino odstupanje od reseta F1/11 (`touch-zoom` brana zelena).
+**Prvi spec je pao 24/28 i to je bila najkorisnija minuta cigle** — pješčanik je bio zelen, pravi dodir ne: ① `touch-action` se čita od
+dodirnutog elementa do PRVOG skrolera, a lice/naličje SU skroleri (BUG-013) → `pan-y` samo na `.flashcard` nikad ne dođe na red,
+`pointercancel` na prvom pomaku; ② Chromium poslije brzog vodoravnog zamaha POTISNE `click` sljedećeg dodira (gola stranica, bez našeg
+JS-a: brz zamah → tap = ništa, i 3 s kasnije; spor zamah → tap radi) → okretanje na dodir seli na `pointerup`, klik koji ipak stigne se
+guta. Usput oboreno: `setPointerCapture` nije bio uzrok (maknut jer je implicitni capture dodira dovoljan). Brane: unit 78 tvrdnji
+(obrnuto `git worktree` 48 crvenih) · spec s PRAVIM dodirom kroz CDP na 4 iPhone profila, uklj. protučinjenično: reset `pan-x pan-y`
+samo na `.flashcard` ne mijenja ništa, na licu/naličju gasi gestu. Preflight EXIT 0, bump. **§6/6 riješeno odlukom:** gesta je dodatak uz gumbe → prekidač nepotreban. Presuda palcem =
+Leonov iPhone (headless nema Safarijev gesture-put); deploy = njegova riječ. F1 uređaj: sve cigle isporučene.
+
+## 2026-09-06 (FABLE) — Leonove stavke poslije F1/5, SAMO ZAPISANE (*„Ovo samo zapiši, nemoj ništa raditi"*)
+
+Leon (slika birača tema na tamnom telefonu, gleda produkciju): *„Zapiši: trebamo promijeniti FAQ, about us srediti malo,
+glavni kontakt sokrat@sokratstudy.com. Frontend nije prilagođen, teme ne odgovaraju, taj dio je uvijek bijela tema. I glupo
+je imati Automatic · Carbon, ne kužim smisao."* Zapisano: **sadržaj → RASPORED F3/1 dopuna** (kontakt na 8 mjesta, Porkbun
+prosljeđivanje provjeriti prije zamjene; FAQ novi tekst; About = `#/about`; sve PRIJE prijevoda) · **„uvijek bijela"** =
+produkcija `c53c28c` bez F1/5, cigla je na grani (potvrda nalaza, ne nova cigla) · **„Automatic · Carbon"** = sufiks iz
+F1/3 (`profile.js`), izgleda kao duplikat → **§6/7**, preporuka: natpis samo „Automatski". CLAUDE.md: šest pitanja.
+Kod nije diran.
+
+## 2026-09-06 (FABLE) — F1/5: pravne stranice prate uređaj (`boot.js` sinkron + `data-theme` na 4 stranice) — kraj poliranja F1 osim Tindera
+
+Isti mehanizam kao `index.html`, bez nove kopije: `tokens.static.css` je sve četiri teme nosio od MREŽE, `legal.css` nema
+heksa — nedostajali su samo atribut i sinkrona skripta. Brana oblika (`theme-boot-order`) je stranice bez `theme.js`
+PRESKAKALA — birač nije preduvjet za temu; sad traži boot svugdje (obrnuto `git worktree`: 8 crvenih). Ponašanje mjeri
+`legal.spec.js` iscrtano (dark → `carbon` / light → `academic`, pozadina `<body>` == `--color-surface-0`, ne kopija
+heksa); `check:contrast:live` je pravne rute dotad zaobilazio (jednobojne) → +4 rute, 4 × 4 teme = 0 ispod praga.
+`MSYS_NO_PATHCONV=1` treba i ovoj skripti kad ruta počinje s `/` (Git Bash ju pretvori u `C:/Program Files/Git/…`).
+**Nije uzeto, svjesno:** `viewport-fit=cover` (legal.css bez safe-area) · **prijevod F3/1** — RASPORED ga nudi „u istom
+obilasku", ali to je F3 i nije poliranje; Leonova riječ. Preflight EXIT 0, bump. F1 = sve osim F1/9 (čeka §6/6).
+
+## 2026-09-06 (FABLE) — F1/4: `scripts/teme.js` — popis tema iz `tokens.css` za sve četiri brane (a11y prvi put skenira `carbon`)
+
+Leon: *„kreni sa poslom"* → plan sesije = F1/4 + F1/5. F1/4: jedan modul `scripts/teme.js` (`temeIzTokena()`, komentari se
+skidaju, nula tema baca), četiri čitatelja kroz njega — živa brana (bio zakucan niz), `axe-gate.js` (zakucan niz s `paper`,
+bez `carbon`), statička brana i `theme-boot-order.test.js` (svaki svoj regex). Brana `theme-list.test.js` 24 tvrdnje;
+obrnuto: `git worktree` na `93b4897` + kopija modula i testa = 9 crvenih (svi `require` + a11y-popis ≠ tokeni).
+**Dokaz koji je cigla tražila:** prijavljena a11y-suita (staging) sad ispisuje `[carbon]` na 7 ploha — **0 nalaza**;
+`check:contrast:live` 13 × 4 iz tokena, 0 ispod praga; preflight EXIT 0. Bez bumpa (ništa servirano nije dirano).
+Nalaz usput: odjavljeni `a11y.spec.js` skenira SAMO zatečenu temu (`skeniraj`, ne `skenirajSveTeme`) — sve-teme obilazak
+živi jedino u prijavljenoj suiti. Nije ovom ciglom mijenjano; zapisano u BACKLOG §F.
+
+## 2026-09-06 (FABLE) — Leonovi odgovori: F2/1 = odjava briše lokalni izbor · iPhone: dodir ne zumira, štipanje da — ali testira INSTALIRANU aplikaciju (produkcija, bez F1/11)
+
+Leon: *„Prijatelj neprijavljen vidi originalnu temu, ne onu koju je korisnik stavio. Znači B, tuđi izbor ne smije
+preživjeti odjavu."* → RASPORED §6/1 odgovoreno, F2/1 nosi odluku (pet pitanja otvoreno). *„Na iPhoneu kada se tapka ne
+zooma se, no kada se štipa se povećava. Provjeravam kao na aplikaciji: na Safariju Share → app."* Instalirana aplikacija
+s početnog zaslona učitava **www.sokratstudy.com = produkciju `c53c28c`**, a ondje je samo F1/10 (dodir 16 px + dvostruki
+dodir) — meta `user-scalable=yes, maximum-scale=5`, bez `pan-x pan-y`, bez `no-zoom.js` (provjereno jednim sporim
+zahtjevom). Dakle njegov nalaz **točno opisuje produkciju**, ne F1/11 ①+② koji su samo na grani/previewu (iza Vercel
+prijave). Presuda štipanja za F1/11 ② još NIJE dana. Compact-priprema: memorija + RASPORED + PROGRESS.
+
+## 2026-09-05 (FABLE) — F1/11 ②: `js/no-zoom.js` — štipanje s dva prsta gasi JS (Leon na iPhoneu: meta + `pan-x pan-y` ne drže)
+
+Leon: *„Neka više i sređeno je, good job"* (dodir u polje, dvostruki dodir) — *„no ja bi da maknemo mogućnost zumiranja
+kompletno … sa dva prsta."* Dakle F1/11 ① je na uređaju držao dodir, ne štipanje; uređaj je jedino mjesto gdje se to moglo
+saznati (BUG-043). Odluka o mjestu: vlastita datoteka na 6 stranica, ne `boot.js` — pravne ga nemaju, a duplikat bi bio
+ADR-027 propust; `defer` dovoljan (gesta stiže poslije učitavanja). Veže se samo uz `GestureEvent` da Chrome ne plaća
+nepasivan `touchmove`. Brana u `touch-zoom.test.js` ③ (vm sandbox s lažnim `document` i `GestureEvent`). Preflight EXIT 0.
+**Gdje se vidi:** grana/preview; produkcija `c53c28c`. **Otvoreno: Leon s dva prsta na previewu.**
+Uz to Leonove dvije nove: **matura = vizija** (VISION.md, ne dira se) · **RAD.xlsx automatski svaki dan** — zasebni commiti.
+
+## 2026-09-05 (FABLE) — F1/7 isporučen u dva commita: landing `fixed` → `scroll` (paint 240 → 0) · `?bez=` prekidač za iPhone
+
+Leon: *„Kreni."* ① Baseline istog dana (sonda još radi: paint 240 / 532,7 Mpx, ispušteno 94) → obrnuta provjera nove
+brane na starom stanju (2 crvene) → `scroll` → build → brana zelena → sonda **0 / 0, ispušteno 0**. Prvi build je
+pao jer je `css/bez.css` (dio ②) već postojao bez manifesta — modul privremeno u scratchpad, ① zasebno, pa ②.
+② `css/bez.css` + `boot.js` (`data-bez` prije prvog crtanja) + sonda čita modul umjesto vlastite kopije (ADR-027).
+**Nalaz:** popis imena iz modula pokupio je i primjer `ime` iz zaglavlja modula — i test i sonda bi mjerili scenarij
+koji ne gasi ništa → komentari se skidaju prije čitanja, test to sad tvrdi za oboje. Dokazi: `bez-switch.test.js`
+26 (obrnuto s HEAD `boot.js`: 5 crvenih) · živa sonda `.jank/probes/bez-live.js`: 5/27/187 → 0, pozadina `none`,
+nepoznato inertno · `jank-probe` 5/5 scenarija paint 0/0 (vrćeno paralelno s preflightom, pa su „>25 ms" brojke
+šum CPU-a, paint/ispušteno nisu) · preflight EXIT 0 ×2. **Gdje se vidi:** grana/preview; produkcija `c53c28c`.
+**Otvoreno: Leonov A/B na iPhoneu s `?bez=`.** Usput: `theme-device`/`theme-boot-order` zeleni uz novi `boot.js`.
+Sljedeće: **F1/4** (popis tema iz `tokens.css` u `check-contrast-live` I `axe-gate`), pa F1/5.
+
+## 2026-09-05 (FABLE) — F1/11 isporučen: ništa ne zumira (meta na 6 stranica · `pan-x pan-y` · `ISKLJUCENO_ODLUKOM` u a11y-brani)
+
+Leon: *„Ovo što mi se dešava je svugdje, nije samo na Safariju, kreni."* Redoslijed: meta + reset → `build:css` →
+**obrnuta provjera a11y-brane PRIJE iznimke** (landing pao na `meta-viewport`, moderate/AA — brana kvar vidi) →
+isključenje imenovano u `axe-gate.js` (ne osnovica: ona ključa po površini i očekuje da nalaz nestane) → landing zelen
+uz ispis `[a11y-odluka] ISKLJUČENO` → `touch-zoom.test.js` prepisan i **obrnuto kroz `git worktree` na HEAD-u: 13
+crvenih** → bump → preflight EXIT 0 → a11y-suita 7/7 (svaka površina ispisuje isključenje). Nalazi usput: ① iOS-sloj
+je bio JEDAN redak, ne novi mehanizam (`manipulation` = pan + pinch-zoom; `pan-x pan-y` = bez pinch-a) — F1/10-ov test
+je tvrdio staru vrijednost doslovno pa je svjesno prepisan, ne „popravljen"; ② `viewport-fit=cover` NE ide na pravne
+stranice (nula safe-area u `legal.css`) — sprega je sad tvrdnja; ③ `axe-gate.js` `TEME` zakucan s mrtvim `paper` i
+bez `carbon` → F1/4. Alat: heredoc opet progutao `\n` u sidru (dvije izmjene tiho nisu prošle, `assert` ih uhvatio)
+→ skripta kroz Write. **Gdje se vidi:** grana/preview; produkcija `c53c28c`. **Otvoreno: štipanje na iPhoneu**
+(rezerva `gesturestart`, koja na pravnim stranicama traži `boot.js` = F1/5). Sljedeće: **F1/7**.
+
+## 2026-09-05 (FABLE) — Leonova odluka: bez zuma uopće (ADR-034 → F1/11) · compact-priprema
+
+Leon (poslije deploya `c53c28c`): *„Stranica uopće ne bi trebala imati mogućnost da se nešto povećava ili smanjuje na njoj ikako. Treba ostati na mjestu."* *„Zapiši to i pripremi
+se za compact."* Zapisano, NE provedeno: **ADR-034** (obrće F1/10 odbijanje `user-scalable=no`; svjesno
+nadjačava WCAG 1.4.4 za gestu), cigla **F1/11** u RASPORED-u (6 meta + iOS-sloj jer Safari ignorira
+`user-scalable=no` za štipanje; imenovana axe-iznimka; tvrdnja ⑨ ostaje), BACKLOG §F dopuna, izlaz iz F1
+„dodir ne zumira" → „ništa ne zumira", `docs/README.md` ADR-raspon 034. Compact-priprema (pravilo #6):
+grep „na grani / čeka OK" poslije deploya = 0 zastarjelih; HISTORY red i memorija ažurirani.
+
+## 2026-09-05 (FABLE) — 🚀 deploy `c53c28c`: F1/10 + F1/8 ① + F1/8 ② na produkciji (Leonov uvjetni OK, suita zelena)
+
+Leon: *„Kada brana završi i svi testovi prođu deployaj."* Puna responsive suita (pravilo #4, do tada
+vrćena samo djelomično — browse i back-model na jednom profilu): **571 prošlo · 0 palo · 117 preskočeno**,
+24 min. Zatim `git push origin feat/racun-r1:main` (fast-forward `8b70c15..c53c28c`), pre-push kuka
+preflight EXIT 0, Vercel produkcija `dpl_Dw1caqN4fhLXEpzCbsudu47JwD89` READY za `c53c28c`, jedan spor
+zahtjev na www.sokratstudy.com vraća token `20260905174602` = repo. Otvoreno za Leona na iPhoneu:
+dvostruki dodir (F1/10). Sljedeće: **F1/7** (landing `background-attachment: fixed`).
 
 ## 2026-09-05 (FABLE) — F1/8 ② isporučen: hover na mišu se naoruža tek prvim pomakom (JS pauza + CSS prefiks + sonda + 28 tvrdnji)
 
@@ -363,6 +593,44 @@ odlomak o tri Leonova problema stajao je i u BACKLOG-u i u RASPORED-u.
 
 **Ceka Leona (5 pitanja, RASPORED §6):** neprijavljen korisnik na tudjem uredaju · sidebar predmeta
 (obrisati ili vratiti) · opseg frontenda vjezbi · Facebook · cetiri kvantitativna HR predmeta.
+
+---
+
+## 2026-09-01 (OPUS, usporedna sesija) — MATURA: spec napisan, faza NIJE otvorena — mjerenje je oborilo obje premise parkiranja
+
+Leon je zatražio raspravu o pripremama za maturu; ishod je **spec i odluka da se ne otvara**
+(*„neću otvarat maturu"*). Vrijedan dio nije plan nego **mjerenje na pravom NCVVO ispitu**, koje je
+srušilo dvije stvari — jednu tuđu, jednu moju.
+
+**Tuđa:** `BACKLOG` §MATURA (22.8.) parkirao je smjer jer *„vježbu srednjoškolac ne može autorirati"*
+→ recepti su preduvjet. Ali prošli ispit je **fiksan** — ne randomizira se, pokazuje se pravi zadatak
+iz 2019. To je **čisti podatak bez `generate()`**, pa recepti ispadaju s kritičnog puta, a zadaci
+smiju u bazu (`export-content-json.js:11` isključuje vježbe baš zbog `generate()`). Druga premisa
+(ADR-020 prije mature) stoji kao zahtjev, ali je **jeftinija**: NCVVO uz svaki rok objavljuje
+`Kljuc za odgovore.pdf` → provjera je usporedba s objavljenim ključem, ne Opusova prosudba.
+
+**Moja:** tvrdio sam da ekstrakcija teksta radi — mjereno na **katalogu** (proza). Na **ispitu**
+proza se vadi savršeno, ali formule se razmrve (`g x x x ( ) = − − ( ) + ( ) 2 3 5`), a grafovi kao
+odgovori nestanu potpuno. Render kroz **`pdfjs-dist` + Playwright** (obje ovisnosti već postoje;
+ImageMagick otpada — traži Ghostscript kojeg nema) pa čitanje **vidom** daje `g(x) = −2(x−3)(x+5)`
+i sva četiri grafa čitljiva. **Glavni kanal je render, ne tekst.**
+
+Ozbiljnija posljedica ispravka: dvo-prolazni ključ provjerava **odgovor, ne pitanje** — krivo
+rekonstruirana formula dala bi zadatak koji pita drugo, a čiji se „točan" odgovor slaže s ključem,
+i brana bi pokazala **zeleno**. To je BUG-024/025 ponovno. Zato tro-strana provjera: pitanje kroz
+dva neovisna kanala, odgovor protiv službenog ključa.
+
+Ostalo zapisano u specu, ne ovdje: `exam` kao treći način smještaja (postojeća navigacija ignorira
+maturu **po konstrukciji** — `placementsOf()` vraća `[]` bez `programId`) · zašto `exam_attempts`
+mora biti nova tablica (`cloud-sync` spaja **max/unija**, pa 80 % pa 40 % zapiše 80 % — sustav ne
+može zabilježiti da je išlo lošije) · zašto objava rezultata nije u v1 (ocjenjivanje je u klijentu
+→ falsificira se; korisnici su maturanti, velik dio maloljetan).
+
+**Isporučeno:** [MATURA-PILOT.md](../archive/MATURA-PILOT.md) (⏸️ PAUZIRAN) + redak u indeksu +
+dopuna `BACKLOG` §MATURA da oborene premise ne ostanu kao razlog. `check:docs` zelen (53 dok.,
+320 poveznica). **Kôd nije pisan, grana nije otvorena, ništa nije pushano.** ⛔ Otvoreno i jedino
+blokirajuće: **pravno pitanje** o objavi NCVVO materijala — naznaka *„isključivo besplatno u cilju
+kvalitetnije pripreme"* nađena na jednoj stranici roka, ali **doslovan tekst nije potvrđen**.
 
 ---
 

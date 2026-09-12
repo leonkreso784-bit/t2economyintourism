@@ -96,7 +96,7 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 | [CHANGELOG.md](./records/CHANGELOG.md) | Verzije i što se mijenjalo |
 | [PROGRESS.md](./records/PROGRESS.md) | Dnevnik rada po sesijama |
 | `RAD.xlsx` (records/) | **Analiza rada** — commiti, isporuke, faze, vizije + 8 grafova; generira `python scripts/rad-xlsx.py` na kraju svake faze (samo odrađeno ulazi) |
-| [DECISIONS.md](./records/DECISIONS.md) | Arhitektonske odluke (ADR-001…033) i zašto |
+| [DECISIONS.md](./records/DECISIONS.md) | Arhitektonske odluke (ADR-001…036) i zašto |
 | [BUGS.md](./records/BUGS.md) | Bugovi + lekcije naučene — **aktivni + riješeni od 2026-08-31** |
 | [BUGS_ARCHIVE.md](./records/BUGS_ARCHIVE.md) | **Arhiva bugova BUG-001…038** (riješeni do 2026-08-30) — cijeli zapisi s lekcijama, referenca |
 | [BACKLOG.md](./records/BACKLOG.md) | Parkiralište ideja |
@@ -141,6 +141,7 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 | [EXERCISES_DB_FIX_PLAN.md](./archive/EXERCISES_DB_FIX_PLAN.md) | BUG-012 fix plan (✅ 2026-06-27) |
 | [SONNET_REVIEW_2026-06.md](./archive/SONNET_REVIEW_2026-06.md) | Vanjski review — potrošen input |
 | [MODEL_KARTICA_DEMO.md](./archive/MODEL_KARTICA_DEMO.md) | Izveden primjer **kartica-standarda** na `management-hr` (kratka kartica → detalj u `learn`). Grana `content/model-demo-management-hr` obrisana 2026-08-31; **model je ovdje**, ne u grani |
+| [MATURA-PILOT.md](./archive/MATURA-PILOT.md) | Skica mature v1 (Matematika A: `exam` os, cjevovod u zasebnom repou, exam mode, mjerenja na pravom NCVVO ispitu) — **arhivirana 2026-09-12**: matura je vizija, ne projekt ([VISION.md §8](./product/VISION.md)); pravno pitanje o objavi NCVVO materijala ostaje otvoreno |
 
 ## `sokrat-ai/` — zaseban projekt
 

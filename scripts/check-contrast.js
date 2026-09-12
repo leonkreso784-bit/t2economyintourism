@@ -25,7 +25,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const TOKENS = path.resolve(__dirname, '..', 'css', 'tokens.css');
+const { TOKENS, bezKomentara, temeIzTokena } = require('./teme');
 
 const TEXT_MIN = 4.5;   // WCAG AA, normalan tekst
 const UI_MIN = 3.0;     // WCAG AA, veliki tekst / granice komponenti
@@ -105,11 +105,14 @@ const css = fs.readFileSync(TOKENS, 'utf8');
 const base = varsIn(blockAfter(css, /@theme\s+static\s*\{/) || '');
 
 const themes = { '(zadana)': base };
-const themeRe = /:root\[data-theme="([a-z0-9-]+)"\]\s*\{/gi;
-let tm;
-while ((tm = themeRe.exec(css)) !== null) {
-  const body = blockAfter(css.slice(tm.index), /:root\[data-theme="[a-z0-9-]+"\]\s*\{/);
-  themes[tm[1]] = Object.assign({}, base, varsIn(body || ''));
+// Imena tema daje JEDAN čitatelj (`scripts/teme.js`, F1/4); ovdje se za svako ime izvuče
+// njegov blok — iz CSS-a BEZ komentara, da primjer bloka u komentaru ne postane tema.
+// Do F1/4 je regex stajao ovdje kao kopija: ova brana je bila jedina koja je teme čitala,
+// a živa i a11y brana nosile su svoje zakucane nizove (v. zaglavlje teme.js).
+const cssBezKomentara = bezKomentara(css);
+for (const ime of temeIzTokena(css)) {
+  const body = blockAfter(cssBezKomentara, new RegExp(':root\\[data-theme="' + ime + '"\\]\\s*\\{'));
+  themes[ime] = Object.assign({}, base, varsIn(body || ''));
 }
 
 // ── provjere ────────────────────────────────────────────────────────────────

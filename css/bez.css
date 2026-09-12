@@ -1,0 +1,44 @@
+/* =====================================================
+   SOKRAT STUDY — `?bez=…`: protučinjenični prekidači za mjerenje na PRAVOM uređaju (F1/7 ②)
+
+   ZAŠTO POSTOJI: `scripts/jank-probe.js` (F1/6) mjeri trzanje u Chromiumu i ondje je
+   našao jedan uzrok (fiksna pozadina landinga, F1/7 ①). iPhone taj instrument NE vidi:
+   Safari `background-attachment: fixed` ionako crta kao `scroll`, a headless ne skrola
+   prstom kao Leon. Zato preview dobiva prekidač — `?bez=zamucenja,sjena` upiše
+   `data-bez="zamucenja sjena"` na <html> PRIJE prvog crtanja (`js/boot.js`), a ova pravila
+   gase sumnjivca. Leon na svom telefonu kaže koji je scenarij gladak; tek IZ TOGA popravak.
+   Nijedan „na oko" (RASPORED F1/7).
+
+   JEDNO MJESTO (ADR-027): sonda `jank-probe` NE nosi vlastitu kopiju ovih zabrana nego
+   postavlja isti atribut, a popis scenarija čita ODAVDE (`[data-bez~="ime"]` → `bez-ime`).
+   Novi sumnjivac = novo pravilo ovdje, i sonda ga zna sama. Čuva `tests/unit/bez-switch.test.js`.
+
+   ⚠️ `!important` je ovdje NAMJERAN i jedini alat koji radi: prekidač mora pobijediti svako
+   pravilo u svakom sloju, uključujući inline `style` boja gradiva. F4/3 („nula `!important`")
+   ga zato IMENUJE kao svjesnu iznimku, ne briše. Bez atributa nijedno pravilo ne pogađa ništa
+   (`css:diff` = 0 razlika), pa posjetitelj koji prekidač ne zna nikad ne plaća ni piksel.
+   ===================================================== */
+
+/* zamućenje iza ljepljive trake i modala — na iPhoneu najsumnjivije (F1/6) */
+:root[data-bez~="zamucenja"] * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* sjene kartica i gumba */
+:root[data-bez~="sjena"] * {
+    box-shadow: none !important;
+}
+
+/* prijelazi i animacije */
+:root[data-bez~="prijelaza"] *,
+:root[data-bez~="prijelaza"] *::before,
+:root[data-bez~="prijelaza"] *::after {
+    transition: none !important;
+    animation: none !important;
+}
+
+/* pozadina landinga: zrno + odsjaj + papir (samo landing ju ima) */
+:root[data-bez~="pozadine"] .landing-page.active {
+    background-image: none !important;
+}

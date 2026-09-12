@@ -11,7 +11,8 @@ nadopunjavat i imat ćemo nekoliko grafova"): openpyxl pri otvaranju postojeće 
 svaka dopuna bez skripte bi ih obrisala. Zato su PODATKOVNI listovi izvor, a sažetak i grafovi se
 svaki put grade iznova iz njih. Dopuna = pokreni skriptu (ona sama pročita git i PROGRESS.md).
 
-KAD SE POKREĆE: na kraju svake faze (RASPORED §1: „zastanak na kraju faze"). U tablicu ulazi
+KAD SE POKREĆE: AUTOMATSKI svaki dan u 23:45 — Windows Task Scheduler zove `scripts/rad-dnevno.ps1`
+(Leon, 2026-09-05: „excel se popunjava na kraju svakog dana, to treba biti automatski"); ručno kad god. U tablicu ulazi
 SAMO ono što je odrađeno — commit je odrađen, PROGRESS-unos je odrađen; namjere i razgovori ne.
 
 LISTOVI
