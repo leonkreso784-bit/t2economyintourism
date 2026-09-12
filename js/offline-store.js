@@ -174,13 +174,42 @@
    */
   function zagrijNacineUcenja(id) {
     const L = window.SokratLoad;
-    if (!L || typeof L.zagrij !== 'function') return;
+    if (!L || typeof L.zagrij !== 'function') return Promise.resolve();
     const s = (typeof SokratCatalog !== 'undefined') ? SokratCatalog.getSubject(id) : null;
     const f = (s && s.features) || {};
     const imena = ['study'];
     if (f.blindMap) imena.push('blind-map');
     if (f.exercises) imena.push('exercises');
-    imena.forEach((ime) => { try { L.zagrij(ime); } catch (e) { /* best-effort */ } });
+    // ⚠️ BUG-045: vraća se PROMISE i `download()` ga ČEKA prije nego napiše „ready". Do popravka
+    // je poziv bio fire-and-forget, pa je potvrda „Saved to device" stizala dok su se skripte
+    // načina učenja još skidale — korisnik koji odmah uključi zrakoplovni način dobio bi gradivo
+    // bez ijednog načina učenja. I dalje best-effort (CDN se preskače, pad ne ruši skidanje).
+    return Promise.all(imena.map((ime) => {
+      try { return Promise.resolve(L.zagrij(ime)).catch(() => false); } catch (e) { return Promise.resolve(false); }
+    }));
+  }
+
+  // ── POSLIJE DEPLOYA: NOVI SW = PRAZAN RUNTIME KEŠ ─────────────────────────────
+  // `sw.js` u `activate` briše stari `sokrat-cache-*`; polica (`sokrat-offline`) preživi, ali
+  // paket načina učenja NE — on živi u runtime kešu. Korisnik koji poslije deploya otvori
+  // aplikaciju online (naslovnica) i ode u zrakoplovni način bi opet dobio prazan predmet (BUG-045,
+  // drugi put). Zato se pri startu, JEDNOM po verziji, za sve predmete s police ponovno zagrije
+  // paket. Biljeg verzije stoji u localStorage: bez njega bi svaki start slao ~100 KB kroz
+  // stale-while-revalidate (koji u pozadini uvijek ide na mrežu) — dakle trošio tuđi promet.
+  const WARM_KEY = 'sokrat-offline-warm-v';
+  function zagrijPoslijeDeploya() {
+    try {
+      const ver = version();
+      if (!ver) return Promise.resolve(false);
+      if (typeof navigator !== 'undefined' && navigator.onLine === false) return Promise.resolve(false);
+      const zapisi = list();
+      if (!zapisi.length) return Promise.resolve(false);
+      if (window.localStorage.getItem(WARM_KEY) === ver) return Promise.resolve(false);
+      return Promise.all(zapisi.map((z) => zagrijNacineUcenja(z.id))).then(() => {
+        try { window.localStorage.setItem(WARM_KEY, ver); } catch (e) { /* kvota */ }
+        return true;
+      });
+    } catch (e) { return Promise.resolve(false); }
   }
 
   // ── SKIDANJE ────────────────────────────────────────────────────────
@@ -229,11 +258,13 @@
         // `remove()` poslije deploya brisao po DRUGIM adresama — obrisao bi zapis, a
         // bajtove ostavio na uređaju zauvijek (nedosežne, jer ih više ništa ne imenuje).
         const zapis = { id: id, bytes: bytes, files: urls.length, at: new Date().toISOString(), v: version(), urls: urls };
-        const map = readAll();
-        map[id] = zapis;
-        writeAll(map);
-        zagrijNacineUcenja(id);      // gradivo bez načina učenja je prazna ljuska
-        return zapis;
+        // gradivo bez načina učenja je prazna ljuska → „ready" TEK kad je paket zagrijan (BUG-045)
+        return zagrijNacineUcenja(id).then(() => {
+          const map = readAll();
+          map[id] = zapis;
+          writeAll(map);
+          return zapis;
+        });
       }).catch((err) => {
         // Sve-ili-ništa: pospremi za sobom pa proslijedi grešku dalje.
         //
@@ -562,8 +593,13 @@
     });
   }
 
+  // BUG-045: poslije deploya zagrij paket načina učenja za sve s police (jednom po verziji).
+  if (supported) zagrijPoslijeDeploya();
+
   window.SokratOffline = {
     supported: supported,
+    zagrijPoslijeDeploya: zagrijPoslijeDeploya,
+    WARM_KEY: WARM_KEY,
     plan: plan,
     estimate: estimate,
     download: download,
