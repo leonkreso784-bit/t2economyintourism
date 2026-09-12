@@ -5,6 +5,43 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-12 (FABLE, sesija POPRAVCI) — SPAJANJE po RASPORED §0: svih šest koraka pripremljeno i izmjereno lokalno, ništa pushano na `main` — svaki korak čeka Leonov OK
+
+Leon: *„ova sesija je namijenjena popravcima … kreni na posao"* → plan je bio zapisan (§0), pa se ništa nije
+odlučivalo iznova. **Metoda: cijeli lanac prvo na suho** (`git merge-tree` + privremena stabla u scratchpadu),
+tek onda spajanje; svaki sudar razvrstan u *tokeni* (`?v=` — riješen stranom pa `npm run bump`) ili *pravi*.
+Svaki korak = svoj commit, preflight EXIT 0 na svakom, `test:responsive` po koraku (brojke dolje / CI).
+
+- **Korak 1** (`fix/napredak-pouzdanost`): lokalni `main` spojen `--no-ff`, stablo bajt-identično vrhu grane
+  (nula sudara). Puna suita: **570 prošlo · 1 palo · 117 preskočeno** (30 min) — pad = `theme-fouc` „uređaj dark →
+  carbon od prvog kadra", izmjerena pozadina `rgb(75,77,81)` = **sredina prijelaza teme**, ne kriva tema; test
+  ponovljen 3× = 18/18, a CI na istom stablu zelen (obje Playwright polovice + authed) → **flake, ne kvar**.
+- **Korak 2** (`feat/mjerenje-aktivacije`): 14 datoteka u sudaru — 10 samo tokeni, `package.json` = unija popisa
+  `test:unit`, CLAUDE/README/CHANGELOG/PROGRESS = oba bloka po datumu. **Jedini semantički šav** između BUG-047 i
+  F1/9: lažni DOM u `flashcard-identity.test.js` nije imao `style.removeProperty`, koje F1/9 zove pri upisu →
+  dopunjen stub (test, ne proizvod). `CLAUDE.md` preko budžeta → dvije rečenice u sudaru sažete u jedan pokazivač.
+- **Korak 3** (`feat/nocna-b`, pushana tek sad): 9 tokena + `package.json` (+`theme-picker-label`) + CHANGELOG;
+  `3bfe40a` je već bio u `main`-u cherry-pickom i spojio se čisto.
+- **Korak 4** (`feat/profil-zid`, odrezana bez F1-osnove): `index.html` spojen **trosmjerno s neutraliziranim
+  tokenima** (F2 donosi traku, F1 ostaje), 8 datoteka tokeni, `check-docs.js` spojio git sam (gitignore-popravak +
+  budžet bez CR-a). RASPORED = F2 redovi + bilješka da je natpis birača isporučen; CHANGELOG/PROGRESS prepleteni
+  po datumu. `CLAUDE.md` opet preko budžeta (sad mjeren BEZ CR-a) → F2-ov odlomak o karticama sažet u pokazivač
+  jer §0 to već nosi. ⚠️ **Migracija `supabase/f2-profile-identity.sql` je SAMO na stagingu** — na PROD uz OK PRIJE
+  deploya ovog koraka.
+- **Korak 5** (cherry-pick BUG-046 pa BUG-045): primijenjena **samo vlastita promjena commita** (trosmjerno s
+  roditeljem kao bazom), docs = samo dodani blokovi po datumu; zapis BUG-045 nastao je ranije na parkiranoj grani
+  pa je prenesen cijeli; oba pod „Riješeni". Redci koji postoje samo na parkiranoj grani (kartice) nisu dirani.
+
+**Pouke alata (Windows), dvije nove:** `execSync` ide kroz `cmd.exe` gdje je **`^` escape-znak** — `sha^` postaje
+`sha`, baza = commit i trosmjerno *tiho* vrati našu stranu (uhvaćeno jer su docs-dodaci bili prazni; od tada `~1`) ·
+`npm ci` nad `package.json` sa sudar-markerima pada, a cijev to maskira — preflight tad javlja „nema `lightningcss`".
+Ostale (CRLF `=======\r`, heredoc guta `\\r`) već su u memoriji i opet su se dogodile.
+
+**Gdje se vidi:** **produkcija NEPROMIJENJENA.** Lokalni `main` nosi korak 1; koraci 2–5 stoje kao jedan lanac na
+kratkotrajnim granama `spajanje/korak-2…5` (svaki = fast-forward prethodnog; Linux CI po koraku). Sljedeće: Leonov
+OK po koraku → `main` fast-forward → push; deploy zaseban OK; grane `spajanje/*` i `feat/racun-r1`,
+`feat/traka-odredista` se brišu čim njihov korak uđe u `main`. Korak 6 (F2/2) = nova sesija u `.f2`.
+
 ## 2026-09-12 (FABLE) — Napredak pouzdan: pet kvarova iz vanjske recenzije, svaki test-prvo (grana `fix/napredak-pouzdanost`, novo stablo `sokratstudy.napredak`)
 
 Leon je donio vanjsku recenziju repozitorija s pet kvarova u praćenju napretka. **Prvo provjera protiv koda, ne
