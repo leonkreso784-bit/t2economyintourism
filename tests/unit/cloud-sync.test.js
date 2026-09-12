@@ -238,6 +238,50 @@ Promise.resolve()
     });
   }))
 
+  // ── BUG-049: PAD PRVOG SLANJA (u pullu) ne smije potrošiti promjenu ────────────
+  // Test iznad štiti `pushChanges`; ovaj štiti `pullAndMerge`, koji je isti kvar imao
+  // na svoj način: `snapshot[key]` se pisao PRIJE upserta. Padne li taj prvi upsert
+  // (prijava na lošoj mreži), ključ za `collectChanged` više nije „promijenjen" —
+  // nikad se ne pošalje, a „sinkronizirano u HH:MM" se svejedno ispiše.
+  .then(() => testAsync('⛔ PAD SLANJA U PULLU: spojeno stanje čeka i ide u sljedećem pokušaju, bez lažnog „sinkronizirano"', function () {
+    const ls = lazniLocalStorage({
+      'statistics-progress': JSON.stringify({ cardsStudied: 40, flashcardsLearned: ['c9'] })
+    });
+    const poslano = [];
+    let padaj = true;
+    const klijent = {
+      from: () => ({
+        select: () => Promise.resolve({
+          data: [{ key: 'statistics-progress', data: { cardsStudied: 12, flashcardsLearned: ['c5'] } }],
+          error: null
+        }),
+        upsert: (rows) => { poslano.push(rows); return Promise.resolve({ error: padaj ? { message: 'offline' } : null }); }
+      })
+    };
+    const sinkInfo = [];
+    const auth = { getClient: () => klijent, setSyncInfo: (s) => sinkInfo.push(s), onChange: () => {} };
+    const CS = new Function(
+      'window', 'document', 'localStorage', 'subjectDataMap', 'SokratAuth', 'setInterval',
+      KOD + '\n;return CloudSync;'
+    )({ addEventListener: () => {}, t: null }, { addEventListener: () => {}, visibilityState: 'visible' },
+      ls, { statistics: { storageKey: 'statistics-progress' } }, auth, () => 1);
+
+    CS.handleAuthChange({ id: 'u1' });
+    return slegni().then(() => {
+      assert.strictEqual(poslano.length, 1, 'pull je morao pokušati poslati spojeno stanje');
+      assert.strictEqual(sinkInfo.length, 0, 'pali upsert se NE smije prikazati kao „sinkronizirano"');
+      padaj = false;
+      return CS.pushNow();
+    }).then(() => {
+      assert.strictEqual(poslano.length, 2, 'poslije pada u pullu sljedeći push MORA ponovno poslati ključ');
+      const red = poslano[1].filter((r) => r.key === 'statistics-progress')[0];
+      assert.ok(red, 'ponovni pokušaj nosi isti ključ');
+      assert.strictEqual(red.data.cardsStudied, 40);
+      ['c5', 'c9'].forEach((id) => assert.ok(red.data.flashcardsLearned.indexOf(id) !== -1, 'izgubljena kartica: ' + id));
+      assert.ok(sinkInfo.length > 0, 'uspjeli push se smije prikazati kao sinkroniziran');
+    });
+  }))
+
   .then(() => {
     console.log('\n  ' + passed + ' prošlo, ' + failed + ' palo\n');
     process.exit(failed ? 1 : 0);

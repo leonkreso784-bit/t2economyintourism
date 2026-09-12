@@ -104,16 +104,24 @@ const CloudSync = (function () {
             const mergedStr = JSON.stringify(merged);
 
             localStorage.setItem(key, mergedStr);
-            snapshot[key] = mergedStr;
             meta[key] = new Date().toISOString();
 
+            // ⚠️ BUG-049: `snapshot` znači „ovo je u oblaku". Ključ koji tek TREBA gore ne
+            // smije ga dobiti prije nego upsert prođe — inače pad prvog slanja (prijava na
+            // lošoj mreži) učini da `collectChanged` ključ više ne vidi i nikad ga ne pošalje.
             if (mergedStr !== JSON.stringify(rem)) {
-                toPush.push({ user_id: userId, key: key, data: merged });
+                toPush.push({ user_id: userId, key: key, data: merged, _raw: mergedStr });
+            } else {
+                snapshot[key] = mergedStr;
             }
         });
 
         writeMeta(meta);
-        if (toPush.length) await upsertRows(toPush);
+        let poslano = true;
+        if (toPush.length) {
+            poslano = await upsertRows(toPush.map(function (r) { return { user_id: r.user_id, key: r.key, data: r.data }; }));
+            if (poslano) toPush.forEach(function (r) { snapshot[r.key] = r._raw; });
+        }
 
         // Ako je predmet trenutno otvoren, osvježi in-memory stanje iz localStorage.
         try {
@@ -124,7 +132,8 @@ const CloudSync = (function () {
             }
         } catch (e) { /* UI refresh je best-effort */ }
 
-        markSynced();
+        // „Sinkronizirano u HH:MM" samo kad JEST — pali push ostaje u redu za sljedeći interval.
+        if (poslano) markSynced();
     }
 
     // ---------- Diff-push petlja ----------
