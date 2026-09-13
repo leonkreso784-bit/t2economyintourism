@@ -122,6 +122,32 @@ test prvo (crveno na `main`-u, zeleno poslije), svoj commit.
   uzorak nije mogao vidjeti; lokalno „43 prošlo" bilo je istinito, ali o podskupu koji je odabrala
   ta ista slijepa pretraga.
 
+## 2026-09-08 (OPUS) — **BUG-046: pilula kategorije pada AA na obojenoj kartici · ⑦ je NEVIN — crveni CI je bila kocka, ne regresija**
+
+Leon: *„pregledaj i analiziraj problem detaljno."* Presuda od 07.09. („CI je crven, uzrok je ⑦") **oborena je protučinjeničnim
+pokusom**, a ispod nje je nađen pravi kvar — stariji od cigle i **živ na produkciji**.
+
+**Što je izmjereno** (isti test, `tests/a11y.spec.js:42`, iPhone-SE-375): grana `f75b2d7` = **3 pada / 6 pokretanja**, i to u dvije
+različite boje; **produkcija `c53c28c` = 12/12 zeleno**; `git diff e223b05 fb49d4d -- css/` = samo ⑦ blok. Sonda kroz cijeli špil na
+obje strane vraća **bit-identične boje** (tamna tinta, pilula = 20 % iste tinte preko pune ispune akcenta) — dakle kvar je isti, a
+razlikuje se samo **što axe uspije izmjeriti**: produkcija `incomplete — „background color could not be determined because it is
+overlapped by another element"`, grana `violation 3.46`. Taj zaklon je **naličje u `preserve-3d` koje prekriva lice u hit-testu** —
+isto ono zbog čega iOS nije dovodio dodir do skrolera (F1/12 ④). ④/⑤ su ga maknuli, pa je **brana progledala, nije se pokvarila**.
+
+**Zašto nasumično:** špil se miješa bez sjemena, a 24 od 56 kartica marketinga M1 nosi boju koja pada = **42,9 %** pokretanja.
+„Zeleno na `e223b05`, crveno na `fb49d4d`" bila je kocka. **⑦ se ne vraća.**
+
+**Kvar (BUG-046):** `.card-category` miješa `color-mix(currentColor 20%)`, dakle 20 % ISTE tinte kojom je i tekst — na punoj ispuni
+akcenta (C2) tamna tinta zatamni podlogu ispod tamnog teksta. `#8b5cf6` → `#6f4ac5` = **3,46** · `#ec4899` → `#bd3a7a` = 4,05;
+kroz cijelo gradivo **11 od 20 boja pada**, najgori `#6366f1` = **3,31** (treba 4,5). Vrijedi i na stolnom.
+
+**Popravak:** pilula miješa **SUPROTNU** tintu (`[data-ink="dark"]` → `--color-on-tint-light` i obratno) — 0 pada, najgori omjer
+**6,61**; kartica bez boje ostaje netaknuta (fallback-ugovor M3b). **Brana:** `tests/unit/card-tint-contrast.test.js` (10 tvrdnji)
+čita postotak i tokene iz CSS-a, prag iz `js/utils.js` i boje iz `data/**` — **deterministično, bez preglednika**, jer a11y-suita
+ovisi o miješanju špila i ovo hvata tek svako drugo pokretanje. **Dokazi:** obrnuto na starom pravilu = 2 crvene tvrdnje koje imenuju
+9 boja · a11y-suita **20/20 u 10 uzastopnih pokretanja** (prije popravka 3 pada / 6) · preflight EXIT 0.
+**Gdje se vidi:** `feat/tinder-kadar` (preview) — **nije na produkciji**, gdje kvar i dalje stoji dok Leon ne odluči o deployu. **Cherry-pick na `main`-kandidat 12.09. (RASPORED §0 korak 5).**
+
 ## 2026-09-07 (OPUS) — **Mjerenje aktivacije i povratka: `SokratMetrika` u `js/consent.js` + jedna kuka u `switchSection()`**
 
 Do danas se mjerio **samo dolazak**: `gtag('config')` pošalje pregled stranice i mjerenje je gotovo, a Vercel Web Analytics je ugašen
