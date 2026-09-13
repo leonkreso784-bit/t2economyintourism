@@ -44,10 +44,13 @@ preskočeno** · korak 3 **607 · 0 · 117** · korak 4 **617 · 0 · 117** · k
 kruga (`theme-fouc` ×3, `offline-study` P4, `tint-ink`) nisu se ponovili. **Linux CI zelen na sva četiri `spajanje/korak-*`**
 (obje Playwright polovice + lint + authed).
 
-**Gdje se vidi:** **produkcija NEPROMIJENJENA.** Lokalni `main` nosi korak 1; koraci 2–5 stoje kao jedan lanac na
-kratkotrajnim granama `spajanje/korak-2…5` (svaki = fast-forward prethodnog; Linux CI po koraku). Sljedeće: Leonov
-OK po koraku → `main` fast-forward → push; deploy zaseban OK; grane `spajanje/*` i `feat/racun-r1`,
-`feat/traka-odredista` se brišu čim njihov korak uđe u `main`. Korak 6 (F2/2) = nova sesija u `.f2`.
+**Gdje se vidi (dopuna 13.09.): SVE JE NA PRODUKCIJI.** Leon: *„Ok super krenimo"* → *„za sve imaš moj OK"* → pet pushova
+na `main`, svaki uz preflight u pre-push kuki i potvrdu živim tokenom; tablica commita, Vercel deploymenta i tokena po
+koraku je 🚀 unos 13.09. u [CHANGELOG.md](./CHANGELOG.md). Migraciju `f2-profile-identity.sql` Leon je primijenio ručno
+u SQL Editoru prije koraka 4 (provjereno čitanjem: identično stagingu, 5 imena prenesena). ⚠️ Harness-klasifikator
+(auto-mod) blokirao je i push na `main` i `apply_migration` kao „Production Deploy" — riješeno Leonovim pravilom, ne
+zaobilaženjem. Spojene grane obrisane na originu; `spajanje/*` i scratch-stabla uklonjeni. Korak 6 (F2/2) = nova sesija,
+**novo stablo od `main`-a** (stara stabla `.b` · `.napredak` · `.f2` · `.fix` nose grane koje su već u `main`-u).
 
 ## 2026-09-12 (FABLE) — Napredak pouzdan: pet kvarova iz vanjske recenzije, svaki test-prvo (grana `fix/napredak-pouzdanost`, novo stablo `sokratstudy.napredak`)
 
