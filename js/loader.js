@@ -86,7 +86,7 @@
         polica: ['js/offline-store.js'],
         materials: ['js/offline-store.js', 'js/node-images.js', 'js/my-materials.js'],
         // Profil montira „Moje materijale" i otkriva admin-karticu → nosi oboje sa sobom.
-        profile: ['js/offline-store.js', 'js/node-images.js', 'js/my-materials.js',
+        profile: ['js/offline-store.js', 'js/node-images.js', 'js/my-materials.js', 'js/profile-images.js',
             'js/admin-reveal.js', 'js/profile.js'],
         // ⚠️ Sinkronizacija napretka NE visi o stranici nego o PRIJAVI: dovlači ju `auth.js`
         // čim se pojavi korisnik. Da stoji uz profil, napredak se ne bi sinkronizirao onome

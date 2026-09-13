@@ -24,8 +24,14 @@ prvi korak. Sve odluke bile su zapisane (RASPORED F2/2, Leon 09.09.), pa se niš
 - Advisori na stagingu: dva nova WARN-a iste klase kao svih 11 RPC-ova (`authenticated` smije zvati SECURITY DEFINER —
   namjerno); ništa novo.
 
-**Sljedeće:** cigla 2 — `js/profile-images.js` u paketu `profile` (odabir · canvas-smanjivanje → WebP · upload · RPC ·
-brisanje stare slike), pa cigla 3 (zid crta slike). Deploy (SQL + Edge Function v3 na PROD) = Leonov OK, zasebno.
+**Cigla 2 (isti dan, Leon: *„dobro super"*):** `js/profile-images.js` + unit (18) + spec ④ u pravom pregledniku (5/5).
+Dva nalaza usput: ① `smanji` bez `instanceof Blob` propuštao je objekt do `createObjectURL` → sirovi TypeError umjesto
+koda (test ga našao, guard dodan); ② **Tailwind skenira `js/`**, pa je ime funkcije `shrink` ušlo u bundle kao
+`.shrink{flex-shrink:1}` i oborilo drift-branu — preimenovano u `smanji` (bez nove `@source not` iznimke). Bump →
+preflight EXIT 0 (dvaput: prvi pad = ta drift-brana).
+
+**Sljedeće:** cigla 3 — zid crta avatar/naslovnu iz javnog URL-a, gumbi u „Uredi profil" (+ i18n ključevi, toast po
+kodu greške), pa cigla 4 (telefon-brana, docs). Deploy (SQL + Edge Function v3 na PROD) = Leonov OK, zasebno.
 
 ## 2026-09-12 (FABLE, sesija POPRAVCI) — SPAJANJE po RASPORED §0: svih šest koraka pripremljeno i izmjereno lokalno, ništa pushano na `main` — svaki korak čeka Leonov OK
 

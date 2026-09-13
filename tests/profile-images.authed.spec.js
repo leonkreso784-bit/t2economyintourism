@@ -166,4 +166,62 @@ test.describe('F2/2 — bucket profile-images + set_profile_image', () => {
     });
     expect(izravno.redaka, 'izravan UPDATE avatar_path je prošao — RPC nije jedini put').toBe(0);
   });
+
+  // Cigla 2 (`js/profile-images.js`): cijeli tijek u PRAVOM pregledniku — smanjivanje je canvas,
+  // pa se ne da mjeriti u Nodeu. Ulaz je 2000×1500 PNG nacrtan u stranici (≈ fotka), izlaz mora biti
+  // WebP ≤ 512 px na dužoj stranici, upisan kroz RPC, javno čitljiv, a PRETHODNI avatar obrisan.
+  test('④ upload() smanji u pregledniku → WebP ≤ 512 → RPC → javni URL; stara slika nestane', async ({ page, request }) => {
+    await naProfilu(page);
+    const uid = await uBazi(page, () => SokratAuth.getUser().id);
+    const staro = await zatecenoStanje(page);
+    const prvi = `${uid}/avatar/brana-stari-${crypto.randomUUID()}.png`;
+    let novi = null;
+
+    try {
+      // „Stari" avatar: upload + RPC, da `upload()` ima što zamijeniti.
+      expect((await upload(page, prvi)).error).toBeNull();
+      expect((await rpc(page, 'avatar', prvi)).error).toBeNull();
+
+      const ishod = await uBazi(page, async (a) => {
+        const c = document.createElement('canvas');
+        c.width = 2000; c.height = 1500;
+        const ctx = c.getContext('2d');
+        ctx.fillStyle = '#4f46e5'; ctx.fillRect(0, 0, 2000, 1500);
+        ctx.fillStyle = '#fff'; ctx.fillRect(400, 300, 1200, 900);
+        const blob = await new Promise((r) => c.toBlob(r, 'image/png'));
+        const file = new File([blob], 'fotka.png', { type: 'image/png' });
+        const izlaz = await window.SokratProfileImages.smanji(file, 'avatar');
+        const row = await window.SokratProfileImages.upload('avatar', file, { oldPath: a.stari });
+        return {
+          ulazBajtova: blob.size, izlazBajtova: izlaz.blob.size, tip: izlaz.type, w: izlaz.width, h: izlaz.height,
+          path: row && row.avatar_path, cover: row && row.cover_path,
+          url: window.SokratProfileImages.publicUrl(row && row.avatar_path)
+        };
+      }, { stari: prvi });
+      novi = ishod.path;
+
+      expect(ishod.tip, 'Chromium zna WebP — izlaz mora biti WebP').toBe('image/webp');
+      expect(Math.max(ishod.w, ishod.h)).toBe(512);
+      expect(ishod.w).toBe(512); expect(ishod.h).toBe(384);
+      expect(ishod.izlazBajtova, 'smanjena slika mora biti manja od ulaza').toBeLessThan(ishod.ulazBajtova);
+      expect(ishod.path).toMatch(new RegExp('^' + uid + '/avatar/[0-9a-f-]{36}\\.webp$'));
+      expect(ishod.cover, 'upload avatara ne smije dirati naslovnu').toBe(staro.cover_path);
+
+      const res = await request.get(ishod.url, { headers: {} });
+      expect(res.status()).toBe(200);
+      expect(res.headers()['content-type']).toContain('image/webp');
+
+      // Stari objekt je obrisan (listanje vlastitog prefiksa ga više ne vidi).
+      const ostao = await uBazi(page, async (p) => {
+        const { data } = await SokratAuth.getClient().storage.from('profile-images').list(p.split('/')[0] + '/avatar');
+        return (data || []).map((x) => x.name);
+      }, prvi);
+      expect(ostao, 'stari avatar nije obrisan nakon zamjene').not.toContain(prvi.split('/')[2]);
+      expect(ostao).toContain(ishod.path.split('/')[2]);
+    } finally {
+      await vratiStanje(page, staro);
+      await ukloni(page, prvi);
+      if (novi) await ukloni(page, novi);
+    }
+  });
 });

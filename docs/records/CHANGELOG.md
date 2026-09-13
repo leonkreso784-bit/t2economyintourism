@@ -5,6 +5,24 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-13 (FABLE) — **F2/2 cigla 2: `js/profile-images.js` — smanjivanje u pregledniku, upload, RPC, brisanje stare** (grana `feat/f2-slike`)
+
+Klijentski modul bez UI-ja i bez i18n-a (tekst ostaje u `profile.js`, cigla 3); baca greške s KODOM.
+
+### Dodano
+- **`js/profile-images.js`** (`window.SokratProfileImages`, u paketu `profile`): `smanji(file, kind)` — `createImageBitmap`
+  (EXIF-orijentacija) → canvas → **WebP** (avatar ≤ 512, naslovna ≤ 1500 px), JPEG kad preglednik WebP ne kodira;
+  `upload(kind, file, {oldPath})` → `<uid>/<kind>/<uuid>.<ext>` uz `cacheControl` 1 god (UUID = nepromjenjiva datoteka) →
+  RPC → **stara se briše samo ako je naša**; RPC odbije → upload se počisti (bez siročeta); `remove` · `publicUrl` · `pick`
+  (birač bez `capture`, i `cancel` je čuvan). Samo pravi `Blob` ulazi — sve drugo je `image_decode_failed`, ne sirovi TypeError.
+- **`tests/unit/profile-images.test.js`** (18 tvrdnji: `fitDims` nikad ne povećava, putanje, `auth_required`/`image_kind_invalid`
+  prije mreže, lažni klijent: tuđa stara putanja se ne dira, RPC-greška ne briše ništa, bez canvasa ništa ne ode na mrežu) +
+  **spec ④** u `profile-images.authed.spec.js`: pravi Chromium, 2000×1500 PNG → **512×384 WebP**, manji od ulaza, javni URL
+  vraća `image/webp`, naslovna netaknuta, **stari avatar obrisan**. 18/18 · 5/5.
+### Pouka
+- Tailwind skenira `js/` → funkcija imena **`shrink`** proizvela je `.shrink{flex-shrink:1}` u bundleu i oborila drift-branu.
+  Preimenovano u `smanji` umjesto nove `@source not` iznimke: ime koje nije utility ne treba iznimku.
+
 ## 2026-09-13 (FABLE) — **F2/2 cigla 1: bucket `profile-images` + RPC `set_profile_image` + `delete-account` čisti oba bucketa** (grana `feat/f2-slike`, STAGING)
 
 Baza za profilnu sliku i naslovnu, po odluci od 09.09. (javan bucket, upis samo vlasniku). Klijent i zid dolaze u ciglama 2–4.
