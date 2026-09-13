@@ -43,6 +43,12 @@ fazama kroz sesije da ga imamo da riješimo ovu listu kako treba"*)
 5. **Cherry-pick `2641834` (BUG-046) i `3708e2d` (BUG-045)** s parkirane grane — svaki svoj commit, svaki svoj gate.
 6. Tek tada **F2/2 slike** u `.f2` — na `main`-u koji je opet **jedan**. Novo stablo = nova sesija (higijena: jedna sesija po stablu, nova po fazi).
 
+**Stanje 12.09. (sesija POPRAVCI):** svih šest koraka **pripremljeno i izmjereno lokalno** — preflight EXIT 0 na
+svakom, `test:responsive` po koraku (brojke u [PROGRESS.md](../records/PROGRESS.md)). Lokalni `main` nosi korak 1;
+koraci 2–5 stoje kao **jedan lanac** na kratkotrajnim granama `spajanje/korak-2…5` (svaki = fast-forward
+prethodnog) radi Linux CI-ja po koraku. **Ništa nije pushano na `main`** — svaki korak čeka Leonov OK, deploy je
+zaseban OK, a migracija koraka 4 ide na PROD *prije* njegova deploya. Grane `spajanje/*` se brišu čim korak uđe.
+
 **Što se u toj sesiji NE radi:** ne otvaraju se kartice (parkirano), ne dira se gradivo, ne uvodi se ništa novo — samo se ono što JEST zeleno dovodi na jedno mjesto, korak po korak, s Leonovim OK-om na svakom pushu.
 
 ---

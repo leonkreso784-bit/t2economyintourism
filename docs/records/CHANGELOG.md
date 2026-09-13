@@ -5,6 +5,29 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-13 (FABLE) — 🚀 **SPAJANJE (RASPORED §0) NA PRODUKCIJI — pet koraka, pet deployeva, Leonov OK po koraku**
+
+Leon (13.09.): *„Ok super krenimo"* → *„za sve imaš moj OK"*. Svaki korak = jedan fast-forward `main`-a i jedan
+push (pre-push kuka vrtjela preflight → EXIT 0 svaki put), svaki potvrđen **živim tokenom** na www.sokratstudy.com
+i Vercel Production deploymentom. Što svaki korak nosi i kako je spojen: unos 12.09. „SPAJANJE" u
+[PROGRESS.md](./PROGRESS.md) i `RASPORED.md` §0.
+
+| korak | commit na `main` | Vercel | token | nosi |
+|---|---|---|---|---|
+| 1 | `d8e61be` | `6421281280` | `20260912195611` | BUG-047…051 — napredak pouzdan |
+| 2 | `d2aa6b3` | `6421350197` | `20260912211633` | ostatak F1 (F1/4 · 5 · 7 · 9 · 11) + metrika `ucenje`/`povratak` + docs 05.–12.09. |
+| 3 | `3dc6624` | `6421387979` | `20260913120617` | F2/1 (6/7): birač tema, natpis samo „Automatski" |
+| 4 | `1d54700` | `6421766880` | `20260913120708` | F2/0 traka s dva odredišta · F2/3a profil = zid · F2/3b identitet |
+| 5 | ovaj push | — | — | BUG-046 (pilula AA) · BUG-045 (SW runtime-keš) · zapis sesije |
+
+**Migracija `supabase/f2-profile-identity.sql` na PROD** (`naxjubnedhrbhsuasayu`): Leon ju je primijenio u SQL Editoru
+13.09. PRIJE koraka 4; provjereno čitanjem — tablica, RLS, jedina politika `authenticated` SELECT, RPC `security definer`
++ `search_path`, okidač, grantovi (`anon` ništa), **5 redaka / 5 imena prenesena**, `profiles` netaknut (1 politika) —
+**identično stagingu** na svih 8 mjera. Time BUG-045 i BUG-046 prestaju biti živi kvarovi na produkciji.
+
+Obrisane spojene grane: `fix/napredak-pouzdanost` · `feat/mjerenje-aktivacije` · `feat/racun-r1` · `feat/nocna-b` ·
+`feat/profil-zid` · `feat/traka-odredista` · `spajanje/korak-*`. **Parkirano ostaje:** `feat/tinder-kadar` (kartice).
+
 ## 2026-09-12 (FABLE) — **NAPREDAK POUZDAN: pet kvarova iz vanjske recenzije** (grana `fix/napredak-pouzdanost`; BUG-047…051)
 
 Vanjska recenzija repozitorija (12.09.) prijavila je pet kvarova u praćenju napretka; svih pet je **potvrđeno
