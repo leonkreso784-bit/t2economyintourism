@@ -5,6 +5,28 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-13 (FABLE, sesija F2/2 u stablu `sokratstudy.f22`) — cigla 1: baza za slike profila na stagingu, test-prvo
+
+Leon: *„svida mi se redosljed krenimo sa prvom ciglom"* → redoslijed iz `/next`: ① baza · ② klijent · ③ zid · ④ brane.
+Stablo `.f22` (grana `feat/f2-slike` od `main` = `2ae9051`) bilo je pripremljeno, ali **bez `node_modules`** → `npm ci`
+prvi korak. Sve odluke bile su zapisane (RASPORED F2/2, Leon 09.09.), pa se ništa nije odlučivalo iznova.
+
+- **Metoda = crveno pa zeleno, na stagingu:** spec napisan PRIJE migracije i vrtjen: ① i ② crvene („Bucket not found",
+  „Could not find the function set_profile_image"), ③ zelena (anon i izravan upis odbijeni i bez bucketa). Migracija kroz
+  MCP `apply_migration` na `czljmvigkgiajzjxtndq` → **9/9** (uz `profile-identity.authed` netaknut).
+- **Isti obrazac za Edge Function:** `delete-account-check` protiv STARE deployane verzije = **2 crvene** (`removedImages=1`,
+  avatar-siroče ostalo) → deploy v3 kroz MCP (`verify_jwt` ostaje `true`) → **20/20**. Siroče koje je crveni prolaz ostavio
+  obrisano kroz Storage API sa service-ključem (ne SQL — SQL skida redak, datoteka ostane u S3).
+- **⚠️ Nalaz koji mijenja obrazloženje:** komentar u funkciji (i CLAUDE.md) tvrdio je da Supabase ODBIJA obrisati vlasnika
+  objekata u Storageu. Izmjereno danas: za bucket izvan popisa `deleteUser` **prolazi**, korisnik nestane, a njegov avatar u
+  JAVNOM bucketu ostane dostupan po URL-u. Dakle popis bucketa u funkciji je **sigurnosni** podatak (GDPR), ne urednost.
+  Stara tvrdnja ostaje zapisana uz mjerenje — možda je vrijedila za `node-images` u 8. mjesecu, danas ne vrijedi za novi bucket.
+- Advisori na stagingu: dva nova WARN-a iste klase kao svih 11 RPC-ova (`authenticated` smije zvati SECURITY DEFINER —
+  namjerno); ništa novo.
+
+**Sljedeće:** cigla 2 — `js/profile-images.js` u paketu `profile` (odabir · canvas-smanjivanje → WebP · upload · RPC ·
+brisanje stare slike), pa cigla 3 (zid crta slike). Deploy (SQL + Edge Function v3 na PROD) = Leonov OK, zasebno.
+
 ## 2026-09-12 (FABLE, sesija POPRAVCI) — SPAJANJE po RASPORED §0: svih šest koraka pripremljeno i izmjereno lokalno, ništa pushano na `main` — svaki korak čeka Leonov OK
 
 Leon: *„ova sesija je namijenjena popravcima … kreni na posao"* → plan je bio zapisan (§0), pa se ništa nije

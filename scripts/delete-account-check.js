@@ -25,6 +25,9 @@ try { require('dotenv').config(); } catch (e) { /* dotenv optional */ }
 
 const PROD_REF = 'naxjubnedhrbhsuasayu';
 const BUCKET = 'node-images';
+// F2/2: drugi osobni bucket (avatar + naslovna, JAVAN). Korisnik sa slikom ondje mora biti
+// jednako izbrisiv — T5 zato stavlja datoteku u OBA i traži da oba budu prazna.
+const PROFILE_BUCKET = 'profile-images';
 const FN = 'delete-account';
 
 const BASE = process.env.STAGING_SUPABASE_URL;
@@ -178,10 +181,19 @@ async function main() {
       method: 'POST', headers: Object.assign({ 'Content-Type': 'image/png' }, asUser), body: PNG
     });
     record('priprema: slika uploadana u vlastiti prefiks', up.ok, `status ${up.status}`);
+    // Avatar u JAVNOM bucketu (F2/2) — isti vlasnik, drugi bucket. Izmjereno 13.09. protiv
+    // funkcije koja ga NIJE čistila: `deleteUser` NE pada, korisnik nestane, a avatar ostane
+    // JAVNO dostupno siroče — GDPR-rupa, ne kvar brisanja. Zato se ovdje ne traži samo 200,
+    // nego da je i ovaj bucket prazan.
+    const avatarPath = `${user.id}/avatar/one.png`;
+    const upAv = await http(`/storage/v1/object/${PROFILE_BUCKET}/${avatarPath}`, {
+      method: 'POST', headers: Object.assign({ 'Content-Type': 'image/png' }, asUser), body: PNG
+    });
+    record('priprema: avatar uploadan u profile-images', upAv.ok, `status ${upAv.status}`);
 
     const res = await callFn(token, {});
     record('brisanje računa → 200', res.status === 200, `status ${res.status} ${JSON.stringify(res.json || {})}`);
-    record('funkcija javlja koliko je slika obrisala', !!(res.json && res.json.removedImages >= 1),
+    record('funkcija javlja koliko je slika obrisala (oba bucketa)', !!(res.json && res.json.removedImages >= 2),
       `removedImages=${res.json ? res.json.removedImages : '?'}`);
 
     record('korisnik više ne postoji', !(await userExists(user.id)));
@@ -200,6 +212,10 @@ async function main() {
     record('napredak je nestao (kaskada)', Array.isArray(prog) && prog.length === 0, `redaka: ${prog ? prog.length : '?'}`);
     record('materijali su nestali (kaskada)', Array.isArray(nodes) && nodes.length === 0, `redaka: ${nodes ? nodes.length : '?'}`);
     record('slike su nestale (Storage purge)', Array.isArray(objs) && objs.length === 0, `objekata: ${objs ? objs.length : '?'}`);
+    const objsAv = await http(`/storage/v1/object/list/${PROFILE_BUCKET}`, {
+      method: 'POST', headers: svcHeaders(), body: JSON.stringify({ prefix: user.id, limit: 100 })
+    }).then((r) => r.ok ? r.json() : null).catch(() => null);
+    record('avatar je nestao (profile-images purge)', Array.isArray(objsAv) && objsAv.length === 0, `objekata: ${objsAv ? objsAv.length : '?'}`);
     leftovers = 'provjereno';
   } finally {
     await adminDeleteUser(user.id);   // za slučaj da je test pao prije brisanja

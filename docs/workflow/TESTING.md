@@ -54,7 +54,7 @@
       ⚠️ **Mjeri samo promjene u CSS-u** — presreće stylesheet, a HTML uzima iz radnog stabla. Premjesti li cigla vrijednost **iz markupa u CSS**, referenca je stranica koja **nikad nije postojala**, pa prijavljuje razlike i ondje gdje se ništa nije promijenilo. Tada se dokazuje **pravim A/B-om**: `HEAD` poslužen iz zasebnog `git worktree`-a na drugom portu, obje verzije sa **svojim** markupom i **svojim** CSS-om.
 - [ ] `npm run test:rls` → anon čita `subject_content`, **ne vidi** `progress`. Pad = curenje; SKIP na uspavanu bazu.
 - [ ] `npm run test:storage` → bucket `node-images` kroz pravi HTTP Storage API. **WRITE → TVRDO odbija prod.**
-- [ ] `npm run test:delete-account` → Edge Function `delete-account`. **HARD-DELETE → TVRDO odbija prod.**
+- [ ] `npm run test:delete-account` → Edge Function `delete-account`. **HARD-DELETE → TVRDO odbija prod.** T5 stavlja datoteku u **oba** osobna bucketa (`node-images` + `profile-images`) i traži da oba budu prazna — izmjereno 13.09.: bucket izvan popisa u funkciji ne ruši brisanje, nego ostavlja **javno siroče**.
 
 ### Što suita čuva — po skupinama, ne po datotekama
 
@@ -69,6 +69,7 @@
 | **sigurnost prikaza** | svaki tekst iz podataka ide kroz `esc`; `:hover`/`:disabled` se ne tuku s kaskadom | `escaping` · `cascade.authed` |
 | **adrese i vraćanje** | devet stranica ima devet dijeljivih adresa; „natrag" ima **jedan** model; kartica lekcije je prava kontrola | `routes` · `back-model` · `lesson-card` · `materials-entry` |
 | **auth, admin, RLS** | odjavljeni put ne vidi ništa admina; prijavljeni put stvarno piše i stvarno je odbijen gdje treba | `auth` · `admin` · `admin-detect.authed` · `publish-rpc.authed` |
+| **račun (identitet i slike)** | ime/opis i putanje slika ulaze SAMO kroz RPC; `role` nedodirljiv; javni bucket čitljiv po URL-u, a tuđi prefiks zatvoren | `profile-identity.authed` · `profile-images.authed` · `profile-wall.authed` |
 | **autorstvo (UGC + Studio)** | graditelj materijala, blok-editor, media, slike pod vlasničkim prefiksom, stropovi kartica | `my-materials.authed` · `studio.authed` · `node-images.authed` · `card-limits.authed` |
 | **platforma** | Service Worker (offline shell + update-flow), monitoring iza privole, UI-primitivi, i18n, pravne stranice | `sw` · `monitoring` · `components` · `i18n` · `legal` |
 

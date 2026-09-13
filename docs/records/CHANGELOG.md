@@ -5,6 +5,24 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-13 (FABLE) — **F2/2 cigla 1: bucket `profile-images` + RPC `set_profile_image` + `delete-account` čisti oba bucketa** (grana `feat/f2-slike`, STAGING)
+
+Baza za profilnu sliku i naslovnu, po odluci od 09.09. (javan bucket, upis samo vlasniku). Klijent i zid dolaze u ciglama 2–4.
+
+### Dodano
+- **`supabase/f2-profile-images.sql`** — bucket `profile-images` (`public=true`, 5 MB, png/jpeg/webp), 4 politike `to authenticated`
+  s vlasničkim prefiksom u InitPlan obliku, `anon` ništa; RPC **`set_profile_image(p_kind, p_path)`** (SECURITY DEFINER) —
+  putanja mora biti `<uid>/<kind>/…` I objekt mora postojati, inače `image_not_owned` / `image_not_found`; upsert dira SAMO
+  traženi stupac. Primijenjeno na **STAGING**; PROD čeka izričit OK.
+- **`tests/profile-images.authed.spec.js`** — 3 testa: ① vlastiti upload → RPC → RLS vrati → **javni URL 200 bez ijednog
+  zaglavlja** (odluka izmjerena, ne pretpostavljena) · ② tuđi prefiks zatvoren (upload, listanje, RPC), nepostojeći objekt,
+  kriva vrsta · ③ anon-upload odbijen, izravan `UPDATE avatar_path` = 0 redaka. **Crveno prije migracije, 9/9 zeleno poslije.**
+### Promijenjeno
+- **`supabase/functions/delete-account/index.ts` (v3 na stagingu)** — `PERSONAL_BUCKET` → `PERSONAL_BUCKETS = ['node-images',
+  'profile-images']`. ⚠️ **Nalaz:** protiv stare verzije `deleteUser` **nije pao** — korisnik je nestao, a avatar u javnom
+  bucketu ostao kao **javno dostupno siroče**. Posljedica propusta je GDPR-rupa, ne „neizbrisiv račun"; komentar u funkciji
+  to sad kaže. `scripts/delete-account-check.js` T5 stavlja datoteku u OBA bucketa i traži da oba budu prazna (2 crvene → 0).
+
 ## 2026-09-13 (FABLE) — 🚀 **SPAJANJE (RASPORED §0) NA PRODUKCIJI — pet koraka, pet deployeva, Leonov OK po koraku**
 
 Leon (13.09.): *„Ok super krenimo"* → *„za sve imaš moj OK"*. Svaki korak = jedan fast-forward `main`-a i jedan

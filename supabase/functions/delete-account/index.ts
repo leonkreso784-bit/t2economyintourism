@@ -15,6 +15,11 @@
 //    („You cannot delete a user if they are the owner of any objects in Supabase Storage").
 //    Obrnut redoslijed = `deleteUser` puca. Uz to bi se nakon brisanja izgubio `uid` potreban
 //    za prefiks, pa bi slike ostale zauvijek kao siročad.
+//    ⚠️ Izmjereno 2026-09-13 (staging, `delete-account-check` T5): za bucket koji NIJE bio na
+//    popisu `deleteUser` NIJE pao — korisnik je nestao, a njegov avatar u JAVNOM bucketu ostao
+//    je kao siroče dostupno po URL-u. Dakle posljedica propusta nije „neizbrisiv račun" nego
+//    GDPR-rupa: slika obrisanog korisnika ostaje javno čitljiva. Zato je popis bucketa ispod
+//    sigurnosni, ne organizacijski podatak.
 //
 // 3. BAZA SE NE DIRA RUČNO.
 //    Svaki FK prema `auth.users` je `on delete cascade` (`progress`, `nodes` → `node_content` →
@@ -25,14 +30,18 @@
 //
 // 4. `lesson-images` SE NE DIRA, I ADMIN SE NE MOŽE OBRISATI SAM.
 //    Taj bucket drži slike JAVNOG KATALOGA i u njega piše samo admin. Kad bi se admin obrisao,
-//    povukao bi sadržaj 22 predmeta sa sobom. Zato čistimo isključivo `node-images/<uid>/`.
+//    povukao bi sadržaj 22 predmeta sa sobom. Zato čistimo isključivo OSOBNE prefikse:
+//    `node-images/<uid>/` (slike gradiva) i `profile-images/<uid>/` (avatar + naslovna, F2/2).
+//    ⚠️ Svaki NOVI bucket u koji običan korisnik smije pisati MORA ući u `PERSONAL_BUCKETS` —
+//    inače slika obrisanog korisnika ostaje kao siroče (v. mjerenje u t. 2), a
+//    `delete-account-check` T5 to mjeri tako da u svaki od njih prije brisanja stavi datoteku.
 //    Ali samo to nije dovoljno: adminu bi slike nestale, `deleteUser` bi pao (i dalje posjeduje
 //    `lesson-images`) i ostao bi POLUOBRISAN račun. Zato admin-guard stoji PRIJE ijednog brisanja
 //    → operacija prođe cijela ili ne promijeni ništa.
 
 import { createClient, type SupabaseClient } from 'jsr:@supabase/supabase-js@2';
 
-const PERSONAL_BUCKET = 'node-images';
+const PERSONAL_BUCKETS = ['node-images', 'profile-images'];
 const LIST_PAGE = 100;   // Storage `list` stranica
 const REMOVE_CHUNK = 100; // koliko putanja po `remove` pozivu
 
@@ -119,12 +128,14 @@ Deno.serve(async (req: Request): Promise<Response> => {
   // ── 3) SLIKE PRIJE KORISNIKA ── (bez ovoga `deleteUser` pada — v. napomenu 2 gore)
   let removedImages = 0;
   try {
-    const paths = await listAll(admin, PERSONAL_BUCKET, uid);
-    for (let i = 0; i < paths.length; i += REMOVE_CHUNK) {
-      const chunk = paths.slice(i, i + REMOVE_CHUNK);
-      const { error } = await admin.storage.from(PERSONAL_BUCKET).remove(chunk);
-      if (error) return json(500, { error: 'storage_purge_failed', detail: error.message });
-      removedImages += chunk.length;
+    for (const bucket of PERSONAL_BUCKETS) {
+      const paths = await listAll(admin, bucket, uid);
+      for (let i = 0; i < paths.length; i += REMOVE_CHUNK) {
+        const chunk = paths.slice(i, i + REMOVE_CHUNK);
+        const { error } = await admin.storage.from(bucket).remove(chunk);
+        if (error) return json(500, { error: 'storage_purge_failed', bucket, detail: error.message });
+        removedImages += chunk.length;
+      }
     }
   } catch (e) {
     return json(500, { error: 'storage_purge_failed', detail: String((e as Error)?.message ?? e) });
@@ -133,8 +144,9 @@ Deno.serve(async (req: Request): Promise<Response> => {
   // ── 4) KORISNIK ── kaskada odnese progress, nodes, node_content(+versions), profiles
   const { error: delErr } = await admin.auth.admin.deleteUser(uid);
   if (delErr) {
-    // Najvjerojatniji uzrok: korisnik je vlasnik objekata IZVAN `node-images` (admin i
-    // `lesson-images`). Radije jasna greška nego brisanje javnog kataloga.
+    // Najvjerojatniji uzrok: korisnik je vlasnik objekata IZVAN osobnih bucketa (admin i
+    // `lesson-images`) — ili je dodan novi bucket koji nije u `PERSONAL_BUCKETS`.
+    // Radije jasna greška nego brisanje javnog kataloga.
     return json(409, { error: 'delete_failed', detail: delErr.message, removedImages });
   }
 
