@@ -258,7 +258,7 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
   ostaje); klijentski dvojnik (D4, `js/auth.js`) svejedno stoji.
   ⚠️ **NE „popravljaj" `js/auth.js:343`** — tvrdnja o `WeakPasswordError` je **oborena**: u
   zakucanom `supabase-js@2.110.8` slaba lozinka dolazi kao `data.weakPassword` uz `error: null`.
-- **Sitni dug (ne blokira):** siročad u Storageu · PROD čeka `f1-nodes.sql` + `f2-profile-images.sql` + `delete-account` v3 (staging) ·
+- **Sitni dug (ne blokira):** siročad u Storageu · PROD čeka `f1-nodes.sql` (staging) ·
   `set_updated_at` ima promjenjiv `search_path` (jedini nenamjeran WARN). ⚠️ **`is_admin()` se NE smije
   revokeati `authenticated`-u** — zovu ga RLS politike kao pozivatelj.
 - **Napomene:** Supabase org je `pro` i **plaća se do daljnjeg** (Leon, 2026-09-01) →

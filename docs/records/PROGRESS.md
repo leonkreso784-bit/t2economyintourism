@@ -35,9 +35,14 @@ osvježava U MJESTU da forma preživi (isti razlog zbog kojeg `loadIdentity` ne 
 toga osvježi). Spec ⑤ = klik-put s `filechooser`. Sve zeleno: 16/16 profil-specova, `phone.authed` 12/12, preflight EXIT 0.
 Cigla 4 (brane) time je **već ispunjena kroz cigle 2–3** — svaka je nosila svoj test; ostaje samo zapis.
 
-**Sljedeće:** F2/2 je funkcionalno GOTOV na stagingu. Za PROD (Leonov OK, zasebno): ① `f2-profile-images.sql` u SQL
-Editoru · ② deploy `delete-account` v3 · ③ tek onda klijent (push `main`). Zatim F2/1 ostatak (tema prati račun) ili
-F2/3c (CSS profila) — po RASPORED-u.
+**🚀 PROD isti dan (Leon: *„sad, sve tri odjednom"*):** SQL (Leon, SQL Editor) → provjera čitanjem = staging → Edge
+Function na PROD (sha = staging v3) → push `main` = `61c39dd`, živi token `20260913203047`. Detalji: 🚀 unos u CHANGELOG-u.
+**Leonove odluke iz ankete za dalje:** tema računa u **`user_metadata`** (JWT, bez mreže pri prijavi; nije javan podatak) ·
+**avatar u gornjoj traci ide uz F2/1** (putanja i u `user_metadata`, kao ime) · stara stabla uklonjena. ⚠️ Checkpoint je
+tvrdio da su sva četiri stabla „spojena" — `fix/kadar-nalicje` NIJE u `main`-u (11 commita kartica, na originu) → grana
+zadržana, samo stablo uklonjeno.
+
+**Sljedeće:** F2/1 ostatak — tema prati račun (`user_metadata`, odjava briše lokalni izbor) + avatar u traci.
 
 ## 2026-09-12 (FABLE, sesija POPRAVCI) — SPAJANJE po RASPORED §0: svih šest koraka pripremljeno i izmjereno lokalno, ništa pushano na `main` — svaki korak čeka Leonov OK
 

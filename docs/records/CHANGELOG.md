@@ -5,6 +5,16 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-13 (FABLE) — 🚀 **F2/2 SLIKE PROFILA NA PRODUKCIJI** — `main` = `61c39dd`, token `20260913203047`
+
+Leon (anketa): *„Sad, sve tri odjednom"* → tri koraka u tvrdom redoslijedu, svaki provjeren prije sljedećeg:
+① `f2-profile-images.sql` Leon u SQL Editoru → čitanjem potvrđeno **identično stagingu** (bucket javan 5 MB / 3 MIME-a ·
+4 politike `authenticated` · RPC secdef + grantovi · `profiles` 1 politika) · ② Edge Function `delete-account` **v2 na
+PROD-u**, sha `4dfd03d1…` = staging v3; poziv bez tokena → 401 · ③ `git push origin main` (pre-push preflight EXIT 0,
+harness-klasifikator odbio prvi pokušaj, prošao drugi uz OK u kontekstu) → živi token potvrđen. Tri commita:
+`3ddf5f2` baza+funkcija · `90dca49` modul · `61c39dd` zid. Stara stabla `.b` · `.napredak` · `.f2` uklonjena (grane
+spojene i obrisane); `.fix` uklonjeno, ali **grana `fix/kadar-nalicje` ZADRŽANA** — nije u `main`-u, dio parkiranih kartica.
+
 ## 2026-09-13 (FABLE) — **F2/2 cigla 3: zid crta profilnu i naslovnu; „Promijeni / Ukloni" u „Uredi profil"** (grana `feat/f2-slike`)
 
 ### Dodano
