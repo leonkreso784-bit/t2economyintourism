@@ -175,15 +175,15 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 ⚠️ **Mjerač mora ispisati i koliko je toga dotaknuo** — bio je prvi kvar 12× u fazi redizajna
 i dvaput vratio uvjerljiv krivi broj umjesto da padne.
 
-### 🎯 FRONTEND REDIZAJN + MREŽA = ✅ **NA PRODUKCIJI (2026-09-01)** — dalje: **RASPORED F1**
+### 🎯 FRONTEND REDIZAJN + MREŽA = ✅ **NA PRODUKCIJI (2026-09-01)** — dalje: **RASPORED F2 (račun)**
 
 Oba speca u `docs/archive/`; što je točno isporučeno zna CHANGELOG. **Next.js odbijen (ADR-028).**
 **🚚 SEOBA je OTKAZANA** (Leon, 2026-09-01) → `BACKLOG.md` §SELF-HOST = arhiv odluke, ne plan.
 Aktivni spec: **`docs/plan/RASPORED.md`** (2026-09-04) — cijela preostala lista razrezana na
 **sedam faza kroz sesije**: F1 uređaj · F2 račun (R2+R3 + CSS profila) · F3 dvojezičnost ·
-F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **§6 rasporeda: nula otvorenih (anketa 06.09.).**
+F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **§6: nula otvorenih (anketa 06.09.).**
 
-**F1 uređaj: F1/1–11 ✅ · kartice F1/12–14 PARKIRANE (Leon 08.09., `feat/tinder-kadar`) · iPhone još presuđuje F1/7 `?bez=` i F1/11 štipanje (ADR-034). 🔀 SPAJANJE grana = `RASPORED.md` §0 (Leon 12.09.).**
+**F1 isporučen; KARTICE parkirane (Leon 08.09., `feat/tinder-kadar`, CI ondje crven, ne otvarati bez njegove riječi; BUG-045/046 ondje → samo cherry-pick). F2 teče: F2/0 ✅ · F2/3a ✅ · F2/3b ✅. 🔀 SPAJANJE grana = `RASPORED.md` §0.**
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 
@@ -191,6 +191,7 @@ F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **§6 rasp
   Dvije tamne palete zaredom pale su na živom ekranu. Smjer izgleda je **APPLE** (Leon: *„apple
   smjer, naravno"*): grotesk svugdje (**serif nadglašen**), praznina, tipografija nosi, monokrom
   + jedan akcent. Spec §7.3–7.8.
+- **Traka nosi TOČNO DVA odredišta: vlastito gradivo i profil** (F2/0 — **okreće T2**, Leon: *„gore treba biti profil i UGC"*). Ulaz je u TRAJNOM KROMU, na svakoj stranici; **drugi ulaz u istu traku vraća kvar koji je K2b uklonio**, zato brana traži točno jedan.
 - **🔒 ZNAK JE NEPROMJENJIV** (Leon: *„sokrat logo je nezamjenjiv"*) — ne prepravlja se nego
   dobiva PROSTOR, i **zadržava indigo kroz sve teme = konstanta marke**.
 - **Broj predmeta se NIKAD ne piše rukom.** Jedini ručno pisan je statični fallback u
@@ -257,8 +258,8 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
   ostaje); klijentski dvojnik (D4, `js/auth.js`) svejedno stoji.
   ⚠️ **NE „popravljaj" `js/auth.js:343`** — tvrdnja o `WeakPasswordError` je **oborena**: u
   zakucanom `supabase-js@2.110.8` slaba lozinka dolazi kao `data.weakPassword` uz `error: null`.
-- **Sitni dug (ne blokira):** siročad u Storageu · staging poravnati s `supabase/f1-nodes.sql` ·
-  `set_updated_at` ima promjenjiv `search_path` (jedini sigurnosni WARN koji nije namjeran). ⚠️ **`is_admin()` se NE smije
+- **Sitni dug (ne blokira):** siročad u Storageu · PROD čeka `f1-nodes.sql` + `f2-profile-identity.sql` (oba samo na stagingu) ·
+  `set_updated_at` ima promjenjiv `search_path` (jedini nenamjeran WARN). ⚠️ **`is_admin()` se NE smije
   revokeati `authenticated`-u** — zovu ga RLS politike kao pozivatelj.
 - **Napomene:** Supabase org je `pro` i **plaća se do daljnjeg** (Leon, 2026-09-01) →
   free-tier spavanje nije prijetnja · `content_versions`/`node_content_versions` =
@@ -267,7 +268,7 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
 
 ## Ključne odluke — samo one koje MIJENJAJU današnji rad
 
-> Puni tekst i sve starije: **`docs/records/DECISIONS.md` (ADR-001…034)**.
+> Puni tekst i sve starije: **`docs/records/DECISIONS.md` (ADR-001…036)**.
 > Ovdje su ADR-ovi koji su **živa ograničenja**, ne povijesno obrazloženje.
 
 - **ADR-034:** **stranica se NE zumira** (Leon, 2026-09-05) — ni štipanje ni dodir ni fokus; nadjačava WCAG 1.4.4; **F1/11 ✅** (`ISKLJUCENO_ODLUKOM` u `axe-gate.js`).

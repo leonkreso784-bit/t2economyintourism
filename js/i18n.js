@@ -541,6 +541,17 @@
     'profile.newPassPlaceholder': { en: 'New password (min. 8 characters)', hr: 'Nova lozinka (min. 8 znakova)' },
     'profile.repeatNewPass': { en: 'Repeat new password', hr: 'Ponovi novu lozinku' },
     'profile.saveNewPass': { en: 'Save new password', hr: 'Spremi novu lozinku' },
+
+    // Zid (F2/3a) — identitet stoji IZNAD postavki; naslov „Postavke" je ta granica.
+    'profile.settings': { en: 'Settings', hr: 'Postavke' },
+    'profile.account': { en: 'Account', hr: 'Račun' },
+    'profile.edit': { en: 'Edit profile', hr: 'Uredi profil' },
+    'profile.bioEmpty': { en: 'No description yet — say what you study and what you are building.', hr: 'Još nema opisa — napiši što učiš i što gradiš.' },
+    'profile.editNamePh': { en: 'Your name', hr: 'Tvoje ime' },
+    'profile.editBioPh': { en: 'A short description — what you study, what you are building.', hr: 'Kratak opis — što učiš i što gradiš.' },
+    'profile.editSave': { en: 'Save', hr: 'Spremi' },
+    'profile.editCancel': { en: 'Cancel', hr: 'Odustani' },
+    'profile.editSaved': { en: 'Profile updated.', hr: 'Profil je spremljen.' },
     // Jedna gornja traka (K2b, spec §8). Do K2b je jezik bio dohvatljiv na 4 od 9
     // stranica, pa je i sam prekidač bio dio problema koji ova cigla rješava.
     'topbar.subjects': { en: 'Subjects', hr: 'Predmeti' },

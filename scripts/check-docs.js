@@ -269,7 +269,11 @@ if (fs.existsSync(SCHEMA) && fs.existsSync(CS)) {
 const CLAUDE_BUDGET = 33000; // znakova; 2026-08-25: izmjereno 31 349 nakon rezanja (bilo 87 970)
 const CLAUDE_MD = path.join(ROOT, 'CLAUDE.md');
 if (fs.existsSync(CLAUDE_MD)) {
-  const vel = fs.readFileSync(CLAUDE_MD, 'utf8').length;
+  // ⚠️ BEZ ZNAKA POVRATKA: `.length` broji i CR, pa je ISTA datoteka mjerila 33 148 znakova
+  // u radnoj kopiji na Windowsu (CRLF) i 32 835 u CI-ju (LF) — razlika od 313 znakova, tj. jednog
+  // znaka po retku. Brana je zbog toga presuđivala po tome KAKO je repozitorij izvučen, a ne po
+  // tome koliko je datoteka narasla: isti commit crven lokalno, zelen u CI-ju. Izmjereno 2026-09-08.
+  const vel = fs.readFileSync(CLAUDE_MD, 'utf8').replace(/\r/g, '').length;
   if (vel > CLAUDE_BUDGET) {
     problems.push('CLAUDE.md PREKO BUDŽETA   ' + vel + ' > ' + CLAUDE_BUDGET + ' znakova' +
       '\n      → pouka cigle ide u `docs/plan/*` ili u zaglavlje skripte, ovdje ostaje POINTER.' +

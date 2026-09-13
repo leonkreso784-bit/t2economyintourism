@@ -145,20 +145,56 @@ nema trzanja. To je jedini prihvatljiv dokaz; mjera na razvojnom stroju je donja
 Nastavak bloka koji je R1 otvorio. **Profil i `css/profile.css` su ista površina**, pa cigla koja
 prepisuje profil nosi i njegov CSS — inače se ista datoteka prepisuje dvaput.
 
+### 🎯 Oblik profila je odlučen (Leon, 2026-09-08)
+
+*„Profil mora biti na isti način kao i Facebook, i privatni sadržaji koje korisnik radi; kasnije će se
+expandat da se može objavljivat sadržaj."*
+
+**Profil postaje ZID, radionica ostaje radionica — i to ne ruši ADR-029, nego ga izvodi.** Facebook sam
+radi oboje: objave stoje na profilu, ali ih pišeš i slažeš drugdje. Isto se preslikava ovdje:
+
+| površina | uloga | što je unutra |
+|---|---|---|
+| `#profile-page` | **tko si i što si napravio** | naslovna, avatar, ime, opis, brojke, **zid materijala**, pa postavke |
+| `#materials-page` | **gdje to gradiš** | polica (skinuto) + stablo mapa + uređivanje |
+
+⚠️ **ADR-029 ostaje netaknut**: vlastito gradivo je i dalje **ravnopravno odredište**, ne pododjeljak
+profila. Od 2026-09-08 ima i **ulaz u traci na svakoj stranici** (F2/0), pa je istaknutije nego ikad.
+
+**Zid je gotovo besplatan:** `nodes` već nosi `name`, `icon`, `color`, `updated_at`, `kind='study'` — kartice
+zida dobivaju izgled bez ijednog novog stupca (boja se ionako nasljeđuje od sekcije, ADR-025).
+
+⚠️ **Identitet NE SMIJE u tablicu `profiles`.** Ona ima točno `user_id · role · created_at` i iz nje čita
+`is_admin()`, kojeg zovu RLS-politike. Dvije zamke: ① politika za samo-uređivanje daje korisniku pravo da
+si upiše `role = 'admin'` osim ako se to izričito zabrani; ② F7 traži **javno čitanje** profila, a javna
+`SELECT`-politika nad `profiles` odala bi **tko su administratori**. Zato ime/opis/slike idu u **zasebnu
+tablicu javnog identiteta**, uz upis kroz `SECURITY DEFINER` RPC (kao svaki upis u ADR-024).
+`user_metadata` (gdje `display_name` stoji danas) radi savršeno dok si sam sebi publika, ali je u tvom
+JWT-u i **nitko ga drugi ne može pročitati** — pa F7 ionako traži tablicu; jeftinije je sad.
+
+**Javnog pogleda na profil NEMA u F2.** Danas nitko ne može vidjeti tuđi profil; zid je privatan, a
+javnu stranu otvara **F7 objava** (ADR-035/036). U F2 se gradi oblik, ne publika.
+
 | cigla | posao | gotovo kad |
 |---|---|---|
-| **F2/1** | **Tema prati račun.** `localStorage` ostaje **prvi kadar** (odluka mora pasti prije crtanja, `boot.js`), račun postaje izvor istine koji ga pri prijavi pregazi i pri promjeni upiše. **Odluka (Leon, 2026-09-06): odjava BRIŠE lokalni izbor** — neprijavljeni posjetitelj na tom uređaju vidi zadano (prati uređaj), *„tuđi izbor ne smije preživjeti odjavu"*; račun izbor čuva za iduću prijavu. ⚠️ **Birač (Leon, 2026-09-06, slika profila):** *„glupo je imati ovu Automatic · Carbon, uopće ne kužim koji je smisao toga"* — gumb „Automatski" nosi sufiks s onim što uređaj trenutno bira (`profile.js`, F1/3: *„inače je gumb obećanje bez sadržaja"*), pa na tamnom telefonu glasi „Automatic · Carbon" i izgleda kao peta tema / duplikat Carbona. **§6/7 odgovoreno 2026-09-06 (anketa): natpis samo „Automatski"** — gumb ostaje (jedini način da se izbor poništi), sufiks otpada; birač se ovdje ionako prekraja. **✅ Natpis je isporučen 2026-09-06** (`feat/nocna-b`, izvan faze — sufiks je jedan izraz, ne čeka prekrajanje birača): `themeCardHtml()` više ne čita `__sokratTemaUredjaja`, gumb i ponašanje su netaknuti, a rezervni (fallback) opis više ne proturječi rječniku. Ostatak F2/1 — račun kao izvor istine i odjava koja briše lokalni izbor — je i dalje otvoren. | …korisnik postavi temu na jednom uređaju i zatekne ju na drugom čim se prijavi |
-| **F2/2** | **Profilna slika** — bucket po obrascu `node-images`: vlasnički prefiks + RLS. | …korisnik stavi svoju sliku i vidi ju odmah, a tuđi prefiks mu je nedostupan |
-| **F2/3** | **Uređivanje profila + `css/profile.css`, `auth.css`, `pages.css`, `consent.css`, `legal.css`, `home-section.css`, `sidebar.css`** (bivši C6). | …korisnik promijeni ime i vidi svoj profil onako kako ga vide drugi |
+| **F2/0** ✅ | **Traka dobiva dva odredišta** — „Moji materijali" + profil; CTA „Počni učiti" obrisan (duplikat: tri `.start-trigger`-a ostaju na landingu). Dodir dignut na 44×44. **Isporučeno 2026-09-08.** | …u vlastito gradivo se ide sa **svake** stranice, a ne samo s landinga ili iz profila |
+| **F2/1** | **Tema prati račun.** `localStorage` ostaje **prvi kadar** (odluka mora pasti prije crtanja, `boot.js`), račun postaje izvor istine koji ga pri prijavi pregazi i pri promjeni upiše. **Odjava BRIŠE lokalni izbor** (Leon, 2026-09-06: *„tuđi izbor ne smije preživjeti odjavu"*) — račun ga čuva za iduću prijavu. Birač: natpis samo **„Automatski"**, bez sufiksa s trenutnom temom (§6/7) — **✅ natpis isporučen 2026-09-06** (`feat/nocna-b`, spojeno 12.09.); ostatak F2/1 (račun kao izvor istine, odjava briše lokalni izbor) otvoren. | …korisnik postavi temu na jednom uređaju i zatekne ju na drugom čim se prijavi |
+| **F2/2** (iza 3b) | **Profilna slika + naslovna** — bucket po obrascu `node-images`: vlasnički prefiks + RLS. ⚠️ **Ide IZA F2/3b** (Leon, 2026-09-09): putanja se upisuje u `profile_identity`, pa bi prije toga završila u `user_metadata` i selila se dvaput. **ODLUČENO (Leon, 2026-09-09): JAVAN bucket, upis samo vlasniku.** Avatar postoji da bi ga se vidjelo, F7 ga ionako otvara, a potpisani URL bi tražio krug prema bazi prije svakog crtanja i ne bi se kesirao na CDN-u. Cijena je izgovorena: tko ima URL, vidi sliku i bez prijave. Ime datoteke nosi uuid da se stara slika ne da pogoditi nakon zamjene; slika se smanjuje U PREGLEDNIKU prije uploada (avatar ~512 px, naslovna ~1500 px, WebP) — inače fotka s iPhonea udari u zid od 5 MB, a HEIC nije na popisu dopuštenih tipova. | …korisnik stavi svoju sliku i vidi ju odmah, a tuđi prefiks mu je nedostupan |
+| **F2/3a** ✅ | **Kostur zida** — naslovna, avatar, ime, opis, `[Uredi profil]`; postavke (tema, lozinka, GDPR, odjava) sele **ispod** zida. **Isporučeno 2026-09-09**; usput obrisan unutarnji naslov „Moj profil" (duplikat trake razine) jer je zid gurao prvu kontrolu ispod pregiba na 320×568. Ime i opis privremeno u `user_metadata` — F2/3b ih seli. | …profil se otvara kao stranica o korisniku, a ne kao popis postavki |
+| **F2/3b** ✅ | **Spremište identiteta** — zasebna tablica + `SECURITY DEFINER` RPC koji **nikad ne dira `role`**. **Isporučeno 2026-09-09** (`supabase/f2-profile-identity.sql`, STAGING; PROD čeka OK). Stupci `avatar_path`/`cover_path` upisani unaprijed za F2/2. | …korisnik promijeni ime i opis, a `profiles.role` ostaje nedodirljiv (obrnuto provjereno) |
+| **F2/3c** | **CSS profila i susjeda** — `css/profile.css`, `auth.css`, `pages.css`, `consent.css`, `legal.css`, `home-section.css`, `sidebar.css` (bivši C6). | …profil izgleda kao ostatak platforme |
 | **F2/4** | **Mail-obavijesti** — Edge Function (ADR-016), pristanak iz upitnika, odjava jednim klikom iz maila, admin-forma. Prvi segment: FMTU. | …primi mail o novom predmetu SAMO ako je pristao, i odjavi se jednim klikom iz samog maila |
+| **F2/5** | **Zid + radionica** — rešetka vlastitih materijala na profilu (`nodes`, `kind='study'`) i `css/my-materials.css` za policu i stablo. Isti sadržaj, dva pogleda. | …korisnik otvori svoj profil i vidi što je napravio, a materijali izgledaju kao proizvod, ne kao administracija |
 
-**Pitanje za F2/1 odgovoreno (Leon, 2026-09-06): vraća se na zadanu.** Neprijavljeni korisnik na tuđem
-uređaju vidi temu uređaja, ne tuđu — odjava briše lokalni izbor, račun ga čuva za iduću prijavu.
+⚠️ **F2/3 je namjerno razrezan na tri.** Kao jedna cigla dirao bi zajednički šav (sedam CSS datoteka +
+novo spremište + novi raspored) — točno onaj oblik zahvata na kojem je tempo već dvaput pukao. Commit
+ide nakon svake, gate na svakoj.
 
 **Ne popušta ni ovdje:** identitet isključivo iz JWT-a (`getUser()`) · `service_role` samo u Edge
 Functions · RLS i `publish_document` nedirnuti · osobni graditelj ostaje zaseban otok.
 
-**Izlaz iz faze:** cijeli krug računa radi na pravom uređaju — prijava, tema, slika, ime, mail.
+**Izlaz iz faze:** cijeli krug računa radi na pravom uređaju — prijava, tema, slika, ime, mail —
+i korisnik otvori **svoj profil** i ondje vidi što je napravio, u obliku koji ne izgleda kao alat.
 
 ---
 

@@ -77,6 +77,122 @@ function wireThemePicker(root) {
     });
 }
 
+// ── SPREMIŠTE IDENTITETA (F2/3b, 2026-09-09) ─────────────────────────
+// Ime i opis žive u `public.profile_identity` — zasebna tablica, owner-RLS, upis samo
+// kroz `set_profile_identity` RPC. ⚠️ NE u `profiles`: iz nje čita `is_admin()`, pa bi
+// pravo na upis vlastitog imena ondje otvorilo i vrata prema `role`. Puni ZAŠTO stoji u
+// `supabase/f2-profile-identity.sql`.
+//
+// ⚠️ REZERVNI PUT (`user_metadata`) NIJE PRIVREMENA SKELA I NE BRIŠE SE — dva razloga:
+//   ① PRODUKCIJA ovu tablicu (još) NEMA; migracija ide uz Leonov izričit OK. Isti kod
+//     vozi ondje, pa se profil ne smije srediti u prazan ekran zato što baza nije migrirana.
+//   ② `signUp` i dalje piše ime u `user_metadata`, pa NOVI račun tablicu nema dok jednom
+//     ne spremi profil.
+let _identity = null;        // red iz baze (ili `{}` kad ga nema), `null` = nemamo ga
+let _identityFor = null;     // za kojeg korisnika keš vrijedi
+
+/** Ime i opis za crtanje: baza ako je stigla, inače `user_metadata`. */
+function identityOf(user) {
+    const meta = user.user_metadata || {};
+    const red = (_identityFor === user.id && _identity) ? _identity : null;
+    // OAuth (R1) ne piše `display_name` nego `full_name`/`name` — isti redoslijed kao auth.js.
+    return {
+        name: String((red && red.display_name) || meta.display_name || meta.full_name || meta.name || '').trim(),
+        bio: String((red && red.bio) || meta.bio || '').trim()
+    };
+}
+
+/** Dohvati red identiteta pa PONOVNO nacrtaj. Tiše pada nego što ruši stranicu. */
+async function loadIdentity(user) {
+    const client = (typeof SokratAuth !== 'undefined') ? SokratAuth.getClient() : null;
+    // Keš se označi kao popunjen i kad dohvat NE uspije — inače bi svako crtanje otvorilo
+    // novi krug prema bazi (i, preko `renderProfilePage`, beskonačnu petlju).
+    if (!client) { _identityFor = user.id; _identity = null; return; }
+    const prije = identityOf(user);
+    let red = null;
+    try {
+        const { data, error } = await client
+            .from('profile_identity')
+            .select('display_name, bio, avatar_path, cover_path')
+            .eq('user_id', user.id)
+            .maybeSingle();
+        red = error ? null : (data || {});
+    } catch (err) {
+        red = null;                       // tablice nema (PROD) → rezervni put
+    }
+    _identityFor = user.id;
+    _identity = red;
+
+    // Crtaj PONOVNO samo ako bi se nešto promijenilo — inače svako otvaranje profila
+    // baci jedan bespotreban bljesak (JWT i tablica se u pravilu SLAŽU).
+    const poslije = identityOf(user);
+    if (poslije.name === prije.name && poslije.bio === prije.bio) return;
+
+    // ⚠️ I onda — nikad preko čovjeka koji upravo piše. `renderProfilePage` prepisuje
+    // `#profileContent`, a s njim i otvorenu formu i tekst u njoj. Izmjerila brana:
+    // klik na „Uredi profil" → red stigne → forma nestane → sljedeći upis čeka polje
+    // koje više ne postoji (test je visio do isteka od 120 s). Zid se osvježi kad zatvori.
+    const forma = document.getElementById('profileEditForm');
+    if (forma && !forma.hidden) return;
+
+    renderProfilePage();
+}
+
+// ── ZID (F2/3a, 2026-09-09) ──────────────────────────────────
+// Do danas je profil bio POPIS POSTAVKI: prvo što je korisnik vidio o sebi bio je
+// gumb „Promijeni lozinku". Leon (2026-09-08): „profil mora biti na isti način kao
+// i Facebook" — dakle prvo TKO SI I ŠTO SI NAPRAVIO, pa tek onda administracija.
+//
+// ⚠️ Naslovna i portret su PRAZNE PLOHE — sliku u njih stavlja F2/2 (bucket s
+//    vlasničkim prefiksom, kao `node-images`). Ovdje se gradi OBLIK, ne sadržaj.
+// ⚠️ Zid VLASTITOG GRADIVA (rešetka `nodes`) dolazi u F2/5 — mjesto mu je odmah
+//    ispod identiteta, ondje gdje danas stoji poveznica na „Moje materijale".
+function wallHtml(user, displayName, memberSince) {
+    const opis = identityOf(user).bio;
+    return '<div class="profile-wall">' +
+        '  <div class="profile-cover"></div>' +
+        '  <div class="profile-identity">' +
+        '    <div class="profile-avatar"><i class="fas fa-user-graduate"></i></div>' +
+        '    <div class="profile-identity-text">' +
+        '      <h2 class="profile-name">' + escapeHtmlProfile(displayName || user.email || '') + '</h2>' +
+        (displayName ? '      <p class="profile-meta profile-meta--sub">' + escapeHtmlProfile(user.email || '') + '</p>' : '') +
+        '      <p class="profile-meta">' + pt('profile.memberSince', 'Member since ') + memberSince + '</p>' +
+        '      <p class="profile-bio' + (opis ? '' : ' profile-bio--empty') + '">' +
+        escapeHtmlProfile(opis || pt('profile.bioEmpty', 'No description yet.')) + '</p>' +
+        '    </div>' +
+        '    <div class="profile-identity-actions">' +
+        '      <button type="button" class="cta-button secondary" id="profileEditBtn"><i class="fas fa-pen"></i><span>' + pt('profile.edit', 'Edit profile') + '</span></button>' +
+        '    </div>' +
+        '  </div>' +
+        '  <form id="profileEditForm" class="profile-edit-form" hidden>' +
+        '    <input type="text" id="profileEditName" class="auth-modal__input" maxlength="60" autocomplete="name"' +
+        '      placeholder="' + pt('profile.editNamePh', 'Your name') + '"' +
+        '      aria-label="' + pt('profile.editNamePh', 'Your name') + '"' +
+        '      value="' + escapeHtmlProfile(displayName) + '">' +
+        '    <textarea id="profileEditBio" class="auth-modal__input" maxlength="280" rows="3"' +
+        '      placeholder="' + pt('profile.editBioPh', 'Short description') + '"' +
+        '      aria-label="' + pt('profile.editBioPh', 'Short description') + '">' + escapeHtmlProfile(opis) + '</textarea>' +
+        '    <p class="profile-edit-status" id="profileEditStatus" hidden></p>' +
+        '    <div class="profile-actions">' +
+        '      <button type="submit" class="cta-button primary"><i class="fas fa-check"></i><span>' + pt('profile.editSave', 'Save') + '</span></button>' +
+        '      <button type="button" class="cta-button secondary" id="profileEditCancel"><i class="fas fa-xmark"></i><span>' + pt('profile.editCancel', 'Cancel') + '</span></button>' +
+        '    </div>' +
+        '  </form>' +
+        '</div>';
+}
+
+// Mjesto budućeg zida gradiva (F2/5). Danas: poveznica na radionicu — stablo i polica
+// žive na `#materials-page` (C0/ADR-029) i `#myMaterials` smije postojati SAMO ondje.
+function materialsLinkHtml() {
+    return '<div class="profile-card">' +
+        '  <h3 class="profile-card-title"><i class="fas fa-folder-tree"></i> ' + pt('materials.title', 'My materials') + '</h3>' +
+        '  <p class="profile-meta">' + pt('materials.desc', 'Build your own study material.') + '</p>' +
+        '  <div class="profile-actions">' +
+        '    <button type="button" class="cta-button primary" data-goto-materials><i class="fas fa-folder-tree"></i><span>' + pt('materials.openPage', 'Open my materials') + '</span></button>' +
+        '  </div>' +
+        '</div>';
+}
+
 function renderProfilePage() {
     const root = document.getElementById('profileContent');
     if (!root) return;
@@ -102,18 +218,23 @@ function renderProfilePage() {
     const memberSince = created
         ? created.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
         : '—';
-    // Ime iz registracije (user_metadata.display_name); stariji računi ga nemaju → email kao naslov.
-    const displayName = (user.user_metadata && user.user_metadata.display_name)
-        ? String(user.user_metadata.display_name).trim() : '';
+    // Ime iz `profile_identity`, s `user_metadata` kao rezervom; nema ni jednog → email kao naslov.
+    const displayName = identityOf(user).name;
 
     root.innerHTML =
+        '<div class="profile-stack">' +
+
+        wallHtml(user, displayName, memberSince) +
+        materialsLinkHtml() +
+
+        // Granica: sve ispod ovog naslova je ADMINISTRACIJA. Prije F2/3a je bila prva
+        // stvar na stranici, pa je profil čitao kao popis postavki, a ne kao osoba.
+        '<h3 class="profile-settings-title">' + pt('profile.settings', 'Settings') + '</h3>' +
         '<div class="profile-grid grid gap-4">' +
 
         '  <div class="profile-card">' +
-        '    <div class="profile-avatar"><i class="fas fa-user-graduate"></i></div>' +
-        '    <h2 class="profile-email">' + escapeHtmlProfile(displayName || user.email || '') + '</h2>' +
-        (displayName ? '    <p class="profile-meta profile-meta--sub">' + escapeHtmlProfile(user.email || '') + '</p>' : '') +
-        '    <p class="profile-meta">' + pt('profile.memberSince', 'Member since ') + memberSince + '</p>' +
+        '    <h3 class="profile-card-title"><i class="fas fa-user"></i> ' + pt('profile.account', 'Account') + '</h3>' +
+        '    <p class="profile-meta">' + escapeHtmlProfile(user.email || '') + '</p>' +
         '    <div class="profile-actions">' +
         '      <button type="button" class="cta-button secondary" id="profileChangePassBtn"><i class="fas fa-key"></i><span>' + pt('profile.changePassword', 'Change password') + '</span></button>' +
         '      <button type="button" class="cta-button secondary" id="profileSignOutBtn"><i class="fas fa-sign-out-alt"></i><span>' + pt('profile.signOut', 'Sign out') + '</span></button>' +
@@ -142,18 +263,6 @@ function renderProfilePage() {
         // otvoriti u novoj kartici, kopirati i vidjeti prije klika — gumb ništa od toga ne nudi.
         '      <a class="cta-button primary" href="editor.html"><i class="fas fa-wand-magic-sparkles"></i><span>' + pt('admin.openStudio', 'Studio editor') + '</span></a>' +
         '      <a class="cta-button secondary" href="editor.html?view=admin"><i class="fas fa-pen-to-square"></i><span>' + pt('admin.editContent', 'Edit content') + '</span></a>' +
-        '    </div>' +
-        '  </div>' +
-
-        // Moji materijali (C0 / ADR-029) — stablo je preseljeno na VLASTITU stranicu `#materials-page`,
-        // jer je vlastiti materijal glavni proizvod, a ne pododjeljak postavki. Ovdje ostaje samo
-        // poveznica: stari put (profil → materijali) i dalje radi, a `#myMaterials` postoji SAMO
-        // na jednom mjestu u dokumentu — dva bi čvora s istim id-em razbila `mount()`.
-        '  <div class="profile-card profile-card--wide">' +
-        '    <h3 class="profile-card-title"><i class="fas fa-folder-tree"></i> ' + pt('materials.title', 'My materials') + '</h3>' +
-        '    <p class="profile-meta">' + pt('materials.desc', 'Build your own study material — organise it in folders however you like. Private to you.') + '</p>' +
-        '    <div class="profile-actions">' +
-        '      <button type="button" class="cta-button primary" data-goto-materials><i class="fas fa-folder-tree"></i><span>' + pt('materials.openPage', 'Open my materials') + '</span></button>' +
         '    </div>' +
         '  </div>' +
 
@@ -194,6 +303,7 @@ function renderProfilePage() {
         '    </form>' +
         '  </div>' +
 
+        '</div>' +
         '</div>';
 
     renderProfileStats();
@@ -224,6 +334,75 @@ function renderProfilePage() {
         if (!form.hidden) document.getElementById('profileDeleteConfirm').focus();
     });
     document.getElementById('profileDeleteAccountForm').addEventListener('submit', deleteAccount);
+
+    document.getElementById('profileEditBtn').addEventListener('click', function () {
+        const form = document.getElementById('profileEditForm');
+        form.hidden = !form.hidden;
+        if (!form.hidden) document.getElementById('profileEditName').focus();
+    });
+    document.getElementById('profileEditCancel').addEventListener('click', function () {
+        document.getElementById('profileEditForm').hidden = true;
+    });
+    document.getElementById('profileEditForm').addEventListener('submit', saveProfileIdentity);
+
+    // Prvi kadar crta ono što znamo bez mreže (JWT), pa se dopuni kad red stigne.
+    if (_identityFor !== user.id) loadIdentity(user);
+}
+
+// F2/3b: izvor istine je `profile_identity`, upis ide kroz `set_profile_identity` RPC.
+// RPC strukturno NE MOŽE dirati `role` — ta kolona stoji u drugoj tablici koju ne spominje.
+async function saveProfileIdentity(e) {
+    e.preventDefault();
+    const client = (typeof SokratAuth !== 'undefined') ? SokratAuth.getClient() : null;
+    const status = document.getElementById('profileEditStatus');
+    const ime = document.getElementById('profileEditName');
+    const opis = document.getElementById('profileEditBio');
+    if (!client || !status || !ime || !opis) return;
+
+    status.hidden = false;
+    status.classList.remove('is-error');
+    status.textContent = pt('msg.saving', 'Saving…');
+
+    const novoIme = ime.value.trim();
+    const noviOpis = opis.value.trim();
+
+    const { data: red, error: rpcErr } = await client.rpc('set_profile_identity', {
+        p_display_name: novoIme, p_bio: noviOpis
+    });
+    // PostgREST za nepostojeću funkciju vraća PGRST202 — to je NEMIGRIRANA BAZA, ne kvar
+    // unosa: tada spremanje pada na `user_metadata` umjesto da se tiho izgubi. Svaka druga
+    // greška (duga polja, istekla sesija) je prava i pokazuje se korisniku.
+    const rpcNedostaje = !!rpcErr && (rpcErr.code === 'PGRST202'
+        || /find the function|does not exist/i.test(rpcErr.message || ''));
+    if (rpcErr && !rpcNedostaje) {
+        status.classList.add('is-error');
+        status.textContent = rpcErr.message;
+        return;
+    }
+
+    // ⚠️ `user_metadata` se upisuje I DALJE, i to nije zaboravljen duplikat: gornju traku
+    // crta `SokratAuth.getDisplayName()`, koji čita JWT da za svako ime ne bi otvarao krug
+    // prema bazi. Tablica je izvor istine, ovo je njezin IZVEDENI preslik — a jedini
+    // upisivač tog preslika je ova funkcija.
+    const { error: metaErr } = await client.auth.updateUser({ data: { display_name: novoIme, bio: noviOpis } });
+    if (metaErr && rpcNedostaje) {
+        status.classList.add('is-error');
+        status.textContent = (typeof SokratAuth !== 'undefined' && SokratAuth.authError)
+            ? SokratAuth.authError(metaErr) : metaErr.message;
+        return;
+    }
+
+    // Osvježi LOKALNE kopije prije crtanja. `updateUser` vraća novog korisnika, ali
+    // `SokratAuth.getUser()` ga dobiva tek kroz događaj `USER_UPDATED` — bez ovoga bi
+    // prvi kadar poslije spremanja pokazao STARO ime, pa bi ga događaj naknadno zamijenio.
+    const user = SokratAuth.getUser();
+    if (user) {
+        user.user_metadata = Object.assign({}, user.user_metadata, { display_name: novoIme, bio: noviOpis });
+        _identityFor = user.id;
+        _identity = rpcNedostaje ? null : (Array.isArray(red) ? red[0] : red);
+    }
+    renderProfilePage();
+    if (typeof showToast === 'function') showToast(pt('profile.editSaved', 'Profile updated.'));
 }
 
 function renderProfileStats() {

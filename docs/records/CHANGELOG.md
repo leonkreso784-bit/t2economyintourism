@@ -33,6 +33,95 @@ test prvo (crveno na `main`-u, zeleno poslije), svoj commit.
 ### Dodano
 - Dva nova unit-testa u `test:unit` (`flashcard-identity`, `loader-retry`) + 8 tvrdnji u `cloud-sync.test.js`.
 
+### 2026-09-09 — **Identitet dobiva svoju tablicu; `role` ostaje nedodirljiv** (F2/3b)
+
+#### Dodano
+- **`public.profile_identity`** (`supabase/f2-profile-identity.sql`) — ime, opis i (prazne, za F2/2)
+  putanje slika. Owner-RLS **samo za čitanje**; upis isključivo kroz `set_profile_identity`
+  (`SECURITY DEFINER`, `auth.uid()`, `search_path` postavljen). Granice **60/280 znakova provodi baza**,
+  ne `maxlength` u formi. Primijenjeno na **STAGING**; PROD čeka izričit OK.
+- **`tests/profile-identity.authed.spec.js`** — pet tvrdnji, sve **obrnute**: izravan INSERT/UPDATE/DELETE
+  nad tablicom se odbija · tuđi red je nevidljiv · **UPDATE nad `profiles` vraća 0 redaka, a `role` je
+  isti prije i poslije upisa identiteta** · duljine ruši baza.
+
+#### Promijenjeno
+- **Profil čita ime i opis iz tablice**, s `user_metadata` kao rezervom. ⚠️ Rezerva **nije skela**:
+  produkcija tablicu (još) nema, a `signUp` i dalje piše ime u metapodatke. `user_metadata.display_name`
+  ostaje **izvedeni preslik za gornju traku** — `getDisplayName()` čita JWT da za svako ime ne otvara
+  krug prema bazi.
+
+#### Popravljeno
+- **Zid se više ne prekriva korisniku koji piše.** Dohvat identiteta završavao je ponovnim crtanjem, a
+  ono briše `#profileContent` s otvorenom formom u njemu. Sad se ponovno crta samo ako bi se nešto
+  promijenilo, i nikad dok je forma otvorena.
+
+### 2026-09-09 — **Profil postaje ZID: tko si gore, postavke ispod** (F2/3a)
+
+#### Promijenjeno
+- **`#profile-page` se otvara kao stranica o korisniku, a ne kao popis postavki** (Leon: *„profil mora
+  biti na isti način kao i Facebook"*). Gore: naslovna, portret, ime, opis i `[Uredi profil]`; ispod
+  njih vlastito gradivo; pa naslov **„Postavke"** i tek onda račun, admin, sync, napredak, tema i
+  privatnost. Do danas je prva stvar o sebi bila gumb „Promijeni lozinku".
+- **Ime i opis se uređuju s profila** — forma piše u `user_metadata` (isti put kojim ondje već stoji
+  `display_name` iz registracije). ⚠️ Privremeno po dizajnu: F2/3b to seli u zasebnu tablicu javnog
+  identiteta, jer metapodaci žive u korisnikovom JWT-u i **nitko ih drugi ne može pročitati**
+  (a `profiles` ne dolazi u obzir — iz nje čita `is_admin()`).
+- **Unutarnji naslov „Moj profil" je obrisan.** Isti ključ već crta traka razine, pa je stranica nosila
+  **tri zaglavlja jedno na drugom**. `#materials-page` svoj naslov zadržava — ondje nema zida.
+
+#### Popravljeno
+- **Prva kontrola profila više ne pada ispod pregiba na 320×568** (izmjereno: gumb s 454 px na 394 px;
+  zid počinje na 116 umjesto 176). Regres je uveo sam zid, a **našla ga je brana `phone.authed` ②**.
+- **Portret preklapa naslovnu na SVIM širinama.** Radilo na 320/375, nestalo na 393: `align-items:
+  flex-end` poništava negativnu gornju marginu čim tekst stane u isti redak. Rješenje `align-self:
+  flex-start`.
+
+#### Brane
+- **`tests/profile-wall.authed.spec.js`** (novo, STAGING): identitet stoji iznad granice postavki na
+  320/375/393/430 · portret preklapa naslovnu i ne visi izvan zida · `[Uredi profil]` je 44×44 i unutar
+  ekrana · forma se otvara sa zatečenim vrijednostima · spremanje mijenja zid. Piše u `user_metadata`
+  i **vraća zatečeno stanje i kad tvrdnja padne**.
+- `preflight` EXIT 0 · `authenticated` 19/19 · neprijavljeno 22 + 11 (`phone.spec.js`).
+
+### 2026-09-08 — **Traka dobiva dva odredišta; „Počni učiti" obrisan** (F2/0)
+
+#### Promijenjeno
+- **Gore stoje „Moji materijali" i profil, a CTA „Počni učiti" je obrisan** (Leon: *„najbeskorisnije
+  smeće koje zauzima prostor gore. Gore treba biti profil i UGC."*). CTA je bio **duplikat** — i bez
+  njega landing nosi tri `.start-trigger`-a, a kartica „Kreni učiti" stoji ≈400 px ispod trake.
+  ⚠️ **Ovo OKREĆE T2**, koji je „Moje materijale" odande maknuo (*„taj gumb je na landingu i na profilu
+  i to je DOVOLJNO"*); komentar u `css/topbar.css` koji je to tvrdio je prepisan, ne zaobiđen.
+- **Zatvorena je cijena zapisana u specu §9.6:** iz unutrašnjosti aplikacije (katalog, lekcija, učenje,
+  Studio) u vlastito gradivo se išlo SAMO preko landinga ili profila. Sad se ide izravno, sa svake stranice.
+- **S CTA-om je otišao i prag od 360 px** — postojao je samo zato što je engleski „Start studying"
+  (126 px) prelijevao traku ondje gdje je hrvatski (103 px) nije.
+
+#### Popravljeno
+- **Gumbi u traci se na telefonu mogu pogoditi prstom: 44×44 px** (bilo **35×40** i **32×40**, izmjereno
+  na 320/360/375/393/430). Kvar je **stariji od ove cigle** — `#authNavBtn` je takav i na produkciji —
+  ali se dotad nije vidio jer je traka imala jedan gumb koji se rijetko tapka. Visina stane u traku od
+  56 px, pa `--chrome-h` i budžet kroma (T3) ostaju netaknuti.
+- **`check:docs` više ne pada u svježem klonu** (preneseno s parkirane grane, `3bfe40a`): gitignoriran
+  artefakt `tests/.auth/admin.json` nije duh-datoteka. ⚠️ Bez ovoga `main` **danas ne prolazi preflight**.
+
+#### Brane
+- **`tests/layout-guard.spec.js` je PREPISAN, ne obrisan.** Stara tvrdnja je čuvala `.topbar-cta`; nova
+  čuva ono zbog čega je nastala (BUG-029): **nijedan par vidljivih gumba u traci se ne preklapa**, na 33
+  širine × 2 jezika. Stari test taj kvar zapravo ne bi uhvatio — mjerio je vlastiti okvir jednog gumba,
+  a preklop je odnos dvaju. **Obrnuto provjereno:** ubačen `margin-left: -20px` → brana crvena na točnoj
+  tvrdnji („gumbi u traci se preklapaju @ 320px / en"), pa vraćeno → zelena.
+- Ulaz u katalog (vrata u herou) traži se sad **bezuvjetno**, na svakoj širini — prije samo ispod praga.
+- `a11y` je uhvatio pravi kvar: ispod 559 px oznaka odlazi pa je gumb ostao **bez pristupačnog imena**
+  (`button-name`, critical). Ime i vidljivi tekst od sada čitaju **isti ključ** `lnav.materials`.
+- **`tests/materials-entry.spec.js` je okrenut u drugom prolazu** — dvije tvrdnje ondje su doslovno
+  kodirale T2 (*„ulaz u materijale NIJE u traci"* i klik na CTA u traci). Sad tvrde suprotno i **strože
+  nego prije**: ulaz je u traci **točno jedan** (dva bi se natjecala i vratila kvar koji je K2b uklonio),
+  stoji na svakoj stranici, **stvarno vodi na policu iz dubine aplikacije**, a stari put preko landinga
+  nije izgubljen. ⚠️ **Ovo je CI našao, ne ja** — moja pretraga referenci gađala je `topbarStart` i
+  `topbar-cta`, a taj spec koristi `.topbar .start-trigger` i `[data-goto-materials]`, pa ga nijedan
+  uzorak nije mogao vidjeti; lokalno „43 prošlo" bilo je istinito, ali o podskupu koji je odabrala
+  ta ista slijepa pretraga.
+
 ## 2026-09-07 (OPUS) — **Mjerenje aktivacije i povratka: `SokratMetrika` u `js/consent.js` + jedna kuka u `switchSection()`**
 
 Do danas se mjerio **samo dolazak**: `gtag('config')` pošalje pregled stranice i mjerenje je gotovo, a Vercel Web Analytics je ugašen
@@ -45,6 +134,7 @@ u brojci ne postoji. Svjesna cijena, zapisana uz kod. Isti dan × više učitava
 Brana: `tests/unit/metrika.test.js` (27 tvrdnji: curenje kroz gate · zapis bez pristanka · brojanje po danu, ne po učitavanju · pokvaren
 zapis · privatni način · kuka statički u izvoru). **Obrnuto provjerena dvjema mutacijama:** uklonjen gate → 4 crvene; uklonjena kuka → 2 crvene.
 Preflight EXIT 0, bump. **Gdje se vidi:** grana `feat/mjerenje-aktivacije` (preview); produkcija `c53c28c` bez toga — dok se ne deploya, mjerenja nema.
+
 ## 2026-09-06 (FABLE) — **Birač tema: natpis je samo „Automatski" — sufiks s temom uređaja otpada** (RASPORED §6/7, odluka (a))
 
 Leon (06.09., slika profila na tamnom telefonu): *„glupo je imati ovu Automatic · Carbon, uopće ne kužim koji je
@@ -189,6 +279,7 @@ www.sokratstudy.com. Na produkciji su sada: zoom na dodir (F1/10: polja 16 px kr
 odlično"*) · hover na mišu tek poslije pomaka (F1/8 ②) · `check:hover` u preflightu · `hover-probe` ·
 `hover-arm.test.js` · svi zapisi. ⚠️ Dvostruki dodir na iPhoneu (dio F1/10) ostaje Leonova presuda —
 nemjerljiv u headlessu.
+
 
 ## 2026-09-05 (FABLE) — **F1/8 ②: hover na mišu se naoruža tek prvim pomakom** (ljepljivi hover zatvoren na oba ulaza; BUG-044 riješen)
 
