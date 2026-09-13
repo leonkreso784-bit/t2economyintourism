@@ -38,14 +38,19 @@ function themeCardHtml() {
     };
     // Popis tema je SAMO u boot.js (jedna istina); bez njega ovdje nema što ponuditi.
     const teme = ['auto'].concat(window.SOKRAT_THEMES || []);
-    // „Automatski" kaže i ŠTO uređaj trenutno bira — inače je gumb obećanje bez sadržaja.
-    const uredjaj = window.__sokratTemaUredjaja ? __sokratTemaUredjaja() : null;
+    /* ⚠️ NATPIS „Automatski" NE NOSI SUFIKS (Leon, 2026-09-06, §6/7 → odluka (a):
+       „glupo je imati ovu Automatic · Carbon, uopće ne kužim koji je smisao toga").
+       F1/3 je gumbu dopisivao ` · ` + ime teme koju uređaj TRENUTNO bira, uz obrazloženje
+       „inače je gumb obećanje bez sadržaja" — ali na tamnom telefonu je time glasio
+       „Automatic · Carbon" i čitao se kao PETA tema, dakle kao duplikat Carbona koji stoji
+       odmah do njega. Što gumb radi kaže opis iznad birača (`profile.appearanceDesc`:
+       „Automatski prati uređaj, kao i naši mailovi") — jedno mjesto, ne dva.
+       Gumb OSTAJE: on je jedini način da se jednom napravljen izbor poništi i da se
+       praćenje uređaja vrati. Brana: `tests/unit/theme-picker-label.test.js`. */
     let gumbi = '';
     for (let i = 0; i < teme.length; i++) {
         const ime = teme[i];
-        const naziv = (ime === 'auto' && uredjaj && imena[uredjaj])
-            ? imena.auto + ' · ' + imena[uredjaj]
-            : (imena[ime] || ime);
+        const naziv = imena[ime] || ime;
         gumbi += '<button type="button" class="theme-option" data-theme-pick="' + ime + '"' +
             ' aria-pressed="' + (ime === cur ? 'true' : 'false') + '">' +
             '<span class="theme-option-swatch ' + (swatch[ime] || '') + '" aria-hidden="true"></span>' +
@@ -53,7 +58,10 @@ function themeCardHtml() {
     }
     return '<div class="profile-card profile-card--wide">' +
         '<h3 class="profile-card-title"><i class="fas fa-palette"></i> ' + pt('profile.appearance', 'Appearance') + '</h3>' +
-        '<p class="profile-meta">' + pt('profile.appearanceDesc', 'Pick a theme — it is saved on this device.') + '</p>' +
+        // ⚠️ Rezervni tekst mora reći ISTO što i rječnik: otkako natpis nema sufiksa, ovo je
+        // JEDINO mjesto koje kaže da „Automatski" prati uređaj. Stari fallback („Pick a
+        // theme…") to nije spominjao, pa bi stranica bez `i18n.js` gumb ostavila neobjašnjenim.
+        '<p class="profile-meta">' + pt('profile.appearanceDesc', 'Automatic follows your device, like our emails. A pick is saved on this device.') + '</p>' +
         '<div class="theme-picker">' + gumbi + '</div>' +
         '</div>';
 }
