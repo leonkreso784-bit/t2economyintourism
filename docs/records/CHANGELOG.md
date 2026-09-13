@@ -5,6 +5,29 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-13 (FABLE) — **F2/2 dopuna: „+" na portretu i gumb na naslovnoj (Facebook-obrazac) + IZREZ slike** (grana `feat/f2-slike`)
+
+Leon (nakon deploya): *„treba biti plus na profilnoj za mijenjat i isto tako za pozadinu… kao facebook. također kada se
+stavljaju slike treba biti da se bira crop."*
+
+### Dodano
+- **`js/image-crop.js`** (`SokratImageCrop.open(file, {aspect, output, round, title}) → Blob|null`): modal u `<sokrat-modal>`,
+  okvir zadanog omjera (avatar **1:1** s okruglom maskom, naslovna **3:1**), slika je `<canvas>` koji se **povlači** (pointer,
+  jedan prst) i **zumira** (klizač 1–4×, kotačić, štipanje). Matematika je čista i izdvojena (`baseScale` · `clampOffset` ·
+  `sourceRect` · `rezoom`) — `tests/unit/image-crop.test.js`, 11 tvrdnji. Izlaz je PNG točnih ciljnih dimenzija
+  (512×512 / 1500×500) pa `profile-images.js` kodira WebP **jednom**. Odustajanje (gumb, ESC, backdrop) = `null`, ništa se ne šalje.
+- **Zid:** okrugli **„+" (kamera) na portretu** i gumb **„Uredi naslovnu"** dolje desno na plohi (na telefonu samo ikona,
+  natpis u `aria-label`); obje mete 44×44. Tijek: „+" → birač → **izrez** → upload. U formi „Uredi profil" ostaje samo
+  **„Ukloni"**, i to samo dok slika postoji (red bez slike je skriven — `[hidden]` mora pobijediti `display:flex`).
+- i18n: `profile.avatarChange` · `coverChange` · `cropTitleAvatar` · `cropTitleCover` · `cropHint` · `cropZoom` (en+hr);
+  `profile.imgChange` maknut (više ga nitko ne zove).
+- **Specovi ⑤/⑥** u `profile-images.authed.spec.js`: „+" 44×44 → birač → modal 1:1 → Spremi → portret 512×**512** (izrez iz
+  4:3) · naslovna: okvir 3:1, **Odustani ne mijenja ništa**, Spremi → 1500×500 WebP, gumb ostaje iznad slike.
+### Pouka
+- `canvas.style.transform` u JS-u = Tailwindu tekst „transform" → `.transform` u bundleu (šum, isti razred kao `visible`/`sticky`)
+  → `@source not inline("{,!}transform")` u `css/app.css`, uz provjeru da nijedno naše `.transform` pravilo ne postoji.
+  Dokazi: profile-images 6/6 · profile-wall 5/5 · phone.authed 12/12 · reachability.authed 3/3 · a11y.authed čist · preflight EXIT 0.
+
 ## 2026-09-13 (FABLE) — 🚀 **F2/2 SLIKE PROFILA NA PRODUKCIJI** — `main` = `61c39dd`, token `20260913203047`
 
 Leon (anketa): *„Sad, sve tri odjednom"* → tri koraka u tvrdom redoslijedu, svaki provjeren prije sljedećeg:

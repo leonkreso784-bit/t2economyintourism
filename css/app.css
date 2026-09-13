@@ -201,3 +201,9 @@
    `check:safearea` ("komentar nije pravilo"): ondje je komentar lazno OPTUZEN, ovdje je
    komentar stvarno NESTO PROIZVEO. */
 @source not inline("{,!}sticky");
+
+/* F2/2 dopuna (izrez slike, 2026-09-13): `transform` je usao iz KODA — `canvas.style.transform = …`
+   u `js/image-crop.js` pomice sliku unutar okvira. Isti razred kao `visible` i `sticky` gore:
+   ime CSS svojstva u JS-u je skeneru samo tekst, a Tailwind ima ugradjeni `.transform` utility.
+   Provjereno prije dopisivanja: u `css/**` nema nijednog naseg pravila `.transform`. */
+@source not inline("{,!}transform");

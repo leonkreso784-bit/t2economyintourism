@@ -122,25 +122,36 @@ function avatarInnerHtml(url) {
     return url ? '<img class="profile-avatar-img" src="' + escapeHtmlProfile(url) + '" alt="">'
                : '<i class="fas fa-user-graduate"></i>';
 }
+// Promjena slike živi NA SLICI (Leon 13.09.: „plus na profilnoj… kao Facebook"); u formi ostaje
+// samo „Ukloni", i to samo dok slika postoji — inače bi red bio natpis bez radnje.
 function imageRowHtml(kind, path) {
     const label = kind === 'avatar' ? pt('profile.avatarLabel', 'Profile photo') : pt('profile.coverLabel', 'Cover image');
-    return '<div class="profile-edit-image-row" data-image-kind="' + kind + '">' +
+    return '<div class="profile-edit-image-row" data-image-kind="' + kind + '"' + (path ? '' : ' hidden') + '>' +
         '  <span class="profile-meta">' + label + '</span>' +
-        '  <button type="button" class="cta-button secondary profile-img-change" data-image-kind="' + kind + '"><i class="fas fa-camera"></i><span>' + pt('profile.imgChange', 'Change') + '</span></button>' +
-        '  <button type="button" class="cta-button secondary profile-img-remove" data-image-kind="' + kind + '"' + (path ? '' : ' hidden') + '><i class="fas fa-trash-can"></i><span>' + pt('profile.imgRemove', 'Remove') + '</span></button>' +
+        '  <button type="button" class="cta-button secondary profile-img-remove" data-image-kind="' + kind + '"><i class="fas fa-trash-can"></i><span>' + pt('profile.imgRemove', 'Remove') + '</span></button>' +
         '</div>';
+}
+/** Okrugli „+" na portretu (Facebook-obrazac): 44×44 dodirna meta, ikona kamere. */
+function avatarButtonHtml() {
+    return '<button type="button" class="profile-avatar-btn profile-img-change" data-image-kind="avatar"' +
+        ' aria-label="' + pt('profile.avatarChange', 'Change profile photo') + '"><i class="fas fa-camera"></i></button>';
+}
+/** Gumb na naslovnoj (dolje desno); na telefonu samo ikona, natpis nosi `aria-label`. */
+function coverButtonHtml() {
+    return '<button type="button" class="cta-button secondary profile-cover-btn profile-img-change" data-image-kind="cover"' +
+        ' aria-label="' + pt('profile.coverChange', 'Edit cover image') + '"><i class="fas fa-camera"></i><span>' + pt('profile.coverChange', 'Edit cover image') + '</span></button>';
 }
 
 /** Osvježi slike na zidu U MJESTU — bez `renderProfilePage`, da otvorena forma preživi. */
 function refreshWallImages(user) {
     const id = identityOf(user);
-    const cover = document.querySelector('#profileContent .profile-cover');
+    const cover = document.querySelector('#profileContent .profile-cover .profile-cover-media');
     const avatar = document.querySelector('#profileContent .profile-avatar');
     if (cover) cover.innerHTML = coverInnerHtml(profileImageUrl(id.cover));
     if (avatar) avatar.innerHTML = avatarInnerHtml(profileImageUrl(id.avatar));
-    document.querySelectorAll('#profileContent .profile-img-remove').forEach(function (btn) {
-        const kind = btn.getAttribute('data-image-kind');
-        btn.hidden = !(kind === 'avatar' ? id.avatar : id.cover);
+    document.querySelectorAll('#profileContent .profile-edit-image-row').forEach(function (row) {
+        const kind = row.getAttribute('data-image-kind');
+        row.hidden = !(kind === 'avatar' ? id.avatar : id.cover);
     });
 }
 
@@ -163,6 +174,23 @@ async function changeProfileImage(kind, remove) {
     if (!remove) {
         file = await SokratProfileImages.pick();
         if (!file) return;                                 // odustao — ništa se ne mijenja
+        // IZREZ (Leon 13.09.): korisnik bira što ostaje. Bez croppera (paket nije stigao) ide cijela
+        // slika, smanjena — bolje nego blokirati promjenu.
+        if (window.SokratImageCrop) {
+            const k = SokratProfileImages.KINDS[kind];
+            try {
+                file = await SokratImageCrop.open(file, {
+                    aspect: k.aspect, output: k.output, round: k.round,
+                    title: kind === 'avatar' ? pt('profile.cropTitleAvatar', 'Adjust profile photo') : pt('profile.cropTitleCover', 'Adjust cover image')
+                });
+            } catch (err) {
+                status.hidden = false;
+                status.classList.add('is-error');
+                status.textContent = imageErrorText(err);
+                return;
+            }
+            if (!file) return;                             // odustao u izrezu
+        }
     }
 
     status.hidden = false;
@@ -236,9 +264,9 @@ function wallHtml(user, displayName, memberSince) {
     const id = identityOf(user);
     const opis = id.bio;
     return '<div class="profile-wall">' +
-        '  <div class="profile-cover">' + coverInnerHtml(profileImageUrl(id.cover)) + '</div>' +
+        '  <div class="profile-cover"><div class="profile-cover-media">' + coverInnerHtml(profileImageUrl(id.cover)) + '</div>' + coverButtonHtml() + '</div>' +
         '  <div class="profile-identity">' +
-        '    <div class="profile-avatar">' + avatarInnerHtml(profileImageUrl(id.avatar)) + '</div>' +
+        '    <div class="profile-avatar-wrap"><div class="profile-avatar">' + avatarInnerHtml(profileImageUrl(id.avatar)) + '</div>' + avatarButtonHtml() + '</div>' +
         '    <div class="profile-identity-text">' +
         '      <h2 class="profile-name">' + escapeHtmlProfile(displayName || user.email || '') + '</h2>' +
         (displayName ? '      <p class="profile-meta profile-meta--sub">' + escapeHtmlProfile(user.email || '') + '</p>' : '') +

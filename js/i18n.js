@@ -555,7 +555,12 @@
     // F2/2 — profilna slika i naslovna (javan bucket; smanjivanje u pregledniku, js/profile-images.js)
     'profile.avatarLabel': { en: 'Profile photo', hr: 'Profilna slika' },
     'profile.coverLabel': { en: 'Cover image', hr: 'Naslovna slika' },
-    'profile.imgChange': { en: 'Change', hr: 'Promijeni' },
+    'profile.avatarChange': { en: 'Change profile photo', hr: 'Promijeni profilnu sliku' },
+    'profile.coverChange': { en: 'Edit cover', hr: 'Uredi naslovnu' },
+    'profile.cropTitleAvatar': { en: 'Adjust profile photo', hr: 'Namjesti profilnu sliku' },
+    'profile.cropTitleCover': { en: 'Adjust cover image', hr: 'Namjesti naslovnu' },
+    'profile.cropHint': { en: 'Drag to reposition, zoom with the slider.', hr: 'Povuci za pomak, zumiraj klizačem.' },
+    'profile.cropZoom': { en: 'Zoom', hr: 'Zum' },
     'profile.imgRemove': { en: 'Remove', hr: 'Ukloni' },
     'profile.imgUploading': { en: 'Uploading photo…', hr: 'Slika se šalje…' },
     'profile.imgSaved': { en: 'Photo updated.', hr: 'Slika je spremljena.' },

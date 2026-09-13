@@ -8243,6 +8243,36 @@ sokrat-modal.auth-modal > * {
 .profile-avatar {
   overflow: hidden;
 }
+.profile-cover {
+  position: relative;
+}
+.profile-cover-media {
+  position: absolute;
+  inset: 0;
+}
+.profile-avatar-btn {
+  position: absolute;
+  right: -6px;
+  bottom: -2px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 3px solid var(--color-surface-1);
+  background: var(--color-brand-500);
+  color: var(--color-on-brand);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+}
+.profile-cover-btn {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  min-height: 44px;
+}
 .profile-edit-images {
   display: flex;
   flex-direction: column;
@@ -8260,7 +8290,7 @@ sokrat-modal.auth-modal > * {
   flex: 1 1 120px;
   margin: 0;
 }
-.profile-edit-image-row .cta-button[hidden] {
+.profile-edit-image-row[hidden] {
   display: none;
 }
 .profile-identity {
@@ -8270,12 +8300,15 @@ sokrat-modal.auth-modal > * {
   gap: 1rem;
   padding: 0 1.3rem 1.3rem;
 }
-.profile-avatar {
-  width: 92px;
-  height: 92px;
+.profile-avatar-wrap {
+  position: relative;
   flex: none;
   align-self: flex-start;
   margin-top: -46px;
+}
+.profile-avatar {
+  width: 92px;
+  height: 92px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8564,11 +8597,21 @@ sokrat-modal.auth-modal > * {
   .profile-cover {
     height: 96px;
   }
+  .profile-avatar-wrap {
+    margin-top: -38px;
+  }
   .profile-avatar {
     width: 76px;
     height: 76px;
-    margin-top: -38px;
     font-size: 1.75rem;
+  }
+  .profile-cover-btn span {
+    display: none;
+  }
+  .profile-cover-btn {
+    min-width: 44px;
+    justify-content: center;
+    padding-inline: 0.6rem;
   }
   .profile-identity {
     padding: 0 1rem 1rem;
@@ -9094,6 +9137,71 @@ sokrat-modal.auth-modal > * {
 }
 .theme-option-swatch--auto {
   background: radial-gradient(circle at 28% 28%, var(--theme-swatch-academic-acc) 0 24%, transparent 30%), radial-gradient(circle at 72% 72%, var(--theme-swatch-carbon-acc) 0 24%, transparent 30%), linear-gradient(135deg, var(--theme-swatch-academic-bg) 0 50%, var(--theme-swatch-carbon-bg) 50%);
+}
+.crop .crop__card {
+  position: relative;
+  width: min(94vw, 560px);
+  background: var(--color-surface-1);
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  padding: 1.3rem 1.3rem 1.2rem;
+  box-shadow: var(--shadow-e2);
+}
+.crop__title {
+  margin: 0 0 0.9rem;
+  font-size: 1.15rem;
+}
+.crop__frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--color-surface-2);
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.crop__frame--round::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 9999px color-mix(in srgb, #0e1a2b 45%, transparent);
+  @supports (color: color-mix(in lab, red, red)) {
+    box-shadow: 0 0 0 9999px color-mix(in srgb, var(--color-shadow) 45%, transparent);
+  }
+  pointer-events: none;
+}
+.crop__canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  max-width: none;
+  display: block;
+}
+.crop__hint {
+  margin: 0.7rem 0 0.4rem;
+}
+.crop__zoom {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: var(--color-ink-1);
+}
+.crop__zoom input[type="range"] {
+  flex: 1 1 auto;
+  min-height: 44px;
+  accent-color: var(--color-brand-500);
+}
+.crop__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 0.9rem;
+  flex-wrap: wrap;
 }
 .mm {
   margin-top: 16px;

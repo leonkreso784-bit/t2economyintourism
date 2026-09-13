@@ -42,6 +42,12 @@ Function na PROD (sha = staging v3) → push `main` = `61c39dd`, živi token `20
 tvrdio da su sva četiri stabla „spojena" — `fix/kadar-nalicje` NIJE u `main`-u (11 commita kartica, na originu) → grana
 zadržana, samo stablo uklonjeno.
 
+**Dopuna nakon deploya (Leon: „plus na profilnoj… kao facebook… bira crop"):** `js/image-crop.js` (modal, povlačenje +
+zum, čista matematika s 11 unit-tvrdnji), „+" na portretu i gumb na naslovnoj, u formi ostaje samo „Ukloni". Pretpostavke
+koje sam uzeo bez pitanja (lako promjenjive): naslovna **3:1**, avatar **1:1 krug**. Specovi ⑤/⑥ prepisani na klik-put
+s izrezom (uklj. Odustani). Tailwind-šum `.transform` iz `canvas.style.transform` → iznimka u manifestu. **Commit lokalno,
+NIJE na produkciji** — traži Leonov OK za push (samo klijent; baza i funkcija su već na PROD-u).
+
 **Sljedeće:** F2/1 ostatak — tema prati račun (`user_metadata`, odjava briše lokalni izbor) + avatar u traci.
 
 ## 2026-09-12 (FABLE, sesija POPRAVCI) — SPAJANJE po RASPORED §0: svih šest koraka pripremljeno i izmjereno lokalno, ništa pushano na `main` — svaki korak čeka Leonov OK

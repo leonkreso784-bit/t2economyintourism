@@ -228,7 +228,18 @@ test.describe('F2/2 — bucket profile-images + set_profile_image', () => {
   // Cigla 3 (`js/profile.js`): korisnikov put KLIKOVIMA — „Uredi profil" → „Promijeni" → birač datoteka →
   // portret na zidu postaje <img> s javnim URL-om, forma OSTAJE otvorena (slika se osvježava u mjestu),
   // „Ukloni" vraća ikonu. Bez ovoga bi cigla 2 bila modul koji nitko ne zove.
-  test('⑤ zid: Promijeni → slika na portretu, forma ostaje; Ukloni → ikona natrag', async ({ page }) => {
+  /** PNG bajtovi slike w×h nacrtane u stranici (jednobojna ploha + bijeli pravokutnik). */
+  async function pngBajtovi(page, w, h) {
+    return uBazi(page, async (d) => {
+      const c = document.createElement('canvas'); c.width = d.w; c.height = d.h;
+      const ctx = c.getContext('2d'); ctx.fillStyle = '#10b981'; ctx.fillRect(0, 0, d.w, d.h);
+      ctx.fillStyle = '#fff'; ctx.fillRect(d.w * 0.3, d.h * 0.3, d.w * 0.4, d.h * 0.4);
+      const b = await new Promise((r) => c.toBlob(r, 'image/png'));
+      return Array.from(new Uint8Array(await b.arrayBuffer()));
+    }, { w, h });
+  }
+
+  test('⑤ zid: „+" na portretu → birač → IZREZ → Spremi → slika na portretu, forma ostaje; Ukloni → ikona natrag', async ({ page }) => {
     await naProfilu(page);
     const uid = await uBazi(page, () => SokratAuth.getUser().id);
     const staro = await zatecenoStanje(page);
@@ -241,33 +252,40 @@ test.describe('F2/2 — bucket profile-images + set_profile_image', () => {
       await expect(page.locator('.profile-avatar img')).toHaveCount(0);
       await page.click('#profileEditBtn');
       await expect(page.locator('#profileEditForm')).toBeVisible();
+      // Bez slike nema ni reda „Ukloni" u formi (natpis bez radnje).
+      await expect(page.locator('.profile-edit-image-row[data-image-kind="avatar"]')).toBeHidden();
 
-      // Slika 1200×900 nacrtana u stranici → PNG bajtovi za birač (Playwright presreće <input type=file>).
-      const png = await uBazi(page, async () => {
-        const c = document.createElement('canvas'); c.width = 1200; c.height = 900;
-        const ctx = c.getContext('2d'); ctx.fillStyle = '#10b981'; ctx.fillRect(0, 0, 1200, 900);
-        const b = await new Promise((r) => c.toBlob(r, 'image/png'));
-        return Array.from(new Uint8Array(await b.arrayBuffer()));
-      });
-      const [chooser] = await Promise.all([
-        page.waitForEvent('filechooser'),
-        page.click('.profile-img-change[data-image-kind="avatar"]')
-      ]);
+      // „+" je NA PORTRETU (Facebook-obrazac), dodirna meta 44×44.
+      const plus = page.locator('.profile-avatar-btn');
+      const pb = await plus.boundingBox();
+      expect(pb.width).toBeGreaterThanOrEqual(44); expect(pb.height).toBeGreaterThanOrEqual(44);
+
+      const png = await pngBajtovi(page, 1200, 900);
+      const [chooser] = await Promise.all([page.waitForEvent('filechooser'), plus.click()]);
       await chooser.setFiles({ name: 'fotka.png', mimeType: 'image/png', buffer: Buffer.from(png) });
+
+      // IZREZ: modal se otvori s okvirom 1:1, korisnik potvrdi.
+      const modal = page.locator('#imageCropModal');
+      await expect(modal).toHaveClass(/is-open/, { timeout: 10000 });
+      const fr = await page.locator('#imageCropFrame').boundingBox();
+      expect(Math.abs(fr.width - fr.height), 'okvir avatara nije 1:1').toBeLessThanOrEqual(1);
+      await page.click('#imageCropSave');
+      await expect(modal).not.toHaveClass(/is-open/);
 
       const img = page.locator('.profile-avatar img.profile-avatar-img');
       await expect(img).toHaveCount(1, { timeout: 20000 });
       const src = await img.getAttribute('src');
       expect(src).toMatch(new RegExp('/object/public/profile-images/' + uid + '/avatar/[0-9a-f-]{36}\\.webp$'));
       await expect(page.locator('#profileEditForm'), 'forma se zatvorila — slika mora osvježiti zid U MJESTU').toBeVisible();
-      await expect(page.locator('.profile-img-remove[data-image-kind="avatar"]')).toBeVisible();
-      // Slika se stvarno učita (nije polomljen <img>).
+      await expect(page.locator('.profile-edit-image-row[data-image-kind="avatar"]')).toBeVisible();
+      // Slika se stvarno učita (nije polomljen <img>) i KVADRAT je — izrez 1:1 iz ulaza 4:3.
       await expect.poll(() => img.evaluate((el) => el.complete && el.naturalWidth), { timeout: 20000 }).toBe(512);
+      expect(await img.evaluate((el) => el.naturalHeight)).toBe(512);
 
       await page.click('.profile-img-remove[data-image-kind="avatar"]');
       await expect(page.locator('.profile-avatar img')).toHaveCount(0, { timeout: 20000 });
       await expect(page.locator('.profile-avatar i.fa-user-graduate')).toHaveCount(1);
-      await expect(page.locator('.profile-img-remove[data-image-kind="avatar"]')).toBeHidden();
+      await expect(page.locator('.profile-edit-image-row[data-image-kind="avatar"]')).toBeHidden();
       const red = await zatecenoStanje(page);
       expect(red.avatar_path).toBeNull();
     } finally {
@@ -277,6 +295,58 @@ test.describe('F2/2 — bucket profile-images + set_profile_image', () => {
         const s = SokratAuth.getClient().storage.from('profile-images');
         const { data } = await s.list(a.uid + '/avatar');
         const visak = (data || []).map((x) => a.uid + '/avatar/' + x.name).filter((p) => a.prije.indexOf(p.split('/')[2]) < 0);
+        if (visak.length) await s.remove(visak);
+      }, { uid, prije });
+    }
+  });
+
+  // Naslovna: gumb na plohi, okvir 3:1, izlaz 1500×500; i ODUSTAJANJE u izrezu ne dira ništa.
+  test('⑥ naslovna: gumb na plohi → izrez 3:1 → 1500×500; Odustani u izrezu ne mijenja ništa', async ({ page }) => {
+    await naProfilu(page);
+    const uid = await uBazi(page, () => SokratAuth.getUser().id);
+    const staro = await zatecenoStanje(page);
+    const prije = await uBazi(page, async (u) => {
+      const { data } = await SokratAuth.getClient().storage.from('profile-images').list(u + '/cover');
+      return (data || []).map((x) => x.name);
+    }, uid);
+
+    try {
+      const gumb = page.locator('.profile-cover-btn');
+      const gb = await gumb.boundingBox();
+      expect(gb.height).toBeGreaterThanOrEqual(44);
+      const png = await pngBajtovi(page, 1600, 1200);
+
+      // ① Odustani → ništa uploadano, red nepromijenjen.
+      let [chooser] = await Promise.all([page.waitForEvent('filechooser'), gumb.click()]);
+      await chooser.setFiles({ name: 'naslovna.png', mimeType: 'image/png', buffer: Buffer.from(png) });
+      const modal = page.locator('#imageCropModal');
+      await expect(modal).toHaveClass(/is-open/, { timeout: 10000 });
+      const fr = await page.locator('#imageCropFrame').boundingBox();
+      expect(Math.abs(fr.width / fr.height - 3), 'okvir naslovne nije 3:1').toBeLessThan(0.05);
+      await page.click('#imageCropCancel');
+      await expect(modal).not.toHaveClass(/is-open/);
+      await page.waitForTimeout(300);
+      expect(await zatecenoStanje(page)).toEqual(staro);
+      await expect(page.locator('.profile-cover-media img')).toHaveCount(staro.cover_path ? 1 : 0);
+
+      // ② Spremi → 1500×500 WebP na plohi.
+      [chooser] = await Promise.all([page.waitForEvent('filechooser'), gumb.click()]);
+      await chooser.setFiles({ name: 'naslovna.png', mimeType: 'image/png', buffer: Buffer.from(png) });
+      await expect(modal).toHaveClass(/is-open/, { timeout: 10000 });
+      await page.click('#imageCropSave');
+      const img = page.locator('.profile-cover-media img.profile-cover-img');
+      await expect(img).toHaveCount(1, { timeout: 20000 });
+      await expect.poll(() => img.evaluate((el) => el.complete && el.naturalWidth), { timeout: 20000 }).toBe(1500);
+      expect(await img.evaluate((el) => el.naturalHeight)).toBe(500);
+      expect(await img.getAttribute('src')).toMatch(new RegExp('/object/public/profile-images/' + uid + '/cover/[0-9a-f-]{36}\\.webp$'));
+      // Gumb je i dalje NA plohi (iznad slike), ne ispod nje.
+      await expect(gumb).toBeVisible();
+    } finally {
+      await vratiStanje(page, staro);
+      await uBazi(page, async (a) => {
+        const s = SokratAuth.getClient().storage.from('profile-images');
+        const { data } = await s.list(a.uid + '/cover');
+        const visak = (data || []).map((x) => a.uid + '/cover/' + x.name).filter((p) => a.prije.indexOf(p.split('/')[2]) < 0);
         if (visak.length) await s.remove(visak);
       }, { uid, prije });
     }

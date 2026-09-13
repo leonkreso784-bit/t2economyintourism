@@ -25,8 +25,11 @@
   if (typeof window === 'undefined') return;
 
   var BUCKET = 'profile-images';
-  /** Najdulja stranica po vrsti (px). Brojke iz RASPORED §F2/2. */
-  var KINDS = { avatar: { max: 512 }, cover: { max: 1500 } };
+  /** Po vrsti: najdulja stranica (px, RASPORED §F2/2) + omjer i ciljne dimenzije IZREZA (js/image-crop.js). */
+  var KINDS = {
+    avatar: { max: 512,  aspect: 1, output: { w: 512, h: 512 },  round: true },
+    cover:  { max: 1500, aspect: 3, output: { w: 1500, h: 500 }, round: false }
+  };
   var QUALITY = 0.85;
   /** Što `<input type=file>` nudi. Bez SVG-a (skripte) i bez GIF-a (avatar se ne miče) — isto kao bucket. */
   var ACCEPT = 'image/png,image/jpeg,image/webp';
