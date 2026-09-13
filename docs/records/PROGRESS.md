@@ -30,8 +30,14 @@ koda (test ga našao, guard dodan); ② **Tailwind skenira `js/`**, pa je ime fu
 `.shrink{flex-shrink:1}` i oborilo drift-branu — preimenovano u `smanji` (bez nove `@source not` iznimke). Bump →
 preflight EXIT 0 (dvaput: prvi pad = ta drift-brana).
 
-**Sljedeće:** cigla 3 — zid crta avatar/naslovnu iz javnog URL-a, gumbi u „Uredi profil" (+ i18n ključevi, toast po
-kodu greške), pa cigla 4 (telefon-brana, docs). Deploy (SQL + Edge Function v3 na PROD) = Leonov OK, zasebno.
+**Cigla 3 (Leon: *„mozes krenuti"*):** zid crta slike, „Promijeni/Ukloni" u formi, 11 i18n ključeva, CSS; slika se
+osvježava U MJESTU da forma preživi (isti razlog zbog kojeg `loadIdentity` ne crta preko otvorene forme — sad ju umjesto
+toga osvježi). Spec ⑤ = klik-put s `filechooser`. Sve zeleno: 16/16 profil-specova, `phone.authed` 12/12, preflight EXIT 0.
+Cigla 4 (brane) time je **već ispunjena kroz cigle 2–3** — svaka je nosila svoj test; ostaje samo zapis.
+
+**Sljedeće:** F2/2 je funkcionalno GOTOV na stagingu. Za PROD (Leonov OK, zasebno): ① `f2-profile-images.sql` u SQL
+Editoru · ② deploy `delete-account` v3 · ③ tek onda klijent (push `main`). Zatim F2/1 ostatak (tema prati račun) ili
+F2/3c (CSS profila) — po RASPORED-u.
 
 ## 2026-09-12 (FABLE, sesija POPRAVCI) — SPAJANJE po RASPORED §0: svih šest koraka pripremljeno i izmjereno lokalno, ništa pushano na `main` — svaki korak čeka Leonov OK
 

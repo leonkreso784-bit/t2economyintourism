@@ -5,6 +5,22 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-13 (FABLE) — **F2/2 cigla 3: zid crta profilnu i naslovnu; „Promijeni / Ukloni" u „Uredi profil"** (grana `feat/f2-slike`)
+
+### Dodano
+- **`js/profile.js`** — portret i naslovna postaju `<img>` iz javnog URL-a kad red identiteta nosi putanju (ikona/ploha
+  ostaju kao rezerva); URL prolazi kroz escape **i** provjeru sheme (samo `https://`, jer `SokratBlocks.safeUrl` na profilu
+  nije učitan). U formi „Uredi profil" dva reda: *Profilna slika* / *Naslovna slika* s **Promijeni** (birač → `upload`) i
+  **Ukloni** (samo kad slika postoji). Slika se osvježava **u mjestu** (`refreshWallImages`) pa otvorena forma i upisani
+  tekst prežive; greška se ispisuje po KODU iz modula (`image_decode_failed` → „odaberi JPG/PNG/WebP", `auth_required`,
+  ostalo s porukom); toast na uspjeh. `loadIdentity` sad uspoređuje i putanje slika (inače bi avatar ostao ikona kad se
+  ime nije promijenilo).
+- **i18n:** 11 ključeva `profile.avatarLabel … imgErrUpload` na oba jezika. **CSS:** `.profile-cover-img`/`.profile-avatar-img`
+  (`object-fit: cover`, portret kroz `overflow: hidden`), `.profile-edit-images` redovi.
+- **Spec ⑤** u `profile-images.authed.spec.js`: klik-put — „Uredi profil" → „Promijeni" → Playwright `filechooser` →
+  portret `<img>` s javnim URL-om, `naturalWidth` 512, forma ostaje otvorena → „Ukloni" → ikona natrag, `avatar_path` NULL.
+  Dokazi: profile-images ⑤/⑤ · profile-wall 5/5 · profile-identity 5/5 · `phone.authed` 12/12 · preflight EXIT 0.
+
 ## 2026-09-13 (FABLE) — **F2/2 cigla 2: `js/profile-images.js` — smanjivanje u pregledniku, upload, RPC, brisanje stare** (grana `feat/f2-slike`)
 
 Klijentski modul bez UI-ja i bez i18n-a (tekst ostaje u `profile.js`, cigla 3); baca greške s KODOM.

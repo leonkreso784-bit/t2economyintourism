@@ -552,6 +552,17 @@
     'profile.editSave': { en: 'Save', hr: 'Spremi' },
     'profile.editCancel': { en: 'Cancel', hr: 'Odustani' },
     'profile.editSaved': { en: 'Profile updated.', hr: 'Profil je spremljen.' },
+    // F2/2 — profilna slika i naslovna (javan bucket; smanjivanje u pregledniku, js/profile-images.js)
+    'profile.avatarLabel': { en: 'Profile photo', hr: 'Profilna slika' },
+    'profile.coverLabel': { en: 'Cover image', hr: 'Naslovna slika' },
+    'profile.imgChange': { en: 'Change', hr: 'Promijeni' },
+    'profile.imgRemove': { en: 'Remove', hr: 'Ukloni' },
+    'profile.imgUploading': { en: 'Uploading photo…', hr: 'Slika se šalje…' },
+    'profile.imgSaved': { en: 'Photo updated.', hr: 'Slika je spremljena.' },
+    'profile.imgRemoved': { en: 'Photo removed.', hr: 'Slika je uklonjena.' },
+    'profile.imgErrDecode': { en: 'Could not read that file — choose a JPG, PNG or WebP image.', hr: 'Ne mogu pročitati datoteku — odaberi JPG, PNG ili WebP sliku.' },
+    'profile.imgErrAuth': { en: 'Sign in again to change your photo.', hr: 'Prijavi se ponovno da promijeniš sliku.' },
+    'profile.imgErrUpload': { en: 'Could not save the photo: ', hr: 'Slika nije spremljena: ' },
     // Jedna gornja traka (K2b, spec §8). Do K2b je jezik bio dohvatljiv na 4 od 9
     // stranica, pa je i sam prekidač bio dio problema koji ova cigla rješava.
     'topbar.subjects': { en: 'Subjects', hr: 'Predmeti' },

@@ -224,4 +224,61 @@ test.describe('F2/2 — bucket profile-images + set_profile_image', () => {
       if (novi) await ukloni(page, novi);
     }
   });
+
+  // Cigla 3 (`js/profile.js`): korisnikov put KLIKOVIMA — „Uredi profil" → „Promijeni" → birač datoteka →
+  // portret na zidu postaje <img> s javnim URL-om, forma OSTAJE otvorena (slika se osvježava u mjestu),
+  // „Ukloni" vraća ikonu. Bez ovoga bi cigla 2 bila modul koji nitko ne zove.
+  test('⑤ zid: Promijeni → slika na portretu, forma ostaje; Ukloni → ikona natrag', async ({ page }) => {
+    await naProfilu(page);
+    const uid = await uBazi(page, () => SokratAuth.getUser().id);
+    const staro = await zatecenoStanje(page);
+    const prije = await uBazi(page, async (u) => {
+      const { data } = await SokratAuth.getClient().storage.from('profile-images').list(u + '/avatar');
+      return (data || []).map((x) => x.name);
+    }, uid);
+
+    try {
+      await expect(page.locator('.profile-avatar img')).toHaveCount(0);
+      await page.click('#profileEditBtn');
+      await expect(page.locator('#profileEditForm')).toBeVisible();
+
+      // Slika 1200×900 nacrtana u stranici → PNG bajtovi za birač (Playwright presreće <input type=file>).
+      const png = await uBazi(page, async () => {
+        const c = document.createElement('canvas'); c.width = 1200; c.height = 900;
+        const ctx = c.getContext('2d'); ctx.fillStyle = '#10b981'; ctx.fillRect(0, 0, 1200, 900);
+        const b = await new Promise((r) => c.toBlob(r, 'image/png'));
+        return Array.from(new Uint8Array(await b.arrayBuffer()));
+      });
+      const [chooser] = await Promise.all([
+        page.waitForEvent('filechooser'),
+        page.click('.profile-img-change[data-image-kind="avatar"]')
+      ]);
+      await chooser.setFiles({ name: 'fotka.png', mimeType: 'image/png', buffer: Buffer.from(png) });
+
+      const img = page.locator('.profile-avatar img.profile-avatar-img');
+      await expect(img).toHaveCount(1, { timeout: 20000 });
+      const src = await img.getAttribute('src');
+      expect(src).toMatch(new RegExp('/object/public/profile-images/' + uid + '/avatar/[0-9a-f-]{36}\\.webp$'));
+      await expect(page.locator('#profileEditForm'), 'forma se zatvorila — slika mora osvježiti zid U MJESTU').toBeVisible();
+      await expect(page.locator('.profile-img-remove[data-image-kind="avatar"]')).toBeVisible();
+      // Slika se stvarno učita (nije polomljen <img>).
+      await expect.poll(() => img.evaluate((el) => el.complete && el.naturalWidth), { timeout: 20000 }).toBe(512);
+
+      await page.click('.profile-img-remove[data-image-kind="avatar"]');
+      await expect(page.locator('.profile-avatar img')).toHaveCount(0, { timeout: 20000 });
+      await expect(page.locator('.profile-avatar i.fa-user-graduate')).toHaveCount(1);
+      await expect(page.locator('.profile-img-remove[data-image-kind="avatar"]')).toBeHidden();
+      const red = await zatecenoStanje(page);
+      expect(red.avatar_path).toBeNull();
+    } finally {
+      await vratiStanje(page, staro);
+      // Sve što je test dodao u vlastiti prefiks — van (staro stanje je popis prije testa).
+      await uBazi(page, async (a) => {
+        const s = SokratAuth.getClient().storage.from('profile-images');
+        const { data } = await s.list(a.uid + '/avatar');
+        const visak = (data || []).map((x) => a.uid + '/avatar/' + x.name).filter((p) => a.prije.indexOf(p.split('/')[2]) < 0);
+        if (visak.length) await s.remove(visak);
+      }, { uid, prije });
+    }
+  });
 });

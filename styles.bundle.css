@@ -8234,6 +8234,35 @@ sokrat-modal.auth-modal > * {
     background: linear-gradient(135deg, color-mix(in srgb, var(--color-brand-500) 30%, var(--color-surface-1)) 0%, color-mix(in srgb, var(--color-brand-500) 8%, var(--color-surface-1)) 100%);
   }
 }
+.profile-cover-img, .profile-avatar-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.profile-avatar {
+  overflow: hidden;
+}
+.profile-edit-images {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--color-line);
+}
+.profile-edit-image-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.profile-edit-image-row .profile-meta {
+  flex: 1 1 120px;
+  margin: 0;
+}
+.profile-edit-image-row .cta-button[hidden] {
+  display: none;
+}
 .profile-identity {
   display: flex;
   flex-wrap: wrap;

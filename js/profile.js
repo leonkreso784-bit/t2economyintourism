@@ -98,8 +98,92 @@ function identityOf(user) {
     // OAuth (R1) ne piše `display_name` nego `full_name`/`name` — isti redoslijed kao auth.js.
     return {
         name: String((red && red.display_name) || meta.display_name || meta.full_name || meta.name || '').trim(),
-        bio: String((red && red.bio) || meta.bio || '').trim()
+        bio: String((red && red.bio) || meta.bio || '').trim(),
+        // Slike (F2/2) žive SAMO u tablici — JWT ih nema, pa prvi kadar crta ikonu, a red ih donese.
+        avatar: String((red && red.avatar_path) || ''),
+        cover: String((red && red.cover_path) || '')
     };
+}
+
+// ── SLIKE (F2/2, 2026-09-13) ─────────────────────────────────────────────────
+// Putanja iz baze → javni URL preko `SokratProfileImages.publicUrl` (bucket je javan,
+// Leon 09.09.). URL ide u `src` atribut, dakle u innerHTML: prolazi kroz escape I kroz
+// provjeru sheme — samo `https://` (Supabase je uvijek https; `SokratBlocks.safeUrl` nije
+// učitan na profilu jer živi u paketu `study`, pa je ovdje stroža, uža provjera).
+function profileImageUrl(path) {
+    if (!path || !window.SokratProfileImages) return '';
+    const url = SokratProfileImages.publicUrl(path);
+    return (typeof url === 'string' && /^https:\/\//.test(url)) ? url : '';
+}
+function coverInnerHtml(url) {
+    return url ? '<img class="profile-cover-img" src="' + escapeHtmlProfile(url) + '" alt="">' : '';
+}
+function avatarInnerHtml(url) {
+    return url ? '<img class="profile-avatar-img" src="' + escapeHtmlProfile(url) + '" alt="">'
+               : '<i class="fas fa-user-graduate"></i>';
+}
+function imageRowHtml(kind, path) {
+    const label = kind === 'avatar' ? pt('profile.avatarLabel', 'Profile photo') : pt('profile.coverLabel', 'Cover image');
+    return '<div class="profile-edit-image-row" data-image-kind="' + kind + '">' +
+        '  <span class="profile-meta">' + label + '</span>' +
+        '  <button type="button" class="cta-button secondary profile-img-change" data-image-kind="' + kind + '"><i class="fas fa-camera"></i><span>' + pt('profile.imgChange', 'Change') + '</span></button>' +
+        '  <button type="button" class="cta-button secondary profile-img-remove" data-image-kind="' + kind + '"' + (path ? '' : ' hidden') + '><i class="fas fa-trash-can"></i><span>' + pt('profile.imgRemove', 'Remove') + '</span></button>' +
+        '</div>';
+}
+
+/** Osvježi slike na zidu U MJESTU — bez `renderProfilePage`, da otvorena forma preživi. */
+function refreshWallImages(user) {
+    const id = identityOf(user);
+    const cover = document.querySelector('#profileContent .profile-cover');
+    const avatar = document.querySelector('#profileContent .profile-avatar');
+    if (cover) cover.innerHTML = coverInnerHtml(profileImageUrl(id.cover));
+    if (avatar) avatar.innerHTML = avatarInnerHtml(profileImageUrl(id.avatar));
+    document.querySelectorAll('#profileContent .profile-img-remove').forEach(function (btn) {
+        const kind = btn.getAttribute('data-image-kind');
+        btn.hidden = !(kind === 'avatar' ? id.avatar : id.cover);
+    });
+}
+
+/** Kod greške iz `js/profile-images.js` → tekst za korisnika (jedino mjesto s tekstom). */
+function imageErrorText(err) {
+    const code = String((err && err.message) || '');
+    if (code === 'image_decode_failed') return pt('profile.imgErrDecode', 'Could not read that file — choose a JPG, PNG or WebP image.');
+    if (code === 'auth_required') return pt('profile.imgErrAuth', 'Sign in again to change your photo.');
+    return pt('profile.imgErrUpload', 'Could not save the photo: ') + code;
+}
+
+/** Promijeni ili ukloni sliku (klik u „Uredi profil"). `remove` = true → ukloni. */
+async function changeProfileImage(kind, remove) {
+    const user = (typeof SokratAuth !== 'undefined') ? SokratAuth.getUser() : null;
+    const status = document.getElementById('profileEditStatus');
+    if (!user || !status || !window.SokratProfileImages) return;
+    const stara = identityOf(user)[kind] || null;
+
+    let file = null;
+    if (!remove) {
+        file = await SokratProfileImages.pick();
+        if (!file) return;                                 // odustao — ništa se ne mijenja
+    }
+
+    status.hidden = false;
+    status.classList.remove('is-error');
+    status.textContent = pt('profile.imgUploading', 'Uploading photo…');
+    try {
+        const red = remove
+            ? await SokratProfileImages.remove(kind, stara)
+            : await SokratProfileImages.upload(kind, file, { oldPath: stara });
+        _identityFor = user.id;
+        _identity = Object.assign({}, _identity || {}, red || {});
+        status.hidden = true;
+        status.textContent = '';
+        refreshWallImages(user);
+        if (typeof showToast === 'function') {
+            showToast(remove ? pt('profile.imgRemoved', 'Photo removed.') : pt('profile.imgSaved', 'Photo updated.'));
+        }
+    } catch (err) {
+        status.classList.add('is-error');
+        status.textContent = imageErrorText(err);
+    }
 }
 
 /** Dohvati red identiteta pa PONOVNO nacrtaj. Tiše pada nego što ruši stranicu. */
@@ -126,14 +210,15 @@ async function loadIdentity(user) {
     // Crtaj PONOVNO samo ako bi se nešto promijenilo — inače svako otvaranje profila
     // baci jedan bespotreban bljesak (JWT i tablica se u pravilu SLAŽU).
     const poslije = identityOf(user);
-    if (poslije.name === prije.name && poslije.bio === prije.bio) return;
+    if (poslije.name === prije.name && poslije.bio === prije.bio
+        && poslije.avatar === prije.avatar && poslije.cover === prije.cover) return;
 
     // ⚠️ I onda — nikad preko čovjeka koji upravo piše. `renderProfilePage` prepisuje
     // `#profileContent`, a s njim i otvorenu formu i tekst u njoj. Izmjerila brana:
     // klik na „Uredi profil" → red stigne → forma nestane → sljedeći upis čeka polje
     // koje više ne postoji (test je visio do isteka od 120 s). Zid se osvježi kad zatvori.
     const forma = document.getElementById('profileEditForm');
-    if (forma && !forma.hidden) return;
+    if (forma && !forma.hidden) { refreshWallImages(user); return; }
 
     renderProfilePage();
 }
@@ -148,11 +233,12 @@ async function loadIdentity(user) {
 // ⚠️ Zid VLASTITOG GRADIVA (rešetka `nodes`) dolazi u F2/5 — mjesto mu je odmah
 //    ispod identiteta, ondje gdje danas stoji poveznica na „Moje materijale".
 function wallHtml(user, displayName, memberSince) {
-    const opis = identityOf(user).bio;
+    const id = identityOf(user);
+    const opis = id.bio;
     return '<div class="profile-wall">' +
-        '  <div class="profile-cover"></div>' +
+        '  <div class="profile-cover">' + coverInnerHtml(profileImageUrl(id.cover)) + '</div>' +
         '  <div class="profile-identity">' +
-        '    <div class="profile-avatar"><i class="fas fa-user-graduate"></i></div>' +
+        '    <div class="profile-avatar">' + avatarInnerHtml(profileImageUrl(id.avatar)) + '</div>' +
         '    <div class="profile-identity-text">' +
         '      <h2 class="profile-name">' + escapeHtmlProfile(displayName || user.email || '') + '</h2>' +
         (displayName ? '      <p class="profile-meta profile-meta--sub">' + escapeHtmlProfile(user.email || '') + '</p>' : '') +
@@ -165,6 +251,7 @@ function wallHtml(user, displayName, memberSince) {
         '    </div>' +
         '  </div>' +
         '  <form id="profileEditForm" class="profile-edit-form" hidden>' +
+        '    <div class="profile-edit-images">' + imageRowHtml('avatar', id.avatar) + imageRowHtml('cover', id.cover) + '</div>' +
         '    <input type="text" id="profileEditName" class="auth-modal__input" maxlength="60" autocomplete="name"' +
         '      placeholder="' + pt('profile.editNamePh', 'Your name') + '"' +
         '      aria-label="' + pt('profile.editNamePh', 'Your name') + '"' +
@@ -344,6 +431,13 @@ function renderProfilePage() {
         document.getElementById('profileEditForm').hidden = true;
     });
     document.getElementById('profileEditForm').addEventListener('submit', saveProfileIdentity);
+    // Slike (F2/2): gumbi žive u formi, ali NISU submit — promjena slike ne sprema ime.
+    root.querySelectorAll('.profile-img-change').forEach(function (btn) {
+        btn.addEventListener('click', function () { changeProfileImage(btn.getAttribute('data-image-kind'), false); });
+    });
+    root.querySelectorAll('.profile-img-remove').forEach(function (btn) {
+        btn.addEventListener('click', function () { changeProfileImage(btn.getAttribute('data-image-kind'), true); });
+    });
 
     // Prvi kadar crta ono što znamo bez mreže (JWT), pa se dopuni kad red stigne.
     if (_identityFor !== user.id) loadIdentity(user);
