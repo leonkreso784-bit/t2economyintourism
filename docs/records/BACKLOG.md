@@ -13,6 +13,51 @@
 > Njihovi zapisi ostaju **ovdje i nedirnuti** jer nose obrazloženje i mjerenja; spec nosi **redoslijed
 > i dokaz**. Kad cigla padne, ovdje se stavlja ✅ s brojkom — ne briše se.
 
+### 🌐 SPREMNOST ZA DRUŠTVENU MREŽU — gap-analiza identiteta i slika (2026-09-13, Leon: *„razmišljaj kao Zuckerberg"*)
+
+**Povod.** F2/2 (slike profila + izrez) je na produkciji; Leon: *„moramo sve pripremiti za kada bude bila socijalna
+mreža."* Ovo je popis onoga što PROFESIONALNA mreža ima, a mi nemamo — razvrstan po tome **koliko kasnije košta**.
+Ništa ovdje ne otvara presuđeno: javni profil i dijeljenje = F7 (ADR-035/036), MCP = F6, katalog ostaje zaliha.
+
+**Što je već na razini mreže (ne dirati):** identitet izvan `profiles` (`role` nedodirljiv) · upis samo kroz
+`SECURITY DEFINER` RPC · javan bucket s vlasničkim prefiksom i UUID-imenima · izrez u pregledniku (1:1 / 3:1) ·
+GDPR-brisanje čisti sve osobne buckete · i18n na oba jezika · telefon i a11y mjereni.
+
+**A · STRUKTURNO — jeftino sad, skupo poslije** (mijenja shemu koju će F7 i svaka objava pretpostavljati):
+1. **`handle`** (korisničko ime za URL, `@leon`): `citext` unique, `^[a-z0-9_]{3,20}$`, popis **rezerviranih**
+   (`admin`, `sokrat`, `api`, `login`…), promjena najviše 1× / 30 dana, provjera u RPC-u. Bez toga javni profil
+   nema adresu, a svaka kasnija dodjela znači migraciju postojećih računa.
+2. **`visibility`** (`private` | `link` | `public`, default `private`) u `profile_identity` + javna SELECT-politika
+   **filtrirana tom kolonom** — jedina politika koju F7 smije dodati nad identitetom. Bez kolone bi F7 morao birati
+   između „svi javni" i nove migracije.
+3. **Kvota po korisniku u `profile-images`**: INSERT-politika s podupitom `count(*) < 20` nad vlastitim prefiksom.
+   Javan bucket bez kvote = besplatan hosting za bilo koga s računom. Isti obrazac kasnije za `node-images`.
+4. **Avatar u `user_metadata`** (odlučeno 13.09.) — traka crta sliku bez kruga prema bazi; putanja se zrcali pri
+   svakom `set_profile_image` (kao ime u `set_profile_identity`).
+
+**B · HIGIJENA — treba prije prvog vala korisnika, ne prije F7:**
+5. **Siročad u Storageu**: upload prođe, RPC padne (mreža) → datoteka bez reda. Klijent čisti „najbolji pokušaj";
+   treba i **mjerač** (`npm run check:orphans`, read-only: objekti bez putanje u `profile_identity`) pa tek onda
+   metla (Edge Function na rasporedu; SQL-brisanje ostavlja S3-siroče, v. `f2-profile-images.sql`).
+6. **Backup Storagea**: `npm run backup` snima SAMO bazu (`scripts/backup-db.js`) — slike korisnika nemaju kopiju.
+7. **Rate-limit uploada i prijave** (Supabase Auth rate-limit već u §4 RASPORED-a; Storage nema — kvota iz A3 je prvi zid).
+8. **Minijature**: Supabase image transformations (Pro) — `getPublicUrl(path, {transform:{width:96}})` za traku i
+   popise; bez toga svaka lista vuče 512 px avatar.
+
+**C · PRAVNO I POVJERENJE — prije javnih profila (F7), Leonove riječi, ne moje:**
+9. `terms.html`/`privacy.html`: korisničke slike su JAVNE po URL-u (odluka 09.09.), pravo na uklanjanje, dob (GDPR
+   16 / roditeljski pristanak), zabrana tuđih fotografija.
+10. **Prijava sadržaja + blokiranje** (report/block) — minimum za bilo koji javni profil; moderacija slika (NSFW)
+    tek kad ima volumena, ali `report` tablica je jeftina sad.
+11. **Sigurnost računa**: promjena e-maila s potvrdom, 2FA (Supabase MFA), pregled sesija — F2/4 susjedstvo.
+
+**D · MREŽNI MODEL — TEK F7+, ovdje samo da se ne zaboravi oblik:** pratitelji (`follows`), objave = materijali
+(ADR-035), reakcije/komentari, obavijesti, feed, blokiranja. **Preduvjet za sve: prave adrese umjesto hash-ruta**
+(§5 RASPORED-a kaže „arhitektonska odluka, ne cigla" — mreža ju vraća na stol: `@handle` bez URL-a nije handle).
+
+**Prijedlog reda:** A1–A4 kao jedna cigla „TEMELJ MREŽE" odmah iza F2/1 (dira isti šav: RPC + `user_metadata`) ·
+B5–B6 u §4 stalnu traku · C i D uz F7. Ništa od ovoga nije započeto; čeka Leonovu riječ.
+
 ### 🔴 LEONOVI NALAZI S UREDAJA — 2026-09-04 (nedirnuto, ceka svoj red)
 
 **A. ODLUKA: TEMA PRATI RACUN, NE UREDAJ** (Leon, 2026-09-04: *„tema treba pratiti racun"*).
