@@ -73,3 +73,33 @@ test('SW update-flow: toast „nova verzija" → dodir → novi SW preuzme + rel
   await page.waitForFunction(() => !!navigator.serviceWorker.controller, null, { timeout: 10000 });
   await expect(page.locator('#landing-page')).toBeVisible();
 });
+
+// ── BUG-045 (2026-09-06) — RUNTIME KEŠ STVARNO PUNI ─────────────────────────────
+// Do popravka je `spremi()` klonirao odgovor unutar `.then(caches.open)` — prekasno, tijelo je
+// stranica već potrošila, `clone()` je bacao „body is already used", a `.catch(() => {})` to gutao.
+// Posljedica: SW od F3 3A NIJE spremio nijedan runtime asset; u kešu je stajao samo precache s
+// instalacije, a „offline radi" je značilo „HTTP-keš preglednika još ima datoteke". iOS ga
+// izbacuje → skinut predmet se otvarao prazan (paket načina učenja nije imao odakle doći).
+// Tvrdnja mjeri KEŠ, ne dojam: poslije zahtjeva stranice skripta MORA biti u SW-kešu.
+// Obrnuto (sw.js prije popravka, isti test): keš ostaje na 4 precache unosa → crveno.
+test('BUG-045: SW stvarno spremi skriptu koju stranica zatraži (klon prije `caches.open`)', async ({ page }) => {
+  await page.goto('/index.html');
+  await page.evaluate(() => navigator.serviceWorker.ready);
+  await page.reload();
+  await page.waitForFunction(() => !!navigator.serviceWorker.controller, null, { timeout: 10000 });
+  const ver = await page.evaluate(() => window.CONTENT_VERSION);
+  expect(ver, 'CONTENT_VERSION mora postojati (isti token kao ?v=)').toBeTruthy();
+  // dva puta kojima stranica traži skripte: fetch() (cors) i <script src> (no-cors) — oba idu kroz SW
+  await page.evaluate(async (v) => { await fetch('js/quiz.js?v=' + v); }, ver);
+  await page.evaluate((v) => new Promise((res) => {
+    const s = document.createElement('script'); s.src = 'js/fill-blanks.js?v=' + v;
+    s.onload = () => res(1); s.onerror = () => res(0); document.head.appendChild(s);
+  }), ver);
+  await expect.poll(async () => await page.evaluate(async () => {
+    const imena = await caches.keys();
+    const app = imena.find((k) => k.startsWith('sokrat-cache-'));
+    if (!app) return [];
+    const ks = await (await caches.open(app)).keys();
+    return ks.map((k) => k.url.split('/').slice(3).join('/').split('?')[0]).filter((u) => /^js\/(quiz|fill-blanks)\.js$/.test(u)).sort();
+  }), { message: 'runtime keš SW-a mora sadržavati obje skripte koje je stranica zatražila', timeout: 8000 }).toEqual(['js/fill-blanks.js', 'js/quiz.js']);
+});

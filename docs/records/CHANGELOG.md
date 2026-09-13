@@ -235,6 +235,12 @@ Brana `tests/unit/theme-list.test.js` (24 tvrdnje; obrnuto kroz `git worktree`: 
 tokena, 0 ispod praga · preflight EXIT 0. **Gdje se vidi:** samo u branama (nijedna korisnička datoteka nije dirana;
 grana `feat/racun-r1`). Bez bumpa — `scripts/**` i `tests/**` nisu na posjetiteljevu putu.
 
+## 2026-09-06 (FABLE) — **BUG-045: Service Worker nikad nije spremao runtime assete — skinut predmet se offline otvarao prazan**
+
+- **Uzrok (izmjeren u živom SW-u):** `res.clone()` unutar `.then(caches.open)` stizao je kad je stranica već potrošila tijelo → `TypeError`, progutan `.catch(() => {})`. Od F3 3A u runtime kešu je bio samo precache; „offline radi" značilo je „HTTP-keš preglednika ima datoteke", a iOS ga izbacuje.
+- **Popravak:** klon sinkrono prije `caches.open` (asseti i navigacija) · `download()` piše „ready" tek kad je paket načina učenja zagrijan · `zagrijPoslijeDeploya()` jednom po verziji za sve s police.
+- **Brane:** `sw.spec` mjeri da je zatražena skripta U KEŠU (ne dojam) · `offline-study.spec` hladno otvaranje bez mreže i bez HTTP-keša (CDP) · `offline-store.test.js` +3. Obrnuto na starom `sw.js`: oba speca crvena.
+
 ## 2026-09-05 (FABLE) — **Matura = vizija (VISION.md §8) · RAD.xlsx se puni automatski svaki dan (`scripts/rad-dnevno.ps1`)**
 
 Dvije Leonove odluke iste večeri. **① Matura:** *„mature ne diramo, to je vizija"* → odjeljak u

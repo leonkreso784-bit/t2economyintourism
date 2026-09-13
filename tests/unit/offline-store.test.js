@@ -234,6 +234,50 @@ Promise.resolve()
     });
   }))
 
+  // ── BUG-045 (2026-09-06): paket načina učenja je dio „ready", ne pozadinski posao ─────────
+  .then(() => testAsync('download() NE piše „ready" dok paket načina učenja nije zagrijan (BUG-045)', function () {
+    const win = noviWindow({ fetch: lazniFetch([], 256) });
+    let zagrijano = false; const trazeni = [];
+    win.SokratLoad = { zagrij: (ime) => { trazeni.push(ime); return new Promise((r) => setTimeout(() => { zagrijano = true; r([true]); }, 30)); } };
+    return win.SokratOffline.download('statistics').then((zapis) => {
+      assert.ok(zagrijano, 'zapis „ready" smije nastati TEK kad zagrijavanje završi');
+      assert.ok(trazeni.indexOf('study') >= 0, 'paket `study` se zagrijava uvijek');
+      assert.ok(trazeni.indexOf('exercises') >= 0, 'statistics ima vježbe → i paket `exercises`');
+      assert.ok(win.SokratOffline.get('statistics'), 'zapis postoji poslije zagrijavanja');
+      assert.strictEqual(zapis.id, 'statistics');
+    });
+  }))
+  .then(() => testAsync('pad zagrijavanja ne ruši skidanje (best-effort, CDN se preskače)', function () {
+    const win = noviWindow({ fetch: lazniFetch([], 256) });
+    win.SokratLoad = { zagrij: () => Promise.reject(new Error('mreža')) };
+    return win.SokratOffline.download('statistics').then((zapis) => {
+      assert.strictEqual(zapis.id, 'statistics', 'gradivo je skinuto; paket je best-effort');
+    });
+  }))
+  .then(() => testAsync('zagrijPoslijeDeploya(): jednom po verziji, samo kad polica nije prazna (BUG-045)', function () {
+    const win = noviWindow({ fetch: lazniFetch([], 256) });
+    let pozivi = 0;
+    win.SokratLoad = { zagrij: () => { pozivi += 1; return Promise.resolve([true]); } };
+    const O = win.SokratOffline;
+    return O.zagrijPoslijeDeploya().then((bilo) => {
+      assert.strictEqual(bilo, false, 'prazna polica → nema što zagrijati');
+      assert.strictEqual(pozivi, 0);
+      return O.download('statistics');
+    }).then(() => {
+      pozivi = 0;
+      win.localStorage.removeItem(O.WARM_KEY);          // kao poslije deploya: biljeg druge verzije / nema ga
+      return O.zagrijPoslijeDeploya();
+    }).then((bilo) => {
+      assert.strictEqual(bilo, true, 'polica ima predmet, verzija nova → zagrij');
+      assert.ok(pozivi >= 1, 'zagrij pozvan za predmet s police');
+      assert.strictEqual(win.localStorage.getItem(O.WARM_KEY), VER, 'biljeg verzije upisan');
+      pozivi = 0;
+      return O.zagrijPoslijeDeploya();
+    }).then((bilo) => {
+      assert.strictEqual(bilo, false, 'ista verzija → drugi put NE (ne troši tuđi promet)');
+      assert.strictEqual(pozivi, 0);
+    });
+  }))
   .then(() => testAsync('download() upiše sve datoteke i zapiše manifest', function () {
     const win = noviWindow({ fetch: lazniFetch([], 2048) });
     const O = win.SokratOffline;
