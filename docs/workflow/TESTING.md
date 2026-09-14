@@ -108,9 +108,11 @@
   i time svim ostalim specovima mijenja temu; vrati zatečeno u `finally` (obrazac:
   `theme-account.authed.spec.js`, koji uz to bira `academic` = ono što ostali ionako vide).
   Izravan `setAttribute('data-theme', …)` (axe-gate) račun ne dira.
-  ② **Nikad `SokratAuth.signOut()` u specu** — supabase-js `signOut()` je zadano `scope: 'global'`
-  (provjereno u zakucanoj 2.110.8) i opoziva refresh-token dijeljene sesije `tests/.auth/admin.json`,
-  pa padaju svi specovi iza njega. Odjava se čuva unit-testom (`SIGNED_OUT` u `vm`-pješčaniku).
+  ② **Nikad `SokratAuth.signOut()` nad DIJELJENOM sesijom** — od F2/1 ④ (2026-09-14) je odjava
+  `scope: 'local'`, ali i lokalna briše sesiju na poslužitelju, a svi konteksti iz `tests/.auth/admin.json`
+  nose ISTU sesiju → padaju svi specovi iza njega. Spec koji vozi odjavu otvara vlastite kontekste s
+  vlastitom prijavom (obrazac: `signout-local.authed.spec.js`). ⚠️ Obrnuta provjera s globalnom odjavom
+  opoziva sve sesije računa → vrti se samo taj spec sam.
 
 
 ## CI/CD — automatski gate (od 2026-06-29, FOUNDATION_PLAN F1)

@@ -5,6 +5,21 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-14 kasno (OPUS, stablo `sokratstudy.f21`) — F2/1 ④: odjava samo ovaj uređaj, test-prvo
+
+Leon (anketa 14.09.: *„Samo ovaj uređaj"*) → `SokratAuth.signOut()` zove `client.auth.signOut({ scope: 'local' })`.
+Odluka iz ankete je cherry-pickana s `feat/f2-zid-radionica` (`1804480` → `f8814ca`) da RASPORED ove grane nosi ④.
+- **Crveno pa zeleno, dvije brane:** `tests/unit/signout-scope.test.js` (svaki `auth.signOut(` u `js/**` nosi `scope: 'local'`;
+  ispisuje koliko je poziva vidio) — 1 pad na starom kodu → zeleno. `tests/signout-local.authed.spec.js` (STAGING, dva
+  konteksta = dvije PRAVE sesije): na starom kodu B nakon A-ove odjave vraća *„Auth session missing!"* i za `getUser` i
+  za `refreshSession` → pada; s popravkom 2/2. Spec tvrdi i da je A-ov stari token na poslužitelju **opozvan** (401/403) —
+  lokalna odjava je prava odjava, ne zaborav u pregledniku — i da `SIGNED_OUT` i dalje briše lokalni izbor teme.
+- **Zamka za testove zapisana u TESTING.md:** i lokalna odjava briše sesiju na poslužitelju, a svi konteksti iz
+  `admin.json` nose ISTU sesiju → spec koji vozi odjavu mora imati vlastite prijave; obrnuta provjera se vrti sama.
+- Brisanje računa ostaje globalno bez ijednog poziva (`delete-account` briše korisnika, a s njim i sve sesije).
+
+---
+
 ## 2026-09-14 (OPUS, sesija F2/1 u stablu `sokratstudy.f21`) — cigla ①: tema prati račun, test-prvo
 
 `/next` → F2/1 razrezan na tri cigle (① tema u računu · ② odjava briše lokalni izbor · ③ avatar u traci); ② je ispala

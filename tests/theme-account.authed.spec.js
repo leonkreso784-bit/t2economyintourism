@@ -12,9 +12,10 @@
 //    se vidi da je temu donio RAČUN. A `academic` je ono što svi ostali prijavljeni specovi
 //    ionako vide (svijetli uređaj), pa im usporedna vrtnja ne mijenja ništa dok je upisan.
 // ⚠️ PIŠE u `user_metadata` i VRAĆA zatečenu vrijednost. Samo STAGING (pravilo #8).
-// ⚠️ Odjava se ovdje NE vozi: `signOut()` je u supabase-js zadano GLOBALAN i opozvao bi
-//    dijeljenu sesiju (`tests/.auth/admin.json`) svim ostalim specovima. Brisanje izbora pri
-//    odjavi čuva unit-test (događaj `SIGNED_OUT`).
+// ⚠️ Odjava se ovdje NE vozi: i lokalna (F2/1 ④) briše sesiju OVOG konteksta na poslužitelju,
+//    a ovaj kontekst nosi dijeljenu sesiju (`tests/.auth/admin.json`) svih ostalih specova.
+//    Brisanje izbora pri odjavi čuvaju unit-test (događaj `SIGNED_OUT`) i
+//    `signout-local.authed.spec.js` (vlastite sesije).
 const { test, expect } = require('@playwright/test');
 const { ucitajPakete } = require('./helpers/paketi');
 

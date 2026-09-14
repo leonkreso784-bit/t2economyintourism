@@ -849,9 +849,13 @@ const SokratAuth = (function () {
         });
     }
 
+    // Odjava je SAMO OVAJ UREĐAJ (F2/1 ④, Leon 14.09.): bez `scope` je supabase-js GLOBALAN i
+    // odjava na mobitelu odjavi i računalo. Poslužitelj i dalje briše sesiju ovog uređaja, a
+    // `SIGNED_OUT` stiže kao i prije (theme.js briše lokalni izbor). Brane: signout-scope.test.js
+    // + signout-local.authed.spec.js.
     async function signOut() {
         if (!client) return;
-        await client.auth.signOut();
+        await client.auth.signOut({ scope: 'local' });
         closeModal();
         if (typeof showToast === 'function') showToast(window.t ? t('msg.signedOut') : 'Signed out. Progress stays on this device.');
     }

@@ -5,6 +5,17 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-14 (OPUS) — **F2/1 ④: odjava samo ovaj uređaj** (Leon, anketa 14.09.) — grana `feat/f2-tema-racun`
+
+### Promijenjeno
+- **`SokratAuth.signOut()` → `signOut({ scope: 'local' })`** (`js/auth.js`). Dotad bez argumenta, a u zakucanom
+  supabase-js 2.110.8 to je GLOBALNO: odjava na mobitelu odjavila je i računalo. Sesija ovog uređaja se i dalje briše na
+  poslužitelju; `SIGNED_OUT` stiže kao i prije, pa se lokalni izbor teme i dalje briše (F2/1 ①).
+### Brana
+- `tests/unit/signout-scope.test.js` — svaki `auth.signOut(` u `js/**` nosi `scope: 'local'` (obrnuto: 1 pad na starom kodu).
+- `tests/signout-local.authed.spec.js` (STAGING, dvije prave sesije) — druga sesija preživi odjavu prve, odjavljeni token je
+  opozvan, izbor teme obrisan. Obrnuto na starom kodu: pada (*„Auth session missing!"* na drugom uređaju).
+
 ## 2026-09-14 (OPUS) — **Zid profila na telefonu** (Leon s iPhonea, preview: *„Nije dobro"*) — grana `feat/f2-tema-racun`
 
 ### Popravljeno (`css/profile.css`, nikad nije bilo na produkciji — gumb naslovne je F2/2 dopuna)
