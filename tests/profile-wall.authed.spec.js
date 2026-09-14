@@ -117,9 +117,19 @@ test.describe('F2/3a — profil je zid', () => {
   test('⑤ spremanje mijenja ime i opis na zidu (pa se vraća zatečeno)', async ({ page }) => {
     await otvoriProfil(page);
 
-    const staro = await page.evaluate(() => {
-      const m = (SokratAuth.getUser() || {}).user_metadata || {};
-      return { name: m.display_name || '', bio: m.bio || '' };
+    // ⚠️ Zatečeno se čita i vraća na OBA mjesta. Od F2/3b spremanje ide u `profile_identity`
+    // (RPC) I u `user_metadata`; do 14.09. se vraćao samo preslik, pa je probno ime ostajalo u
+    // tablici — a sljedeći spec koji spremi formu (s tim imenom unaprijed upisanim) prepisao ga
+    // je natrag i u metapodatke. Nađeno na stagingu kao „F2/3a proba …" na test-računu.
+    const staro = await page.evaluate(async () => {
+      const u = SokratAuth.getUser() || {};
+      const m = u.user_metadata || {};
+      const { data } = await SokratAuth.getClient().from('profile_identity')
+        .select('display_name, bio').eq('user_id', u.id).maybeSingle();
+      return {
+        name: m.display_name ?? null, bio: m.bio ?? null,
+        tName: (data && data.display_name) || '', tBio: (data && data.bio) || ''
+      };
     });
 
     const probno = 'F2/3a proba ' + Date.now();
@@ -136,7 +146,9 @@ test.describe('F2/3a — profil je zid', () => {
     } finally {
       // Vrati zatečeno stanje računa i kad tvrdnja padne — sljedeća vrtnja mora zateći isto.
       await page.evaluate(async (s) => {
-        await SokratAuth.getClient().auth.updateUser({ data: { display_name: s.name, bio: s.bio } });
+        const c = SokratAuth.getClient();
+        await c.rpc('set_profile_identity', { p_display_name: s.tName, p_bio: s.tBio });
+        await c.auth.updateUser({ data: { display_name: s.name, bio: s.bio } });
       }, staro);
     }
   });

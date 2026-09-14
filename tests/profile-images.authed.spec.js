@@ -254,7 +254,14 @@ test.describe('F2/2 — bucket profile-images + set_profile_image', () => {
     }, uid);
 
     try {
-      await expect(page.locator('.profile-avatar img')).toHaveCount(0);
+      // Test mjeri put „bez slike → slika → bez slike", pa si početak POSTAVI sam umjesto da ga
+      // pretpostavi (račun je dijeljen; 14.09. je zatečeni avatar oborio ovu tvrdnju, a ne kod).
+      // Samo se putanja makne (datoteka ostaje) — `vratiStanje` ju na kraju vrati.
+      if (staro.avatar_path) {
+        await rpc(page, 'avatar', null);
+        await page.evaluate(() => { _identityFor = null; renderProfilePage(); });
+      }
+      await expect(page.locator('.profile-avatar img')).toHaveCount(0, { timeout: 15000 });
       await page.click('#profileEditBtn');
       await expect(page.locator('#profileEditForm')).toBeVisible();
       // Bez slike nema ni reda „Ukloni" u formi (natpis bez radnje).

@@ -175,7 +175,10 @@ function naPromjenuRacuna(user, event) {
     if (_temaNaPutu !== null) return;   // klik čeka mrežu — staro stanje računa ga ne vraća unatrag
     const tema = (user.user_metadata || {})[TEMA_RACUNA];
     if (valjanaTemaRacuna(tema)) primijeniTemuRacuna(tema);
-    else preuzmiIzborUredjaja(user);
+    // Preuzimanje je MIGRACIJA pri ulasku (prijava / učitana sesija), ne pravilo koje vrijedi
+    // stalno: na `USER_UPDATED` bez teme bi prozor odmah ponovno upisao ono što je netko upravo
+    // namjerno maknuo (izmjereno na stagingu 14.09. — vraćanje stanja u specu se poništavalo).
+    else if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') preuzmiIzborUredjaja(user);
 }
 
 document.addEventListener('DOMContentLoaded', function () {

@@ -253,6 +253,19 @@ const IZABRAN = (t) => ({ 'sokrat-theme': t, 'sokrat-theme-chosen': '1' });
         tvrdi(s.upisi.length === 1 && s.upisi[0].data.theme === 'chalk',
             '④ korisnik zatečen PRIJE prijave slušača (sesija već učitana) se svejedno obradi', s.upisi);
     }
+    {
+        // Preuzimanje je MIGRACIJA pri prijavi, ne pravilo koje vrijedi uvijek. Nađeno na stagingu
+        // 14.09.: spec je vratio temu računa na „nema" (`null`), a ISTI prozor ju je na tom
+        // `USER_UPDATED` odmah ponovno upisao iz uređaja — vraćanje stanja se samo poništilo.
+        const s = svijet({ tamno: true, spremljeno: IZABRAN('academic'), korisnik: osoba({ theme: 'academic' }) });
+        await tik();
+        s.dogadaj(osoba({ theme: null }), 'USER_UPDATED');
+        s.dogadaj(osoba({ theme: null }), 'TOKEN_REFRESHED');
+        await tik(); await tik();
+        tvrdi(s.citanja.length === 0 && s.upisi.length === 0,
+            '④ USER_UPDATED / TOKEN_REFRESHED bez teme NE pokreću preuzimanje (samo prijava i učitana sesija)',
+            { citanja: s.citanja.length, upisi: s.upisi });
+    }
 
     // ── 5 · brisanje računa ne čuva temu ─────────────────────────────────────────
     {
