@@ -77,8 +77,13 @@ test.describe('F2/1 ③ — profilna u traci', () => {
       await expect.poll(() => img.evaluate((el) => el.complete && el.naturalWidth > 0), { message: 'slika se nije učitala' }).toBe(true);
 
       // Traka na najužem telefonu: dodir ostaje 44×44, slika 28 px, ništa se ne prelijeva.
+      // ⚠️ Prijelazi se gase: `.topbar-btn` animira visinu 40 → 44 px kad prozor prijeđe prag od
+      // 560 px, pa je prva vrtnja izmjerila 42,66 px USRED animacije (lažan „gumb nizak").
+      // Mjeri se konačno stanje, ne put do njega.
+      await page.addStyleTag({ content: '*, *::before, *::after { transition: none !important; }' });
       await page.setViewportSize({ width: 320, height: 700 });
       await page.waitForTimeout(80);
+      await expect(img, 'u gumbu smije biti TOČNO jedna slika').toHaveCount(1);
       const b = await page.locator('#authNavBtn').boundingBox();
       expect(b.width, 'gumb uzak').toBeGreaterThanOrEqual(44);
       expect(b.height, 'gumb nizak').toBeGreaterThanOrEqual(44);
@@ -131,8 +136,12 @@ test.describe('F2/1 ③ — profilna u traci', () => {
     try {
       nova = await uploadAvatar(page);
       await expect.poll(() => metaAvatar(page)).toBe(nova);
-      // Profil se iscrta s novom slikom (red „Ukloni" postoji tek kad slika postoji).
-      await page.evaluate(() => renderProfilePage());
+      // Upload je išao IZRAVNO kroz modul, mimo `changeProfileImage`, pa profilni keš (`_identity`)
+      // ne zna za sliku i red „Ukloni" ostaje skriven (prva vrtnja je ovdje visjela 120 s).
+      // Isprazni keš → `renderProfilePage` pozove `loadIdentity` → red stigne iz baze.
+      await page.evaluate(() => { _identityFor = null; renderProfilePage(); });
+      await expect(page.locator('#profileEditForm .profile-edit-image-row[data-image-kind="avatar"]'),
+        'red „Ukloni" se nije pojavio').not.toHaveAttribute('hidden', /.*/, { timeout: 15000 });
       await page.click('#profileEditBtn');
       await expect(page.locator('#profileEditForm')).toBeVisible();
       await page.fill('#profileEditBio', 'napola napisan opis');
