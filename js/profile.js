@@ -101,7 +101,9 @@ function identityOf(user) {
         bio: String((red && red.bio) || meta.bio || '').trim(),
         // Slike (F2/2) žive SAMO u tablici — JWT ih nema, pa prvi kadar crta ikonu, a red ih donese.
         avatar: String((red && red.avatar_path) || ''),
-        cover: String((red && red.cover_path) || '')
+        cover: String((red && red.cover_path) || ''),
+        // Temelj mreže (A1): korisničko ime živi SAMO u tablici i nije obavezno — prazno = nema ga.
+        handle: String((red && red.handle) || '')
     };
 }
 
@@ -222,12 +224,15 @@ async function loadIdentity(user) {
     if (!client) { _identityFor = user.id; _identity = null; return; }
     const prije = identityOf(user);
     let red = null;
+    const citaj = (stupci) => client.from('profile_identity').select(stupci).eq('user_id', user.id).maybeSingle();
     try {
-        const { data, error } = await client
-            .from('profile_identity')
-            .select('display_name, bio, avatar_path, cover_path')
-            .eq('user_id', user.id)
-            .maybeSingle();
+        let { data, error } = await citaj('display_name, bio, avatar_path, cover_path, handle');
+        // ⚠️ Baza bez migracije „Temelj mreže" (PROD dok ju Leon ne pusti) nema stupac `handle` →
+        // 42703. Bez ovog drugog pokušaja cijeli bi red pao na rezervni put i zid bi IZGUBIO
+        // slike samo zato što je klijent stigao prije SQL-a.
+        if (error && (error.code === '42703' || /handle/.test(error.message || ''))) {
+            ({ data, error } = await citaj('display_name, bio, avatar_path, cover_path'));
+        }
         red = error ? null : (data || {});
     } catch (err) {
         red = null;                       // tablice nema (PROD) → rezervni put
@@ -246,7 +251,8 @@ async function loadIdentity(user) {
     // baci jedan bespotreban bljesak (JWT i tablica se u pravilu SLAŽU).
     const poslije = identityOf(user);
     if (poslije.name === prije.name && poslije.bio === prije.bio
-        && poslije.avatar === prije.avatar && poslije.cover === prije.cover) return;
+        && poslije.avatar === prije.avatar && poslije.cover === prije.cover
+        && poslije.handle === prije.handle) return;
 
     // ⚠️ I onda — nikad preko čovjeka koji upravo piše. `renderProfilePage` prepisuje
     // `#profileContent`, a s njim i otvorenu formu i tekst u njoj. Izmjerila brana:
@@ -276,6 +282,7 @@ function wallHtml(user, displayName, memberSince) {
         '    <div class="profile-avatar-wrap"><div class="profile-avatar">' + avatarInnerHtml(profileImageUrl(id.avatar)) + '</div>' + avatarButtonHtml() + '</div>' +
         '    <div class="profile-identity-text">' +
         '      <h2 class="profile-name">' + escapeHtmlProfile(displayName || user.email || '') + '</h2>' +
+        (id.handle ? '      <p class="profile-handle">@' + escapeHtmlProfile(id.handle) + '</p>' : '') +
         (displayName ? '      <p class="profile-meta profile-meta--sub">' + escapeHtmlProfile(user.email || '') + '</p>' : '') +
         '      <p class="profile-meta">' + pt('profile.memberSince', 'Member since ') + memberSince + '</p>' +
         '      <p class="profile-bio' + (opis ? '' : ' profile-bio--empty') + '">' +
@@ -291,6 +298,14 @@ function wallHtml(user, displayName, memberSince) {
         '      placeholder="' + pt('profile.editNamePh', 'Your name') + '"' +
         '      aria-label="' + pt('profile.editNamePh', 'Your name') + '"' +
         '      value="' + escapeHtmlProfile(displayName) + '">' +
+        // Temelj mreže (A1): `@` je ukras ispred polja, ne dio vrijednosti (RPC ga ne bi propustio).
+        '    <div class="profile-handle-field"><span class="profile-handle-at" aria-hidden="true">@</span>' +
+        '      <input type="text" id="profileEditHandle" class="auth-modal__input" maxlength="20"' +
+        '        autocomplete="username" autocapitalize="none" spellcheck="false"' +
+        '        placeholder="' + pt('profile.handlePh', 'username') + '"' +
+        '        aria-label="' + pt('profile.handleLabel', 'Username') + '" aria-describedby="profileEditHandleHint"' +
+        '        value="' + escapeHtmlProfile(id.handle) + '"></div>' +
+        '    <p class="profile-meta profile-handle-hint" id="profileEditHandleHint">' + pt('profile.handleHint', '3–20 characters: letters a–z, digits and _. You can change it once every 30 days.') + '</p>' +
         '    <textarea id="profileEditBio" class="auth-modal__input" maxlength="280" rows="3"' +
         '      placeholder="' + pt('profile.editBioPh', 'Short description') + '"' +
         '      aria-label="' + pt('profile.editBioPh', 'Short description') + '">' + escapeHtmlProfile(opis) + '</textarea>' +
@@ -478,6 +493,19 @@ function renderProfilePage() {
     if (_identityFor !== user.id) loadIdentity(user);
 }
 
+/** Kod iz `set_profile_handle` (supabase/f2-temelj-mreze.sql) → tekst za korisnika. */
+function handleErrorText(err) {
+    const m = String((err && err.message) || '');
+    if (/^handle_invalid/.test(m)) return pt('profile.handleErrInvalid', 'Username: 3–20 characters — letters a–z, digits and _.');
+    if (/^handle_reserved/.test(m)) return pt('profile.handleErrReserved', 'That username is reserved. Please pick another one.');
+    if (/^handle_taken/.test(m)) return pt('profile.handleErrTaken', 'That username is already taken.');
+    if (/^handle_cooldown/.test(m)) {
+        const dan = /(\d{4}-\d{2}-\d{2})/.exec(m);
+        return pt('profile.handleErrCooldown', 'You can change your username once every 30 days.') + (dan ? ' (' + dan[1] + ')' : '');
+    }
+    return m;
+}
+
 // F2/3b: izvor istine je `profile_identity`, upis ide kroz `set_profile_identity` RPC.
 // RPC strukturno NE MOŽE dirati `role` — ta kolona stoji u drugoj tablici koju ne spominje.
 async function saveProfileIdentity(e) {
@@ -494,6 +522,32 @@ async function saveProfileIdentity(e) {
 
     const novoIme = ime.value.trim();
     const noviOpis = opis.value.trim();
+
+    // Temelj mreže (A1): korisničko ime ima VLASTITI RPC i vlastita pravila (oblik, rezervirano,
+    // zauzeto, 30 dana). Ide PRVO — ako padne, ništa se ne sprema i korisnik ispravi baš to polje.
+    // Šalje se samo kad se promijenilo, inače bi svako spremanje imena udaralo u pravilo 30 dana.
+    const polje = document.getElementById('profileEditHandle');
+    const korisnik = SokratAuth.getUser();
+    if (polje && korisnik) {
+        const trenutni = identityOf(korisnik).handle;
+        const novi = polje.value.trim().replace(/^@/, '').toLowerCase();
+        if (novi !== trenutni) {
+            if (!novi) {
+                status.classList.add('is-error');
+                status.textContent = pt('profile.handleErrClear', 'A username can be changed, but not removed.');
+                return;
+            }
+            const { data: hRed, error: hErr } = await client.rpc('set_profile_handle', { p_handle: novi });
+            if (hErr) {
+                status.classList.add('is-error');
+                status.textContent = handleErrorText(hErr);
+                polje.focus();
+                return;
+            }
+            _identityFor = korisnik.id;
+            _identity = Object.assign({}, _identity || {}, hRed || {});
+        }
+    }
 
     const { data: red, error: rpcErr } = await client.rpc('set_profile_identity', {
         p_display_name: novoIme, p_bio: noviOpis

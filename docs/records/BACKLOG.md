@@ -24,6 +24,11 @@ Ništa ovdje ne otvara presuđeno: javni profil i dijeljenje = F7 (ADR-035/036),
 GDPR-brisanje čisti sve osobne buckete · i18n na oba jezika · telefon i a11y mjereni.
 
 **A · STRUKTURNO — jeftino sad, skupo poslije** (mijenja shemu koju će F7 i svaka objava pretpostavljati):
+> **✅ A1–A3 NA STAGINGU 2026-09-14** (`supabase/f2-temelj-mreze.sql`, spec `temelj-mreze.authed.spec.js` 6/6; CHANGELOG
+> 14.09.). Odstupanja od prijedloga ispod: `handle` je obični `text` (pravilo oblika drži mala slova, pa `citext` nije
+> potreban) · kvota NE smije biti podupit u politici (izmjereno: `42P17`, srušio SVE uploade) → SECURITY DEFINER brojač.
+> **PROD čeka Leonov OK** (SQL prije klijenta).
+
 1. **`handle`** (korisničko ime za URL, `@leon`): `citext` unique, `^[a-z0-9_]{3,20}$`, popis **rezerviranih**
    (`admin`, `sokrat`, `api`, `login`…), promjena najviše 1× / 30 dana, provjera u RPC-u. Bez toga javni profil
    nema adresu, a svaka kasnija dodjela znači migraciju postojećih računa.
@@ -58,7 +63,12 @@ GDPR-brisanje čisti sve osobne buckete · i18n na oba jezika · telefon i a11y 
 (§5 RASPORED-a kaže „arhitektonska odluka, ne cigla" — mreža ju vraća na stol: `@handle` bez URL-a nije handle).
 
 **Prijedlog reda:** A1–A4 kao jedna cigla „TEMELJ MREŽE" odmah iza F2/1 (dira isti šav: RPC + `user_metadata`) ·
-B5–B6 u §4 stalnu traku · C i D uz F7. Ništa od ovoga nije započeto; čeka Leonovu riječ.
+B5–B6 u §4 stalnu traku · C i D uz F7. ~~Ništa od ovoga nije započeto~~ A1–A4 izvedeno 14.09. (v. gore); B, C, D čekaju.
+
+**🧪 Povremeni pad `theme-fouc.spec.js` (nađeno 14.09., star):** scenariji s tamnim uređajem padaju ~2/72 na tvrdnji
+„pozadina nije tamna" — boja `body` uhvaćena USRED prijelaza (npr. `rgb(199,201,203)`), dok je atribut teme točan od prvog
+kadra (nula promjena). Isti omjer i sa `theme.js` od prije F2/1 (izmjereno obrnuto). Popravak brane: čekati mirnu
+pozadinu (`expect.poll`) ili ugasiti prijelaze PRIJE mjerenja boje — ne dirati tvrdnju o atributu. Nije hitno; stalna traka.
 
 ### 🔴 LEONOVI NALAZI S UREDAJA — 2026-09-04 (nedirnuto, ceka svoj red)
 

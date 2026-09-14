@@ -200,6 +200,35 @@
     overflow-wrap: anywhere;
 }
 
+/* Temelj mreže (A1) — `@ime` ispod imena (adresa profila u F7). Tinta `ink-1`, ne marka: ime
+   nije poveznica dok javnog profila nema. Pun izgled profila radi F2/3c. */
+.profile-handle {
+    margin: 0 0 0.35rem;
+    color: var(--color-ink-1);
+    font-size: 0.95rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+/* Polje s `@` ispred: znak je ukras (aria-hidden), vrijednost ga ne nosi. */
+.profile-handle-field {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.profile-handle-at {
+    color: var(--color-ink-1);
+    font-weight: 700;
+}
+
+.profile-handle-field .auth-modal__input {
+    flex: 1;
+    min-width: 0;
+}
+
+.profile-handle-hint { margin: -0.35rem 0 0; }
+
 .profile-bio {
     color: var(--color-ink-0);
     font-size: 0.95rem;

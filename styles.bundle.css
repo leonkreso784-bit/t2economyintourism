@@ -8345,6 +8345,29 @@ sokrat-modal.auth-modal > * {
   margin: 0 0 0.25rem;
   overflow-wrap: anywhere;
 }
+.profile-handle {
+  margin: 0 0 0.35rem;
+  color: var(--color-ink-1);
+  font-size: 0.95rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.profile-handle-field {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.profile-handle-at {
+  color: var(--color-ink-1);
+  font-weight: 700;
+}
+.profile-handle-field .auth-modal__input {
+  flex: 1;
+  min-width: 0;
+}
+.profile-handle-hint {
+  margin: -0.35rem 0 0;
+}
 .profile-bio {
   color: var(--color-ink-0);
   font-size: 0.95rem;

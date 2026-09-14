@@ -5,6 +5,41 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-14 (OPUS) — **TEMELJ MREŽE (BACKLOG §🌐 A1–A3): korisničko ime · vidljivost · kvota slika** — STAGING (grana `feat/f2-avatar-traka`)
+
+Leon: *„može, ovo je super"* (pravila: 3–20 znakova, 30 dana, bez brisanja · vidljivost bez sučelja do F7 · 20 slika).
+
+### Dodano
+- **`supabase/f2-temelj-mreze.sql`** (additivno, idempotentno): `profile_identity.handle` (format `^[a-z0-9_]{3,20}$` +
+  unique) · `handle_changed_at` · `visibility` (`private|link|public`, zadano `private`, BEZ politike i sučelja — F7 dodaje
+  jednu SELECT-politiku nad tim stupcem) · `reserved_handles` (RLS bez politika, bez grantova) · RPC **`set_profile_handle`**
+  (normalizira u mala slova; kodovi `handle_invalid|reserved|taken|cooldown`; 30 dana između promjena, prvo postavljanje
+  slobodno, isto ime ne pomiče sat, `for update` protiv utrke) · **kvota 20 objekata** u vlastitom prefiksu `profile-images`
+  kroz `profile_images_count_mine()` (SECURITY DEFINER, EXECUTE ostaje `authenticated`-u — politiku izvršava pozivatelj).
+- **`js/profile.js`:** `@ime` na zidu ispod imena · polje s `@` u „Uredi profil" (ide PRVO, samo kad se promijenilo, greške
+  prevedene; brisanje odbijeno na klijentu) · `loadIdentity` na `42703` (baza bez stupca) čita bez `handle` umjesto da cijeli
+  red padne na rezervni put — klijent smije stići prije SQL-a a da zid ne izgubi slike. i18n 9 ključeva, CSS u `profile.css`.
+### ⚠️ Nalaz iz mjerenja (STAGING) — prva verzija kvote je SRUŠILA upload
+Podupit nad `storage.objects` UNUTAR INSERT-politike nad `storage.objects` → `42P17 infinite recursion detected in policy`,
+a Storage API to javlja kao *„The database schema is invalid or incompatible."* — **svaki** upload u bucket, ne samo 21.
+Uhvatio ga je tek spec (upload 1 od 20); popravak = SECURITY DEFINER brojač, zapisano u SQL-u uz politiku.
+### Popravljeno (nađeno istim vrtnjama)
+- **`js/theme.js` (F2/1 ①):** preuzimanje teme s uređaja samo na `SIGNED_IN`/`INITIAL_SESSION` — na `USER_UPDATED` bez teme
+  prozor je odmah ponovno upisivao ono što je netko upravo maknuo (vraćanje stanja u specu se poništavalo). Unit +1.
+- **Higijena dijeljenog test-računa:** `profile-wall` ⑤ vraća ime/opis i u TABLICU (ne samo preslik) — probno ime je inače
+  ostajalo u `profile_identity`, a sljedeći spec koji spremi formu vraćao ga je i u metapodatke · `profile-images` ⑤ si
+  postavi „bez slike" umjesto da ga pretpostavi. Test-račun na stagingu počišćen (Storage API + SQL) i provjeren čistim
+  POSLIJE pune vrtnje.
+### Brane
+- `tests/temelj-mreze.authed.spec.js` (6): vidljivost · normalizacija + isto ime · odbijanja s KODOM (oblik, rezervirano,
+  30 dana, zauzeto preko jednokratnog korisnika) · izravan upis i čitanje rezerviranih zatvoreni · sučelje (@ime, prevedena
+  greška, forma ostaje) · kvota (21. odbijen). **Prije migracije 6/6 crvenih → poslije 6/6 zelenih**; 27/27 profilnih specova.
+- Savjetnik (security) na stagingu: ništa novo osim očekivanog (`reserved_handles` bez politike = namjerno; dva nova RPC-a
+  iste klase kao svih 11).
+### PROD — redoslijed (Leonov OK)
+**SQL u SQL Editoru PRIJE klijenta** (isto kao F2/2). Klijent bez stupca preživi (42703 → čitanje bez `handle`), ali polje
+za ime bi palo na „Could not find the function".
+
 ## 2026-09-14 (OPUS) — **F2/1 ③: profilna u gornjoj traci** (grana `feat/f2-avatar-traka`, iznad ①)
 
 Leon (anketa 13.09.): avatar u traci, putanja i u `user_metadata` (kao ime). = BACKLOG §🌐 **A4**.

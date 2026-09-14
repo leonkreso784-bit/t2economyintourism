@@ -30,7 +30,23 @@ dira disk pa ne smeta suiti koja vrti), a ③ se gradi u **zasebnom stablu `sokr
   forme. ③ bi to pogoršao (Ukloni je U formi i šalje `USER_UPDATED`) — sad `USER_UPDATED`/`TOKEN_REFRESHED` uz otvorenu
   formu ne crtaju profil; traka i slike na zidu se osvježavaju u mjestu.
 
-**Sljedeće:** „Temelj mreže" (BACKLOG §🌐 A1–A3) — Leon potvrdio red 14.09.: ③ → temelj mreže → F2/3c → F2/5 → F2/4.
+**`test:responsive` za ① (47 min):** 630 prošlo · 2 pala · 117 preskočeno. Oba pada ponovljena ciljano 5/5 zelena;
+`theme-fouc` cijeli 3× na 4 profila = **2/72 pada i na novom i na STAROM `theme.js`** (isti simptom: pozadina uhvaćena
+USRED prijelaza, atribut teme točan od prvog kadra) → star povremeni pad testa, ne ①. Zapis: BACKLOG §STALNA TRAKA.
+⚠️ Moj brojač padova je tražio `✘`, a line-reporter ga ne ispisuje — padove sam vidio tek na kraju. Broji se `N failed`.
+
+**Specovi ③ (kad se port oslobodio):** dva crvena, oba MOJ test, ne kod — `42,66 px` je visina USRED animacije
+`.topbar-btn` (40 → 44 na pragu 560 px; sonda s dvije slike u gumbu to je razotkrila) · ③ je visio jer upload mimo
+`changeProfileImage` ne puni `_identity`. Popravljeno, 3/3; obrnuto na `4c7216c` 3/3 crvena.
+
+**TEMELJ MREŽE (Leon: *„može, ovo je super"*):** SQL + spec PRIJE migracije → 6/6 crvenih → migracija na STAGING →
+**upload SRUŠEN** (`42P17` rekurzija politike, Storage kaže „schema invalid") → SECURITY DEFINER brojač → 6/6 zelenih.
+Iste vrtnje razotkrile tri traga na dijeljenom test-računu (probno ime, tema, avatar) → korijeni: `profile-wall` ⑤ vraćao
+samo preslik · `theme.js` preuzimao temu i na `USER_UPDATED` (moj kvar iz ①, sad samo na ulazu) · `profile-images` ⑤
+pretpostavljao prazan račun. Račun počišćen, 27/27 profilnih specova, račun čist i POSLIJE vrtnje. Preflight EXIT 0.
+**PROD čeka Leona:** `f2-temelj-mreze.sql` u SQL Editoru PRIJE klijenta.
+
+**Sljedeće:** F2/3c (CSS profila i susjeda) — red 14.09.: ③ ✅ → temelj mreže ✅ (staging) → **F2/3c** → F2/5 → F2/4.
 
 ## 2026-09-13 (FABLE, sesija F2/2 u stablu `sokratstudy.f22`) — cigla 1: baza za slike profila na stagingu, test-prvo
 
