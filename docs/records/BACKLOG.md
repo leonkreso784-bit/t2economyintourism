@@ -61,6 +61,8 @@ B5–B6 u §4 stalnu traku · C i D uz F7. Ništa od ovoga nije započeto; čeka
 ### 🔴 LEONOVI NALAZI S UREDAJA — 2026-09-04 (nedirnuto, ceka svoj red)
 
 **A. ODLUKA: TEMA PRATI RACUN, NE UREDAJ** (Leon, 2026-09-04: *„tema treba pratiti racun"*).
+**✅ IZVEDENO 2026-09-14 (F2/1 ①, `feat/f2-tema-racun`)** — otvoreno pitanje ispod odgovoreno 06.09. (zadana: odjava
+briše lokalni izbor); izvedba i brane: CHANGELOG 14.09. Tekst ispod ostaje kao zapis povoda.
 Danas se tema sprema u `localStorage` pod `sokrat-theme` — dakle po UREDAJU. To je bilo
 namjerno („tema je stvar uredaja", zapisano uz birac u profilu), ali Leon je odlucio suprotno.
 **Njegov opis kvara koji ga je na to naveo:** *„kada otvorim aplikaciju i nisam prijavljen,

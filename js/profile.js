@@ -61,7 +61,7 @@ function themeCardHtml() {
         // ⚠️ Rezervni tekst mora reći ISTO što i rječnik: otkako natpis nema sufiksa, ovo je
         // JEDINO mjesto koje kaže da „Automatski" prati uređaj. Stari fallback („Pick a
         // theme…") to nije spominjao, pa bi stranica bez `i18n.js` gumb ostavila neobjašnjenim.
-        '<p class="profile-meta">' + pt('profile.appearanceDesc', 'Automatic follows your device, like our emails. A pick is saved on this device.') + '</p>' +
+        '<p class="profile-meta">' + pt('profile.appearanceDesc', 'Automatic follows your device, like our emails. When you are signed in, your pick follows your account; otherwise it stays on this device.') + '</p>' +
         '<div class="theme-picker">' + gumbi + '</div>' +
         '</div>';
 }
@@ -655,9 +655,9 @@ const DELETE_TOKEN = 'DELETE';
  * Consent se čuva jer je i sam GDPR-artefakt (dokaz pristanka), a `sokrat-supabase-override`
  * je test-prekidač — brisanje bi razvalilo staging-sesiju usred testa.
  */
-// `sokrat-theme-chosen` = biljeg da je tema IZABRANA (boot.js, F1/3): ostane li tema bez
-// biljega, `academic` bi se na sljedećem ulasku pročitao kao stari automatski upis i nestao.
-const KEEP_LOCAL_KEYS = ['sokrat-theme', 'sokrat-theme-chosen', 'sokrat-ui-lang', 'sokrat-cookie-consent', 'sokrat-supabase-override'];
+// ⚠️ Tema NIJE na popisu (F2/1): od kad prati račun, izbor pripada osobi, ne uređaju — odjava
+// ga ionako briše (`theme.js`, SIGNED_OUT), a brisanje računa ne smije biti blaže od odjave.
+const KEEP_LOCAL_KEYS = ['sokrat-ui-lang', 'sokrat-cookie-consent', 'sokrat-supabase-override'];
 
 /**
  * Počisti SVE lokalne tragove korisnika. Allow-lista (a ne popis za brisanje) je namjerna:

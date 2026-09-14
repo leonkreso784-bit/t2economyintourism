@@ -5,6 +5,24 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-14 (OPUS, sesija F2/1 u stablu `sokratstudy.f21`) — cigla ①: tema prati račun, test-prvo
+
+`/next` → F2/1 razrezan na tri cigle (① tema u računu · ② odjava briše lokalni izbor · ③ avatar u traci); ② je ispala
+toliko mala da je ušla u ① (jedna `SIGNED_OUT` grana u istom slušaču). Leon potvrdio plan i jedinu pretpostavku: **račun
+bez teme preuzme izbor uređaja**, ali tek nakon svježeg čitanja s poslužitelja.
+
+- **Crveno pa zeleno:** unit test napisan prije koda → 20 crvenih na starom `theme.js` → 32/32. Spec na STAGING-u zelen,
+  pa obrnuto sa starim `theme.js` → pada. Preflight EXIT 0.
+- **Postojeća brana ulovila raspored:** `theme-boot-order` traži da između `initTheme` i `setTheme` nema `setItem` (upis
+  na učitavanju je zabranjen od F1/3) — nova pomoćna funkcija sjela je baš ondje; premještena iza `setTheme`, brana netaknuta.
+- **Tamni uređaj + izbor `academic` u specu je namjeran:** vidi se da temu donosi račun (uređaj bi dao `carbon`), a ostali
+  prijavljeni specovi ionako vide `academic`, pa im usporedna vrtnja ne mijenja ništa dok je upisan.
+- **Nalaz za zapamtiti:** `SokratAuth.signOut()` zove `client.auth.signOut()` bez `scope` → u supabase-js je to
+  **globalno** (opoziva sve sesije računa). Zato spec ne vozi odjavu. Je li to i željeno ponašanje za korisnika (odjava na
+  jednom uređaju odjavi sve) — nije dirano, zapisano za Leona.
+
+**Sljedeće:** ③ avatar u gornjoj traci (putanja u `user_metadata`, BACKLOG §🌐 A4).
+
 ## 2026-09-13 (FABLE, sesija F2/2 u stablu `sokratstudy.f22`) — cigla 1: baza za slike profila na stagingu, test-prvo
 
 Leon: *„svida mi se redosljed krenimo sa prvom ciglom"* → redoslijed iz `/next`: ① baza · ② klijent · ③ zid · ④ brane.

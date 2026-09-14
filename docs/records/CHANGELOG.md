@@ -5,6 +5,29 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-14 (OPUS) — **F2/1 ①: tema prati račun** (grana `feat/f2-tema-racun`)
+
+Leon (2026-09-04): *„tema treba pratiti račun"* · (2026-09-06): *„tuđi izbor ne smije preživjeti odjavu"* · (anketa 13.09.):
+tema u `user_metadata`. Prvenstvo iz `boot.js` time dobiva i gornju razinu: **račun > lokalni izbor > uređaj > academic**.
+
+### Promijenjeno
+- **`js/theme.js`:** izbor prijavljenog se upisuje u `user_metadata.theme` (`updateUser({ data })`, u pozadini — klik se
+  primijeni odmah); „Automatski" se piše izričito kao `auto`. Na svaki događaj računa s valjanom temom (prijava, obnovljena
+  sesija, osvježen token, `USER_UPDATED`) račun **pregazi** lokalni izbor i upiše ga lokalno s biljegom, pa je i prvi kadar
+  sljedećeg ulaska točan. **`SIGNED_OUT` briše lokalni izbor** → uređaj; neprijavljen posjetitelj svoj izbor zadržava.
+  Dok upis čeka mrežu, staro stanje računa klik ne vraća unatrag. `localStorage` ostaje prvi kadar (`boot.js` netaknut).
+- **Račun bez teme** (svi računi stariji od ovoga) **preuzme izbor uređaja** — tek nakon SVJEŽEG `getUser()`, jer keširana
+  sesija zna biti starija od izbora s drugog uređaja; ima li poslužitelj temu, primijeni se ona. Jednom po korisniku.
+- **`js/profile.js`:** `KEEP_LOCAL_KEYS` (brisanje računa) više ne čuva temu — brisanje ne smije biti blaže od odjave.
+- **i18n `profile.appearanceDesc`:** „Kad si prijavljen/a, odabir prati tvoj račun; inače se pamti na ovom uređaju."
+
+### Brane
+- `tests/unit/theme-account.test.js` (32 tvrdnje, `vm` + lažni `SokratAuth`) — obrnuto na starom `theme.js`: **20 crvenih**.
+- `tests/theme-account.authed.spec.js` (STAGING, tamni uređaj): klik → `user_metadata.theme` na poslužitelju, ime preživi
+  (stapanje, ne prepisivanje), obrisan lokalni izbor + reload → račun pregazi `carbon` uređaja u `academic`. Obrnuto na
+  starom `theme.js`: **pada** („izbor nije stigao u račun"). Odjava se u specu NE vozi (`signOut()` je globalan i opozvao
+  bi dijeljenu sesiju) — čuva ju unit.
+
 ## 2026-09-13 (FABLE) — **F2/2 dopuna: „+" na portretu i gumb na naslovnoj (Facebook-obrazac) + IZREZ slike** (grana `feat/f2-slike`)
 
 Leon (nakon deploya): *„treba biti plus na profilnoj za mijenjat i isto tako za pozadinu… kao facebook. također kada se

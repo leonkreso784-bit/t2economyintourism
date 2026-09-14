@@ -532,7 +532,7 @@
     'profile.changePassword': { en: 'Change password', hr: 'Promijeni lozinku' },
     'profile.signOut': { en: 'Sign out', hr: 'Odjava' },
     'profile.appearance': { en: 'Appearance', hr: 'Izgled' },
-    'profile.appearanceDesc': { en: 'Automatic follows your device, like our emails. A pick is saved on this device.', hr: 'Automatski prati uređaj, kao i naši mailovi. Odabir se pamti na ovom uređaju.' },
+    'profile.appearanceDesc': { en: 'Automatic follows your device, like our emails. When you are signed in, your pick follows your account; otherwise it stays on this device.', hr: 'Automatski prati uređaj, kao i naši mailovi. Kad si prijavljen/a, odabir prati tvoj račun; inače se pamti na ovom uređaju.' },
     'profile.themeAuto': { en: 'Automatic', hr: 'Automatski' },
     'profile.themeAcademic': { en: 'Academic blue', hr: 'Akademsko plavo' },
     'profile.themeChalk': { en: 'Chalkboard', hr: 'Ploča' },

@@ -103,6 +103,14 @@
   edit-pa-revert.
 - **Setup računa:** dediciran **test-admin account (NE osobni)** → napravi kroz app +
   `profiles.role='admin'` → creds u `.env`.
+- ⚠️ **Sesija i račun su DIJELJENI svim `*.authed.spec.js` (2026-09-14, F2/1):**
+  ① **tema živi u `user_metadata.theme`** — spec koji mijenja temu kroz `setTheme`/birač piše u račun
+  i time svim ostalim specovima mijenja temu; vrati zatečeno u `finally` (obrazac:
+  `theme-account.authed.spec.js`, koji uz to bira `academic` = ono što ostali ionako vide).
+  Izravan `setAttribute('data-theme', …)` (axe-gate) račun ne dira.
+  ② **Nikad `SokratAuth.signOut()` u specu** — supabase-js `signOut()` je zadano `scope: 'global'`
+  (provjereno u zakucanoj 2.110.8) i opoziva refresh-token dijeljene sesije `tests/.auth/admin.json`,
+  pa padaju svi specovi iza njega. Odjava se čuva unit-testom (`SIGNED_OUT` u `vm`-pješčaniku).
 
 
 ## CI/CD — automatski gate (od 2026-06-29, FOUNDATION_PLAN F1)

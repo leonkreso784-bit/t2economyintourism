@@ -48,18 +48,26 @@ function initTheme() {
 }
 
 function setTheme(name) {
+    if (name !== 'auto' && window.SOKRAT_THEMES.indexOf(name) < 0) return false;
+    zapisiIzborLokalno(name);
+    initTheme();
+    upisiTemuURacun(name);
+    return true;
+}
+
+/** Upiše izbor na OVAJ uređaj (prvi kadar sljedećeg ulaska ga čita u `boot.js`). Račun ne dira.
+    ⚠️ Stoji IZA `setTheme`, ne između njega i `initTheme`: `theme-boot-order.test.js` u tom
+    rasponu traži da nema nijednog `setItem` (upis na učitavanju je zabranjen, F1/3). */
+function zapisiIzborLokalno(name) {
     try {
         if (name === 'auto') {
             localStorage.removeItem('sokrat-theme');
             localStorage.removeItem('sokrat-theme-chosen');
         } else {
-            if (window.SOKRAT_THEMES.indexOf(name) < 0) return false;
             localStorage.setItem('sokrat-theme', name);
             localStorage.setItem('sokrat-theme-chosen', '1');   // biljeg izbora — v. boot.js
         }
     } catch (e) { /* privatni način: bez zapisa NEMA ni izbora — pada na uređaj (do F1/3 je padao na zadanu) */ }
-    initTheme();
-    return true;
 }
 
 /* Što birač pokazuje kao aktivno: IZBOR, ne primijenjenu temu. Uz „Automatski" te dvije
@@ -83,3 +91,98 @@ try {
 // Tema je već na ekranu (boot.js); ovdje se samo normalizira zapis u localStorageu, pa
 // smije čekati `DOMContentLoaded`. Ono što se VIDI ne čeka ništa.
 document.addEventListener('DOMContentLoaded', initTheme);
+
+/* ========== F2/1 · TEMA PRATI RAČUN ==========
+   Leon, 2026-09-04: „tema treba pratiti račun" — do sad je živjela samo u `localStorage`, pa
+   je neprijavljen posjetitelj zaticao temu zadnjeg prijavljenog. Prvenstvo (`boot.js`):
+   račun > lokalni izbor > uređaj > academic.
+   ⚠️ `localStorage` OSTAJE prvi kadar: odluka mora pasti prije crtanja, a račun stiže tek
+   kad se učita supabase-js. Račun ga zato PREGAZI čim stigne i ne čeka se ništa na ekranu.
+   Izbor je u `user_metadata.theme` (JWT, bez nove tablice — Leon, anketa 13.09.); „Automatski"
+   se piše izričito kao `auto`, jer ključ koji NEDOSTAJE znači „račun još nema mišljenje" i
+   pokreće preuzimanje izbora s uređaja (niže).
+   ⚠️ `SokratAuth` je GOLI `const` iz `auth.js` (učitan POSLIJE ove datoteke) — zato se čita
+   golo i tek u trenutku poziva, nikad `window.SokratAuth`. Brana: `tests/unit/theme-account.test.js`. */
+const TEMA_RACUNA = 'theme';
+let _temaNaPutu = null;              // izbor čiji upis u račun još čeka mrežu
+const _preuzetoZa = {};              // user.id → preuzimanje izbora s uređaja je već pokrenuto
+
+function valjanaTemaRacuna(v) {
+    return v === 'auto' || window.SOKRAT_THEMES.indexOf(v) >= 0;
+}
+
+/** Birač u profilu pokazuje IZBOR — kad ga promijeni račun, a ne klik, mora se preoznačiti. */
+function oznaciBiracTeme() {
+    const izbor = getThemeChoice();
+    document.querySelectorAll('[data-theme-pick]').forEach(function (b) {
+        b.setAttribute('aria-pressed', b.dataset.themePick === izbor ? 'true' : 'false');
+    });
+}
+
+function primijeniTemuRacuna(tema) {
+    if (tema === getThemeChoice()) return;
+    zapisiIzborLokalno(tema);
+    initTheme();
+    oznaciBiracTeme();
+}
+
+function upisiTemuURacun(name) {
+    if (typeof SokratAuth === 'undefined') return;
+    const user = SokratAuth.getUser();
+    const client = SokratAuth.getClient();
+    if (!user || !client) return;
+    if ((user.user_metadata || {})[TEMA_RACUNA] === name) return;
+    _temaNaPutu = name;
+    const podaci = {};
+    podaci[TEMA_RACUNA] = name;
+    // Tema je već na ekranu — upis je u pozadini. Ne uspije li (bez mreže), račun ostaje izvor
+    // istine: sljedeća prijava vrati ono što on ima. To je svjesna cijena, ne kvar.
+    Promise.resolve(client.auth.updateUser({ data: podaci }))
+        .then(function (r) { if (r && r.error) throw r.error; })
+        .catch(function (e) { console.warn('[tema] upis u račun nije uspio:', (e && e.message) || e); })
+        .then(function () { if (_temaNaPutu === name) _temaNaPutu = null; });
+}
+
+/* Račun bez teme (svaki račun stariji od F2/1) preuzme izbor koji uređaj već ima — inače bi
+   svatko morao birati ispočetka. ⚠️ Tek nakon SVJEŽEG čitanja s poslužitelja: sesija iz
+   `localStorage` zna biti starija od izbora napravljenog na drugom uređaju, pa bi slijepo
+   preuzimanje pregazilo noviji izbor starijim. Jednom po korisniku (SIGNED_IN se ponavlja). */
+function preuzmiIzborUredjaja(user) {
+    const izbor = window.__sokratIzborTeme();
+    if (!izbor || _preuzetoZa[user.id]) return;
+    const client = SokratAuth.getClient();
+    if (!client) return;
+    _preuzetoZa[user.id] = true;
+    Promise.resolve(client.auth.getUser())
+        .then(function (r) {
+            const svjez = r && r.data && r.data.user;
+            if (!svjez) return;
+            const tema = (svjez.user_metadata || {})[TEMA_RACUNA];
+            if (valjanaTemaRacuna(tema)) primijeniTemuRacuna(tema);
+            else upisiTemuURacun(window.__sokratIzborTeme() || 'auto');
+        })
+        .catch(function (e) { console.warn('[tema] čitanje računa nije uspjelo:', (e && e.message) || e); });
+}
+
+function naPromjenuRacuna(user, event) {
+    if (!user) {
+        // Leon, 2026-09-06: „tuđi izbor ne smije preživjeti odjavu" — račun ga čuva za iduću
+        // prijavu. SAMO odjava: neprijavljen posjetitelj (INITIAL_SESSION bez sesije) svoj
+        // lokalni izbor zadržava, jer on nikome drugome ne pripada.
+        if (event === 'SIGNED_OUT') primijeniTemuRacuna('auto');
+        return;
+    }
+    if (_temaNaPutu !== null) return;   // klik čeka mrežu — staro stanje računa ga ne vraća unatrag
+    const tema = (user.user_metadata || {})[TEMA_RACUNA];
+    if (valjanaTemaRacuna(tema)) primijeniTemuRacuna(tema);
+    else preuzmiIzborUredjaja(user);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof SokratAuth === 'undefined' || typeof SokratAuth.onChange !== 'function') return;
+    SokratAuth.onChange(naPromjenuRacuna);
+    // `auth.js` se inicijalizira na ISTOM događaju i sesiju donosi asinkrono, pa je ovdje
+    // obično još nema — ali ako ju je već donio, obradi ju kao zatečenu.
+    const zatecen = SokratAuth.getUser();
+    if (zatecen) naPromjenuRacuna(zatecen, 'INITIAL_SESSION');
+});
