@@ -235,6 +235,13 @@ async function loadIdentity(user) {
     _identityFor = user.id;
     _identity = red;
 
+    // F2/1 ③ SAMOPOPRAVAK: traka čita avatar iz JWT-a (`user_metadata.avatar_path`), baza je istina.
+    // Razišli su se (slika postavljena prije F2/1, ili je zrcaljenje palo bez mreže) → vrati preslik.
+    // Samo uz USPJEŠNO čitanje (`red` nije null): bez tablice ne znamo istinu, pa ništa ne diramo.
+    if (red && window.SokratProfileImages && typeof SokratProfileImages.mirrorAvatar === 'function') {
+        SokratProfileImages.mirrorAvatar(red.avatar_path || null);
+    }
+
     // Crtaj PONOVNO samo ako bi se nešto promijenilo — inače svako otvaranje profila
     // baci jedan bespotreban bljesak (JWT i tablica se u pravilu SLAŽU).
     const poslije = identityOf(user);

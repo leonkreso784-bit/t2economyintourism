@@ -185,7 +185,15 @@ const SokratAuth = (function () {
             if (event === 'PASSWORD_RECOVERY') openModal();
             // Ako je Profile otvoren, osvježi ga (ili makni ako se korisnik odjavio).
             if (typeof AppState !== 'undefined' && AppState.nav.page === 'profile') {
-                if (currentUser && typeof renderProfilePage === 'function') renderProfilePage();
+                // ⚠️ F2/1: `USER_UPDATED` (tema, zrcaljenje avatara — oboje pišu u `user_metadata`) i
+                // `TOKEN_REFRESHED` (svaki sat) NE mijenjaju TKO je prijavljen. `renderProfilePage`
+                // prepisuje `#profileContent`, pa bi preko otvorene forme „Uredi profil" obrisao ono
+                // što korisnik upravo piše — a „Ukloni" sliku stoji BAŠ u toj formi. Ništa se ne
+                // gubi: slike zid osvježi U MJESTU (`refreshWallImages`), spremanje crta iznova, a
+                // traka (`updateNavButton` gore) prati događaj i dok je forma otvorena.
+                const forma = document.getElementById('profileEditForm');
+                const piše = !!forma && !forma.hidden && (event === 'USER_UPDATED' || event === 'TOKEN_REFRESHED');
+                if (currentUser && !piše && typeof renderProfilePage === 'function') renderProfilePage();
                 if (!currentUser && typeof navigateTo === 'function') navigateTo('landing');
             }
         });
@@ -209,10 +217,53 @@ const SokratAuth = (function () {
         document.querySelectorAll('.auth-entry-label').forEach(function (label) {
             label.textContent = short;
         });
+        const avatar = currentUser ? navAvatarUrl(currentUser) : null;
         document.querySelectorAll('.auth-entry').forEach(function (btn) {
             btn.classList.toggle('is-signed-in', !!currentUser);
             btn.setAttribute('aria-label', currentUser ? 'My profile' : 'Sign in');
+            setNavAvatar(btn, avatar);
         });
+    }
+
+    /* ---------- F2/1 ③ — PROFILNA U TRACI (Leon, anketa 13.09.) ----------
+       Putanja stiže iz JWT-a (`user_metadata.avatar_path`, zrcali ju `js/profile-images.js`), pa se
+       slika crta na SVAKOJ stranici bez kruga prema bazi i bez paketa `profile`. Bucket je javan
+       (Leon, 09.09.), URL je običan string.
+       ⚠️ Metapodatke korisnik smije pisati sam (`updateUser`), pa je putanja ULAZ, ne činjenica:
+       prolazi samo oblik `<moj-id>/avatar/<ime>` — tuđa ili izmišljena putanja ne postaje URL.
+       Datoteka koja ne postoji (npr. obrisana na drugom uređaju) → `error` → natrag na ikonu. */
+    const AVATAR_BUCKET = 'profile-images';
+
+    function navAvatarUrl(user) {
+        const p = user && user.user_metadata && user.user_metadata.avatar_path;
+        if (!client || typeof p !== 'string') return null;
+        const seg = p.split('/');
+        if (seg.length !== 3 || seg[0] !== user.id || seg[1] !== 'avatar' || !/^[A-Za-z0-9._-]+$/.test(seg[2])) return null;
+        const res = client.storage.from(AVATAR_BUCKET).getPublicUrl(p);
+        const url = res && res.data && res.data.publicUrl;
+        return (typeof url === 'string' && /^https:\/\//.test(url)) ? url : null;
+    }
+
+    function setNavAvatar(btn, url) {
+        let img = btn.querySelector('img.auth-entry-avatar');
+        if (!url) {
+            if (img) img.remove();
+            btn.classList.remove('has-avatar');
+            return;
+        }
+        if (!img) {
+            img = document.createElement('img');
+            img.className = 'auth-entry-avatar';
+            img.alt = '';                 // ime gumbu daje `aria-label`; slika je ukras
+            img.decoding = 'async';
+            img.addEventListener('error', function () {
+                img.remove();
+                btn.classList.remove('has-avatar');
+            });
+            btn.insertBefore(img, btn.firstChild);
+        }
+        if (img.getAttribute('src') !== url) img.setAttribute('src', url);
+        btn.classList.add('has-avatar');
     }
     // i18n: na promjenu jezika sučelja ponovno iscrtaj nav-gumb (prevede „Sign in", čuva ime kad je prijavljen)
     window.refreshAuthNav = updateNavButton;

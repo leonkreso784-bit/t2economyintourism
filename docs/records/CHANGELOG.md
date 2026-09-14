@@ -5,6 +5,30 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-14 (OPUS) — **F2/1 ③: profilna u gornjoj traci** (grana `feat/f2-avatar-traka`, iznad ①)
+
+Leon (anketa 13.09.): avatar u traci, putanja i u `user_metadata` (kao ime). = BACKLOG §🌐 **A4**.
+
+### Dodano
+- **`js/profile-images.js` `mirrorAvatar(path)`:** nakon uspješnog RPC-a upload/ukloni AVATARA zrcali putanju u
+  `user_metadata.avatar_path` (naslovna ne). Najbolji pokušaj — pad ne obara upload; nedostaje li ključ = `null`.
+- **`js/profile.js` samopopravak:** `loadIdentity` poslije uspješnog čitanja reda vrati preslik na istinu iz baze
+  (slike od prije F2/1, zrcaljenje koje je palo bez mreže). Bez tablice ne dira ništa.
+- **`js/auth.js` `navAvatarUrl` / `setNavAvatar`:** `.auth-entry` gumbi crtaju okruglu sliku (28 px) umjesto ikone, iz
+  JWT-a, bez kruga prema bazi i bez paketa `profile`. Putanja je ULAZ (korisnik smije pisati metapodatke): prolazi samo
+  `<moj-id>/avatar/<ime>`; `error` pri učitavanju → natrag na ikonu. CSS u `css/topbar.css` (`.auth-entry-avatar`,
+  `.has-avatar > i`); dodir 44×44 i budžet kroma netaknuti.
+### Popravljeno
+- **`USER_UPDATED` / `TOKEN_REFRESHED` više ne crtaju profil preko otvorene forme „Uredi profil".** `auth.js` je na SVAKI
+  događaj zvao `renderProfilePage`, koji prepisuje `#profileContent` — „Ukloni" sliku stoji U formi i od ③ šalje
+  `USER_UPDATED`, pa bi obrisao napola napisan opis (a osvježavanje tokena svaki sat to je moglo i prije).
+### Brane
+- `profile-images.test.js` +7 (zrcaljenje: ukloni → null, naslovna ne dira račun, RPC odbije → bez zrcaljenja, pad
+  zrcaljenja ne obara ukloni, ista putanja → bez poziva) — obrnuto na starom modulu **5 crvenih**.
+- `tests/topbar-avatar.authed.spec.js` (STAGING): ① pravi upload → slika u traci, 44×44 i 28 px na 320 px, bez
+  prelijevanja → ukloni → ikona · ② tuđa putanja u metapodacima NIJE URL + samopopravak pri otvaranju profila ·
+  ③ „Ukloni" u otvorenoj formi čuva upisani opis. `profile-images.authed.spec.js` vraća i preslik u `vratiStanje`.
+
 ## 2026-09-14 (OPUS) — **F2/1 ①: tema prati račun** (grana `feat/f2-tema-racun`)
 
 Leon (2026-09-04): *„tema treba pratiti račun"* · (2026-09-06): *„tuđi izbor ne smije preživjeti odjavu"* · (anketa 13.09.):

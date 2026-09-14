@@ -32,8 +32,10 @@ GDPR-brisanje čisti sve osobne buckete · i18n na oba jezika · telefon i a11y 
    između „svi javni" i nove migracije.
 3. **Kvota po korisniku u `profile-images`**: INSERT-politika s podupitom `count(*) < 20` nad vlastitim prefiksom.
    Javan bucket bez kvote = besplatan hosting za bilo koga s računom. Isti obrazac kasnije za `node-images`.
-4. **Avatar u `user_metadata`** (odlučeno 13.09.) — traka crta sliku bez kruga prema bazi; putanja se zrcali pri
-   svakom `set_profile_image` (kao ime u `set_profile_identity`).
+4. ~~**Avatar u `user_metadata`**~~ **✅ 2026-09-14 (F2/1 ③)** — traka crta sliku bez kruga prema bazi; putanju zrcali
+   klijent (`SokratProfileImages.mirrorAvatar`) poslije `set_profile_image`, a `loadIdentity` popravlja razliku.
+
+**Red (Leon, 14.09.: „može kreni"):** F2/1 ③ → **A1–A3 „Temelj mreže"** → F2/3c → F2/5 → F2/4.
 
 **B · HIGIJENA — treba prije prvog vala korisnika, ne prije F7:**
 5. **Siročad u Storageu**: upload prođe, RPC padne (mreža) → datoteka bez reda. Klijent čisti „najbolji pokušaj";

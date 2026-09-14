@@ -191,6 +191,22 @@ body.no-pathbar {
     letter-spacing: 0.04em;
 }
 
+/* F2/1 ③ — profilna u traci ZAMJENJUJE ikonu (`js/auth.js`, `setNavAvatar`). 28 px stane u gumb
+   od 40/44 px bez ijedne promjene njegove veličine, pa dodir (44×44) i budžet kroma ostaju
+   netaknuti. Ploha iza slike je `surface-2`, da krug postoji i dok slika još stiže. */
+.auth-entry-avatar {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--color-surface-2);
+}
+
+.auth-entry.has-avatar > i {
+    display: none;
+}
+
 /* ⚠️ `.topbar-cta` („Počni učiti") JE OBRISAN 2026-09-08, sa svojim pravilima i svojim
    pragom od 360 px. Leon: *„ovaj gumb počni učiti je najbeskorisnije smeće koje zauzima
    prostor gore. Gore treba biti profil i UGC."* Bio je DUPLIKAT: landing nosi tri

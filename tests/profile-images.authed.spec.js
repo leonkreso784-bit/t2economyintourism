@@ -72,6 +72,11 @@ async function zatecenoStanje(page) {
 async function vratiStanje(page, s) {
   await rpc(page, 'avatar', s.avatar_path);
   await rpc(page, 'cover', s.cover_path);
+  // F2/1 ③: RPC ne dira `user_metadata.avatar_path` (preslik za traku piše samo modul), a klik-put
+  // ga je ovdje upisao → vrati ga na istinu iz baze, da sljedeći spec ne zatekne tuđu putanju.
+  await uBazi(page, async (p) => {
+    await SokratAuth.getClient().auth.updateUser({ data: { avatar_path: p } });
+  }, s.avatar_path);
 }
 
 test.describe('F2/2 — bucket profile-images + set_profile_image', () => {

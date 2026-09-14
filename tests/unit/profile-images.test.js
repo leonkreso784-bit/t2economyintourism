@@ -122,9 +122,12 @@ function load(auth) {
 
   // -------------------------------------------------------------- lažni klijent: siroče se čisti
   {
-    /** Bilježi što modul zove; `rpcError` upravlja ishodom RPC-a. */
-    function fakeAuth(rpcError) {
-      const log = { uploads: [], removes: [], rpc: [] };
+    /** Bilježi što modul zove; `rpcError` upravlja ishodom RPC-a. `o.meta` = `user_metadata`
+        prijavljenog, `o.updateError` = `auth.updateUser` vraća grešku (F2/1 ③ zrcaljenje). */
+    function fakeAuth(rpcError, o) {
+      o = o || {};
+      const log = { uploads: [], removes: [], rpc: [], updates: [] };
+      const user = { id: 'U-1', user_metadata: Object.assign({}, o.meta || {}) };
       const storage = {
         from() {
           return {
@@ -140,9 +143,17 @@ function load(auth) {
           log.rpc.push({ name, args });
           if (rpcError) return Promise.resolve({ data: null, error: { message: rpcError } });
           return Promise.resolve({ data: { user_id: 'U-1', avatar_path: args.p_path, cover_path: null }, error: null });
+        },
+        auth: {
+          updateUser(p) {
+            log.updates.push(p);
+            if (o.updateError) return Promise.resolve({ data: null, error: { message: o.updateError } });
+            Object.assign(user.user_metadata, p.data);
+            return Promise.resolve({ data: { user }, error: null });
+          }
         }
       };
-      return { auth: { getClient: () => client, getUser: () => ({ id: 'U-1' }) }, log };
+      return { auth: { getClient: () => client, getUser: () => user }, log };
     }
 
     // `upload` prolazi kroz UNUTARNJI `smanji` (canvas + createImageBitmap), kojih u sandboxu nema →
@@ -180,6 +191,53 @@ function load(auth) {
       const PI = loadFake(f.auth);
       await assert.rejects(PI.remove('avatar', 'U-1/avatar/old.webp'), /image_kind_invalid/);
       assert.deepStrictEqual(f.log.removes, []);
+    });
+
+    // ── F2/1 ③ — putanja avatara se ZRCALI u `user_metadata.avatar_path` (traka ju čita iz JWT-a) ──
+    await testAsync('③ remove avatara → user_metadata.avatar_path = null (traka vraća ikonu)', async () => {
+      const f = fakeAuth(null, { meta: { avatar_path: 'U-1/avatar/old.webp', display_name: 'Leon' } });
+      const PI = loadFake(f.auth);
+      await PI.remove('avatar', 'U-1/avatar/old.webp');
+      assert.deepStrictEqual(f.log.updates, [{ data: { avatar_path: null } }]);
+    });
+    await testAsync('③ remove NASLOVNE → račun se ne dira (traka nosi samo avatar)', async () => {
+      const f = fakeAuth(null, { meta: { avatar_path: 'U-1/avatar/a.webp' } });
+      const PI = loadFake(f.auth);
+      await PI.remove('cover', 'U-1/cover/old.webp');
+      assert.deepStrictEqual(f.log.updates, []);
+    });
+    await testAsync('③ RPC odbije → ni zrcaljenja (račun ne smije tvrditi ono što baza nema)', async () => {
+      const f = fakeAuth('rpc_failed', { meta: { avatar_path: 'U-1/avatar/a.webp' } });
+      const PI = loadFake(f.auth);
+      await assert.rejects(PI.remove('avatar', 'U-1/avatar/a.webp'));
+      assert.deepStrictEqual(f.log.updates, []);
+    });
+    await testAsync('③ zrcaljenje padne → remove SVEJEDNO uspije (baza je istina, profil ga popravi)', async () => {
+      const f = fakeAuth(null, { meta: { avatar_path: 'U-1/avatar/a.webp' }, updateError: 'Failed to fetch' });
+      const PI = loadFake(f.auth);
+      const row = await PI.remove('avatar', 'U-1/avatar/a.webp');
+      assert.strictEqual(row.avatar_path, null);
+      assert.strictEqual(f.log.updates.length, 1);
+      assert.deepStrictEqual(f.log.removes, [['U-1/avatar/a.webp']], 'stara se i dalje briše');
+    });
+    await testAsync('③ mirrorAvatar: ista putanja kakvu račun već ima → bez poziva', async () => {
+      const f = fakeAuth(null, { meta: { avatar_path: 'U-1/avatar/a.webp' } });
+      const PI = loadFake(f.auth);
+      assert.strictEqual(await PI.mirrorAvatar('U-1/avatar/a.webp'), false);
+      assert.strictEqual(await PI.mirrorAvatar(null), true);
+      assert.strictEqual(await PI.mirrorAvatar(null), false, 'null → null je isto');
+      assert.deepStrictEqual(f.log.updates, [{ data: { avatar_path: null } }]);
+    });
+    await testAsync('③ mirrorAvatar: nema ključa u računu + nema slike → bez poziva (nedostaje = null)', async () => {
+      const f = fakeAuth(null, { meta: {} });
+      const PI = loadFake(f.auth);
+      assert.strictEqual(await PI.mirrorAvatar(null), false);
+      assert.strictEqual(await PI.mirrorAvatar(''), false, 'prazan string = nema slike');
+      assert.deepStrictEqual(f.log.updates, []);
+    });
+    await testAsync('③ mirrorAvatar bez prijave → false, bez rušenja', async () => {
+      const PI = load();
+      assert.strictEqual(await PI.mirrorAvatar('U-1/avatar/a.webp'), false);
     });
 
     await testAsync('upload bez canvasa u sandboxu → image_decode_failed, i NIŠTA nije uploadano', async () => {

@@ -150,6 +150,27 @@
   }
 
   /**
+   * F2/1 ③ (Leon, anketa 13.09.): putanja AVATARA se zrcali u `user_metadata.avatar_path`, da gornja
+   * traka nacrta sliku iz JWT-a — na svakoj stranici, bez kruga prema bazi (isti obrazac kao ime,
+   * koje `profile.js` piše u tablicu I u metapodatke). Baza (`profile_identity`) ostaje ISTINA:
+   * zrcaljenje je najbolji pokušaj i nikad ne obara upload; razliku popravi `loadIdentity` pri
+   * sljedećem otvaranju profila. Nedostaje li ključ, to je isto što i „nema slike" (`null`).
+   * @param {string|null} path
+   * @returns {Promise<boolean>} je li upis poslan i prošao
+   */
+  function mirrorAvatar(path) {
+    var c = client();
+    if (!c || !c.auth || typeof c.auth.updateUser !== 'function') return Promise.resolve(false);
+    var u = SokratAuth.getUser();
+    if (!u) return Promise.resolve(false);
+    var want = path || null;
+    if (((u.user_metadata || {}).avatar_path || null) === want) return Promise.resolve(false);
+    return Promise.resolve(c.auth.updateUser({ data: { avatar_path: want } }))
+      .then(function (res) { return !(res && res.error); })
+      .catch(function () { return false; });
+  }
+
+  /**
    * Cijeli tijek: smanji → upload u vlastiti prefiks → RPC upiše putanju → obriši staru.
    * @param {string} kind  'avatar' | 'cover'
    * @param {Blob} file
@@ -178,7 +199,9 @@
           .then(function () { throw new Error(res.error.message || 'rpc_failed'); });
       }
       var row = res ? res.data : null;
-      return removeOld(c, uid, oldPath, path).then(function () { return row; });
+      return (kind === 'avatar' ? mirrorAvatar(path) : Promise.resolve())
+        .then(function () { return removeOld(c, uid, oldPath, path); })
+        .then(function () { return row; });
     });
   }
 
@@ -195,7 +218,9 @@
     return c.rpc('set_profile_image', { p_kind: kind, p_path: null }).then(function (res) {
       if (res && res.error) throw new Error(res.error.message || 'rpc_failed');
       var row = res ? res.data : null;
-      return removeOld(c, uid, oldPath, null).then(function () { return row; });
+      return (kind === 'avatar' ? mirrorAvatar(null) : Promise.resolve())
+        .then(function () { return removeOld(c, uid, oldPath, null); })
+        .then(function () { return row; });
     });
   }
 
@@ -231,6 +256,7 @@
     ownerOf: ownerOf,
     kindOf: kindOf,
     publicUrl: publicUrl,
+    mirrorAvatar: mirrorAvatar,
     smanji: smanji,
     upload: upload,
     remove: remove,

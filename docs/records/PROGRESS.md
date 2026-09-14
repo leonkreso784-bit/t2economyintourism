@@ -21,7 +21,16 @@ bez teme preuzme izbor uređaja**, ali tek nakon svježeg čitanja s poslužitel
   **globalno** (opoziva sve sesije računa). Zato spec ne vozi odjavu. Je li to i željeno ponašanje za korisnika (odjava na
   jednom uređaju odjavi sve) — nije dirano, zapisano za Leona.
 
-**Sljedeće:** ③ avatar u gornjoj traci (putanja u `user_metadata`, BACKLOG §🌐 A4).
+**Cigla ③ (isti dan, Leon: *„može kreni"* — bez čekanja sata `test:responsive`-a):** ① commitana (`4c7216c`; commit ne
+dira disk pa ne smeta suiti koja vrti), a ③ se gradi u **zasebnom stablu `sokratstudy.f21a`** (grana
+`feat/f2-avatar-traka` od `4c7216c`) — Playwright u `.f21` drži port 5050, pa se specovi ③ vrte tek kad on završi
+(inače `reuseExistingServer` spoji test na TUĐI poslužitelj i mjeri stari kod).
+- Unit crveno (5) → zeleno (25/25); preflight EXIT 0.
+- **Nalaz izvan plana, uzet u ciglu:** `auth.js` je na svaki događaj računa zvao `renderProfilePage` → preko otvorene
+  forme. ③ bi to pogoršao (Ukloni je U formi i šalje `USER_UPDATED`) — sad `USER_UPDATED`/`TOKEN_REFRESHED` uz otvorenu
+  formu ne crtaju profil; traka i slike na zidu se osvježavaju u mjestu.
+
+**Sljedeće:** „Temelj mreže" (BACKLOG §🌐 A1–A3) — Leon potvrdio red 14.09.: ③ → temelj mreže → F2/3c → F2/5 → F2/4.
 
 ## 2026-09-13 (FABLE, sesija F2/2 u stablu `sokratstudy.f22`) — cigla 1: baza za slike profila na stagingu, test-prvo
 

@@ -7687,6 +7687,17 @@ body.no-pathbar {
   font-size: 0.8rem;
   letter-spacing: 0.04em;
 }
+.auth-entry-avatar {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--color-surface-2);
+}
+.auth-entry.has-avatar > i {
+  display: none;
+}
 .topbar-iconbtn {
   width: 40px;
   height: 40px;
