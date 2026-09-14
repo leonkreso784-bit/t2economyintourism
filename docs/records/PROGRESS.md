@@ -48,6 +48,12 @@ koje sam uzeo bez pitanja (lako promjenjive): naslovna **3:1**, avatar **1:1 kru
 s izrezom (uklj. Odustani). Tailwind-šum `.transform` iz `canvas.style.transform` → iznimka u manifestu. **Commit lokalno,
 NIJE na produkciji** — traži Leonov OK za push (samo klijent; baza i funkcija su već na PROD-u).
 
+**Kraj sesije (14.09., priprema za compact):** preview dopune pušten na `feat/f2-slike` (Vercel READY,
+`studymaster-git-feat-f2-slike-…`), Leon: *„super je"*; gap-analiza mreže u BACKLOG §🌐 (Leon: *„razmišljaj kao
+Zuckerberg"*) — čeka njegovu riječ o redu (A1–A4 „Temelj mreže" iza F2/1) i o pushu dopune na prod. Novo stablo za
+sljedeću sesiju: **`sokratstudy.f21`**, grana `feat/f2-tema-racun` od vrha `feat/f2-slike` (nadskup `main`-a, da F2/1
+ne krene bez dopune — pouka §0). Lokalno nepushano: `main` `090bd0c` (docs) · `feat/f2-slike` `38f9add`+ (docs).
+
 **Sljedeće:** F2/1 ostatak — tema prati račun (`user_metadata`, odjava briše lokalni izbor) + avatar u traci.
 
 ## 2026-09-12 (FABLE, sesija POPRAVCI) — SPAJANJE po RASPORED §0: svih šest koraka pripremljeno i izmjereno lokalno, ništa pushano na `main` — svaki korak čeka Leonov OK
