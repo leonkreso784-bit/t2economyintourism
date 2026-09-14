@@ -82,6 +82,27 @@ test.describe('F2/3a — profil je zid', () => {
     }
   });
 
+  test('②b gumb naslovne je GUMB u kutu, ne traka; naslovna ima omjer izreza (3:1)', async ({ page }) => {
+    // Leon, 14.09., s iPhonea: „nije dobro" — `.cta-button` je mobile-first `width: 100%`, pa je
+    // apsolutni gumb naslovne na telefonu bio traka preko CIJELE plohe (359 px, 12 px van ruba);
+    // a ploha je bila zakucane visine (96/128 px), pa je prikaz rezao korisnikov izrez 3:1.
+    await otvoriProfil(page);
+    await page.addStyleTag({ content: '*, *::before, *::after { transition: none !important; }' });
+    for (const w of [...SIRINE, 1280]) {
+      await page.setViewportSize({ width: w, height: 844 });
+      await page.waitForTimeout(60);
+      const naslovna = await box(page, '.profile-cover');
+      const gumb = await box(page, '.profile-cover-btn');
+      expect(Math.abs(naslovna.width / naslovna.height - 3), `naslovna nije 3:1 @ ${w}px`).toBeLessThan(0.05);
+      expect(gumb.width, `gumb naslovne je traka (${Math.round(gumb.width)} px) @ ${w}px`).toBeLessThan(naslovna.width / 2);
+      expect(gumb.height, `gumb naslovne nizak @ ${w}px`).toBeGreaterThanOrEqual(44);
+      expect(gumb.x, `gumb naslovne viri lijevo @ ${w}px`).toBeGreaterThanOrEqual(naslovna.x);
+      expect(gumb.x + gumb.width, `gumb naslovne viri desno @ ${w}px`).toBeLessThanOrEqual(naslovna.x + naslovna.width + 1);
+      // U DONJEM DESNOM kutu — ne na sredini plohe.
+      expect(gumb.x + gumb.width / 2, `gumb naslovne nije u desnoj polovici @ ${w}px`).toBeGreaterThan(naslovna.x + naslovna.width / 2);
+    }
+  });
+
   test('③ „Uredi profil" je dohvatljiv prstom (44×44) i unutar ekrana', async ({ page }) => {
     await otvoriProfil(page);
 

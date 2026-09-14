@@ -5,6 +5,22 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-14 (OPUS) — **Zid profila na telefonu** (Leon s iPhonea, preview: *„Nije dobro"*) — grana `feat/f2-tema-racun`
+
+### Popravljeno (`css/profile.css`, nikad nije bilo na produkciji — gumb naslovne je F2/2 dopuna)
+- **Gumb naslovne bio je traka preko CIJELE naslovne** (359 px na 393, 12 px van lijevog ruba): `.cta-button` je mobile-first
+  `width: 100%`, a apsolutni gumb ga je naslijedio; na ≥768 px `.cta-button` vraća prirodnu širinu, pa se na stolnom nije
+  vidjelo. → `width: auto`, a na telefonu okrugla ikona 44×44 u donjem desnom kutu na poluprozirnoj plohi teme.
+- **Naslovna je rezala korisnikov izrez:** ploha zakucane visine (96 px na 359 = 3,7:1; 128 px na 860 = 6,7:1), a izrez je
+  3:1 → `aspect-ratio: 3 / 1`. Ono što korisnik odabere u izrezu sad se vidi cijelo, na svakoj širini.
+- **Telefon = Facebook-obrazac:** portret 76 → **112 px** (preklapa naslovnu), ime / e-adresa / opis u VLASTITOM retku ispod
+  njega (dotad stisnuti uz portret, ~235 px).
+### Brana
+- `profile-wall.authed.spec.js` **②b**: na 320/375/393/430/1280 naslovna je 3:1 (±0,05), gumb naslovne uži od pola plohe,
+  ≥44 px visok, unutar plohe i u desnoj polovici. **Obrnuto na starom CSS-u: pada** („gumb naslovne je traka (286 px) @
+  320px"). Uz nju zeleno: `phone.authed` · `profile-wall` · `profile-images` · `topbar-avatar` · `temelj-mreze` (32/32);
+  preflight EXIT 0. Reprodukcija Leonovog ekrana (393, tamno, portret + naslovna) snimljena prije i poslije.
+
 ## 2026-09-14 (OPUS) — **TEMELJ MREŽE (BACKLOG §🌐 A1–A3): korisničko ime · vidljivost · kvota slika** — STAGING (grana `feat/f2-avatar-traka`)
 
 Leon: *„može, ovo je super"* (pravila: 3–20 znakova, 30 dana, bez brisanja · vidljivost bez sučelja do F7 · 20 slika).

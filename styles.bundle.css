@@ -8239,7 +8239,7 @@ sokrat-modal.auth-modal > * {
   overflow: hidden;
 }
 .profile-cover {
-  height: 128px;
+  aspect-ratio: 3 / 1;
   background: linear-gradient(135deg, color-mix(in srgb, #4f46e5 30%, #ffffff) 0%, color-mix(in srgb, #4f46e5 8%, #ffffff) 100%);
   @supports (color: color-mix(in lab, red, red)) {
     background: linear-gradient(135deg, color-mix(in srgb, var(--color-brand-500) 30%, var(--color-surface-1)) 0%, color-mix(in srgb, var(--color-brand-500) 8%, var(--color-surface-1)) 100%);
@@ -8282,6 +8282,7 @@ sokrat-modal.auth-modal > * {
   position: absolute;
   right: 0.75rem;
   bottom: 0.75rem;
+  width: auto;
   min-height: 44px;
 }
 .profile-edit-images {
@@ -8628,24 +8629,31 @@ sokrat-modal.auth-modal > * {
   .profile-stat-vals {
     gap: 0.7rem;
   }
-  .profile-cover {
-    height: 96px;
-  }
   .profile-avatar-wrap {
-    margin-top: -38px;
+    margin-top: -56px;
   }
   .profile-avatar {
-    width: 76px;
-    height: 76px;
-    font-size: 1.75rem;
+    width: 112px;
+    height: 112px;
+    font-size: 2.4rem;
+  }
+  .profile-identity-text {
+    flex-basis: 100%;
   }
   .profile-cover-btn span {
     display: none;
   }
   .profile-cover-btn {
+    width: 44px;
+    height: 44px;
     min-width: 44px;
+    padding: 0;
+    border-radius: 50%;
     justify-content: center;
-    padding-inline: 0.6rem;
+    background: color-mix(in srgb, #ffffff 82%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-surface-1) 82%, transparent);
+    }
   }
   .profile-identity {
     padding: 0 1rem 1rem;

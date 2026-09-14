@@ -83,8 +83,12 @@
     overflow: hidden;
 }
 
+/* ⚠️ OMJER = IZREZ (Leon, 14.09., s iPhonea: „nije dobro"). Naslovna se reže u `js/image-crop.js`
+   na točno 3:1 (1500×500), a ploha je do danas bila zakucana visina — 96 px na 359 px širine
+   (3,7:1) i 128 px na 860 (6,7:1) — pa je `object-fit: cover` REZAO ono što je korisnik upravo
+   odabrao. Ploha i izrez moraju imati isti omjer, inače izrez laže. */
 .profile-cover {
-    height: 128px;
+    aspect-ratio: 3 / 1;
     background: linear-gradient(135deg,
         color-mix(in srgb, var(--color-brand-500) 30%, var(--color-surface-1)) 0%,
         color-mix(in srgb, var(--color-brand-500) 8%, var(--color-surface-1)) 100%);
@@ -124,10 +128,15 @@
     cursor: pointer;
     padding: 0;
 }
+/* ⚠️ `width: auto` NIJE ukras: `.cta-button` je mobile-first `width: 100%` (components.css), pa je
+   na telefonu ovaj apsolutni gumb bio traka preko CIJELE naslovne (359 px, i 12 px van lijevog
+   ruba) — Leonov ekran 14.09. Na ≥768 px `.cta-button` vraća prirodnu širinu, pa se na stolnom
+   nije vidjelo. */
 .profile-cover-btn {
     position: absolute;
     right: 0.75rem;
     bottom: 0.75rem;
+    width: auto;
     min-height: 44px;
 }
 
@@ -479,14 +488,24 @@
     /* Kratica ponovno briše sigurnu zonu — zato je longhand ovdje ponovno ispisan. */
     .profile-content { padding: 1rem; padding-bottom: max(1rem, var(--safe-bottom)); }
     .profile-stat-vals { gap: 0.7rem; }
-    /* Na 320 px identitet stoji U STUPCU: ime i gumb u istom retku ostavljaju imenu
-       ~120 px, pa se lomi na tri retka i gura portret gore. */
-    .profile-cover { height: 96px; }
-    .profile-avatar-wrap { margin-top: -38px; }
-    .profile-avatar { width: 76px; height: 76px; font-size: 1.75rem; }
-    /* Na telefonu gumb naslovne = samo ikona (natpis nosi aria-label), inače pokriva pola plohe. */
+    /* Telefon = Facebook-obrazac (Leon, 14.09.): VELIK portret koji preklapa naslovnu, a ime,
+       e-adresa i opis u VLASTITOM retku ispod njega. Uz portret od 76 px ime je dobivalo ~235 px
+       i stiskalo se uz rub naslovne, a „+" od 44 px pokrivao je četvrtinu portreta. */
+    .profile-avatar-wrap { margin-top: -56px; }
+    .profile-avatar { width: 112px; height: 112px; font-size: 2.4rem; }
+    .profile-identity-text { flex-basis: 100%; }
+    /* Gumb naslovne = okrugla ikona u kutu (natpis nosi aria-label); ploha je poluprozirna PLOHA
+       teme, da se vidi slika ispod, a ikona ostane čitljiva na svakoj fotografiji. */
     .profile-cover-btn span { display: none; }
-    .profile-cover-btn { min-width: 44px; justify-content: center; padding-inline: 0.6rem; }
+    .profile-cover-btn {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        padding: 0;
+        border-radius: 50%;
+        justify-content: center;
+        background: color-mix(in srgb, var(--color-surface-1) 82%, transparent);
+    }
     .profile-identity { padding: 0 1rem 1rem; }
     .profile-identity-actions { flex: 1 1 100%; }
     .profile-identity-actions .cta-button { width: 100%; justify-content: center; }
