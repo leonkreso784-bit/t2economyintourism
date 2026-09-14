@@ -718,8 +718,9 @@ PRESUĐENO SUPROTNO 2026-09-04**: Leon je odlučio da tema prati RAČUN, v. §LE
 lokalni zapis ostaje samo zato što odluka mora pasti prije prvog crtanja), teme s
 pregled-krugovima (`--theme-swatch-*` u `tokens.css`).
 ⚠️ **Ispravljeno 2026-09-04:** tema je tada imala 4 palete i mehanizam u `js/theme.js`; danas
-su **3** (`paper` maknut isti tjedan), a popis i primjena zive u **`js/boot.js`** (odluka mora
-pasti prije prvog crtanja — v. cigla FOUC gore). `theme.js` nosi jos samo klik i normalizaciju.
+su opet **4** (`paper` maknut isti tjedan, `carbon` dodan u F1/2), a popis i primjena zive u
+**`js/boot.js`** (odluka mora pasti prije prvog crtanja — v. cigla FOUC gore). `theme.js` nosi klik,
+normalizaciju i — od F2/1 (2026-09-14) — vezu s računom (`user_metadata.theme`).
 **Zapisana obaveza ispunjena isti dan:** zabrana #1 u `check:palette` proširena na JAKE
 semantičke ispune (`--color-ok/-strong`, `--color-danger`, `--color-warn`) — pronađeno 0
 prekršaja (ADR-032 je teren već očistio); -soft varijante namjerno izvan.

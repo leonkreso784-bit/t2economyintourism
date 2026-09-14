@@ -32,7 +32,7 @@ dira disk pa ne smeta suiti koja vrti), a ③ se gradi u **zasebnom stablu `sokr
 
 **`test:responsive` za ① (47 min):** 630 prošlo · 2 pala · 117 preskočeno. Oba pada ponovljena ciljano 5/5 zelena;
 `theme-fouc` cijeli 3× na 4 profila = **2/72 pada i na novom i na STAROM `theme.js`** (isti simptom: pozadina uhvaćena
-USRED prijelaza, atribut teme točan od prvog kadra) → star povremeni pad testa, ne ①. Zapis: BACKLOG §STALNA TRAKA.
+USRED prijelaza, atribut teme točan od prvog kadra) → star povremeni pad testa, ne ①. Zapis: BACKLOG §🌐 (ispod reda).
 ⚠️ Moj brojač padova je tražio `✘`, a line-reporter ga ne ispisuje — padove sam vidio tek na kraju. Broji se `N failed`.
 
 **Specovi ③ (kad se port oslobodio):** dva crvena, oba MOJ test, ne kod — `42,66 px` je visina USRED animacije
@@ -46,7 +46,19 @@ samo preslik · `theme.js` preuzimao temu i na `USER_UPDATED` (moj kvar iz ①, 
 pretpostavljao prazan račun. Račun počišćen, 27/27 profilnih specova, račun čist i POSLIJE vrtnje. Preflight EXIT 0.
 **PROD čeka Leona:** `f2-temelj-mreze.sql` u SQL Editoru PRIJE klijenta.
 
-**Sljedeće:** F2/3c (CSS profila i susjeda) — red 14.09.: ③ ✅ → temelj mreže ✅ (staging) → **F2/3c** → F2/5 → F2/4.
+**Preview i Leonov iPhone (isti dan):** grana pushana (`feat/f2-tema-racun`, Vercel READY). Leon, sa snimkom: *„Nije
+dobro"* — gumb naslovne bio je TRAKA preko cijele naslovne (`.cta-button` mobile-first `width: 100%`), naslovna je rezala
+izrez 3:1, portret 76 px stiskao ime. Reproducirano lokalno (393, tamno) prije koda → `aca5ed1` (gumb u kutu, `aspect-ratio:
+3/1`, portret 112 px, ime ispod) + brana `profile-wall` ②b (obrnuto pada: „traka 286 px @ 320px"). Leon: *„Fantastično."*
+**F2/3c SPOJEN u F2/5** (C6 zatvoren 01.09. — RASPORED). Plan F2/5 (5a zid · 5b radionica · 5c polica) zapisan u RASPORED-u
+s DVA pitanja za Leona (dodir = učenje? · premještanje kroz izbornik?).
+
+**Kraj sesije (priprema za compact / novu sesiju, Leon):** audit `.md` — `BACKEND.md` dobio temelj mreže + preslike u
+`user_metadata` (nije ih imao) · BACKLOG „3 palete" → 4 (carbon) · ova poveznica. Novo stablo **`sokratstudy.f25`**, grana
+`feat/f2-zid-radionica` od vrha `feat/f2-tema-racun`.
+
+**Sljedeće:** F2/5a (zid profila) — čim Leon odgovori na dva pitanja iz RASPORED §F2/5. **PROD čeka Leona:** SQL temelja
+mreže, zatim push klijenta (F2/1 + F2/2 dopuna + temelj mreže + zid).
 
 ## 2026-09-13 (FABLE, sesija F2/2 u stablu `sokratstudy.f22`) — cigla 1: baza za slike profila na stagingu, test-prvo
 
