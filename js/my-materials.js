@@ -146,6 +146,54 @@
     return false;
   }
 
+  // ── F2/5a: ZID GRADIVA na profilu ──────────────────────────────────────
+  const HEX6 = /^#[0-9a-f]{6}$/i;
+
+  /** Boja materijala: vlastita (ako je ispravan `#rrggbb`) → stalna iz palete (`utils.js`). */
+  function colorOf(row) {
+    const c = row && typeof row.color === 'string' ? row.color.trim() : '';
+    if (HEX6.test(c)) return c;
+    return (typeof window.bojaMaterijala === 'function') ? window.bojaMaterijala(row && row.id) : '#6366f1';
+  }
+
+  /** Ikona materijala — oblikom provjerena (BUG-025: ikona ide u `class`, escape nije dovoljan). */
+  function iconOf(row) {
+    const s = String((row && row.icon) || '').trim();
+    return /^fa-[a-z0-9-]+$/.test(s) ? s : 'fa-book-open';
+  }
+
+  /** Kad je gradivo zadnji put mijenjano: `node_content.updated_at`, bez njega vrijeme stvaranja. */
+  function changedAt(row) {
+    let nc = row && row.node_content;
+    if (Array.isArray(nc)) nc = nc[0];                 // PostgREST vraća objekt ili niz, ovisno o verziji
+    const t = Date.parse((nc && nc.updated_at) || (row && row.created_at) || '');
+    return isNaN(t) ? 0 : t;
+  }
+
+  /**
+   * Retci stabla → pločice zida: živi materijali (`kind='study'`), zadnja IZMJENA GRADIVA prva.
+   * ⚠️ Ne `nodes.updated_at`: `reorder_nodes` dira `updated_at` svoj braći, pa bi zid skakao od
+   *    samog presložavanja u stablu. Mapa = ime roditelja (siroče i korijen = bez mape).
+   * @param {Array<object>} rows @param {number} limit
+   * @returns {{items: Array<{id:string,name:string,icon:string,color:string,folder:(string|null)}>, total:number}}
+   */
+  function recentStudy(rows, limit) {
+    const live = (rows || []).filter(function (r) { return r && r.id && !r.deleted_at; });
+    const byId = Object.create(null);
+    live.forEach(function (r) { byId[r.id] = r; });
+    const study = live.filter(function (r) { return r.kind === 'study'; });
+    study.sort(function (a, b) {
+      return (changedAt(b) - changedAt(a)) || String(a.name).localeCompare(String(b.name));
+    });
+    return {
+      total: study.length,
+      items: study.slice(0, Math.max(0, limit | 0)).map(function (r) {
+        const p = r.parent_id ? byId[r.parent_id] : null;
+        return { id: r.id, name: r.name, icon: iconOf(r), color: colorOf(r), folder: p ? p.name : null };
+      })
+    };
+  }
+
   // ── MREŽA: čitanje = SELECT (RLS), pisanje = RPC ───────────────────────
 
   /** Je li graditelj uopće dostupan (prijavljen + klijent spreman)? */
@@ -160,7 +208,8 @@
     if (!c) throw new Error('auth_required');
     const res = await c
       .from('nodes')
-      .select('id,parent_id,kind,name,position,icon,color,deleted_at')
+      // `node_content(updated_at)` = vrijeme zadnje izmjene gradiva, za redoslijed zida (F2/5a).
+      .select('id,parent_id,kind,name,position,icon,color,created_at,deleted_at,node_content(updated_at)')
       .is('deleted_at', null)
       .order('position', { ascending: true });
     if (res.error) throw res.error;
@@ -433,8 +482,8 @@
     subjectDataMap[key] = {
       name: row.name,
       shortName: row.name,
-      icon: row.icon || 'fa-book-open',
-      color: row.color || '#6366f1',
+      icon: iconOf(row),
+      color: colorOf(row),                   // ista boja kao pločica na zidu (F2/5a)
       description: '',
       storageKey: key,                       // napredak + analitika + sync žive pod ovim ključem
       lessons: [{ id: LESSON_ID, name: row.name }],
@@ -786,6 +835,20 @@
   }
 
   /**
+   * F2/5a — podaci za ZID na profilu. Isti upis kao `ensureRegistered` (stanje bez DOM-a), pa dodir na
+   * pločicu ide kroz postojeći `learnNode` i materijal je registriran i za profil-statistiku.
+   * BACA (za razliku od `ensureRegistered`): zid mora znati razlikovati „nema materijala" od „nije stiglo".
+   * @param {number} limit @returns {Promise<{items: Array<object>, total: number}>}
+   */
+  async function loadWall(limit) {
+    const res = await loadTree();
+    _rows = res.rows;
+    _tree = res.tree;
+    registerAllStudySubjects();
+    return recentStudy(res.rows, limit);
+  }
+
+  /**
    * Nacrtaj stranicu `#materials-page` (C0 / ADR-029).
    *
    * Stranica je od C0 ravnopravno odredište i **smije se otvoriti i bez prijave** — ulaz stoji u
@@ -954,6 +1017,8 @@
     // mreža
     isAvailable: isAvailable,
     ensureRegistered: ensureRegistered,   // BUG-023: registracija bez DOM-a (obnova pozicije)
+    loadWall: loadWall,                   // F2/5a: zid gradiva na profilu
+    recentStudy: recentStudy,
     loadTree: loadTree,
     createNode: createNode,
     renameNode: renameNode,

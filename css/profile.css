@@ -275,6 +275,156 @@
 
 .profile-edit-status.is-error { color: var(--color-danger-ink); }
 
+/* ---------- Zid gradiva (F2/5a) ----------
+   Rešetka do 6 zadnje mijenjanih materijala, odmah ispod identiteta: profil kaže ŠTO SI
+   NAPRAVIO prije nego što ponudi postavke. Jezik je isti kao pločice predmeta na naslovnici
+   (ploha 1, rub, boja SAMO na kvadratu ikone s računatom tintom), ali USPRAVNO — dva stupca
+   na telefonu ne nose ikonu i ime u istom retku, a ime smije u dva retka. Boju donosi JS kao
+   `--tile-color` (stalna po materijalu, `bojaMaterijala` u utils.js). */
+.profile-shelf {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.profile-shelf-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.profile-shelf-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-ink-0);
+    margin: 0;
+}
+
+/* Dodir 44 px visok (F2/0), tekst tih: poveznica, ne druga primarna radnja. */
+.profile-shelf-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 44px;
+    padding: 0 0.25rem;
+    font: inherit;
+    font-size: 0.88rem;
+    color: var(--color-ink-1);
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+
+.profile-shelf-all i { font-size: 0.78rem; }
+.profile-shelf-all:hover { color: var(--color-ink-0); }
+.profile-shelf-all[hidden] { display: none; }
+
+.profile-shelf-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+@media (min-width: 48rem) { .profile-shelf-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+.profile-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.55rem;
+    min-width: 0;
+    min-height: 7.5rem;
+    padding: 0.9rem;
+    font: inherit;
+    text-align: start;
+    color: var(--color-ink-0);
+    cursor: pointer;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-1);
+    transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.profile-tile:hover {
+    border-color: var(--tile-color, var(--color-brand-500));
+    background: var(--color-surface-2);
+}
+
+.profile-tile-icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    background: var(--tile-color, var(--color-brand-500));
+    /* Tinta po luminanciji plohe (`inkForTint()`), ne po temi — isto kao `.landing-subject-icon`. */
+    color: var(--color-on-tint-light);
+}
+
+.profile-tile-icon[data-ink="dark"] { color: var(--color-on-tint-dark); }
+
+/* Ime u NAJVIŠE dva retka: pločica ostaje iste visine, a dugo ime se ne reže na 6 znakova
+   (izmjereno 14.09. u stablu na 393 px) nego na dva puna retka. */
+.profile-tile-name {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.profile-tile-folder {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    max-width: 100%;
+    margin-top: auto;
+    font-size: 0.78rem;
+    color: var(--color-ink-2);
+}
+
+.profile-tile-folder > span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Prazno stanje — isprekidana ploha bez boje, kao ＋ pločica na naslovnici: prazno mjesto koje
+   čeka, a ne još jedan materijal (boja u ovoj rešetki znači „postoji gradivo"). */
+.profile-tile--make {
+    border-style: dashed;
+    background: transparent;
+}
+
+.profile-tile--make:hover {
+    border-color: var(--color-ink-0);
+    background: var(--color-surface-1);
+}
+
+.profile-tile-icon--make {
+    color: var(--color-ink-2);
+    background: var(--color-surface-2);
+    border: 1px dashed var(--color-line);
+}
+
+/* Dok stiže: dvije mirne plohe (bez animacije — ništa se ne vrti dok čekaš jedan upit). */
+.profile-tile--skeleton {
+    cursor: default;
+    border-color: transparent;
+    background: var(--color-surface-2);
+}
+
+.profile-shelf-state { grid-column: 1 / -1; }
+.profile-shelf-state .profile-meta { margin-bottom: 0.6rem; }
+
 /* Granica: sve ispod je administracija. Do F2/3a je bila PRVA stvar na stranici. */
 .profile-settings-title {
     font-size: 0.9rem;

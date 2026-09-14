@@ -318,16 +318,76 @@ function wallHtml(user, displayName, memberSince) {
         '</div>';
 }
 
-// Mjesto budućeg zida gradiva (F2/5). Danas: poveznica na radionicu — stablo i polica
-// žive na `#materials-page` (C0/ADR-029) i `#myMaterials` smije postojati SAMO ondje.
-function materialsLinkHtml() {
-    return '<div class="profile-card">' +
-        '  <h3 class="profile-card-title"><i class="fas fa-folder-tree"></i> ' + pt('materials.title', 'My materials') + '</h3>' +
-        '  <p class="profile-meta">' + pt('materials.desc', 'Build your own study material.') + '</p>' +
-        '  <div class="profile-actions">' +
-        '    <button type="button" class="cta-button primary" data-goto-materials><i class="fas fa-folder-tree"></i><span>' + pt('materials.openPage', 'Open my materials') + '</span></button>' +
+// ── ZID GRADIVA (F2/5a) ─────────────────────────────────────────────────────
+// Leon: profil pokazuje ŠTO SI NAPRAVIO — rešetka do 6 zadnje mijenjanih materijala, odmah ispod
+// identiteta. Dodir = UČENJE (anketa 14.09.; uređivanje ide kroz radionicu, „⋯" u 5b). Stablo i
+// polica i dalje žive SAMO na `#materials-page` (`#myMaterials` smije postojati samo ondje).
+// Podatke daje `SokratMaterials.loadWall` (isti paket `profile`); boja je stalna po materijalu
+// (`bojaMaterijala`, utils.js), tinta na njoj računata (`inkForTint`), ime kroz escape.
+const SHELF_LIMIT = 6;
+let _shelfSeq = 0;   // svaki crtež profila pokreće čitanje; kasni odgovor starijeg crteža se odbacuje
+
+function shelfHtml() {
+    return '<section class="profile-shelf" aria-labelledby="profileShelfTitle">' +
+        '  <div class="profile-shelf-head">' +
+        '    <h3 class="profile-shelf-title" id="profileShelfTitle">' + pt('materials.title', 'My materials') + '</h3>' +
+        '    <button type="button" class="profile-shelf-all" data-goto-materials hidden>' +
+        '<span>' + pt('profile.shelfAll', 'All materials') + '</span><i class="fas fa-arrow-right" aria-hidden="true"></i></button>' +
         '  </div>' +
-        '</div>';
+        '  <div class="profile-shelf-grid" id="profileShelf" aria-busy="true">' +
+        '    <span class="profile-tile profile-tile--skeleton" aria-hidden="true"></span>' +
+        '    <span class="profile-tile profile-tile--skeleton" aria-hidden="true"></span>' +
+        '  </div>' +
+        '</section>';
+}
+
+function shelfTileHtml(m) {
+    return '<button type="button" class="profile-tile" data-shelf-learn="' + escapeHtmlProfile(m.id) + '"' +
+        ' style="--tile-color:' + escapeHtmlProfile(m.color) + '">' +
+        '<span class="profile-tile-icon" data-ink="' + inkForTint(m.color) + '">' +
+        '<i class="fas ' + safeIcon(m.icon, 'fa-book-open') + '" aria-hidden="true"></i></span>' +
+        '<span class="profile-tile-name">' + escapeHtmlProfile(m.name) + '</span>' +
+        (m.folder
+            ? '<span class="profile-tile-folder"><i class="fas fa-folder" aria-hidden="true"></i><span>' + escapeHtmlProfile(m.folder) + '</span></span>'
+            : '') +
+        '</button>';
+}
+
+async function fillShelf() {
+    const seq = ++_shelfSeq;
+    const grid = document.getElementById('profileShelf');
+    if (!grid) return;
+    const M = window.SokratMaterials;
+    let wall = null;
+    let pao = false;
+    try {
+        if (!M || typeof M.loadWall !== 'function') throw new Error('materials-unavailable');
+        wall = await M.loadWall(SHELF_LIMIT);
+    } catch (e) {
+        pao = true;
+    }
+    if (seq !== _shelfSeq) return;
+    const g = document.getElementById('profileShelf');
+    if (!g) return;
+    g.setAttribute('aria-busy', 'false');
+    const all = document.querySelector('.profile-shelf-all');
+    if (pao) {
+        g.innerHTML = '<div class="profile-shelf-state">' +
+            '<p class="profile-meta">' + pt('profile.shelfError', 'Your materials did not load.') + '</p>' +
+            '<button type="button" class="cta-button secondary" data-shelf-retry><i class="fas fa-rotate"></i><span>' +
+            pt('materials.retry', 'Try again') + '</span></button></div>';
+        return;
+    }
+    if (!wall.total) {
+        // Prazno stanje = ulaz u radionicu (ondje je „Novi materijal"). Isprekidana ploha bez
+        // boje, kao ＋ pločica na naslovnici: prazno mjesto koje čeka, ne još jedan materijal.
+        g.innerHTML = '<button type="button" class="profile-tile profile-tile--make" data-goto-materials>' +
+            '<span class="profile-tile-icon profile-tile-icon--make"><i class="fas fa-plus" aria-hidden="true"></i></span>' +
+            '<span class="profile-tile-name">' + pt('profile.shelfEmpty', 'Make your first material') + '</span></button>';
+        return;
+    }
+    g.innerHTML = wall.items.map(shelfTileHtml).join('');
+    if (all) all.hidden = false;
 }
 
 function renderProfilePage() {
@@ -362,7 +422,7 @@ function renderProfilePage() {
         '<div class="profile-stack">' +
 
         wallHtml(user, displayName, memberSince) +
-        materialsLinkHtml() +
+        shelfHtml() +
 
         // Granica: sve ispod ovog naslova je ADMINISTRACIJA. Prije F2/3a je bila prva
         // stvar na stranici, pa je profil čitao kao popis postavki, a ne kao osoba.
@@ -444,6 +504,21 @@ function renderProfilePage() {
         '</div>';
 
     renderProfileStats();
+    fillShelf();
+    // Zid se crta asinkrono i ponovno pri svakom crtežu profila → JEDAN delegat na `#profileContent`
+    // (on sam preživi `innerHTML`). „Svi materijali" i prazna pločica idu kroz globalni
+    // `[data-goto-materials]` (navigation.js).
+    if (root.dataset.shelfBound !== '1') {
+        root.dataset.shelfBound = '1';
+        root.addEventListener('click', function (e) {
+            const tile = e.target.closest('[data-shelf-learn]');
+            if (tile) {
+                if (window.SokratMaterials) SokratMaterials.learnNode(tile.getAttribute('data-shelf-learn'));
+                return;
+            }
+            if (e.target.closest('[data-shelf-retry]')) fillShelf();
+        });
+    }
     wireThemePicker(root);
     // Otkrij admin karticu samo adminu (RLS je prava zaštita; ovo je UX). Async re-check.
     if (window.SokratAdmin) SokratAdmin.refresh();

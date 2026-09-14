@@ -5,6 +5,27 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-15 (OPUS, stablo `sokratstudy.f21`, grana `feat/f2-zid` od `830feb6`) — F2/5a: zid gradiva na profilu
+
+Leon: *„možemo dalje"* → F2/5 u ovom stablu (sesija je vezana uz `.f21`; `.f25` s granom `feat/f2-zid-radionica` nosi
+samo commit s odlukom, koji je već ovdje). Grana je odvojena da `feat/f2-tema-racun` ostane isporučiva sama.
+- **Jedno pitanje Leonu (anketa 15.09.):** plan kaže da pločica nosi boju materijala, a `nodes.color` nitko ne upisuje
+  (ni sučelje ni RPC) → **stalna boja iz kurirane palete Studija, izvedena iz id-a.** Paleta ima **6** boja, ne 8 kako
+  sam napisao u pitanju.
+- **Crveno pa zeleno:** `my-materials.test.js` +10 (paleta, `bojaMaterijala`, `recentStudy`: redoslijed, granica, mapa,
+  siroče, loša boja/ikona, oblik niza iz PostgREST-a, ista boja na stranici učenja) — 10 pada → 36/36.
+  `profile-shelf.authed.spec.js`: ① pravi materijal kroz RPC je prva pločica (mapa, boja, escapano ime) i dodir ga otvara
+  za učenje · ② 2/2/3 stupca na 320/393/1280, ništa ne bježi, ime u točno dva retka · ③ prazno stanje → radionica ·
+  ④ greška ≠ „nemaš materijala", „Pokušaj ponovno" radi. ②–④ podmeću odgovor na čitanje `nodes` (račun ima ~40 starih
+  materijala). 7/7; obrnuto na starom `profile.js`+`my-materials.js`: 6/6 pada.
+- **Odluka izrečena u kodu:** „zadnje mijenjano" = `node_content.updated_at`, ne `nodes.updated_at` (`reorder_nodes` dira
+  svu braću). Baza netaknuta — ugniježđeni SELECT prolazi kroz postojeći RLS.
+- Uz to zeleno: 62/62 authed specova profila i materijala (uklj. `a11y.authed`, `phone.authed`), smoke + landing +
+  ulazi u materijale 13/13, preflight EXIT 0. Snimke 393 (svijetla/tamna) i 1280 pregledane.
+- **Otvoreno (zasebna cigla):** paleta još živi u `studio.js` i `block-editor.js` kao kopije → čitati `KURIRANE_BOJE`.
+
+---
+
 ## 2026-09-14 kasno (OPUS, stablo `sokratstudy.f21`) — F2/1 ④: odjava samo ovaj uređaj, test-prvo
 
 Leon (anketa 14.09.: *„Samo ovaj uređaj"*) → `SokratAuth.signOut()` zove `client.auth.signOut({ scope: 'local' })`.

@@ -63,6 +63,30 @@ function safeIcon(icon, fallback) {
 window.inkForTint = inkForTint;
 window.safeIcon = safeIcon;
 
+// ── BOJA MATERIJALA (F2/5a; Leon, anketa 2026-09-15: „stalna boja iz palete") ──
+// Materijal (`nodes.color`) danas nema ni sučelja ni RPC-a koji bi mu upisao boju, pa bi SVAKA
+// pločica na zidu bila ista. Zato materijal bez vlastite boje dobiva STALNU boju iz kurirane
+// palete, izvedenu iz id-a: ista na svakom uređaju i na svakom mjestu gdje se crta (zid profila i
+// stranica učenja, `my-materials.js`). Kad dođe biranje boje, korisnikova je pregazi.
+// Paleta je kurirani skup koji korisnik već vidi u Studiju (boje sekcija i blokova) — ovdje, a ne
+// u editoru, jer `utils.js` učitavaju i `index.html` i `editor.html` (isti razlog kao tinta gore).
+// ⚠️ `studio.js` (`SECTION_COLORS`) i `block-editor.js` (`BLOCK_COLORS`) još nose svoje kopije.
+const KURIRANE_BOJE = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4', '#a855f7'];
+
+/** Stalna boja za id (FNV-1a nad znakovima → indeks u paleti). @param {string} id */
+function bojaMaterijala(id) {
+    const s = String(id == null ? '' : id);
+    let h = 0x811c9dc5;
+    for (let i = 0; i < s.length; i++) {
+        h ^= s.charCodeAt(i);
+        h = Math.imul(h, 0x01000193) >>> 0;
+    }
+    return s ? KURIRANE_BOJE[h % KURIRANE_BOJE.length] : KURIRANE_BOJE[0];
+}
+
+window.KURIRANE_BOJE = KURIRANE_BOJE;
+window.bojaMaterijala = bojaMaterijala;
+
 // ── HOVER SE NAORUŽA TEK PRVIM POMAKOM MIŠA (F1/8 ②; Leon, 2026-09-05: „gumb koji je stajao na
 // mjestu starog gumba isto svijetli po rubovima a nije ga se diralo") ──
 //

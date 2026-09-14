@@ -199,5 +199,92 @@ test('buildTree: position koji nije broj → 0 (ne ruši sortiranje)', () => {
   });
 }
 
+// ---------------------------------------------------------------- F2/5a — zid gradiva
+// Leon (anketa 15.09.): materijal bez vlastite boje dobiva STALNU boju iz kurirane palete —
+// istu na svakom uređaju, izvedenu iz id-a. Paleta i izvod žive u `js/utils.js` (i profil i
+// editor ga učitavaju), pa se modul ovdje slaže kao u pregledniku: utils PRVI.
+{
+  const utils = fs.readFileSync(path.join(__dirname, '..', '..', 'js', 'utils.js'), 'utf8');
+  /** @type {any} */
+  const win = {};
+  new Function('window', utils)(win);
+  new Function('window', code)(win);
+  const W = win.SokratMaterials;
+  const HEX = /^#[0-9a-f]{6}$/i;
+
+  test('paleta: kurirani skup Studija (6 boja, sve #rrggbb, bez duplikata)', () => {
+    assert.ok(Array.isArray(win.KURIRANE_BOJE), 'KURIRANE_BOJE nije na window');
+    assert.strictEqual(win.KURIRANE_BOJE.length, 6);
+    win.KURIRANE_BOJE.forEach((b) => assert.match(b, HEX));
+    assert.strictEqual(new Set(win.KURIRANE_BOJE).size, 6);
+  });
+  test('bojaMaterijala: ista za isti id (stalna), uvijek iz palete', () => {
+    const id = '3f2a9c1e-0000-4000-8000-000000000001';
+    assert.strictEqual(win.bojaMaterijala(id), win.bojaMaterijala(id));
+    assert.ok(win.KURIRANE_BOJE.includes(win.bojaMaterijala(id)));
+  });
+  test('bojaMaterijala: 60 id-eva pogodi bar 5 od 6 boja (nije sve ista boja)', () => {
+    const vidjene = new Set();
+    for (let i = 0; i < 60; i++) vidjene.add(win.bojaMaterijala('id-' + i + '-x'));
+    assert.ok(vidjene.size >= 5, 'raspon je preuzak: ' + vidjene.size);
+  });
+  test('bojaMaterijala: prazan id → prva boja palete (ne baca)', () => {
+    assert.strictEqual(win.bojaMaterijala(''), win.KURIRANE_BOJE[0]);
+    assert.strictEqual(win.bojaMaterijala(null), win.KURIRANE_BOJE[0]);
+  });
+
+  const rows = [
+    { id: 'f1', parent_id: null, kind: 'folder', name: 'Ispiti', created_at: '2026-09-01T10:00:00Z', node_content: null },
+    { id: 's1', parent_id: 'f1', kind: 'study', name: 'Makro', created_at: '2026-09-01T10:00:00Z',
+      node_content: { updated_at: '2026-09-10T10:00:00Z' } },
+    { id: 's2', parent_id: null, kind: 'study', name: 'Statistika', created_at: '2026-09-02T10:00:00Z',
+      node_content: [{ updated_at: '2026-09-12T10:00:00Z' }] },                 // PostgREST zna vratiti niz
+    { id: 's3', parent_id: null, kind: 'study', name: 'Bez sadržaja', created_at: '2026-09-11T10:00:00Z',
+      node_content: null },                                                     // → vrijeme stvaranja
+    { id: 's4', parent_id: 'nema', kind: 'study', name: 'Siroče', created_at: '2026-08-01T10:00:00Z',
+      node_content: { updated_at: '2026-08-02T10:00:00Z' }, color: '#10b981', icon: 'fa-flask' },
+    { id: 's5', parent_id: null, kind: 'study', name: 'Obrisan', created_at: '2026-09-13T10:00:00Z',
+      node_content: { updated_at: '2026-09-14T10:00:00Z' }, deleted_at: '2026-09-14T11:00:00Z' },
+    { id: 's6', parent_id: null, kind: 'study', name: 'Loša boja', created_at: '2026-07-01T10:00:00Z',
+      node_content: null, color: 'red;background:url(x)', icon: 'fa-x" onclick="y' }
+  ];
+
+  test('recentStudy: samo živi materijali (bez mapa i obrisanih), zadnja izmjena gradiva prva', () => {
+    const r = W.recentStudy(rows, 6);
+    assert.deepStrictEqual(r.items.map((x) => x.id), ['s2', 's3', 's1', 's4', 's6']);
+    assert.strictEqual(r.total, 5);
+  });
+  test('recentStudy: granica (6 → prvih N) i ukupan broj ostaje pun', () => {
+    const r = W.recentStudy(rows, 2);
+    assert.deepStrictEqual(r.items.map((x) => x.id), ['s2', 's3']);
+    assert.strictEqual(r.total, 5);
+  });
+  test('recentStudy: mapa = ime roditelja; korijen i siroče bez mape', () => {
+    const po = Object.fromEntries(W.recentStudy(rows, 6).items.map((x) => [x.id, x.folder]));
+    assert.strictEqual(po.s1, 'Ispiti');
+    assert.strictEqual(po.s2, null);
+    assert.strictEqual(po.s4, null);
+  });
+  test('recentStudy: vlastita boja/ikona se poštuje, a neispravna pada na izvedenu/zadanu', () => {
+    const po = Object.fromEntries(W.recentStudy(rows, 6).items.map((x) => [x.id, x]));
+    assert.strictEqual(po.s4.color, '#10b981');
+    assert.strictEqual(po.s4.icon, 'fa-flask');
+    assert.strictEqual(po.s6.color, win.bojaMaterijala('s6'));
+    assert.strictEqual(po.s6.icon, 'fa-book-open');
+    assert.strictEqual(po.s2.color, win.bojaMaterijala('s2'));
+  });
+  test('recentStudy: prazan/neispravan ulaz → prazno, ne baca', () => {
+    assert.deepStrictEqual(W.recentStudy(null, 6), { items: [], total: 0 });
+    assert.deepStrictEqual(W.recentStudy([], 6), { items: [], total: 0 });
+  });
+  test('registerStudySubject: materijal bez boje dobiva ISTU boju kao na zidu', () => {
+    // `subjectDataMap` je u pregledniku goli global; modul ga traži preko `typeof`.
+    const mapa = {};
+    const M3 = new Function('window', 'subjectDataMap', code + '\n;return window.SokratMaterials;')(win, mapa);
+    const key = M3.registerStudySubject({ id: 's2', kind: 'study', name: 'Statistika' });
+    assert.strictEqual(mapa[key].color, win.bojaMaterijala('s2'));
+  });
+}
+
 console.log(`\n=== rezultat: ${passed} prošlo / ${failed} palo ===\n`);
 process.exit(failed ? 1 : 0);

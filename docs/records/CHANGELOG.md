@@ -5,6 +5,21 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-15 (OPUS) — **F2/5a: zid gradiva na profilu** — grana `feat/f2-zid`
+
+### Dodano
+- **Rešetka do 6 zadnje mijenjanih materijala** odmah ispod identiteta (umjesto kartice „Otvori moje materijale"):
+  2 stupca na telefonu, 3 na stolnom; pločica = ikona u boji materijala + ime u najviše dva retka + mapa. **Dodir =
+  učenje.** „Svi materijali →" vodi u radionicu; prazno stanje je isprekidana pločica „Napravi prvi materijal"; greška
+  čitanja ima „Pokušaj ponovno" i ne pretvara se u „nemaš materijala".
+- **Stalna boja materijala** (`bojaMaterijala`, `js/utils.js`, Leon 15.09.): materijal bez vlastite boje dobiva boju iz
+  kurirane palete Studija izvedenu iz id-a — istu na zidu i na stranici učenja (dotad uvijek indigo).
+### Promijenjeno
+- `SokratMaterials.loadTree` čita i `created_at` + `node_content(updated_at)` (redoslijed zida); novo `loadWall` i čisti
+  `recentStudy`. Ključ `materials.openPage` uklonjen (više ga nitko ne koristi); novi `profile.shelfAll/Empty/Error`.
+### Brana
+- `tests/unit/my-materials.test.js` +10 · `tests/profile-shelf.authed.spec.js` (7; obrnuto na starom kodu 6/6 pada).
+
 ## 2026-09-14 (OPUS) — **F2/1 ④: odjava samo ovaj uređaj** (Leon, anketa 14.09.) — grana `feat/f2-tema-racun`
 
 ### Promijenjeno

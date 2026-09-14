@@ -547,6 +547,10 @@
     'profile.account': { en: 'Account', hr: 'Račun' },
     'profile.edit': { en: 'Edit profile', hr: 'Uredi profil' },
     'profile.bioEmpty': { en: 'No description yet — say what you study and what you are building.', hr: 'Još nema opisa — napiši što učiš i što gradiš.' },
+    // F2/5a — zid gradiva na profilu
+    'profile.shelfAll': { en: 'All materials', hr: 'Svi materijali' },
+    'profile.shelfEmpty': { en: 'Make your first material', hr: 'Napravi prvi materijal' },
+    'profile.shelfError': { en: 'Your materials did not load.', hr: 'Materijali se nisu učitali.' },
     'profile.editNamePh': { en: 'Your name', hr: 'Tvoje ime' },
     'profile.editBioPh': { en: 'A short description — what you study, what you are building.', hr: 'Kratak opis — što učiš i što gradiš.' },
     // Temelj mreže (A1) — korisničko ime (`set_profile_handle`, supabase/f2-temelj-mreze.sql)
@@ -591,9 +595,6 @@
     'materials.title': { en: 'My materials', hr: 'Moji materijali' },
     'materials.desc': { en: 'Build your own study material — organise it in folders however you like. Private to you.', hr: 'Gradi vlastite materijale za učenje — složi ih na police kako god želiš. Vidljivo samo tebi.' },
     // C0 (ADR-029) — vlastiti materijal ima vlastitu stranicu; neprijavljen posjetitelj nikad ne vidi prazan ekran.
-    // ⚠️ NE zovi ovo `materials.open` — taj ključ već postoji niže i znači „Uredi materijal"
-    // (akcija na retku stabla). Duplikat bi tiho pregazio jedan od njih.
-    'materials.openPage': { en: 'Open my materials', hr: 'Otvori moje materijale' },
     'materials.signedOutTitle': { en: 'Build your own study material', hr: 'Gradi vlastiti materijal' },
     'materials.signedOutDesc': { en: 'Your own cards, quizzes and notes — organised however you like, private to you, and synced across your devices. You need an account to start.', hr: 'Vlastite kartice, kvizovi i bilješke — složeni kako god želiš, vidljivi samo tebi i sinkronizirani među uređajima. Za početak treba račun.' },
     'materials.signedOutCta': { en: 'Sign in to start', hr: 'Prijavi se za početak' },
