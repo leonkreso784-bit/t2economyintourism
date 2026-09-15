@@ -88,6 +88,43 @@ main.legal {
     padding: 2.5rem 1.5rem 3rem;
 }
 
+/* ── Odjava od obavijesti (F2/4, `odjava.html`) ──
+   Jedan gumb, jedno stanje: ista stranica kao pravila (kostur `legal`), jer iz maila dolazi
+   netko tko nije nužno prijavljen — mora biti mirna i čitljiva, ne aplikacija. */
+.unsub-lang {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0 0.6rem;
+    font: inherit;
+    font-weight: 600;
+    background: none;
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.unsub-btn {
+    min-height: 48px;
+    padding: 0 1.4rem;
+    font: inherit;
+    font-weight: 600;
+    color: var(--color-on-brand);
+    background: var(--color-brand-500);
+    border: 0;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.unsub-btn:disabled { opacity: 0.55; cursor: default; }
+
+@media (hover: hover) {
+    .unsub-btn:hover:not(:disabled) { background: var(--color-brand-600); }
+}
+
+.unsub-status { min-height: 1.4em; font-weight: 600; }
+.unsub-status[data-state="done"] { color: var(--color-ok); }
+.unsub-status[data-state="error"] { color: var(--color-danger-ink); }
+
 .legal h1 { font-size: 1.8rem; margin-bottom: 0.4rem; }
 
 .legal .legal-updated {

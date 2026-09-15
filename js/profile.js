@@ -405,6 +405,52 @@ async function fillShelf(uid) {
     if (all) all.hidden = !wall.total;
 }
 
+// ── OBAVIJESTI MAILOM (F2/4; Leon, anketa 15.09.: „prekidač u profilu") ─────────────────────
+// Pristanak je korisnikov i živi u `user_metadata.mail_consent` (isti ključ koji piše upitnik R1 i
+// koji `send-notification` čita) — PRAVI boolean, uz vrijeme i izvor (`mail_consent_at`/`_via`) kao
+// trag izričitog izbora. Povlačenje mora biti jednako lako kao davanje (GDPR), a 4 od 5 računa na
+// produkciji upitnik nikad nije vidjelo: bez prekidača se ne bi mogli ni prijaviti.
+// ⚠️ Pristupačno ime = naslov + stanje (`aria-labelledby` na oba): samo „Uključeno" ne kaže ŠTO je
+//    uključeno, a samo naslov bi se razišao s vidljivim tekstom gumba (axe „label-in-name").
+function mailCardHtml(user) {
+    const on = !!(user.user_metadata && user.user_metadata.mail_consent === true);
+    return '  <div class="profile-card">' +
+        '    <h3 class="profile-card-title" id="profileMailTitle"><i class="fas fa-envelope" aria-hidden="true"></i> ' + pt('profile.mailTitle', 'Email updates') + '</h3>' +
+        '    <p class="profile-meta">' + pt('profile.mailDesc', 'Now and then we let you know about a new subject or an important change. No ads — every email has a one-click unsubscribe.') + '</p>' +
+        '    <button type="button" class="mail-switch" id="profileMailSwitch" role="switch" aria-checked="' + (on ? 'true' : 'false') + '"' +
+        ' aria-labelledby="profileMailTitle profileMailState">' +
+        '<span class="mail-switch-track" aria-hidden="true"><span class="mail-switch-thumb"></span></span>' +
+        '<span class="mail-switch-label" id="profileMailState">' + (on ? pt('profile.mailOn', 'On') : pt('profile.mailOff', 'Off')) + '</span></button>' +
+        '  </div>';
+}
+
+async function toggleMailConsent(btn) {
+    const client = (typeof SokratAuth !== 'undefined') ? SokratAuth.getClient() : null;
+    if (!client || btn.disabled) return;
+    const on = btn.getAttribute('aria-checked') !== 'true';
+    const oznaka = document.getElementById('profileMailState');
+    const postavi = function (v) {
+        btn.setAttribute('aria-checked', v ? 'true' : 'false');
+        if (oznaka) oznaka.textContent = v ? pt('profile.mailOn', 'On') : pt('profile.mailOff', 'Off');
+    };
+    postavi(on);                         // odmah vidljivo; poslužitelj potvrđuje ispod
+    btn.disabled = true;
+    let greska = null;
+    try {
+        const r = await client.auth.updateUser({ data: { mail_consent: on, mail_consent_at: new Date().toISOString(), mail_consent_via: 'profile' } });
+        greska = r && r.error;
+    } catch (e) { greska = e; }
+    btn.disabled = false;
+    if (greska) {
+        postavi(!on);
+        if (typeof showToast === 'function') showToast(pt('profile.mailErr', 'Not saved — please try again.'));
+        return;
+    }
+    if (typeof showToast === 'function') {
+        showToast(on ? pt('profile.mailOnToast', 'You will get email updates.') : pt('profile.mailOffToast', 'Email updates are off.'));
+    }
+}
+
 function renderProfilePage() {
     const root = document.getElementById('profileContent');
     if (!root) return;
@@ -465,6 +511,8 @@ function renderProfilePage() {
         '    </form>' +
         '  </div>' +
 
+        mailCardHtml(user) +
+
         // Admin (F4) — renderira se skriveno; SokratAdmin.refresh() ga otkrije samo adminu.
         '  <div class="profile-card profile-card--wide admin-only" style="display:none">' +
         '    <h3 class="profile-card-title"><i class="fas fa-user-shield"></i> ' + pt('admin.title', 'Admin') + '</h3>' +
@@ -475,6 +523,9 @@ function renderProfilePage() {
         // otvoriti u novoj kartici, kopirati i vidjeti prije klika — gumb ništa od toga ne nudi.
         '      <a class="cta-button primary" href="editor.html"><i class="fas fa-wand-magic-sparkles"></i><span>' + pt('admin.openStudio', 'Studio editor') + '</span></a>' +
         '      <a class="cta-button secondary" href="editor.html?view=admin"><i class="fas fa-pen-to-square"></i><span>' + pt('admin.editContent', 'Edit content') + '</span></a>' +
+        // F2/4 (Leon, anketa 15.09.): obavijest se piše OVDJE — admin-kartica je već jedino mjesto
+        // koje vidi samo admin; prozor crta `js/mail-admin.js` (paket `profile`).
+        '      <button type="button" class="cta-button secondary" data-mail-admin><i class="fas fa-paper-plane"></i><span>' + pt('mail.adminOpen', 'Send a notification') + '</span></button>' +
         '    </div>' +
         '  </div>' +
 
@@ -531,7 +582,10 @@ function renderProfilePage() {
                 if (window.SokratMaterials) SokratMaterials.learnNode(tile.getAttribute('data-shelf-learn'));
                 return;
             }
-            if (e.target.closest('[data-shelf-retry]')) { const u = SokratAuth.getUser(); fillShelf(u && u.id); }
+            if (e.target.closest('[data-shelf-retry]')) { const u = SokratAuth.getUser(); fillShelf(u && u.id); return; }
+            const sw = e.target.closest('#profileMailSwitch');
+            if (sw) { toggleMailConsent(sw); return; }
+            if (e.target.closest('[data-mail-admin]') && window.SokratMailAdmin) window.SokratMailAdmin.open();
         });
     }
     wireThemePicker(root);

@@ -27,6 +27,19 @@ test.describe('a11y — 0 gateanih axe prekršaja (WCAG A/AA ∪ serious/critica
     expect(await skeniraj(page, 'LANDING')).toEqual([]);
   });
 
+  // F2/4: stranica do koje vodi „Odjavi se" iz SVAKOG maila — dolazi netko tko nije nužno
+  // prijavljen, često s mobitela. Skenira se prije klika i u stanju „Gotovo" (odgovor podmetnut).
+  test('odjava od obavijesti (odjava.html) — prije i poslije klika', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'iPhone-SE-375', 'a11y se skenira na jednom viewportu');
+    await page.route(/\/functions\/v1\/mail-unsubscribe/, (r) => r.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
+    await page.goto('/odjava.html?t=abc.def');
+    await page.waitForFunction(() => typeof window.t === 'function');
+    const prije = await skeniraj(page, 'ODJAVA (prije)');
+    await page.click('#unsubBtn');
+    await page.waitForSelector('#unsubStatus[data-state="done"]');
+    expect(prije.concat(await skeniraj(page, 'ODJAVA (gotovo)'))).toEqual([]);
+  });
+
   test('browse drill-down', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'iPhone-SE-375', 'a11y se skenira na jednom viewportu');
     await page.goto('/');

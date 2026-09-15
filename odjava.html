@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="academic">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Unsubscribe — Sokrat Study</title>
+    <!-- F2/4: stranica do koje vodi poveznica „Odjavi se" iz maila. NE indeksira se: nema smisla
+         bez tokena iz maila, a u tražilici bi bila samo prazan gumb. (robots.txt je NE zabranjuje —
+         inače `noindex` nitko ne bi pročitao; v. check:seo.) -->
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/png" href="assets/logo.svg?v=20260915153358">
+    <link rel="stylesheet" href="css/tokens.static.css?v=20260915153358">
+    <link rel="stylesheet" href="css/legal.css?v=20260915153358">
+    <script src="js/no-zoom.js?v=20260915153358" defer></script>
+    <script src="js/i18n.js?v=20260915153358" defer></script>
+    <script src="js/odjava.js?v=20260915153358" defer></script>
+</head>
+<body>
+<script src="js/boot.js?v=20260915153358"></script>
+    <header class="legal-nav">
+        <a class="legal-logo" href="/"><img src="assets/logo.svg?v=20260915153358" alt="Sokrat Study">Sokrat Study</a>
+        <!-- Oznaku („EN"/„HR") upiše `i18n.js` (`.lang-toggle-label`) — prazna je dok JS ne stigne. -->
+        <button type="button" class="legal-back unsub-lang" data-action="toggleUiLang" data-i18n-aria="unsub.lang" aria-label="Language / Jezik">
+            <span class="lang-toggle-label"></span>
+        </button>
+    </header>
+
+    <!-- GET ove stranice NIKAD ne odjavljuje — tek gumb (POST). Sigurnosni skeneri pošte otvaraju
+         svaku poveznicu iz maila; da odjavljuje otvaranje, odjavili bi ljude bez njihova znanja. -->
+    <main class="legal unsub">
+        <h1 data-i18n="unsub.title">Unsubscribe from email updates</h1>
+        <p data-i18n="unsub.desc">After this you will get no more Sokrat Study updates. Account emails (sign-in, password reset) still work.</p>
+        <p>
+            <button type="button" class="unsub-btn" id="unsubBtn" data-i18n="unsub.button">Unsubscribe</button>
+        </p>
+        <p class="unsub-status" id="unsubStatus" role="status" aria-live="polite"></p>
+        <p><a href="/" data-i18n="unsub.back">Back to Sokrat Study</a></p>
+    </main>
+</body>
+</html>

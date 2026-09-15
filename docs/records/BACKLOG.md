@@ -69,6 +69,8 @@ B5–B6 u §4 stalnu traku · C i D uz F7. ~~Ništa od ovoga nije započeto~~ A1
 „pozadina nije tamna" — boja `body` uhvaćena USRED prijelaza (npr. `rgb(199,201,203)`), dok je atribut teme točan od prvog
 kadra (nula promjena). Isti omjer i sa `theme.js` od prije F2/1 (izmjereno obrnuto). Popravak brane: čekati mirnu
 pozadinu (`expect.poll`) ili ugasiti prijelaze PRIJE mjerenja boje — ne dirati tvrdnju o atributu. Nije hitno; stalna traka.
+➕ 15.09. (puni paket, 1/801): `izbor chalk pobjeđuje uređaj` na iPhone-SE, boja `rgb(247,249,252)` = POČETAK istog prijelaza
+(puna svijetla); sam spec odmah poslije 60/60 (`--repeat-each=10`), WIP nije dirao nijednu datoteku teme.
 
 ### 🔴 LEONOVI NALAZI S UREDAJA — 2026-09-04 (nedirnuto, ceka svoj red)
 

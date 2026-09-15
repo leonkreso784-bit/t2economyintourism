@@ -88,7 +88,7 @@
         materials: ['js/row-menu.js', 'js/offline-store.js', 'js/node-images.js', 'js/my-materials.js'],
         // Profil montira „Moje materijale" i otkriva admin-karticu → nosi oboje sa sobom.
         profile: ['js/row-menu.js', 'js/offline-store.js', 'js/node-images.js', 'js/my-materials.js', 'js/image-crop.js', 'js/profile-images.js',
-            'js/admin-reveal.js', 'js/profile.js'],
+            'js/admin-reveal.js', 'js/mail-admin.js', 'js/profile.js'],
         // ⚠️ Sinkronizacija napretka NE visi o stranici nego o PRIJAVI: dovlači ju `auth.js`
         // čim se pojavi korisnik. Da stoji uz profil, napredak se ne bi sinkronizirao onome
         // tko svoj profil nikad ne otvori — a to je većina prijavljenih.

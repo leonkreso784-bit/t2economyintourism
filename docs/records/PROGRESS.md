@@ -5,6 +5,40 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-15 kasno (OPUS, stablo `sokratstudy.f21`, grana `feat/f2-mail` od `6fbac90`) — F2/4 mail-obavijesti: ①② gotovi, ③ WIP
+
+Leon: *„možeš krenuti"* → anketa 15.09. (forma u admin-kartici profila · prekidač u profilu · segmenti FMTU / svi s
+pristankom). PROD: 5 računa, 1 pristanak, 0 FMTU s pristankom — F2/4 je infrastruktura za poslije.
+- **① `24b8749`** jezgra `supabase/functions/_shared/mail-core.ts` (bez Deno-uvoza; Node 24 je vrti izravno) + unit 13 ·
+  `supabase/f2-mail-log.sql` na STAGINGU (RLS, 0 politika, bez grantova — provjereno čitanjem).
+- **② `3ac8504`** `send-notification` (v2) + `mail-unsubscribe` (v1, `verify_jwt=false`) na STAGINGU, `npm run test:mail`:
+  T0–T4 zeleni na živom stagingu; **T5 (odjava) i T6 (slanje) SKIP dok Leon ne postavi tajne** (v. dolje).
+  **Nalaz:** GoTrue `admin/users` padao je zbog NULL tokena na RLS-fiksturi staginga (`rls-fixture-b@sokrat.local`,
+  upisana SQL-om 02.08.) → NULL→'' na stagingu; PROD 0 takvih (provjereno). T0 to sad kaže tim riječima.
+- **③ `feat/f2-mail`, NIŠTA pushano (bio WIP; izmjeren i pretvoren u pravi commit u sljedećoj sesiji, v. dolje):** prekidač „Obavijesti mailom" u profilu (`mailCardHtml`,
+  `toggleMailConsent`) · `js/mail-admin.js` (prozor: broj primatelja → proba meni → potvrda → slanje, ključ protiv
+  ponavljanja po prozoru) · `odjava.html` + `js/odjava.js` (GET ne odjavljuje; hr po jeziku uređaja) · i18n (mail.*,
+  profile.mail*, unsub.*) · `tests/odjava.spec.js` (4/4 ✅) · `tests/mail-notify.authed.spec.js` ①② (2/2 ✅) + ③ axe ·
+  `tests/unit/odjava.test.js` (7/7 ✅) · a11y.spec + test za odjava.html.
+  **Pravi nalaz iz novog axe-testa:** gumbi „Obriši podatke iz oblaka"/„Obriši račun" nosili su zakucan `#f87171` —
+  kontrast 2,31–2,51 (svijetle teme) i 3,95–4,38 (tamne) → **na PRODUKCIJI DANAS**; popravljeno na tokene
+  (`--color-danger-ink`, `--color-ok`) u `css/profile.css`. ✅ **Izmjereno sljedeće sesije (15.09. navečer):**
+  `mail-notify.authed` 4/4 (③ axe = 0 u 5 tema; isti test je prije popravka bio crven = obrnuta provjera) ·
+  `a11y -g odjava` 1/1 · preflight EXIT 0 · **puni paket 680 ✅ / 120 skip / 1 ✘** — ✘ = poznati povremeni
+  `theme-fouc` (BACKLOG), sam 60/60, WIP ne dira datoteke teme.
+- **SLJEDEĆA SESIJA, redom:** ① vrti `mail-notify.authed.spec.js` (③ axe mora biti 0) + `a11y.spec.js -g odjava
+  --project=iPhone-SE-375` + preflight · ② ako zeleno, zamijeni WIP commit pravim (`git commit --amend` je lokalno i
+  dopušteno) · ③ Leon postavi tajne na STAGING (`RESEND_API_KEY`, `MAIL_UNSUB_SECRET` = `STAGING_MAIL_UNSUB_SECRET` iz
+  `.env`, `MAIL_REDIRECT_TO=delivered@resend.dev`) → `npm run test:mail` mora biti bez SKIP-a · ④ nacrt Pravila privatnosti
+  (obavijesti, Resend kao obrađivač, podaci iz upitnika koje politika još NE spominje) — Leon čita · ⑤ `check:functions`
+  (`scripts/check-edge-functions.js`) zna samo `delete-account` → dodati obje nove (mail-unsubscribe NE traži JWT) ·
+  ⑥ PROD koraci za Leona: SQL `f2-mail-log.sql` → tajne (bez `MAIL_REDIRECT_TO`!) → deploy obje funkcije → push.
+- Pouke: poziv koji nije uvjetovan izlazom preflighta push-a svejedno (8d9a3c4) — sad `if [ $rc -eq 0 ]` · backtick
+  u `node -e "…"` izvršava bash (skripte → Write → `node <put>`) · brane koje mjere samo na `iPhone-SE-375` na drugim
+  profilima javljaju „skipped", ne „passed".
+
+---
+
 ## 2026-09-15 (OPUS, stablo `sokratstudy.f21`, grana `feat/f2-zid` od `830feb6`) — F2/5a: zid gradiva na profilu
 
 Leon: *„možemo dalje"* → F2/5 u ovom stablu (sesija je vezana uz `.f21`; `.f25` s granom `feat/f2-zid-radionica` nosi
