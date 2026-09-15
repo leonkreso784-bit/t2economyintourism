@@ -31,6 +31,11 @@ testirano, što slijedi.
   (T5 odjavi oba računa s pristankom, pa `0 === 0`) → T6 sad stvara svjež račun s pristankom, broji u tom trenutku i
   traži ≥ 1 + red u `mail_log`: **1/1 poslano preusmjereno, zapisano**. Snimke Playwrighta s ključem (4, gitignorane)
   obrisane.
+- **Pravila privatnosti u `privacy.html`** (Leon: *„može super"*): Google-prijava, upitnik, potvrda 16+, profil (slike
+  javne po poveznici), tema, materijali, obavijesti (pristanak, odjava, zapis bez adresa, bez praćenja), Resend, §8 16+.
+  Pri upisu nađena netočnost u MOM nacrtu: „upitnik je sav neobavezan" — a „Tko si?" je `required` na mail-putu → ispravljeno.
+  `check:i18n` osnovica `privacy.html` 96 → 150 SVJESNO (pravne stranice su samo EN i ne učitavaju `i18n.js`; HR inačica
+  Pravila = zasebna proizvodna odluka). legal + a11y 22/22, preflight EXIT 0. ⚠️ Pravne stranice ne skenira nijedan axe.
 
 ---
 

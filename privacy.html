@@ -30,7 +30,7 @@
 
     <main class="legal">
         <h1>Privacy Policy</h1>
-        <p class="legal-updated">Last updated: 8 August 2026 (self-service account deletion added)</p>
+        <p class="legal-updated">Last updated: 15 September 2026 (email updates, sign-up questionnaire and profile added)</p>
 
         <p>Sokrat Study ("we", "us") is a free study platform available at
         <a href="https://www.sokratstudy.com">www.sokratstudy.com</a>, operated by
@@ -42,32 +42,75 @@
             <li><strong>Without an account:</strong> we collect no personal data. Your study progress
                 (flashcards learned, quiz scores, study statistics) is stored only in your browser's
                 local storage, on your device. It never leaves your device.</li>
-            <li><strong>With an account (optional):</strong> if you create an account, we store your
-                <strong>name</strong> (shown on your profile), your <strong>email address</strong>,
-                your <strong>password</strong> (stored only as a secure cryptographic hash by our
-                authentication provider — we never see or store the password itself) and your
-                <strong>study progress</strong> (so it can sync across your devices). That's all —
-                no payment data, no tracking profiles.</li>
+            <li><strong>With an account (optional):</strong>
+                <ul>
+                    <li><strong>Sign-in details:</strong> your <strong>email address</strong> and your
+                        <strong>password</strong> (stored only as a secure cryptographic hash by our
+                        authentication provider — we never see or store the password itself). If you choose
+                        <strong>Sign in with Google</strong>, you have no password with us; instead Google
+                        shares your <strong>name, email address and a link to your Google profile
+                        picture</strong>.</li>
+                    <li><strong>Sign-up questionnaire:</strong> whether you are a university student, a
+                        high-school pupil or something else; optionally, the name of your university or school;
+                        and whether you want email updates. We use the school name only to recognise students of
+                        FMTU Opatija, so that updates specific to FMTU reach only them.</li>
+                    <li><strong>Your age confirmation</strong> (email sign-up): that you confirmed being at least
+                        16, and when.</li>
+                    <li><strong>Your profile:</strong> display name, a short bio (up to 280 characters), a
+                        username, and — if you upload them — a <strong>profile photo</strong> and a
+                        <strong>cover image</strong>. We also remember your chosen <strong>colour theme</strong>,
+                        so it follows you across devices.</li>
+                    <li><strong>Study progress</strong>, so it can sync across your devices.</li>
+                    <li><strong>Personal materials</strong> you create (text, flashcards, questions) and images
+                        you add to them.</li>
+                    <li><strong>Your email-update choice:</strong> whether you said yes, when, and where (in the
+                        questionnaire or in your profile) — so we can show that you agreed.</li>
+                </ul>
+                No payment data, no tracking profiles, no advertising.</li>
         </ul>
 
         <h2>2. How we use your data</h2>
         <ul>
-            <li>To sign you in (email + password; we also send a one-time confirmation email when
-                you register and password-reset emails when you request them).</li>
-            <li>To back up and synchronise your study progress across devices.</li>
+            <li>To sign you in. Account emails (confirming your address when you register, password resets
+                when you ask for them) are sent through our email provider, <strong>Resend</strong>.</li>
+            <li>To back up and synchronise your study progress, profile and personal materials across
+                devices.</li>
+            <li><strong>Email updates — only if you said yes.</strong> Now and then we email you about a new
+                subject or an important change to the platform. <strong>No ads.</strong> Every email contains a
+                <strong>one-click unsubscribe link</strong>, and you can also switch updates off at any time
+                under <em>Profile → Email updates</em>. The list of recipients is made fresh at the moment of
+                sending, from the people who currently have updates switched on. For each sending we keep a
+                record of its subject, the group it went to and how many people received it — <strong>but not
+                who they were.</strong> We do <strong>not</strong> track whether you open an email or click a
+                link in it.</li>
+            <li><strong>Images on your profile:</strong> so that they load quickly, your profile photo and cover
+                image are stored so that <strong>anyone who has the image's direct link can open it</strong>.
+                Everything else on your profile is currently visible only to you. Images in your personal
+                materials are private.</li>
             <li>We do <strong>not</strong> sell or share your data with third parties for marketing.</li>
         </ul>
 
         <h2>3. Legal basis</h2>
-        <p>Processing is based on the performance of a contract (providing the account and sync
-        features you request, Art. 6(1)(b) GDPR). Creating an account is entirely optional —
-        the platform is fully usable without one.</p>
+        <ul>
+            <li>Your account, sync, profile and personal materials: <strong>performance of a contract</strong>
+                — providing the features you ask for (Art. 6(1)(b) GDPR). Creating an account is entirely
+                optional; the platform is fully usable without one.</li>
+            <li><strong>Email updates: your consent</strong> (Art. 6(1)(a) GDPR). It is off unless you switch it
+                on. You can withdraw it at any time; withdrawing does not affect emails sent before.</li>
+            <li>Analytics and error monitoring: your consent (see section 5).</li>
+        </ul>
 
         <h2>4. Where your data is stored</h2>
-        <p>Account and progress data are stored with <strong>Supabase</strong> (our database and
-        authentication provider) on servers in the European Union. Data in transit is encrypted
+        <p>Account, profile, materials and progress data are stored with <strong>Supabase</strong> (our
+        database and authentication provider) on servers in the European Union. Data in transit is encrypted
         (HTTPS), and database access is restricted so each user can only access their own records.
         The website is hosted on <strong>Vercel</strong>.</p>
+        <p>Emails are delivered by <strong>Resend</strong> (from the EU region). To deliver an email, Resend
+        receives your email address and the content of that email, and keeps delivery records for a limited
+        period. Resend is a US company; any transfer outside the EU is covered by standard contractual
+        clauses.</p>
+        <p>If you use <strong>Sign in with Google</strong>, Google processes that sign-in under its own privacy
+        policy.</p>
 
         <h2>5. Cookies and analytics</h2>
         <p><strong>Essential local storage (always on):</strong> we use your browser's local storage
@@ -96,27 +139,34 @@
 
         <h2>6. Data retention</h2>
         <p>Your account data is kept for as long as your account exists. If you delete your cloud
-        data or your account, the corresponding records are removed from our database.</p>
+        data or your account, the corresponding records are removed from our database. If you unsubscribe
+        from email updates, we keep the note that you said <strong>no</strong> — that is how we make sure you
+        are not emailed again. The record of each sending (subject, group, number of recipients) contains no
+        personal data about recipients and is kept as a log.</p>
 
         <h2>7. Your rights</h2>
         <p>Under the GDPR you have the right to access, rectify, export, and erase your personal
         data, and to lodge a complaint with a supervisory authority (in Croatia: AZOP).</p>
         <ul>
+            <li><strong>Stop email updates:</strong> the unsubscribe link in any update email (one click), or
+                <em>Profile → Email updates</em>.</li>
             <li><strong>Delete cloud data:</strong> available directly in the app under
                 <em>Profile → Privacy &amp; data → Delete cloud data</em>.</li>
             <li><strong>Delete your account:</strong> available directly in the app under
                 <em>Profile → Privacy &amp; data → Delete account</em>. This is a <strong>permanent
                 deletion</strong> and takes effect immediately: your login, your study progress, your
-                personal materials and any images you uploaded to them are erased and cannot be
-                recovered. Records of edits to our public catalogue are kept, but your name is removed
-                from them.</li>
+                profile (including your profile photo and cover image), your personal materials and any
+                images you uploaded to them are erased and cannot be recovered. Records of edits to our
+                public catalogue are kept, but your name is removed from them.</li>
             <li><strong>Any other right</strong> (access, rectification, export): email us at
                 <a href="mailto:leonkreso784@gmail.com">leonkreso784@gmail.com</a> — we respond within 30 days.</li>
         </ul>
 
         <h2>8. Children</h2>
-        <p>The platform is intended for university students. We do not knowingly collect data from
-        children under 16.</p>
+        <p>The platform is intended for university and secondary-school students. You need to be
+        <strong>at least 16</strong> to create an account, and you confirm this when you sign up. We do not
+        knowingly collect data from children under 16; if you believe a child under 16 has created an
+        account, contact us and we will delete it.</p>
 
         <h2>9. Changes to this policy</h2>
         <p>We may update this policy as the platform evolves. Material changes will be announced on
