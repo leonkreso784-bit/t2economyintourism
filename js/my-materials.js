@@ -313,10 +313,10 @@
     return '' +
       // F2/5b-3: JEDAN „+ Novo" (dotad dva gumba) → izbornik istog oblika kao „⋯" retka; materijal
       // je prvi jer se češće radi nego polica. Stavke nose stare `data-mm-new` atribute.
-      '<div class="mm-bar">' +
+      '<div class="mm-bar" data-menu-scope>' +
       '  <button type="button" class="mm-add" data-mm-more aria-haspopup="menu" aria-expanded="false" aria-controls="mm-menu-new">' +
       '    <i class="fas fa-plus" aria-hidden="true"></i><span>' + esc(mt('materials.new', 'New')) + '</span></button>' +
-      '  <div class="mm-menu" id="mm-menu-new" role="menu" ' + (HAS_POPOVER ? 'popover="auto"' : 'hidden') + '>' +
+      '  <div class="mm-menu" id="mm-menu-new" role="menu" ' + menuAttr() + '>' +
       menuItem('data-mm-new="study"', 'fa-book-medical', mt('materials.newStudy', 'New material')) +
       menuItem('data-mm-new="folder"', 'fa-folder-plus', mt('materials.newFolder', 'New folder')) +
       '  </div>' +
@@ -365,7 +365,7 @@
     const menuId = 'mm-menu-' + n.id;
     return '' +
       '<li class="mm-row' + (isFolder ? ' mm-row--folder' : ' mm-row--study') + '"' +
-      ' role="treeitem" aria-level="' + (entry.depth + 1) + '"' +
+      ' role="treeitem" data-menu-scope aria-level="' + (entry.depth + 1) + '"' +
       (isFolder && hasKids ? ' aria-expanded="' + (open ? 'true' : 'false') + '"' : '') +
       ' data-mm-id="' + esc(n.id) + '" data-mm-kind="' + esc(n.kind) + '"' +
       ' style="--mm-depth:' + entry.depth + (isFolder ? '' : ';--tile-color:' + esc(colorOf(n))) + '">' +
@@ -386,7 +386,7 @@
       '  <button type="button" class="mm-more" data-mm-more aria-haspopup="menu" aria-expanded="false"' +
       ' aria-controls="' + esc(menuId) + '" aria-label="' + esc(mt('materials.more', 'More actions') + ': ' + n.name) + '">' +
       '<i class="fas fa-ellipsis" aria-hidden="true"></i></button>' +
-      '  <div class="mm-menu" id="' + esc(menuId) + '" role="menu" ' + (HAS_POPOVER ? 'popover="auto"' : 'hidden') + '>' +
+      '  <div class="mm-menu" id="' + esc(menuId) + '" role="menu" ' + menuAttr() + '>' +
       (isFolder
         ? menuItem('data-mm-new-in="study"', 'fa-book-medical', mt('materials.addStudyIn', 'New material inside')) +
           menuItem('data-mm-new-in="folder"', 'fa-folder-plus', mt('materials.addFolderIn', 'New folder inside'))
@@ -410,72 +410,10 @@
     return (typeof window.inkForTint === 'function') ? window.inkForTint(color) : 'light';
   }
 
-  // Popover API (Safari 17+, Chrome 114+). Bez njega izbornik je `hidden` element s istim ponašanjem
-  // (zatvara ga klik izvan i Escape) — samo bez gornjeg sloja.
-  const HAS_POPOVER = typeof HTMLElement !== 'undefined'
-    && Object.prototype.hasOwnProperty.call(HTMLElement.prototype, 'popover');
-
-  function isMenuOpen(menu) {
-    if (!menu) return false;
-    if (HAS_POPOVER) { try { return menu.matches(':popover-open'); } catch (e) { return false; } }
-    return !menu.hidden;
-  }
-
-  function closeMenus() {
-    const host = root();
-    if (!host) return;
-    host.querySelectorAll('.mm-menu').forEach(function (m) {
-      if (!isMenuOpen(m)) return;
-      if (HAS_POPOVER) m.hidePopover(); else m.hidden = true;
-      syncMore(m, false);
-    });
-  }
-
-  /** Vlasnik izbornika: redak stabla ili traka („+ Novo", 5b-3) — svaki nosi jedan „⋯" i jedan `.mm-menu`. */
-  function menuScope(el) { return el && el.closest ? el.closest('.mm-row, .mm-bar') : null; }
-
-  function syncMore(menu, open) {
-    const row = menuScope(menu);
-    const btn = row && row.querySelector('[data-mm-more]');
-    if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-  }
-
-  /** Smjesti izbornik uz gumb: poravnat uz BLIŽI rub gumba („⋯" desno, „+ Novo" lijevo), ispod — ili iznad ako dolje ne stane. */
-  function placeMenu(menu, btn) {
-    const r = btn.getBoundingClientRect();
-    const mw = menu.offsetWidth || 200;
-    const mh = menu.offsetHeight || 200;
-    // Lijevi rub, ne središte: „+ Novo" je na telefonu pune širine, pa mu je središte točno na polovici.
-    let left = Math.round((r.left < window.innerWidth / 2) ? r.left : r.right - mw);
-    left = Math.max(8, Math.min(left, window.innerWidth - mw - 8));
-    let top = r.bottom + 4;
-    // Donji rub nije `innerHeight`: cookie-banner (`--bottom-inset`, js/consent.js) presreće
-    // pokazivač — isti razlog kao izbornik blokova u Studiju.
-    const donji = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bottom-inset')) || 0;
-    if (top + mh > window.innerHeight - donji - 8) top = Math.max(8, r.top - mh - 4);
-    menu.style.left = left + 'px';
-    menu.style.top = top + 'px';
-  }
-
-  // ⚠️ Drugi dodir na „⋯" mora ZATVORITI izbornik. Popover `auto` se zatvara već na PRITISAK izvan
-  //    sebe (a „⋯" je izvan), pa bi klik stigao na zatvoren izbornik i otvorio ga ponovno — izmjereno
-  //    u `radionica.authed.spec.js` ②. Zato se pamti je li izbornik bio otvoren u trenutku PRITISKA.
-  let _otvorenPriPritisku = null;
-
-  function openMenu(row) {
-    const menu = row && row.querySelector('.mm-menu');
-    const btn = row && row.querySelector('[data-mm-more]');
-    if (!menu || !btn) return;
-    const bioOtvoren = isMenuOpen(menu) || _otvorenPriPritisku === menu;
-    _otvorenPriPritisku = null;
-    closeMenus();
-    if (bioOtvoren) return;                       // drugi dodir na „⋯" zatvara
-    if (HAS_POPOVER) menu.showPopover(); else menu.hidden = false;
-    placeMenu(menu, btn);                         // izmjereno tek kad je vidljiv, prije iscrtavanja
-    syncMore(menu, true);
-    const prvi = menu.querySelector('[role="menuitem"]');
-    if (prvi) prvi.focus();
-  }
+  // Izbornik „⋯" = `js/row-menu.js` (F2/5c: JEDNO ponašanje za radionicu, „+ Novo" i policu skinutog).
+  // Ovdje su samo prečaci; vlasnik izbornika nosi `data-menu-scope` (redak, traka).
+  function menuAttr() { return window.SokratRowMenu ? window.SokratRowMenu.attr() : 'hidden'; }
+  function openMenu(scope) { if (window.SokratRowMenu) window.SokratRowMenu.open(scope); }
 
   /** Inline redak za unos naziva (novi čvor ili preimenovanje). */
   function editRowHtml(depth, value, kind) {
@@ -1087,12 +1025,6 @@
     const retry = e.target.closest('[data-mm-retry]');
     if (retry) { refresh(); return; }
 
-    // F2/5b: „⋯" otvara izbornik retka; stavka izbornika ga PRVO zatvori (brisanje otvara potvrdu,
-    // preimenovanje unos — izbornik ne smije ostati visjeti preko njih), pa radnja ide dalje niže.
-    const more = e.target.closest('[data-mm-more]');
-    if (more) { openMenu(menuScope(more)); return; }
-    if (e.target.closest('.mm-menu [role="menuitem"]')) closeMenus();
-
     // Dodir na redak = glavna radnja: materijal → učenje; mapa → otvori/zatvori; prazna mapa → „⋯".
     const main = e.target.closest('[data-mm-main]');
     if (main) {
@@ -1204,89 +1136,7 @@
     }, 120);
   }
 
-  /** Izbornik zatvoren izvana (klik mimo, Escape): `aria-expanded` natrag, fokus na „⋯" ako je bio u izborniku. */
-  function onMenuClosed(menu) {
-    syncMore(menu, false);
-    const a = document.activeElement;
-    if (!a || a === document.body || menu.contains(a)) {
-      const row = menuScope(menu);
-      const btn = row && row.querySelector('[data-mm-more]');
-      if (btn) btn.focus();
-    }
-  }
-
   if (typeof document !== 'undefined') {
-    document.addEventListener('pointerdown', function (e) {
-      const b = e.target.closest && e.target.closest('[data-mm-more]');
-      const m = b && menuScope(b) && menuScope(b).querySelector('.mm-menu');
-      _otvorenPriPritisku = (m && isMenuOpen(m)) ? m : null;
-    }, true);
-    // `toggle` ne mjehuri → hvata se u fazi hvatanja. Samo za popover-put.
-    document.addEventListener('toggle', function (e) {
-      const m = e.target;
-      if (m && m.classList && m.classList.contains('mm-menu') && e.newState === 'closed') onMenuClosed(m);
-    }, true);
-    if (!HAS_POPOVER) {
-      document.addEventListener('click', function (e) {
-        if (!e.target.closest || !e.target.closest('.mm-menu, [data-mm-more]')) closeMenus();
-      }, true);
-    }
-    document.addEventListener('keydown', function (e) {
-      // `role="menu"` obećava strelice (ARIA APG): ↓/↑ kruže stavkama, Home/End na prvu/zadnju.
-      const u = e.target.closest && e.target.closest('.mm-menu');
-      // Tab u izborniku (APG „menu button"): zatvori i vrati fokus na „⋯" — preglednikov Tab zatim
-      // nastavlja OD njega (naprijed ili, uz Shift, natrag), kao da izbornik nije ni bio otvoren.
-      if (u && e.key === 'Tab' && isMenuOpen(u)) {
-        const s = menuScope(u);
-        const b = s && s.querySelector('[data-mm-more]');
-        closeMenus();
-        if (b) b.focus();
-        return;
-      }
-      if (u && ['ArrowDown', 'ArrowUp', 'Home', 'End'].indexOf(e.key) !== -1) {
-        const items = Array.prototype.slice.call(u.querySelectorAll('[role="menuitem"]'));
-        if (!items.length) return;
-        e.preventDefault();
-        const i = items.indexOf(document.activeElement);
-        const n = e.key === 'Home' ? 0
-          : e.key === 'End' ? items.length - 1
-          : (i + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
-        items[n].focus();
-        return;
-      }
-      if (e.key !== 'Escape' || HAS_POPOVER) return;
-      const host = root();
-      const open = host && Array.prototype.find.call(host.querySelectorAll('.mm-menu'), isMenuOpen);
-      if (open) { closeMenus(); onMenuClosed(open); }
-    });
-    // Tab VAN izbornika ga zatvara (popover ne gleda fokus — ostao bi visjeti nad sljedećim retkom).
-    // ⚠️ Samo kad fokus stvarno ODE negdje (`relatedTarget`): Safari na klik ne fokusira gumb, pa
-    //    dodir na stavku daje `focusout` BEZ cilja — zatvaranje tada bi pojelo klik na stavku.
-    document.addEventListener('focusout', function (e) {
-      const m = e.target.closest && e.target.closest('.mm-menu');
-      const to = e.relatedTarget;
-      if (!m || !to || !isMenuOpen(m) || m.contains(to)) return;
-      const s = menuScope(m);
-      if (s && s.querySelector('[data-mm-more]') === to) return;
-      closeMenus();
-    });
-    // Izbornik stoji na FIKSNOM mjestu ekrana; kad se stranica pomakne, „⋯" ode, a izbornik ne.
-    // Zato ga pomak PREMJESTI uz njegov gumb, a zatvori tek kad gumb izađe s ekrana.
-    // ⚠️ Ne zatvarati na svaki pomak: `scroll-behavior: smooth` (i zamah prsta na iPhoneu) nastavi
-    //    klizati i POSLIJE dodira na „⋯" — izmjereno u `radionica` ②: izbornik se otvarao i odmah zatvarao.
-    const pratiPomak = function (e) {
-      if (e && e.target && e.target.closest && e.target.closest('.mm-menu')) return;
-      const host = root();
-      const open = host && Array.prototype.find.call(host.querySelectorAll('.mm-menu'), isMenuOpen);
-      if (!open) return;
-      const s = menuScope(open);
-      const btn = s && s.querySelector('[data-mm-more]');
-      const r = btn && btn.getBoundingClientRect();
-      if (!r || r.bottom < 0 || r.top > window.innerHeight) { closeMenus(); return; }
-      placeMenu(open, btn);
-    };
-    window.addEventListener('scroll', pratiPomak, { capture: true, passive: true });
-    window.addEventListener('resize', pratiPomak, { passive: true });
     document.addEventListener('click', onClick);
     document.addEventListener('keydown', onKeydown);
     document.addEventListener('focusout', onFocusout);

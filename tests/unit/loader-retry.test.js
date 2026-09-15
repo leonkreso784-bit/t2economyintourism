@@ -57,30 +57,36 @@ function load() {
 function slegni() { return new Promise((r) => setTimeout(r, 0)); }
 
 Promise.resolve()
-  .then(() => testAsync('⛔ ODBIJENI PAKET SE ZABORAVLJA: drugi poziv ponovno skida, ne vraća staru grešku', function () {
+  // `polica` = naše skripte, bez CDN-a — najmanji paket koji prolazi kroz `ubaci`. Koliko ih je,
+  // čita se iz `PAKETI` (od F2/5c su DVIJE: `row-menu.js` + `offline-store.js`) — broj napisan
+  // rukom pao je čim se paketu dodala datoteka, a tvrdnja se ne tiče broja nego oporavka.
+  .then(() => testAsync('⛔ ODBIJENI PAKET SE ZABORAVLJA: drugi poziv ponovno skida PALU skriptu, ne vraća staru grešku', function () {
     const { L, red } = load();
-    // `polica` = jedna naša skripta, bez CDN-a — najmanji paket koji prolazi kroz `ubaci`.
+    const n = L.PAKETI.polica.length;
     const prvi = L.paket('polica');
-    assert.strictEqual(red.length, 1, 'prvi poziv mora ubaciti skriptu');
+    assert.strictEqual(red.length, n, 'prvi poziv mora ubaciti sve skripte paketa (' + n + ')');
     red[0].javi('error');
     return prvi.then(
       () => { throw new Error('prvi poziv je morao PASTI'); },
       () => slegni()
     ).then(() => {
       const drugi = L.paket('polica');
-      assert.strictEqual(red.length, 2, 'poslije pada drugi poziv MORA ponovno ubaciti skriptu (mreža se možda vratila)');
-      red[1].javi('load');
+      assert.strictEqual(red.length, n + 1,
+        'poslije pada drugi poziv MORA ponovno ubaciti palu skriptu (mreža se možda vratila) — i SAMO nju');
+      red[n].javi('load');
+      for (let i = 1; i < n; i++) red[i].javi('load');
       return drugi;                                  // i mora se RAZRIJEŠITI, ne naslijediti pad
     });
   }))
 
   .then(() => testAsync('uspio paket ostaje idempotentan — drugi poziv ne skida ništa', function () {
     const { L, red } = load();
+    const n = L.PAKETI.polica.length;
     const prvi = L.paket('polica');
-    red[0].javi('load');
+    red.forEach((el) => el.javi('load'));
     return prvi.then(() => {
       const drugi = L.paket('polica');
-      assert.strictEqual(red.length, 1, 'uspio paket se ne smije skidati dvaput');
+      assert.strictEqual(red.length, n, 'uspio paket se ne smije skidati dvaput');
       assert.strictEqual(drugi, prvi, 'isto obećanje');
     });
   }))

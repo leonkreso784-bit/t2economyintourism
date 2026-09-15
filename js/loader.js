@@ -83,10 +83,11 @@
         // Polica (skidanje predmeta na uređaj) visi na DVIJE stranice — popisu lekcija i
         // materijalima — pa stoji sama. ČITANJE skinutog ide kroz Service Worker i ne treba
         // ovu datoteku; ovdje je samo njezino sučelje (skini / obriši / popis).
-        polica: ['js/offline-store.js'],
-        materials: ['js/offline-store.js', 'js/node-images.js', 'js/my-materials.js'],
+        // `row-menu.js` = izbornik „⋯" (F2/5c): ide PRIJE police i radionice, koje ga obje crtaju.
+        polica: ['js/row-menu.js', 'js/offline-store.js'],
+        materials: ['js/row-menu.js', 'js/offline-store.js', 'js/node-images.js', 'js/my-materials.js'],
         // Profil montira „Moje materijale" i otkriva admin-karticu → nosi oboje sa sobom.
-        profile: ['js/offline-store.js', 'js/node-images.js', 'js/my-materials.js', 'js/image-crop.js', 'js/profile-images.js',
+        profile: ['js/row-menu.js', 'js/offline-store.js', 'js/node-images.js', 'js/my-materials.js', 'js/image-crop.js', 'js/profile-images.js',
             'js/admin-reveal.js', 'js/profile.js'],
         // ⚠️ Sinkronizacija napretka NE visi o stranici nego o PRIJAVI: dovlači ju `auth.js`
         // čim se pojavi korisnik. Da stoji uz profil, napredak se ne bi sinkronizirao onome
