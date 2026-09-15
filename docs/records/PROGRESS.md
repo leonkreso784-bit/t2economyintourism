@@ -33,6 +33,11 @@ nakon svakog (dira zajednički šav: redak, klikove, povlačenje, pet specova): 
 - Dokazi: `radionica.authed.spec.js` 3/3 (i u WebKitu, 10/10 sa zidom) · 60/60 pogođenih authed specova · preflight 0 ·
   snimke 393 svijetla/tamna s otvorenim izbornikom.
 
+**F2/5b-2 — „Premjesti u…".** Čisti `moveTargets` (unit 5 crvenih → 41/41), prozor u `<sokrat-modal>` (ne drugi overlay),
+isti RPC kao povlačenje. `radionica` ④ (stolno: trenutna onemogućena, polica ne ide u sebe ni potomka, Escape ništa ne
+mijenja, upis provjeren čitanjem baze) + ⑤ (samo dodirom) — Chromium 20/20 s materijalima i axeom, WebKit 6/6. Axe nad
+OTVORENIM izbornikom i prozorom (nove plohe koje zatvoreno stablo ne pokazuje): 5 tema, 0. Preflight 0.
+
 ---
 
 ## 2026-09-14 kasno (OPUS, stablo `sokratstudy.f21`) — F2/1 ④: odjava samo ovaj uređaj, test-prvo

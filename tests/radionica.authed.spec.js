@@ -84,8 +84,8 @@ test.describe('F2/5b — redak radionice (stolno)', () => {
       const stavke = (id) => redak(page, id).locator('.mm-menu [role="menuitem"]').evaluateAll((els) =>
         els.map((e) => [...e.attributes].map((a) => a.name).find((n) => n.startsWith('data-mm-'))
           + (e.getAttribute('data-mm-new-in') ? '=' + e.getAttribute('data-mm-new-in') : '')));
-      expect(await stavke(S)).toEqual(['data-mm-learn', 'data-mm-open', 'data-mm-rename', 'data-mm-del']);
-      expect(await stavke(F)).toEqual(['data-mm-new-in=study', 'data-mm-new-in=folder', 'data-mm-rename', 'data-mm-del']);
+      expect(await stavke(S)).toEqual(['data-mm-learn', 'data-mm-open', 'data-mm-rename', 'data-mm-move', 'data-mm-del']);
+      expect(await stavke(F)).toEqual(['data-mm-new-in=study', 'data-mm-new-in=folder', 'data-mm-rename', 'data-mm-move', 'data-mm-del']);
 
       // na retku nema više ni jedne ikone-radnje osim „⋯" (i ✓/✕ u unosu, kojeg ovdje nema)
       const vidljiviGumbi = await redak(page, S).locator('button:visible').count();
@@ -123,6 +123,72 @@ test.describe('F2/5b — redak radionice (stolno)', () => {
       await expect(redak(page, F).locator('.mm-menu')).toBeHidden();
     } finally {
       await rm(page, [S, F]);
+    }
+  });
+});
+
+const roditelj = (page, id) => page.evaluate(async (i) => {
+  const r = await window.SokratMaterials.loadTree();
+  return (r.rows.find((x) => x.id === i) || {}).parent_id;
+}, id);
+
+/** „⋯ → Premjesti u…" → odaberi odredište (`null` = vrh). */
+async function premjesti(page, id, u, dodir) {
+  const r = redak(page, id);
+  const klik = (loc) => (dodir ? loc.tap() : loc.click());
+  await klik(r.locator('[data-mm-more]'));
+  await klik(r.locator('.mm-menu [data-mm-move]'));
+  await expect(page.locator('#mmMoveModal .mm-move__card')).toBeVisible();
+  await klik(page.locator('#mmMoveModal [data-mm-move-to="' + (u || '') + '"]'));
+  await expect(page.locator('#mmMoveModal .mm-move__card')).toBeHidden();
+  await page.waitForSelector('#myMaterials:not(.mm-busy)');
+}
+
+test.describe('F2/5b-2 — „Premjesti u…" (stolno)', () => {
+  test('④ premještanje kroz izbornik: trenutna polica nije izbor, polica ne ide u sebe, upis stigne u bazu', async ({ page }) => {
+    await openMaterials(page);
+    const oznaka = Date.now();
+    const A = await mk(page, null, 'folder', 'R5b2 A ' + oznaka);
+    const A1 = await mk(page, A, 'folder', 'R5b2 A1 ' + oznaka);
+    const B = await mk(page, null, 'folder', 'R5b2 B ' + oznaka);
+    const S = await mk(page, A, 'study', 'R5b2 materijal ' + oznaka);
+    try {
+      await page.evaluate(() => window.SokratMaterials.refresh());
+      await expect(redak(page, A)).toHaveCount(1, { timeout: 20000 });
+      if ((await redak(page, A).getAttribute('aria-expanded')) !== 'true') await redak(page, A).locator('[data-mm-toggle]').click();
+      await expect(redak(page, S)).toHaveCount(1);
+
+      // prozor: trenutna polica (A) je onemogućena i označena
+      await redak(page, S).locator('[data-mm-more]').click();
+      await redak(page, S).locator('.mm-menu [data-mm-move]').click();
+      const uA = page.locator('#mmMoveModal [data-mm-move-to="' + A + '"]');
+      await expect(uA).toBeDisabled();
+      await expect(uA).toHaveAttribute('aria-current', 'true');
+      await expect(page.locator('#mmMoveModal #mmMoveWhat')).toHaveText('R5b2 materijal ' + oznaka);
+      // Escape = odustani, ništa se ne mijenja
+      await page.keyboard.press('Escape');
+      await expect(page.locator('#mmMoveModal .mm-move__card')).toBeHidden();
+      expect(await roditelj(page, S)).toBe(A);
+
+      // materijal A → B
+      await premjesti(page, S, B, false);
+      await expect.poll(() => roditelj(page, S), { timeout: 20000 }).toBe(B);
+      await expect(redak(page, S)).toHaveAttribute('style', /--mm-depth:1/);
+
+      // polica A: ne nudi sebe ni svog potomka A1
+      await redak(page, A).locator('[data-mm-more]').click();
+      await redak(page, A).locator('.mm-menu [data-mm-move]').click();
+      await expect(page.locator('#mmMoveModal [data-mm-move-to="' + A + '"]')).toHaveCount(0);
+      await expect(page.locator('#mmMoveModal [data-mm-move-to="' + A1 + '"]')).toHaveCount(0);
+      await expect(page.locator('#mmMoveModal [data-mm-move-to="' + B + '"]')).toBeEnabled();
+      await page.click('#mmMoveModal [data-mm-move-cancel]');
+      await expect(page.locator('#mmMoveModal .mm-move__card')).toBeHidden();
+
+      // materijal B → vrh
+      await premjesti(page, S, null, false);
+      await expect.poll(() => roditelj(page, S), { timeout: 20000 }).toBe(null);
+    } finally {
+      await rm(page, [S, A1, A, B]);
     }
   });
 });
@@ -169,6 +235,26 @@ test.describe('F2/5b — redak radionice (telefon, dodir)', () => {
       expect(Math.min(...visine), 'stavka izbornika je premala za prst').toBeGreaterThanOrEqual(44);
     } finally {
       await rm(page, [S]);
+    }
+  });
+
+  test('⑤ premještanje DODIROM (bez povlačenja): materijal ide u policu i natrag', async ({ page }) => {
+    await openMaterials(page);
+    const oznaka = Date.now();
+    const F = await mk(page, null, 'folder', 'R5b2 tel polica ' + oznaka);
+    const S = await mk(page, null, 'study', 'R5b2 tel materijal ' + oznaka);
+    try {
+      await page.evaluate(() => window.SokratMaterials.refresh());
+      await expect(redak(page, S)).toHaveCount(1, { timeout: 20000 });
+      await premjesti(page, S, F, true);
+      await expect.poll(() => roditelj(page, S), { timeout: 20000 }).toBe(F);
+      const visine = await page.locator('#mmMoveModal [data-mm-move-to]').evaluateAll((els) =>
+        els.map((e) => Math.round(e.getBoundingClientRect().height)));
+      expect(visine.length, 'prozor nije nacrtao odredišta').toBeGreaterThan(1);
+      await premjesti(page, S, null, true);
+      await expect.poll(() => roditelj(page, S), { timeout: 20000 }).toBe(null);
+    } finally {
+      await rm(page, [S, F]);
     }
   });
 });

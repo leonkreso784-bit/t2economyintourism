@@ -42,6 +42,38 @@ test.describe('a11y (prijavljen) — 0 gateanih prekršaja (WCAG A/AA ∪ seriou
     expect(await skenirajSveTeme(page, 'MATERIJALI (prijavljen)')).toEqual([]);
   });
 
+  // F2/5b: radnje retka su se preselile u „⋯" (popover u gornjem sloju) i „Premjesti u…"
+  // (<sokrat-modal>). Obje su nove plohe koje zatvoreno stablo ne pokazuje → skeniraju se OTVORENE.
+  // Materijal za skeniranje spec napravi sam (račun smije biti prazan) i obriše ga u `finally`.
+  test('Moji materijali — otvoren „⋯" i otvoren „Premjesti u…"', async ({ page }) => {
+    test.setTimeout(240000);
+    await page.goto('/');
+    await ucitajPakete(page, ['profile']);
+    await page.waitForFunction(() => !!window.SokratMaterials && window.SokratMaterials.isAvailable(), null, { timeout: 20000 });
+    await page.evaluate(() => navigateTo('materials'));
+    await page.waitForSelector('#myMaterials .mm-spin', { state: 'detached', timeout: 20000 });
+    const id = await page.evaluate(() => window.SokratMaterials.createNode(null, 'study', 'A11y izbornik ' + Date.now()));
+    try {
+      await page.evaluate(() => window.SokratMaterials.refresh());
+      const row = page.locator('#myMaterials .mm-row[data-mm-id="' + id + '"]');
+      await expect(row).toHaveCount(1, { timeout: 20000 });
+      const nalazi = [];
+
+      await row.locator('[data-mm-more]').click();
+      await expect(row.locator('.mm-menu')).toBeVisible();
+      nalazi.push(...await skenirajSveTeme(page, 'MATERIJALI/izbornik ⋯'));
+
+      await row.locator('.mm-menu [data-mm-move]').click();
+      await expect(page.locator('#mmMoveModal .mm-move__card')).toBeVisible();
+      nalazi.push(...await skenirajSveTeme(page, 'MATERIJALI/premjesti u'));
+      await page.keyboard.press('Escape');
+
+      expect(nalazi).toEqual([]);
+    } finally {
+      await page.evaluate((i) => window.SokratMaterials.deleteNode(i).catch(() => {}), id);
+    }
+  });
+
   test('Studio — stablo, otvorena lekcija, draft-mod, block-editor, dijalog potvrde', async ({ page }) => {
     // ⚠️ VLASTITI BUDŽET, i to nije popuštanje nego mjera. Ovaj test radi PET punih
     // axe-analiza (5 tema) nad najtežom stranicom u aplikaciji — Studio nosi stablo,

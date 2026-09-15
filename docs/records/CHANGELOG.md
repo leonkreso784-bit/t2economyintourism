@@ -5,6 +5,16 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-15 (OPUS) — **F2/5b-2: „Premjesti u…"** — grana `feat/f2-zid`
+
+### Dodano
+- **Premještanje bez povlačenja** (Leon, anketa 14.09.: na telefonu kroz izbornik): „⋯ → Premjesti u…" otvara prozor s
+  popisom polica — „Na vrh (izvan police)" + sve police uvučeno po dubini; trenutna je onemogućena („Ovdje je"), a
+  polica se ne nudi u samu sebe ni u svoje potomke. Upis je isti RPC (`move_node`) kao povlačenje mišem.
+### Brana
+- `my-materials.test.js` +5 (`moveTargets`) · `radionica.authed.spec.js` ④ + ⑤ (dodir; Chromium + WebKit) ·
+  `a11y.authed.spec.js`: otvoren „⋯" i otvoren prozor, 5 tema, 0 prekršaja.
+
 ## 2026-09-15 (OPUS) — **F2/5b-1: redak radionice** — grana `feat/f2-zid`
 
 ### Promijenjeno

@@ -163,6 +163,46 @@ test('buildTree: position koji nije broj → 0 (ne ruši sortiranje)', () => {
   });
 }
 
+// ---------------------------------------------------------------- moveTargets (F2/5b-2)
+// Premještanje na telefonu ide kroz izbornik (Leon, anketa 14.09.): „⋯ → Premjesti u…" → popis
+// polica. Popis mora ponuditi SAMO dopuštena odredišta — server ciklus svejedno odbija (`node_cycle`),
+// ali ponuditi zabranjeno pa javiti grešku je gore od ne ponuditi.
+{
+  const rows = [
+    { id: 'f1', parent_id: null, kind: 'folder', name: 'FMTU', position: 0 },
+    { id: 'f2', parent_id: 'f1', kind: 'folder', name: '1. godina', position: 0 },
+    { id: 'f3', parent_id: 'f2', kind: 'folder', name: 'Zimski', position: 0 },
+    { id: 'f4', parent_id: null, kind: 'folder', name: 'Ostalo', position: 1 },
+    { id: 's1', parent_id: 'f2', kind: 'study', name: 'Matematika', position: 1 },
+    { id: 'fx', parent_id: null, kind: 'folder', name: 'Obrisana', position: 2, deleted_at: '2026-09-01' }
+  ];
+  const ids = (t) => t.map((x) => x.id);
+
+  test('moveTargets: vrh + sve žive police redom stabla, s dubinom', () => {
+    const t = M.moveTargets(rows, 's1');
+    assert.deepStrictEqual(ids(t), [null, 'f1', 'f2', 'f3', 'f4']);
+    assert.deepStrictEqual(t.map((x) => x.depth), [0, 1, 2, 3, 1]);
+  });
+  test('moveTargets: trenutna polica je označena (ne nudi se kao promjena)', () => {
+    const t = M.moveTargets(rows, 's1');
+    assert.deepStrictEqual(t.filter((x) => x.current).map((x) => x.id), ['f2']);
+    assert.deepStrictEqual(M.moveTargets(rows, 'f4').filter((x) => x.current).map((x) => x.id), [null]);
+  });
+  test('moveTargets: polica se ne nudi u samu sebe ni u svoje potomke', () => {
+    assert.deepStrictEqual(ids(M.moveTargets(rows, 'f1')), [null, 'f4']);
+    assert.deepStrictEqual(ids(M.moveTargets(rows, 'f2')), [null, 'f1', 'f4']);
+  });
+  test('moveTargets: materijal nije odredište; obrisana polica nije odredište', () => {
+    const t = ids(M.moveTargets(rows, 'f4'));
+    assert.ok(!t.includes('s1'));
+    assert.ok(!t.includes('fx'));
+  });
+  test('moveTargets: nepoznat id / prazan ulaz → samo vrh, ne baca', () => {
+    assert.deepStrictEqual(ids(M.moveTargets([], 'x')), [null]);
+    assert.deepStrictEqual(ids(M.moveTargets(null, 'x')), [null]);
+  });
+}
+
 // -------------------------------------------------------------- humanError
 {
   test('humanError: naši RPC kodovi → ljudska poruka (ne sirovi SQL)', () => {

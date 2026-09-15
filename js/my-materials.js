@@ -146,6 +146,28 @@
     return false;
   }
 
+  /**
+   * F2/5b-2 — kamo se čvor `id` smije premjestiti: vrh (`id: null`) + sve žive police redom stabla,
+   * BEZ samog čvora i njegovih potomaka (ciklus). Trenutni roditelj nosi `current: true`.
+   * Server ciklus svejedno odbija (`node_cycle`) — ovo je da se zabranjeno ni ne ponudi.
+   * @returns {Array<{id:(string|null), name:(string|null), depth:number, current:boolean}>}
+   */
+  function moveTargets(rows, id) {
+    const list = (rows || []).filter(function (r) { return r && r.id && !r.deleted_at; });
+    const self = list.find(function (r) { return r.id === id; });
+    const parent = self ? (self.parent_id || null) : null;
+    const out = [{ id: null, name: null, depth: 0, current: !!self && parent === null }];
+    const walk = function (nodes, depth) {
+      nodes.forEach(function (n) {
+        if (n.kind !== 'folder' || n.id === id) return;       // potomci čvora `id` time otpadaju cijeli
+        out.push({ id: n.id, name: n.name, depth: depth, current: n.id === parent });
+        walk(n.children, depth + 1);
+      });
+    };
+    walk(buildTree(list), 1);
+    return out;
+  }
+
   // ── F2/5a: ZID GRADIVA na profilu ──────────────────────────────────────
   const HEX6 = /^#[0-9a-f]{6}$/i;
 
@@ -368,6 +390,7 @@
         : menuItem('data-mm-learn', 'fa-graduation-cap', mt('materials.learn', 'Study')) +
           menuItem('data-mm-open', 'fa-pen-to-square', mt('materials.open', 'Edit material'))) +
       menuItem('data-mm-rename', 'fa-pen', mt('materials.rename', 'Rename')) +
+      menuItem('data-mm-move', 'fa-folder-tree', mt('materials.move', 'Move to…')) +
       menuItem('data-mm-del', 'fa-trash', mt('materials.delete', 'Delete'), 'mm-menu-item--danger') +
       '  </div>' +
       '</li>';
@@ -683,6 +706,80 @@
       toast(mt('materials.deleted', 'Deleted.'));
     } catch (err) {
       toast(humanError(err));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  // ── F2/5b-2: „Premjesti u…" — premještanje BEZ povlačenja ─────────────
+  // Leon (anketa 14.09.): na telefonu se premješta kroz izbornik, povlačenje ostaje za miš.
+  // Prozor je `<sokrat-modal>` (ESC, pozadina, fokus-zamka — kao izrez slike); živi na `body`,
+  // IZVAN `#myMaterials`, pa ima vlastiti rukovatelj klika. Upis je isti RPC kao povlačenje
+  // (`move_node`, na kraj police); server i dalje presuđuje ciklus.
+
+  function ensureMoveModal() {
+    let m = document.getElementById('mmMoveModal');
+    if (m) return m;
+    m = document.createElement('sokrat-modal');
+    m.id = 'mmMoveModal';
+    m.className = 'mm-move';
+    m.setAttribute('aria-labelledby', 'mmMoveTitle');
+    m.innerHTML =
+      '<div class="mm-move__card">' +
+      '  <h3 class="mm-move__title" id="mmMoveTitle"></h3>' +
+      '  <p class="mm-move__what" id="mmMoveWhat"></p>' +
+      '  <div class="mm-move__list" id="mmMoveList" role="list"></div>' +
+      '  <div class="mm-move__actions">' +
+      '    <button type="button" class="cta-button secondary" data-mm-move-cancel><i class="fas fa-xmark" aria-hidden="true"></i><span>' +
+      esc(mt('materials.cancel', 'Cancel')) + '</span></button>' +
+      '  </div>' +
+      '</div>';
+    document.body.appendChild(m);
+    m.addEventListener('click', function (e) {
+      if (e.target.closest('[data-mm-move-cancel]')) { m.close(); return; }
+      const to = e.target.closest('[data-mm-move-to]');
+      if (!to || to.disabled) return;
+      const id = m.getAttribute('data-mm-for');
+      m.close();
+      moveTo(id, to.getAttribute('data-mm-move-to') || null);
+    });
+    return m;
+  }
+
+  function openMove(id) {
+    if (_busy) return;
+    const row = _rows.find(function (r) { return r.id === id; });
+    if (!row) return;
+    const m = ensureMoveModal();
+    m.setAttribute('data-mm-for', id);
+    m.querySelector('#mmMoveTitle').textContent = mt('materials.move', 'Move to…');
+    m.querySelector('#mmMoveWhat').textContent = row.name;
+    const targets = moveTargets(_rows, id);
+    m.querySelector('#mmMoveList').innerHTML = targets.map(function (t) {
+      const ime = t.id ? t.name : mt('materials.moveRoot', 'Top level');
+      return '<div role="listitem"><button type="button" class="mm-move__to" data-mm-move-to="' + esc(t.id || '') + '"' +
+        ' style="--mm-depth:' + t.depth + '"' + (t.current ? ' disabled aria-current="true"' : '') + '>' +
+        '<i class="fas ' + (t.id ? 'fa-folder' : 'fa-house') + '" aria-hidden="true"></i>' +
+        '<span class="mm-move__name">' + esc(ime) + '</span>' +
+        (t.current ? '<span class="mm-move__here">' + esc(mt('materials.moveHere', 'Here now')) + '</span>' : '') +
+        '</button></div>';
+    }).join('') + (targets.length === 1 && targets[0].current
+      ? '<p class="mm-move__empty">' + esc(mt('materials.moveEmpty', 'There is no folder to move it to yet — create one first.')) + '</p>'
+      : '');
+    m.open();
+  }
+
+  async function moveTo(id, parentId) {
+    if (!id || _busy) return;
+    setBusy(true);
+    try {
+      await moveNode(id, parentId, null);
+      if (parentId) { _expanded[parentId] = true; saveExpanded(); }
+      await refresh();
+      toast(mt('materials.moved', 'Moved.'));
+    } catch (err) {
+      toast(humanError(err));
+      await refresh();
     } finally {
       setBusy(false);
     }
@@ -1032,6 +1129,13 @@
       return;
     }
 
+    const mv = e.target.closest('[data-mm-move]');
+    if (mv) {
+      const row = mv.closest('[data-mm-id]');
+      if (row) openMove(row.getAttribute('data-mm-id'));
+      return;
+    }
+
     const del = e.target.closest('[data-mm-del]');
     if (del) {
       const row = del.closest('[data-mm-id]');
@@ -1143,6 +1247,7 @@
     buildTree: buildTree,
     flattenVisible: flattenVisible,
     isSelfOrDescendant: isSelfOrDescendant,
+    moveTargets: moveTargets,
     humanError: humanError,
     // mreža
     isAvailable: isAvailable,

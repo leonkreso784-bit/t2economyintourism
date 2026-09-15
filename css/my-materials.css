@@ -320,6 +320,84 @@ body.mm-dragging {
     color: var(--color-danger-ink);
 }
 
+/* ── „Premjesti u…" (F2/5b-2) — kartica u <sokrat-modal>, kao izrez slike ── */
+.mm-move .mm-move__card {
+    width: min(94vw, 440px);
+    max-height: min(80vh, 640px);
+    display: flex;
+    flex-direction: column;
+    padding: 1.2rem 1.2rem 1rem;
+    border: 1px solid var(--color-line);
+    border-radius: 16px;
+    background: var(--color-surface-1);
+    box-shadow: var(--shadow-e2);
+}
+
+.mm-move__title {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.mm-move__what {
+    margin: 0.25rem 0 0.9rem;
+    color: var(--color-ink-2);
+    font-size: 0.88rem;
+    overflow-wrap: anywhere;
+}
+
+/* Popis se pomiče SAM — naslov i „Odustani" ostaju na mjestu i kad polica ima pedeset. */
+.mm-move__list {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+}
+
+.mm-move__to {
+    --mm-depth: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 44px;
+    padding: 6px 12px 6px calc(12px + (var(--mm-depth) - 1) * 16px);
+    border: 0;
+    border-bottom: 1px solid var(--color-line);
+    background: transparent;
+    color: var(--color-ink-0);
+    font: inherit;
+    font-size: 0.92rem;
+    text-align: start;
+    cursor: pointer;
+}
+
+.mm-move__to[style*="--mm-depth:0"] { padding-left: 12px; }
+[role="listitem"]:last-child > .mm-move__to { border-bottom: 0; }
+.mm-move__to i { width: 18px; color: var(--color-warn); text-align: center; }
+.mm-move__to:hover { background: var(--color-surface-2); }
+
+.mm-move__to:disabled {
+    cursor: default;
+    color: var(--color-ink-2);
+    background: transparent;
+}
+
+.mm-move__name { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.mm-move__here { flex: 0 0 auto; font-size: 0.78rem; color: var(--color-ink-2); }
+
+.mm-move__empty {
+    margin: 0.75rem 0 0;
+    color: var(--color-ink-2);
+    font-size: 0.88rem;
+}
+
+.mm-move__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.9rem;
+}
+
 /* Akcije inline unosa (✓ / ✕) */
 .mm-acts {
     display: flex;
