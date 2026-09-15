@@ -45,6 +45,17 @@ greška speca (dvaput `const m`), a ja sam okvir koda pročitao kao pad tvrdnje.
 porukom tvrdnje, novo 7/7. Crveno vrijedi tek kad ispis nosi PORUKU tvrdnje, ne samo redak koda.
 Dokazi: 53/53 pogođenih authed specova · WebKit 7/7 · preflight 0. **5b je time gotov.**
 
+**Pregled 5a+5b (Leon: *„odlično izgleda — prođi kroz sve i analiziraj je li stvarno dobro"*).** Diff čitan iznova, s
+ciljem pronaći rupe. **Šest nalaza, svi popravljeni** (v. CHANGELOG): treptanje zida na izbor teme (NAJVEĆI — vidio bi ga
+svatko tko na profilu mijenja temu) · strelice · Tab van · pomak · put do podpolice · fokus poslije premještanja.
+**Tri sumnje oborene provjerom, ne pretpostavkom:** veza `node_content → nodes` na PROD-u (čitanje sheme) · odjava bez
+mreže (izvor zakucanog supabase-js) · pozadinsko crtanje profila (samo dok je otvoren).
+⚠️ **Dvije pouke o mjerenju:** ① tvrdnja o pomaku PROLAZILA JE s isključenim praćenjem — kotačić uz `scroll-behavior:
+smooth` nije ni krenuo kad je poll pogledao; sad je pomak trenutan, izmjeren i uz tvrdnju da se stranica STVARNO
+pomaknula (bez nje je `scrollY` ostao 0 i ništa se nije mjerilo) · ② prvi popravak (zatvori na svaki pomak) srušio je
+samo otvaranje izbornika — klizanje do „⋯" nastavlja i POSLIJE dodira; zato izbornik prati gumb umjesto da se zatvara.
+Dokazi: Chromium 70/70 (11 specova) · WebKit 14/14 · preflight 0.
+
 ---
 
 ## 2026-09-14 kasno (OPUS, stablo `sokratstudy.f21`) — F2/1 ④: odjava samo ovaj uređaj, test-prvo

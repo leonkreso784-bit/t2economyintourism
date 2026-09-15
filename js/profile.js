@@ -326,19 +326,39 @@ function wallHtml(user, displayName, memberSince) {
 // (`bojaMaterijala`, utils.js), tinta na njoj računata (`inkForTint`), ime kroz escape.
 const SHELF_LIMIT = 6;
 let _shelfSeq = 0;   // svaki crtež profila pokreće čitanje; kasni odgovor starijeg crteža se odbacuje
+// ⚠️ ZADNJI ZID PO KORISNIKU. Profil se crta iznova na svaki `USER_UPDATED` — a birač teme stoji BAŠ
+//    na profilu i svaki izbor piše u račun (F2/1). Bez ovoga je zid na svaki klik teme padao na
+//    sive plohe i čitao bazu ispočetka (treptanje). Sad se zadnji zid nacrta ODMAH, a svježe
+//    čitanje ga tiho zamijeni (`aria-busy` do tada ostaje `true` — sadržaj se osvježava).
+let _shelfZadnji = null;   // { uid, wall }
 
-function shelfHtml() {
+function shelfHtml(uid) {
+    const zadnji = (_shelfZadnji && _shelfZadnji.uid === uid) ? _shelfZadnji.wall : null;
     return '<section class="profile-shelf" aria-labelledby="profileShelfTitle">' +
         '  <div class="profile-shelf-head">' +
         '    <h3 class="profile-shelf-title" id="profileShelfTitle">' + pt('materials.title', 'My materials') + '</h3>' +
-        '    <button type="button" class="profile-shelf-all" data-goto-materials hidden>' +
+        '    <button type="button" class="profile-shelf-all" data-goto-materials' + (zadnji && zadnji.total ? '' : ' hidden') + '>' +
         '<span>' + pt('profile.shelfAll', 'All materials') + '</span><i class="fas fa-arrow-right" aria-hidden="true"></i></button>' +
         '  </div>' +
         '  <div class="profile-shelf-grid" id="profileShelf" aria-busy="true">' +
-        '    <span class="profile-tile profile-tile--skeleton" aria-hidden="true"></span>' +
-        '    <span class="profile-tile profile-tile--skeleton" aria-hidden="true"></span>' +
+        (zadnji
+            ? shelfInner(zadnji)
+            : '    <span class="profile-tile profile-tile--skeleton" aria-hidden="true"></span>' +
+              '    <span class="profile-tile profile-tile--skeleton" aria-hidden="true"></span>') +
         '  </div>' +
         '</section>';
+}
+
+/** Sadržaj rešetke za gotov zid: pločice, ili prazno stanje kad materijala nema. */
+function shelfInner(wall) {
+    if (!wall.total) {
+        // Prazno stanje = ulaz u radionicu (ondje je „Novi materijal"). Isprekidana ploha bez
+        // boje, kao ＋ pločica na naslovnici: prazno mjesto koje čeka, ne još jedan materijal.
+        return '<button type="button" class="profile-tile profile-tile--make" data-goto-materials>' +
+            '<span class="profile-tile-icon profile-tile-icon--make"><i class="fas fa-plus" aria-hidden="true"></i></span>' +
+            '<span class="profile-tile-name">' + pt('profile.shelfEmpty', 'Make your first material') + '</span></button>';
+    }
+    return wall.items.map(shelfTileHtml).join('');
 }
 
 function shelfTileHtml(m) {
@@ -353,7 +373,7 @@ function shelfTileHtml(m) {
         '</button>';
 }
 
-async function fillShelf() {
+async function fillShelf(uid) {
     const seq = ++_shelfSeq;
     const grid = document.getElementById('profileShelf');
     if (!grid) return;
@@ -372,22 +392,17 @@ async function fillShelf() {
     g.setAttribute('aria-busy', 'false');
     const all = document.querySelector('.profile-shelf-all');
     if (pao) {
+        // Već nacrtan zid (iz ove sesije) ostaje — neuspjelo OSVJEŽAVANJE ne briše ono što se vidi.
+        if (_shelfZadnji && _shelfZadnji.uid === uid) return;
         g.innerHTML = '<div class="profile-shelf-state">' +
             '<p class="profile-meta">' + pt('profile.shelfError', 'Your materials did not load.') + '</p>' +
             '<button type="button" class="cta-button secondary" data-shelf-retry><i class="fas fa-rotate"></i><span>' +
             pt('materials.retry', 'Try again') + '</span></button></div>';
         return;
     }
-    if (!wall.total) {
-        // Prazno stanje = ulaz u radionicu (ondje je „Novi materijal"). Isprekidana ploha bez
-        // boje, kao ＋ pločica na naslovnici: prazno mjesto koje čeka, ne još jedan materijal.
-        g.innerHTML = '<button type="button" class="profile-tile profile-tile--make" data-goto-materials>' +
-            '<span class="profile-tile-icon profile-tile-icon--make"><i class="fas fa-plus" aria-hidden="true"></i></span>' +
-            '<span class="profile-tile-name">' + pt('profile.shelfEmpty', 'Make your first material') + '</span></button>';
-        return;
-    }
-    g.innerHTML = wall.items.map(shelfTileHtml).join('');
-    if (all) all.hidden = false;
+    _shelfZadnji = { uid: uid, wall: wall };
+    g.innerHTML = shelfInner(wall);
+    if (all) all.hidden = !wall.total;
 }
 
 function renderProfilePage() {
@@ -422,7 +437,7 @@ function renderProfilePage() {
         '<div class="profile-stack">' +
 
         wallHtml(user, displayName, memberSince) +
-        shelfHtml() +
+        shelfHtml(user.id) +
 
         // Granica: sve ispod ovog naslova je ADMINISTRACIJA. Prije F2/3a je bila prva
         // stvar na stranici, pa je profil čitao kao popis postavki, a ne kao osoba.
@@ -504,7 +519,7 @@ function renderProfilePage() {
         '</div>';
 
     renderProfileStats();
-    fillShelf();
+    fillShelf(user.id);
     // Zid se crta asinkrono i ponovno pri svakom crtežu profila → JEDAN delegat na `#profileContent`
     // (on sam preživi `innerHTML`). „Svi materijali" i prazna pločica idu kroz globalni
     // `[data-goto-materials]` (navigation.js).
@@ -516,7 +531,7 @@ function renderProfilePage() {
                 if (window.SokratMaterials) SokratMaterials.learnNode(tile.getAttribute('data-shelf-learn'));
                 return;
             }
-            if (e.target.closest('[data-shelf-retry]')) fillShelf();
+            if (e.target.closest('[data-shelf-retry]')) { const u = SokratAuth.getUser(); fillShelf(u && u.id); }
         });
     }
     wireThemePicker(root);

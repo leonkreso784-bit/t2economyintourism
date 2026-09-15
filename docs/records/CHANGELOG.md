@@ -5,6 +5,25 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-15 (OPUS) — **Pregled F2/5a+5b: šest nalaza, svi popravljeni** (Leon: *„prođi kroz sve i analiziraj"*) — grana `feat/f2-zid`
+
+### Popravljeno (ništa od ovoga nije bilo na produkciji)
+- **Zid je treptao na svaki izbor teme:** birač teme stoji NA profilu, izbor piše u račun (`USER_UPDATED`) i profil se
+  crta iznova → zid je padao na sive plohe i čitao bazu ispočetka. Sad se zadnji zid (po korisniku) nacrta odmah, a
+  svježe čitanje ga tiho zamijeni; neuspjelo osvježavanje ne briše ono što se vidi.
+- **Izbornik „⋯" bez strelica:** `role="menu"` obećava ↓/↑/Home/End (ARIA APG) — sad radi.
+- **Tab iz izbornika ga nije zatvarao:** izbornik je visio nad sljedećim retkom. Sad Tab zatvara i nastavlja od „⋯".
+- **Pomak stranice odvajao je izbornik od „⋯":** izbornik sad prati svoj gumb, a zatvara se tek kad gumb izađe s ekrana
+  (zatvaranje na svaki pomak rušilo je otvaranje — glatko klizanje nastavlja i poslije dodira).
+- **„Premjesti" u podpolicu zatvorene police sakrivao je materijal:** otvara se cijeli put do odredišta.
+- **Poslije premještanja fokus je padao na `body`:** vraća se na premješteni redak.
+### Provjereno i OBORENO
+- Produkcija ima vezu `node_content → nodes` i politiku čitanja po vlasniku (čitanjem sheme) → novi upit stabla radi i ondje.
+- Odjava bez mreže: zakucani supabase-js 2.110.8 i tada briše lokalnu sesiju → poruka „Odjavljen" ne laže.
+- `renderProfilePage` se zove samo dok je profil otvoren → zid ne dira stanje radionice u pozadini.
+### Brana
+- `profile-shelf` ⑤ · `radionica` ② (strelice, Tab, pomak) i ④ (put + fokus). Svaka tvrdnja viđena CRVENA sa svojom porukom.
+
 ## 2026-09-15 (OPUS) — **F2/5b-3: jedan „+ Novo"** — grana `feat/f2-zid`
 
 ### Promijenjeno

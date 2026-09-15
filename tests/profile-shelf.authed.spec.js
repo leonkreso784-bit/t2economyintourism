@@ -143,6 +143,33 @@ test('③ prazno stanje vodi u radionicu, a „Svi materijali" se ne nudi', asyn
   await expect.poll(() => page.evaluate(() => AppState.nav.page)).toBe('materials');
 });
 
+// Birač teme stoji NA profilu; svaki izbor piše u račun (`USER_UPDATED`), a auth.js tada crta profil
+// iznova. Prije ove brane je zid na svaki klik teme padao na sive plohe i čitao bazu ispočetka.
+// Ovdje se crtež profila okida izravno (isti put kao auth.js), a drugo čitanje namjerno kasni 2 s.
+test('⑤ ponovno crtanje profila (npr. izbor teme) NE vraća zid na sive plohe', async ({ page }) => {
+  let citanja = 0;
+  await page.route(CITANJE_NODES, async (route) => {
+    if (route.request().method() !== 'GET') return route.continue();
+    citanja++;
+    if (citanja > 1) await new Promise((r) => setTimeout(r, 2000));
+    return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(redci(3)) });
+  });
+  await naProfilu(page);
+  await expect(page.locator('#profileShelf .profile-tile')).toHaveCount(3);
+
+  await page.evaluate(() => renderProfilePage());
+  // odmah, dok drugo čitanje još traje:
+  const odmah = await page.evaluate(() => ({
+    sivih: document.querySelectorAll('#profileShelf .profile-tile--skeleton').length,
+    plocica: document.querySelectorAll('#profileShelf [data-shelf-learn]').length,
+    sviVidljiv: !document.querySelector('.profile-shelf-all').hidden,
+  }));
+  expect(odmah, 'zid je trepnuo na sive plohe pri ponovnom crtanju').toEqual({ sivih: 0, plocica: 3, sviVidljiv: true });
+  await zidGotov(page);
+  expect(citanja, 'svježe čitanje se mora dogoditi (zid se osvježava, ne smrzava)').toBe(2);
+  await expect(page.locator('#profileShelf .profile-tile')).toHaveCount(3);
+});
+
 test('④ neuspjelo čitanje kaže da nije stiglo, a „Pokušaj ponovno" ga dovrši', async ({ page }) => {
   await podmetni(page, { status: 500, contentType: 'application/json', body: '{"message":"boom"}' });
   await naProfilu(page);

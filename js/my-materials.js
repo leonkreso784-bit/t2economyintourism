@@ -782,8 +782,24 @@
     setBusy(true);
     try {
       await moveNode(id, parentId, null);
-      if (parentId) { _expanded[parentId] = true; saveExpanded(); }
+      // Otvori CIJELI put do odredišta, ne samo samu policu: premještanje u podpolicu zatvorene
+      // police inače sakrije materijal i korisnik ne vidi kamo je otišao.
+      let p = parentId;
+      let guard = 0;
+      while (p && guard++ < 1000) {
+        _expanded[p] = true;
+        const pr = _rows.find(function (r) { return r.id === p; });
+        p = pr ? pr.parent_id : null;
+      }
+      saveExpanded();
       await refresh();
+      // Fokus se vraća na premješteni redak (prozor ga je vratio na izbornik kojeg više nema).
+      const a = document.activeElement;
+      if (!a || a === document.body) {
+        const host = root();
+        const b = host && host.querySelector('.mm-row[data-mm-id="' + (window.CSS && CSS.escape ? CSS.escape(id) : id) + '"] [data-mm-main]');
+        if (b) b.focus();
+      }
       toast(mt('materials.moved', 'Moved.'));
     } catch (err) {
       toast(humanError(err));
@@ -1216,11 +1232,61 @@
       }, true);
     }
     document.addEventListener('keydown', function (e) {
+      // `role="menu"` obećava strelice (ARIA APG): ↓/↑ kruže stavkama, Home/End na prvu/zadnju.
+      const u = e.target.closest && e.target.closest('.mm-menu');
+      // Tab u izborniku (APG „menu button"): zatvori i vrati fokus na „⋯" — preglednikov Tab zatim
+      // nastavlja OD njega (naprijed ili, uz Shift, natrag), kao da izbornik nije ni bio otvoren.
+      if (u && e.key === 'Tab' && isMenuOpen(u)) {
+        const s = menuScope(u);
+        const b = s && s.querySelector('[data-mm-more]');
+        closeMenus();
+        if (b) b.focus();
+        return;
+      }
+      if (u && ['ArrowDown', 'ArrowUp', 'Home', 'End'].indexOf(e.key) !== -1) {
+        const items = Array.prototype.slice.call(u.querySelectorAll('[role="menuitem"]'));
+        if (!items.length) return;
+        e.preventDefault();
+        const i = items.indexOf(document.activeElement);
+        const n = e.key === 'Home' ? 0
+          : e.key === 'End' ? items.length - 1
+          : (i + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+        items[n].focus();
+        return;
+      }
       if (e.key !== 'Escape' || HAS_POPOVER) return;
       const host = root();
       const open = host && Array.prototype.find.call(host.querySelectorAll('.mm-menu'), isMenuOpen);
       if (open) { closeMenus(); onMenuClosed(open); }
     });
+    // Tab VAN izbornika ga zatvara (popover ne gleda fokus — ostao bi visjeti nad sljedećim retkom).
+    // ⚠️ Samo kad fokus stvarno ODE negdje (`relatedTarget`): Safari na klik ne fokusira gumb, pa
+    //    dodir na stavku daje `focusout` BEZ cilja — zatvaranje tada bi pojelo klik na stavku.
+    document.addEventListener('focusout', function (e) {
+      const m = e.target.closest && e.target.closest('.mm-menu');
+      const to = e.relatedTarget;
+      if (!m || !to || !isMenuOpen(m) || m.contains(to)) return;
+      const s = menuScope(m);
+      if (s && s.querySelector('[data-mm-more]') === to) return;
+      closeMenus();
+    });
+    // Izbornik stoji na FIKSNOM mjestu ekrana; kad se stranica pomakne, „⋯" ode, a izbornik ne.
+    // Zato ga pomak PREMJESTI uz njegov gumb, a zatvori tek kad gumb izađe s ekrana.
+    // ⚠️ Ne zatvarati na svaki pomak: `scroll-behavior: smooth` (i zamah prsta na iPhoneu) nastavi
+    //    klizati i POSLIJE dodira na „⋯" — izmjereno u `radionica` ②: izbornik se otvarao i odmah zatvarao.
+    const pratiPomak = function (e) {
+      if (e && e.target && e.target.closest && e.target.closest('.mm-menu')) return;
+      const host = root();
+      const open = host && Array.prototype.find.call(host.querySelectorAll('.mm-menu'), isMenuOpen);
+      if (!open) return;
+      const s = menuScope(open);
+      const btn = s && s.querySelector('[data-mm-more]');
+      const r = btn && btn.getBoundingClientRect();
+      if (!r || r.bottom < 0 || r.top > window.innerHeight) { closeMenus(); return; }
+      placeMenu(open, btn);
+    };
+    window.addEventListener('scroll', pratiPomak, { capture: true, passive: true });
+    window.addEventListener('resize', pratiPomak, { passive: true });
     document.addEventListener('click', onClick);
     document.addEventListener('keydown', onKeydown);
     document.addEventListener('focusout', onFocusout);

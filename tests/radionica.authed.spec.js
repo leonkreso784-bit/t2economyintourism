@@ -114,6 +114,58 @@ test.describe('F2/5b — redak radionice (stolno)', () => {
       await expect(vise).toHaveAttribute('aria-expanded', 'false');
       await expect(vise).toBeFocused();
 
+      // strelice (ARIA APG za `role="menu"`): ↓ dalje, ↑ s prve na zadnju, End/Home
+      await vise.click();
+      const fok = () => page.evaluate(() => {
+        const a = document.activeElement;
+        return a && [...a.attributes].map((x) => x.name).find((n) => n.startsWith('data-mm-'));
+      });
+      expect(await fok()).toBe('data-mm-learn');
+      await page.keyboard.press('ArrowDown');
+      expect(await fok(), '↓ ne pomiče fokus u izborniku').toBe('data-mm-open');
+      await page.keyboard.press('Home');
+      await page.keyboard.press('ArrowUp');
+      expect(await fok(), '↑ s prve stavke mora na zadnju').toBe('data-mm-del');
+      await page.keyboard.press('Home');
+      expect(await fok()).toBe('data-mm-learn');
+      await page.keyboard.press('End');
+      expect(await fok()).toBe('data-mm-del');
+
+      // Tab VAN izbornika ga zatvara (inače visi nad sljedećim retkom)
+      await page.keyboard.press('Tab');
+      await expect(menu, 'Tab je izveo fokus, a izbornik je ostao otvoren').toBeHidden();
+      await expect(vise).toHaveAttribute('aria-expanded', 'false');
+
+      // pomak stranice: izbornik PRATI svoj „⋯" (stoji na fiksnom mjestu ekrana, gumb bi otišao)
+      await vise.click();
+      await expect(menu).toBeVisible();
+      // ⚠️ Pomak TRENUTAN i IZMJEREN: kotačić uz `scroll-behavior: smooth` još nije ni krenuo kad
+      //    poll prvi put pogleda, pa je tvrdnja prolazila i s isključenim praćenjem (obrnuto provjereno).
+      const pomak = await vise.evaluate((btn) => {
+        // Spremnik koji STVARNO klizi (predak s preljevom, inače dokument); kratka stranica se
+        // produži podmetačem, da pomak ima što mjeriti — test ne smije ovisiti o broju redaka.
+        let el = btn.parentElement;
+        while (el && !(el.scrollHeight > el.clientHeight + 1 && /auto|scroll/.test(getComputedStyle(el).overflowY))) el = el.parentElement;
+        const sc = el || document.scrollingElement;
+        if (sc.scrollHeight - sc.clientHeight - sc.scrollTop < 200) {
+          const pod = document.createElement('div');
+          pod.style.height = '1200px';
+          (el || document.body).appendChild(pod);
+        }
+        const prije = sc.scrollTop;
+        sc.scrollBy({ top: 120, behavior: 'instant' });
+        return sc.scrollTop - prije;
+      });
+      expect(pomak, 'stranica se nije pomaknula — tvrdnja ispod ne bi ništa mjerila').toBeGreaterThan(40);
+      await expect.poll(async () => {
+        const [g, izb] = [await vise.boundingBox(), await menu.boundingBox()];
+        if (!g || !izb) return 'nema';
+        const ispod = Math.abs(izb.y - (g.y + g.height + 4));
+        const iznad = Math.abs(izb.y + izb.height + 4 - g.y);
+        return Math.min(ispod, iznad) <= 2 ? 'uz gumb' : 'odvojen ' + Math.round(Math.min(ispod, iznad)) + ' px';
+      }, { message: 'pomak stranice je odvojio izbornik od „⋯"' }).toBe('uz gumb');
+      await page.keyboard.press('Escape');
+
       // drugi dodir na „⋯" zatvara isti izbornik; otvaranje drugog zatvara prvi
       await vise.click();
       await redak(page, F).locator('[data-mm-more]').click();
@@ -208,6 +260,15 @@ test.describe('F2/5b-2 — „Premjesti u…" (stolno)', () => {
       // materijal B → vrh
       await premjesti(page, S, null, false);
       await expect.poll(() => roditelj(page, S), { timeout: 20000 }).toBe(null);
+
+      // u PODPOLICU ZATVORENE police: cijeli put se otvori, materijal se vidi i nosi fokus
+      if ((await redak(page, A).getAttribute('aria-expanded')) === 'true') await redak(page, A).locator('[data-mm-toggle]').click();
+      await expect(redak(page, A1)).toHaveCount(0);
+      await premjesti(page, S, A1, false);
+      await expect.poll(() => roditelj(page, S), { timeout: 20000 }).toBe(A1);
+      await expect(redak(page, S), 'premješteni materijal je nestao s ekrana (put nije otvoren)').toBeVisible();
+      await expect(redak(page, S)).toHaveAttribute('style', /--mm-depth:2/);
+      await expect(redak(page, S).locator('[data-mm-main]'), 'fokus nije vraćen na premješteni redak').toBeFocused();
     } finally {
       await rm(page, [S, A1, A, B]);
     }
