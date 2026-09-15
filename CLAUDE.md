@@ -108,7 +108,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 | `npm run palette:breakdown` | razloži ostatak palete po **POSLJEDICI** | read-only, **nije gate** |
 | `npm run check:final` | bazni `final` red == M1⊕M2(+examPractice); preskočene **imenuje** protiv zakucane osnovice (osmi = pad) | mrežno (anon, read-only) |
 | `npm run diff:db [id]` | usporedi bazu s datotekama **prije re-synca** — `migrate-content.js` piše PREKO baze, a `content_versions` je audit, ne undo | mrežno |
-| `npm run check:functions` | Edge Functions na PRODUKCIJI: sve deployano i traži JWT (401), stranci obrisani (404) | mrežno, bez ijednog ključa |
+| `npm run check:functions` | Edge Functions na PRODUKCIJI: sve deployano, JWT (401) osim imenovanih javnih, stranci 404 | mrežno, bez ključa |
 | `npm run backup` / `backup:verify` | DB snapshot → gzip-JSON + sha256 manifest u `backups/` (gitignored, KORISNIČKI podaci) | mrežno; restore je guarded (`--restore` dry-run · `--confirm` · `--force-prod`) |
 | `npm run load-probe [N] [R]` | simulira razred: N paralelnih anon readova × rundi | mrežno |
 
