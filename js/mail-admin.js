@@ -127,6 +127,9 @@
       let kod = 'mail_failed';
       try {
         const ctx = r.error.context;
+        // Nepostojeća funkcija: gateway vraća 404 BEZ našeg `error` koda — isto stanje kao
+        // `mail_not_configured` (Leonov nalaz 15.09. na previewu, koji čita PROD bez funkcije).
+        if (ctx && ctx.status === 404) kod = 'mail_not_configured';
         if (ctx && typeof ctx.json === 'function') { const j = await ctx.json(); if (j && j.error) kod = j.error; }
       } catch (e) { /* tijelo nije JSON */ }
       throw new Error(kod);

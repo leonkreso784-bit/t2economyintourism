@@ -36,6 +36,10 @@ testirano, što slijedi.
   Pri upisu nađena netočnost u MOM nacrtu: „upitnik je sav neobavezan" — a „Tko si?" je `required` na mail-putu → ispravljeno.
   `check:i18n` osnovica `privacy.html` 96 → 150 SVJESNO (pravne stranice su samo EN i ne učitavaju `i18n.js`; HR inačica
   Pravila = zasebna proizvodna odluka). legal + a11y 22/22, preflight EXIT 0. ⚠️ Pravne stranice ne skenira nijedan axe.
+- **Preview `feat/f2-mail` pushan** (READY `921cfbc`, iza Vercel-prijave). **Leonov nalaz s telefona:** admin-prozor na
+  previewu (čita PROD, funkcije ondje nema) javio je „Nešto je pošlo po zlu. Pokušaj ponovno." — gateway za nepostojeću
+  funkciju vraća 404 bez našeg koda. Sad 404 = `mail_not_configured` („Slanje na ovom poslužitelju još nije postavljeno.");
+  „Pošalji" je i prije bio ugašen bez broja. `mail-notify.authed` ④ (404 podmetnut): crven na starom → 5/5.
 
 ---
 

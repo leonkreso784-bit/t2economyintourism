@@ -93,6 +93,19 @@ test('② admin-forma: broj primatelja po segmentu, „Pošalji" ugašen bez pri
   await expect(card).toBeHidden();
 });
 
+// Leonov nalaz 15.09. (preview čita PROD, gdje funkcije još nema): prozor je javio „Nešto je pošlo po
+// zlu. Pokušaj ponovno." — a ponovni pokušaj ne pomaže. Gateway za nepostojeću funkciju vraća 404 BEZ
+// našeg `error` koda; to je isto stanje kao `mail_not_configured` (slanje ovdje nije postavljeno).
+test('④ funkcije nema (404) → „slanje nije postavljeno", ne „pokušaj ponovno"; Pošalji ostaje ugašen', async ({ page }) => {
+  await page.route('**/functions/v1/send-notification', (route) => route.fulfill({
+    status: 404, contentType: 'application/json', body: JSON.stringify({ code: 'NOT_FOUND', message: 'Requested function was not found' }) }));
+  await naProfilu(page);
+  await page.locator('[data-mail-admin]').click();
+  await expect(page.locator('#mailStatus')).toHaveClass(/is-error/, { timeout: 20000 });
+  await expect(page.locator('#mailStatus')).toHaveText('Slanje na ovom poslužitelju još nije postavljeno.');
+  await expect(page.locator('#mailSend')).toBeDisabled();
+});
+
 // Nove plohe F2/4 (prekidač u postavkama i otvoren prozor) — axe u svih pet tema.
 test('③ a11y: kartica „Obavijesti mailom" i otvoren prozor obavijesti, 5 tema', async ({ page }) => {
   test.setTimeout(240000);
