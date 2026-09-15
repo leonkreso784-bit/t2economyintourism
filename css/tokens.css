@@ -124,6 +124,10 @@
   --color-brand-400: #6366f1;
   --color-brand-500: #4f46e5;
   --color-brand-600: #4338ca;
+  /* TEKST MARKE NA NJEZINOJ TINTI (aktivna kartica prijave = 18 % marke preko surface-2).
+     500 ondje pada u 4 od 5 tema (axe 15.09.: 4.26 · 4.41 mint · 3.96 carbon). Ljestvica ide
+     SUPROTNO po temi — svijetla treba tamniji, tamne svjetliji — pa je to token po temi, ne 600. */
+  --color-brand-ink: #4338ca;
 
   /* ⚠️ TEKST NA ISPUNI MARKE MORA BITI TAMAN, NE BIJEL.
      Kreda-žuta je svijetla boja: #F2C14E + bijelo = 1.86 (pada i za veliki tekst),
@@ -335,6 +339,7 @@
   --color-line: #45463e;      --color-line-strong: #8a8878;
   --color-ink-0: #f5f2e8;      --color-ink-1: #dcd8c9;      --color-ink-2: #a6a292;
   --color-brand-400: #f7d47c;  --color-brand-500: #f2c14e;  --color-brand-600: #d3a233;
+  --color-brand-ink: #f2c14e;
   --color-on-brand: #1e1f1c;
   --color-mark: rgb(242 193 78 / 0.30);
   --color-on-ok: #14161a;      --color-on-danger: #14161a;
@@ -361,6 +366,7 @@
   --color-line: #dde4ee;      --color-line-strong: #7d8a9c;
   --color-ink-0: #0e1a2b;      --color-ink-1: #34455c;      --color-ink-2: #5b6879;
   --color-brand-400: #6366f1;  --color-brand-500: #4f46e5;  --color-brand-600: #4338ca;
+  --color-brand-ink: #4338ca;
   --color-on-brand: #ffffff;
   --color-mark: #ffd24a;
   --color-on-ok: #ffffff;      --color-on-danger: #ffffff;
@@ -382,6 +388,7 @@
   --color-line: #1f4247;      --color-line-strong: #5c8e94;
   --color-ink-0: #e9f3f2;      --color-ink-1: #c5d8d7;      --color-ink-2: #88a7a6;
   --color-brand-400: #7adcc4;  --color-brand-500: #4fc9ab;  --color-brand-600: #2fa88c;
+  --color-brand-ink: #7adcc4;
   --color-on-brand: #0b1a1c;
   --color-mark: rgb(79 201 171 / 0.30);
   --color-on-ok: #14161a;      --color-on-danger: #14161a;
@@ -426,6 +433,7 @@
   --color-line: #262b36;      --color-line-strong: #6b7280;
   --color-ink-0: #e6e8ee;      --color-ink-1: #c3c8d4;      --color-ink-2: #9aa1b1;
   --color-brand-400: #a5b4fc;  --color-brand-500: #818cf8;  --color-brand-600: #7075f4;
+  --color-brand-ink: #a5b4fc;
   --color-on-brand: #0f1115;
   --color-mark: rgb(99 102 241 / 0.30);
   --color-on-ok: #14161a;      --color-on-danger: #14161a;

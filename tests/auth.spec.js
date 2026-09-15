@@ -3,6 +3,7 @@
 // (offline okruženje), jer je upravo to željeno ponašanje appa.
 const { test, expect } = require('@playwright/test');
 const { ucitajPakete } = require('./helpers/paketi');
+const { skenirajSveTeme } = require('./helpers/axe-gate');
 
 // Pre-set the cookie-consent choice so the fixed bottom banner (which legitimately
 // overlays the bottom of the viewport until dismissed) doesn't intercept clicks on
@@ -154,6 +155,73 @@ test('auth R1: OAuth buttons + two-step signup with questionnaire', async ({ pag
   await page.click('#authTabSignIn');
   await page.click('#authForgotLink');
   await expect(page.locator('#authGoogleBtn')).toBeHidden();
+
+  expect(errors).toEqual([]);
+});
+
+// F2/4 cigla 4 (Leon, anketa 15.09.): račun traži 16+ (Pravila §8, hrvatska granica za pristanak).
+// Mail-put: obavezna kvačica u koraku 2 — bez nje NIJEDAN zahtjev ne ide poslužitelju (ni zaobilaskom
+// preglednikove provjere), s njom zahtjev nosi potvrdu i vrijeme (dokaz). Google-put: rečenica uz gumb.
+// Poslužitelj je PODMETNUT (`page.route`) — nijedan pravi račun ne nastaje.
+test('auth 16+: bez kvačice nema registracije; s njom zahtjev nosi potvrdu; Google-put ima rečenicu', async ({ page }) => {
+  test.setTimeout(240000);
+  const errors = [];
+  page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
+  const zahtjevi = [];
+  await page.route('**/auth/v1/signup**', async (route) => {
+    zahtjevi.push(route.request().postDataJSON());
+    await route.fulfill({ status: 200, contentType: 'application/json',
+      body: JSON.stringify({ id: '00000000-0000-4000-8000-000000000016', aud: 'authenticated', email: 'test16@example.com', identities: [{ id: 'x' }], user_metadata: {} }) });
+  });
+  await page.route('https://api.pwnedpasswords.com/**', (route) => route.fulfill({ status: 200, contentType: 'text/plain', body: '' }));
+  await page.addInitScript(() => { try { localStorage.setItem('sokrat-ui-lang', 'hr'); } catch (e) { /* private */ } });
+
+  await page.goto('/');
+  const btn = page.locator('#authNavBtn');
+  let cdnOk = true;
+  try { await btn.waitFor({ state: 'visible', timeout: 15000 }); } catch (e) { cdnOk = false; }
+  test.skip(!cdnOk, 'supabase-js CDN unreachable — auth disabled by design');
+  await btn.click();
+
+  // Google-put: rečenica o 16+ stoji UZ gumb (u istom bloku), vidljiva na prijavi i registraciji
+  const googleDob = page.locator('#authOAuthWrap #authOAuthAge');
+  await expect(googleDob).toBeVisible();
+  await expect(googleDob).toContainText('16');
+  // Prozor prijave dotad NIJEDAN axe nije skenirao; nova rečenica je sitan sivi tekst (kontrast).
+  const nalazi = [...await skenirajSveTeme(page, 'PRIJAVA/google-16')];
+
+  await page.click('#authTabSignUp');
+  await expect(googleDob).toBeVisible();
+  await page.fill('#authSignUpName', 'Test Šesnaest');
+  await page.fill('#authSignUpEmail', 'test16@example.com');
+  await page.fill('#authSignUpPassword', 'neka-duga-lozinka-16');
+  await page.click('#authSignUpForm button[type="submit"]');
+  await expect(page.locator('#authSignUpForm2')).toBeVisible();
+  // radio je skriven ispod pilule (opacity 0) — korisnik dodiruje pilulu
+  await page.click('#authSignUpForm2 label.auth-role:has(input[value="pupil"])');
+
+  const dob = page.locator('#authSignUpAge');
+  await expect(dob, 'kvačica 16+ mora postojati u koraku 2').toBeVisible();
+  await expect(dob, 'nikad unaprijed označena').not.toBeChecked();
+  await expect(page.locator('label[for="authSignUpAge"], label:has(#authSignUpAge)')).toContainText('16');
+  nalazi.push(...await skenirajSveTeme(page, 'PRIJAVA/korak2-16'));
+  expect(nalazi, 'axe u 5 tema: prozor prijave i korak 2 registracije').toEqual([]);
+
+  // ① klik bez kvačice: preglednik ne pušta formu
+  await page.click('#authSignUpForm2 button[type="submit"]');
+  // ② zaobilazak preglednikove provjere (submit-događaj izravno) — JS mora sam odbiti
+  await page.evaluate(() => document.getElementById('authSignUpForm2').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })));
+  await page.waitForTimeout(500);
+  expect(zahtjevi, 'bez potvrde 16+ nijedan zahtjev ne smije otići poslužitelju').toEqual([]);
+
+  // ③ s kvačicom: zahtjev ode i nosi potvrdu + vrijeme
+  await dob.check();
+  await page.click('#authSignUpForm2 button[type="submit"]');
+  await expect.poll(() => zahtjevi.length, { timeout: 10000 }).toBe(1);
+  const meta = zahtjevi[0].data || {};
+  expect(meta.age_confirmed, 'potvrda mora biti PRAVI boolean').toBe(true);
+  expect(Date.parse(meta.age_confirmed_at)).toBeGreaterThan(Date.now() - 120000);
+  expect(meta.acct_type).toBe('pupil');
 
   expect(errors).toEqual([]);
 });

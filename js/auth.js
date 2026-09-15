@@ -367,6 +367,9 @@ const SokratAuth = (function () {
             '        <button type="button" class="auth-oauth__btn" id="authGoogleBtn">' + IKONA_GOOGLE + '<span>' + at('auth.oauth.google', 'Continue with Google') + '</span></button>' +
             (FB_LOGIN ? '        <button type="button" class="auth-oauth__btn" id="authFacebookBtn">' + IKONA_FACEBOOK + '<span>' + at('auth.oauth.facebook', 'Continue with Facebook') + '</span></button>' : '') +
             '      </div>' +
+            // 16+ (Leon, anketa 15.09.): Google-put preskače formu i njezinu kvačicu, pa potvrdu
+            // nosi rečenica UZ gumb. Mail-put ima obaveznu kvačicu u koraku 2 (`authSignUpAge`).
+            '      <p class="auth-oauth__age" id="authOAuthAge">' + at('auth.oauth.age', 'By continuing with Google you confirm you are at least 16.') + '</p>' +
             '      <div class="auth-divider"><span>' + at('auth.divider.or', 'or') + '</span></div>' +
             '    </div>' +
             '    <div class="auth-modal__tabs" role="tablist">' +
@@ -397,6 +400,9 @@ const SokratAuth = (function () {
             '    <form id="authSignUpForm2" class="auth-modal__form" hidden>' +
             '      <p class="auth-modal__text auth-modal__text--tight">' + at('auth.q.text', 'One quick step — it helps us show you the right subjects.') + '</p>' +
             questFieldsHtml('authSignUp') +
+            // Samo ovdje, ne u `questFieldsHtml`: post-OAuth upitnik je preskočiv, a potvrdu
+            // Google-puta nosi rečenica uz gumb (gore). Nikad unaprijed označena.
+            '      <label class="auth-consent"><input type="checkbox" id="authSignUpAge" required><span>' + at('auth.q.age', 'I am at least 16 years old.') + '</span></label>' +
             '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-user-plus"></i><span>' + at('auth.tab.signUp', 'Create account') + '</span></button>' +
             '      <button type="button" class="auth-modal__link" id="authSignUpBack">' + at('auth.q.back', '← Back') + '</button>' +
             '    </form>' +
@@ -751,6 +757,13 @@ const SokratAuth = (function () {
         const type = (document.querySelector('input[name="authSignUpType"]:checked') || {}).value;
         const school = document.getElementById('authSignUpSchool').value;
         const consent = document.getElementById('authSignUpConsent').checked;
+        // `required` čuva samo klik na gumb; submit mimo preglednikove provjere mora stati OVDJE.
+        const age = document.getElementById('authSignUpAge');
+        if (!age || !age.checked) {
+            setStatus(at('auth.st.age', 'Please confirm you are at least 16 years old.'), true);
+            if (age && age.focus) age.focus();
+            return;
+        }
         setStatus(at('auth.st.creating', 'Creating account…'));
         if (await isPasswordPwned(password)) {
             setStatus(at('auth.st.weakPwned', 'This password has appeared in a known data breach — please pick a different one.'), true);
@@ -760,7 +773,8 @@ const SokratAuth = (function () {
             email: email,
             password: password,
             options: {
-                data: Object.assign({ display_name: name }, buildQuestData(type, school, consent)),
+                data: Object.assign({ display_name: name }, buildQuestData(type, school, consent),
+                    { age_confirmed: true, age_confirmed_at: new Date().toISOString() }),
                 emailRedirectTo: window.location.origin + window.location.pathname
             }
         });

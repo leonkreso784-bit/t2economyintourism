@@ -23,6 +23,7 @@
     --color-brand-400: #6366f1;
     --color-brand-500: #4f46e5;
     --color-brand-600: #4338ca;
+    --color-brand-ink: #4338ca;
     --color-on-brand: #ffffff;
     --color-on-ok: #ffffff;
     --color-on-danger: #ffffff;
@@ -97,6 +98,7 @@
   --color-brand-400: #f7d47c;
   --color-brand-500: #f2c14e;
   --color-brand-600: #d3a233;
+  --color-brand-ink: #f2c14e;
   --color-on-brand: #1e1f1c;
   --color-mark: rgb(242 193 78 / 0.30);
   --color-on-ok: #14161a;
@@ -131,6 +133,7 @@
   --color-brand-400: #6366f1;
   --color-brand-500: #4f46e5;
   --color-brand-600: #4338ca;
+  --color-brand-ink: #4338ca;
   --color-on-brand: #ffffff;
   --color-mark: #ffd24a;
   --color-on-ok: #ffffff;
@@ -165,6 +168,7 @@
   --color-brand-400: #7adcc4;
   --color-brand-500: #4fc9ab;
   --color-brand-600: #2fa88c;
+  --color-brand-ink: #7adcc4;
   --color-on-brand: #0b1a1c;
   --color-mark: rgb(79 201 171 / 0.30);
   --color-on-ok: #14161a;
@@ -199,6 +203,7 @@
   --color-brand-400: #a5b4fc;
   --color-brand-500: #818cf8;
   --color-brand-600: #7075f4;
+  --color-brand-ink: #a5b4fc;
   --color-on-brand: #0f1115;
   --color-mark: rgb(99 102 241 / 0.30);
   --color-on-ok: #14161a;
@@ -7958,7 +7963,7 @@ sokrat-modal.auth-modal > * {
   @supports (color: color-mix(in lab, red, red)) {
     background: color-mix(in srgb, var(--color-brand-500) 18%, transparent);
   }
-  color: var(--color-brand-500);
+  color: var(--color-brand-ink);
 }
 .auth-modal__form {
   display: flex;
@@ -8104,6 +8109,13 @@ sokrat-modal.auth-modal > * {
 .auth-oauth__ikona {
   flex: 0 0 auto;
   display: block;
+}
+.auth-oauth__age {
+  margin: -0.4rem 0 0.95rem;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--color-ink-2);
 }
 .auth-divider {
   display: flex;

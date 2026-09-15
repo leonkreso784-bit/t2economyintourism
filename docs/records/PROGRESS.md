@@ -5,6 +5,29 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-15 navečer (OPUS, stablo `sokratstudy.f21`, `feat/f2-mail`) — F2/4: ③ izmjeren, brana funkcija, cigla 4 „16+"
+
+- **③ → pravi commit `c0a53f4`** (mjere u unosu ispod). Puni paket: 1 ✘ = poznati `theme-fouc` (BACKLOG), sam 60/60.
+- **`097d59b` check:functions:** skripta je već čitala sve iz `supabase/functions/` — rupa je bila da bi javnu
+  `mail-unsubscribe` proglasila padom. Sad imenovana (`PUBLIC_FNS`: 400 bad_token = zdrava · 500 = nema tajne · 401 =
+  lomi one-click · GET mora 302 na naš `odjava.html`) + `CHECK_FUNCTIONS_URL` za staging. Staging ✗ „nema tajne",
+  prod ✗ obje 404 — obje presude točne.
+- **Leon (anketa 15.09.) za Pravila privatnosti:** račun traži **16+** (kvačica na mail-putu, rečenica uz Google
+  gumb) · Resend praćenje otvaranja/klikova ISKLJUČENO (provjerio) · opći tekst o Resendu · profilne slike javne po
+  poveznici, Pravila to kažu. Nacrt Pravila čeka Leonovo čitanje (nije u repozitoriju).
+- **Cigla 4 „16+":** `#authSignUpAge` (obavezna, samo u koraku 2 — post-OAuth upitnik je preskočiv) + JS-straža u
+  `handleSignUp` (submit mimo preglednika) + `age_confirmed`/`_at` u metapodacima · `#authOAuthAge` uz Google gumb.
+  Test `auth.spec.js` „16+" (poslužitelj podmetnut): bez kvačice 0 zahtjeva, s njom zahtjev nosi potvrdu; na starom
+  kodu crven. ⚠️ Obrnuta provjera SAME straže (privremeno je ugasiti) — **harness-klasifikator odbio** („Security
+  Weaken"); dokaz je da izravan `submit`-događaj po DOM-u ne vrti provjeru preglednika, pa je straža jedino što staje.
+- **Nalaz usput (NA PRODUKCIJI od R1, 02.09.):** prozor prijave NIJEDAN axe nije skenirao; prvi sken: **aktivna
+  kartica „Prijava"/„Registracija"** = marka-500 na vlastitoj tinti, 4.26 / 4.41 (mint) / 3.96 (carbon) < 4.5 u 4 od 5
+  tema. Novi token **`--color-brand-ink`** po temi (svijetla tamniji, tamne svjetliji; `chalk` prolazi s 500) + u
+  `check:contrast`. Poslije: axe 0 u 5 tema na oba panela, `auth.spec` 12/12 (SE + položeni), a11y/layout/components
+  18/18, preflight EXIT 0.
+
+---
+
 ## 2026-09-15 kasno (OPUS, stablo `sokratstudy.f21`, grana `feat/f2-mail` od `6fbac90`) — F2/4 mail-obavijesti: ①② gotovi, ③ WIP
 
 Leon: *„možeš krenuti"* → anketa 15.09. (forma u admin-kartici profila · prekidač u profilu · segmenti FMTU / svi s

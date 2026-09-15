@@ -95,7 +95,7 @@ sokrat-modal.auth-modal > * {
 
 .auth-modal__tab.is-active {
     background: color-mix(in srgb, var(--color-brand-500) 18%, transparent);
-    color: var(--color-brand-500);
+    color: var(--color-brand-ink); /* 500 na vlastitoj tinti pada (axe, 15.09.) */
 }
 
 /* ---------- Forme ---------- */
@@ -222,6 +222,13 @@ sokrat-modal.auth-modal > * {
    njih skidao 106 KB brands-fonta. Boje su providerove i NAMJERNO ne slušaju temu: to su
    tuđe marke, ne naša paleta, pa ovdje nema tokena i `check:palette` ih ne dira. */
 .auth-oauth__ikona { flex: 0 0 auto; display: block; }
+
+/* 16+ uz Google gumb (F2/4 cigla 4): sitan tekst u istom bloku, prije „ili" */
+.auth-oauth__age {
+    margin: -0.4rem 0 0.95rem;
+    font-size: 0.78rem; line-height: 1.5; text-align: center;
+    color: var(--color-ink-2);
+}
 
 .auth-divider {
     display: flex; align-items: center; gap: 0.7rem;

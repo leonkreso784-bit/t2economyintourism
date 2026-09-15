@@ -117,7 +117,7 @@ for (const ime of temeIzTokena(css)) {
 
 // ── provjere ────────────────────────────────────────────────────────────────
 const SURFACES = ['--color-surface-0', '--color-surface-1', '--color-surface-2'];
-const AS_TEXT = ['--color-ink-0', '--color-ink-1', '--color-ink-2', '--color-brand-500',
+const AS_TEXT = ['--color-ink-0', '--color-ink-1', '--color-ink-2', '--color-brand-500', '--color-brand-ink',
                  '--color-ok', '--color-warn-ink', '--color-danger-ink',
                  /* TINTE AUTORA (`.lb-color-*` u gradivu, 8 nijansi iz trake editora).
                     Ušle su 2026-08-31 jer ih dotad NIJEDNA brana nije vidjela: `check:palette`
