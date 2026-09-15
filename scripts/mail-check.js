@@ -164,12 +164,22 @@ async function posalji(token, body) {
         const log = await http('/rest/v1/mail_log?select=subject,segment,recipients,test&order=id.desc&limit=1', { headers: svc() });
         const red = (await log.json())[0] || {};
         rec('T6 proba zapisana u mail_log (test=true, 1 primatelj)', red.subject === 'mail-check proba' && red.test === true && red.recipients === 1, JSON.stringify(red));
-        const n = poslije.all.recipients;
+        // T5 je odjavio OBA računa s pristankom, pa bi segment ovdje imao 0 primatelja i „0 === 0"
+        // prošao bez ijednog poslanog maila (izmjereno 15.09.). Svjež račun s pristankom + broj
+        // IZ OVOG TRENUTKA; mjera je valjana tek s ≥ 1 primateljem.
+        const E = await noviKorisnik('segment', { mail_consent: true, is_fmtu: false }, true);
+        stvoreni.push(E.id);
+        const n = (await posalji(tAdmin, { mode: 'count', segment: 'all' })).j.recipients;
         if (n > 10) {
           skip('T6 slanje segmentu', 'na stagingu je ' + n + ' primatelja s pristankom (> 10) — ne šaljem ni preusmjereno');
         } else {
           const seg = await posalji(tAdmin, { mode: 'send', segment: 'all', subject: 'mail-check segment', text: 'Segment.', idempotency: kljuc });
-          rec('T6 slanje „svi s pristankom" → poslano onoliko koliko je primatelja', seg.status === 200 && seg.j.sent === seg.j.recipients, JSON.stringify(seg.j));
+          rec('T6 slanje „svi s pristankom" → poslano onoliko koliko je primatelja (≥ 1)',
+            seg.status === 200 && seg.j.recipients >= 1 && seg.j.sent === seg.j.recipients && seg.j.redirected === true, JSON.stringify(seg.j));
+          const log2 = await http('/rest/v1/mail_log?select=subject,segment,recipients,test&order=id.desc&limit=1', { headers: svc() });
+          const red2 = (await log2.json())[0] || {};
+          rec('T6 slanje zapisano u mail_log (test=false, isti broj primatelja)',
+            red2.subject === 'mail-check segment' && red2.test === false && red2.recipients === seg.j.recipients, JSON.stringify(red2));
         }
       }
     }

@@ -25,6 +25,12 @@ testirano, što slijedi.
   tema. Novi token **`--color-brand-ink`** po temi (svijetla tamniji, tamne svjetliji; `chalk` prolazi s 500) + u
   `check:contrast`. Poslije: axe 0 u 5 tema na oba panela, `auth.spec` 12/12 (SE + položeni), a11y/layout/components
   18/18, preflight EXIT 0.
+- **Tajne na STAGINGU postavljene** (Leon se prijavio u Playwright-prozor, ja upisao tri kroz dashboard; `MAIL_REDIRECT_TO`
+  = `delivered@resend.dev`). `check:functions` protiv stagingâ **zelen** (prvi zeleni put nove tvrdnje: 400 bad_token +
+  302). `npm run test:mail` **bez padova i bez SKIP-a** — ali zadnja stavka „slanje segmentu" prošla je s **0 primatelja**
+  (T5 odjavi oba računa s pristankom, pa `0 === 0`) → T6 sad stvara svjež račun s pristankom, broji u tom trenutku i
+  traži ≥ 1 + red u `mail_log`: **1/1 poslano preusmjereno, zapisano**. Snimke Playwrighta s ključem (4, gitignorane)
+  obrisane.
 
 ---
 
