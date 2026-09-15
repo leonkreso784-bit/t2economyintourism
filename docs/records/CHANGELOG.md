@@ -5,6 +5,19 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-15 (OPUS) — **F2/5b-1: redak radionice** — grana `feat/f2-zid`
+
+### Promijenjeno
+- **Redak stabla „Mojih materijala" = ikona u boji + PUNO ime + jedan „⋯"** (dotad pet ikona; na 393 px ime rezano na
+  6–8 znakova). Materijal nosi svoju stalnu boju (isto kao pločica na zidu), ime se lomi u retke.
+- **Dodir na redak = glavna radnja:** materijal → učenje; mapa → otvori/zatvori; prazna mapa → „⋯".
+- **„⋯" izbornik** (Uči · Uredi · Preimenuj · Obriši; mapa: Novi materijal unutra · Nova polica unutra · Preimenuj ·
+  Obriši): `popover` iznad svega, stavke 44 px, Escape zatvara i vraća fokus. Bez Popover API-ja isti izbornik kao `hidden`.
+- **Ručka za povlačenje samo za miš** (`pointer: fine`) — na dodiru se premješta kroz izbornik (5b-2).
+### Brana
+- `tests/radionica.authed.spec.js` (3, Chromium + WebKit) · specovi koji su klikali ikone retka idu kroz „⋯"
+  (`tests/helpers/izbornik-retka.js`).
+
 ## 2026-09-15 (OPUS) — **F2/5a: zid gradiva na profilu** — grana `feat/f2-zid`
 
 ### Dodano

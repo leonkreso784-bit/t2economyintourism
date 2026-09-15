@@ -15,6 +15,7 @@
 // i tad pada test „osobni materijal", ne produkcija.
 const { test, expect } = require('@playwright/test');
 const { ucitajPakete } = require('./helpers/paketi');
+const { radnjaRetka } = require('./helpers/izbornik-retka');
 // T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
 const { otvoriAdminPreglednik, otvoriAplikaciju } = require('./helpers/studio-entry');
 
@@ -151,7 +152,7 @@ test.describe('M5a — mjera duljine kartice', () => {
       await page.evaluate(() => window.SokratMaterials.refresh());
       const row = page.locator('#myMaterials .mm-row[data-mm-id="' + id + '"]');
       await expect(row).toHaveCount(1, { timeout: 20000 });
-      await row.locator('[data-mm-open]').click();
+      await radnjaRetka(row, '[data-mm-open]');
 
       await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
       await page.click('#stEdit');

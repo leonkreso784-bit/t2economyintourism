@@ -106,6 +106,12 @@
     color: var(--color-ink-0);
 }
 
+/* F2/5b (Leon, anketa 14.09.): povlačenje je SAMO za miš — na dodiru se premješta kroz „⋯".
+   Bez ovoga je ručka na telefonu jela 16 px od imena, a pokret prstom po njoj nije ništa radio. */
+@media not (pointer: fine) {
+    .mm-grip { display: none; }
+}
+
 .mm-row--dragging {
     opacity: 0.45;
 }
@@ -169,12 +175,32 @@ body.mm-dragging {
     transform: rotate(90deg);
 }
 
-/* Ikona tipa */
+/* Glavni gumb retka (F2/5b): ikona + ime, cijela širina — dodir na redak je glavna radnja. */
+.mm-main {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    min-height: 44px;
+    padding: 4px 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+}
+
+/* Ikona tipa — ista kutija za mapu i materijal, da imena stoje u istoj okomici. */
 .mm-icon {
     display: inline-flex;
-    flex: 0 0 auto;
-    width: 20px;
+    align-items: center;
     justify-content: center;
+    flex: 0 0 26px;
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
     font-size: 0.9rem;
 }
 
@@ -182,17 +208,21 @@ body.mm-dragging {
     color: var(--color-warn);
 }
 
+/* Materijal nosi SVOJU boju (kao pločica na zidu, F2/5a); tinta računata (`inkForTint()`). */
 .mm-row--study .mm-icon {
-    color: var(--color-brand-500);
+    font-size: 0.75rem;
+    background: var(--tile-color, var(--color-brand-500));
+    color: var(--color-on-tint-light);
 }
 
-/* Naziv */
+.mm-row--study .mm-icon[data-ink="dark"] { color: var(--color-on-tint-dark); }
+
+/* Naziv — PUNO ime, lomi se u retke umjesto da se reže (izmjereno 14.09.: 6–8 znakova na 393 px). */
 .mm-name {
     flex: 1 1 auto;
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
+    line-height: 1.35;
     color: var(--color-ink-1);
     font-size: 0.94rem;
 }
@@ -215,18 +245,86 @@ body.mm-dragging {
     text-align: center;
 }
 
-/* Akcije — vidljive na hover/focus (miš), uvijek na dodir */
+/* „⋯" — JEDINA kontrola na retku (F2/5b); tiha, uvijek vidljiva (dodir nema hover). */
+.mm-more {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--color-ink-2);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.mm-more:hover,
+.mm-more[aria-expanded="true"] {
+    color: var(--color-ink-0);
+    background: var(--color-surface-2);
+}
+
+/* Izbornik retka — `popover` (gornji sloj), smješta ga JS uz „⋯". Bez Popover API-ja isti element
+   s `hidden`: fiksan položaj ga i ondje vadi iz `.mm-tree { overflow: hidden }`. */
+.mm-menu {
+    position: fixed;
+    inset: auto;
+    z-index: 1500;
+    margin: 0;
+    min-width: 13rem;
+    max-width: calc(100vw - 16px);
+    padding: 6px;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-1);
+    color: var(--color-ink-0);
+    box-shadow: var(--shadow-e2);
+}
+
+.mm-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 44px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--color-ink-0);
+    font: inherit;
+    font-size: 0.92rem;
+    text-align: start;
+    cursor: pointer;
+}
+
+.mm-menu-item i {
+    width: 18px;
+    color: var(--color-ink-2);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.mm-menu-item:hover,
+.mm-menu-item:focus-visible {
+    background: var(--color-surface-2);
+}
+
+.mm-menu-item--danger,
+.mm-menu-item--danger i {
+    color: var(--color-danger-ink);
+}
+
+/* Akcije inline unosa (✓ / ✕) */
 .mm-acts {
     display: flex;
     flex: 0 0 auto;
     gap: 2px;
-    opacity: 0;
-    transition: opacity 0.18s ease;
-}
-
-.mm-row:hover .mm-acts,
-.mm-row:focus-within .mm-acts {
-    opacity: 1;
 }
 
 .mm-act {
@@ -248,11 +346,6 @@ body.mm-dragging {
 .mm-act:hover {
     color: var(--color-ink-0);
     background: var(--color-surface-2);
-}
-
-.mm-act--danger:hover {
-    color: var(--color-danger-ink);
-    background: color-mix(in srgb, var(--color-danger) 12%, transparent);
 }
 
 .mm-add--undo {
@@ -290,10 +383,6 @@ body.mm-dragging {
 .mm-input:focus {
     outline: 2px solid var(--color-brand-400);
     outline-offset: 1px;
-}
-
-.mm-acts--edit {
-    opacity: 1;
 }
 
 /* ── Stanja (prazno / učitavanje / greška) ──────────────────────── */
@@ -340,12 +429,6 @@ body.mm-dragging {
 @media (max-width: 640px) {
     .mm-row {
         padding-left: calc(8px + var(--mm-depth) * 14px);
-    }
-
-    /* Na dodir nema hovera → akcije i ručka su uvijek vidljive. */
-    .mm-acts,
-    .mm-grip {
-        opacity: 1;
     }
 
     .mm-add {

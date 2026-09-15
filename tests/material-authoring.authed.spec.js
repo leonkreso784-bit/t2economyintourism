@@ -13,6 +13,7 @@
 // `docs/product/UGC_SPEC.md` traži oboje.
 const { test, expect } = require('@playwright/test');
 const { ucitajPakete } = require('./helpers/paketi');
+const { radnjaRetka } = require('./helpers/izbornik-retka');
 // T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
 const { otvoriAplikaciju } = require('./helpers/studio-entry');
 
@@ -56,7 +57,7 @@ async function openFreshMaterialWithSection(page, name) {
   await page.evaluate(() => window.SokratMaterials.refresh());
   const row = page.locator('#myMaterials .mm-row[data-mm-id="' + id + '"]');
   await expect(row).toHaveCount(1, { timeout: 20000 });
-  await row.locator('[data-mm-open]').click();
+  await radnjaRetka(row, '[data-mm-open]');
 
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
   await page.click('#stEdit');
@@ -193,10 +194,11 @@ async function openForStudy(page, id) {
   const row = page.locator('#myMaterials .mm-row[data-mm-id="' + id + '"]');
   await expect(row).toHaveCount(1, { timeout: 20000 });
   await expect(
-    row.locator('[data-mm-learn]'),
-    'materijal nema gumb „Uči" → iz vlastitog sadržaja se ne može učiti'
+    row.locator('.mm-menu [data-mm-learn]'),
+    'materijal nema „Uči" u izborniku → iz vlastitog sadržaja se ne može učiti'
   ).toHaveCount(1);
-  await row.locator('[data-mm-learn]').click();
+  // F2/5b: dodir na redak = UČENJE (Leon, anketa 14.09.) — to je put koji korisnik zapravo prolazi.
+  await row.locator('[data-mm-main]').click();
   await expect(page.locator('#study-page.active')).toHaveCount(1, { timeout: 20000 });
   await page.waitForFunction(
     (nodeId) => AppState.nav.subject === 'node:' + nodeId

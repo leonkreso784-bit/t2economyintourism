@@ -6,6 +6,7 @@
 // sadržaj ostao + audit-redak zapisan + `base_version` lovi tuđu izmjenu.
 const { test, expect } = require('@playwright/test');
 const { ucitajPakete } = require('./helpers/paketi');
+const { radnjaRetka } = require('./helpers/izbornik-retka');
 // T6: editor je vlastiti dokument — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
 const { otvoriStudio, otvoriAplikaciju } = require('./helpers/studio-entry');
 
@@ -155,7 +156,7 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
 
       const row = page.locator('#myMaterials .mm-row[data-mm-id="' + id + '"]');
       await expect(row).toHaveCount(1, { timeout: 20000 });
-      await row.locator('[data-mm-open]').click();
+      await radnjaRetka(row, '[data-mm-open]');
 
       // 1) prebacio se na editor-stranicu i zna koji je čvor
       await expect(page.locator('#editor-page')).toHaveClass(/active/, { timeout: 20000 });
@@ -185,7 +186,7 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
       await page.evaluate(() => window.SokratMaterials.refresh());
       const row = page.locator('#myMaterials .mm-row[data-mm-id="' + id + '"]');
       await expect(row).toHaveCount(1, { timeout: 20000 });
-      await row.locator('[data-mm-open]').click();
+      await radnjaRetka(row, '[data-mm-open]');
       await expect(page.locator('#editor-page')).toHaveClass(/active/, { timeout: 20000 });
 
       await page.click('#pathbarBack');   // K2b: jedan gumb natrag
@@ -204,7 +205,7 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
       await page.evaluate(() => window.SokratMaterials.refresh());
       const row = page.locator('#myMaterials .mm-row[data-mm-id="' + id + '"]');
       await expect(row).toHaveCount(1, { timeout: 20000 });
-      await row.locator('[data-mm-open]').click();
+      await radnjaRetka(row, '[data-mm-open]');
       await expect(page.locator('#editor-page')).toHaveClass(/active/, { timeout: 20000 });
 
       // prazan čvor: nema modova, ali NIJE slijepa ulica — „Uredi" postoji
@@ -243,7 +244,7 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
       await page.evaluate(() => window.SokratMaterials.refresh());
       const row = page.locator('#myMaterials .mm-row[data-mm-id="' + id + '"]');
       await expect(row).toHaveCount(1, { timeout: 20000 });
-      await row.locator('[data-mm-open]').click();
+      await radnjaRetka(row, '[data-mm-open]');
       await expect(page.locator('#editor-page')).toHaveClass(/active/, { timeout: 20000 });
       await page.click('#stEdit');
 

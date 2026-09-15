@@ -605,6 +605,7 @@
     'materials.rename': { en: 'Rename', hr: 'Preimenuj' },
     'materials.delete': { en: 'Delete', hr: 'Obriši' },
     'materials.toggle': { en: 'Expand or collapse', hr: 'Otvori ili zatvori' },
+    'materials.more': { en: 'More actions', hr: 'Više radnji' },
     'materials.loading': { en: 'Loading your materials…', hr: 'Učitavam tvoje materijale…' },
     'materials.retry': { en: 'Try again', hr: 'Pokušaj ponovno' },
     'materials.emptyTitle': { en: 'Nothing here yet', hr: 'Ovdje još nema ničega' },

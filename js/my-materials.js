@@ -329,12 +329,20 @@
     // DOM je PLOSNAT (dubina je vizualna, `--mm-depth`) → `aria-level` nosi hijerarhiju.
     // `aria-expanded` stoji i na retku (stanje stavke) i na twisty-gumbu (stanje kontrole); oba se
     // ispisuju iz iste varijable `open`, pa se ne mogu razići.
+    //
+    // F2/5b (Leon, anketa 14.09.): redak = ikona u boji + PUNO ime + JEDAN „⋯". Dodir na redak je
+    // glavna radnja — materijal se UČI (isto kao pločica na zidu), mapa se otvara/zatvara, a prazna
+    // mapa otvara „⋯" (dodir koji ne učini ništa vidljivo je gori od ijednog izbora). Izmjereno
+    // 14.09. na 393 px: pet ikona po retku rezalo je ime na 6–8 znakova.
+    // Izbornik je `popover` (gornji sloj): DOM mu ostaje U RETKU, pa `closest('[data-mm-id]')` i
+    // postojeći rukovatelji rade netaknuto, a `.mm-tree { overflow: hidden }` ga ne reže.
+    const menuId = 'mm-menu-' + n.id;
     return '' +
       '<li class="mm-row' + (isFolder ? ' mm-row--folder' : ' mm-row--study') + '"' +
       ' role="treeitem" aria-level="' + (entry.depth + 1) + '"' +
       (isFolder && hasKids ? ' aria-expanded="' + (open ? 'true' : 'false') + '"' : '') +
       ' data-mm-id="' + esc(n.id) + '" data-mm-kind="' + esc(n.kind) + '"' +
-      ' style="--mm-depth:' + entry.depth + '">' +
+      ' style="--mm-depth:' + entry.depth + (isFolder ? '' : ';--tile-color:' + esc(colorOf(n))) + '">' +
       '  <span class="mm-grip" data-mm-drag title="' + esc(mt('materials.drag', 'Drag to move')) + '" aria-hidden="true">' +
       '<i class="fas fa-grip-vertical"></i></span>' +
       '  <span class="mm-twisty">' +
@@ -344,28 +352,98 @@
           '<i class="fas fa-chevron-right" aria-hidden="true"></i></button>'
         : '') +
       '  </span>' +
-      '  <span class="mm-icon"><i class="fas ' + icon + '" aria-hidden="true"></i></span>' +
-      '  <span class="mm-name" title="' + esc(n.name) + '">' + esc(n.name) + '</span>' +
+      '  <button type="button" class="mm-main" data-mm-main>' +
+      '<span class="mm-icon"' + (isFolder ? '' : ' data-ink="' + inkOf(colorOf(n)) + '"') + '>' +
+      '<i class="fas ' + (isFolder ? icon : iconOf(n)) + '" aria-hidden="true"></i></span>' +
+      '<span class="mm-name">' + esc(n.name) + '</span></button>' +
       (hasKids ? '  <span class="mm-count">' + n.children.length + '</span>' : '') +
-      '  <span class="mm-acts">' +
+      '  <button type="button" class="mm-more" data-mm-more aria-haspopup="menu" aria-expanded="false"' +
+      ' aria-controls="' + esc(menuId) + '" aria-label="' + esc(mt('materials.more', 'More actions') + ': ' + n.name) + '">' +
+      '<i class="fas fa-ellipsis" aria-hidden="true"></i></button>' +
+      '  <div class="mm-menu" id="' + esc(menuId) + '" role="menu" ' + (HAS_POPOVER ? 'popover="auto"' : 'hidden') + '>' +
       (isFolder
-        ? '<button type="button" class="mm-act" data-mm-new-in="folder" title="' + esc(mt('materials.addFolderIn', 'New folder inside')) + '">' +
-          '<i class="fas fa-folder-plus" aria-hidden="true"></i></button>' +
-          '<button type="button" class="mm-act" data-mm-new-in="study" title="' + esc(mt('materials.addStudyIn', 'New material inside')) + '">' +
-          '<i class="fas fa-plus" aria-hidden="true"></i></button>'
-        // M2: „Uči" ide PRVI — materijal se češće uči nego uređuje, a create/edit je zasebna radnja.
-        // ⚠ Mjesto gumba je PRIVREMENO; konačan raspored je u vlasništvu frontend-redizajna (Leon).
+        ? menuItem('data-mm-new-in="study"', 'fa-book-medical', mt('materials.addStudyIn', 'New material inside')) +
+          menuItem('data-mm-new-in="folder"', 'fa-folder-plus', mt('materials.addFolderIn', 'New folder inside'))
         // F3 K2: study-čvor se otvara POSTOJEĆIM Studio editorom (isti renderer, isti draft-stroj).
-        : '<button type="button" class="mm-act mm-act--learn" data-mm-learn title="' + esc(mt('materials.learn', 'Study')) + '">' +
-          '<i class="fas fa-graduation-cap" aria-hidden="true"></i></button>' +
-          '<button type="button" class="mm-act mm-act--open" data-mm-open title="' + esc(mt('materials.open', 'Edit material')) + '">' +
-          '<i class="fas fa-pen-to-square" aria-hidden="true"></i></button>') +
-      '    <button type="button" class="mm-act" data-mm-rename title="' + esc(mt('materials.rename', 'Rename')) + '">' +
-      '<i class="fas fa-pen" aria-hidden="true"></i></button>' +
-      '    <button type="button" class="mm-act mm-act--danger" data-mm-del title="' + esc(mt('materials.delete', 'Delete')) + '">' +
-      '<i class="fas fa-trash" aria-hidden="true"></i></button>' +
-      '  </span>' +
+        : menuItem('data-mm-learn', 'fa-graduation-cap', mt('materials.learn', 'Study')) +
+          menuItem('data-mm-open', 'fa-pen-to-square', mt('materials.open', 'Edit material'))) +
+      menuItem('data-mm-rename', 'fa-pen', mt('materials.rename', 'Rename')) +
+      menuItem('data-mm-del', 'fa-trash', mt('materials.delete', 'Delete'), 'mm-menu-item--danger') +
+      '  </div>' +
       '</li>';
+  }
+
+  function menuItem(attr, icon, label, extra) {
+    return '<button type="button" role="menuitem" class="mm-menu-item' + (extra ? ' ' + extra : '') + '" ' + attr + '>' +
+      '<i class="fas ' + icon + '" aria-hidden="true"></i><span>' + esc(label) + '</span></button>';
+  }
+
+  /** Tinta na obojenoj ikoni — ista računica kao pločice (utils.js); bez nje svijetla (stari izgled). */
+  function inkOf(color) {
+    return (typeof window.inkForTint === 'function') ? window.inkForTint(color) : 'light';
+  }
+
+  // Popover API (Safari 17+, Chrome 114+). Bez njega izbornik je `hidden` element s istim ponašanjem
+  // (zatvara ga klik izvan i Escape) — samo bez gornjeg sloja.
+  const HAS_POPOVER = typeof HTMLElement !== 'undefined'
+    && Object.prototype.hasOwnProperty.call(HTMLElement.prototype, 'popover');
+
+  function isMenuOpen(menu) {
+    if (!menu) return false;
+    if (HAS_POPOVER) { try { return menu.matches(':popover-open'); } catch (e) { return false; } }
+    return !menu.hidden;
+  }
+
+  function closeMenus() {
+    const host = root();
+    if (!host) return;
+    host.querySelectorAll('.mm-menu').forEach(function (m) {
+      if (!isMenuOpen(m)) return;
+      if (HAS_POPOVER) m.hidePopover(); else m.hidden = true;
+      syncMore(m, false);
+    });
+  }
+
+  function syncMore(menu, open) {
+    const row = menu.closest('[data-mm-id]');
+    const btn = row && row.querySelector('[data-mm-more]');
+    if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  /** Smjesti izbornik uz „⋯": desni rub poravnat, ispod — ili iznad ako dolje ne stane. */
+  function placeMenu(menu, btn) {
+    const r = btn.getBoundingClientRect();
+    const mw = menu.offsetWidth || 200;
+    const mh = menu.offsetHeight || 200;
+    let left = Math.round(r.right - mw);
+    left = Math.max(8, Math.min(left, window.innerWidth - mw - 8));
+    let top = r.bottom + 4;
+    // Donji rub nije `innerHeight`: cookie-banner (`--bottom-inset`, js/consent.js) presreće
+    // pokazivač — isti razlog kao izbornik blokova u Studiju.
+    const donji = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bottom-inset')) || 0;
+    if (top + mh > window.innerHeight - donji - 8) top = Math.max(8, r.top - mh - 4);
+    menu.style.left = left + 'px';
+    menu.style.top = top + 'px';
+  }
+
+  // ⚠️ Drugi dodir na „⋯" mora ZATVORITI izbornik. Popover `auto` se zatvara već na PRITISAK izvan
+  //    sebe (a „⋯" je izvan), pa bi klik stigao na zatvoren izbornik i otvorio ga ponovno — izmjereno
+  //    u `radionica.authed.spec.js` ②. Zato se pamti je li izbornik bio otvoren u trenutku PRITISKA.
+  let _otvorenPriPritisku = null;
+
+  function openMenu(row) {
+    const menu = row && row.querySelector('.mm-menu');
+    const btn = row && row.querySelector('[data-mm-more]');
+    if (!menu || !btn) return;
+    const bioOtvoren = isMenuOpen(menu) || _otvorenPriPritisku === menu;
+    _otvorenPriPritisku = null;
+    closeMenus();
+    if (bioOtvoren) return;                       // drugi dodir na „⋯" zatvara
+    if (HAS_POPOVER) menu.showPopover(); else menu.hidden = false;
+    placeMenu(menu, btn);                         // izmjereno tek kad je vidljiv, prije iscrtavanja
+    syncMore(menu, true);
+    const prvi = menu.querySelector('[role="menuitem"]');
+    if (prvi) prvi.focus();
   }
 
   /** Inline redak za unos naziva (novi čvor ili preimenovanje). */
@@ -888,6 +966,26 @@
     const retry = e.target.closest('[data-mm-retry]');
     if (retry) { refresh(); return; }
 
+    // F2/5b: „⋯" otvara izbornik retka; stavka izbornika ga PRVO zatvori (brisanje otvara potvrdu,
+    // preimenovanje unos — izbornik ne smije ostati visjeti preko njih), pa radnja ide dalje niže.
+    const more = e.target.closest('[data-mm-more]');
+    if (more) { openMenu(more.closest('[data-mm-id]')); return; }
+    if (e.target.closest('.mm-menu [role="menuitem"]')) closeMenus();
+
+    // Dodir na redak = glavna radnja: materijal → učenje; mapa → otvori/zatvori; prazna mapa → „⋯".
+    const main = e.target.closest('[data-mm-main]');
+    if (main) {
+      const row = main.closest('[data-mm-id]');
+      if (!row) return;
+      const id = row.getAttribute('data-mm-id');
+      if (row.getAttribute('data-mm-kind') === 'study') { learnNode(id); return; }
+      if (!row.querySelector('[data-mm-toggle]')) { openMenu(row); return; }
+      if (_expanded[id]) delete _expanded[id]; else _expanded[id] = true;
+      saveExpanded();
+      draw();
+      return;
+    }
+
     const twisty = e.target.closest('[data-mm-toggle]');
     if (twisty) {
       const row = twisty.closest('[data-mm-id]');
@@ -978,7 +1076,39 @@
     }, 120);
   }
 
+  /** Izbornik zatvoren izvana (klik mimo, Escape): `aria-expanded` natrag, fokus na „⋯" ako je bio u izborniku. */
+  function onMenuClosed(menu) {
+    syncMore(menu, false);
+    const a = document.activeElement;
+    if (!a || a === document.body || menu.contains(a)) {
+      const row = menu.closest('[data-mm-id]');
+      const btn = row && row.querySelector('[data-mm-more]');
+      if (btn) btn.focus();
+    }
+  }
+
   if (typeof document !== 'undefined') {
+    document.addEventListener('pointerdown', function (e) {
+      const b = e.target.closest && e.target.closest('[data-mm-more]');
+      const m = b && b.closest('[data-mm-id]') && b.closest('[data-mm-id]').querySelector('.mm-menu');
+      _otvorenPriPritisku = (m && isMenuOpen(m)) ? m : null;
+    }, true);
+    // `toggle` ne mjehuri → hvata se u fazi hvatanja. Samo za popover-put.
+    document.addEventListener('toggle', function (e) {
+      const m = e.target;
+      if (m && m.classList && m.classList.contains('mm-menu') && e.newState === 'closed') onMenuClosed(m);
+    }, true);
+    if (!HAS_POPOVER) {
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest || !e.target.closest('.mm-menu, [data-mm-more]')) closeMenus();
+      }, true);
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape' || HAS_POPOVER) return;
+      const host = root();
+      const open = host && Array.prototype.find.call(host.querySelectorAll('.mm-menu'), isMenuOpen);
+      if (open) { closeMenus(); onMenuClosed(open); }
+    });
     document.addEventListener('click', onClick);
     document.addEventListener('keydown', onKeydown);
     document.addEventListener('focusout', onFocusout);

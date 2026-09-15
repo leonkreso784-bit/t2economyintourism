@@ -9483,6 +9483,11 @@ sokrat-modal.auth-modal > * {
     color: var(--color-ink-0);
   }
 }
+@media not (pointer: fine) {
+  .mm-grip {
+    display: none;
+  }
+}
 .mm-row--dragging {
   opacity: 0.45;
 }
@@ -9542,25 +9547,47 @@ body.mm-dragging {
 .mm-twisty-btn[aria-expanded="true"] i {
   transform: rotate(90deg);
 }
+.mm-main {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 44px;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
 .mm-icon {
   display: inline-flex;
-  flex: 0 0 auto;
-  width: 20px;
+  align-items: center;
   justify-content: center;
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
   font-size: 0.9rem;
 }
 .mm-row--folder .mm-icon {
   color: var(--color-warn);
 }
 .mm-row--study .mm-icon {
-  color: var(--color-brand-500);
+  font-size: 0.75rem;
+  background: var(--tile-color, var(--color-brand-500));
+  color: var(--color-on-tint-light);
+}
+.mm-row--study .mm-icon[data-ink="dark"] {
+  color: var(--color-on-tint-dark);
 }
 .mm-name {
   flex: 1 1 auto;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
   color: var(--color-ink-1);
   font-size: 0.94rem;
 }
@@ -9579,20 +9606,83 @@ body.mm-dragging {
   font-weight: 700;
   text-align: center;
 }
+.mm-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-ink-2);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.mm-more[aria-expanded="true"] {
+  color: var(--color-ink-0);
+  background: var(--color-surface-2);
+}
+@media (hover: hover) {
+  :where(:root:not([data-hover-paused])) .mm-more:hover {
+    color: var(--color-ink-0);
+    background: var(--color-surface-2);
+  }
+}
+.mm-menu {
+  position: fixed;
+  inset: auto;
+  z-index: 1500;
+  margin: 0;
+  min-width: 13rem;
+  max-width: calc(100vw - 16px);
+  padding: 6px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-1);
+  color: var(--color-ink-0);
+  box-shadow: var(--shadow-e2);
+}
+.mm-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-ink-0);
+  font: inherit;
+  font-size: 0.92rem;
+  text-align: start;
+  cursor: pointer;
+}
+.mm-menu-item i {
+  width: 18px;
+  color: var(--color-ink-2);
+  font-size: 0.85rem;
+  text-align: center;
+}
+.mm-menu-item:focus-visible {
+  background: var(--color-surface-2);
+}
+@media (hover: hover) {
+  :where(:root:not([data-hover-paused])) .mm-menu-item:hover {
+    background: var(--color-surface-2);
+  }
+}
+.mm-menu-item--danger, .mm-menu-item--danger i {
+  color: var(--color-danger-ink);
+}
 .mm-acts {
   display: flex;
   flex: 0 0 auto;
   gap: 2px;
-  opacity: 0;
-  transition: opacity 0.18s ease;
-}
-.mm-row:focus-within .mm-acts {
-  opacity: 1;
-}
-@media (hover: hover) {
-  :where(:root:not([data-hover-paused])) .mm-row:hover .mm-acts {
-    opacity: 1;
-  }
 }
 .mm-act {
   display: inline-flex;
@@ -9613,15 +9703,6 @@ body.mm-dragging {
   :where(:root:not([data-hover-paused])) .mm-act:hover {
     color: var(--color-ink-0);
     background: var(--color-surface-2);
-  }
-}
-@media (hover: hover) {
-  :where(:root:not([data-hover-paused])) .mm-act--danger:hover {
-    color: var(--color-danger-ink);
-    background: color-mix(in srgb, #c0332b 12%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background: color-mix(in srgb, var(--color-danger) 12%, transparent);
-    }
   }
 }
 .mm-add--undo {
@@ -9665,9 +9746,6 @@ body.mm-dragging {
   outline: 2px solid var(--color-brand-400);
   outline-offset: 1px;
 }
-.mm-acts--edit {
-  opacity: 1;
-}
 .mm-state {
   display: flex;
   flex-direction: column;
@@ -9706,9 +9784,6 @@ body.mm-dragging {
 @media (max-width: 640px) {
   .mm-row {
     padding-left: calc(8px + var(--mm-depth) * 14px);
-  }
-  .mm-acts, .mm-grip {
-    opacity: 1;
   }
   .mm-add {
     flex: 1 1 auto;

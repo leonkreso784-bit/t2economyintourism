@@ -24,6 +24,15 @@ samo commit s odlukom, koji je već ovdje). Grana je odvojena da `feat/f2-tema-r
   ulazi u materijale 13/13, preflight EXIT 0. Snimke 393 (svijetla/tamna) i 1280 pregledane.
 - **Otvoreno (zasebna cigla):** paleta još živi u `studio.js` i `block-editor.js` kao kopije → čitati `KURIRANE_BOJE`.
 
+**F2/5b-1 — redak radionice (isti dan, Leon: *„možeš nastaviti dalje"*).** 5b je razrezan na tri koraka s commitom
+nakon svakog (dira zajednički šav: redak, klikove, povlačenje, pet specova): ① redak · ② „Premjesti u…" · ③ jedan „+ Novo".
+- **Izbornik = `popover` s DOM-om u retku**: stavke nose ISTE `data-mm-*` atribute kao stare ikone → klik-rukovatelj
+  netaknut, a specovi dobivaju samo korak „otvori ⋯" (`tests/helpers/izbornik-retka.js`, 14 zamjena u 4 speca).
+- **Nalaz vlastite brane:** drugi dodir na „⋯" ponovno je otvarao izbornik — popover `auto` se zatvara već na PRITISAK
+  izvan sebe, pa klik stigne na zatvoren izbornik. Stanje se sad pamti na `pointerdown`.
+- Dokazi: `radionica.authed.spec.js` 3/3 (i u WebKitu, 10/10 sa zidom) · 60/60 pogođenih authed specova · preflight 0 ·
+  snimke 393 svijetla/tamna s otvorenim izbornikom.
+
 ---
 
 ## 2026-09-14 kasno (OPUS, stablo `sokratstudy.f21`) — F2/1 ④: odjava samo ovaj uređaj, test-prvo

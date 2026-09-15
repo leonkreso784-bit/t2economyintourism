@@ -7,6 +7,7 @@
 // korisnički naziv se ESCAPA (sigurnosna granica) · prazno stanje.
 const { test, expect } = require('@playwright/test');
 const { ucitajPakete } = require('./helpers/paketi');
+const { radnjaRetka } = require('./helpers/izbornik-retka');
 
 /** Otvori profil s montiranim graditeljem. */
 async function openMaterials(page) {
@@ -137,7 +138,7 @@ test.describe('F2 — Moji materijali', () => {
       fid = await row.getAttribute('data-mm-id');
 
       // 2) gradivo UNUTAR foldera → pojavi se ugniježđeno (depth 1) i folder je otvoren
-      await row.locator('[data-mm-new-in="study"]').click();
+      await radnjaRetka(row, '[data-mm-new-in="study"]');
       await page.fill('#myMaterials [data-mm-input]', 'F2 Gradivo');
       await page.press('#myMaterials [data-mm-input]', 'Enter');
 
@@ -152,33 +153,33 @@ test.describe('F2 — Moji materijali', () => {
       const studyName = study.locator('.mm-name');
 
       // 3) preimenuj — unos je PREDPOPUNJEN starim nazivom
-      await study.locator('[data-mm-rename]').click();
+      await radnjaRetka(study, '[data-mm-rename]');
       await expect(page.locator('#myMaterials [data-mm-input]')).toHaveValue('F2 Gradivo');
       await page.fill('#myMaterials [data-mm-input]', 'F2 Preimenovano');
       await page.press('#myMaterials [data-mm-input]', 'Enter');
       await expect(studyName).toHaveText('F2 Preimenovano', { timeout: 20000 });
 
       // 3b) ✓ gumb potvrđuje jednako kao Enter (mišem — blur ga ne smije pojesti)
-      await study.locator('[data-mm-rename]').click();
+      await radnjaRetka(study, '[data-mm-rename]');
       await page.fill('#myMaterials [data-mm-input]', 'F2 Gumbom');
       await page.click('#myMaterials [data-mm-commit]');
       await expect(studyName).toHaveText('F2 Gumbom', { timeout: 20000 });
 
       // 3c) ✕ gumb odustaje
-      await study.locator('[data-mm-rename]').click();
+      await radnjaRetka(study, '[data-mm-rename]');
       await page.fill('#myMaterials [data-mm-input]', 'NE OVO');
       await page.click('#myMaterials [data-mm-cancel]');
       await expect(studyName).toHaveText('F2 Gumbom');
 
       // 3d) tipkovnica: Tab s unosa na ✓ pa Enter — blur NE smije otkazati unos
-      await study.locator('[data-mm-rename]').click();
+      await radnjaRetka(study, '[data-mm-rename]');
       await page.fill('#myMaterials [data-mm-input]', 'F2 Tipkovnicom');
       await page.press('#myMaterials [data-mm-input]', 'Tab');
       await page.keyboard.press('Enter');
       await expect(studyName).toHaveText('F2 Tipkovnicom', { timeout: 20000 });
 
       // 4) Escape odustaje (naziv ostaje)
-      await study.locator('[data-mm-rename]').click();
+      await radnjaRetka(study, '[data-mm-rename]');
       await page.fill('#myMaterials [data-mm-input]', 'NE SPREMAJ');
       await page.press('#myMaterials [data-mm-input]', 'Escape');
       await expect(studyName).toHaveText('F2 Tipkovnicom');
@@ -197,7 +198,7 @@ test.describe('F2 — Moji materijali', () => {
       await expect(row).toHaveCount(1, { timeout: 20000 });
 
       // brisanje traži potvrdu
-      await row.locator('[data-mm-del]').click();
+      await radnjaRetka(row, '[data-mm-del]');
       await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
       await page.click('sokrat-confirm .sokrat-confirm__ok');
 
@@ -408,7 +409,7 @@ test.describe('F2 — Moji materijali', () => {
       await page.evaluate(() => window.SokratMaterials.refresh());
       const row = page.locator('#myMaterials .mm-row[data-mm-id="' + fid + '"]');
       await expect(row).toHaveCount(1, { timeout: 20000 });
-      await row.locator('[data-mm-del]').click();
+      await radnjaRetka(row, '[data-mm-del]');
       await page.waitForSelector('sokrat-confirm .sokrat-confirm__cancel', { state: 'visible' });
       await page.click('sokrat-confirm .sokrat-confirm__cancel');
       await expect(page.locator('#myMaterials .mm-row[data-mm-id="' + fid + '"]')).toHaveCount(1);
