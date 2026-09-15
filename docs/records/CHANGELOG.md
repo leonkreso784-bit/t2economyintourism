@@ -5,6 +5,21 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-15 (OPUS) — **F2/5c: polica istog izgleda + jedan ulaz u profil** — grana `feat/f2-zid` (F2/5 GOTOV)
+
+### Promijenjeno
+- **Izbornik „⋯" je jedan modul** — `js/row-menu.js` (`SokratRowMenu`), izvučen iz `my-materials.js`: radionica, „+ Novo"
+  i polica dijele isto ponašanje (strelice, Tab, pomak, Escape, zamjena bez Popover API-ja). Učitava se u paketima
+  `polica`, `materials`, `profile`, prije police i radionice.
+- **Polica „Skinuto za offline" = redak kao u radionici:** kvadrat u boji predmeta, puno ime, opis (veličina · stanje
+  učenja; zastarjelost jantarno), dodir na redak otvara predmet (poveznica s pravom adresom), a „Osvježi" (samo
+  zastarjelo, prvo) i „Ukloni s uređaja" su u „⋯". Dok radnja traje, redak je prigušen (`aria-busy`).
+- **Zaglavlje „Mojih materijala" više ne nosi drugi gumb računa** — ulaz u profil je jedan, u traci (F2/0).
+### Brana
+- `shelf.spec.js` (izgled + uklanjanje kroz „⋯") · `offline-study.spec.js` (Osvježi je prva stavka zastarjelog) ·
+  `materials-entry.spec.js` (nula ulaza u profil u zaglavlju stranice, jedan u traci) — sve obrnuto crveno na starom kodu.
+  `loader-retry.test.js` broj skripti paketa čita iz `PAKETI` i tvrdi strože (poslije pada ponovno SAMO pala skripta).
+
 ## 2026-09-15 (OPUS) — **Pregled F2/5a+5b: šest nalaza, svi popravljeni** (Leon: *„prođi kroz sve i analiziraj"*) — grana `feat/f2-zid`
 
 ### Popravljeno (ništa od ovoga nije bilo na produkciji)

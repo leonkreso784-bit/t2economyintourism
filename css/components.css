@@ -38,7 +38,7 @@
    pobjednik, @768 vraca siroki oblik).
    Stara baza NIJE vracena doslovno — bila je iz tamne ere (bijelo staklo, zakucani
    indigo u sjenama). Ovo je ista obitelj pisana danasnjim jezikom: puna ispuna marke
-   s `--on-primary` tintom (ADR-032), sekundarni kao `.header-auth-btn` (C3 obrazac). */
+   s `--on-primary` tintom (ADR-032), sekundarni kao okrugli gumb računa iz C3 (klasa je uklonjena u F2/5c). */
 .cta-button {
     display: inline-flex;
     align-items: center;

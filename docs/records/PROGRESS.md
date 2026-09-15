@@ -56,6 +56,17 @@ pomaknula (bez nje je `scrollY` ostao 0 i ništa se nije mjerilo) · ② prvi po
 samo otvaranje izbornika — klizanje do „⋯" nastavlja i POSLIJE dodira; zato izbornik prati gumb umjesto da se zatvara.
 Dokazi: Chromium 70/70 (11 specova) · WebKit 14/14 · preflight 0.
 
+**F2/5c — polica istog izgleda + jedan ulaz u profil (serija od tri commita).** ① `js/row-menu.js`: „⋯" izvučen iz
+`my-materials.js` jer ga polica (drugi paket, radi bez prijave) treba jednako — inače druga kopija koda koji je u pregledu
+trebao šest popravaka. Čista selidba, specovi radionice netaknuti (22/22 + WebKit 7/7). Preflight je pao na
+`loader-retry.test.js`: pisao je „paket `polica` = jedna skripta" kao broj — tvrdnja se ne tiče broja nego oporavka, pa
+sad broj čita iz `PAKETI` i tvrdi strože. ② polica: redak kao u radionici, radnje u „⋯", `aria-busy` dok radnja traje
+(izbornik se zatvori pa „radi" mora nositi redak). ③ okrugli gumb računa iz zaglavlja maknut, s pravilima `.header-auth-btn`.
+⚠️ Zamka se ponovila: backtick u shell-stringu (`node -e "…\`#myMaterials\`…"`) — bash ga je izvršio; skripta je pala
+prije upisa, ništa nije dirano. Skripta → Write alat → `node <put>` (memorija to već kaže).
+⚠️ Brane `phone.spec`/`a11y.spec` mjere SAMO na `iPhone-SE-375`: na drugom profilu „23 skipped" izgleda kao da je prošlo.
+Dokazi: polica/offline 34/34 (dva telefona) · SE-375 brane 23/23 · authed 33/33 · preflight 0. **F2/5 = GOTOV.**
+
 ---
 
 ## 2026-09-14 kasno (OPUS, stablo `sokratstudy.f21`) — F2/1 ④: odjava samo ovaj uređaj, test-prvo

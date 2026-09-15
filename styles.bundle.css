@@ -8727,37 +8727,6 @@ sokrat-modal.auth-modal > * {
 .profile-delete-status.is-error {
   color: var(--color-danger-ink, #f87171);
 }
-.header-auth-btn {
-  flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-line);
-  border-radius: 50%;
-  color: var(--color-ink-1);
-  font-size: 1rem;
-  cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-}
-@media (hover: hover) {
-  :where(:root:not([data-hover-paused])) .header-auth-btn:hover {
-    color: var(--color-ink-0);
-    border-color: color-mix(in srgb, #4f46e5 55%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in srgb, var(--color-brand-500) 55%, transparent);
-    }
-    background: color-mix(in srgb, #4f46e5 12%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background: color-mix(in srgb, var(--color-brand-500) 12%, transparent);
-    }
-  }
-}
-.header-auth-btn.is-signed-in {
-  color: var(--color-brand-500);
-}
 @media (max-width: 640px) {
   .profile-grid {
     grid-template-columns: 1fr;

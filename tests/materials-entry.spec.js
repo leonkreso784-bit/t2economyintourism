@@ -169,6 +169,16 @@ test('ulaz u materijale JE u traci, tocno jedan i na svakoj stranici (F2/0; okre
   await page.waitForSelector('#materials-page.active');
 });
 
+// F2/5c (RASPORED §F2/5): zaglavlje „Mojih materijala" nosilo je VLASTITI okrugli gumb računa, a traka
+// (F2/0) isti ulaz već nosi na svakoj stranici — na telefonu dva ista gumba jedan ispod drugoga.
+// Isti razred kvara kao dvostruki ulaz u traci (K2b): ulaz u profil je TOČNO JEDAN, i on je u traci.
+test('„Moji materijali" nemaju drugi ulaz u profil — jedini je u traci (F2/5c)', async ({ page }) => {
+  await page.goto('/#/materials');
+  await page.waitForSelector('#materials-page.active');
+  expect(await page.locator('#materials-page .auth-entry').count(), 'zaglavlje stranice opet nosi vlastiti gumb računa').toBe(0);
+  expect(await page.locator('.topbar .auth-entry').count(), 'ulaz u profil mora ostati u traci').toBe(1);
+});
+
 test('u dokumentu postoji TOČNO JEDAN #myMaterials', async ({ page }) => {
   // C0 je stablo preselio s profila na vlastitu stranicu. Vrati li ga netko i na profil,
   // nastaju dva čvora s istim id-em → `mount()` crta u prvi, a korisnik gleda drugi.
