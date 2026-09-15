@@ -311,11 +311,15 @@
 
   function shellHtml(inner) {
     return '' +
+      // F2/5b-3: JEDAN „+ Novo" (dotad dva gumba) → izbornik istog oblika kao „⋯" retka; materijal
+      // je prvi jer se češće radi nego polica. Stavke nose stare `data-mm-new` atribute.
       '<div class="mm-bar">' +
-      '  <button type="button" class="mm-add" data-mm-new="folder">' +
-      '    <i class="fas fa-folder-plus" aria-hidden="true"></i><span>' + esc(mt('materials.newFolder', 'New folder')) + '</span></button>' +
-      '  <button type="button" class="mm-add" data-mm-new="study">' +
-      '    <i class="fas fa-book-medical" aria-hidden="true"></i><span>' + esc(mt('materials.newStudy', 'New material')) + '</span></button>' +
+      '  <button type="button" class="mm-add" data-mm-more aria-haspopup="menu" aria-expanded="false" aria-controls="mm-menu-new">' +
+      '    <i class="fas fa-plus" aria-hidden="true"></i><span>' + esc(mt('materials.new', 'New')) + '</span></button>' +
+      '  <div class="mm-menu" id="mm-menu-new" role="menu" ' + (HAS_POPOVER ? 'popover="auto"' : 'hidden') + '>' +
+      menuItem('data-mm-new="study"', 'fa-book-medical', mt('materials.newStudy', 'New material')) +
+      menuItem('data-mm-new="folder"', 'fa-folder-plus', mt('materials.newFolder', 'New folder')) +
+      '  </div>' +
       (_lastDeleted
         ? '  <button type="button" class="mm-add mm-add--undo" data-mm-undo>' +
           '    <i class="fas fa-rotate-left" aria-hidden="true"></i><span>' + esc(mt('materials.undo', 'Undo delete')) + '</span></button>'
@@ -427,18 +431,22 @@
     });
   }
 
+  /** Vlasnik izbornika: redak stabla ili traka („+ Novo", 5b-3) — svaki nosi jedan „⋯" i jedan `.mm-menu`. */
+  function menuScope(el) { return el && el.closest ? el.closest('.mm-row, .mm-bar') : null; }
+
   function syncMore(menu, open) {
-    const row = menu.closest('[data-mm-id]');
+    const row = menuScope(menu);
     const btn = row && row.querySelector('[data-mm-more]');
     if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
   }
 
-  /** Smjesti izbornik uz „⋯": desni rub poravnat, ispod — ili iznad ako dolje ne stane. */
+  /** Smjesti izbornik uz gumb: poravnat uz BLIŽI rub gumba („⋯" desno, „+ Novo" lijevo), ispod — ili iznad ako dolje ne stane. */
   function placeMenu(menu, btn) {
     const r = btn.getBoundingClientRect();
     const mw = menu.offsetWidth || 200;
     const mh = menu.offsetHeight || 200;
-    let left = Math.round(r.right - mw);
+    // Lijevi rub, ne središte: „+ Novo" je na telefonu pune širine, pa mu je središte točno na polovici.
+    let left = Math.round((r.left < window.innerWidth / 2) ? r.left : r.right - mw);
     left = Math.max(8, Math.min(left, window.innerWidth - mw - 8));
     let top = r.bottom + 4;
     // Donji rub nije `innerHeight`: cookie-banner (`--bottom-inset`, js/consent.js) presreće
@@ -1066,7 +1074,7 @@
     // F2/5b: „⋯" otvara izbornik retka; stavka izbornika ga PRVO zatvori (brisanje otvara potvrdu,
     // preimenovanje unos — izbornik ne smije ostati visjeti preko njih), pa radnja ide dalje niže.
     const more = e.target.closest('[data-mm-more]');
-    if (more) { openMenu(more.closest('[data-mm-id]')); return; }
+    if (more) { openMenu(menuScope(more)); return; }
     if (e.target.closest('.mm-menu [role="menuitem"]')) closeMenus();
 
     // Dodir na redak = glavna radnja: materijal → učenje; mapa → otvori/zatvori; prazna mapa → „⋯".
@@ -1185,7 +1193,7 @@
     syncMore(menu, false);
     const a = document.activeElement;
     if (!a || a === document.body || menu.contains(a)) {
-      const row = menu.closest('[data-mm-id]');
+      const row = menuScope(menu);
       const btn = row && row.querySelector('[data-mm-more]');
       if (btn) btn.focus();
     }
@@ -1194,7 +1202,7 @@
   if (typeof document !== 'undefined') {
     document.addEventListener('pointerdown', function (e) {
       const b = e.target.closest && e.target.closest('[data-mm-more]');
-      const m = b && b.closest('[data-mm-id]') && b.closest('[data-mm-id]').querySelector('.mm-menu');
+      const m = b && menuScope(b) && menuScope(b).querySelector('.mm-menu');
       _otvorenPriPritisku = (m && isMenuOpen(m)) ? m : null;
     }, true);
     // `toggle` ne mjehuri → hvata se u fazi hvatanja. Samo za popover-put.

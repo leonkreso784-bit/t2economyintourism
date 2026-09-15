@@ -38,6 +38,13 @@ isti RPC kao povlačenje. `radionica` ④ (stolno: trenutna onemogućena, polica
 mijenja, upis provjeren čitanjem baze) + ⑤ (samo dodirom) — Chromium 20/20 s materijalima i axeom, WebKit 6/6. Axe nad
 OTVORENIM izbornikom i prozorom (nove plohe koje zatvoreno stablo ne pokazuje): 5 tema, 0. Preflight 0.
 
+**F2/5b-3 — jedan „+ Novo".** Izbornička logika poopćena s „retka" na „redak ili traka" (`menuScope`), ne drugi izbornik.
+Snimka na 393 px pokazala da je izbornik visio desno: gumb je na telefonu pune širine, pa mu je SREDIŠTE točno na
+polovici ekrana → pravilo sad gleda lijevi rub. ⚠️ **Pouka o obrnutoj provjeri:** prvi „crveni" prolaz bio je SINTAKSNA
+greška speca (dvaput `const m`), a ja sam okvir koda pročitao kao pad tvrdnje. Ponovljeno ispravno: staro pravilo pada s
+porukom tvrdnje, novo 7/7. Crveno vrijedi tek kad ispis nosi PORUKU tvrdnje, ne samo redak koda.
+Dokazi: 53/53 pogođenih authed specova · WebKit 7/7 · preflight 0. **5b je time gotov.**
+
 ---
 
 ## 2026-09-14 kasno (OPUS, stablo `sokratstudy.f21`) — F2/1 ④: odjava samo ovaj uređaj, test-prvo

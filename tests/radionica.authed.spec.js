@@ -127,6 +127,27 @@ test.describe('F2/5b — redak radionice (stolno)', () => {
   });
 });
 
+test('⑥ traka nosi JEDAN „+ Novo": izbornik s materijalom i policom, poravnat uz gumb', async ({ page }) => {
+  await openMaterials(page);
+  const bar = page.locator('#myMaterials .mm-bar');
+  const gumbi = await bar.locator('button:visible').evaluateAll((els) => els.filter((e) => !e.hasAttribute('data-mm-undo')).length);
+  expect(gumbi, 'traka smije nositi samo „+ Novo" (i „Vrati" kad ima što)').toBe(1);
+  const novo = bar.locator('[data-mm-more]');
+  await novo.click();
+  const menu = bar.locator('.mm-menu');
+  await expect(menu).toBeVisible();
+  await expect(novo).toHaveAttribute('aria-expanded', 'true');
+  expect(await menu.locator('[role="menuitem"]').evaluateAll((els) => els.map((e) => e.getAttribute('data-mm-new'))))
+    .toEqual(['study', 'folder']);
+  const [g, m] = [await novo.boundingBox(), await menu.boundingBox()];
+  expect(Math.abs(m.x - g.x), 'izbornik „+ Novo" nije poravnat uz lijevi rub gumba').toBeLessThanOrEqual(1);
+  await menu.locator('[data-mm-new="study"]').click();
+  await expect(menu).toBeHidden();
+  await expect(page.locator('#myMaterials .mm-row--edit [data-mm-input]')).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#myMaterials [data-mm-input]')).toHaveCount(0);
+});
+
 const roditelj = (page, id) => page.evaluate(async (i) => {
   const r = await window.SokratMaterials.loadTree();
   return (r.rows.find((x) => x.id === i) || {}).parent_id;
@@ -233,6 +254,14 @@ test.describe('F2/5b — redak radionice (telefon, dodir)', () => {
       const visine = await r.locator('.mm-menu [role="menuitem"]').evaluateAll((els) =>
         els.map((e) => Math.round(e.getBoundingClientRect().height)));
       expect(Math.min(...visine), 'stavka izbornika je premala za prst').toBeGreaterThanOrEqual(44);
+      await page.keyboard.press('Escape');
+
+      // „+ Novo" je na telefonu pune širine → izbornik mu stoji uz LIJEVI rub (ne visi desno u zraku)
+      const novo = page.locator('#myMaterials .mm-bar [data-mm-more]');
+      await novo.tap();
+      const gumb = await novo.boundingBox();
+      const izb = await page.locator('#myMaterials .mm-bar .mm-menu').boundingBox();
+      expect(Math.abs(izb.x - gumb.x), 'izbornik „+ Novo" nije uz lijevi rub gumba na telefonu').toBeLessThanOrEqual(1);
     } finally {
       await rm(page, [S]);
     }

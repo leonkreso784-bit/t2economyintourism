@@ -15,4 +15,15 @@ async function radnjaRetka(row, stavka) {
   await row.locator('.mm-menu ' + stavka).click();
 }
 
-module.exports = { radnjaRetka };
+/**
+ * „+ Novo" (F2/5b-3): traka nosi JEDAN gumb koji otvara izbornik „Novi materijal / Nova polica"
+ * (dotad dva gumba). Stavke nose stare `data-mm-new` atribute.
+ * @param {import('@playwright/test').Page} page
+ * @param {'study'|'folder'} vrsta
+ */
+async function novo(page, vrsta) {
+  await page.click('#myMaterials .mm-bar [data-mm-more]');
+  await page.click('#myMaterials .mm-bar .mm-menu [data-mm-new="' + vrsta + '"]');
+}
+
+module.exports = { radnjaRetka, novo };

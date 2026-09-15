@@ -598,6 +598,7 @@
     'materials.signedOutTitle': { en: 'Build your own study material', hr: 'Gradi vlastiti materijal' },
     'materials.signedOutDesc': { en: 'Your own cards, quizzes and notes — organised however you like, private to you, and synced across your devices. You need an account to start.', hr: 'Vlastite kartice, kvizovi i bilješke — složeni kako god želiš, vidljivi samo tebi i sinkronizirani među uređajima. Za početak treba račun.' },
     'materials.signedOutCta': { en: 'Sign in to start', hr: 'Prijavi se za početak' },
+    'materials.new': { en: 'New', hr: 'Novo' },
     'materials.newFolder': { en: 'New folder', hr: 'Nova polica' },
     'materials.newStudy': { en: 'New material', hr: 'Novi materijal' },
     'materials.addFolderIn': { en: 'New folder inside', hr: 'Nova polica unutra' },

@@ -5,6 +5,15 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-15 (OPUS) — **F2/5b-3: jedan „+ Novo"** — grana `feat/f2-zid`
+
+### Promijenjeno
+- Traka radionice nosi **jedan „+ Novo"** (dotad „Nova polica" + „Novi materijal") koji otvara izbornik istog oblika kao
+  „⋯" retka: Novi materijal · Nova polica. Izbornik stoji uz bliži rub gumba (na telefonu je gumb pune širine → lijevo).
+### Brana
+- `radionica.authed.spec.js` ⑥ (jedan gumb, redoslijed, poravnanje, unos dobiva fokus) + ③ (telefon; obrnuto na
+  pravilu „po središtu" pada) · `my-materials.authed.spec.js` ide kroz `novo()` (`tests/helpers/izbornik-retka.js`).
+
 ## 2026-09-15 (OPUS) — **F2/5b-2: „Premjesti u…"** — grana `feat/f2-zid`
 
 ### Dodano

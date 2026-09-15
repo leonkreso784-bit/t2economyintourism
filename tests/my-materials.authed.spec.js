@@ -7,7 +7,7 @@
 // korisnički naziv se ESCAPA (sigurnosna granica) · prazno stanje.
 const { test, expect } = require('@playwright/test');
 const { ucitajPakete } = require('./helpers/paketi');
-const { radnjaRetka } = require('./helpers/izbornik-retka');
+const { radnjaRetka, novo } = require('./helpers/izbornik-retka');
 
 /** Otvori profil s montiranim graditeljem. */
 async function openMaterials(page) {
@@ -128,7 +128,7 @@ test.describe('F2 — Moji materijali', () => {
     let fid = null;
     try {
       // 1) novi folder iz trake → inline unos → Enter
-      await page.click('#myMaterials [data-mm-new="folder"]');
+      await novo(page, 'folder');
       await expect(page.locator('#myMaterials .mm-row--edit [data-mm-input]')).toBeFocused();
       await page.fill('#myMaterials [data-mm-input]', 'F2 Akcije');
       await page.press('#myMaterials [data-mm-input]', 'Enter');
@@ -336,18 +336,19 @@ test.describe('F2 — Moji materijali', () => {
     }
   });
 
-  test('brzi dvoklik na „+ Folder" ne otvara dva unosa', async ({ page }) => {
+  // F2/5b-3: „+ Folder" je od jednog „+ Novo" stavka izbornika — dvoklik na isti gumb više ne
+  // postoji, ali ista opasnost (drugi „novi" dok prvi unos stoji) i dalje smije dati samo JEDAN unos.
+  test('dvaput „Nova polica" zaredom ne otvara dva unosa', async ({ page }) => {
     await openMaterials(page);
-    const btn = page.locator('#myMaterials [data-mm-new="folder"]');
-    await btn.click();
-    await btn.click({ force: true });
+    await novo(page, 'folder');
+    await novo(page, 'folder');
     await expect(page.locator('#myMaterials [data-mm-input]')).toHaveCount(1);
     await page.keyboard.press('Escape');
   });
 
   test('dvostruki Enter ne stvara duplikat čvora', async ({ page }) => {
     await openMaterials(page);
-    await page.click('#myMaterials [data-mm-new="folder"]');
+    await novo(page, 'folder');
     await page.fill('#myMaterials [data-mm-input]', 'F2 DvaPuta');
     await page.press('#myMaterials [data-mm-input]', 'Enter');
     await page.keyboard.press('Enter');
@@ -393,9 +394,9 @@ test.describe('F2 — Moji materijali', () => {
 
   test('otvaranje drugog unosa dok je prvi otvoren ne ostavlja siroče', async ({ page }) => {
     await openMaterials(page);
-    await page.click('#myMaterials [data-mm-new="folder"]');
+    await novo(page, 'folder');
     await page.fill('#myMaterials [data-mm-input]', 'nedovrseno');
-    await page.click('#myMaterials [data-mm-new="study"]');
+    await novo(page, 'study');
     const inputs = page.locator('#myMaterials [data-mm-input]');
     await expect(inputs).toHaveCount(1);
     await expect(inputs).toHaveValue('');   // stari tekst se NE prenosi
