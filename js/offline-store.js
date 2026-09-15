@@ -492,31 +492,68 @@
       .forEach((zapis) => host.appendChild(shelfTile(zapis)));
   }
 
+  // Boja predmeta iz kataloga — oblikom provjerena (ide u `style`), bez nje boja marke.
+  function bojaPredmeta(subject) {
+    const c = String((subject && subject.color) || '').trim();
+    return /^#[0-9a-f]{6}$/i.test(c) ? c : '#6366f1';
+  }
+
+  function stavka(ikonaIme, tekst, atribut, id, opasno) {
+    const b = doc.createElement('button');
+    b.type = 'button';
+    b.setAttribute('role', 'menuitem');
+    b.className = 'mm-menu-item' + (opasno ? ' mm-menu-item--danger' : '');
+    b.setAttribute(atribut, id);
+    const i = doc.createElement('i');
+    i.className = 'fas ' + ikonaIme;
+    i.setAttribute('aria-hidden', 'true');
+    const s = doc.createElement('span');
+    s.textContent = tekst;
+    b.appendChild(i);
+    b.appendChild(s);
+    return b;
+  }
+
+  // F2/5c (Leon, anketa 14.09. — „polica istog izgleda"): redak kao u radionici — ikona u boji
+  // predmeta + PUNO ime + jedan „⋯" (`js/row-menu.js`). Dodir na redak = otvori predmet (poveznica s
+  // pravom adresom, K1); „Osvježi" i „Ukloni s uređaja" su u „⋯". Zastarjelost ostaje VIDLJIVA u opisu.
   function shelfTile(zapis) {
     const id = String(zapis.id);
     const subject = (typeof SokratCatalog !== 'undefined') ? SokratCatalog.getSubject(id) : null;
+    const ime = (subject && subject.name) || id;
 
     const staro = isStale(zapis);
 
     const tile = doc.createElement('div');
     tile.className = 'shelf-tile';
     tile.setAttribute('data-shelf-id', id);
+    tile.setAttribute('data-menu-scope', '');
     if (staro) tile.setAttribute('data-shelf-stale', '1');
+    const boja = bojaPredmeta(subject);
+    tile.style.setProperty('--tile-color', boja);
 
+    // Otvaranje je POVEZNICA s pravom adresom (K1) — dijeljiva i otvoriva u novoj kartici — i
+    // pokriva ikonu, ime i opis: cijeli redak je meta za prst.
+    const glavna = doc.createElement('a');
+    glavna.className = 'shelf-tile__main';
+    glavna.href = '#/subject/' + encodeURIComponent(id);
+
+    const kvadrat = doc.createElement('span');
+    kvadrat.className = 'shelf-tile__icon';
+    kvadrat.setAttribute('data-ink', typeof window.inkForTint === 'function' ? window.inkForTint(boja) : 'light');
     const ikona = doc.createElement('i');
-    ikona.className = 'fas ' + sigurnaIkona(subject && subject.icon) + ' shelf-tile__icon';
+    ikona.className = 'fas ' + sigurnaIkona(subject && subject.icon);
     ikona.setAttribute('aria-hidden', 'true');
+    kvadrat.appendChild(ikona);
 
-    const tijelo = doc.createElement('div');
+    const tijelo = doc.createElement('span');
     tijelo.className = 'shelf-tile__body';
 
-    // Otvaranje je POVEZNICA s pravom adresom (K1) — dijeljiva i otvoriva u novoj kartici.
-    const veza = doc.createElement('a');
+    const veza = doc.createElement('span');
     veza.className = 'shelf-tile__name';
-    veza.href = '#/subject/' + encodeURIComponent(id);
-    veza.textContent = (subject && subject.name) || id;
+    veza.textContent = ime;
 
-    const meta = doc.createElement('p');
+    const meta = doc.createElement('span');
     meta.className = 'shelf-tile__meta';
     const dijelovi = [];
     // Zastarjelost ide PRVA: to je jedino što mijenja ono što korisnik vidi u gradivu.
@@ -532,38 +569,37 @@
 
     tijelo.appendChild(veza);
     tijelo.appendChild(meta);
+    glavna.appendChild(kvadrat);
+    glavna.appendChild(tijelo);
 
-    let osv = null;
-    if (staro) {
-      osv = doc.createElement('button');
-      osv.type = 'button';
-      osv.className = 'shelf-tile__refresh';
-      osv.setAttribute('data-shelf-refresh', id);
-      // Kao i kod uklanjanja: ime kontrole nosi NA ČEMU djeluje — pet „Osvježi"
-      // gumba u popisu je za čitač ekrana pet istih kontrola.
-      osv.setAttribute('aria-label', tr('offline.refresh', 'Refresh') + ' — ' + ((subject && subject.name) || id));
-      const r = doc.createElement('i');
-      r.className = 'fas fa-rotate';
-      r.setAttribute('aria-hidden', 'true');
-      osv.appendChild(r);
-    }
+    // „⋯" nosi ime predmeta: pet istih „Više radnji" u popisu je za čitač ekrana pet istih kontrola.
+    const menuId = 'shelf-menu-' + id.replace(/[^a-z0-9_-]/gi, '_');
+    const vise = doc.createElement('button');
+    vise.type = 'button';
+    vise.className = 'mm-more';
+    vise.setAttribute('data-mm-more', '');
+    vise.setAttribute('aria-haspopup', 'menu');
+    vise.setAttribute('aria-expanded', 'false');
+    vise.setAttribute('aria-controls', menuId);
+    vise.setAttribute('aria-label', tr('materials.more', 'More actions') + ': ' + ime);
+    const tri = doc.createElement('i');
+    tri.className = 'fas fa-ellipsis';
+    tri.setAttribute('aria-hidden', 'true');
+    vise.appendChild(tri);
 
-    const ukloni = doc.createElement('button');
-    ukloni.type = 'button';
-    ukloni.className = 'shelf-tile__remove';
-    ukloni.setAttribute('data-shelf-remove', id);
-    // Ime kontrole mora nositi NA CEMU djeluje: pet „Ukloni" gumba u popisu je za
-    // citac ekrana pet istih kontrola.
-    ukloni.setAttribute('aria-label', tr('offline.remove', 'Remove from device') + ' — ' + ((subject && subject.name) || id));
-    const x = doc.createElement('i');
-    x.className = 'fas fa-trash-can';
-    x.setAttribute('aria-hidden', 'true');
-    ukloni.appendChild(x);
+    const izbornik = doc.createElement('div');
+    izbornik.className = 'mm-menu';
+    izbornik.id = menuId;
+    izbornik.setAttribute('role', 'menu');
+    if (window.SokratRowMenu && window.SokratRowMenu.HAS_POPOVER) izbornik.setAttribute('popover', 'auto');
+    else izbornik.hidden = true;
+    // Popravak ide PRVI kad postoji — to je radnja zbog koje je redak označen.
+    if (staro) izbornik.appendChild(stavka('fa-rotate', tr('offline.refresh', 'Refresh'), 'data-shelf-refresh', id, false));
+    izbornik.appendChild(stavka('fa-trash-can', tr('offline.remove', 'Remove from device'), 'data-shelf-remove', id, true));
 
-    tile.appendChild(ikona);
-    tile.appendChild(tijelo);
-    if (osv) tile.appendChild(osv);
-    tile.appendChild(ukloni);
+    tile.appendChild(glavna);
+    tile.appendChild(vise);
+    tile.appendChild(izbornik);
     return tile;
   }
 
@@ -578,6 +614,10 @@
       const osvjezava = t.hasAttribute('data-shelf-refresh');
       const id = t.getAttribute(osvjezava ? 'data-shelf-refresh' : 'data-shelf-remove');
       const host = t.closest('#shelfList');
+      // Radnja živi u „⋯" koji se na dodir zatvori — pa „radi" mora pokazati REDAK, inače
+      // osvježavanje od nekoliko sekundi izgleda kao da se ništa nije dogodilo (F2/5c).
+      const redak = t.closest('.shelf-tile');
+      if (redak) redak.setAttribute('aria-busy', 'true');
       t.disabled = true;
       (osvjezava ? download(id) : remove(id)).then(() => {
         mountShelf(host);
@@ -588,6 +628,7 @@
         // Neuspjeh osvježavanja je sve-ili-ništa (download radi rollback): na uređaju
         // ostaje STARI komplet, pa se pločica ne smije prekrižiti nego samo oživjeti.
         t.disabled = false;
+        if (redak) redak.removeAttribute('aria-busy');
         if (osvjezava) toast(tr('offline.failed', 'Download failed — nothing was saved'));
       });
     });

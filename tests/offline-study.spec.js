@@ -260,7 +260,10 @@ test.describe('POLICA · P3 (pravilo u SW-u) + P4 (napredak bez mreže)', () => 
     });
     const plocica = page.locator('#shelfList .shelf-tile[data-shelf-id="' + PREDMET + '"]');
     await expect(plocica).toHaveAttribute('data-shelf-stale', '1');
-    await expect(plocica.locator('[data-shelf-refresh]')).toBeVisible();
+    // F2/5c: „Osvježi" je PRVA stavka u „⋯" (radnja zbog koje je redak označen).
+    await plocica.locator('[data-mm-more]').click();
+    await expect(plocica.locator('.mm-menu [role="menuitem"]').first()).toHaveAttribute('data-shelf-refresh', PREDMET);
+    await expect(plocica.locator('.mm-menu [data-shelf-refresh]')).toBeVisible();
   });
 
   // P4 zatvara petlju: sinkronizacija je vec offline-first (dokazano u

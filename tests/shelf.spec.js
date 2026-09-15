@@ -58,11 +58,27 @@ test.describe('P2 · polica s dva izvora', () => {
     const ocekivano = await page.evaluate((id) => SokratCatalog.getSubject(id).name, PREDMET);
     await expect(plocica.locator('.shelf-tile__name')).toHaveText(ocekivano);
 
-    // Poveznica je PRAVA adresa (K1) — dijeljiva, otvoriva u novoj kartici.
-    await expect(plocica.locator('.shelf-tile__name')).toHaveAttribute('href', '#/subject/' + PREDMET);
+    // Poveznica je PRAVA adresa (K1) — dijeljiva, otvoriva u novoj kartici — i pokriva cijeli redak.
+    await expect(plocica.locator('.shelf-tile__main')).toHaveAttribute('href', '#/subject/' + PREDMET);
+    await expect(plocica.locator('.shelf-tile__main .shelf-tile__name')).toHaveCount(1);
 
     // Meta nosi veličinu i stanje učenja („još nedirnuto", jer ništa nije učeno).
     await expect(plocica.locator('.shelf-tile__meta')).toContainText(/\d+\s?(B|KB|MB)/);
+
+    // F2/5c (Leon: „polica istog izgleda"): kao redak radionice — kvadrat u BOJI PREDMETA i jedan „⋯",
+    // bez gumba-ikona na retku; radnje su u izborniku.
+    const izgled = await plocica.evaluate((el, id) => ({
+      boja: el.style.getPropertyValue('--tile-color').trim().toLowerCase(),
+      predmet: String(SokratCatalog.getSubject(id).color || '').toLowerCase(),
+      ink: el.querySelector('.shelf-tile__icon').getAttribute('data-ink'),
+      gumbi: [...el.children].filter((c) => c.matches('button')).length,
+    }), PREDMET);
+    expect(izgled.boja, 'kvadrat ne nosi boju predmeta').toBe(izgled.predmet);
+    expect(['light', 'dark']).toContain(izgled.ink);
+    expect(izgled.gumbi, 'redak police smije nositi samo „⋯"').toBe(1);
+    await plocica.locator('[data-mm-more]').click();
+    await expect(plocica.locator('.mm-menu [data-shelf-remove]')).toBeVisible();
+    await expect(plocica.locator('.mm-menu [data-shelf-refresh]'), '„Osvježi" se nudi samo zastarjelom').toHaveCount(0);
   });
 
   test('polica vodi u predmet — poveznica stvarno otvara njegove lekcije', async ({ page }) => {
@@ -91,7 +107,10 @@ test.describe('P2 · polica s dva izvora', () => {
     await expect(page.locator('#offlineControl .offline-row')).toHaveAttribute('data-offline-state', 'ready', { timeout: 30000 });
 
     await page.evaluate(() => window.navigateTo('materials'));
-    await page.locator('#shelfList [data-shelf-remove]').first().click();
+    // F2/5c: „Ukloni s uređaja" je u „⋯" retka.
+    const redak = page.locator('#shelfList .shelf-tile[data-shelf-id="' + PREDMET + '"]');
+    await redak.locator('[data-mm-more]').click();
+    await redak.locator('.mm-menu [data-shelf-remove]').click();
 
     await expect(page.locator('#shelfList .shelf-tile')).toHaveCount(0, { timeout: 15000 });
     await expect(page.locator('#shelfList .shelf-empty')).toBeVisible();

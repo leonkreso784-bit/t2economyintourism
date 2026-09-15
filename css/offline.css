@@ -82,10 +82,13 @@
    površinu za tuđi dug.
    ===================================================================== */
 
-.shelf {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+/* F2/5c (Leon: „polica istog izgleda"): popis kao stablo radionice — jedna ploha s crtama
+   između redaka, redak = ikona u boji predmeta + puno ime + jedan „⋯" (`.mm-more`/`.mm-menu`
+   iz `my-materials.css`, ponašanje `js/row-menu.js`). Prazno stanje ostaje tekst bez plohe. */
+.shelf:has(.shelf-tile) {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-1);
 }
 
 .shelf-empty { margin: 0; }
@@ -93,59 +96,68 @@
 .shelf-tile {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem;
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-lg);
-    background: var(--color-surface-1);
+    gap: 8px;
+    min-height: 44px;
+    padding: 4px 10px;
+    transition: background 0.18s ease;
 }
 
+.shelf-tile + .shelf-tile { border-top: 1px solid var(--color-line); }
+.shelf-tile:hover { background: color-mix(in srgb, var(--color-brand-500) 8%, transparent); }
+
+/* Dok „Osvježi"/„Ukloni" radi (izbornik se zatvorio, pa stanje nosi REDAK). */
+.shelf-tile[aria-busy="true"] {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+/* Poveznica preko ikone, imena i opisa — cijeli redak je meta za prst (K1: prava adresa). */
+.shelf-tile__main {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    min-height: 44px;
+    padding: 4px 0;
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Isti kvadrat kao materijal u radionici (`.mm-row--study .mm-icon`): boja predmeta, tinta računata. */
 .shelf-tile__icon {
-    flex-shrink: 0;
-    width: 2.25rem;
-    text-align: center;
-    font-size: 1.1rem;
-    color: var(--color-brand-500);
+    display: inline-flex;
+    flex: 0 0 26px;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    font-size: 0.75rem;
+    background: var(--tile-color, var(--color-brand-500));
+    color: var(--color-on-tint-light);
 }
 
-/* `min-width: 0` je ono što dopušta rezanje dugog naziva unutar flexa — bez njega
+.shelf-tile__icon[data-ink="dark"] { color: var(--color-on-tint-dark); }
+
+/* `min-width: 0` je ono što dopušta lomljenje dugog naziva unutar flexa — bez njega
    pločica gura policu u vodoravni skrol na 320 px. */
 .shelf-tile__body { flex: 1; min-width: 0; }
 
 .shelf-tile__name {
     display: block;
-    font-weight: 600;
     color: var(--color-ink-0);
-    text-decoration: none;
+    font-size: 0.94rem;
+    line-height: 1.35;
     overflow-wrap: anywhere;
 }
 
-.shelf-tile__name:hover { color: var(--color-brand-500); }
-
 .shelf-tile__meta {
-    margin: 0.15rem 0 0;
+    display: block;
+    margin: 0.1rem 0 0;
     font-size: 0.8rem;
     color: var(--color-ink-2);
 }
-
-.shelf-tile__remove {
-    flex-shrink: 0;
-    min-width: var(--touch-target);
-    min-height: var(--touch-target);
-    border: 1px solid transparent;
-    border-radius: var(--radius-md);
-    background: none;
-    color: var(--color-ink-2);
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.shelf-tile__remove:hover:not(:disabled) {
-    border-color: var(--color-danger);
-    color: var(--color-danger-ink);
-}
-
-.shelf-tile__remove:disabled { opacity: 0.5; cursor: default; }
 
 /* =====================================================================
    P3 (POLICA) — „zastarjelo" je STANJE, ne greška
@@ -170,22 +182,6 @@
     font-weight: 500;
 }
 
-.shelf-tile[data-shelf-stale] .shelf-tile__icon { color: var(--color-warn-ink); }
+/* Zastarjelo: boja ide na OPIS (tekst), ne na kvadrat — kvadrat nosi boju predmeta kao i u
+   radionici. „Osvježi" je prva stavka u „⋯" (F2/5c). */
 .shelf-tile[data-shelf-stale] .shelf-tile__meta { color: var(--color-warn-ink); }
-
-/* Isti kalup kao `__remove` (meta na dodir, prozirna ploha), druga boja ruba na
-   pokazivač — radnja je popravak, ne brisanje. */
-.shelf-tile__refresh {
-    flex-shrink: 0;
-    min-width: var(--touch-target);
-    min-height: var(--touch-target);
-    border: 1px solid transparent;
-    border-radius: var(--radius-md);
-    background: none;
-    color: var(--color-warn-ink);
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.shelf-tile__refresh:hover:not(:disabled) { border-color: var(--color-brand-500); }
-.shelf-tile__refresh:disabled { opacity: 0.5; cursor: default; }
