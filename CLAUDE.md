@@ -183,7 +183,7 @@ Aktivni spec: **`docs/plan/RASPORED.md`** (2026-09-04) — cijela preostala list
 **sedam faza kroz sesije**: F1 uređaj · F2 račun (R2+R3 + CSS profila) · F3 dvojezičnost ·
 F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **§6: nula otvorenih (anketa 06.09.).**
 
-**F1 isporučen; KARTICE parkirane (Leon 08.09., `feat/tinder-kadar`, CI ondje crven, ne otvarati bez njegove riječi; BUG-045/046 ondje → samo cherry-pick). F2 teče: F2/0 ✅ · F2/3a ✅ · F2/3b ✅ · **F2/2 🚀 13.09.** · F2/1 ✅ · mreža A1–A3 (staging) · **F2/5 ✅** (`feat/f2-zid`) · dalje F2/4.**
+**F1 isporučen; KARTICE parkirane (Leon 08.09., `feat/tinder-kadar`, CI ondje crven, ne otvarati bez njegove riječi; BUG-045/046 ondje → samo cherry-pick). F2 teče: F2/0 ✅ · F2/3a ✅ · F2/3b ✅ · **F2/2 🚀 13.09.** · F2/1 ✅ · mreža A1–A3 (staging) · **F2/5 ✅** · dalje F2/4.**
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 
