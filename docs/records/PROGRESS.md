@@ -24,7 +24,11 @@ testirano, što slijedi.
 - **Gate:** preflight EXIT 0 (budžet: zaliha 71.0 KiB) · typecheck (kuka deklarirana u `types/globals.d.ts`) ·
   Playwright 5051: blind-map · i18n · smoke · a11y · app-state × SE + položeni **30 prošlo, 0 palo** (8 = a11y samo na
   SE) · `phone.spec` 11/11 (uklj. `study@blindMap`).
-- **Sljedeće po redu: `js/exercises.js` (29).**
+- **Leon poslije cigle 2 (anketa):** zadani jezik prati uređaj (samo `hr` → HR, sve ostalo EN) kao SLJEDEĆA cigla ·
+  trajni tekst se na prekidač precrtava odmah · gradivo ostaje na jeziku na kojem je napravljeno. Detalj: RASPORED F3/2.
+- **Preview:** push grane `feat/f3-dvojezicnost` odbio harness-klasifikator („Data Exfiltration") — Leon dodaje
+  dozvolu za push na `feat/*`. Do tada lokalni pregled: `PORT=5052 node scripts/static-server.js` u stablu `.f3`.
+- **Sljedeće: cigla 3 = jezik uređaja**, pa `js/exercises.js` (29).
 
 ## 2026-09-16 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/2 cigla 1: `index.html` bez slijepe karte
 
