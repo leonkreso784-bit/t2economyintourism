@@ -156,6 +156,7 @@
 
     // Learn
     'learn.title': { en: 'Learn - Complete Material', hr: 'Učenje – cjelovito gradivo' },
+    'learn.imageClose': { en: 'Close image viewer', hr: 'Zatvori prikaz slike' },
 
     // Flashcards
     'fc.title': { en: 'Flashcards', hr: 'Kartice' },
@@ -428,6 +429,7 @@
     // `footer.made.*` obrisani u C2 — „Made with ❤️ for students" je ukras koji ne nosi
     // značenje (izlazni uvjet §7.6.5), a i suzio je publiku na studente.
     'sidebar.choose': { en: 'Choose Subject', hr: 'Odaberi predmet' },
+    'sidebar.close': { en: 'Close sidebar', hr: 'Zatvori bočnu traku' },
 
     // ===== Browse drill-down (dinamički renderirano u navigation.js) =====
     'browse.trail.faculty': { en: 'Faculty', hr: 'Fakultet' },
@@ -647,6 +649,10 @@
     'topbar.studio': { en: 'Studio', hr: 'Studio' },
     'topbar.back': { en: 'Go back', hr: 'Natrag' },
     'topbar.crumbs': { en: 'Breadcrumb', hr: 'Putanja' },
+    // F3/2 (Leon, 16.09.): ime prekidača je NAMJERNO dvojezično u oba jezika — tko ne razumije
+    // trenutni jezik, mora ipak naći gumb koji ga mijenja. Oznaka na gumbu = trenutni jezik.
+    'topbar.lang': { en: 'Language / Jezik', hr: 'Jezik / Language' },
+    'topbar.langCode': { en: 'EN', hr: 'HR' },
 
     // „Moji materijali" (F2) — osobni UGC-graditelj
     'materials.title': { en: 'My materials', hr: 'Moji materijali' },
@@ -819,7 +825,7 @@
     return e[uiLang] != null ? e[uiLang] : (e.en != null ? e.en : key);
   }
 
-  // Postavi tekst svih [data-i18n] / [data-i18n-placeholder] + osvježi labelu toggle-a.
+  // Postavi tekst svih [data-i18n] / [data-i18n-placeholder|-value|-aria|-title] + precrtaj liste.
   /** @param {Document | Element} [root] */
   function applyTranslations(root) {
     const scope = root || document;
@@ -845,7 +851,13 @@
       const key = el.getAttribute('data-i18n-aria');
       if (key) el.setAttribute('aria-label', t(key));
     });
-    document.querySelectorAll('.lang-toggle-label').forEach((el) => { el.textContent = uiLang.toUpperCase(); });
+    // F3/2: tooltip (`title`) — do tada je gumb za jezik nosio engleski title bez lijeka.
+    scope.querySelectorAll('[data-i18n-title]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-title');
+      if (key) el.setAttribute('title', t(key));
+    });
+    // Oznaka prekidača (`.lang-toggle-label`) do F3/2 je imala zaseban pisac ovdje, mimo
+    // rječnika; sad nosi `data-i18n="topbar.langCode"` kao svaki drugi tekst.
     // auth nav-gumb ima dinamičan tekst (ime / „Sign in") → prepusti njemu da se osvježi
     if (typeof window.refreshAuthNav === 'function') window.refreshAuthNav();
     // Liste renderirane iz catalog-a (innerHTML) ne hvataju [data-i18n] → re-renderiraj ih na promjenu jezika.

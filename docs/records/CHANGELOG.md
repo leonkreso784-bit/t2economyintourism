@@ -5,6 +5,16 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-16 (OPUS) — **F3/2 cigla 1: naslovnica i traka bez engleskog ostatka** — grana `feat/f3-dvojezicnost`
+
+### Promijenjeno
+- **Prekidač jezika** na hrvatskom nosi ime „Jezik / Language" (i opis kad se prijeđe mišem); na engleskom „Language /
+  Jezik" — tko ne razumije trenutni jezik, i dalje ga nađe. Isto u Studiju.
+- Podnožje stranica lekcija i učenja ima isti tekst kao podnožje naslovnice, na oba jezika.
+- Čitač ekrana na hrvatskom dobiva hrvatska imena podnožja, bočne trake i gumba za zatvaranje slike.
+### Brana
+- `check:i18n` zna `data-i18n-title`; `i18n.spec.js` tvrdi da promjena jezika usred kviza ne gazi pitanje.
+
 ## 2026-09-16 (OPUS) — **F3/1 ③d: novi Uvjeti korištenja, na engleskom i hrvatskom** — grana `feat/f3-dvojezicnost`
 
 ### Promijenjeno

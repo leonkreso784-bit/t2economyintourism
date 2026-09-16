@@ -1,8 +1,7 @@
 {
   "_zasto": "Broj nositelja teksta bez i18n kljuca PO DATOTECI (mjeri scripts/check-i18n.js). Rast = pad brane; pad = --update. Ovo je IZMJERENI dug, ne dopustenje: presuda prevoditi-ili-gasiti dvojezicnost donosi se nad `--list` ispisom, ne ovdje.",
   "datoteke": {
-    "editor.html": 5,
-    "index.html": 49,
+    "index.html": 21,
     "js/admin-editors.js": 6,
     "js/admin.js": 11,
     "js/analytics.js": 2,
@@ -11,7 +10,6 @@
     "js/block-editor-media.js": 13,
     "js/block-editor.js": 23,
     "js/blocks-renderer.js": 2,
-    "js/components/sokrat-toast.js": 1,
     "js/exercises.js": 29,
     "js/fill-blanks.js": 1,
     "js/learn.js": 5,

@@ -15,8 +15,8 @@
  * ── ŠTO SE MJERI ───────────────────────────────────────────────────────────────────────
  *  ① HTML (korijenske `*.html`, samo `<body>`): tekstni čvor sa slovom čiji vlasnik nema
  *     `data-i18n` (za `<textarea>` vrijedi i `data-i18n-value`); atributi `placeholder` /
- *     `aria-label` / `alt` / `title` sa slovom bez `data-i18n-placeholder` / `-aria`
- *     mehanizma (za alt/title mehanizam još ne postoji — nalaz svejedno stoji: tekst je
+ *     `aria-label` / `alt` / `title` sa slovom bez `data-i18n-placeholder` / `-aria` /
+ *     `-title` mehanizma (za alt mehanizam još ne postoji — nalaz svejedno stoji: tekst je
  *     korisniku izgovoren ili pokazan, a prevesti se ne može).
  *  ② JS (`js/**`, BEZ `js/i18n.js` — on JE rječnik): string/template literali koji nose
  *     HTML → parsiraju se kao fragment i sude ISTOM presudom kao ① (`${…}` se neutralizira,
@@ -122,12 +122,13 @@ const VOID = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input'
 const SIROVI = new Set(['script', 'style', 'noscript', 'title']); // sadržaj se preskače
 
 // Atribut → mehanizam kojim ga i18n sloj zna prevesti (null = mehanizam ne postoji,
-// nalaz stoji svejedno jer je tekst korisniku vidljiv/izgovoren).
+// nalaz stoji svejedno jer je tekst korisniku vidljiv/izgovoren). `title` ga ima od F3/2
+// (gumb za jezik u traci); `alt` još nema — ondje je dosad uvijek išlo vlastito ime.
 const ATRIBUTI = {
   placeholder: 'data-i18n-placeholder',
   'aria-label': 'data-i18n-aria',
   alt: null,
-  title: null,
+  title: 'data-i18n-title',
 };
 
 function nadjiKrajTaga(html, od) {
@@ -165,7 +166,7 @@ function sudiAtributeTaga(tag, datoteka, redak, prijavi, prijaviTekst) {
   }
   // presuda ③: ključ na koji se element poziva mora postojati u rječniku —
   // `t()` za nepoznat ključ vrati SAM KLJUČ, pa korisnik na ekranu vidi 'landing.x'.
-  for (const atr of ['data-i18n', 'data-i18n-placeholder', 'data-i18n-value', 'data-i18n-aria']) {
+  for (const atr of ['data-i18n', 'data-i18n-placeholder', 'data-i18n-value', 'data-i18n-aria', 'data-i18n-title']) {
     const v = vrijednostAtributa(tag, atr);
     if (v != null) sudiKljuc(v, datoteka, redak, atr, prijavi);
   }

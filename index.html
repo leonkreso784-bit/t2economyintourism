@@ -20,11 +20,11 @@
     <meta name="format-detection" content="telephone=no">
     
     <!-- Favicon & App Icons -->
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260916162949">
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260916162949">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260916162949">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260916162949">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260916162949">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260916172031">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260916172031">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260916172031">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260916172031">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260916172031">
     <link rel="manifest" href="manifest.json">
     
     <!-- SEO & Social -->
@@ -98,7 +98,7 @@
     <!-- Preconnect for faster loading -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <link rel="stylesheet" href="styles.bundle.css?v=20260916162949">
+    <link rel="stylesheet" href="styles.bundle.css?v=20260916172031">
 
     <!-- C2: GOOGLE FONTS SU OTIŠLI. Inter + Space Grotesk = 2 obitelji, 11 težina, dva
          `preconnect`-a i treći poslužitelj na kritičnom putu — a §7.1 ih je imenovao kao
@@ -122,10 +122,10 @@
     <!-- Learn styles are managed in css/learn.css to avoid inline conflicts on mobile. -->
 
     <!-- Cookie consent + Google Analytics (Consent Mode v2; analytics loads only after Accept) -->
-    <link rel="stylesheet" href="css/consent.css?v=20260916162949">
+    <link rel="stylesheet" href="css/consent.css?v=20260916172031">
     <!-- Praćenje grešaka (Faza 2, 2E): učita se prije consent.js; consent-gated + no-op bez DSN-a. -->
-    <script src="js/monitoring.js?v=20260916162949" defer></script>
-    <script src="js/consent.js?v=20260916162949" defer></script>
+    <script src="js/monitoring.js?v=20260916172031" defer></script>
+    <script src="js/consent.js?v=20260916172031" defer></script>
 </head>
 <!-- ⚠️ `no-pathbar` STOJI U MARKUPU, NE ČEKA JS (CLS, 2026-08-24).
      `#landing-page` je u markupu već `active`, a landing NEMA drugi red trake — pa je `<body>`
@@ -140,9 +140,9 @@
 <!-- boot.js je SINKRON (bez defer) pa blokira parser i izvrši se prije prvog crtanja —
      isto jamstvo koje je davao inline blok koji je tu živio do D1 (CSP); zašto odluka
      mora pasti prije crtanja piše u js/boot.js. -->
-<script src="js/boot.js?v=20260916162949"></script>
+<script src="js/boot.js?v=20260916172031"></script>
 <!-- ADR-034: štipanje s dva prsta gasi JS, jer Safari metu ignorira — zašto piše u js/no-zoom.js -->
-<script src="js/no-zoom.js?v=20260916162949" defer></script>
+<script src="js/no-zoom.js?v=20260916172031" defer></script>
     
     <!-- ==================== LANDING PAGE ==================== -->
     <!-- ====================================================================
@@ -181,7 +181,7 @@
     <div class="chrome" id="chrome">
     <header class="topbar" id="top" role="banner">
         <a class="topbar-logo" href="#/" id="topbarHome" aria-label="Sokrat Study">
-            <img src="assets/logo.svg?v=20260916162949" alt="" class="logo-image">
+            <img src="assets/logo.svg?v=20260916172031" alt="" class="logo-image">
             <span class="logo-text">Sokrat Study</span>
         </a>
 
@@ -205,9 +205,9 @@
         <div class="topbar-spacer"></div>
 
         <div class="topbar-actions">
-            <button type="button" class="topbar-btn topbar-lang" data-action="toggleUiLang" aria-label="Language / Jezik" title="Language / Jezik">
+            <button type="button" class="topbar-btn topbar-lang" data-action="toggleUiLang" aria-label="Language / Jezik" title="Language / Jezik" data-i18n-aria="topbar.lang" data-i18n-title="topbar.lang">
                 <i class="fas fa-globe" aria-hidden="true"></i>
-                <span class="lang-toggle-label">EN</span>
+                <span class="lang-toggle-label" data-i18n="topbar.langCode">EN</span>
             </button>
             <!-- Vlastito gradivo je ODREDISTE u traci, na SVAKOJ stranici. Bez JS-a:
                  `data-goto-materials` hvata globalni delegat u js/navigation.js.
@@ -223,7 +223,9 @@
             </button>
             <button type="button" class="topbar-btn auth-entry" id="authNavBtn" hidden>
                 <i class="fas fa-user" aria-hidden="true"></i>
-                <span class="auth-entry-label topbar-btn-label" id="authNavLabel">Sign in</span>
+                <!-- `data-i18n` smije ovdje iako JS piše ime prijavljenog: `applyTranslations()`
+                     odmah poslije zove `refreshAuthNav()`, sinkrono, pa ime nikad ne ostane pregaženo. -->
+                <span class="auth-entry-label topbar-btn-label" id="authNavLabel" data-i18n="auth.signIn">Sign in</span>
             </button>
         </div>
     </header>
@@ -465,24 +467,24 @@
                 <div class="footer-cols">
                     <div class="footer-brand">
                         <div class="landing-logo">
-                            <img src="assets/logo.svg?v=20260916162949" alt="" class="logo-image">
+                            <img src="assets/logo.svg?v=20260916172031" alt="" class="logo-image">
                             <span class="logo-text">Sokrat Study</span>
                         </div>
                         <p data-i18n="footer.tagline">Write your own study material, or use one that's ready. Free for everyone.</p>
                     </div>
-                    <nav class="footer-col" aria-label="Explore">
+                    <nav class="footer-col" aria-label="Explore" data-i18n-aria="footer.explore">
                         <h3 data-i18n="footer.explore">Explore</h3>
                         <button type="button" class="footer-link-btn start-trigger" data-i18n="cta.start.lower">Start studying</button>
                         <button type="button" class="footer-link-btn" data-goto-materials data-i18n="lnav.materials">My materials</button>
                         <a href="#subjects" data-i18n="lnav.subjects">Subjects</a>
                     </nav>
-                    <nav class="footer-col" aria-label="About">
+                    <nav class="footer-col" aria-label="About" data-i18n-aria="footer.about">
                         <h3 data-i18n="footer.about">About</h3>
                         <button type="button" class="footer-link-btn" data-action="showAboutUs" data-i18n="footer.aboutUs">About us</button>
                         <a href="contact.html" data-i18n="footer.contact">Contact</a>
                         <a href="faq.html" data-i18n="footer.faq">FAQ</a>
                     </nav>
-                    <nav class="footer-col" aria-label="Legal">
+                    <nav class="footer-col" aria-label="Legal" data-i18n-aria="footer.legal">
                         <h3 data-i18n="footer.legal">Legal</h3>
                         <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
                         <a href="terms.html" data-i18n="footer.terms">Terms of Use</a>
@@ -501,15 +503,15 @@
     <aside class="subjects-sidebar" id="subjectsSidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260916162949" alt="Sokrat Study" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260916172031" alt="Sokrat Study" class="logo-image"></div>
                 <span data-i18n="sidebar.choose">Choose Subject</span>
             </div>
-            <button class="close-sidebar-btn" id="closeSidebar" aria-label="Close sidebar">
+            <button class="close-sidebar-btn" id="closeSidebar" aria-label="Close sidebar" data-i18n-aria="sidebar.close">
                 <i class="fas fa-times" aria-hidden="true"></i>
-                <span class="visually-hidden">Close</span>
+                <span class="visually-hidden" data-i18n="sidebar.close">Close sidebar</span>
             </button>
         </div>
-        <div class="sidebar-content" tabindex="0" role="region" aria-label="Subjects">
+        <div class="sidebar-content" tabindex="0" role="region" aria-label="Subjects" data-i18n-aria="lnav.subjects">
             <div class="subjects-list" id="subjectsList">
                 <!-- Subjects are rendered from data/catalog.js via renderSubjectsSidebar() -->
             </div>
@@ -539,7 +541,12 @@
              tvrdnje u `tests/browse.spec.js`.
              ⚠️ `min-height` je NAMJERNO otišao bez zamjene — v. komentar uz `.browse-page`. -->
         <main class="browse-content mx-auto w-full min-w-0 max-w-[60rem] px-4 pt-5 pb-[calc(1.25rem+var(--safe-bottom))] sm:px-6 sm:pt-6 sm:pb-[calc(2rem+var(--safe-bottom))]">
-            <h1 class="browse-heading mb-1.5 text-xl font-bold leading-[1.25] text-balance" id="browseHeading">Choose your faculty</h1>
+            <!-- F3/2: mjesta koja JS UVIJEK piše prije nego se vide (ovaj naslov, naslovi lekcija i
+                 učenja, kartica, kviz, dopuna, toast) su u markupu PRAZNA — ne s `data-i18n`.
+                 `applyTranslations()` na promjenu jezika piše ključ preko SVEGA što ga nosi, pa bi
+                 usred kviza umjesto pitanja stajalo „Pitanje?". Engleski rezervni tekst ovdje nikad
+                 nije bio viđen; mjerač (`check:i18n`) je samo s pravom tvrdio da se ne da prevesti. -->
+            <h1 class="browse-heading mb-1.5 text-xl font-bold leading-[1.25] text-balance" id="browseHeading"></h1>
             <p class="browse-intro mb-6 text-center text-base text-ink-1 empty:hidden" id="browseIntro"></p>
             <div class="browse-grid grid min-w-0 grid-cols-1 gap-3.5 sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] sm:gap-4" id="browseGrid">
                 <!-- Cards rendered from catalog by renderBrowse() in js/navigation.js -->
@@ -564,9 +571,9 @@
              a `max-width: 1200px` na ≥1536 nikad nije mogao vrijediti jer roditelj staje
              na 1000. Ovdje je ta ljestva JEDNA i mobile-first: 1 → md:2 → lg:3. -->
         <main class="lessons-content mx-auto w-full max-w-[800px] p-6 md:p-8 lg:max-w-[1000px]">
-            <h1 id="currentSubjectTitle" class="visually-hidden">Subject Name</h1>
+            <h1 id="currentSubjectTitle" class="visually-hidden"></h1>
             <div class="lessons-intro mb-8 text-center">
-                <p id="subjectDescription" class="text-ink-1">Select a lesson to start studying</p>
+                <p id="subjectDescription" class="text-ink-1"></p>
                 <!-- P1 (POLICA): kontrolu crta `js/offline-store.js` pri svakom
                      renderu lekcija. Prazna je u markupu jer stanje („skinuto?",
                      „koliko zauzima?") zna tek uređaj, ne poslužitelj. -->
@@ -588,7 +595,7 @@
         <!-- T2: `header.study-header` je OBRISAN — isti čisti duplikat kao na lekcijama
              („First Midterm" i u zaglavlju i u mrvici), **115 px**. Naslov ostaje
              `visually-hidden`; id čuva `navigation.js` i `material-authoring.authed`. -->
-        <h1 id="currentLessonTitle" class="visually-hidden">Lesson Name</h1>
+        <h1 id="currentLessonTitle" class="visually-hidden"></h1>
 
         <!-- Navigation Tabs -->
         <!-- ⚠️ `display` ove trake NAMJERNO nije utility: `hidden` je u ovom projektu
@@ -734,12 +741,12 @@
                         <span class="swipe-stamp swipe-stamp--dont" aria-hidden="true" data-i18n="fc.dontKnow">Don't Know</span>
                         <div class="flashcard-inner">
                             <div class="flashcard-front">
-                                <div class="card-category" id="cardCategory">Category</div>
-                                <p id="cardQuestion">Question will appear here</p>
+                                <div class="card-category" id="cardCategory"></div>
+                                <p id="cardQuestion"></p>
                                 <span class="flip-hint"><i class="fas fa-sync-alt"></i> <span data-i18n="fc.clickForAnswer">Click for answer</span></span>
                             </div>
                             <div class="flashcard-back">
-                                <p id="cardAnswer">Answer will appear here</p>
+                                <p id="cardAnswer"></p>
                                 <div class="explanation" id="cardExplanation"></div>
                             </div>
                         </div>
@@ -815,7 +822,7 @@
                 <div class="quiz-game hidden" id="quizGame">
                     <div class="quiz-header">
                         <div class="quiz-progress flex justify-between items-center mb-2 text-[0.9rem]">
-                            <span id="quizProgress">Question 1/10</span>
+                            <span id="quizProgress"></span>
                         </div>
                         <div class="progress-bar">
                             <div class="progress-fill" id="quizProgressBar"></div>
@@ -823,8 +830,8 @@
                     </div>
 
                     <div class="question-card">
-                        <div class="question-category" id="questionCategory">Category</div>
-                        <h2 id="questionText">Question?</h2>
+                        <div class="question-category" id="questionCategory"></div>
+                        <h2 id="questionText"></h2>
                         <div class="answers flex flex-col" id="answersContainer">
                             <!-- Answers loaded by JS -->
                         </div>
@@ -851,11 +858,11 @@
                 <div class="quiz-results hidden" id="quizResults">
                     <div class="results-card text-center">
                         <div class="results-icon" id="resultsIcon">🎉</div>
-                        <h1 id="resultsTitle">Excellent!</h1>
+                        <h1 id="resultsTitle"></h1>
                         <div class="score-circle">
                             <span id="finalScore">85%</span>
                         </div>
-                        <p id="resultsMessage">Fantastic result!</p>
+                        <p id="resultsMessage"></p>
                         
                         <div class="results-stats">
                             <div class="result-stat flex flex-col items-center">
@@ -906,7 +913,7 @@
                 </div>
 
                 <div class="fill-card">
-                    <div class="fill-category" id="fillCategory">Category</div>
+                    <div class="fill-category" id="fillCategory"></div>
                     <p class="fill-sentence" id="fillSentence">
                         <!-- Sentence with blank -->
                     </p>
@@ -1178,7 +1185,7 @@
         <main class="about-content max-w-[600px] mx-auto">
             <h1 class="visually-hidden" data-i18n="about.title">About Sokrat Study</h1>
             <div class="about-hero-section text-center mb-8">
-                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260916162949" alt="Sokrat Study Logo" class="logo-image"></div>
+                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260916172031" alt="Sokrat Study" class="logo-image"></div>
                 <p class="about-tagline" data-i18n="about.tagline">Study what is ready, or make your own</p>
 
                 <!-- ⚠️ IZLAZ. Izmjereno prije popravka: cijela stranica imala je TOČNO JEDNU
@@ -1304,11 +1311,12 @@
     <!-- Learn Image Viewer Modal (F2 2D.2b — <sokrat-modal>: overlay/ESC/backdrop/scroll-lock/fokus iz komponente;
          izgled (tamni backdrop, safe-area, close X) ostaje u .image-modal* CSS-u → nulta vizualna promjena) -->
     <sokrat-modal class="image-modal" id="imageModal">
-        <button class="image-modal-close" id="imageModalClose" aria-label="Close image viewer">
+        <button class="image-modal-close" id="imageModalClose" aria-label="Close image viewer" data-i18n-aria="learn.imageClose">
             <i class="fas fa-times"></i>
         </button>
         <figure class="image-modal-content">
-            <img id="imageModalImg" src="" alt="Expanded learn image">
+            <!-- `alt` piše `openLearnImageModal()` (js/learn.js) pri svakom otvaranju. -->
+            <img id="imageModalImg" src="" alt="">
             <figcaption id="imageModalCaption"></figcaption>
         </figure>
     </sokrat-modal>
@@ -1316,7 +1324,7 @@
     <!-- Toast Notification (F2 2D.1 — Web Component <sokrat-toast>; light-DOM zadržava .toast CSS; djeca ostaju za CSS/fallback prije upgrade-a) -->
     <sokrat-toast class="toast" id="toast">
         <i class="fas fa-info-circle"></i>
-        <span id="toastMessage">Message</span>
+        <span id="toastMessage"></span>
     </sokrat-toast>
 
     <!-- Confirm dialog (F2 2D.3 — Web Component <sokrat-confirm>, građen na <sokrat-modal>; window.askConfirm() zamjenjuje native confirm()) -->
@@ -1324,7 +1332,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>© 2026 All Rights Reserved by Leon Kreso</p>
+        <p data-i18n="footer.rights">&copy; 2026 Sokrat Study &middot; Leon Kreso. All rights reserved.</p>
     </footer>
 
     <!-- LAZY LOADING (A4): subject content (data-*.js) is NO LONGER loaded here.
@@ -1333,38 +1341,38 @@
          (Blok B): loadSubjectContent() later becomes fetch('/api/subject/...'). -->
 
     <!-- Catalog: single source of truth for subjects (must load before js/config.js) -->
-    <script src="data/catalog.js?v=20260916162949"></script>
+    <script src="data/catalog.js?v=20260916172031"></script>
     <!-- Autogeneriran landing broj pitanja (npm run stats). Eager + sitan; čita ga renderLandingMeta(). -->
-    <script src="data/landing-stats.js?v=20260916162949"></script>
+    <script src="data/landing-stats.js?v=20260916172031"></script>
 
     <!-- App modules (split from app.js) -->
     <!-- T6: tema je izrezana iz init.js jer ju treba i editor.html, koji boot aplikacije NE ucitava. -->
-    <script src="js/theme.js?v=20260916162949"></script>
-    <script src="js/i18n.js?v=20260916162949"></script>
+    <script src="js/theme.js?v=20260916172031"></script>
+    <script src="js/i18n.js?v=20260916172031"></script>
     <!-- AppState (S3, Faza 2C): namespace runtime stanja — MORA prije config.js (grupe migriraju iz njega). -->
-    <script src="js/app-state.js?v=20260916162949"></script>
-    <script src="js/config.js?v=20260916162949"></script>
-    <script src="js/content-loader.js?v=20260916162949"></script>
+    <script src="js/app-state.js?v=20260916172031"></script>
+    <script src="js/config.js?v=20260916172031"></script>
+    <script src="js/content-loader.js?v=20260916172031"></script>
     <!-- ContentRepository (S1, Faza 2): jedinstveni šav za dohvat sadržaja (nakon catalog+config+loader). -->
-    <script src="js/content-repo.js?v=20260916162949"></script>
-    <script src="js/components/sokrat-toast.js?v=20260916162949"></script>
-    <script src="js/components/sokrat-modal.js?v=20260916162949"></script>
+    <script src="js/content-repo.js?v=20260916172031"></script>
+    <script src="js/components/sokrat-toast.js?v=20260916172031"></script>
+    <script src="js/components/sokrat-modal.js?v=20260916172031"></script>
     <!-- <sokrat-confirm> (2D.3) — nakon sokrat-modal.js (gradi se na njemu). -->
-    <script src="js/components/sokrat-confirm.js?v=20260916162949"></script>
-    <script src="js/utils.js?v=20260916162949"></script>
-    <script src="js/storage.js?v=20260916162949"></script>
-    <script src="js/analytics.js?v=20260916162949"></script>
+    <script src="js/components/sokrat-confirm.js?v=20260916172031"></script>
+    <script src="js/utils.js?v=20260916172031"></script>
+    <script src="js/storage.js?v=20260916172031"></script>
+    <script src="js/analytics.js?v=20260916172031"></script>
     <!-- UČITAVANJE PO RUTI: `js/loader.js` mora prije `navigation.js` i `auth.js` (oba traže
          pakete). Iz markupa su OTIŠLI: načini učenja (math · blocks-renderer · flashcards ·
          quiz · fill-blanks · learn · progress), slijepa karta, vježbe, polica (offline-store),
          slike osobnog gradiva, „Moji materijali", profil, otkrivanje admina i sinkronizacija
          napretka. Svaki od njih stiže na svom događaju — otvorena lekcija, otvoren tab,
          otvoren profil, prijava. Popis paketa i obrazloženje reza: `js/loader.js`. -->
-    <script src="js/loader.js?v=20260916162949"></script>
-    <script src="js/navigation.js?v=20260916162949"></script>
-    <script src="js/auth.js?v=20260916162949"></script>
-    <script src="js/init.js?v=20260916162949"></script>
+    <script src="js/loader.js?v=20260916172031"></script>
+    <script src="js/navigation.js?v=20260916172031"></script>
+    <script src="js/auth.js?v=20260916172031"></script>
+    <script src="js/init.js?v=20260916172031"></script>
     <!-- Service Worker (F3 3A): offline app-shell; registrira se na load, fail-safe. -->
-    <script src="js/sw-register.js?v=20260916162949" defer></script>
+    <script src="js/sw-register.js?v=20260916172031" defer></script>
 </body>
 </html>

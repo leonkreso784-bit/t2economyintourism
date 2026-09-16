@@ -43,7 +43,7 @@
             if (!this._msg) {
                 this.innerHTML =
                     '<i class="fas fa-info-circle" aria-hidden="true"></i>' +
-                    '<span id="toastMessage">Message</span>';
+                    '<span id="toastMessage"></span>'; // tekst stiže tek kroz show()
                 this._msg = /** @type {HTMLElement|null} */ (this.querySelector('#toastMessage'));
             }
 

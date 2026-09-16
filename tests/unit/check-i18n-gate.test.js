@@ -99,6 +99,22 @@ slucaj('placeholder s mehanizmom i postojećim ključem → zeleno', 0, vrti(sta
   osnovica: {},
 })));
 
+// ⑤b `title` (F3/2): mehanizam `data-i18n-title` postoji od gumba za jezik u traci.
+// Do tada je title bio nalaz BEZ lijeka — sad s ključem prolazi, bez njega i dalje pada,
+// a ključ kojeg nema u rječniku pada kao i svaki drugi (presuda ③).
+slucaj('title bez data-i18n-title → PAD', 1, vrti(stablo({
+  html: { 't1.html': '<button title="Close panel">x</button>' },
+  osnovica: {},
+})), (o) => o.includes('atribut title') && o.includes('Close panel'));
+slucaj('title s data-i18n-title i postojećim ključem → zeleno', 0, vrti(stablo({
+  html: { 't2.html': '<button title="Close panel" data-i18n-title="nav.ok"><i class="fa"></i></button>' },
+  osnovica: {},
+})));
+slucaj('data-i18n-title s nepostojećim ključem → PAD „ključ bez rječnika"', 1, vrti(stablo({
+  html: { 't3.html': '<button title="Close panel" data-i18n-title="topbar.nema"><i class="fa"></i></button>' },
+  osnovica: {},
+})), (o) => o.includes('ključ bez rječnika') && o.includes('topbar.nema'));
+
 // ⑥ JS predložak sa zakucanim tekstom → PAD; samo `${t(\'k\')}` interpolacija → zeleno.
 slucaj('zakucan tekst u JS template literalu → PAD', 1, vrti(stablo({
   js: { 'ui.js': 'el.innerHTML = `<button class="x">Publish now</button>`;\n' },

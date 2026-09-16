@@ -5,6 +5,31 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-16 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/2 cigla 1: `index.html` bez slijepe karte
+
+- **Leon: OK plana** (i oba prijedloga: ime prekidača dvojezično, staro podnožje dobiva `footer.rights`).
+- **Tri vrste nalaza, tri zahvata:** ① 15 mjesta koja JS uvijek piše (naslovi browse/lekcije/učenja, kartica, kviz,
+  dopuna, toast, `alt` uvećane slike) → PRAZNA u markupu; `data-i18n` bi ih `applyTranslations()` pregazio usred igre ·
+  ② kromo s ključem: `aria-label` podnožja (postojeći `footer.*`), bočna traka (`sidebar.close`, `lnav.subjects`),
+  zatvaranje slike (`learn.imageClose`), logo „O nama" `alt` = vlastito ime, staro podnožje `footer.rights` ·
+  ③ prekidač jezika: `data-i18n-title` (novi mehanizam u `applyTranslations` + brana ga zna), `topbar.lang`
+  („Language / Jezik" ↔ „Jezik / Language"), oznaka kroz `topbar.langCode` — zaseban pisac `.lang-toggle-label` u
+  `i18n.js` uklonjen, pa i `odjava.html` dobiva ključ. „Sign in" dobiva `data-i18n` umjesto praznine: `auth.js` otkriva
+  gumb prije nego mu upiše ime (prazan bi bio bez imena), a `applyTranslations` sinkrono zove `refreshAuthNav`.
+- **Isti kromo u `editor.html`** (njegovih 5 nalaza = traka + toast) i rezervni „Message" u `sokrat-toast.js` — inače
+  bi isti element imao dva oblika.
+- **Brojke:** `check:i18n` 224 → **190** (`index.html` 49 → 21, ostatak = slijepa karta · `editor.html` 5 → 0 ·
+  `sokrat-toast.js` 1 → 0), osnovica spuštena.
+- **Brane:** `check-i18n-gate.test.js` +3 (`title` bez/s mehanizmom, nepostojeći ključ) — na starom kodu **2 crvena** ·
+  `i18n.spec.js` F3/2 (kviz i kartica pokrenuti, prekidač usred igre: sadržaj netaknut; traka i podnožje prate jezik, i
+  natrag). **Obrnuto:** `data-i18n` na `#questionText` → pad „promjena jezika pregazila je sadržaj"; bez
+  `data-i18n-title` → pad na `title`.
+- **Gate:** preflight EXIT 0 · Playwright na 5051 (i18n · quiz-reset · app-state · flashcard-swipe · components · odjava ·
+  sidebar · browse · smoke · a11y · landing · about · layout-guard) × SE + položeni: **93 prošlo, 0 palo** (15 = uvjetni
+  `test.skip` u a11y/layout-guard) · `phone.spec` 11/11.
+- **Brana ne vidi (zapisano u RASPORED F3/2):** `js/auth.js` `aria-label` gumba za prijavu · `js/learn.js` engleski
+  rezervni `alt`. **Sljedeće: cigla 2 = slijepa karta** (`index.html` + `js/blind-map.js` + `js/progress.js`).
+
 ## 2026-09-16 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/1 ①: javni kontakt `sokrat@sokratstudy.com`
 
 - **① kontakt:** 8 `mailto:` poveznica (`contact` · `faq` ×3 · `privacy` ×2 · `terms` · „O nama" u `index.html`) +
