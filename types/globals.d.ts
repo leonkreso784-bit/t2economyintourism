@@ -56,6 +56,8 @@ declare global {
     // K2b: mrvicu crta JS u `textContent` (nikad `innerHTML`), pa je `[data-i18n]` ne
     // dohvaća — i18n je mora precrtati kao i ostale liste građene iz kataloga.
     renderPathbar?: () => void;
+    // F3/2: poruke slijepe karte ovise o stanju (koordinate, rezultat) — i18n ih precrta.
+    renderBlindMapText?: () => void;
     initTopbar?: () => void;
   }
 }

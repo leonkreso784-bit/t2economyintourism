@@ -92,6 +92,37 @@ const blindMapLocations = {
 let blindMapDifficulty = 'cities';
 let blindMapQuestions = [];
 
+// ===== TEKST (F3/2) =====
+// Sav tekst sučelja ide kroz rječnik (`map.*` u js/i18n.js); imena mjesta su gradivo i ne prevode
+// se (ADR-012). Poruke koje ovise o STANJU crtaju se iz stanja, pa ih promjena jezika može precrtati
+// (`renderBlindMapText`, zove je `applyTranslations`).
+const mapT = (k) => (typeof t === 'function' ? t(k) : k);
+
+function drawMapCoordsText() {
+    const el = document.getElementById('mapCoords');
+    if (!el) return;
+    const s = blindMapState.selectedLocation;
+    el.textContent = s
+        ? mapT('map.clicked').replace('{x}', String(s.x)).replace('{y}', String(s.y))
+        : mapT('map.noSelection');
+}
+
+// Ikona + tekst kao DOM, ne `innerHTML`: poruka nosi ime mjesta, a `append` tekst ne tumači kao
+// HTML — nema se što escapeati. (Do F3/2 je ime išlo golo u `innerHTML`.)
+function setMapMessage(icon, text) {
+    const el = document.getElementById('feedbackMessage');
+    if (!el) return;
+    const i = document.createElement('i');
+    i.className = 'fas ' + icon;
+    el.textContent = '';
+    el.append(i, ' ' + text);
+}
+
+function renderBlindMapText() {
+    drawMapCoordsText();
+    if (blindMapQuestions.length && blindMapState.currentQuestion >= blindMapQuestions.length) showMapResults();
+}
+
 function initBlindMap() {
     if (AppState.nav.subject !== 'geography') return;
     document.getElementById('blindMapNavBtn')?.style.removeProperty('display');
@@ -129,6 +160,7 @@ function initBlindMap() {
     
     blindMapState = { selectedLocation: null, currentQuestion: 0, score: 0, answers: [] };
     blindMapQuestions = shuffleArray([...(blindMapLocations[blindMapDifficulty] || blindMapLocations.cities)]);
+    drawMapCoordsText();
     updateBlindMapUI();
 }
 
@@ -156,7 +188,7 @@ function handleBlindMapTouch(event) {
     const y = Math.round((touch.clientY - rect.top) * scaleY);
     
     blindMapState.selectedLocation = { x, y };
-    document.getElementById('mapCoords').textContent = 'Clicked: X=' + x + ', Y=' + y;
+    drawMapCoordsText();
     
     drawBlindMapCanvas();
     const ctx = canvas.getContext('2d');
@@ -197,7 +229,7 @@ function drawBlindMapCanvas() {
             ctx.fillStyle = 'rgba(255,255,255,0.5)';
             ctx.font = '16px Arial';
             ctx.textAlign = 'center';
-            ctx.fillText('Map could not be loaded', W/2, H/2);
+            ctx.fillText(mapT('map.loadError'), W/2, H/2);
         };
         img.src = 'blind-map.webp' + ver;
         ctx.fillStyle = '#0f0d2e';
@@ -205,7 +237,7 @@ function drawBlindMapCanvas() {
         ctx.fillStyle = 'rgba(255,255,255,0.3)';
         ctx.font = '18px Arial';
         ctx.textAlign = 'center';
-        ctx.fillText('Loading map...', W/2, H/2);
+        ctx.fillText(mapT('map.loading'), W/2, H/2);
         return;
     }
 
@@ -221,7 +253,7 @@ function handleBlindMapClick(event) {
     const y = Math.round((event.clientY - rect.top) * scaleY);
     
     blindMapState.selectedLocation = { x, y };
-    document.getElementById('mapCoords').textContent = `Clicked: X=${x}, Y=${y}`;
+    drawMapCoordsText();
     
     drawBlindMapCanvas();
     const ctx = canvas.getContext('2d');
@@ -241,7 +273,7 @@ function handleBlindMapClick(event) {
 
 function submitMapAnswer() {
     if (!blindMapState.selectedLocation) {
-        showToast('Click on the map to select a location first');
+        showToast(mapT('map.selectFirst'));
         return;
     }
     
@@ -255,17 +287,17 @@ function submitMapAnswer() {
     const isCorrect = distance <= threshold;
     
     const feedback = document.getElementById('mapFeedback');
-    const message = document.getElementById('feedbackMessage');
-    
+
     feedback.classList.toggle('correct', isCorrect);
     feedback.classList.toggle('incorrect', !isCorrect);
     feedback.classList.add('show');
-    
+
     if (isCorrect) {
-        message.innerHTML = `<i class="fas fa-check"></i> Correct! That's ${currentQ.name}!`;
+        setMapMessage('fa-check', mapT('map.correct').replace('{name}', currentQ.name));
         blindMapState.score += 10;
     } else {
-        message.innerHTML = `<i class="fas fa-times"></i> That's not right. ${currentQ.name} is elsewhere. (${Math.round(distance)}px off)`;
+        setMapMessage('fa-times', mapT('map.wrong')
+            .replace('{name}', currentQ.name).replace('{n}', String(Math.round(distance))));
         const canvas = document.getElementById('blindMapCanvas');
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = '#22c55e';
@@ -299,10 +331,11 @@ function showMapResults() {
     const total = blindMapQuestions.length;
     const pct = Math.round((correct / total) * 100);
     const feedback = document.getElementById('mapFeedback');
-    const message = document.getElementById('feedbackMessage');
     feedback.classList.remove('correct', 'incorrect');
     feedback.classList.add('show', pct >= 50 ? 'correct' : 'incorrect');
-    message.innerHTML = `<i class="fas fa-flag-checkered"></i> Finished! ${correct}/${total} correct (${pct}%). Score: ${blindMapState.score}`;
+    setMapMessage('fa-flag-checkered', mapT('map.finished')
+        .replace('{correct}', String(correct)).replace('{total}', String(total))
+        .replace('{pct}', String(pct)).replace('{score}', String(blindMapState.score)));
 }
 
 function validateBlindMapAnswer(answer) {
@@ -312,8 +345,8 @@ function validateBlindMapAnswer(answer) {
 }
 
 function clearMapSelection() {
-    document.getElementById('mapCoords').textContent = 'No location selected';
     blindMapState.selectedLocation = null;
+    drawMapCoordsText();
     drawBlindMapCanvas();
 }
 
@@ -359,7 +392,9 @@ function updateBlindMapUI() {
     const currentQ = blindMapQuestions[idx];
     const taskEl = document.getElementById('mapTaskName');
     if (taskEl && currentQ) {
-        taskEl.textContent = `Find: ${currentQ.name}`;
+        // Samo ime: rečenicu („Pokaži na karti:") nosi markup ispred. Do F3/2 je ovdje stajalo
+        // „Find: …", pa je ekran pisao „Click on the location of: Find: Zagreb".
+        taskEl.textContent = currentQ.name;
     }
 }
 
@@ -379,3 +414,4 @@ window.handleBlindMapClick = handleBlindMapClick;
 window.handleBlindMapTouch = handleBlindMapTouch;
 window.resizeBlindMapCanvas = resizeBlindMapCanvas;
 window.setBlindMapDifficulty = setBlindMapDifficulty;
+window.renderBlindMapText = renderBlindMapText;

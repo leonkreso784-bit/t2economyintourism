@@ -5,6 +5,27 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-16 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/2 cigla 2: slijepa karta dvojezična
+
+- **Leon:** *„odlično, možeš krenuti"* (poslije cigle 1).
+- **Markup:** naslov, uvod, pet razina, „Pokaži na karti:", Predaj/Poništi/Preskoči, Napredak/Bodovi/bod. i kartica
+  napretka dobivaju ključeve (`map.*`; postojeći `prog.accuracy`, `prog.attempts`, `common.submit`, `common.skip`).
+  Ime mjesta, koordinate i poruka su PRAZNI (pravilo cigle 1).
+- **`js/blind-map.js`:** sav tekst kroz rječnik (`mapT`), `{x}`/`{name}`/… kroz `.replace` (obrazac `mail-admin.js`).
+  Tekst na platnu („Učitavanje karte…", greška) također — brana ga ne vidi (`fillText` nije sink). Poruka s imenom
+  mjesta slaže se kao DOM (`append`), ne `innerHTML`. **Kuka `renderBlindMapText`** (zove je `applyTranslations`):
+  koordinate i završni rezultat precrtavaju se iz stanja kad se promijeni jezik. **Usput:** zadatak je pisao
+  „Click on the location of: Find: Zagreb" — sad samo ime.
+- **Brojke:** `check:i18n` 190 → **161** (`index.html` 21 → **0** · `js/blind-map.js` 8 → 0). `index.html` je time
+  izvan osnovice.
+- **Brana:** `blind-map.spec.js` F3/2 — HR sučelje bez engleskog ostatka (16 nizova u vidljivom tekstu), toast, klik →
+  koordinate, prekidač → precrtane na EN, predaja → poruka s ikonom kao elementom, kartica napretka na HR. Na starom
+  kodu crven (naslov); **bez kuke crven** (koordinate poslije prekidača).
+- **Gate:** preflight EXIT 0 (budžet: zaliha 71.0 KiB) · typecheck (kuka deklarirana u `types/globals.d.ts`) ·
+  Playwright 5051: blind-map · i18n · smoke · a11y · app-state × SE + položeni **30 prošlo, 0 palo** (8 = a11y samo na
+  SE) · `phone.spec` 11/11 (uklj. `study@blindMap`).
+- **Sljedeće po redu: `js/exercises.js` (29).**
+
 ## 2026-09-16 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/2 cigla 1: `index.html` bez slijepe karte
 
 - **Leon: OK plana** (i oba prijedloga: ime prekidača dvojezično, staro podnožje dobiva `footer.rights`).

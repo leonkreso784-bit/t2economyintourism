@@ -247,6 +247,30 @@
     'ex.subtitle': { en: 'Interactive, auto-graded practice problems.', hr: 'Interaktivni zadaci s automatskim ocjenjivanjem.' },
     'ex.empty': { en: 'No exercises yet for this lesson.', hr: 'Za ovu lekciju još nema vježbi.' },
 
+    // Slijepa karta (F3/2) — sučelje; imena mjesta su gradivo i ne prevode se (ADR-012).
+    // `{…}` popunjava `js/blind-map.js` kroz `.replace`.
+    'map.title': { en: 'Blind Map', hr: 'Slijepa karta' },
+    'map.heading': { en: 'Interactive Blind Map', hr: 'Interaktivna slijepa karta' },
+    'map.intro': { en: 'Click on the map to find the requested location', hr: 'Klikni na karti i pronađi traženo mjesto' },
+    'map.level.cities': { en: 'Cities', hr: 'Gradovi' },
+    'map.level.islands': { en: 'Islands', hr: 'Otoci' },
+    'map.level.nationalParks': { en: 'National Parks', hr: 'Nacionalni parkovi' },
+    'map.level.natureParks': { en: 'Nature Parks', hr: 'Parkovi prirode' },
+    'map.level.regions': { en: 'Regions', hr: 'Regije' },
+    'map.task': { en: 'Click on the location of:', hr: 'Pokaži na karti:' },
+    'map.noSelection': { en: 'No location selected', hr: 'Nijedno mjesto nije odabrano' },
+    'map.clicked': { en: 'Clicked: X={x}, Y={y}', hr: 'Odabrano: X={x}, Y={y}' },
+    'map.clear': { en: 'Clear', hr: 'Poništi' },
+    'map.progress': { en: 'Progress:', hr: 'Napredak:' },
+    'map.score': { en: 'Score:', hr: 'Bodovi:' },
+    'map.pts': { en: 'pts', hr: 'bod.' },
+    'map.selectFirst': { en: 'Click on the map to select a location first', hr: 'Najprije klikni na karti i odaberi mjesto' },
+    'map.correct': { en: "Correct! That's {name}!", hr: 'Točno! To je {name}!' },
+    'map.wrong': { en: "That's not right. {name} is elsewhere. ({n}px off)", hr: 'Nije točno. {name} je drugdje (promašaj {n} px).' },
+    'map.finished': { en: 'Finished! {correct}/{total} correct ({pct}%). Score: {score}', hr: 'Gotovo! Točno {correct}/{total} ({pct} %). Bodovi: {score}' },
+    'map.loading': { en: 'Loading map...', hr: 'Učitavanje karte…' },
+    'map.loadError': { en: 'Map could not be loaded', hr: 'Karta se nije mogla učitati' },
+
     // ===== Landing (chrome — marketing copy; EN = originalni tekst) =====
     'lnav.subjects': { en: 'Subjects', hr: 'Predmeti' },
     // `lnav.how` / `lnav.modes` / `lnav.about` obrisani u C2 zajedno sa sidrenim linkovima i
@@ -869,6 +893,9 @@
     // K2b: mrvicu crta JavaScript u `textContent` (nikad `innerHTML`), pa je `[data-i18n]`
     // ne dohvaća — mora se precrtati kao i ostale liste iz kataloga.
     if (typeof window.renderPathbar === 'function') window.renderPathbar();
+    // F3/2: poruke slijepe karte ovise o STANJU (odabrane koordinate, završni rezultat) → precrtaj
+    // ih iz stanja. Kuka postoji tek kad je paket `blind-map` učitan.
+    if (typeof window.renderBlindMapText === 'function') window.renderBlindMapText();
     const bp = document.getElementById('browse-page');
     if (bp && bp.classList.contains('active') && typeof window.renderBrowse === 'function') window.renderBrowse();
     // Profil je renderiran innerHTML-om (ne hvata [data-i18n]) → re-renderiraj ako je otvoren.

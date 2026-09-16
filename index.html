@@ -20,11 +20,11 @@
     <meta name="format-detection" content="telephone=no">
     
     <!-- Favicon & App Icons -->
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260916172031">
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260916172031">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260916172031">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260916172031">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260916172031">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260916201351">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260916201351">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260916201351">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260916201351">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260916201351">
     <link rel="manifest" href="manifest.json">
     
     <!-- SEO & Social -->
@@ -98,7 +98,7 @@
     <!-- Preconnect for faster loading -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <link rel="stylesheet" href="styles.bundle.css?v=20260916172031">
+    <link rel="stylesheet" href="styles.bundle.css?v=20260916201351">
 
     <!-- C2: GOOGLE FONTS SU OTIŠLI. Inter + Space Grotesk = 2 obitelji, 11 težina, dva
          `preconnect`-a i treći poslužitelj na kritičnom putu — a §7.1 ih je imenovao kao
@@ -122,10 +122,10 @@
     <!-- Learn styles are managed in css/learn.css to avoid inline conflicts on mobile. -->
 
     <!-- Cookie consent + Google Analytics (Consent Mode v2; analytics loads only after Accept) -->
-    <link rel="stylesheet" href="css/consent.css?v=20260916172031">
+    <link rel="stylesheet" href="css/consent.css?v=20260916201351">
     <!-- Praćenje grešaka (Faza 2, 2E): učita se prije consent.js; consent-gated + no-op bez DSN-a. -->
-    <script src="js/monitoring.js?v=20260916172031" defer></script>
-    <script src="js/consent.js?v=20260916172031" defer></script>
+    <script src="js/monitoring.js?v=20260916201351" defer></script>
+    <script src="js/consent.js?v=20260916201351" defer></script>
 </head>
 <!-- ⚠️ `no-pathbar` STOJI U MARKUPU, NE ČEKA JS (CLS, 2026-08-24).
      `#landing-page` je u markupu već `active`, a landing NEMA drugi red trake — pa je `<body>`
@@ -140,9 +140,9 @@
 <!-- boot.js je SINKRON (bez defer) pa blokira parser i izvrši se prije prvog crtanja —
      isto jamstvo koje je davao inline blok koji je tu živio do D1 (CSP); zašto odluka
      mora pasti prije crtanja piše u js/boot.js. -->
-<script src="js/boot.js?v=20260916172031"></script>
+<script src="js/boot.js?v=20260916201351"></script>
 <!-- ADR-034: štipanje s dva prsta gasi JS, jer Safari metu ignorira — zašto piše u js/no-zoom.js -->
-<script src="js/no-zoom.js?v=20260916172031" defer></script>
+<script src="js/no-zoom.js?v=20260916201351" defer></script>
     
     <!-- ==================== LANDING PAGE ==================== -->
     <!-- ====================================================================
@@ -181,7 +181,7 @@
     <div class="chrome" id="chrome">
     <header class="topbar" id="top" role="banner">
         <a class="topbar-logo" href="#/" id="topbarHome" aria-label="Sokrat Study">
-            <img src="assets/logo.svg?v=20260916172031" alt="" class="logo-image">
+            <img src="assets/logo.svg?v=20260916201351" alt="" class="logo-image">
             <span class="logo-text">Sokrat Study</span>
         </a>
 
@@ -467,7 +467,7 @@
                 <div class="footer-cols">
                     <div class="footer-brand">
                         <div class="landing-logo">
-                            <img src="assets/logo.svg?v=20260916172031" alt="" class="logo-image">
+                            <img src="assets/logo.svg?v=20260916201351" alt="" class="logo-image">
                             <span class="logo-text">Sokrat Study</span>
                         </div>
                         <p data-i18n="footer.tagline">Write your own study material, or use one that's ready. Free for everyone.</p>
@@ -503,7 +503,7 @@
     <aside class="subjects-sidebar" id="subjectsSidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260916172031" alt="Sokrat Study" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260916201351" alt="Sokrat Study" class="logo-image"></div>
                 <span data-i18n="sidebar.choose">Choose Subject</span>
             </div>
             <button class="close-sidebar-btn" id="closeSidebar" aria-label="Close sidebar" data-i18n-aria="sidebar.close">
@@ -1005,10 +1005,10 @@
 
                     <!-- Blind Map Progress (Geography Only) -->
                     <div class="progress-card" id="blindMapProgressSection" style="display: none;">
-                        <h3 class="flex items-center gap-2 mb-2"><i class="fas fa-map-marked-alt"></i> Blind Map</h3>
-                        <p>Accuracy: <span id="blindMapAccuracy">0%</span></p>
-                        <p>Attempts: <span id="blindMapAttempts">0</span></p>
-                        <p>Score: <span id="blindMapScore">0</span></p>
+                        <h3 class="flex items-center gap-2 mb-2"><i class="fas fa-map-marked-alt"></i> <span data-i18n="map.title">Blind Map</span></h3>
+                        <p><span data-i18n="prog.accuracy">Accuracy:</span> <span id="blindMapAccuracy">0%</span></p>
+                        <p><span data-i18n="prog.attempts">Attempts:</span> <span id="blindMapAttempts">0</span></p>
+                        <p><span data-i18n="map.score">Score:</span> <span id="blindMapScore">0</span></p>
                     </div>
 
                     <!-- Exercises Progress (subjects with features.exercises) -->
@@ -1044,25 +1044,25 @@
         <section id="blind-map" class="section">
             <div class="blind-map-container max-w-[900px] mx-auto">
                 <div class="blind-map-header text-center mb-6">
-                    <h1>Interactive Blind Map</h1>
-                    <p class="text-ink-1 text-[0.95rem]">Click on the map to find the requested location</p>
+                    <h1 data-i18n="map.heading">Interactive Blind Map</h1>
+                    <p class="text-ink-1 text-[0.95rem]" data-i18n="map.intro">Click on the map to find the requested location</p>
                 </div>
 
                 <div class="map-difficulty-selector flex flex-wrap justify-center mb-6">
                     <button class="map-diff-btn active" data-action="setBlindMapDifficulty" data-arg="cities" data-level="cities">
-                        <i class="fas fa-city"></i> Cities
+                        <i class="fas fa-city"></i> <span data-i18n="map.level.cities">Cities</span>
                     </button>
                     <button class="map-diff-btn" data-action="setBlindMapDifficulty" data-arg="islands" data-level="islands">
-                        <i class="fas fa-water"></i> Islands
+                        <i class="fas fa-water"></i> <span data-i18n="map.level.islands">Islands</span>
                     </button>
                     <button class="map-diff-btn" data-action="setBlindMapDifficulty" data-arg="nationalParks" data-level="nationalParks">
-                        <i class="fas fa-tree"></i> National Parks
+                        <i class="fas fa-tree"></i> <span data-i18n="map.level.nationalParks">National Parks</span>
                     </button>
                     <button class="map-diff-btn" data-action="setBlindMapDifficulty" data-arg="natureParks" data-level="natureParks">
-                        <i class="fas fa-leaf"></i> Nature Parks
+                        <i class="fas fa-leaf"></i> <span data-i18n="map.level.natureParks">Nature Parks</span>
                     </button>
                     <button class="map-diff-btn" data-action="setBlindMapDifficulty" data-arg="regions" data-level="regions">
-                        <i class="fas fa-map"></i> Regions
+                        <i class="fas fa-map"></i> <span data-i18n="map.level.regions">Regions</span>
                     </button>
                 </div>
 
@@ -1072,22 +1072,24 @@
 
                 <div class="map-answer-section">
                     <div class="map-question mb-4 text-ink-0" id="mapQuestion">
-                        <i class="fas fa-crosshairs"></i> Click on the location of: <strong id="mapTaskName">Loading...</strong>
+                        <!-- Ime mjesta, koordinate i poruku piše `js/blind-map.js` iz stanja → u markupu su
+                             PRAZNI (isto pravilo kao kviz, F3/2: `data-i18n` bi ih pregazio na prekidač). -->
+                        <i class="fas fa-crosshairs"></i> <span data-i18n="map.task">Click on the location of:</span> <strong id="mapTaskName"></strong>
                     </div>
 
                     <div class="map-coordinates text-[0.85rem] text-ink-2 mb-4 font-[monospace]">
-                        <span id="mapCoords">No location selected</span>
+                        <span id="mapCoords"></span>
                     </div>
 
                     <div class="map-action-buttons grid gap-2 mb-4">
                         <button class="map-submit-btn" id="mapSubmitBtn" data-action="submitMapAnswer">
-                            <i class="fas fa-check"></i> Submit
+                            <i class="fas fa-check"></i> <span data-i18n="common.submit">Submit</span>
                         </button>
                         <button class="map-clear-btn" id="mapClearBtn" data-action="clearMapSelection">
-                            <i class="fas fa-times"></i> Clear
+                            <i class="fas fa-times"></i> <span data-i18n="map.clear">Clear</span>
                         </button>
                         <button class="map-skip-btn" id="mapSkipBtn" data-action="skipMapQuestion">
-                            <i class="fas fa-forward"></i> Skip
+                            <i class="fas fa-forward"></i> <span data-i18n="common.skip">Skip</span>
                         </button>
                     </div>
 
@@ -1095,7 +1097,7 @@
                         <div class="map-feedback-content flex items-center gap-3">
                             <span class="map-feedback-icon text-[1.5rem]"><i class="fas fa-check-circle"></i></span>
                             <div class="map-feedback-text">
-                                <div class="map-feedback-message font-semibold text-[1rem]" id="feedbackMessage">Waiting for answer...</div>
+                                <div class="map-feedback-message font-semibold text-[1rem]" id="feedbackMessage"></div>
                                 <div class="map-feedback-details text-[0.85rem] text-ink-1 mt-1" id="feedbackDetails"></div>
                             </div>
                         </div>
@@ -1103,8 +1105,8 @@
                 </div>
 
                 <div class="map-progress flex justify-between items-center mb-2 text-[0.9rem] text-ink-1">
-                    <span class="map-progress-text">Progress: <span id="mapProgressCount">0/0</span></span>
-                    <span class="map-score-display">Score: <span id="mapScore">0</span> pts</span>
+                    <span class="map-progress-text"><span data-i18n="map.progress">Progress:</span> <span id="mapProgressCount">0/0</span></span>
+                    <span class="map-score-display"><span data-i18n="map.score">Score:</span> <span id="mapScore">0</span> <span data-i18n="map.pts">pts</span></span>
                 </div>
                 <div class="map-progress-bar">
                     <div class="map-progress-fill" id="mapProgressFill"></div>
@@ -1185,7 +1187,7 @@
         <main class="about-content max-w-[600px] mx-auto">
             <h1 class="visually-hidden" data-i18n="about.title">About Sokrat Study</h1>
             <div class="about-hero-section text-center mb-8">
-                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260916172031" alt="Sokrat Study" class="logo-image"></div>
+                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260916201351" alt="Sokrat Study" class="logo-image"></div>
                 <p class="about-tagline" data-i18n="about.tagline">Study what is ready, or make your own</p>
 
                 <!-- ⚠️ IZLAZ. Izmjereno prije popravka: cijela stranica imala je TOČNO JEDNU
@@ -1341,38 +1343,38 @@
          (Blok B): loadSubjectContent() later becomes fetch('/api/subject/...'). -->
 
     <!-- Catalog: single source of truth for subjects (must load before js/config.js) -->
-    <script src="data/catalog.js?v=20260916172031"></script>
+    <script src="data/catalog.js?v=20260916201351"></script>
     <!-- Autogeneriran landing broj pitanja (npm run stats). Eager + sitan; čita ga renderLandingMeta(). -->
-    <script src="data/landing-stats.js?v=20260916172031"></script>
+    <script src="data/landing-stats.js?v=20260916201351"></script>
 
     <!-- App modules (split from app.js) -->
     <!-- T6: tema je izrezana iz init.js jer ju treba i editor.html, koji boot aplikacije NE ucitava. -->
-    <script src="js/theme.js?v=20260916172031"></script>
-    <script src="js/i18n.js?v=20260916172031"></script>
+    <script src="js/theme.js?v=20260916201351"></script>
+    <script src="js/i18n.js?v=20260916201351"></script>
     <!-- AppState (S3, Faza 2C): namespace runtime stanja — MORA prije config.js (grupe migriraju iz njega). -->
-    <script src="js/app-state.js?v=20260916172031"></script>
-    <script src="js/config.js?v=20260916172031"></script>
-    <script src="js/content-loader.js?v=20260916172031"></script>
+    <script src="js/app-state.js?v=20260916201351"></script>
+    <script src="js/config.js?v=20260916201351"></script>
+    <script src="js/content-loader.js?v=20260916201351"></script>
     <!-- ContentRepository (S1, Faza 2): jedinstveni šav za dohvat sadržaja (nakon catalog+config+loader). -->
-    <script src="js/content-repo.js?v=20260916172031"></script>
-    <script src="js/components/sokrat-toast.js?v=20260916172031"></script>
-    <script src="js/components/sokrat-modal.js?v=20260916172031"></script>
+    <script src="js/content-repo.js?v=20260916201351"></script>
+    <script src="js/components/sokrat-toast.js?v=20260916201351"></script>
+    <script src="js/components/sokrat-modal.js?v=20260916201351"></script>
     <!-- <sokrat-confirm> (2D.3) — nakon sokrat-modal.js (gradi se na njemu). -->
-    <script src="js/components/sokrat-confirm.js?v=20260916172031"></script>
-    <script src="js/utils.js?v=20260916172031"></script>
-    <script src="js/storage.js?v=20260916172031"></script>
-    <script src="js/analytics.js?v=20260916172031"></script>
+    <script src="js/components/sokrat-confirm.js?v=20260916201351"></script>
+    <script src="js/utils.js?v=20260916201351"></script>
+    <script src="js/storage.js?v=20260916201351"></script>
+    <script src="js/analytics.js?v=20260916201351"></script>
     <!-- UČITAVANJE PO RUTI: `js/loader.js` mora prije `navigation.js` i `auth.js` (oba traže
          pakete). Iz markupa su OTIŠLI: načini učenja (math · blocks-renderer · flashcards ·
          quiz · fill-blanks · learn · progress), slijepa karta, vježbe, polica (offline-store),
          slike osobnog gradiva, „Moji materijali", profil, otkrivanje admina i sinkronizacija
          napretka. Svaki od njih stiže na svom događaju — otvorena lekcija, otvoren tab,
          otvoren profil, prijava. Popis paketa i obrazloženje reza: `js/loader.js`. -->
-    <script src="js/loader.js?v=20260916172031"></script>
-    <script src="js/navigation.js?v=20260916172031"></script>
-    <script src="js/auth.js?v=20260916172031"></script>
-    <script src="js/init.js?v=20260916172031"></script>
+    <script src="js/loader.js?v=20260916201351"></script>
+    <script src="js/navigation.js?v=20260916201351"></script>
+    <script src="js/auth.js?v=20260916201351"></script>
+    <script src="js/init.js?v=20260916201351"></script>
     <!-- Service Worker (F3 3A): offline app-shell; registrira se na load, fail-safe. -->
-    <script src="js/sw-register.js?v=20260916172031" defer></script>
+    <script src="js/sw-register.js?v=20260916201351" defer></script>
 </body>
 </html>

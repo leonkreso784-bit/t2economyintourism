@@ -5,6 +5,15 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-16 (OPUS) — **F3/2 cigla 2: slijepa karta na hrvatskom** — grana `feat/f3-dvojezicnost`
+
+### Dodano
+- **Slijepa karta na hrvatskom sučelju:** razine, gumbi, zadatak, koordinate, poruke o točnosti i rezultat, poruka pri
+  učitavanju karte i kartica u Napretku. Imena mjesta ostaju kako jesu (gradivo). Promjena jezika usred igre precrta i
+  koordinate i rezultat.
+### Popravljeno
+- Zadatak na karti pisao je „Click on the location of: Find: Zagreb" — sad samo ime mjesta.
+
 ## 2026-09-16 (OPUS) — **F3/2 cigla 1: naslovnica i traka bez engleskog ostatka** — grana `feat/f3-dvojezicnost`
 
 ### Promijenjeno
