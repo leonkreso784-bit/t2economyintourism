@@ -4,6 +4,31 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-037 — Pravne stranice nose OBA jezika u stranici; `boot.js` bira prije crtanja
+**Datum:** 2026-09-16 · **Status:** ✅ ODLUČENO (Leon, anketa) · **Vezano:** [ADR-033](#adr-033) (sučelje je dvojezično), ADR-012 (jezik gradiva = program), ADR-027, BUG-025 (`innerHTML` granica) · **Faza:** F3/1 u [RASPORED.md](../plan/RASPORED.md)
+
+**Kontekst.** Četiri pravne stranice (`contact` · `faq` · `privacy` · `terms`) nisu učitavale `js/i18n.js`, a tekst im
+je pun podebljanja i poveznica usred rečenice. Mehanizam sučelja (`data-i18n` → `textContent`) taj markup briše.
+
+**Odluka (Leon, 2026-09-16):** **oba jezika u stranici** — `<div class="jezik" lang="en|hr">`; `boot.js` upiše
+`data-ui-lang` + `lang` na `<html>` PRIJE crtanja, `css/legal.css` skriva drugi blok. Zaglavlje, podnožje i naslov
+kartice ostaju na `data-i18n` (dijele ključeve s aplikacijom).
+
+**Zašto ne ostala dva puta:** tekst u rječniku traži **nov `innerHTML`-put** (odbijen na „O nama" 24.08., BUG-025) i
+dodaje ~60 KB pravnog teksta u `i18n.js`, koji je već 75 KB na putu SVAKOG posjetitelja naslovnice (`check:budget`).
+Zasebne stranice po jeziku = četiri nove datoteke s dvostrukim zaglavljem i podnožjem, sitemap/canonical/hreflang, a
+prekidač postaje navigacija.
+
+**Posljedice:**
+- `check:i18n` presuda ④: blok je preveden samo uz SUSJEDNI blok drugog jezika istog **oblika** (naslovi · odlomci ·
+  stavke · poveznice) koji nije doslovna kopija — inače su svi engleski nositelji nalazi.
+- `tests/legal.spec.js`: popis dvojezičnih stranica == sve pravne stranice; bljesak engleskog se MJERI.
+- **Nova pravna stranica nosi oba bloka od prvog commita.** Izmjena teksta = izmjena u oba bloka istog commita.
+- Stranica nosi oba teksta (Pravila ~2× bajtova) — pravne stranice nisu na putu posjetitelja naslovnice.
+- Tražilica vidi oba jezika na jednom URL-u, kao i na ostatku stranice; hreflang se ne uvodi.
+
+---
+
 ## ADR-036 — Monetizacija: najam je ORGANIZACIJA, firme plaćaju prve, prodaju prvo organizacije
 **Datum:** 2026-09-07 · **Status:** ✅ ODLUČENO (Leon) · **Vezano:** [ADR-035](#adr-035) (proizvod je tržište gradiva), [ADR-029](#adr-029), [ADR-031](#adr-031) (korisnik plaća svoj AI), [ADR-024](#adr-024) (osobni otok) · **Model u cijelosti:** [MONETIZATION.md](../product/MONETIZATION.md)
 

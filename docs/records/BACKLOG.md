@@ -349,7 +349,7 @@ SAMO ondje, `theme.js` ga cita s window-a. Brane: `tests/unit/theme-boot-order.t
 (preflight) + `tests/theme-fouc.spec.js` (obrnuta provjera: na starom kodu pada).
 **Ostatak, ne blokira:** `contact/faq/privacy/terms.html` nemaju `data-theme` ni `theme.js`
 — korisnik na tamnoj temi ondje dobije svijetlu stranicu. Nije bljesak nego **nedostatak
-teme**; ide uz ciglu "tema = izgled maila".
+teme**; ide uz ciglu "tema = izgled maila". ✅ **Isporučeno F1/5 (2026-09-06).**
 
 **3. BRZINA — PRAVA DIJAGNOZA (2026-09-04), stara je bila kriva.**
 Mjera je sada PONOVLJIVA: `scripts/perf-probe.js` (Chromium koji vec imamo + CDP; hladan
@@ -520,6 +520,9 @@ uređajem već tražio, ne svakom posjetitelju. Tko dođe s Googlea na svijetlom
 > ⚠️ **Gotcha koja je koštala jedan krug:** `check:contrast:live` **ne diže vlastiti poslužitelj**
 > (traži `serve:test` na :5050, redak 32). Jutros je prošla jer je na portu visio stari
 > poslužitelj iz prethodne sesije; `ERR_CONNECTION_REFUSED` = nema poslužitelja, ne kvar brane.
+> ⚠️ **2026-09-16 (F3/1): isti razred je Playwright tiho mjerio TUĐE radno stablo** (13/13 i 24/24 lažno) →
+> `tests/global-setup.js` + `X-Sokrat-Root` ga sad odbija. **Skripte izvan Playwrighta (`check:contrast:live`,
+> `*-probe`) tu branu NEMAJU** — ondje i dalje vrijedi: provjeri čije datoteke poslužitelj daje.
 
 > ### ✅ F1/3 ISPORUČENA 2026-09-05 — prvi kadar prati uređaj
 > `boot.js` bez spremljenog izbora čita `prefers-color-scheme` prije prvog crtanja (tamno →
@@ -952,6 +955,9 @@ C4–C7 i POLICA nedovršeni, plaćeni promet dolazi na gradilište.
 > — uz tvrdo pravilo da **mijenjanje jezika NIKAD ne dira predmete** (jezik gradiva je
 > svojstvo programa, ADR-012). Ovo je red čekanja za taj posao, **bez termina** — nije dio
 > faze MREŽA i ne blokira je.
+
+> ✅ **F3/1 (2026-09-16, grana `feat/f3-dvojezicnost`): četiri pravne stranice → 0** — oba jezika u stranici
+> (ADR-037). Ostatak su `index.html` i editor/JS (F3/2–F3/3); brojka živi u osnovici, ne ovdje.
 
 **Opseg (izmjeren, `scripts/i18n-baseline.json` · pun popis: `node scripts/check-i18n.js --list`):**
 - **4 stranice bez mehanizma** — prvo učitati `js/i18n.js` + `data-i18n`, pa prevesti:

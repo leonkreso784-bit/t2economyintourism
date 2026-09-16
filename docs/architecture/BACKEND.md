@@ -33,13 +33,12 @@ ključ, `jsonb`). Sadržaj predmeta i dalje u `data/*` fajlovima (staza A, kasni
   string-polja=unija, objekti rekurzivno — naučeno se nikad ne gubi), diff-push 30 s +
   visibility/beforeunload. App bez računa radi identično kao prije (auth je aditivan).
 - **Profile (`js/profile.js` + `css/profile.css`, `#profile-page`):** account info, sync status
-  + „Sync now", progress overview po predmetu (iz localStorage), **GDPR**: „Delete cloud data"
-  (briše sve `progress` retke korisnika pa odjava — da diff-push ne re-uploada lokalno) + mailto
-  za potpuno brisanje računa. Ulazi u auth: `.auth-entry` gumbi (landing nav + headeri
+  + „Sync now", progress overview po predmetu (iz localStorage), **GDPR**: „Delete study history"
+  (briše `progress` retke korisnika i lokalni napredak; račun ostaje) + „Delete account" (Edge Function
+  `delete-account`, v. dolje). Ulazi u auth: `.auth-entry` gumbi (landing nav + headeri
   browse/lessons/study) — odjavljen→modal, prijavljen→Profile.
-  > **⚠️ Self-service „Obriši račun" (GDPR pravo na zaborav) — PLANIRANO, još NEMA** (trenutno samo „Delete cloud data" + mail-fallback).
-  > Odlučeno (ADR-016): brisanje `auth.users` traži `service_role` → ide u **Supabase Edge Function** (`service_role` NIKAD u Vercel), NE frontend.
-  > Dizajn-skica: `docs/records/BACKLOG.md` §Brisanje računa. Odgođeno (uz F4 ili ranije).
+  > ✅ **Self-service „Obriši račun" postoji od 2026-08-08** — Edge Function `delete-account` (ADR-016: `service_role`
+  > samo ondje; identitet iz JWT-a; slike iz oba osobna bucketa). Do 2026-09-16 je ovdje stajalo „PLANIRANO, još NEMA".
 - **Pravne/info stranice (Google Ads spremnost):** statične `privacy.html` / `terms.html` /
   `faq.html` / `contact.html` (+ `css/legal.css`), linkane iz landing footera i login modala
   (pristanak na Terms/Privacy). HTML se na Vercelu ne kešira immutable → izmjene su odmah vidljive.
