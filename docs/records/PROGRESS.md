@@ -5,6 +5,19 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-16 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/1 ①: javni kontakt `sokrat@sokratstudy.com`
+
+- **① kontakt:** 8 `mailto:` poveznica (`contact` · `faq` ×3 · `privacy` ×2 · `terms` · „O nama" u `index.html`) +
+  `README.md` sad vode na `sokrat@sokratstudy.com`. Isporuka potvrđena (Leon 15.09.), pa bez dodatne provjere.
+- **Brana `tests/unit/kontakt-adresa.test.js`** (u `test:unit`): svaki `mailto:` u korijenskim `.html` vodi na
+  službenu adresu, vidljiva adresa u poveznici je ista, osobni Gmail nigdje na javnoj površini (ni u `js/i18n.js`);
+  ispisuje koliko je poveznica dotaknula i pada na nuli. **Na starom tekstu: 21 pad** (8 poveznica izmjereno).
+  `legal.spec.js` je tražio samo DA `mailto:` postoji, ne KAMO vodi.
+- Gmail namjerno ostaje u `scripts/mail-preview.js` (testni podatak) i `supabase/f4-admin.sql` (Leonov račun).
+- **Datum „Last updated" nije mijenjan:** `privacy.html` 15.09. još nije na produkciji (izlazi zajedno), a u `terms`
+  je promjena adrese kontakta, ne uvjeta.
+- **Slijedi ②:** nacrt FAQ-a i „O nama" za Leona — u `faq.html`/`index.html` se ne upisuje prije njegove presude.
+
 ## 2026-09-15 navečer (OPUS, stablo `sokratstudy.f21`, `feat/f2-mail`) — F2/4: ③ izmjeren, brana funkcija, cigla 4 „16+"
 
 - **③ → pravi commit `c0a53f4`** (mjere u unosu ispod). Puni paket: 1 ✘ = poznati `theme-fouc` (BACKLOG), sam 60/60.

@@ -377,7 +377,7 @@ This project is heavily documented. Start with:
 
 **Questions? Feedback? Bug report?**
 
-📧 **Email:** [leonkreso784@gmail.com](mailto:leonkreso784@gmail.com)
+📧 **Email:** [sokrat@sokratstudy.com](mailto:sokrat@sokratstudy.com)
 
 🔗 **Links:**
 - 🌐 [Live Platform](https://www.sokratstudy.com)

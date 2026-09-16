@@ -5,6 +5,15 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-16 (OPUS) — **F3/1 ①: javni kontakt je `sokrat@sokratstudy.com`** — grana `feat/f3-dvojezicnost`
+
+### Promijenjeno
+- Kontakt, FAQ, Pravila privatnosti, Uvjeti korištenja i „O nama" vode na `sokrat@sokratstudy.com` umjesto osobnog
+  Gmaila (8 poveznica) + `README.md`.
+### Brana
+- `tests/unit/kontakt-adresa.test.js`: svaki `mailto:` na javnoj stranici vodi na službenu adresu i pokazuje nju;
+  osobni Gmail nigdje na javnoj površini. Na starom tekstu crvena (21 pad).
+
 ## 2026-09-15 (OPUS) — **F2/5c: polica istog izgleda + jedan ulaz u profil** — grana `feat/f2-zid` (F2/5 GOTOV)
 
 ### Promijenjeno
