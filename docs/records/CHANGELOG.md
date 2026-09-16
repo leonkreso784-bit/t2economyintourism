@@ -5,6 +5,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-16 (OPUS) — **F3/1 ③c: Pravila privatnosti na hrvatskom** — grana `feat/f3-dvojezicnost`
+
+### Dodano
+- **Pravila privatnosti na hrvatskom** (inačica od 15.09.) — izabrani jezik od prvog crtanja, prekidač u zaglavlju.
+
 ## 2026-09-16 (OPUS) — **F3/1 ③b: FAQ na hrvatskom** — grana `feat/f3-dvojezicnost`
 
 ### Dodano

@@ -87,6 +87,16 @@ testirano, što slijedi.
 - Osnovica `faq.html` 51 → **0**. `legal.spec.js` DVOJEZICNE + FAQ (bljesak · prekidač · 320 px oba jezika).
 - Gate: preflight EXIT 0 · `legal` + `i18n` 14/14 na pravom stablu (5051). Snimke 320/393 × HR/EN pregledane.
 
+### ③c Pravila privatnosti dvojezična (NOVI tekst od 15.09.)
+- Prevodi se inačica s obavijestima, upitnikom, 16+, profilom i Resendom (RASPORED: „prevodi se TA inačica").
+  Pravni izrazi hrvatskog prava: voditelj obrade · privola · izvršenje ugovora · čl. 6. st. 1. t. (a)/(b) GDPR-a ·
+  AZOP · standardne ugovorne klauzule. Nazivi gumba doslovno iz aplikacije („Prihvaćam"/„Odbijam", „Postavke
+  kolačića", „Obriši povijest učenja", „Obriši račun", „Obavijesti mailom"). Glas „ti", bez rodno obilježenih oblika
+  (upitnik: „studiraš li, ideš li u srednju školu"; „čuvamo zabilješku o tvom ne").
+- `check:i18n` oblik EN == HR **iz prvog pokušaja** (nijedan odlomak/stavka/poveznica ispušten). Osnovica
+  `privacy.html` 150 → **0**.
+- Gate: preflight EXIT 0 · `legal` + `i18n` + `a11y` 24/24 na pravom stablu. Snimke 320/393 × HR/EN pregledane.
+
 ## 2026-09-15 navečer (OPUS, stablo `sokratstudy.f21`, `feat/f2-mail`) — F2/4: ③ izmjeren, brana funkcija, cigla 4 „16+"
 
 - **③ → pravi commit `c0a53f4`** (mjere u unosu ispod). Puni paket: 1 ✘ = poznati `theme-fouc` (BACKLOG), sam 60/60.
