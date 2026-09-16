@@ -5,6 +5,18 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-16 (OPUS) — **F3/1 ②: novi tekst FAQ-a, „O nama" i Kontakta** — grana `feat/f3-dvojezicnost`
+
+### Promijenjeno
+- **FAQ** napisan iznova prema stvarnom stanju: vlastito gradivo, račun (Google, 16+), vidljivost, offline, jezik,
+  obavijesti mailom, brisanje u aplikaciji. Maknute zastarjele tvrdnje (brisanje računa mailom, „new subjects added
+  regularly", slanje bilježaka mailom).
+- **„O nama":** točan opis kataloga, oznake su stvarni načini učenja (Learn · Flashcards · Quiz · Fill-in-the-blanks),
+  kartica „Get in touch", uloga „Founder & developer"; HTML-fallback izjednačen s rječnikom.
+- **Kontakt:** popis tema bez slanja bilježaka i bez brisanja računa mailom.
+- **Pravila privatnosti §7:** ime gumba „Delete study history" (pisalo „Delete cloud data").
+- **Naslovnica:** vrata „Make your own" više ne obećavaju dijeljenje („private to you").
+
 ## 2026-09-16 (OPUS) — **F3/1 ①: javni kontakt je `sokrat@sokratstudy.com`** — grana `feat/f3-dvojezicnost`
 
 ### Promijenjeno

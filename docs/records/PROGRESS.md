@@ -18,6 +18,26 @@ testirano, što slijedi.
   je promjena adrese kontakta, ne uvjeta.
 - **Slijedi ②:** nacrt FAQ-a i „O nama" za Leona — u `faq.html`/`index.html` se ne upisuje prije njegove presude.
 
+### ② novi tekst (Leon: *„super mozemo nastavit dalje"* + anketa 16.09.)
+- **Nacrt je provjeren protiv koda, ne sjećanja** — i našao četiri zastarjele tvrdnje koje su bile javne: FAQ je slao
+  brisanje računa MAILOM (u aplikaciji je od 08.08.) · obećavao „new subjects added regularly" (staza pauzirana) ·
+  zvao na slanje bilježaka (UGC ih gradi sam) · „O nama" je pisao „several programmes" (jedan smjer, dva jezika) i
+  nudio „Summaries" kao način učenja (nikad nije postojao).
+- **FAQ** 12 pitanja (račun, Google, 16+, vlastito gradivo, vidljivost, offline, jezik, obavijesti, brisanje, kontakt).
+  Vježbe za vlastito gradivo i offline za vlastito gradivo se NE obećavaju (nema dokaza u kodu).
+- **„O nama":** HTML-fallback je nosio STARI tekst dok je rječnik od 24.08. nosio novi → izjednačen · oznake
+  Learn/Flashcards/Quiz/Fill-in-the-blanks s ikonama trake modova · „Contribute" → „Get in touch" · „Founder &
+  developer" (Leon) · glas množina svugdje (Leon). Ključevi `about.feat.*` i `about.contact.*` preimenovani (nitko
+  drugi ih ne zove — provjereno grepom).
+- **Nalazi koje je Leon presudio u anketi:** Pravila §7 „Delete cloud data" → „Delete study history" (ime gumba) ·
+  `door.make.m` „private until you share it" → „private to you" (dijeljenje ne postoji, PRD §7) · **Uvjeti dobivaju
+  novi tekst prije prijevoda** (§5 tvrdio da je SAV sadržaj Leonov, bez vlastitog gradiva, Google-prijave i 16+).
+- **`check:i18n` osnovica svjesno PODIGNUTA:** `faq.html` 34 → 51, `contact.html` 26 → 28 — novi tekst ima više
+  nositelja; ③ ih spušta na nulu. Isti postupak kao `privacy.html` 15.09.
+- Gate: preflight EXIT 0 · `legal` + `about` + `seo` + `phone` 24/24 (iPhone-SE-375). ⚠️ Pouka: prvi put sam
+  Playwright ispis filtrirao `grep -v` po ESC-sekvenci i time progutao završni redak, a `EXIT=0` je bio `tail`-ov —
+  ponovljeno s `--reporter=list` i pravim izlaznim kodom.
+
 ## 2026-09-15 navečer (OPUS, stablo `sokratstudy.f21`, `feat/f2-mail`) — F2/4: ③ izmjeren, brana funkcija, cigla 4 „16+"
 
 - **③ → pravi commit `c0a53f4`** (mjere u unosu ispod). Puni paket: 1 ✘ = poznati `theme-fouc` (BACKLOG), sam 60/60.

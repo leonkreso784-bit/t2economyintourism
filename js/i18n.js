@@ -286,7 +286,8 @@
     'door.study.m': { en: ' subjects ready', hr: ' predmeta spremno' },
     'door.make.t': { en: 'Make your own', hr: 'Napravi svoje' },
     'door.make.d': { en: 'From your notes to flashcards in a few minutes.', hr: 'Od bilježaka do kartica u nekoliko minuta.' },
-    'door.make.m': { en: 'Editor · private until you share it', hr: 'Editor · privatno dok ne podijeliš' },
+    // F3/1 (Leon, 16.09.): do tada „private until you share it" — obećanje dijeljenja koje ne postoji (PRD §7).
+    'door.make.m': { en: 'Editor · private to you', hr: 'Editor · vidljivo samo tebi' },
 
     // ── KATALOG + ČINJENICE ───────────────────────────────────────────────
     'cat.title': { en: 'Or start from the catalog', hr: 'Ili kreni iz kataloga' },
@@ -403,14 +404,17 @@
     'about.mission.h': { en: 'Our Mission', hr: 'Naša misija' },
     'about.mission.p': { en: 'Sokrat Study turns study material into something that asks you questions instead of just showing you answers. It is built by Leon Kreso and it is free — whether the material is already here or you write it yourself.', hr: 'Sokrat Study pretvara gradivo u nešto što te ispituje, umjesto da ti samo pokazuje odgovore. Radi ga Leon Kreso i besplatno je — svejedno je li gradivo već ovdje ili ga sam napišeš.' },
     'about.do.h': { en: 'What We Do', hr: 'Što radimo' },
-    'about.do.p': { en: 'Wherever the material comes from, it works the same way: read it, then practise it as flashcards, a quiz or fill-in-the-blanks. The catalogue holds ready subjects across several programmes; the editor lets you build your own from your notes.', hr: 'Svejedno odakle gradivo dolazi, radi na isti način: pročitaš ga, pa uvježbaš karticama, kvizom ili dopunama. U katalogu stoje gotovi predmeti iz nekoliko programa, a u editoru napraviš vlastite iz svojih bilježaka.' },
-    'about.feat.materials': { en: 'Study Materials', hr: 'Gradivo' },
-    'about.feat.summaries': { en: 'Summaries', hr: 'Sažeci' },
-    'about.feat.quizzes': { en: 'Interactive Quizzes', hr: 'Interaktivni kvizovi' },
+    // F3/1 (Leon, 16.09.): „several programmes" nije bilo točno (jedan smjer, dva jezika) · oznake su
+    // stvarni načini učenja (sažetaka nikad nije bilo) · „Contribute" je pozivao da se gradivo šalje,
+    // pa je postao „Get in touch" · glas je MNOŽINA kao na FAQ-u, Kontaktu i u Pravilima („write to us").
+    'about.do.p': { en: 'Wherever the material comes from, it works the same way: read it, then practise it as flashcards, a quiz or fill-in-the-blanks. The catalogue holds ready university subjects; the editor lets you build your own from your notes.', hr: 'Svejedno odakle gradivo dolazi, radi na isti način: pročitaš ga, pa uvježbaš karticama, kvizom ili dopunama. U katalogu stoje gotovi fakultetski predmeti, a u editoru napraviš vlastite iz svojih bilježaka.' },
+    'about.feat.learn': { en: 'Learn', hr: 'Učenje' },
     'about.feat.flashcards': { en: 'Flashcards', hr: 'Kartice' },
-    'about.contribute.h': { en: 'Contribute', hr: 'Doprinesi' },
-    'about.contribute.p': { en: 'You no longer have to send anything to anyone — make your material right here, and it stays yours. If you would rather hand over notes, or you have found a mistake, write to me.', hr: 'Više ne moraš nikome ništa slati — gradivo napraviš ovdje i ostaje tvoje. Ako radije predaš bilješke ili si našao grešku, javi mi se.' },
-    'about.creator.role': { en: 'Developer', hr: 'Developer' },
+    'about.feat.quiz': { en: 'Quiz', hr: 'Kviz' },
+    'about.feat.fill': { en: 'Fill-in-the-blanks', hr: 'Dopune' },
+    'about.contact.h': { en: 'Get in touch', hr: 'Javi nam se' },
+    'about.contact.p': { en: 'Your own material you make right here, and it stays yours. Found a mistake or have an idea? Write to us.', hr: 'Vlastito gradivo napraviš ovdje i ostaje tvoje. Našao si grešku ili imaš ideju? Piši nam.' },
+    'about.creator.role': { en: 'Founder & developer', hr: 'Osnivač i developer' },
     // T4 · Cookie-traka. Do sada je bila JEDINA površina sa zakucanim engleskim tekstom —
     // a to je pravni tekst, ne ukras. ⚠️ Tekst je namjerno kraći nego prije (171 → 100
     // znakova): na 320 px je stara rečenica bila PET redaka i traka je uzimala 38 % ekrana.
