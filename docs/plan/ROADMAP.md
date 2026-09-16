@@ -109,7 +109,7 @@ file-fallbackom — AKTIVNO. Detaljan dnevnik: [PROGRESS.md](../records/PROGRESS
   vlastiti `storageKey`). Prijevod preko **`scripts/translate-subject.js`** (Sonnet tool_use, slot-pristup + salvage-parser; čuva quiz-indeks/KaTeX/
   `_______`/HTML). **Napravljeno:** ✅ pilot **Business Informatics HR** (11 kat/86fc, ~$0.66) · ✅ catalog (EN nepromijenjen, HR kroz Browse) ·
   ✅ **UI i18n + globalni 🌐 HR/EN toggle** (`js/i18n.js`, ~160 ključeva; cijeli study UI + landing + browse; EN bajt-identičan). Detaljan plan: [HRV_PLAN.md](../archive/HRV_PLAN.md).
-  **⬜ Preostaje:** long-tail chrome (profil/~~pravne stranice~~ ✅ F3/1 2026-09-16/lessons-header/blind-map) **PA prijevod ostalih predmeta** (batch alatom) → kvantitativni → vježbe → Supabase re-sync.
+  **⬜ Preostaje:** long-tail chrome (profil/~~pravne stranice~~ ✅ F3/1 2026-09-16/lessons-header/~~blind-map~~ ✅ F3/2 2026-09-16) **PA prijevod ostalih predmeta** (batch alatom) → kvantitativni → vježbe → Supabase re-sync.
 - **2) 3. godina** Hospitality Managementa — doći će, timing TBD.
 - **3) Studentski UGC za više godine:** studenti uploadaju/grade **3. i 4. godinu**. Za randomizirane UGC-vježbe =
   **deklarativni `params`+formula + sigurni sandbox-evaluator** (NE `eval`), ne klijentski kod (vidi BUG-012 pouku). Veže se na Fazu 1–2 + moderaciju ([VISION.md](../product/VISION.md) §4).

@@ -96,9 +96,9 @@ preskače svjesno, a ne zaboravom.
 
 > **⚠️ PRIORITET — MCP „VRLO USKORO" (Leon, 16.09.).** *„prije nego što napravimo cijelu mrežu ja bih
 > se krenuo baviti MCP-om i to VRLO uskoro, jer smo polako na kraju s vremenom prije početka faksa."*
-> F6 time ide **prije F7** i ne čeka redom F4/F5. **Gdje točno** u odnosu na ostatak F3 (vježbe, profil,
-> editor = F3/3), F4 i F5 — **Leonova riječ, pitati poslije cigle F3/2-3.** Činjenica za tu odluku:
-> F6/1 (konektor) traži OAuth nad računom iz F2.
+> **✅ Red presudio Leon (anketa 16.09., poslije F3/2-3):** F3/2 **profil + Moji materijali + prijava**
+> (stranice na koje stiže ono što MCP napravi) → **F6 MCP** → ostatak F3/2 (vježbe, sitnice) · F3/3 editor ·
+> F4 · F5 · F7. Činjenica koja ide uz F6/1: konektor traži OAuth nad računom iz F2.
 
 ---
 
