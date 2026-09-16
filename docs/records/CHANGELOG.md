@@ -5,6 +5,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-16 (OPUS) — **F3/2 cigla 3: jezik prati uređaj** — grana `feat/f3-dvojezicnost`
+
+### Promijenjeno
+- **Prvi posjet na uređaju s hrvatskim jezikom otvara hrvatsko sučelje**, od prvog prikaza i na svim stranicama
+  (uključujući pravne i odjavu). Svi ostali uređaji dobivaju engleski. Prekidač jezika i dalje ima zadnju riječ i
+  pamti se. Predmeti i materijali ostaju na jeziku na kojem su napravljeni.
+
 ## 2026-09-16 (OPUS) — **F3/2 cigla 2: slijepa karta na hrvatskom** — grana `feat/f3-dvojezicnost`
 
 ### Dodano

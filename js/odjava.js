@@ -39,11 +39,7 @@
 
   function init() {
     // Posjetitelj iz maila najčešće NIJE birao jezik na ovom uređaju; tada presuđuje jezik uređaja.
-    let izabrano = null;
-    try { izabrano = window.localStorage.getItem('sokrat-ui-lang'); } catch (e) { /* privatni način */ }
-    if (!izabrano && /^hr\b/i.test(window.navigator.language || '') && typeof window.setUiLang === 'function') {
-      window.setUiLang('hr', false);
-    }
+    // Od F3/2 to radi `boot.js` za SVAKU stranicu (ovdje je stajala vlastita kopija pravila).
     doc.title = tr('unsub.pageTitle', 'Unsubscribe — Sokrat Study');
 
     const token = new URLSearchParams(window.location.search).get('t') || '';

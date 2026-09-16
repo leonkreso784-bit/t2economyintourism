@@ -838,9 +838,11 @@
   function readStored() {
     try { const v = localStorage.getItem(LS_KEY); return (v === 'hr' || v === 'en') ? v : null; } catch (_) { return null; }
   }
-  // Početni jezik = spremljeni izbor korisnika, inače 'en'.
+  // Početni jezik = spremljeni izbor korisnika, inače jezik UREĐAJA (F3/2 cigla 3). Pravilo „koji
+  // uređaj je hrvatski" zna samo `boot.js`; bez boota (sandbox) ostaje engleski.
   /** @type {'en' | 'hr'} */
-  let uiLang = readStored() || 'en';
+  let uiLang = readStored()
+    || (typeof window.__sokratJezikUredjaja === 'function' ? window.__sokratJezikUredjaja() : 'en');
 
   /** @param {string} key @returns {string} */
   function t(key) {

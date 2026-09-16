@@ -93,10 +93,23 @@
         return j;
     }
 
+    /* F3/2 cigla 3 (Leon, 16.09.): BEZ IZBORA JEZIK PRATI UREĐAJ — isto pravilo kao tema.
+       Samo hrvatski uređaj dobiva hrvatsko sučelje; susjedni jezici NE (*„nemamo veze sa srpskim
+       niti crnogorskim niti bosanskim, eng i hrvatski su jednako bitni"*). Gleda se PRVI jezik
+       uređaja: hrvatski kao drugi na popisu je rezerva, ne jezik uređaja. Jezik uređaja se NE
+       zapisuje — izbor nastaje tek na prekidaču. Mijenja SAMO sučelje; gradivo ostaje na jeziku
+       na kojem je napravljeno (ADR-012). `i18n.js` pita ovu funkciju, ne nosi svoju kopiju. */
+    function jezikUredjaja() {
+        var n = window.navigator;
+        var prvi = n ? ((n.languages && n.languages[0]) || n.language) : '';
+        return /^hr(-|$)/i.test(String(prvi || '')) ? 'hr' : 'en';
+    }
+
     var spremljeniJezik = null;
     try { spremljeniJezik = localStorage.getItem('sokrat-ui-lang'); } catch (e) { /* privatni način */ }
     window.__sokratPrimijeniJezik = primijeniJezik;
-    primijeniJezik(spremljeniJezik);
+    window.__sokratJezikUredjaja = jezikUredjaja;
+    primijeniJezik(JEZICI.indexOf(spremljeniJezik) >= 0 ? spremljeniJezik : jezikUredjaja());
 
     /* F1/7 ② · `?bez=zamucenja,sjena` → `<html data-bez="zamucenja sjena">` PRIJE prvog crtanja.
        Protučinjenični prekidač za mjerenje na PRAVOM uređaju: `css/bez.css` gasi sumnjivca

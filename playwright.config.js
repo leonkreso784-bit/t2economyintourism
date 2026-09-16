@@ -85,6 +85,10 @@ module.exports = defineConfig({
     // logika (npr. dual-read DB→JSON→.js fallback preko page.route) bila deterministička —
     // SW presreće same-origin fetcheve. SW se testira izolirano u sw.spec.js (test.use allow).
     serviceWorkers: 'block',
+    // ⚠️ Od F3/2 (jezik prati uređaj) je jezik preglednika ULAZ u aplikaciju: bez ovoga bi isti
+    // testovi na računalu s hrvatskim sustavom vidjeli hrvatsko sučelje, a u CI-ju engleski.
+    // Testovi hrvatskog uređaja traže ga izričito (`test.use({ locale: 'hr-HR' })`).
+    locale: 'en-US',
   },
   globalSetup: require.resolve('./tests/global-setup.js'),
   webServer: {

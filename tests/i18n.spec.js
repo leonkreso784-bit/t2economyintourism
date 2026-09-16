@@ -132,3 +132,48 @@ test('F3/2: prekidač usred kviza ne gazi pitanje, a traka i podnožje prate jez
   await expect(lang.locator('.lang-toggle-label')).toHaveText('EN');
   expect(await page.evaluate(zivo)).toEqual(prije);
 });
+
+// F3/2 cigla 3 (Leon, 16.09.): BEZ IZBORA JEZIK PRATI UREĐAJ — samo hrvatski uređaj dobiva hrvatsko
+// sučelje, izbor na prekidaču pobjeđuje, a jezik uređaja se NE zapisuje kao izbor. Logiku (koji su
+// uređaji hrvatski) drži `tests/unit/jezik-boot.test.js`; ovdje je pravi preglednik s pravim `locale`.
+test.describe('jezik uređaja', () => {
+  test.use({ locale: 'hr-HR' });
+
+  test('hrvatski uređaj bez izbora → hrvatsko sučelje; prekidač pobjeđuje i pamti se', async ({ page }) => {
+    await page.goto('/');
+    await page.waitForFunction(() => window.getUiLang);
+    expect(await page.evaluate(() => navigator.language)).toBe('hr-HR');
+    expect(await page.evaluate(() => window.getUiLang())).toBe('hr');
+    expect(await page.evaluate(() => document.documentElement.lang)).toBe('hr');
+    expect(await page.evaluate(() => localStorage.getItem('sokrat-ui-lang')),
+      'jezik uređaja nije korisnikov izbor i ne smije se zapisati').toBeNull();
+    await expect(page.locator('.topbar .lang-toggle-label')).toHaveText('HR');
+    await expect(page.locator('#topbarMaterials .topbar-btn-label')).toHaveText('Moji materijali');
+
+    // Prekidač → engleski je IZBOR: zapiše se i nadjača hrvatski uređaj i poslije ponovnog učitavanja.
+    await page.evaluate(() => window.toggleUiLang());
+    expect(await page.evaluate(() => localStorage.getItem('sokrat-ui-lang'))).toBe('en');
+    await page.reload();
+    await page.waitForFunction(() => window.getUiLang);
+    expect(await page.evaluate(() => window.getUiLang())).toBe('en');
+    await expect(page.locator('#topbarMaterials .topbar-btn-label')).toHaveText('My materials');
+  });
+
+  test('pravna stranica na hrvatskom uređaju: hrvatski blok od prvog učitavanja', async ({ page }) => {
+    await page.goto('/privacy.html');
+    expect(await page.evaluate(() => document.documentElement.getAttribute('data-ui-lang'))).toBe('hr');
+    await expect(page.locator('.jezik[lang="hr"]').first()).toBeVisible();
+    await expect(page.locator('.jezik[lang="en"]').first()).toBeHidden();
+  });
+});
+
+test.describe('jezik uređaja — susjedni jezici', () => {
+  test.use({ locale: 'sr-RS' });
+
+  test('srpski uređaj → engleski (Leon: samo hrvatski otvara hrvatsko sučelje)', async ({ page }) => {
+    await page.goto('/');
+    await page.waitForFunction(() => window.getUiLang);
+    expect(await page.evaluate(() => window.getUiLang())).toBe('en');
+    expect(await page.evaluate(() => document.documentElement.lang)).toBe('en');
+  });
+});

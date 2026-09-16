@@ -5,6 +5,30 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-16 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/2 cigla 3: jezik prati uređaj
+
+- **Leon (anketa):** samo hrvatski uređaj → hrvatsko sučelje (NE bs/sr/cnr: *„eng i hrvatski su jednako bitni"*);
+  gradivo ostaje na jeziku na kojem je napravljeno; *„možemo krenuti sada na sljedeću ciglu"*.
+- **Kod:** `boot.js` `jezikUredjaja()` — PRVI jezik uređaja (`languages[0]`), `/^hr(-|$)/i`; bez valjanog izbora
+  presuđuje uređaj, i to prije prvog crtanja; ništa se ne zapisuje dok korisnik ne pritisne prekidač. `i18n.js`
+  počinje istim jezikom kroz `window.__sokratJezikUredjaja` (jedno mjesto). `odjava.js` je nosio vlastitu kopiju
+  (`navigator.language`) → uklonjena. Tip u `types/globals.d.ts`. CLAUDE.md redak i18n prepisan bez rasta (32 972).
+- **Playwright `locale: 'en-US'`** u `use`: jezik računala je od sada ulaz u aplikaciju (lokalno je Chromium
+  prijavljivao `en-GB`, WebKit `en-US`; hrvatski sustav bi preokrenuo pola suite).
+- **Brane:** `jezik-boot.test.js` ④ — 11 uređaja (hr-HR · hr · HR-hr → hr; en · de · sr · bs · cnr · sr-Latn · hrv ·
+  [en, hr] → en), izbor pobjeđuje u oba smjera, nevaljan zapis → uređaj, privatni način → uređaj, i18n ne zapisuje
+  uređaj kao izbor, prekidač zapisuje; **na starom kodu 8 padova**. `i18n.spec.js` „jezik uređaja" (`hr-HR`: sučelje,
+  `lang`, nema zapisa, prekidač → EN preživi reload · `privacy.html` HR blok · `sr-RS` → EN); **stari kod → 2 pada**.
+  ⚠️ Prva obrnuta provjera bila je NEVALJANA (sed pao na `|`, vraćen samo `boot.js`, a i18n je nadoknadio → zeleno) —
+  ponovljena skriptom koja traži točno jedno pogađanje i uspoređuje vraćene datoteke bajt po bajt.
+- **Usput:** test karte iz cigle 2 pao na položenom telefonu (klik na 40,40 presretala ljepljiva traka, ovisno o
+  skrolu) → klik u sredinu, 8/8 u 4 ponavljanja.
+- **Gate:** preflight EXIT 0 · Playwright 5051 (i18n · legal · odjava · landing · about · a11y · blind-map · browse ·
+  smoke · theme-fouc) × SE + položeni: 101 prošlo, 1 palo (gore, popravljeno i ponovljeno 8/8), 14 uvjetno preskočeno.
+- **Leon usput (smjer, zapisano u RASPORED §2 i F7):** MCP „VRLO uskoro", prije mreže i prije početka faksa · objava:
+  katalog pod njegovim profilom, pregled svega objavljenog, AI profili za početak, 1. godina FMTU na hrvatskom,
+  pravni fakultet. **Pitati poslije ove cigle: gdje točno ide MCP.**
+
 ## 2026-09-16 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/2 cigla 2: slijepa karta dvojezična
 
 - **Leon:** *„odlično, možeš krenuti"* (poslije cigle 1).

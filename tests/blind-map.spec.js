@@ -93,9 +93,11 @@ test('F3/2: slijepa karta na hrvatskom — bez engleskog ostatka, koordinate pra
   await expect(page.locator('#toastMessage')).toHaveText('Najprije klikni na karti i odaberi mjesto');
 
   // Klik na kartu → koordinate na hrvatskom; prekidač → precrtane na engleski iz stanja.
+  // Klik u SREDINU platna: na položenom telefonu (852×393) gornji rub karte zna ležati pod
+  // ljepljivom trakom, pa je klik na (40, 40) povremeno presretala mrvica (nestabilan test).
   const platno = page.locator('#blindMapCanvas');
   await platno.scrollIntoViewIfNeeded();
-  await platno.click({ position: { x: 40, y: 40 } });
+  await platno.click();
   await expect(page.locator('#mapCoords')).toHaveText(/^Odabrano: X=\d+, Y=\d+$/);
   await page.evaluate(() => window.toggleUiLang());
   await expect(page.locator('#mapCoords')).toHaveText(/^Clicked: X=\d+, Y=\d+$/);

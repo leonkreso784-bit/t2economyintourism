@@ -57,6 +57,8 @@ function svijet(o) {
             removeItem: (k) => { delete store[k]; },
         };
     const ctx = { document, localStorage, location: { hash: '', search: '' }, console, matchMedia: () => ({ matches: false }) };
+    // Jezik uređaja (F3/2 cigla 3). Bez `o.uredjaj` navigatora NEMA — stari sandbox mora ostati engleski.
+    if (o.uredjaj) ctx.navigator = { language: o.uredjaj[0], languages: o.uredjaj.slice() };
     ctx.window = ctx;
     vm.createContext(ctx);
     vm.runInContext(BOOT, ctx, { filename: 'boot.js' });
@@ -103,6 +105,53 @@ console.log('\n=== jezik prije prvog crtanja (boot.js + i18n.js u sandboxu) ===\
     tvrdi(s.store['sokrat-ui-lang'] === 'hr', '② … i izbor je zapamćen', s.store);
     s.ctx.setUiLang('en');
     tvrdi(s.attrs['data-ui-lang'] === 'en' && s.attrs.lang === 'en', '② natrag na „en" → oba atributa en', s.attrs);
+}
+
+// ④ JEZIK PRATI UREĐAJ (F3/2 cigla 3, Leon 16.09.): bez izbora presuđuje PRVI jezik uređaja, i to
+// SAMO hrvatski otvara hrvatsko sučelje (*„nemamo veze sa srpskim niti crnogorskim niti bosanskim,
+// eng i hrvatski su jednako bitni"*). Izbor uvijek pobjeđuje, a jezik uređaja se NE pamti kao izbor.
+console.log('\n--- ④ jezik uređaja ---\n');
+for (const [uredjaj, ocekivano] of [
+    [['hr-HR'], 'hr'], [['hr'], 'hr'], [['HR-hr'], 'hr'],
+    [['en-US'], 'en'], [['de-DE'], 'en'],
+    [['sr-RS'], 'en'], [['bs-BA'], 'en'], [['cnr-ME'], 'en'], [['sr-Latn-RS'], 'en'],
+    [['hrv'], 'en'],                         // nije BCP 47 oznaka hrvatskog — ne nagađa se
+    [['en-US', 'hr-HR'], 'en'],              // hrvatski kao DRUGI jezik nije jezik uređaja
+]) {
+    const s = svijet({ spremljeno: {}, uredjaj });
+    tvrdi(s.attrs.lang === ocekivano && (s.attrs['data-ui-lang'] || 'en') === ocekivano,
+        `④ bez izbora, uređaj ${JSON.stringify(uredjaj)} → ${ocekivano}`, s.attrs);
+}
+{
+    const s = svijet({ spremljeno: { 'sokrat-ui-lang': 'en' }, uredjaj: ['hr-HR'] });
+    tvrdi(s.attrs.lang === 'en', '④ izbor „en" pobjeđuje hrvatski uređaj', s.attrs);
+}
+{
+    const s = svijet({ spremljeno: { 'sokrat-ui-lang': 'hr' }, uredjaj: ['en-US'] });
+    tvrdi(s.attrs.lang === 'hr', '④ izbor „hr" pobjeđuje engleski uređaj', s.attrs);
+}
+{
+    const s = svijet({ spremljeno: { 'sokrat-ui-lang': 'de' }, uredjaj: ['hr-HR'] });
+    tvrdi(s.attrs.lang === 'hr', '④ nevaljan zapis („de") nije izbor → presuđuje uređaj', s.attrs);
+}
+{
+    const s = svijet({ storageBaca: true, uredjaj: ['hr-HR'] });
+    tvrdi(s.attrs.lang === 'hr', '④ privatni način (localStorage baca) → i dalje uređaj', s.attrs);
+}
+{
+    const s = svijet({ spremljeno: {}, uredjaj: ['hr-HR'], i18n: true });
+    tvrdi(s.ctx.getUiLang() === 'hr', '④ i18n.js počinje istim jezikom kao boot (hrvatski uređaj)', s.ctx.getUiLang());
+    tvrdi(!('sokrat-ui-lang' in s.store), '④ … a jezik uređaja se NE zapisuje kao izbor', s.store);
+    s.ctx.toggleUiLang();
+    tvrdi(s.store['sokrat-ui-lang'] === 'en' && s.attrs.lang === 'en', '④ prekidač → „en" zapamćen kao izbor', s.store);
+}
+{
+    const s = svijet({ spremljeno: {}, uredjaj: ['sr-RS'], i18n: true });
+    tvrdi(s.ctx.getUiLang() === 'en', '④ i18n.js: srpski uređaj → engleski', s.ctx.getUiLang());
+}
+{
+    const s = svijet({ spremljeno: {} });
+    tvrdi(typeof s.ctx.__sokratJezikUredjaja === 'function', '④ boot izlaže window.__sokratJezikUredjaja (jedno mjesto)');
 }
 
 if (pao) { console.log('\n❌ ' + pao + ' pad(ova)\n'); process.exit(1); }

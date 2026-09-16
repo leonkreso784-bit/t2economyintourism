@@ -43,6 +43,8 @@ declare global {
     getUiLang?: () => string;
     // js/boot.js (F3/1): primjena jezika na <html> (lang + data-ui-lang) prije prvog crtanja; i18n.js je zove pri prebacivanju
     __sokratPrimijeniJezik?: (lang: string | null) => string;
+    // js/boot.js (F3/2): jezik uređaja kad nema izbora — jedino mjesto koje zna koji je uređaj hrvatski
+    __sokratJezikUredjaja?: () => 'en' | 'hr';
 
     // Renderi/oslonci koje i18n poziva nakon promjene jezika (definirani u drugim modulima)
     refreshAuthNav?: () => void;
