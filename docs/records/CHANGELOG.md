@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-16 (OPUS) — **F3/1 ③b: FAQ na hrvatskom** — grana `feat/f3-dvojezicnost`
+
+### Dodano
+- **Česta pitanja na hrvatskom** — isti mehanizam kao Kontakt: izabrani jezik od prvog crtanja, prekidač u zaglavlju,
+  hrvatsko zaglavlje, podnožje i naslov kartice.
+
 ## 2026-09-16 (OPUS) — **F3/1 ③a: pravne stranice dvojezične — mehanizam + Kontakt na hrvatskom** — grana `feat/f3-dvojezicnost`
 
 ### Dodano

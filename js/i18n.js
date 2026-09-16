@@ -605,6 +605,7 @@
     'legal.lang': { en: 'Language: English / Croatian', hr: 'Jezik: hrvatski / engleski' },
     'legal.back': { en: '← Back to app', hr: '← Natrag u aplikaciju' },
     'legal.title.contact': { en: 'Contact — Sokrat Study', hr: 'Kontakt — Sokrat Study' },
+    'legal.title.faq': { en: 'FAQ — Sokrat Study', hr: 'Česta pitanja — Sokrat Study' },
     'profile.editNamePh': { en: 'Your name', hr: 'Tvoje ime' },
     'profile.editBioPh': { en: 'A short description — what you study, what you are building.', hr: 'Kratak opis — što učiš i što gradiš.' },
     // Temelj mreže (A1) — korisničko ime (`set_profile_handle`, supabase/f2-temelj-mreze.sql)

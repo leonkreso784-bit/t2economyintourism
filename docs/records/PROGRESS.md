@@ -73,6 +73,20 @@ testirano, što slijedi.
 - Gate: preflight EXIT 0 · Playwright 49/49 na pravom stablu (port 5051). **Slijedi:** FAQ, Pravila privatnosti
   (svaki svoj commit); Uvjeti tek poslije Leonove presude nacrta.
 
+### Leon: nacrt Uvjeta v2 i hrvatski glas ODOBRENI (*„je u redu je budi bez brige"*)
+- Uvjeti v2 računaju s objavom (Leon: *„kasnije je plan da korisnik može objavljivati svoje radove"*): pokrivaju
+  dijeljenje linkom (F7/1) i javnu objavu (ADR-035) — autor odlučuje i povlači, besplatno (ADR-036), samo ono na što
+  imaš pravo, prijava i uklanjanje s obrazloženjem (DSA), zabrana namještanja rezultata, §9 dodatni uvjeti za
+  prodaju/natjecanje/organizacije. ⚠️ Pri F7 se MORAJU dopuniti i Pravila privatnosti (ime uz objavu, link-token).
+- Hrvatski glas: „ti", bez rodno obilježenih oblika („uz prijavu", „uz tvoj pristanak", „napravi ga ovdje").
+
+### ③b FAQ dvojezičan
+- `faq.html` po obrascu Kontakta (pretvarač u scratchpadu — isti kostur, bez ručnog prepisivanja): HR tekst, zaglavlje,
+  podnožje, `<title data-i18n="legal.title.faq">`, `i18n.js` prije `consent.js`. Nazivi iz aplikacije doslovno
+  (Moji materijali · + Novo · polica · Skini za offline · Obavijesti mailom · Obriši povijest učenja).
+- Osnovica `faq.html` 51 → **0**. `legal.spec.js` DVOJEZICNE + FAQ (bljesak · prekidač · 320 px oba jezika).
+- Gate: preflight EXIT 0 · `legal` + `i18n` 14/14 na pravom stablu (5051). Snimke 320/393 × HR/EN pregledane.
+
 ## 2026-09-15 navečer (OPUS, stablo `sokratstudy.f21`, `feat/f2-mail`) — F2/4: ③ izmjeren, brana funkcija, cigla 4 „16+"
 
 - **③ → pravi commit `c0a53f4`** (mjere u unosu ispod). Puni paket: 1 ✘ = poznati `theme-fouc` (BACKLOG), sam 60/60.

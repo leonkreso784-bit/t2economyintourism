@@ -67,6 +67,7 @@ for (const [shema, tema] of [['dark', 'carbon'], ['light', 'academic']]) {
 // Popis raste stranicu po stranicu (cigle F3/1); kad obuhvati sve četiri, mjeri cijeli PAGES.
 const DVOJEZICNE = [
   { url: '/contact.html', h1: { en: 'Contact', hr: 'Kontakt' }, naslov: { en: 'Contact — Sokrat Study', hr: 'Kontakt — Sokrat Study' } },
+  { url: '/faq.html', h1: { en: 'Frequently Asked Questions', hr: 'Česta pitanja' }, naslov: { en: 'FAQ — Sokrat Study', hr: 'Česta pitanja — Sokrat Study' } },
 ];
 
 for (const p of DVOJEZICNE) {

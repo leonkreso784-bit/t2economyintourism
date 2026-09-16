@@ -3,129 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FAQ — Sokrat Study</title>
+    <title data-i18n="legal.title.faq">FAQ — Sokrat Study</title>
     <meta name="description" content="Questions about Sokrat Study — studying ready subjects, making your own material, accounts, privacy and contact.">
     <link rel="canonical" href="https://www.sokratstudy.com/faq.html">
-    <link rel="icon" type="image/png" href="assets/logo.svg?v=20260916142333">
+    <link rel="icon" type="image/png" href="assets/logo.svg?v=20260916162257">
     <!-- paleta: GENERIRAN izvadak tokena iz bundlea; MORA prije legal.css -->
-    <link rel="stylesheet" href="css/tokens.static.css?v=20260916142333">
-    <link rel="stylesheet" href="css/legal.css?v=20260916142333">
+    <link rel="stylesheet" href="css/tokens.static.css?v=20260916162257">
+    <link rel="stylesheet" href="css/legal.css?v=20260916162257">
 
     <!-- Cookie consent + Google Analytics (Consent Mode v2; default=denied zivi u js/consent.js, D1/CSP) -->
-    <link rel="stylesheet" href="css/consent.css?v=20260916142333">
-    <script src="js/consent.js?v=20260916142333" defer></script>
+    <link rel="stylesheet" href="css/consent.css?v=20260916162257">
+    <!-- F3/1: i18n.js PRIJE consent.js (oba su defer, izvršavaju se redom) — cookie-traka tekst uzima iz `window.t`. -->
+    <script src="js/i18n.js?v=20260916162257" defer></script>
+    <script src="js/consent.js?v=20260916162257" defer></script>
     <!-- ADR-034: štipanje s dva prsta gasi JS, jer Safari metu ignorira — zašto piše u js/no-zoom.js -->
-    <script src="js/no-zoom.js?v=20260916142333" defer></script>
+    <script src="js/no-zoom.js?v=20260916162257" defer></script>
 </head>
 <body>
 <!-- F1/5 (2026-09-06): tema se odlučuje PRIJE prvog crtanja, isto kao u index.html — boot.js je
      SINKRON (bez defer). `data-theme` u markupu je svijetla zadana samo bez JS-a; s JS-om odlučuje
      spremljeni izbor, inače uređaj (`prefers-color-scheme`). Do ove cigle stranica nije imala ni
      atribut ni skriptu: korisnik na tamnom telefonu dobivao je crn katalog i bijela Pravila. -->
-<script src="js/boot.js?v=20260916142333"></script>
+<script src="js/boot.js?v=20260916162257"></script>
     <header class="legal-nav">
-        <a class="legal-logo" href="/"><img src="assets/logo.svg?v=20260916142333" alt="Sokrat Study logo">Sokrat Study</a>
-        <a class="legal-back" href="/">&larr; Back to app</a>
+        <!-- `alt=""`: znak stoji uz vidljivo ime u istoj poveznici; opisan alt bi čitač ekrana izgovorio dvaput. -->
+        <a class="legal-logo" href="/"><img src="assets/logo.svg?v=20260916162257" alt="">Sokrat Study</a>
+        <div class="legal-nav-actions">
+            <button type="button" class="legal-back legal-lang" data-action="toggleUiLang" data-i18n-aria="legal.lang" aria-label="Language / Jezik">
+                <span class="jezik" lang="en">EN</span><span class="jezik" lang="hr">HR</span>
+            </button>
+            <a class="legal-back" href="/" data-i18n="legal.back">&larr; Back to app</a>
+        </div>
     </header>
 
     <main class="legal">
-        <h1>Frequently Asked Questions</h1>
-        <p class="legal-updated">Last updated: 16 September 2026</p>
+        <!-- F3/1: oba jezika u stranici — vidi se onaj iz `<html data-ui-lang>` (boot.js, prije crtanja).
+             Blokovi moraju imati ISTI oblik (naslovi · odlomci · stavke · poveznice) — `npm run check:i18n`. -->
+        <div class="jezik" lang="en">
+            <h1>Frequently Asked Questions</h1>
+            <p class="legal-updated">Last updated: 16 September 2026</p>
 
-        <div class="legal-card">
-            <h2>What is Sokrat Study?</h2>
-            <p>A free study platform with two ways in: study a ready subject from the catalogue, or build
-            your own material from your notes. Either way it works the same — read it, then practise it with
-            flashcards, a quiz and fill-in-the-blanks, and your progress is saved.</p>
+            <div class="legal-card">
+                <h2>What is Sokrat Study?</h2>
+                <p>A free study platform with two ways in: study a ready subject from the catalogue, or build
+                your own material from your notes. Either way it works the same — read it, then practise it with
+                flashcards, a quiz and fill-in-the-blanks, and your progress is saved.</p>
+            </div>
+
+            <div class="legal-card">
+                <h2>Is it free?</h2>
+                <p>Yes. Studying and building your own material are free, and there are no ads.</p>
+            </div>
+
+            <div class="legal-card">
+                <h2>Which subjects are in the catalogue?</h2>
+                <p>University subjects from the Faculty of Tourism and Hospitality Management in Opatija (FMTU):
+                the Hospitality Management programme in English, and first-year subjects in Croatian. Some subjects
+                also have practice exercises or a blind map. Your subject isn't there? Build it yourself — it works
+                the same way.</p>
+            </div>
+
+            <div class="legal-card">
+                <h2>Do I need an account?</h2>
+                <p>Not to study the catalogue — without one, your progress is saved in this browser. A free account
+                lets you build your own material, keeps your progress in sync across devices, and gives you a
+                profile. Sign up with email and password, or continue with Google. You need to be at least 16.</p>
+            </div>
+
+            <div class="legal-card">
+                <h2>How does syncing work?</h2>
+                <p>When you're signed in, your progress is backed up while you study, and your materials, profile
+                and colour theme follow you to every device you sign in on. Progress from different devices is
+                merged, so nothing you've learned is lost.</p>
+            </div>
+
+            <div class="legal-card">
+                <h2>How do I make my own material?</h2>
+                <p>Sign in and open <strong>My materials</strong>. Use <strong>+ New</strong> to create a folder or a
+                material. In a material you write the explanation and add flashcards, quiz questions and
+                fill-in-the-blanks — images too. Tap it to study, with the same screens as the catalogue. Building
+                is easiest on a computer; studying works everywhere.</p>
+            </div>
+
+            <div class="legal-card">
+                <h2>Who can see my material and my profile?</h2>
+                <p>Only you. Your materials are private, and so is your profile for now. One exception: your profile
+                photo and cover image can be opened by anyone who has the image's direct link — see the
+                <a href="privacy.html">Privacy Policy</a>.</p>
+            </div>
+
+            <div class="legal-card">
+                <h2>Can I study offline?</h2>
+                <p>Yes. Open a subject from the catalogue and choose <strong>Download for offline</strong> — it then
+                works without a connection.</p>
+            </div>
+
+            <div class="legal-card">
+                <h2>Can I switch the language?</h2>
+                <p>Yes — the language button at the top switches the interface between English and Croatian. Study
+                material stays in the language it was written in.</p>
+            </div>
+
+            <div class="legal-card">
+                <h2>Will you send me emails?</h2>
+                <p>Only if you said yes — when you signed up, or under <em>Profile → Email updates</em>. We write now
+                and then about a new subject or an important change, never ads, and every email has a one-click
+                unsubscribe. Emails you ask for, like confirming your address or resetting your password, come
+                either way.</p>
+            </div>
+
+            <div class="legal-card">
+                <h2>How do I delete my data or my account?</h2>
+                <p>In the app, under <em>Profile → Privacy &amp; data</em>. <strong>Delete study history</strong> erases
+                your progress from the cloud and this device and keeps your account. <strong>Delete account</strong>
+                permanently removes everything — progress, profile, photos, materials and their images. Details in
+                the <a href="privacy.html">Privacy Policy</a>.</p>
+            </div>
+
+            <div class="legal-card">
+                <h2>Found a mistake, or something isn't working?</h2>
+                <p>Write to <a href="mailto:sokrat@sokratstudy.com">sokrat@sokratstudy.com</a>. For a mistake, tell us
+                the subject and lesson; for a problem, what you did and on which device.</p>
+            </div>
         </div>
 
-        <div class="legal-card">
-            <h2>Is it free?</h2>
-            <p>Yes. Studying and building your own material are free, and there are no ads.</p>
-        </div>
+        <div class="jezik" lang="hr">
+            <h1>Česta pitanja</h1>
+            <p class="legal-updated">Zadnja izmjena: 16. rujna 2026.</p>
 
-        <div class="legal-card">
-            <h2>Which subjects are in the catalogue?</h2>
-            <p>University subjects from the Faculty of Tourism and Hospitality Management in Opatija (FMTU):
-            the Hospitality Management programme in English, and first-year subjects in Croatian. Some subjects
-            also have practice exercises or a blind map. Your subject isn't there? Build it yourself — it works
-            the same way.</p>
-        </div>
+            <div class="legal-card">
+                <h2>Što je Sokrat Study?</h2>
+                <p>Besplatna platforma za učenje s dva ulaza: uči gotov predmet iz kataloga ili napravi vlastito
+                gradivo iz svojih bilježaka. U oba slučaja radi isto — pročitaš ga, pa ga uvježbaš karticama, kvizom
+                i dopunama, a napredak se pamti.</p>
+            </div>
 
-        <div class="legal-card">
-            <h2>Do I need an account?</h2>
-            <p>Not to study the catalogue — without one, your progress is saved in this browser. A free account
-            lets you build your own material, keeps your progress in sync across devices, and gives you a
-            profile. Sign up with email and password, or continue with Google. You need to be at least 16.</p>
-        </div>
+            <div class="legal-card">
+                <h2>Je li besplatno?</h2>
+                <p>Da. Učenje i izrada vlastitog gradiva su besplatni i nema reklama.</p>
+            </div>
 
-        <div class="legal-card">
-            <h2>How does syncing work?</h2>
-            <p>When you're signed in, your progress is backed up while you study, and your materials, profile
-            and colour theme follow you to every device you sign in on. Progress from different devices is
-            merged, so nothing you've learned is lost.</p>
-        </div>
+            <div class="legal-card">
+                <h2>Koji su predmeti u katalogu?</h2>
+                <p>Fakultetski predmeti Fakulteta za menadžment u turizmu i ugostiteljstvu u Opatiji (FMTU): smjer
+                Hospitality Management na engleskom i predmeti prve godine na hrvatskom. Neki predmeti imaju i vježbe
+                ili slijepu kartu. Nema tvog predmeta? Napravi ga ovdje — radi na isti način.</p>
+            </div>
 
-        <div class="legal-card">
-            <h2>How do I make my own material?</h2>
-            <p>Sign in and open <strong>My materials</strong>. Use <strong>+ New</strong> to create a folder or a
-            material. In a material you write the explanation and add flashcards, quiz questions and
-            fill-in-the-blanks — images too. Tap it to study, with the same screens as the catalogue. Building
-            is easiest on a computer; studying works everywhere.</p>
-        </div>
+            <div class="legal-card">
+                <h2>Treba li mi račun?</h2>
+                <p>Za učenje iz kataloga ne treba — bez računa se napredak pamti u ovom pregledniku. Besplatan račun
+                omogućuje izradu vlastitog gradiva, sinkronizira napredak među uređajima i daje ti profil. Registriraj
+                se e-mailom i lozinkom ili nastavi s Googleom. Moraš imati najmanje 16 godina.</p>
+            </div>
 
-        <div class="legal-card">
-            <h2>Who can see my material and my profile?</h2>
-            <p>Only you. Your materials are private, and so is your profile for now. One exception: your profile
-            photo and cover image can be opened by anyone who has the image's direct link — see the
-            <a href="privacy.html">Privacy Policy</a>.</p>
-        </div>
+            <div class="legal-card">
+                <h2>Kako radi sinkronizacija?</h2>
+                <p>Uz prijavu se napredak sprema u oblak dok učiš, a tvoji materijali, profil i tema prate te na svaki
+                uređaj na kojem se prijaviš. Napredak s različitih uređaja se spaja, pa se ništa naučeno ne gubi.</p>
+            </div>
 
-        <div class="legal-card">
-            <h2>Can I study offline?</h2>
-            <p>Yes. Open a subject from the catalogue and choose <strong>Download for offline</strong> — it then
-            works without a connection.</p>
-        </div>
+            <div class="legal-card">
+                <h2>Kako napraviti vlastito gradivo?</h2>
+                <p>Prijavi se i otvori <strong>Moji materijali</strong>. Preko <strong>+ Novo</strong> napravi policu ili
+                materijal. U materijalu napišeš objašnjenje i dodaš kartice, pitanja za kviz i dopune — i slike.
+                Dodirni ga za učenje, istim ekranima kao u katalogu. Gradivo se najlakše slaže na računalu, a učiti se
+                može svugdje.</p>
+            </div>
 
-        <div class="legal-card">
-            <h2>Can I switch the language?</h2>
-            <p>Yes — the language button at the top switches the interface between English and Croatian. Study
-            material stays in the language it was written in.</p>
-        </div>
+            <div class="legal-card">
+                <h2>Tko vidi moje gradivo i moj profil?</h2>
+                <p>Samo ti. Tvoji materijali su privatni, a zasad i tvoj profil. Jedna iznimka: profilnu i naslovnu
+                sliku može otvoriti svatko tko ima izravnu poveznicu na tu sliku — vidi
+                <a href="privacy.html">Pravila privatnosti</a>.</p>
+            </div>
 
-        <div class="legal-card">
-            <h2>Will you send me emails?</h2>
-            <p>Only if you said yes — when you signed up, or under <em>Profile → Email updates</em>. We write now
-            and then about a new subject or an important change, never ads, and every email has a one-click
-            unsubscribe. Emails you ask for, like confirming your address or resetting your password, come
-            either way.</p>
-        </div>
+            <div class="legal-card">
+                <h2>Mogu li učiti bez interneta?</h2>
+                <p>Da. Otvori predmet iz kataloga i odaberi <strong>Skini za offline</strong> — nakon toga radi i bez
+                veze.</p>
+            </div>
 
-        <div class="legal-card">
-            <h2>How do I delete my data or my account?</h2>
-            <p>In the app, under <em>Profile → Privacy &amp; data</em>. <strong>Delete study history</strong> erases
-            your progress from the cloud and this device and keeps your account. <strong>Delete account</strong>
-            permanently removes everything — progress, profile, photos, materials and their images. Details in
-            the <a href="privacy.html">Privacy Policy</a>.</p>
-        </div>
+            <div class="legal-card">
+                <h2>Mogu li promijeniti jezik?</h2>
+                <p>Da — gumb za jezik na vrhu prebacuje sučelje između engleskog i hrvatskog. Gradivo ostaje na jeziku
+                na kojem je napisano.</p>
+            </div>
 
-        <div class="legal-card">
-            <h2>Found a mistake, or something isn't working?</h2>
-            <p>Write to <a href="mailto:sokrat@sokratstudy.com">sokrat@sokratstudy.com</a>. For a mistake, tell us
-            the subject and lesson; for a problem, what you did and on which device.</p>
+            <div class="legal-card">
+                <h2>Hoćete li mi slati mailove?</h2>
+                <p>Samo uz tvoj pristanak — pri registraciji ili pod <em>Profil → Obavijesti mailom</em>. Povremeno
+                javimo novi predmet ili važnu promjenu, nikad reklame, a u svakom mailu je odjava jednim klikom.
+                Mailove koje tražiš, poput potvrde adrese ili nove lozinke, dobivaš svejedno.</p>
+            </div>
+
+            <div class="legal-card">
+                <h2>Kako obrisati svoje podatke ili račun?</h2>
+                <p>U aplikaciji, pod <em>Profil → Privatnost i podaci</em>. <strong>Obriši povijest učenja</strong> briše
+                napredak iz oblaka i s ovog uređaja, a račun ostaje. <strong>Obriši račun</strong> trajno uklanja sve —
+                napredak, profil, fotografije, materijale i njihove slike. Detalji su u
+                <a href="privacy.html">Pravilima privatnosti</a>.</p>
+            </div>
+
+            <div class="legal-card">
+                <h2>Vidiš grešku ili nešto ne radi?</h2>
+                <p>Piši na <a href="mailto:sokrat@sokratstudy.com">sokrat@sokratstudy.com</a>. Za grešku napiši predmet
+                i lekciju, a za problem što se dogodilo i na kojem uređaju.</p>
+            </div>
         </div>
     </main>
 
     <footer class="legal-footer">
         <nav>
-            <a href="/">Home</a>
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Use</a>
-            <a href="faq.html">FAQ</a>
-            <a href="contact.html">Contact</a>
-            <a href="#" data-consent-settings>Cookie settings</a>
+            <a href="/" data-i18n="nav.home">Home</a>
+            <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+            <a href="terms.html" data-i18n="footer.terms">Terms of Use</a>
+            <a href="faq.html" data-i18n="footer.faq">FAQ</a>
+            <a href="contact.html" data-i18n="footer.contact">Contact</a>
+            <a href="#" data-consent-settings data-i18n="footer.cookies">Cookie settings</a>
         </nav>
-        <p>&copy; 2026 Sokrat Study &middot; Leon Kreso. All rights reserved.</p>
+        <p data-i18n="footer.rights">&copy; 2026 Sokrat Study &middot; Leon Kreso. All rights reserved.</p>
     </footer>
 </body>
 </html>
