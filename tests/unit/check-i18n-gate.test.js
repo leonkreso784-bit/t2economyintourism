@@ -167,6 +167,40 @@ slucaj('bez osnovice → exit 2', 2, vrti(stablo({
   osnovica: null,
 })), (o) => o.includes('i18n-baseline.json'));
 
+// ⑯ JEZIČNI BLOKOVI (F3/1, Leon 16.09.: pravne stranice nose oba jezika u stranici).
+// Tekst u `.jezik[lang]` bloku je preveden SAMO ako uz njega stoji blok drugog jezika ISTOG
+// oblika — inače bi „omotaj u lang=en" bio način da engleski prođe branu bez prijevoda.
+const EN = '<div class="jezik" lang="en"><h2>Privacy</h2><p>We <strong>never</strong> sell data. <a href="x">More</a></p></div>';
+const HR = '<div class="jezik" lang="hr"><h2>Privatnost</h2><p>Podatke <strong>nikad</strong> ne prodajemo. <a href="x">Više</a></p></div>';
+slucaj('par EN+HR istog oblika → zeleno (i inline <strong> smije ići)', 0, vrti(stablo({
+  html: { 'par.html': EN + HR },
+  osnovica: {},
+})));
+slucaj('EN blok BEZ hrvatskog para → PAD, tekst prijavljen', 1, vrti(stablo({
+  html: { 'sam.html': EN },
+  osnovica: {},
+})), (o) => o.includes('sam.html') && o.includes('never') && o.includes('bez para'));
+slucaj('HR blok bez odlomka koji EN ima → PAD „oblik"', 1, vrti(stablo({
+  html: { 'oblik.html': EN.replace('</p></div>', '</p><p>Extra paragraph.</p></div>') + HR },
+  osnovica: {},
+})), (o) => o.includes('oblik.html') && o.includes('oblik se razlikuje'));
+slucaj('HR blok bez poveznice koju EN ima → PAD „oblik"', 1, vrti(stablo({
+  html: { 'link.html': EN + HR.replace(' <a href="x">Više</a>', '') },
+  osnovica: {},
+})), (o) => o.includes('link.html') && o.includes('oblik se razlikuje'));
+slucaj('dva EN bloka zaredom (bez HR između) → PAD', 1, vrti(stablo({
+  html: { 'dva.html': EN + EN },
+  osnovica: {},
+})), (o) => o.includes('dva.html') && o.includes('bez para'));
+slucaj('HR blok = doslovna kopija engleskog → PAD „kopija"', 1, vrti(stablo({
+  html: { 'kopija.html': EN + EN.replace('lang="en"', 'lang="hr"') },
+  osnovica: {},
+})), (o) => o.includes('kopija.html') && o.includes('doslovna kopija') && o.includes('never'));
+slucaj('`lang` bez klase `jezik` (npr. citat) NIJE blok → tekst se sudi normalno', 1, vrti(stablo({
+  html: { 'citat.html': '<p lang="en">Quoted text</p>' },
+  osnovica: {},
+})), (o) => o.includes('Quoted text'));
+
 // ⑭ Mjerač kaže koliko je dotaknuo.
 slucaj('ispisuje „dotaknuto"', 0, vrti(stablo({
   html: { 'x.html': '<p data-i18n="nav.ok">t</p>' },

@@ -5,6 +5,20 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-16 (OPUS) — **F3/1 ③a: pravne stranice dvojezične — mehanizam + Kontakt na hrvatskom** — grana `feat/f3-dvojezicnost`
+
+### Dodano
+- **Kontakt na hrvatskom** — stranica nosi oba jezika; vidi se izabrani, od prvog crtanja (bez bljeska engleskog).
+  Prekidač jezika u zaglavlju, hrvatsko zaglavlje, podnožje, naslov kartice i cookie-traka.
+- `<html lang>` je točan prije prvog crtanja na svim stranicama (čitač ekrana više ne izgovara hrvatski engleskim glasom
+  dok se skripte ne učitaju).
+### Popravljeno
+- Zaglavlje pravnih stranica na 320 px više ne izlazi iz ekrana.
+### Brana
+- `check:i18n` zna jezične blokove: hrvatski blok mora imati isti oblik kao engleski i ne smije biti kopija.
+- `tests/unit/jezik-boot.test.js`; `legal.spec.js` mjeri bljesak, prekidač i 320 px.
+- Playwright odbija poslužitelj drugog radnog stabla (`tests/global-setup.js`, `SOKRAT_TEST_PORT`).
+
 ## 2026-09-16 (OPUS) — **F3/1 ②: novi tekst FAQ-a, „O nama" i Kontakta** — grana `feat/f3-dvojezicnost`
 
 ### Promijenjeno

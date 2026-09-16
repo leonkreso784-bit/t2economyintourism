@@ -88,10 +88,26 @@ main.legal {
     padding: 2.5rem 1.5rem 3rem;
 }
 
-/* ── Odjava od obavijesti (F2/4, `odjava.html`) ──
-   Jedan gumb, jedno stanje: ista stranica kao pravila (kostur `legal`), jer iz maila dolazi
-   netko tko nije nužno prijavljen — mora biti mirna i čitljiva, ne aplikacija. */
-.unsub-lang {
+/* ── Oba jezika u stranici (F3/1, Leon 2026-09-16) ──
+   Svaka pravna stranica nosi `.jezik[lang="en"]` i `.jezik[lang="hr"]`; vidi se onaj koji
+   `boot.js` upiše u `<html data-ui-lang>` PRIJE prvog crtanja. Bez atributa (i bez JS-a)
+   vrijedi engleski. Podebljanja i poveznice usred rečenice zato ostaju obična HTML — nema
+   `innerHTML`-puta za prijevod, a pravni tekst ne ide u rječnik koji dobiva svaki posjetitelj.
+   Da hrvatski blok ne zaostane za engleskim (isti naslovi, odlomci, stavke, poveznice), čuva
+   `npm run check:i18n` (presuda ④). */
+html:not([data-ui-lang="hr"]) .jezik[lang="hr"],
+html[data-ui-lang="hr"] .jezik[lang="en"] { display: none; }
+
+.legal-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* ── Prekidač jezika na pravnim stranicama i odjavi (`odjava.html`, F2/4) ──
+   Oznaka („EN"/„HR") je u jezičnim blokovima (pravne stranice) ili je upiše `i18n.js`
+   (odjava) — gumb nosi samo kutiju od 44 px. */
+.legal-lang {
     min-height: 44px;
     min-width: 44px;
     padding: 0 0.6rem;
@@ -178,5 +194,10 @@ main.legal {
 
 @media (max-width: 480px) {
     main.legal { padding: 1.8rem 1.1rem 2.2rem; }
+    /* F3/1: zaglavlje nosi i prekidač jezika, a hrvatski „Natrag u aplikaciju" je dulji —
+       na 320 px je izmjereno 332 px širine (vodoravni pomak). Rub isti kao `main.legal`,
+       a ako i dalje ne stane, red se prelomi umjesto da izađe iz ekrana. */
+    .legal-nav { padding: 0.75rem 1.1rem; flex-wrap: wrap; row-gap: 0.4rem; }
+    .legal-nav-actions { gap: 0.5rem; margin-left: auto; }
     .legal h1 { font-size: 1.45rem; }
 }

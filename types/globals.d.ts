@@ -41,6 +41,8 @@ declare global {
     suggestLangForSubject?: (subjectId?: string) => void;
     setUiLangForSubject?: (subjectId?: string) => void;
     getUiLang?: () => string;
+    // js/boot.js (F3/1): primjena jezika na <html> (lang + data-ui-lang) prije prvog crtanja; i18n.js je zove pri prebacivanju
+    __sokratPrimijeniJezik?: (lang: string | null) => string;
 
     // Renderi/oslonci koje i18n poziva nakon promjene jezika (definirani u drugim modulima)
     refreshAuthNav?: () => void;

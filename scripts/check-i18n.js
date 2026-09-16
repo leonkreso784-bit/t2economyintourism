@@ -28,6 +28,14 @@
  *     „ima ključ" ništa ne znači: `t()` za nepoznat ključ vrati SAM KLJUČ na ekran, a
  *     helperi s fallbackom vrate engleski — točno K5 nalaz (28 od 48 `studio.*` ključeva
  *     nije postojalo, a izbrojano je RUČNO; s ovom presudom ispada iz ispisa).
+ *  ④ JEZIČNI BLOKOVI (F3/1, Leon 16.09.): pravne stranice nose OBA jezika u stranici —
+ *     `<div class="jezik" lang="en">…</div><div class="jezik" lang="hr">…</div>`, a koji se
+ *     vidi odluči `boot.js` prije crtanja. Tekst u bloku (i podebljanja i poveznice usred
+ *     rečenice, zbog kojih `data-i18n` ondje ne radi) je preveden SAMO ako uz blok stoji
+ *     SUSJEDNI blok drugog jezika istog OBLIKA (redoslijed naslova, odlomaka, stavki,
+ *     poveznica) i nije doslovna kopija. Inače bi „omotaj engleski u lang=en" bio put da
+ *     neprevedeni tekst prođe branu — zato blok bez para i blok krivog oblika prijavljuju
+ *     SVE nositelje teksta izvornog (engleskog) bloka, ne jedan zbirni nalaz.
  *
  * Iznimke su KRATKE I IZRIČITE (uzor: `tests/about.spec.js` tvrdnja ③): tekst bez slova,
  * e-adrese, URL-ovi i vlastita imena s popisa `VLASTITA_IMENA`. Popis se ne smije
@@ -143,13 +151,16 @@ function vrijednostAtributa(tag, ime) {
 }
 
 /** Sudi atribute jednog (i djelomičnog) taga — koristi ga i HTML skener i JS skener
- *  za KONKATENIRANE literale koji počinju usred taga (`'" title="Povuci…">…'`). */
-function sudiAtributeTaga(tag, datoteka, redak, prijavi) {
+ *  za KONKATENIRANE literale koji počinju usred taga (`'" title="Povuci…">…'`).
+ *  `prijaviTekst` prima nalaze o TEKSTU atributa (u jezičnom bloku se odgađaju do sparivanja);
+ *  nalazi o ključu bez rječnika idu uvijek ravno u `prijavi`. */
+function sudiAtributeTaga(tag, datoteka, redak, prijavi, prijaviTekst) {
+  const tekstNalaz = prijaviTekst || prijavi;
   for (const [atr, mehanizam] of Object.entries(ATRIBUTI)) {
     const v = vrijednostAtributa(tag, atr);
     if (v != null && imaSlovo(v)
       && !(mehanizam && new RegExp('\\b' + mehanizam + '\\s*=').test(tag))) {
-      prijavi({ datoteka, redak, vrsta: 'atribut ' + atr, tekst: v.trim().slice(0, 60) });
+      tekstNalaz({ datoteka, redak, vrsta: 'atribut ' + atr, tekst: v.trim().slice(0, 60) });
     }
   }
   // presuda ③: ključ na koji se element poziva mora postojati u rječniku —
@@ -171,6 +182,11 @@ function sudiAtributeTaga(tag, datoteka, redak, prijavi) {
 function skenirajHtml(izvor, datoteka, bazniRedak, jeFragment, prijavi) {
   const redak = (poz) => bazniRedak + izvor.slice(0, poz).split('\n').length - 1;
   const stog = [];
+  const blokovi = [];   // presuda ④, redom kojim su otvoreni
+  const blokOko = () => {
+    for (let s = stog.length - 1; s >= 0; s -= 1) if (stog[s].blok) return stog[s].blok;
+    return null;
+  };
   let uBody = jeFragment;
   let i = 0;
   while (i < izvor.length) {
@@ -193,13 +209,26 @@ function skenirajHtml(izvor, datoteka, bazniRedak, jeFragment, prijavi) {
         }
       } else {
         if (ime === 'body') uBody = true;
-        if (uBody && ime !== 'body') sudiAtributeTaga(tag, datoteka, redak(i), prijavi);
+        const oko = blokOko();
+        if (oko && OBLIK_TAGOVI.has(ime)) oko.oblik.push(ime);
+        if (uBody && ime !== 'body') {
+          sudiAtributeTaga(tag, datoteka, redak(i), prijavi, oko ? oko.odgodi : prijavi);
+        }
         if (SIROVI.has(ime)) {
           const kraj = izvor.toLowerCase().indexOf('</' + ime, k + 1);
           i = kraj < 0 ? izvor.length : kraj;
           continue;
         }
-        if (!/\/>$/.test(tag) && !VOID.has(ime)) stog.push({ ime, tag });
+        if (!/\/>$/.test(tag) && !VOID.has(ime)) {
+          const lang = (uBody && !oko) ? jezikBloka(tag) : null;   // blok u bloku nije blok
+          let blok;
+          if (lang) {
+            const nalazi = [];
+            blok = { lang, redak: redak(i), oblik: [], tekst: [], nalazi, odgodi: (n) => nalazi.push(n) };
+            blokovi.push(blok);
+          }
+          stog.push({ ime, tag, blok });
+        }
       }
       i = k + 1;
       continue;
@@ -212,8 +241,10 @@ function skenirajHtml(izvor, datoteka, bazniRedak, jeFragment, prijavi) {
       const kljuc = vlasnik && /\bdata-i18n\s*=/.test(vlasnik.tag);
       const textareaValue = vlasnik && vlasnik.ime === 'textarea'
         && /\bdata-i18n-value\s*=/.test(vlasnik.tag);
+      const oko = blokOko();
+      if (oko) oko.tekst.push(ocisti(tekst).replace(/\s+/g, ' ').trim());
       if (!kljuc && !textareaValue) {
-        prijavi({
+        (oko ? oko.odgodi : prijavi)({
           datoteka,
           redak: redak(i),
           vrsta: 'tekst u <' + (vlasnik ? vlasnik.ime : '?') + '>',
@@ -222,6 +253,50 @@ function skenirajHtml(izvor, datoteka, bazniRedak, jeFragment, prijavi) {
       }
     }
     i = kraj;
+  }
+  spariBlokove(blokovi, datoteka, prijavi);
+}
+
+// ── Presuda ④: jezični blokovi ─────────────────────────────────────────────────────────
+const JEZICI_BLOKA = new Set(['en', 'hr']);
+// OBLIK = ono što prijevod NE smije izgubiti ni dodati: strukturu i poveznice. Inline
+// naglasci (`strong`/`em`/`br`/`span`) su izvan — hrvatska rečenica smije naglasiti drugu riječ.
+const OBLIK_TAGOVI = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'ul', 'ol', 'li', 'a',
+  'table', 'thead', 'tbody', 'tr', 'th', 'td', 'dl', 'dt', 'dd', 'section', 'button']);
+
+/** `lang` jezičnog bloka ili null. Blok = klasa `jezik` + `lang` iz popisa; sam `lang` (citat) nije blok. */
+function jezikBloka(tag) {
+  const klasa = vrijednostAtributa(tag, 'class');
+  if (klasa == null || !/(^|\s)jezik(\s|$)/.test(klasa)) return null;
+  const m = tag.match(/\slang\s*=\s*["']([a-z-]+)["']/i);
+  return m && JEZICI_BLOKA.has(m[1].toLowerCase()) ? m[1].toLowerCase() : null;
+}
+
+function spariBlokove(blokovi, datoteka, prijavi) {
+  const neprevedeno = (b, zasto) => {
+    b.nalazi.forEach((n) => prijavi(Object.assign({}, n, { vrsta: 'jezični blok ' + zasto + ' · ' + n.vrsta })));
+    if (!b.nalazi.length) prijavi({ datoteka, redak: b.redak, vrsta: 'jezični blok ' + zasto, tekst: 'lang=' + b.lang });
+  };
+  for (let b = 0; b < blokovi.length; b += 1) {
+    const a = blokovi[b];
+    const c = blokovi[b + 1];
+    if (!c || c.lang === a.lang) { neprevedeno(a, 'bez para (lang=' + a.lang + ')'); continue; }
+    b += 1;   // par je potrošen
+    const izvor = a.lang === 'en' ? a : c;
+    const prijevod = izvor === a ? c : a;
+    if (izvor.oblik.join(' ') !== prijevod.oblik.join(' ')) {
+      let x = 0;
+      while (x < izvor.oblik.length && izvor.oblik[x] === prijevod.oblik[x]) x += 1;
+      prijavi({
+        datoteka, redak: prijevod.redak, vrsta: 'jezični blok: oblik se razlikuje',
+        tekst: 'element #' + (x + 1) + ': en=' + (izvor.oblik[x] || '—') + ' · ' + prijevod.lang + '='
+          + (prijevod.oblik[x] || '—') + ' (en ' + izvor.oblik.length + ', ' + prijevod.lang + ' '
+          + prijevod.oblik.length + ')',
+      });
+      neprevedeno(izvor, 'krivog oblika');
+    } else if (izvor.tekst.join(' ') === prijevod.tekst.join(' ') && izvor.nalazi.length) {
+      neprevedeno(izvor, 'je doslovna kopija (' + prijevod.lang + ' = en)');
+    }
   }
 }
 

@@ -413,7 +413,7 @@
     'about.feat.quiz': { en: 'Quiz', hr: 'Kviz' },
     'about.feat.fill': { en: 'Fill-in-the-blanks', hr: 'Dopune' },
     'about.contact.h': { en: 'Get in touch', hr: 'Javi nam se' },
-    'about.contact.p': { en: 'Your own material you make right here, and it stays yours. Found a mistake or have an idea? Write to us.', hr: 'Vlastito gradivo napraviš ovdje i ostaje tvoje. Našao si grešku ili imaš ideju? Piši nam.' },
+    'about.contact.p': { en: 'Your own material you make right here, and it stays yours. Found a mistake or have an idea? Write to us.', hr: 'Vlastito gradivo napraviš ovdje i ostaje tvoje. Vidiš grešku ili imaš ideju? Piši nam.' },
     'about.creator.role': { en: 'Founder & developer', hr: 'Osnivač i developer' },
     // T4 · Cookie-traka. Do sada je bila JEDINA površina sa zakucanim engleskim tekstom —
     // a to je pravni tekst, ne ukras. ⚠️ Tekst je namjerno kraći nego prije (171 → 100
@@ -600,7 +600,11 @@
     'unsub.missing': { en: 'The link is incomplete — open it again from the email.', hr: 'Poveznica nije potpuna — otvori je ponovno iz maila.' },
     'unsub.error': { en: 'That did not work — please try again.', hr: 'Nije uspjelo — pokušaj ponovno.' },
     'unsub.back': { en: 'Back to Sokrat Study', hr: 'Natrag na Sokrat Study' },
-    'unsub.lang': { en: 'Language: English / Croatian', hr: 'Jezik: hrvatski / engleski' },
+    // F3/1: pravne stranice (contact/faq/privacy/terms) i odjava dijele zaglavlje — tekst TIJELA
+    // pravnih stranica NIJE ovdje nego u jezičnim blokovima same stranice (`.jezik[lang]`).
+    'legal.lang': { en: 'Language: English / Croatian', hr: 'Jezik: hrvatski / engleski' },
+    'legal.back': { en: '← Back to app', hr: '← Natrag u aplikaciju' },
+    'legal.title.contact': { en: 'Contact — Sokrat Study', hr: 'Kontakt — Sokrat Study' },
     'profile.editNamePh': { en: 'Your name', hr: 'Tvoje ime' },
     'profile.editBioPh': { en: 'A short description — what you study, what you are building.', hr: 'Kratak opis — što učiš i što gradiš.' },
     // Temelj mreže (A1) — korisničko ime (`set_profile_handle`, supabase/f2-temelj-mreze.sql)
@@ -863,7 +867,10 @@
     const next = lang === 'hr' ? 'hr' : 'en';
     const changed = next !== uiLang;
     uiLang = next;
-    document.documentElement.setAttribute('lang', uiLang);
+    // F3/1: `lang` + `data-ui-lang` postavlja `boot.js` (jedno mjesto; `data-ui-lang` bira blok
+    // pravne stranice). Bez boota (npr. test u sandboxu) ostaje barem `lang`.
+    if (typeof window.__sokratPrimijeniJezik === 'function') window.__sokratPrimijeniJezik(uiLang);
+    else document.documentElement.setAttribute('lang', uiLang);
     if (persist !== false) { try { localStorage.setItem(LS_KEY, uiLang); } catch (_) { /* ignore */ } }
     // uvijek primijeni (i kad nema promjene) — npr. inicijalno bojanje toggle-labela
     applyTranslations();

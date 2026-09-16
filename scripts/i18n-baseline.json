@@ -1,7 +1,6 @@
 {
   "_zasto": "Broj nositelja teksta bez i18n kljuca PO DATOTECI (mjeri scripts/check-i18n.js). Rast = pad brane; pad = --update. Ovo je IZMJERENI dug, ne dopustenje: presuda prevoditi-ili-gasiti dvojezicnost donosi se nad `--list` ispisom, ne ovdje.",
   "datoteke": {
-    "contact.html": 28,
     "editor.html": 5,
     "faq.html": 51,
     "index.html": 49,

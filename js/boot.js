@@ -73,6 +73,31 @@
     window.__sokratPrimijeniTemu = primijeniTemu;
     primijeniTemu();
 
+    /* ===== JEZIK — isto pravilo kao tema: odluka PRIJE prvog crtanja =====
+       F3/1 (Leon, 2026-09-16: „oba jezika u stranici"): pravne stranice nose engleski i hrvatski
+       blok (`.jezik[lang]`), a `css/legal.css` skriva onaj koji nije izabran po `data-ui-lang`.
+       Da atribut postavlja tek `i18n.js` (defer), hrvatski korisnik bi pri svakom otvaranju
+       Pravila privatnosti vidio bljesak engleskog. `lang` ide uz njega: čitač ekrana hrvatske
+       rečenice inače izgovara engleskim glasom (WCAG 3.1.1).
+       ⚠️ `i18n.js` pri prebacivanju zove OVU funkciju — jedno mjesto koje zna što „primijeniti
+       jezik na <html>" znači. Izbor (ključ `sokrat-ui-lang`) i dalje upisuje samo `i18n.js`.
+       Čuva `tests/unit/jezik-boot.test.js`. */
+    var JEZICI = ['en', 'hr'];
+
+    function primijeniJezik(jezik) {
+        var j = JEZICI.indexOf(jezik) >= 0 ? jezik : 'en';
+        var html = document.documentElement;
+        // Samo stvarne promjene: `<html lang="en">` iz markupa bez atributa = engleski, bez zapisa.
+        if ((html.getAttribute('lang') || 'en') !== j) html.setAttribute('lang', j);
+        if ((html.getAttribute('data-ui-lang') || 'en') !== j) html.setAttribute('data-ui-lang', j);
+        return j;
+    }
+
+    var spremljeniJezik = null;
+    try { spremljeniJezik = localStorage.getItem('sokrat-ui-lang'); } catch (e) { /* privatni način */ }
+    window.__sokratPrimijeniJezik = primijeniJezik;
+    primijeniJezik(spremljeniJezik);
+
     /* F1/7 ② · `?bez=zamucenja,sjena` → `<html data-bez="zamucenja sjena">` PRIJE prvog crtanja.
        Protučinjenični prekidač za mjerenje na PRAVOM uređaju: `css/bez.css` gasi sumnjivca
        (zamućenje · sjene · prijelazi · pozadina landinga), Leon na iPhoneu kaže koji je scenarij

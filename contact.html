@@ -3,66 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Contact — Sokrat Study</title>
+    <title data-i18n="legal.title.contact">Contact — Sokrat Study</title>
     <meta name="description" content="Contact Sokrat Study — a mistake in a subject, something that isn't working, your data, or anything else.">
     <link rel="canonical" href="https://www.sokratstudy.com/contact.html">
-    <link rel="icon" type="image/png" href="assets/logo.svg?v=20260916140441">
+    <link rel="icon" type="image/png" href="assets/logo.svg?v=20260916142333">
     <!-- paleta: GENERIRAN izvadak tokena iz bundlea; MORA prije legal.css -->
-    <link rel="stylesheet" href="css/tokens.static.css?v=20260916140441">
-    <link rel="stylesheet" href="css/legal.css?v=20260916140441">
+    <link rel="stylesheet" href="css/tokens.static.css?v=20260916142333">
+    <link rel="stylesheet" href="css/legal.css?v=20260916142333">
 
     <!-- Cookie consent + Google Analytics (Consent Mode v2; default=denied zivi u js/consent.js, D1/CSP) -->
-    <link rel="stylesheet" href="css/consent.css?v=20260916140441">
-    <script src="js/consent.js?v=20260916140441" defer></script>
+    <link rel="stylesheet" href="css/consent.css?v=20260916142333">
+    <!-- F3/1: i18n.js PRIJE consent.js (oba su defer, izvršavaju se redom) — cookie-traka tekst uzima iz `window.t`. -->
+    <script src="js/i18n.js?v=20260916142333" defer></script>
+    <script src="js/consent.js?v=20260916142333" defer></script>
     <!-- ADR-034: štipanje s dva prsta gasi JS, jer Safari metu ignorira — zašto piše u js/no-zoom.js -->
-    <script src="js/no-zoom.js?v=20260916140441" defer></script>
+    <script src="js/no-zoom.js?v=20260916142333" defer></script>
 </head>
 <body>
 <!-- F1/5 (2026-09-06): tema se odlučuje PRIJE prvog crtanja, isto kao u index.html — boot.js je
      SINKRON (bez defer). `data-theme` u markupu je svijetla zadana samo bez JS-a; s JS-om odlučuje
      spremljeni izbor, inače uređaj (`prefers-color-scheme`). Do ove cigle stranica nije imala ni
      atribut ni skriptu: korisnik na tamnom telefonu dobivao je crn katalog i bijela Pravila. -->
-<script src="js/boot.js?v=20260916140441"></script>
+<script src="js/boot.js?v=20260916142333"></script>
     <header class="legal-nav">
-        <a class="legal-logo" href="/"><img src="assets/logo.svg?v=20260916140441" alt="Sokrat Study logo">Sokrat Study</a>
-        <a class="legal-back" href="/">&larr; Back to app</a>
+        <!-- `alt=""`: znak stoji uz vidljivo ime u istoj poveznici; opisan alt bi čitač ekrana izgovorio dvaput. -->
+        <a class="legal-logo" href="/"><img src="assets/logo.svg?v=20260916142333" alt="">Sokrat Study</a>
+        <div class="legal-nav-actions">
+            <button type="button" class="legal-back legal-lang" data-action="toggleUiLang" data-i18n-aria="legal.lang" aria-label="Language / Jezik">
+                <span class="jezik" lang="en">EN</span><span class="jezik" lang="hr">HR</span>
+            </button>
+            <a class="legal-back" href="/" data-i18n="legal.back">&larr; Back to app</a>
+        </div>
     </header>
 
     <main class="legal">
-        <h1>Contact</h1>
-        <p class="legal-updated">We usually reply within a few days.</p>
+        <!-- F3/1: oba jezika u stranici — vidi se onaj iz `<html data-ui-lang>` (boot.js, prije crtanja).
+             Blokovi moraju imati ISTI oblik (naslovi · odlomci · stavke · poveznice) — `npm run check:i18n`. -->
+        <div class="jezik" lang="en">
+            <h1>Contact</h1>
+            <p class="legal-updated">We usually reply within a few days.</p>
 
-        <div class="legal-card">
-            <h2>Email</h2>
-            <p><a href="mailto:sokrat@sokratstudy.com">sokrat@sokratstudy.com</a></p>
-            <p>Write to us about anything:</p>
-            <ul>
-                <li><strong>A mistake in a subject</strong> — tell us the subject and lesson.</li>
-                <li><strong>Something isn't working</strong> — what you did and on which device.</li>
-                <li><strong>Your data</strong> — most of it you can do yourself under
-                    <em>Profile → Privacy &amp; data</em>; for anything else (for example a copy of your data),
-                    write to us — see the <a href="privacy.html">Privacy Policy</a>.</li>
-                <li><strong>Anything else</strong> — feedback, ideas, working together.</li>
-            </ul>
+            <div class="legal-card">
+                <h2>Email</h2>
+                <p><a href="mailto:sokrat@sokratstudy.com">sokrat@sokratstudy.com</a></p>
+                <p>Write to us about anything:</p>
+                <ul>
+                    <li><strong>A mistake in a subject</strong> — tell us the subject and lesson.</li>
+                    <li><strong>Something isn't working</strong> — what you did and on which device.</li>
+                    <li><strong>Your data</strong> — most of it you can do yourself under
+                        <em>Profile → Privacy &amp; data</em>; for anything else (for example a copy of your data),
+                        write to us — see the <a href="privacy.html">Privacy Policy</a>.</li>
+                    <li><strong>Anything else</strong> — feedback, ideas, working together.</li>
+                </ul>
+            </div>
+
+            <div class="legal-card">
+                <h2>Who is behind Sokrat Study?</h2>
+                <p>Sokrat Study is created and maintained by <strong>Leon Kreso</strong> —
+                built by a student, for students. More on the <a href="/">home page</a>.</p>
+            </div>
         </div>
 
-        <div class="legal-card">
-            <h2>Who is behind Sokrat Study?</h2>
-            <p>Sokrat Study is created and maintained by <strong>Leon Kreso</strong> —
-            built by a student, for students. More on the <a href="/">home page</a>.</p>
+        <div class="jezik" lang="hr">
+            <h1>Kontakt</h1>
+            <p class="legal-updated">Obično odgovaramo u nekoliko dana.</p>
+
+            <div class="legal-card">
+                <h2>E-mail</h2>
+                <p><a href="mailto:sokrat@sokratstudy.com">sokrat@sokratstudy.com</a></p>
+                <p>Piši nam o bilo čemu:</p>
+                <ul>
+                    <li><strong>Greška u predmetu</strong> — napiši predmet i lekciju.</li>
+                    <li><strong>Nešto ne radi</strong> — što se dogodilo i na kojem uređaju.</li>
+                    <li><strong>Tvoji podaci</strong> — većina toga je u aplikaciji, pod
+                        <em>Profil → Privatnost i podaci</em>; za sve ostalo (na primjer kopiju svojih podataka)
+                        piši nam — vidi <a href="privacy.html">Pravila privatnosti</a>.</li>
+                    <li><strong>Sve ostalo</strong> — dojmovi, ideje, suradnja.</li>
+                </ul>
+            </div>
+
+            <div class="legal-card">
+                <h2>Tko stoji iza Sokrat Studyja?</h2>
+                <p>Sokrat Study stvara i održava <strong>Leon Kreso</strong> —
+                student, za studente. Više na <a href="/">početnoj stranici</a>.</p>
+            </div>
         </div>
     </main>
 
     <footer class="legal-footer">
         <nav>
-            <a href="/">Home</a>
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Use</a>
-            <a href="faq.html">FAQ</a>
-            <a href="contact.html">Contact</a>
-            <a href="#" data-consent-settings>Cookie settings</a>
+            <a href="/" data-i18n="nav.home">Home</a>
+            <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+            <a href="terms.html" data-i18n="footer.terms">Terms of Use</a>
+            <a href="faq.html" data-i18n="footer.faq">FAQ</a>
+            <a href="contact.html" data-i18n="footer.contact">Contact</a>
+            <a href="#" data-consent-settings data-i18n="footer.cookies">Cookie settings</a>
         </nav>
-        <p>&copy; 2026 Sokrat Study &middot; Leon Kreso. All rights reserved.</p>
+        <p data-i18n="footer.rights">&copy; 2026 Sokrat Study &middot; Leon Kreso. All rights reserved.</p>
     </footer>
 </body>
 </html>

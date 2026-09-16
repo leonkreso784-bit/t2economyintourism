@@ -16,7 +16,8 @@ for (const p of PAGES) {
     const resp = await page.goto(p.url);
     expect(resp.status()).toBe(200);
 
-    await expect(page.locator('h1')).toHaveText(p.h1);
+    // `:visible` — dvojezične stranice (F3/1) nose DVA h1, a vidi se jedan.
+    await expect(page.locator('h1:visible')).toHaveText(p.h1);
     await expect(page.locator('.legal-nav .legal-logo')).toBeVisible();
     await expect(page.locator('.legal-footer nav a[href="privacy.html"]')).toBeVisible();
 
@@ -55,6 +56,70 @@ for (const [shema, tema] of [['dark', 'carbon'], ['light', 'academic']]) {
       expect(s.shema, p.url + ': color-scheme').toBe(shema);
       expect(s.bg, p.url + ': body pozadina == --color-surface-0 teme').toBe(hexUrgb(s.surface0));
     }
+  });
+}
+
+// ── F3/1 (Leon 2026-09-16): OBA JEZIKA U STRANICI ────────────────────────────────────────
+// Engleski i hrvatski blok stoje u istoj stranici; vidi se onaj iz `<html data-ui-lang>`, koji
+// `boot.js` upiše PRIJE crtanja. Mjeri se ono što korisnik vidi i čuje (vidljiv h1, `lang`,
+// naslov kartice, zaglavlje, podnožje) i — što nijedna statička brana ne može — je li engleski
+// blok ikad ušao u stranicu dok `<html>` još nije rekao hrvatski (bljesak).
+// Popis raste stranicu po stranicu (cigle F3/1); kad obuhvati sve četiri, mjeri cijeli PAGES.
+const DVOJEZICNE = [
+  { url: '/contact.html', h1: { en: 'Contact', hr: 'Kontakt' }, naslov: { en: 'Contact — Sokrat Study', hr: 'Kontakt — Sokrat Study' } },
+];
+
+for (const p of DVOJEZICNE) {
+  test(`${p.url}: spremljen hrvatski → hrvatski od prvog crtanja, bez bljeska engleskog`, async ({ page }) => {
+    await page.addInitScript(() => {
+      try { localStorage.setItem('sokrat-ui-lang', 'hr'); } catch (e) { /* privatni način */ }
+      // Za svaki engleski blok koji parser ubaci zapiši što <html> u tom času kaže o jeziku.
+      window.__jezikUzEngleskiBlok = [];
+      new MutationObserver((zapisi) => {
+        for (const z of zapisi) {
+          for (const n of z.addedNodes) {
+            if (n.nodeType === 1 && n.matches('.jezik[lang="en"]')) {
+              window.__jezikUzEngleskiBlok.push(document.documentElement.getAttribute('data-ui-lang'));
+            }
+          }
+        }
+      }).observe(document, { childList: true, subtree: true });
+    });
+    await page.goto(p.url);
+    const uz = await page.evaluate(() => window.__jezikUzEngleskiBlok);
+    expect(uz.length, 'mjerač je vidio bar jedan engleski blok').toBeGreaterThan(0);
+    expect(uz, '<html data-ui-lang> je bio "hr" prije SVAKOG engleskog bloka').toEqual(uz.map(() => 'hr'));
+
+    await expect(page.locator('h1:visible')).toHaveText(p.h1.hr);
+    await expect(page.locator('h1', { hasText: p.h1.en })).toBeHidden();
+    expect(await page.evaluate(() => document.documentElement.lang)).toBe('hr');
+    await expect(page).toHaveTitle(p.naslov.hr);
+    await expect(page.locator('.legal-nav a.legal-back')).toHaveText('← Natrag u aplikaciju');
+    await expect(page.locator('.legal-footer a[href="privacy.html"]')).toHaveText('Pravila privatnosti');
+    await expect(page.locator('.legal-lang .jezik:visible')).toHaveText('HR');
+
+    // Najuža širina (spec §2): hrvatsko zaglavlje je dulje od engleskog.
+    await page.setViewportSize({ width: 320, height: 568 });
+    for (const jezik of ['hr', 'en']) {
+      if (jezik === 'en') await page.locator('.legal-lang').click();
+      const sirina = await page.evaluate(() => document.documentElement.scrollWidth);
+      expect(sirina, jezik + ': nema vodoravnog pomaka na 320 px').toBeLessThanOrEqual(321);
+    }
+  });
+
+  test(`${p.url}: prekidač prebaci jezik i izbor preživi ponovno učitavanje`, async ({ page }) => {
+    await page.goto(p.url);
+    await expect(page.locator('h1:visible')).toHaveText(p.h1.en);
+    await expect(page.locator('.legal-lang .jezik:visible')).toHaveText('EN');
+    await page.locator('.legal-lang').click();
+    await expect(page.locator('h1:visible')).toHaveText(p.h1.hr);
+    await expect(page.locator('.legal-lang')).toHaveAccessibleName('Jezik: hrvatski / engleski');
+    expect(await page.evaluate(() => localStorage.getItem('sokrat-ui-lang'))).toBe('hr');
+    await page.reload();
+    await expect(page.locator('h1:visible')).toHaveText(p.h1.hr);
+    await page.locator('.legal-lang').click();
+    await expect(page.locator('h1:visible')).toHaveText(p.h1.en);
+    expect(await page.evaluate(() => document.documentElement.lang)).toBe('en');
   });
 }
 

@@ -37,6 +37,41 @@ testirano, što slijedi.
 - Gate: preflight EXIT 0 · `legal` + `about` + `seo` + `phone` 24/24 (iPhone-SE-375). ⚠️ Pouka: prvi put sam
   Playwright ispis filtrirao `grep -v` po ESC-sekvenci i time progutao završni redak, a `EXIT=0` je bio `tail`-ov —
   ponovljeno s `--reporter=list` i pravim izlaznim kodom.
+  ⚠️ **ISPRAVAK (isti dan):** ovih 24/24 (i 13/13 uz ciglu ①) **NIJE mjerilo ovo stablo** — na 5050 je odgovarao
+  poslužitelj drugog radnog stabla (v. dolje „tuđe stablo"). Ponovljeno na pravom stablu uz ③a: **49/49**
+  (`legal` · `about` · `i18n` · `theme-fouc` · `a11y` · `seo` · `landing` · `phone`).
+
+### Nalaz: Playwright je mjerio TUĐE stablo (`5343c3f`)
+- Novi test za prekidač jezika nije našao `.legal-lang` iako je bio u datoteci. Na 5050 je slušao `static-server`
+  pokrenut **15.09. u 15:34** iz drugog radnog stabla; `reuseExistingServer: true` ga je preuzeo bez pitanja.
+- **Brana:** `X-Sokrat-Root` u `static-server.js` + `tests/global-setup.js` (odbije tuđe/nepoznato stablo, poruka
+  imenuje oba i kaže `SOKRAT_TEST_PORT=5051`) + `tests/unit/test-server-root.test.js` (pravi poslužitelji; stari
+  server 2 pada). Pokus: na 5050 Playwright padne imenovano, na 5051 vrti ovo stablo. Tuđi poslužitelj NISAM gasio
+  (možda ga koristi druga sesija). Zapis: `docs/workflow/TESTING.md` §„Zeleno na tuđem stablu".
+
+### ③a mehanizam prijevoda + Kontakt dvojezično (Leon, anketa 16.09.: „oba jezika u stranici")
+- **Odluka (Leon):** pravne stranice nose EN i HR blok (`<div class="jezik" lang>`), ne rječnik (i18n.js je već 75 KB
+  na putu SVAKOG posjetitelja naslovnice, a podebljanja/poveznice usred rečenice tražile bi nov `innerHTML`-put) ni
+  zasebne stranice po jeziku.
+- **`boot.js`** upiše `lang` + `data-ui-lang` PRIJE crtanja (`__sokratPrimijeniJezik`); `setUiLang` u `i18n.js` zove
+  istu funkciju. `css/legal.css` skriva drugi blok. Kao nuspojava i **naslovnica** dobiva točan `<html lang>` prije
+  crtanja (dotad tek iz `i18n.js`). Brana `tests/unit/jezik-boot.test.js` (5 crvenih na starom kodu).
+- **`check:i18n` presuda ④:** tekst u bloku je preveden samo uz SUSJEDNI blok drugog jezika istog OBLIKA (naslovi ·
+  odlomci · stavke · poveznice) koji nije doslovna kopija; inače se prijave SVI engleski nositelji (bez „omotaj u
+  lang=en" rupe). Gate-test +7 slučajeva, stara brana 6 crvenih. Na živom `contact.html`: brisanje jedne HR stavke
+  → 20 nalaza.
+- **Kontakt:** HR tekst (bez rodno obilježenih oblika: „što se dogodilo", ne „što si napravio"), zaglavlje
+  (`legal.back`), podnožje (postojeći `footer.*`), naslov kartice (`<title data-i18n>`), prekidač jezika istog
+  obrasca kao `odjava.html` (klasa `.unsub-lang` → zajednička `.legal-lang`, ključ `unsub.lang` → `legal.lang`).
+  `i18n.js` se učitava PRIJE `consent.js` → cookie-traka je na hrvatskom i na pravnim stranicama. Logo `alt=""`
+  (stoji uz vidljivo ime). „O nama" `about.contact.p` HR: „Našao si grešku" → „Vidiš grešku" (rodno neutralno).
+- **Nalaz mjerenjem:** hrvatsko zaglavlje na 320 px = **332 px** (vodoravni pomak) → uži rub + prelamanje reda;
+  tvrdnja za 320 px mjeri OBA jezika. Snimke 320/393 × HR/EN pregledane.
+- **`legal.spec.js`** +2 po dvojezičnoj stranici: bez bljeska (MutationObserver: `data-ui-lang` = `hr` prije svakog
+  engleskog bloka; **obrnuto crveno** s ugašenim pozivom u `boot.js`) · h1/`lang`/naslov/zaglavlje/podnožje · 320 px
+  · prekidač + izbor preživi reload. Osnovica `contact.html` 28 → **0** (izbrisan iz osnovice).
+- Gate: preflight EXIT 0 · Playwright 49/49 na pravom stablu (port 5051). **Slijedi:** FAQ, Pravila privatnosti
+  (svaki svoj commit); Uvjeti tek poslije Leonove presude nacrta.
 
 ## 2026-09-15 navečer (OPUS, stablo `sokratstudy.f21`, `feat/f2-mail`) — F2/4: ③ izmjeren, brana funkcija, cigla 4 „16+"
 
