@@ -97,6 +97,19 @@ testirano, što slijedi.
   `privacy.html` 150 → **0**.
 - Gate: preflight EXIT 0 · `legal` + `i18n` + `a11y` 24/24 na pravom stablu. Snimke 320/393 × HR/EN pregledane.
 
+### ③d Uvjeti korištenja: NOVI tekst (v2, Leon odobrio) + hrvatski → **F3/1 GOTOV NA GRANI**
+- Novi EN tekst = odobreni nacrt v2: vlastito gradivo (privatno po zadanom, AI-gradivo korisnikovo), **dijeljenje i
+  objava** (F7/1 link + javna objava, ADR-035; besplatno, ADR-036; samo ono na što imaš pravo; uklanjanje), prijava
+  sadržaja s obrazloženjem autoru (DSA), zabrana namještanja rezultata, suspenzija, dodatni uvjeti (prodaja ·
+  natjecanja · organizacije), potrošačka prava. „free" maknut iz opisa usluge i iz meta opisa. HR prijevod istim glasom.
+- Osnovica `terms.html` 40 → **0**. `legal.spec.js`: DVOJEZICNE == PAGES (nova pravna stranica ne ulazi samo na
+  engleskom). Pretvarač stranica ostao u scratchpadu (jednokratni alat, ne ide u repo).
+- **F3/1 ispunjen:** sve četiri pravne stranice dvojezične i izvan osnovice (`contact` 28 · `faq` 51 · `privacy` 150 ·
+  `terms` 40 → 0). `check:i18n` ukupno **474 → 224** nositelja u 19 datoteka (474 = osnovica na početku F3/1; usput svjesno podignuta na 493 za novi FAQ/Kontakt) (ostatak = F3/2 `index.html` 49 i F3/3
+  editor/JS). Gate: preflight EXIT 0 · Playwright 56/56 na pravom stablu (legal · about · i18n · a11y · theme-fouc ·
+  seo · landing · phone). **Sve LOKALNO na `feat/f3-dvojezicnost`, ništa pushano** — nije na previewu ni produkciji.
+- **Sljedeće po RASPOREDU: F3/2** (`index.html`, pa redom po težini) — uz Leonov OK za novu fazu.
+
 ## 2026-09-15 navečer (OPUS, stablo `sokratstudy.f21`, `feat/f2-mail`) — F2/4: ③ izmjeren, brana funkcija, cigla 4 „16+"
 
 - **③ → pravi commit `c0a53f4`** (mjere u unosu ispod). Puni paket: 1 ✘ = poznati `theme-fouc` (BACKLOG), sam 60/60.

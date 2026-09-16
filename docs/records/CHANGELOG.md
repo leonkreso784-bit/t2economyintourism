@@ -5,6 +5,16 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-16 (OPUS) — **F3/1 ③d: novi Uvjeti korištenja, na engleskom i hrvatskom** — grana `feat/f3-dvojezicnost`
+
+### Promijenjeno
+- **Uvjeti korištenja napisani iznova:** vlastito gradivo ostaje korisnikovo i privatno je po zadanom; pravila za
+  dijeljenje i objavu (autor odlučuje i povlači, besplatno, samo ono na što imaš pravo, uklanjanje); prijava
+  nezakonitog sadržaja; zabrana namještanja rezultata; dodatni uvjeti za buduće plaćene funkcije; potrošačka prava.
+### Dodano
+- **Uvjeti korištenja na hrvatskom.** Time su sve četiri pravne stranice (Kontakt, Česta pitanja, Pravila privatnosti,
+  Uvjeti korištenja) dostupne na oba jezika.
+
 ## 2026-09-16 (OPUS) — **F3/1 ③c: Pravila privatnosti na hrvatskom** — grana `feat/f3-dvojezicnost`
 
 ### Dodano

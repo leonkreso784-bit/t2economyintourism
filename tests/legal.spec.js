@@ -64,12 +64,17 @@ for (const [shema, tema] of [['dark', 'carbon'], ['light', 'academic']]) {
 // `boot.js` upiše PRIJE crtanja. Mjeri se ono što korisnik vidi i čuje (vidljiv h1, `lang`,
 // naslov kartice, zaglavlje, podnožje) i — što nijedna statička brana ne može — je li engleski
 // blok ikad ušao u stranicu dok `<html>` još nije rekao hrvatski (bljesak).
-// Popis raste stranicu po stranicu (cigle F3/1); kad obuhvati sve četiri, mjeri cijeli PAGES.
+// Od F3/1 ③d su sve četiri pravne stranice dvojezične — tvrdnja ispod traži da popis ostane == PAGES.
 const DVOJEZICNE = [
   { url: '/contact.html', h1: { en: 'Contact', hr: 'Kontakt' }, naslov: { en: 'Contact — Sokrat Study', hr: 'Kontakt — Sokrat Study' } },
   { url: '/faq.html', h1: { en: 'Frequently Asked Questions', hr: 'Česta pitanja' }, naslov: { en: 'FAQ — Sokrat Study', hr: 'Česta pitanja — Sokrat Study' } },
   { url: '/privacy.html', h1: { en: 'Privacy Policy', hr: 'Pravila privatnosti' }, naslov: { en: 'Privacy Policy — Sokrat Study', hr: 'Pravila privatnosti — Sokrat Study' } },
+  { url: '/terms.html', h1: { en: 'Terms of Use', hr: 'Uvjeti korištenja' }, naslov: { en: 'Terms of Use — Sokrat Study', hr: 'Uvjeti korištenja — Sokrat Study' } },
 ];
+
+test('svaka pravna stranica je dvojezična (nova ne ulazi samo na engleskom)', () => {
+  expect(DVOJEZICNE.map((d) => d.url).sort()).toEqual(PAGES.map((p) => p.url).sort());
+});
 
 for (const p of DVOJEZICNE) {
   test(`${p.url}: spremljen hrvatski → hrvatski od prvog crtanja, bez bljeska engleskog`, async ({ page }) => {

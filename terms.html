@@ -3,95 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Terms of Use — Sokrat Study</title>
-    <meta name="description" content="Terms of Use for Sokrat Study — the free study platform for university students.">
+    <title data-i18n="legal.title.terms">Terms of Use — Sokrat Study</title>
+    <meta name="description" content="Terms of Use for Sokrat Study — accounts, your own material, sharing and publishing, and acceptable use.">
     <link rel="canonical" href="https://www.sokratstudy.com/terms.html">
-    <link rel="icon" type="image/png" href="assets/logo.svg?v=20260916162620">
+    <link rel="icon" type="image/png" href="assets/logo.svg?v=20260916162949">
     <!-- paleta: GENERIRAN izvadak tokena iz bundlea; MORA prije legal.css -->
-    <link rel="stylesheet" href="css/tokens.static.css?v=20260916162620">
-    <link rel="stylesheet" href="css/legal.css?v=20260916162620">
+    <link rel="stylesheet" href="css/tokens.static.css?v=20260916162949">
+    <link rel="stylesheet" href="css/legal.css?v=20260916162949">
 
     <!-- Cookie consent + Google Analytics (Consent Mode v2; default=denied zivi u js/consent.js, D1/CSP) -->
-    <link rel="stylesheet" href="css/consent.css?v=20260916162620">
-    <script src="js/consent.js?v=20260916162620" defer></script>
+    <link rel="stylesheet" href="css/consent.css?v=20260916162949">
+    <!-- F3/1: i18n.js PRIJE consent.js (oba su defer, izvršavaju se redom) — cookie-traka tekst uzima iz `window.t`. -->
+    <script src="js/i18n.js?v=20260916162949" defer></script>
+    <script src="js/consent.js?v=20260916162949" defer></script>
     <!-- ADR-034: štipanje s dva prsta gasi JS, jer Safari metu ignorira — zašto piše u js/no-zoom.js -->
-    <script src="js/no-zoom.js?v=20260916162620" defer></script>
+    <script src="js/no-zoom.js?v=20260916162949" defer></script>
 </head>
 <body>
 <!-- F1/5 (2026-09-06): tema se odlučuje PRIJE prvog crtanja, isto kao u index.html — boot.js je
      SINKRON (bez defer). `data-theme` u markupu je svijetla zadana samo bez JS-a; s JS-om odlučuje
      spremljeni izbor, inače uređaj (`prefers-color-scheme`). Do ove cigle stranica nije imala ni
      atribut ni skriptu: korisnik na tamnom telefonu dobivao je crn katalog i bijela Pravila. -->
-<script src="js/boot.js?v=20260916162620"></script>
+<script src="js/boot.js?v=20260916162949"></script>
     <header class="legal-nav">
-        <a class="legal-logo" href="/"><img src="assets/logo.svg?v=20260916162620" alt="Sokrat Study logo">Sokrat Study</a>
-        <a class="legal-back" href="/">&larr; Back to app</a>
+        <!-- `alt=""`: znak stoji uz vidljivo ime u istoj poveznici; opisan alt bi čitač ekrana izgovorio dvaput. -->
+        <a class="legal-logo" href="/"><img src="assets/logo.svg?v=20260916162949" alt="">Sokrat Study</a>
+        <div class="legal-nav-actions">
+            <button type="button" class="legal-back legal-lang" data-action="toggleUiLang" data-i18n-aria="legal.lang" aria-label="Language / Jezik">
+                <span class="jezik" lang="en">EN</span><span class="jezik" lang="hr">HR</span>
+            </button>
+            <a class="legal-back" href="/" data-i18n="legal.back">&larr; Back to app</a>
+        </div>
     </header>
 
     <main class="legal">
-        <h1>Terms of Use</h1>
-        <p class="legal-updated">Last updated: 12 June 2026</p>
+        <!-- F3/1: oba jezika u stranici — vidi se onaj iz `<html data-ui-lang>` (boot.js, prije crtanja).
+             Blokovi moraju imati ISTI oblik (naslovi · odlomci · stavke · poveznice) — `npm run check:i18n`. -->
+        <div class="jezik" lang="en">
+            <h1>Terms of Use</h1>
+            <p class="legal-updated">Last updated: 16 September 2026</p>
 
-        <p>Welcome to Sokrat Study (<a href="https://www.sokratstudy.com">www.sokratstudy.com</a>),
-        operated by <strong>Leon Kreso</strong>. By using the platform you agree to these terms.</p>
+            <p>Welcome to Sokrat Study (<a href="https://www.sokratstudy.com">www.sokratstudy.com</a>),
+            operated by <strong>Leon Kreso</strong> (Croatia). By using the platform you agree to these terms. How we
+            handle personal data is described separately in our <a href="privacy.html">Privacy Policy</a>.</p>
 
-        <h2>1. The service</h2>
-        <p>Sokrat Study is a <strong>free</strong> study platform offering interactive learning
-        materials (lessons, flashcards, quizzes, and exercises) for university subjects. The service
-        is provided "as is", without guarantees of availability or fitness for a particular purpose.</p>
+            <h2>1. The service</h2>
+            <p>Sokrat Study is a study platform. You can study from ready subjects in our catalogue and — with an
+            account — build your own study material. The service is provided "as is": we work to keep it running and
+            correct, but we cannot guarantee that it is always available, error-free, or suitable for a particular
+            purpose. Features may change or be discontinued.</p>
 
-        <h2>2. Study content</h2>
-        <p>The study materials are original summaries and exercises created for exam preparation.
-        They are a <strong>study aid</strong>, not a replacement for official course materials,
-        lectures, or syllabi. While we work hard to keep content accurate, we cannot guarantee it is
-        free of errors or that it matches the current version of any course — always verify against
-        your official course materials.</p>
+            <h2>2. The catalogue</h2>
+            <p>The subjects in our catalogue are original summaries, questions and exercises created for exam
+            preparation. They are a <strong>study aid</strong>, not a replacement for official course materials,
+            lectures or syllabi, and they may contain mistakes or differ from the current version of a course — always
+            check against your official materials. If you find a mistake, please tell us.</p>
 
-        <h2>3. Accounts</h2>
-        <ul>
-            <li>An account is optional and free. You create it with your name, email address and a password,
-                and confirm your email address before signing in.</li>
-            <li>You are responsible for keeping your password confidential and for the security of your
-                email inbox, which can be used to reset access to your account.</li>
-            <li>We may suspend accounts used for abuse (e.g. attempts to disrupt the service or access other users' data).</li>
-        </ul>
+            <h2>3. Accounts</h2>
+            <ul>
+                <li>An account is free. You can sign up with an email address and a password (and confirm your
+                    address), or continue with Google.</li>
+                <li>You must be <strong>at least 16</strong> to create an account.</li>
+                <li>Keep your password confidential. You are responsible for what happens in your account and for the
+                    security of the email inbox connected to it.</li>
+                <li>You can delete your account at any time in the app, under
+                    <em>Profile → Privacy &amp; data → Delete account</em>.</li>
+            </ul>
 
-        <h2>4. Acceptable use</h2>
-        <p>You agree not to scrape, copy at scale, republish, or resell the platform's content, and not
-        to interfere with the operation of the service or attempt to access data that is not yours.</p>
+            <h2>4. Your material</h2>
+            <ul>
+                <li><strong>What you create stays yours.</strong> Your materials — text, flashcards, questions and the
+                    images you add — belong to you, or to whoever you have the right to use them from. This includes
+                    material you create with the help of an AI tool: you decide what goes in, and you are responsible
+                    for it.</li>
+                <li><strong>Private by default.</strong> Your material is visible only to you unless you choose to share
+                    or publish it.</li>
+                <li>To run the service for you, you give us permission to store your material, back it up, sync it
+                    across your devices and show it to you. We do not sell it and do not use it for advertising.</li>
+                <li>Your profile photo and cover image can be opened by anyone who has the image's direct link, as
+                    explained in the Privacy Policy.</li>
+                <li>Keep your own copy of anything important. We back up our database, but we cannot promise that data
+                    will never be lost.</li>
+            </ul>
 
-        <h2>5. Intellectual property</h2>
-        <p>The platform, its design, and its study content are the property of Leon Kreso unless
-        otherwise stated. You may use the content for your personal studying.</p>
+            <h2>5. Sharing and publishing your material</h2>
+            <p>Where Sokrat Study lets you share material (for example with a link) or publish it for everyone, these
+            rules apply:</p>
+            <ul>
+                <li><strong>You decide.</strong> Nothing is shared or published unless you do it, and you can stop
+                    sharing or withdraw published material at any time — after that, other people can no longer open or
+                    study from it. Anyone who has a sharing link can open that material, so share links only with people
+                    you choose.</li>
+                <li><strong>Sharing and publishing are free.</strong> We do not charge for them.</li>
+                <li><strong>What others may do.</strong> By sharing or publishing, you allow Sokrat Study and the people
+                    you share it with (or, if published, all users) to open, find and study from your material on the
+                    platform, for as long as it stays shared or published. They may not copy it out of Sokrat Study,
+                    republish it or sell it.</li>
+                <li><strong>Your name goes with it.</strong> Shared and published material is shown with your display
+                    name or username.</li>
+                <li><strong>Share and publish only what you have the right to.</strong> That means your own work, or
+                    material you have permission to share. Do not share or publish your lecturers' slides, textbook
+                    pages, other students' notes or exam papers without permission, and do not share or publish anything
+                    illegal, hateful or other people's personal data. Writing your own notes, summaries and questions
+                    about a subject is fine.</li>
+                <li><strong>We may remove it.</strong> We may remove shared or published material, or take away the
+                    ability to share and publish, if it breaks these terms or the law, or if someone rightly reports that
+                    it infringes their rights.</li>
+            </ul>
 
-        <h2>6. Liability</h2>
-        <p>To the maximum extent permitted by law, we are not liable for any damages arising from the
-        use of the platform, including exam results, data loss, or service interruptions. The service
-        may change or be discontinued at any time.</p>
+            <h2>6. Reporting a problem with content</h2>
+            <p>If you believe something on Sokrat Study is illegal or infringes your rights (for example, your
+            copyright), write to <a href="mailto:sokrat@sokratstudy.com">sokrat@sokratstudy.com</a>: tell us what it is,
+            where it is, and why. We will look into it, remove it where needed, and tell the person who shared or
+            published it why.</p>
 
-        <h2>7. Privacy</h2>
-        <p>How we handle personal data is described in our
-        <a href="privacy.html">Privacy Policy</a>.</p>
+            <h2>7. Acceptable use</h2>
+            <p>You agree not to:</p>
+            <ul>
+                <li>copy the catalogue or other users' material at scale, republish it outside Sokrat Study, or resell
+                    it;</li>
+                <li>interfere with the service, overload it, or try to get around its security;</li>
+                <li>try to access accounts or data that are not yours;</li>
+                <li>manipulate progress, scores, results or rankings;</li>
+                <li>use the service for anything illegal.</li>
+            </ul>
 
-        <h2>8. Governing law</h2>
-        <p>These terms are governed by the laws of the Republic of Croatia.</p>
+            <h2>8. Suspending accounts</h2>
+            <p>We may suspend or delete an account that seriously or repeatedly breaks these terms — for example, by
+            attacking the service, accessing other users' data, or repeatedly sharing or publishing material that
+            infringes other people's rights. Where we reasonably can, we will tell you why first.</p>
 
-        <h2>9. Contact</h2>
-        <p>Questions about these terms:
-        <a href="mailto:sokrat@sokratstudy.com">sokrat@sokratstudy.com</a> ·
-        <a href="contact.html">Contact page</a></p>
+            <h2>9. Additional terms for some features</h2>
+            <p>Some features — for example selling material, competitions, or accounts managed by an organisation such
+            as a company or a school — may come with additional terms. We will show them to you before you use such a
+            feature, and you will not be bound by them unless you accept them.</p>
+
+            <h2>10. Intellectual property</h2>
+            <p>The platform — its design, code and catalogue content — belongs to Leon Kreso unless stated otherwise.
+            You may use the catalogue for your own studying. Your own material stays yours (section 4).</p>
+
+            <h2>11. Liability</h2>
+            <p>To the extent permitted by law, we are not liable for damages arising from the use of the platform,
+            including exam results, lost data or interruptions of the service, or for material shared or published by
+            other users. Nothing in these terms limits rights you have as a consumer under mandatory law.</p>
+
+            <h2>12. Changes to these terms</h2>
+            <p>We may update these terms as the platform evolves. The date above always shows the latest version, and we
+            will announce important changes on the website before they take effect.</p>
+
+            <h2>13. Governing law</h2>
+            <p>These terms are governed by the laws of the Republic of Croatia.</p>
+
+            <h2>14. Contact</h2>
+            <p>Questions about these terms:
+            <a href="mailto:sokrat@sokratstudy.com">sokrat@sokratstudy.com</a> ·
+            <a href="contact.html">Contact page</a></p>
+        </div>
+
+        <div class="jezik" lang="hr">
+            <h1>Uvjeti korištenja</h1>
+            <p class="legal-updated">Zadnja izmjena: 16. rujna 2026.</p>
+
+            <p>Sokrat Study (<a href="https://www.sokratstudy.com">www.sokratstudy.com</a>) vodi
+            <strong>Leon Kreso</strong> (Hrvatska). Korištenjem platforme prihvaćaš ove uvjete. Kako postupamo s osobnim
+            podacima opisano je zasebno u <a href="privacy.html">Pravilima privatnosti</a>.</p>
+
+            <h2>1. Usluga</h2>
+            <p>Sokrat Study je platforma za učenje. Možeš učiti iz gotovih predmeta u našem katalogu i — uz račun —
+            izrađivati vlastito gradivo. Usluga se pruža „kakva jest“: trudimo se da radi i da je točna, ali ne možemo
+            jamčiti da je uvijek dostupna, bez grešaka ili prikladna za određenu svrhu. Mogućnosti se mogu mijenjati ili
+            ukinuti.</p>
+
+            <h2>2. Katalog</h2>
+            <p>Predmeti u našem katalogu su izvorni sažeci, pitanja i vježbe izrađeni za pripremu ispita. Oni su
+            <strong>pomoć u učenju</strong>, a ne zamjena za službene materijale kolegija, predavanja ili izvedbene
+            planove, i mogu sadržavati greške ili se razlikovati od trenutne verzije kolegija — uvijek provjeri prema
+            službenim materijalima. Ako nađeš grešku, javi nam.</p>
+
+            <h2>3. Računi</h2>
+            <ul>
+                <li>Račun je besplatan. Možeš se registrirati e-mail adresom i lozinkom (i potvrditi adresu) ili nastaviti
+                    s Googleom.</li>
+                <li>Za izradu računa moraš imati <strong>najmanje 16 godina</strong>.</li>
+                <li>Lozinku čuvaj u tajnosti. Odgovaraš za ono što se događa u tvom računu i za sigurnost e-mail
+                    sandučića povezanog s njim.</li>
+                <li>Račun možeš obrisati u bilo kojem trenutku u aplikaciji, pod
+                    <em>Profil → Privatnost i podaci → Obriši račun</em>.</li>
+            </ul>
+
+            <h2>4. Tvoje gradivo</h2>
+            <ul>
+                <li><strong>Ono što izradiš ostaje tvoje.</strong> Tvoji materijali — tekst, kartice, pitanja i slike
+                    koje dodaš — pripadaju tebi ili onome od koga ih imaš pravo koristiti. To vrijedi i za gradivo
+                    izrađeno uz pomoć AI alata: ti odlučuješ što ulazi u njega i ti za njega odgovaraš.</li>
+                <li><strong>Privatno po zadanom.</strong> Tvoje gradivo vidiš samo ti, osim ako ga odlučiš podijeliti ili
+                    objaviti.</li>
+                <li>Kako bismo ti pružali uslugu, daješ nam dopuštenje da tvoje gradivo spremamo, radimo njegove
+                    sigurnosne kopije, sinkroniziramo ga među tvojim uređajima i prikazujemo ga tebi. Ne prodajemo ga i
+                    ne koristimo ga za oglašavanje.</li>
+                <li>Tvoju profilnu fotografiju i naslovnu sliku može otvoriti svatko tko ima izravnu poveznicu na sliku,
+                    kako je objašnjeno u Pravilima privatnosti.</li>
+                <li>Kopiju svega važnog čuvaj i kod sebe. Radimo sigurnosne kopije baze, ali ne možemo obećati da se
+                    podaci nikad neće izgubiti.</li>
+            </ul>
+
+            <h2>5. Dijeljenje i objava tvog gradiva</h2>
+            <p>Kad ti Sokrat Study omogući da gradivo podijeliš (na primjer poveznicom) ili ga objaviš za sve, vrijede
+            ova pravila:</p>
+            <ul>
+                <li><strong>Ti odlučuješ.</strong> Ništa se ne dijeli niti objavljuje dok to ne učiniš, a dijeljenje
+                    možeš prekinuti ili objavu povući u bilo kojem trenutku — nakon toga ga drugi više ne mogu otvoriti
+                    niti iz njega učiti. Tko ima poveznicu za dijeljenje, može otvoriti taj materijal, zato poveznicu
+                    dijeli samo s ljudima koje odabereš.</li>
+                <li><strong>Dijeljenje i objava su besplatni.</strong> Za njih ne naplaćujemo.</li>
+                <li><strong>Što smiju drugi.</strong> Dijeljenjem ili objavom dopuštaš Sokrat Studyju i ljudima s kojima
+                    dijeliš (ili, ako je objavljeno, svim korisnicima) da tvoje gradivo otvaraju, pronalaze i iz njega
+                    uče na platformi, dok god je podijeljeno ili objavljeno. Ne smiju ga kopirati izvan Sokrat Studyja,
+                    ponovno objavljivati ni prodavati.</li>
+                <li><strong>Uz gradivo ide tvoje ime.</strong> Podijeljeno i objavljeno gradivo prikazuje se s tvojim
+                    imenom za prikaz ili korisničkim imenom.</li>
+                <li><strong>Dijeli i objavljuj samo ono na što imaš pravo.</strong> To znači vlastiti rad ili materijal
+                    za koji imaš dopuštenje da ga dijeliš. Bez dopuštenja ne dijeli i ne objavljuj slajdove svojih
+                    predavača, stranice udžbenika, tuđe bilješke ni ispite, i ne dijeli niti objavljuj ništa nezakonito,
+                    ništa što širi mržnju ni tuđe osobne podatke. Pisati vlastite bilješke, sažetke i pitanja o predmetu
+                    je u redu.</li>
+                <li><strong>Možemo ga ukloniti.</strong> Podijeljeno ili objavljeno gradivo možemo ukloniti, ili oduzeti
+                    mogućnost dijeljenja i objave, ako krši ove uvjete ili zakon, ili ako netko opravdano prijavi da krši
+                    njegova prava.</li>
+            </ul>
+
+            <h2>6. Prijava problema sa sadržajem</h2>
+            <p>Ako smatraš da je nešto na Sokrat Studyju nezakonito ili krši tvoja prava (na primjer autorska), piši na
+            <a href="mailto:sokrat@sokratstudy.com">sokrat@sokratstudy.com</a>: napiši što je, gdje je i zašto.
+            Provjerit ćemo, po potrebi ukloniti i osobi koja je to podijelila ili objavila objasniti zašto.</p>
+
+            <h2>7. Prihvatljivo korištenje</h2>
+            <p>Obvezuješ se da nećeš:</p>
+            <ul>
+                <li>masovno kopirati katalog ili tuđe gradivo, ponovno ga objavljivati izvan Sokrat Studyja ili ga
+                    preprodavati;</li>
+                <li>ometati uslugu, preopterećivati je ili pokušavati zaobići njezinu zaštitu;</li>
+                <li>pokušavati pristupiti računima ili podacima koji nisu tvoji;</li>
+                <li>namještati napredak, bodove, rezultate ili ljestvice;</li>
+                <li>koristiti uslugu za bilo što nezakonito.</li>
+            </ul>
+
+            <h2>8. Suspenzija računa</h2>
+            <p>Račun koji teško ili ponovljeno krši ove uvjete možemo suspendirati ili obrisati — na primjer zbog napada
+            na uslugu, pristupa tuđim podacima ili ponovljenog dijeljenja ili objave gradiva koje krši tuđa prava. Kad
+            god je to razumno moguće, prvo ćemo ti reći zašto.</p>
+
+            <h2>9. Dodatni uvjeti za neke mogućnosti</h2>
+            <p>Neke mogućnosti — na primjer prodaja gradiva, natjecanja ili računi kojima upravlja organizacija poput
+            tvrtke ili škole — mogu imati dodatne uvjete. Pokazat ćemo ti ih prije nego takvu mogućnost koristiš i ne
+            obvezuju te dok ih ne prihvatiš.</p>
+
+            <h2>10. Intelektualno vlasništvo</h2>
+            <p>Platforma — njezin dizajn, kôd i sadržaj kataloga — pripada Leonu Kresi, osim ako je navedeno drukčije.
+            Katalog smiješ koristiti za vlastito učenje. Tvoje gradivo ostaje tvoje (odjeljak 4).</p>
+
+            <h2>11. Odgovornost</h2>
+            <p>U mjeri u kojoj to zakon dopušta, ne odgovaramo za štetu nastalu korištenjem platforme, uključujući
+            rezultate ispita, izgubljene podatke ili prekide usluge, ni za gradivo koje podijele ili objave drugi
+            korisnici. Ništa u ovim uvjetima ne ograničava prava koja imaš kao potrošač prema prisilnim propisima.</p>
+
+            <h2>12. Izmjene ovih uvjeta</h2>
+            <p>Ove uvjete možemo mijenjati kako se platforma razvija. Datum na vrhu uvijek pokazuje najnoviju inačicu, a
+            važne izmjene najavit ćemo na stranici prije nego stupe na snagu.</p>
+
+            <h2>13. Mjerodavno pravo</h2>
+            <p>Na ove uvjete primjenjuje se pravo Republike Hrvatske.</p>
+
+            <h2>14. Kontakt</h2>
+            <p>Pitanja o ovim uvjetima:
+            <a href="mailto:sokrat@sokratstudy.com">sokrat@sokratstudy.com</a> ·
+            <a href="contact.html">Stranica za kontakt</a></p>
+        </div>
     </main>
 
     <footer class="legal-footer">
         <nav>
-            <a href="/">Home</a>
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Use</a>
-            <a href="faq.html">FAQ</a>
-            <a href="contact.html">Contact</a>
-            <a href="#" data-consent-settings>Cookie settings</a>
+            <a href="/" data-i18n="nav.home">Home</a>
+            <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+            <a href="terms.html" data-i18n="footer.terms">Terms of Use</a>
+            <a href="faq.html" data-i18n="footer.faq">FAQ</a>
+            <a href="contact.html" data-i18n="footer.contact">Contact</a>
+            <a href="#" data-consent-settings data-i18n="footer.cookies">Cookie settings</a>
         </nav>
-        <p>&copy; 2026 Sokrat Study &middot; Leon Kreso. All rights reserved.</p>
+        <p data-i18n="footer.rights">&copy; 2026 Sokrat Study &middot; Leon Kreso. All rights reserved.</p>
     </footer>
 </body>
 </html>
