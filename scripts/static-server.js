@@ -30,7 +30,10 @@ http.createServer((req, res) => {
     // ovdje pretvorilo u razliku između probne i prave okoline, a to je najgora vrsta rupe.
     res.writeHead(200, {
       'Content-Type': MIME[path.extname(filePath).toLowerCase()] || 'application/octet-stream',
-      'Content-Length': Buffer.byteLength(data)
+      'Content-Length': Buffer.byteLength(data),
+      // KOJE STABLO poslužujem (2026-09-16): Playwright s `reuseExistingServer` inače preuzme
+      // poslužitelj drugog radnog stabla i mjeri tuđe datoteke — `tests/global-setup.js` ovo čita.
+      'X-Sokrat-Root': encodeURIComponent(ROOT)
     });
     res.end(data);
   });

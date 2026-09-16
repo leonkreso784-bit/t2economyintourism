@@ -3,7 +3,11 @@ const { defineConfig } = require('@playwright/test');
 // nije instaliran ili .env ne postoji, config i dalje radi (env dolazi iz shella/CI-a).
 try { require('dotenv').config(); } catch (e) { /* dotenv optional */ }
 
-const PORT = 5050;
+// ⚠️ Port se smije zadati izvana (`SOKRAT_TEST_PORT`), jer na istom računalu stoji više radnih
+// stabala, a `reuseExistingServer` preuzme poslužitelj bilo kojeg od njih. `tests/global-setup.js`
+// odbije tuđe stablo; drugi port je put dalje kad onaj na 5050 pripada drugoj sesiji.
+// ⚠️ `tests/.auth/admin.json` je spremljen za localhost:5050 — authed suite traži taj port.
+const PORT = Number(process.env.SOKRAT_TEST_PORT) || 5050;
 
 // Custom iPhone-like viewports (Playwright's built-in devices lag behind newest models).
 const iphone = (width, height) => ({
@@ -82,8 +86,10 @@ module.exports = defineConfig({
     // SW presreće same-origin fetcheve. SW se testira izolirano u sw.spec.js (test.use allow).
     serviceWorkers: 'block',
   },
+  globalSetup: require.resolve('./tests/global-setup.js'),
   webServer: {
     command: 'node scripts/static-server.js',
+    env: { PORT: String(PORT) },
     url: `http://localhost:${PORT}`,
     reuseExistingServer: true,
     timeout: 30000,

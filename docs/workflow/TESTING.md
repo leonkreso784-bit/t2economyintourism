@@ -170,6 +170,20 @@ sharding: 533 testa u jednom procesu je uzrok, a ne simptom.
 run: build **0.4 min** · shardovi **11.2 / 10.0 min** — stari job je bio 97 % Playwright.
 Rast suite se apsorbira **novim shardom** u matrici, nikad većim timeoutom.
 
+## ⚠️ ZELENO NA TUĐEM STABLU (2026-09-16, F3/1)
+
+Playwright ima `reuseExistingServer: true`, a na računalu stoji **više radnih stabala** (`.dev`,
+`.f21`, `.f3`…). Poslužitelj koji je dan ranije pokrenulo drugo stablo ostao je živ na 5050, i
+Playwright ga je **tiho preuzeo**: u sesiji F3/1 su prijavljeni rezultati **13/13 i 24/24
+mjerili TUĐE datoteke**. Otkrilo se tek kad je novi test tražio element koji postoji samo u
+ovom stablu. *`reuseExistingServer` provjerava ODGOVARA LI adresa, ne ČIJE datoteke daje.*
+
+**Brana:** `scripts/static-server.js` šalje `X-Sokrat-Root`, a `tests/global-setup.js` prije
+ijednog testa odbije poslužitelj drugog stabla (i stari bez zaglavlja) porukom koja imenuje oba
+stabla. Čuva je `tests/unit/test-server-root.test.js` (pravi poslužitelji, obrnuto crveno).
+**Kad padne:** ugasi taj poslužitelj ili vrti na drugom portu — `SOKRAT_TEST_PORT=5051 npx
+playwright test …`. ⚠️ `test:authed` traži 5050 (`tests/.auth/admin.json` je spremljen za tu adresu).
+
 ## ⚠️ BRISES LI ELEMENT SUCELJA, NE TRAZI NJEGOVO IME (2026-09-08, F2/0)
 
 Obrisan je CTA `#topbarStart` / `.topbar-cta` iz trake. Prije koda je potrazeno tko ga
