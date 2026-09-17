@@ -150,12 +150,42 @@ slucaj('setAttribute s uvjetnim izrazom kroz t() → zeleno', 0, vrti(stablo({
   js: { 'u.js': "btn.setAttribute('aria-label', open ? t('nav.ok') : t('msg.saved'));\n" },
   osnovica: {},
 })));
-
-// ⑧ askConfirm: KLJUČ (argument t-a) se preskače, FALLBACK je nalaz (K5 razred).
-slucaj('askConfirm: ključ preskočen, engleski fallback = nalaz → PAD', 1, vrti(stablo({
-  js: { 'a.js': "askConfirm({ title: t('nav.ok', 'Delete everything?') });\n" },
+// ⑦c F3/2 cigla 4b: sudi se SVAKI literal drugog argumenta — i u predlošku, i uz helper.
+slucaj('setAttribute: zakucan tekst u predlošku → PAD', 1, vrti(stablo({
+  js: { 'u.js': "img.setAttribute('aria-label', `Open image: ${img.alt || 'Learn image'}`);\n" },
   osnovica: {},
-})), (o) => o.includes('Delete everything?') && !o.includes('"nav.ok"'));
+})), (o) => o.includes('Open image'));
+slucaj('setAttribute: rezerva uz POSTOJEĆI ključ i `typeof … === \'function\'` → zeleno', 0, vrti(stablo({
+  js: { 'u.js': "w.setAttribute('aria-label', typeof window.t === 'function' ? window.t('nav.ok') : 'Table');\n"
+    + "v.setAttribute('aria-label', tr('msg.saved', 'More actions') + ': ' + ime);\n" },
+  osnovica: {},
+})));
+slucaj('setAttribute: rezerva uz NEPOSTOJEĆI ključ → PAD (i ključ i rezerva)', 1, vrti(stablo({
+  js: { 'u.js': "v.setAttribute('aria-label', tr('materials.nema', 'More actions') + ': ' + ime);\n" },
+  osnovica: {},
+})), (o) => o.includes('More actions') && o.includes('materials.nema'));
+
+// ⑧ askConfirm — presuda o REZERVI (Leon, 17.09., F3/2 cigla 4b, „A"): engleski tekst uz ključ
+// koji POSTOJI u rječniku nije nalaz — prikaže se samo ako rječnik nije učitan, na hrvatskom
+// sučelju nikad. Do tada je ovaj slučaj tvrdio suprotno (i sukobio se sa zaglavljem brane).
+slucaj('askConfirm: rezerva uz postojeći ključ, bilo kojim kućnim helperom → zeleno', 0, vrti(stablo({
+  js: { 'a.js': "askConfirm({ title: t('nav.ok', 'Delete everything?'), message: mt('msg.saved', 'Gone.'),\n"
+    + "  confirmText: pt('nav.ok', 'Delete') });\n"
+    + "askConfirm({ message: window.t ? t('msg.saved') : 'Saved to cloud' });\n" },
+  osnovica: {},
+})));
+slucaj('askConfirm: rezerva uz NEPOSTOJEĆI ključ → PAD (ona je tada tekst na ekranu)', 1, vrti(stablo({
+  js: { 'a.js': "askConfirm({ title: mt('materials.nema', 'Delete this item?') });\n" },
+  osnovica: {},
+})), (o) => o.includes('Delete this item?') && o.includes('materials.nema'));
+slucaj('askConfirm: `window.t ? t(k) : \'X\'` s nepostojećim ključem → PAD', 1, vrti(stablo({
+  js: { 'a.js': "askConfirm({ message: window.t ? t('msg.nema') : 'Delete ALL progress?' });\n" },
+  osnovica: {},
+})), (o) => o.includes('Delete ALL progress?'));
+slucaj('askConfirm: goli tekst bez ključa → PAD', 1, vrti(stablo({
+  js: { 'a.js': "askConfirm({ title: 'Discard changes?' });\n" },
+  osnovica: {},
+})), (o) => o.includes('Discard changes?'));
 
 // ⑨ PRESUDA ③: ključ kojeg NEMA u rječniku → PAD (i u t-pozivu i u data-i18n atributu).
 slucaj('t() s nepostojećim ključem → PAD „ključ bez rječnika"', 1, vrti(stablo({
@@ -168,6 +198,12 @@ slucaj('pt()/at() s nepostojećim ključem → PAD „ključ bez rječnika"', 1,
   js: { 'h.js': "x = pt('profile.nema', 'Profile'); y = at('auth.nema', 'Sign in');\n" },
   osnovica: {},
 })), (o) => o.includes('profile.nema') && o.includes('auth.nema'));
+// ⑨c F3/2 cigla 4b: izmjereno u js/ 17.09. — i `tr` (5 datoteka), `ct`, `_t`, `_pt`, `T` nose ključ.
+slucaj('tr()/ct()/_t()/_pt()/T() s nepostojećim ključem → PAD', 1, vrti(stablo({
+  js: { 'h2.js': "a = tr('fc.nema', 'x'); b = ct('crop.nema', 'y'); c = _t('nav.nema1');\n"
+    + "d = _pt('nav.nema2', 'z'); e = T('cookie.nema');\n" },
+  osnovica: {},
+})), (o) => ['fc.nema', 'crop.nema', 'nav.nema1', 'nav.nema2', 'cookie.nema'].every((k) => o.includes(k)));
 slucaj('data-i18n s nepostojećim ključem → PAD', 1, vrti(stablo({
   html: { 'k.html': '<h1 data-i18n="landing.nema">x</h1>' },
   osnovica: {},

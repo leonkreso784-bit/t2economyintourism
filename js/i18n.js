@@ -157,6 +157,9 @@
     // Learn
     'learn.title': { en: 'Learn - Complete Material', hr: 'Učenje – cjelovito gradivo' },
     'learn.imageClose': { en: 'Close image viewer', hr: 'Zatvori prikaz slike' },
+    // F3/2 cigla 4b: ime slike u gradivu (čitač ekrana) i opis slike koja ga nema (natpis preglednika).
+    'learn.openImage': { en: 'Open image: {alt}', hr: 'Otvori sliku: {alt}' },
+    'learn.image': { en: 'Learn image', hr: 'Slika' },
 
     // Flashcards
     'fc.title': { en: 'Flashcards', hr: 'Kartice' },

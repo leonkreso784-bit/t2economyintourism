@@ -147,22 +147,26 @@ function enhanceLearnTables(container) {
 function enhanceLearnImages(container) {
     if (!container) return;
 
+    // F3/2 cigla 4b: ime slike je bilo „Open image: …" u oba jezika. Rezervni opis (slika bez `alt`)
+    // stanuje u `openLearnImageModal`, pa ga klik predaje prazan umjesto da ga ponavlja.
+    const tr = (k, fb) => (typeof window.t === 'function' ? window.t(k) : fb);
     container.querySelectorAll('.learn-card-content img').forEach(img => {
         img.classList.add('learn-image', 'learn-zoomable');
         img.setAttribute('loading', img.getAttribute('loading') || 'lazy');
         img.setAttribute('tabindex', '0');
         img.setAttribute('role', 'button');
-        img.setAttribute('aria-label', `Open image: ${img.alt || 'Learn image'}`);
+        img.setAttribute('aria-label', tr('learn.openImage', 'Open image: {alt}')
+            .replace('{alt}', img.alt || tr('learn.image', 'Learn image')));
 
         if (img.dataset.zoomBound === '1') return;
 
         img.addEventListener('click', () => {
-            openLearnImageModal(img.src, img.alt || 'Learn image');
+            openLearnImageModal(img.src, img.alt);
         });
         img.addEventListener('keydown', (event) => {
             if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
-                openLearnImageModal(img.src, img.alt || 'Learn image');
+                openLearnImageModal(img.src, img.alt);
             }
         });
 
@@ -199,9 +203,11 @@ function openLearnImageModal(src, altText) {
     const caption = document.getElementById('imageModalCaption');
     if (!modal || !img || !caption) return;
 
+    // F3/2 cigla 4b: slika bez opisa dobivala je VIDLJIV natpis „Learn image" i na hrvatskom sučelju.
+    const opis = altText || ((typeof window.t === 'function') ? window.t('learn.image') : 'Learn image');
     img.src = src;
-    img.alt = altText || 'Expanded learn image';
-    caption.textContent = altText || 'Learn image';
+    img.alt = opis;
+    caption.textContent = opis;
 
     if (typeof modal.open === 'function') {
         modal.open();                                   // <sokrat-modal>

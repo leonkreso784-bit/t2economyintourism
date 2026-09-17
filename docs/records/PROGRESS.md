@@ -5,6 +5,30 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-17 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/2 cigla 4b: presuda o rezervi + slika u gradivu
+
+- **Leon (presuda „A"):** engleska rezerva uz ključ koji POSTOJI u rječniku se ne broji. Test ⑧ (koji je tvrdio suprotno)
+  okrenut; rezerva uz NEPOSTOJEĆI ključ i goli tekst i dalje padaju.
+- **Brana `check:i18n`:** ① popis kućnih helpera IZMJEREN u `js/` (`HELPERI`): uz t/mt/tt/pt/at/_adminT još `ct`, `tr`
+  (5 datoteka), `T`, `_t`, `_pt` — isti popis sudi i presudu ③ (ključ mora postojati) i presudu o rezervi ·
+  ② `setAttribute(atribut, …)` i `askConfirm(…)` sude SVAKI literal argumenta (tokeni: literal · ime · znak) kroz jednu
+  funkciju `tekstNaEkranu`: nije nalaz ključ helpera, uzorak `.replace`, rezerva uz postojeći ključ (`h('k','X')` i
+  `… ? h('k') : 'X'`), operand usporedbe (`=== 'function'`). Uska 4a-grana (`uvjet ? 'A' : 'B'`) je time zamijenjena.
+- **Mjera:** maknuto 29 nalaza, dodano 0 — `admin.js` 9 · `analytics.js` 2 · `my-materials.js` 8 · `profile.js` 7 ·
+  `studio.js` 3. **Svih 22 retka provjereno skriptom**: ključ postoji s `en` i `hr` (jedna sumnja — `studio.delCatMsg`
+  „bez hr" — bila je greška provjernika, `{name}` u tekstu; unos ima hrvatski).
+- **Ispravak moje tvrdnje Leonu:** `learn.js:155` („Open image: …") stara brana JEST brojala (1 nalaz); rečenica „umjesto
+  da podižem osnovicu" bila je kriva — osnovica ne bi rasla.
+- **Kod (`learn.js`):** ime slike kroz `learn.openImage` (`{alt}`) + `learn.image`; **skrivena i VIDLJIVA rupa uz isti
+  tekst:** preglednik slike bez opisa pisao je natpis „Learn image" (`caption.textContent = altText || '…'` — brana ne
+  vidi) i `alt` „Expanded learn image" → isti ključ; klik predaje `img.alt`, rezerva stanuje na jednom mjestu. Engleski
+  tekst namjerno IDENTIČAN (test to tvrdi). Precrtavanje učenja na prekidač NIJE uzeto — cigla za `learn.js`.
+- **`check:i18n` 154 → 124** (29 mjera + 1 prijevod).
+- **Obrnuto provjereno:** unit 3 nova slučaja padaju na staroj brani (⑧ okrenut: izlaz 1 umjesto 0) · na živom stablu
+  obrisan ključ `materials.delTitle` → brana PADA (`my-materials.js` 2 nalaza, osnovica 0), datoteka vraćena bajt-identično ·
+  `i18n.spec.js` „cigla 4b" na starom kodu pada na imenu slike.
+- **Gate:** unit brane 40/40 · Playwright 5051 `components` + `i18n` + `auth` × 4 telefona **96/96** · **preflight EXIT 0**.
+
 ## 2026-09-17 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/2 cigla 4a: prijava na hrvatskom
 
 - **Leon:** red presuđen 16.09. (profil + materijali + prijava pa MCP); plan zadatka 1 u četiri commita (4a prijava ·

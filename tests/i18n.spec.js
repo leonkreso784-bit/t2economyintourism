@@ -217,6 +217,45 @@ test.describe('F3/2 cigla 4a — prijava prati jezik', () => {
   });
 });
 
+// F3/2 cigla 4b: slika u gradivu. Ime slike za čitač ekrana bilo je „Open image: …" u oba jezika,
+// a preglednik slike bez opisa pisao je VIDLJIV natpis „Learn image". Engleski tekst ostaje isti.
+test.describe('F3/2 cigla 4b — slika u gradivu prati jezik', () => {
+  test.use({ locale: 'hr-HR' });
+
+  test('ime slike i natpis preglednika na hrvatskom; na engleskom isti tekst kao prije', async ({ page }) => {
+    await page.addInitScript(() => {
+      try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* privatni način */ }
+    });
+    await page.goto('/');
+    await ucitajPakete(page, ['study']);
+    await page.waitForFunction(() => typeof window.enhanceLearnImages === 'function'
+      && typeof window.openLearnImageModal === 'function' && window.getUiLang);
+    expect(await page.evaluate(() => window.getUiLang())).toBe('hr');
+
+    const imena = () => page.evaluate(() => {
+      const div = document.createElement('div');
+      div.innerHTML = '<div class="learn-card-content"><img src="assets/logo.svg" alt="Karta Europe"><img src="assets/logo.svg" alt=""></div>';
+      document.body.appendChild(div);
+      window.enhanceLearnImages(div);
+      const [s, bez] = div.querySelectorAll('img');
+      const rez = [s.getAttribute('aria-label'), bez.getAttribute('aria-label')];
+      div.remove();
+      return rez;
+    });
+    expect(await imena(), 'ime slike za čitač ekrana').toEqual(['Otvori sliku: Karta Europe', 'Otvori sliku: Slika']);
+
+    await page.evaluate(() => window.openLearnImageModal('assets/logo.svg', ''));
+    await expect(page.locator('#imageModalCaption'), 'vidljiv natpis slike bez opisa').toHaveText('Slika');
+    await expect(page.locator('#imageModalImg')).toHaveAttribute('alt', 'Slika');
+    await page.evaluate(() => document.getElementById('imageModal').close());
+
+    await page.evaluate(() => window.toggleUiLang());
+    expect(await imena(), 'engleski tekst se ne mijenja').toEqual(['Open image: Karta Europe', 'Open image: Learn image']);
+    await page.evaluate(() => window.openLearnImageModal('assets/logo.svg', ''));
+    await expect(page.locator('#imageModalCaption')).toHaveText('Learn image');
+  });
+});
+
 test.describe('jezik uređaja — susjedni jezici', () => {
   test.use({ locale: 'sr-RS' });
 

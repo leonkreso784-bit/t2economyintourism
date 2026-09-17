@@ -21,9 +21,10 @@
  *  ② JS (`js/**`, BEZ `js/i18n.js` — on JE rječnik): string/template literali koji nose
  *     HTML → parsiraju se kao fragment i sude ISTOM presudom kao ① (`${…}` se neutralizira,
  *     pa tekst koji dolazi kroz `t()` prirodno prolazi); plus poimence nabrojeni sinkovi:
- *     `.textContent/.innerText/.placeholder/.title =`, `setAttribute('aria-label'|
- *     'placeholder'|'title'|'alt', …)`, `showToast(`, `toast(`, `askConfirm(`.
- *  ③ KLJUČ BEZ RJEČNIKA: svaki literalni ključ u `t('x.y')`/`mt(`/`_adminT(` pozivu i
+ *     `.textContent/.innerText/.placeholder/.title =`, `showToast(`, `toast(` (prvi literal) te
+ *     `setAttribute('aria-label'|'placeholder'|'title'|'alt', …)` i `askConfirm(` (SVAKI literal
+ *     argumenta — tekst zna stići kroz uvjetni izraz, predložak ili objekt).
+ *  ③ KLJUČ BEZ RJEČNIKA: svaki literalni ključ u pozivu kućnog helpera (`HELPERI`) i
  *     svaki `data-i18n*="x.y"` atribut mora POSTOJATI u DICT-u `js/i18n.js`. Bez ovoga
  *     „ima ključ" ništa ne znači: `t()` za nepoznat ključ vrati SAM KLJUČ na ekran, a
  *     helperi s fallbackom vrate engleski — točno K5 nalaz (28 od 48 `studio.*` ključeva
@@ -49,13 +50,12 @@
  *  · stringovi sastavljeni iz varijabli u JS-u — statička analiza ih ne vidi; vidi ih
  *    tek DOM, a živi DOM-sud ima lažno-pozitivan razred (tekst kroz `t()` bez atributa).
  *    Isto vrijedi za DINAMIČKE ključeve (`t('nav.' + mode)`) — presuda ③ sudi literale.
- *  · engleski FALLBACK uz POSTOJEĆI ključ (`t('x', 'Text')` gdje `x` jest u DICT-u) —
- *    mrtav tekst koji se nikad ne prikaže; brojati ga bi značilo kažnjavati opreznost.
+ *  · engleski FALLBACK uz POSTOJEĆI ključ (`h('x', 'Text')` ili `window.t ? t('x') : 'Text'`
+ *    gdje `x` jest u DICT-u) — tekst koji se na hrvatskom sučelju nikad ne prikaže. **Presudio
+ *    Leon 2026-09-17 (F3/2 cigla 4b, „A")**, i vrijedi JEDNAKO u svim sinkovima: do tada ga je
+ *    `askConfirm` brojao (unit ⑧ je to tvrdio), pa je 14 nalaza u profilu i materijalima bio
+ *    sukob pravila, ne engleski. Rezerva uz ključ kojeg NEMA ostaje nalaz (`tekstNaEkranu`).
  *  · poruke u `throw`/`console` — nisu korisnikov ekran.
- *  · u `setAttribute(atribut, …)` uvjetni izraz se sudi SAMO kad su OBJE grane literali
- *    (`uvjet ? 'A' : 'B'`, F3/2 cigla 4a). Grana koja je poziv — `window.t ? t('k') : 'X'`,
- *    `tr('k', 'X')` — je rezerva uz ključ, a broji li se ona, presuda je o fallbacku
- *    (u `askConfirm` se danas broji, u predlošcima ne); mjereno 16.09.: 5 takvih mjesta.
  *
  * ── ČEGRTALJKA (obrazac `check:palette`, po izričitom zahtjevu backloga) ───────────────
  * Osnovica `scripts/i18n-baseline.json` drži BROJ nalaza PO DATOTECI. Rast broja u
@@ -113,6 +113,13 @@ if (fs.existsSync(DICT_PUT)) {
 } else {
   console.log('[check:i18n] ⚠️ js/i18n.js ne postoji — presuda „ključ bez rječnika" preskočena.');
 }
+
+// Kućni helperi „ključ (+ rezerva)" — IZMJERENO u js/ 2026-09-17 (F3/2 cigla 4b), ne po sjećanju:
+// `t` · `mt` (my-materials, mail-admin) · `tt` (sokrat-confirm) · `pt` (profile) · `at` (auth) ·
+// `ct` (image-crop) · `tr` (flashcards, fill-blanks, quiz, odjava, offline-store) · `T` (consent) ·
+// `_t` / `_pt` (navigation) · `_adminT` (admin). Do 4a presuda ③ je znala samo t/mt/tt/_adminT, pa je
+// ključ bez rječnika u ostalima tiho pokazivao engleski. Novi helper = novi unos ovdje.
+const HELPERI = ['t', 'mt', 'tt', 'pt', 'at', 'ct', 'tr', 'T', '_t', '_pt', '_adminT'];
 
 function sudiKljuc(kljuc, datoteka, redak, gdje, prijavi) {
   if (DICT && OBLIK_KLJUCA.test(kljuc) && !DICT.has(kljuc)) {
@@ -456,7 +463,8 @@ function skenirajJs(izvor, datoteka, prijavi) {
   }
 
   // ② sinkovi — poimence nabrojeni (granica mjere: što nije ovdje, ne sudi se)
-  const SINK = /(?:\.(?:textContent|innerText|placeholder|title)\s*=|\.setAttribute\(\s*['"](?:aria-label|placeholder|title|alt)['"]\s*,|\b(?:showToast|toast)\()\s*(['"`])/g;
+  // (`setAttribute` i `askConfirm` NISU ovdje — sude se svi literali argumenta, niže.)
+  const SINK = /(?:\.(?:textContent|innerText|placeholder|title)\s*=|\b(?:showToast|toast)\()\s*(['"`])/g;
   let m;
   while ((m = SINK.exec(bezKom)) !== null) {
     const pozLiterala = m.index + m[0].length - 1;
@@ -470,65 +478,55 @@ function skenirajJs(izvor, datoteka, prijavi) {
     }
   }
 
-  // ③ ključ bez rječnika u t-pozivima — kućni helperi ključ+fallback: `t` · `mt`
-  // (my-materials, mail-admin) · `tt` · `_adminT` · `pt` (profile.js) · `at` (auth.js).
-  // `pt` i `at` su ušli tek u F3/2 cigli 4a: do tada je ključ bez rječnika u profilu ili
-  // prozoru za prijavu tiho pokazivao engleski fallback, a presuda ga nije vidjela.
-  const TPOZIV = /\b(?:t|mt|tt|pt|at|_adminT)\(\s*(['"])([a-zA-Z0-9_-]+(?:\.[a-zA-Z0-9_-]+)+)\1/g;
+  // ③ ključ bez rječnika u pozivima kućnih helpera (popis `HELPERI` gore)
+  const TPOZIV = new RegExp('\\b(?:' + HELPERI.join('|') + ')\\(\\s*([\'"])([a-zA-Z0-9_-]+(?:\\.[a-zA-Z0-9_-]+)+)\\1', 'g');
   while ((m = TPOZIV.exec(bezKom)) !== null) {
     sudiKljuc(m[2], datoteka, redakNa(bezKom, m.index), 't-poziv', prijavi);
   }
 
-  // ② setAttribute(atribut, uvjet ? 'A' : 'B') — SINK gore hvata samo literal ODMAH iza
-  // zareza, pa je uvjetni izraz s tekstom u obje grane prolazio: gumb za prijavu („My
-  // profile"/„Sign in") i oko lozinke („Hide/Show password") govorili su engleski na
-  // hrvatskom sučelju (F3/2 cigla 4a). Oblik je NAMJERNO uzak — v. zaglavlje, granice mjere.
-  const SET = /\.setAttribute\(\s*(['"])(?:aria-label|placeholder|title|alt)\1\s*,/g;
+  // ② setAttribute('aria-label'|'placeholder'|'title'|'alt', …) i askConfirm(…) — sudi se SVAKI
+  // literal argumenta, ne samo prvi iza zareza (F3/2 cigla 4a/4b): tekst zna stići kroz uvjetni
+  // izraz (`uvjet ? 'My profile' : 'Sign in'`), predložak ili objekt. Što NIJE nalaz — `tekstNaEkranu`.
+  const SET = /\.setAttribute\(\s*(['"])(aria-label|placeholder|title|alt)\1\s*,/g;
   while ((m = SET.exec(bezKom)) !== null) {
-    const tok = tokeniArgumenta(bezKom, m.index + m[0].length);
-    for (let k = 0; k + 3 < tok.length; k += 1) {
-      if (tok[k].znak !== '?' || tok[k + 1].lit == null || tok[k + 2].znak !== ':' || tok[k + 3].lit == null) continue;
-      for (const grana of [tok[k + 1], tok[k + 3]]) {
-        if (imaSlovo(grana.lit) && !/<[a-zA-Z]/.test(grana.lit)) {
-          prijavi({
-            datoteka, redak: redakNa(bezKom, grana.poz), vrsta: 'sink setAttribute uvjet',
-            tekst: grana.lit.trim().slice(0, 60),
-          });
-        }
-      }
-    }
+    sudiLiterale(tokeniArgumenta(bezKom, m.index + m[0].length), 'sink .setAttribute(' + m[2] + ')', datoteka, bezKom, prijavi);
   }
-
-  // ② askConfirm(...) — string-vrijednosti unutar poziva (naslov/poruka/gumbi su ekran)
   const AC = /\baskConfirm\(/g;
   while ((m = AC.exec(bezKom)) !== null) {
-    let dubina = 1;
-    let j = m.index + m[0].length;
-    while (j < bezKom.length && dubina > 0) {
-      const d = bezKom[j];
-      if (d === "'" || d === '"' || d === '`') {
-        const tekst = procitajLiteral(bezKom, j);
-        // Ključ kao argument `t('admin.x', …)` / `_adminT(…)` NIJE zakucan tekst — on je
-        // upravo suprotno: put u rječnik. FALLBACK (drugi argument, iza zareza) OSTAJE
-        // nalaz: to je tekst koji živi izvan `js/i18n.js` (K5 razred). `.replace('{x}',…)`
-        // prima uzorak za zamjenu, ne tekst.
-        const prije = bezKom.slice(Math.max(0, j - 40), j);
-        const poziv = prije.match(/([A-Za-z_$][A-Za-z0-9_$]*)\(\s*$/);
-        const preskoci = poziv && ['t', '_adminT', 'replace'].includes(poziv[1]);
-        if (!preskoci && imaSlovo(tekst) && !/<[a-zA-Z]/.test(tekst)) {
-          prijavi({
-            datoteka, redak: redakNa(bezKom, j), vrsta: 'askConfirm',
-            tekst: tekst.trim().slice(0, 60),
-          });
-        }
-        j += tekst.length + 2;
-        continue;
-      }
-      if (d === '(') dubina += 1;
-      else if (d === ')') dubina -= 1;
-      j += 1;
-    }
+    sudiLiterale(tokeniArgumenta(bezKom, m.index + m[0].length), 'askConfirm', datoteka, bezKom, prijavi);
   }
+}
+
+function sudiLiterale(tok, vrsta, datoteka, bezKom, prijavi) {
+  tok.forEach((tk, i) => {
+    if (tk.lit == null || !imaSlovo(tk.lit) || /<[a-zA-Z]/.test(tk.lit)) return;   // HTML sudi skener gore
+    if (!tekstNaEkranu(tok, i)) return;
+    prijavi({ datoteka, redak: redakNa(bezKom, tk.poz), vrsta, tekst: tk.lit.trim().slice(0, 60) });
+  });
+}
+
+/**
+ * Je li literal `tok[i]` tekst koji korisnik vidi? PRESUDA O REZERVI (Leon, 17.09., F3/2 cigla 4b):
+ * engleski tekst uz ključ koji POSTOJI u rječniku NIJE nalaz — prikaže se samo ako rječnik nije
+ * učitan, na hrvatskom sučelju nikad. Rezerva uz ključ kojeg NEMA ostaje nalaz: tada je baš ona
+ * na ekranu (K5 razred). Do te presude `askConfirm` je brojao svaku rezervu, a zaglavlje je tvrdilo
+ * suprotno; 14 nalaza u profilu i materijalima bilo je taj sukob, ne engleski tekst.
+ * Nije nalaz:
+ *  ① ključ — prvi argument kućnog helpera (postojanje sudi presuda ③); uzorak `.replace('{x}', …)`
+ *  ② rezerva uz POSTOJEĆI ključ — `h('k', 'X')`, ili `… ? h('k') : 'X'` (`window.t ? t('k') : 'X'`)
+ *  ③ operand usporedbe — `typeof window.t === 'function'`
+ */
+function tekstNaEkranu(tok, i) {
+  const p = (n) => tok[i - n] || {};
+  const helper = (tk) => tk.rijec != null && HELPERI.includes(tk.rijec);
+  const postoji = (k) => !!(DICT && DICT.has(k));
+  if (p(1).znak === '(' && (helper(p(2)) || p(2).rijec === 'replace')) return false;                       // ①
+  if (p(1).znak === ',' && p(2).lit != null && p(3).znak === '(' && helper(p(4))) return !postoji(p(2).lit);   // ② h('k', 'X')
+  if (p(1).znak === ':' && p(2).znak === ')' && p(3).lit != null && p(4).znak === '(' && helper(p(5))) {
+    return !postoji(p(3).lit);                                                                               // ② … ? h('k') : 'X'
+  }
+  if (p(1).znak === '=' && (p(2).znak === '=' || p(2).znak === '!')) return false;                          // ③
+  return true;
 }
 
 /** Indeks IZA zatvarajućeg navodnika literala koji počinje na `od` (i s `${…}` u kojem su stringovi). */
@@ -558,7 +556,7 @@ function krajLiterala(src, od) {
 
 /**
  * Tokeni argumenata poziva od `od` do zagrade koja ga zatvara (dubina počinje s 1):
- * `{ lit, poz }` za string-literal, `{ znak, poz }` za svaki drugi ne-razmak znak.
+ * `{ lit, poz }` za string-literal, `{ rijec, poz }` za ime, `{ znak, poz }` za svaki drugi ne-razmak znak.
  */
 function tokeniArgumenta(src, od) {
   const tok = [];
@@ -569,6 +567,12 @@ function tokeniArgumenta(src, od) {
     if (d === "'" || d === '"' || d === '`') {
       tok.push({ lit: procitajLiteral(src, j), poz: j });
       j = krajLiterala(src, j);
+      continue;
+    }
+    if (/[A-Za-z0-9_$]/.test(d)) {
+      const ime = src.slice(j).match(/^[A-Za-z0-9_$]+/)[0];
+      tok.push({ rijec: ime, poz: j });
+      j += ime.length;
       continue;
     }
     if (d === '(') dubina += 1;

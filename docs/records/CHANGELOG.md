@@ -5,6 +5,17 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-17 (OPUS) — **F3/2 cigla 4b: slika u gradivu na hrvatskom · mjera prijevoda ispravljena** — grana `feat/f3-dvojezicnost`
+
+### Popravljeno
+- **Slika u gradivu bez opisa više ne piše „Learn image" ispod sebe na hrvatskom sučelju**, a čitač ekrana je na
+  hrvatskom najavljuje kao „Otvori sliku: …". Na engleskom je tekst isti kao prije.
+
+### Interno
+- Brana prijevoda više ne broji engleski rezervni tekst uz ključ koji postoji u rječniku (presuda Leon, 17.09.) — takav
+  se tekst na hrvatskom sučelju nikad ne prikaže. Brojka je pala za 29 bez ijednog prevedenog teksta; ključ koji ne
+  postoji i tekst bez ključa i dalje ruše branu.
+
 ## 2026-09-17 (OPUS) — **F3/2 cigla 4a: prijava na hrvatskom** — grana `feat/f3-dvojezicnost`
 
 ### Popravljeno
