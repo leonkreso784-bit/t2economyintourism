@@ -269,7 +269,7 @@ korisnički JS (ruši ADR-018 — prava cijena nije sandbox nego to da tuđi kô
 
 Presuđeno je **što** i **kojim oblikom** (ADR-030/031) i **kako se gradi** ([ADR-038](../records/DECISIONS.md#adr-038)):
 MCP je **cjevovod** `Learn → kartice → dopune/kviz`, ne skup CRUD-alata. Danas postoji samo read-only pokus izvan
-repozitorija. **Plan napisan 17.09.; ①/1 izveden na STAGINGU, čeka ručni dokaz (Leonov Claude).** Grana `feat/f6-mcp`
+repozitorija. **Plan napisan 17.09.; ①/1 izveden na STAGINGU (poslužiteljski dokazan 18.09.: pravi OAuth token → MCP alat vraća 40 materijala), čeka još ručni dokaz iz Leonovog Claudea. ①/2 brava ✅ STAGING 18.09.** Grana `feat/f6-mcp`
 od `a1d1bb5`, stablo `sokratstudy.f6` (stranica za odobrenje treba F3 mehanizam jezika, „Povezani AI-jevi" profil iz
 F2). Sve prvo na STAGINGU.
 
@@ -309,6 +309,15 @@ OpenAI *Developer mode* · upit nad STAGING bazom (samo čitanje).
 7. **ADR-031 pretpostavke koje ne stoje:** ⓐ nacrt osobnog materijala na poslužitelju nije postojao (`publish_document`
    = katalog + `is_admin()`, `SokratDraft` živi u pregledniku, `publish_node` piše živo) → ADR-038 ① · ⓑ „tek nakon
    seobe" — seoba otkazana, OAuth ide na postojeće projekte.
+9. **Izmjereno pri gradnji brave (18.09.), oborilo tri pretpostavke plana:** ⓐ odobrenje NE traži preglednik —
+   `approveAuthorization` je `POST /auth/v1/oauth/authorizations/<id>/consent`, ali **tek poslije `GET` istog puta**
+   (bez njega 404), a veza koja već postoji vrati `400 „no longer pending"` → svaki test traži SVJEŽ DCR klijent.
+   Zato brava nije Playwright spec nego mrežna provjera (`npm run mcp:brava`, kalup `delete-account-check.js`).
+   ⓑ **`verify_jwt` na Edge Functions provjerava samo POTPIS**, ne `role` → `delete-account` brava u bazi ne doseže
+   (izmjereno: AI-token je obrisao račun) → `_shared/token-guard.ts`. ⓒ odbijen RPC, nepostojeći RPC i RPC s krivim
+   argumentima daju **isti** odgovor (404 `PGRST202`), a Storage odbijanje dolazi kao **HTTP 400** s `AccessDenied`
+   u tijelu → brana koja gleda samo broj bila bi zeleno-slijepa.
+
 8. **Oblik podataka za brane:** kategorija ima obavezan `color` (`KURIRANE_BOJE` u `js/utils.js`) · dopuna se ocjenjuje
    kroz `normFill` (`js/fill-blanks.js`) · `answers` = broj praznina (D2) · shema nema polje veze kartica→pitanje
    (`additionalProperties:false`).
@@ -320,7 +329,7 @@ OpenAI *Developer mode* · upit nad STAGING bazom (samo čitanje).
 | cigla | posao | crveno na starom kodu |
 |---|---|---|
 | **①/1** okomiti pokus — ✅ STAGING 17.09. | `odobrenje.html` + `js/odobrenje.js` (popis hostova već ovdje) · Edge Function `mcp` v1 s alatom `procitaj_materijale` (jezgra `alati.ts`, samo čitanje) · `npm run mcp:probe`; Leon spaja Claude.ai na `https://czljmvigkgiajzjxtndq.supabase.co/functions/v1/mcp` | `mcp:probe` prije deploya 4/7 palo (404) → poslije 9/9 · `tests/odobrenje.spec.js` 20/20 (①②④ padali: `display:flex` gazio `hidden`, gumbi vidljivi uz odbijen host) · unit `mcp-alati` 11 + `odobrenje` 18, 5/5 mutacija obara test · **ručno još čeka:** Claude izlista Leonove staging materijale |
-| **①/2** brava | Custom Access Token Hook: token s `client_id` → uloga `mcp_klijent`, **zabrana po defaultu** (samo `mcp_*` RPC + čitanje vlastitih čvorova); `delete-account` i `send-notification` → 403. **Rezerva** ako hook ne smije mijenjati ulogu: provjera `client_id` u svakom RPC-u + inventarska brana | `tests/mcp-brava.authed.spec.js` s PRAVIM OAuth tokenom (test-klijent, Playwright odobri): `publish_node` · `delete_node` · `set_profile_handle` · upload slike · `delete-account` · `PUT /user` na starom kodu prolaze; + svaka RPC ruta koju token vidi mora biti na popisu dopuštenih |
+| **①/2** brava — ✅ STAGING 18.09. | `supabase/f6-mcp-brava.sql`: uloga `mcp_klijent` (`GRANT … TO authenticator`, `USAGE` na `public`, `SELECT` na `nodes`) + hook `mcp_access_token_hook` (token s `client_id` → ta uloga) + `is_admin()` više nije PUBLIC. Uz to `_shared/token-guard.ts` (`delete-account`, `send-notification` → 403), jer gateway `verify_jwt` **ne gleda `role`**. Brana: `npm run mcp:brava` (mrežna, staging-only) + unit `token-guard` 8 | **crveno izmjereno na starom kodu: 18/24 palo** — AI-token je stvarao čvorove, uzeo `handle`, mijenjao profil, uploadao sliku, prošao admin-vrata `send-notification` i **obrisao račun** (HTTP 200). Poslije brave 24/24; `test:authed` 149/149, `test:rls`/`test:storage`/`test:delete-account` zeleni (hook ide na SVAKU prijavu); 4/4 mutacije obaraju unit |
 | **①/2b** lozinka (Leon 17.09.) | profil „Promijeni lozinku" dobiva polje **Trenutna lozinka** (HR/EN, test; provjeriti da ga zakucani supabase-js šalje — `current_password` se u bundleu ne spominje) → TEK ONDA postavka „traži trenutnu lozinku" (staging, pa PROD uz OK). Bez polja bi sama postavka srušila promjenu lozinke | `PUT /auth/v1/user {password}` s OAuth tokenom prolazi; profilna promjena bez stare lozinke pada nakon postavke |
 | **①/3** stranica za odobrenje | prijava uz očuvan `authorization_id` · ime klijenta i host preusmjeravanja · **popis dopuštenih hostova** (`claude.ai`, `chatgpt.com`) · HR/EN · telefon | nepoznat host → nema „Dopusti"; `check:csp/i18n/seo/budget`, Vercel check |
 | **①/4** ugradnja | imenovana iznimka u `check:functions` · točno pinani paketi · **`www.sokratstudy.com/mcp` kroz Vercel rewrite** (provjera na previewu) | `check:functions` crven bez iznimke |
@@ -364,9 +373,14 @@ funkcija → klijent.
 Claude.ai računu · **ChatGPT Plus ima → testira se i on** (prije PROD-a) · pomoćni subagenti u radu na F6 (mehanički
 posao i napadač na brave) · lozinka = cigla ①/2b · dozvola za push `feat/*` upisana.
 
-**Čeka Leona za kraj ①/1:** u pregledniku na `http://localhost:5051` prijava na STAGING (override) → Claude.ai →
+**Čeka Leona za kraj ①/1:** u pregledniku na `http://localhost:5051` prijava na STAGING (override, račun
+`test-admin@sokrat.local` — jedini staging račun s gradivom: 5 polica, 40 materijala) → Claude.ai →
 *Customize → Connectors → Add custom connector* → staging adresa iz ①/1 → „Dopusti" → pitati Claude za materijale.
-U ①/2: *Auth Hooks → Custom Access Token*.
+**①/2 dashboard korak je IZVEDEN** (Leonov OK, 18.09.): *Auth Hooks → Customize Access Token (JWT) Claims* →
+Postgres → `public.mcp_access_token_hook` → Enabled, na STAGINGU. Izlaz u nuždi je isti taj zaslon.
+
+**Što ①/2 svjesno NIJE zatvorio:** `PUT /auth/v1/user` (lozinka, mail, metapodaci) — ide na Auth API mimo Postgresa,
+`npm run mcp:brava` ga MJERI i ispisuje kao poznatu rupu (`OCEKUJ.authApiZatvoren`); zatvara ga ①/2b.
 
 ---
 

@@ -40,6 +40,7 @@
 //    → operacija prođe cijela ili ne promijeni ništa.
 
 import { createClient, type SupabaseClient } from 'jsr:@supabase/supabase-js@2';
+import { biljegTokena } from '../_shared/token-guard.ts';
 
 const PERSONAL_BUCKETS = ['node-images', 'profile-images'];
 const LIST_PAGE = 100;   // Storage `list` stranica
@@ -99,6 +100,11 @@ Deno.serve(async (req: Request): Promise<Response> => {
   // ── 1) TKO ZOVE — isključivo iz tokena ──
   const authHeader = req.headers.get('Authorization') ?? '';
   if (!authHeader.toLowerCase().startsWith('bearer ')) return json(401, { error: 'missing_token' });
+
+  // Brisanje računa je NEPOVRATNO, a ova funkcija radi `service_role`-om → brava u bazi (uloga
+  // `mcp_klijent`) je ne doseže. Token korisnikovog AI-ja zato staje ovdje, prije `getUser()`.
+  const biljeg = biljegTokena(authHeader);
+  if (biljeg.aiToken) return json(403, { error: 'ai_token_forbidden', detail: biljeg.razlog });
 
   const asUser = createClient(url, anonKey, { global: { headers: { Authorization: authHeader } } });
   const { data: userData, error: userErr } = await asUser.auth.getUser();

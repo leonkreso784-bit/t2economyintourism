@@ -109,6 +109,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 | `npm run check:final` | bazni `final` red == M1⊕M2(+examPractice); preskočene **imenuje** protiv zakucane osnovice (osmi = pad) | mrežno (anon, read-only) |
 | `npm run diff:db [id]` | usporedi bazu s datotekama **prije re-synca** — `migrate-content.js` piše PREKO baze, a `content_versions` je audit, ne undo | mrežno |
 | `npm run check:functions` | Edge Functions na PRODUKCIJI: sve deployano, JWT (401) osim imenovanih javnih, stranci 404 | mrežno, bez ključa |
+| `npm run mcp:brava` | brava nad AI-tokenom (F6 ①/2): pravi OAuth token bez preglednika; zabranjeno pada, MCP alat radi. **TVRDO odbija prod** | mrežno + staging tajne |
 | `npm run backup` / `backup:verify` | DB snapshot → gzip-JSON + sha256 manifest u `backups/` (gitignored, KORISNIČKI podaci) | mrežno; restore je guarded (`--restore` dry-run · `--confirm` · `--force-prod`) |
 | `npm run load-probe [N] [R]` | simulira razred: N paralelnih anon readova × rundi | mrežno |
 
@@ -175,15 +176,13 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 ⚠️ **Mjerač mora ispisati i koliko je toga dotaknuo** — bio je prvi kvar 12× u fazi redizajna
 i dvaput vratio uvjerljiv krivi broj umjesto da padne.
 
-### 🎯 FRONTEND REDIZAJN + MREŽA = ✅ **NA PRODUKCIJI (2026-09-01)** — dalje: **RASPORED F2 (račun)**
+### 🎯 FRONTEND REDIZAJN + MREŽA = ✅ **NA PRODUKCIJI (2026-09-01)**
 
-Oba speca u `docs/archive/`; što je točno isporučeno zna CHANGELOG. **Next.js odbijen (ADR-028).**
-**🚚 SEOBA je OTKAZANA** (Leon, 2026-09-01) → `BACKLOG.md` §SELF-HOST = arhiv odluke, ne plan.
-Aktivni spec: **`docs/plan/RASPORED.md`** (2026-09-04) — cijela preostala lista razrezana na
-**sedam faza kroz sesije**: F1 uređaj · F2 račun (R2+R3 + CSS profila) · F3 dvojezičnost ·
-F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. **§6: nula otvorenih (anketa 06.09.).**
+Oba speca u `docs/archive/`; isporučeno zna CHANGELOG. **Next.js odbijen (ADR-028)** · **🚚 SEOBA OTKAZANA**
+(Leon, 01.09.) → `BACKLOG.md` §SELF-HOST = arhiv, ne plan. Aktivni spec: **`docs/plan/RASPORED.md`** — sedam
+faza: F1 uređaj · F2 račun · F3 dvojezičnost · F4 CSS-dug · F5 vježbe/recepti · F6 MCP · F7 objava.
 
-**F1 isporučen; KARTICE parkirane (Leon 08.09., `feat/tinder-kadar`, CI ondje crven, ne otvarati bez njegove riječi; BUG-045/046 ondje → samo cherry-pick). F2 gotov na granama (PROD čeka Leona). **F3/1 ✅** (ADR-037) · F3/2 ①–④ ✅ → **MCP (F6)** (RASPORED §2).**
+**F1 ✅ · F2 gotov na granama (PROD čeka Leona) · F3/1 ✅ (ADR-037) · F3/2 ①–④ ✅ · **F6 MCP: ①/1 i ①/2 na STAGINGU**. KARTICE parkirane (Leon 08.09., `feat/tinder-kadar`; BUG-045/046 ondje → samo cherry-pick).**
 
 **Živa pravila IZGLEDA** (nadžive fazu; obrazloženja u spec-arhivi):
 
@@ -258,9 +257,9 @@ Odbačeno (ruši ADR-018): evaluator izraza i sandbox za korisnički JS. Izvan M
   ostaje); klijentski dvojnik (D4, `js/auth.js`) svejedno stoji.
   ⚠️ **NE „popravljaj" `js/auth.js:343`** — tvrdnja o `WeakPasswordError` je **oborena**: u
   zakucanom `supabase-js@2.110.8` slaba lozinka dolazi kao `data.weakPassword` uz `error: null`.
-- **Sitni dug (ne blokira):** siročad u Storageu · PROD čeka `f1-nodes.sql` (staging) ·
+- **Sitni dug (ne blokira):** siročad u Storageu · PROD čeka `f2-temelj-mreze.sql` + mail (18.09.) ·
   `set_updated_at` ima promjenjiv `search_path` (jedini nenamjeran WARN). ⚠️ **`is_admin()` se NE smije
-  revokeati `authenticated`-u** — zovu ga RLS politike kao pozivatelj.
+  revokeati `authenticated`-u** — zovu ga RLS politike kao pozivatelj (F6 ①/2 skinuo mu je samo PUBLIC).
 - **Napomene:** Supabase org je `pro` i **plaća se do daljnjeg** (Leon, 2026-09-01) →
   free-tier spavanje nije prijetnja · `content_versions`/`node_content_versions` =
   **append-only audit**, brisanje **samo uz izričit OK** · PWA drži staru ikonu do

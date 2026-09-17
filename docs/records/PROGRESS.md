@@ -5,6 +5,33 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-18 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/2: BRAVA nad tokenom korisnikovog AI-ja (STAGING)
+
+- **Leonov OK u toj poruci:** dashboard korak (Auth Hooks) na stagingu. Sve ostalo ①/2, bez produkcije.
+- **Crveni dokaz PRIJE brave (`npm run mcp:brava`, 18/24 palo):** pravi OAuth token je stvarao čvorove
+  (`create_node` 200), uzeo `handle`, mijenjao profil i sliku, uploadao u Storage, prošao admin-vrata
+  `send-notification` (400 = iza vrata) i **obrisao račun** (`delete-account` 200).
+- **Brava (ADR-038 ④ — sigurnost u BAZI):** `supabase/f6-mcp-brava.sql` na STAGINGU — uloga `mcp_klijent`
+  (`grant … to authenticator`, `usage` na `public`, `select` na `nodes`), hook `mcp_access_token_hook`
+  (token s `client_id` → ta uloga), `is_admin()` više nije PUBLIC (zadržan grant za `anon`/`authenticated`,
+  CLAUDE.md). Zabrana dolazi sa sloja GRANT-ova: nijedna tablica nema PUBLIC grant, pa nova uloga ne vidi ništa,
+  a `grant select on nodes` odmah znači „samo vlastiti" jer politika `nodes_select_own` vrijedi i za nju.
+- **Ono što baza ne doseže:** `verify_jwt` na Edge Functions provjerava SAMO potpis (dokumentacija + izmjereno)
+  → `supabase/functions/_shared/token-guard.ts` (jedan modul, dva čitatelja) i `delete-account` (v5) +
+  `send-notification` (v4) vraćaju **403** prije `getUser()`. Usput nađeno: bez te straže bi `send-notification`
+  poslije skidanja PUBLIC-a s `is_admin` vraćao **500 `admin_check_failed`** — točno odbijanje, netočan razlog.
+- **Poslije brave:** `mcp:brava` **24/24** · `test:authed` **149/149** · `test:rls`, `test:storage`,
+  `test:delete-account` zeleni (hook se vrti na SVAKOJ prijavi — to je bio glavni rizik) · unit `token-guard` 8,
+  **4/4 mutacije obaraju test** (datoteka vraćena bajt-identično).
+- **Tri pretpostavke plana oborene mjerenjem** (upisano u RASPORED §F6 t. 9): odobrenje ne treba preglednik, ali
+  `consent` traži prethodni `GET` i svjež DCR klijent · `verify_jwt` ne gleda `role` · odbijen/nepostojeći/krivo
+  pozvan RPC izgledaju isto (404 `PGRST202`), a Storage odbija s HTTP **400** i `AccessDenied` u tijelu → zato se
+  svaki RPC zove TOČNIM potpisom i zato brana čita tijelo, ne samo broj.
+- **①/1 poslužiteljski dokazan:** pravi OAuth token → `tools/call procitaj_materijale` → 40 materijala. Ljudski
+  dokaz (Leonov Claude.ai) i dalje čeka; upute u RASPORED §F6.
+- **Sljedeće:** ①/2b (polje „Trenutna lozinka" pa postavka) — tek uz Leonov OK; `PUT /auth/v1/user` je do tada
+  izmjerena, poznata rupa.
+
 ## 2026-09-17 kasno (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/1 okomiti pokus na STAGINGU
 
 - **Leon (druga anketa):** stablo `.f6` u istoj sesiji · dashboard kroz Playwright · pokus na njegovom Claude.ai ·
