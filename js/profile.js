@@ -500,11 +500,11 @@ function renderProfilePage() {
         '    <form id="profileChangePassForm" class="profile-pass-form" hidden>' +
         '      <div class="auth-pass-wrap">' +
         '        <input type="password" id="profileNewPassword" class="auth-modal__input" placeholder="' + pt('profile.newPassPlaceholder', 'New password (min. 8 characters)') + '" required minlength="8" autocomplete="new-password">' +
-        '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
+        '        <button type="button" class="auth-pass-toggle" aria-label="' + pt('auth.showPassword', 'Show password') + '"><i class="fas fa-eye"></i></button>' +
         '      </div>' +
         '      <div class="auth-pass-wrap">' +
         '        <input type="password" id="profileNewPassword2" class="auth-modal__input" placeholder="' + pt('profile.repeatNewPass', 'Repeat new password') + '" required minlength="8" autocomplete="new-password">' +
-        '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
+        '        <button type="button" class="auth-pass-toggle" aria-label="' + pt('auth.showPassword', 'Show password') + '"><i class="fas fa-eye"></i></button>' +
         '      </div>' +
         '      <button type="submit" class="cta-button primary"><i class="fas fa-check"></i><span>' + pt('profile.saveNewPass', 'Save new password') + '</span></button>' +
         '      <p class="profile-pass-status" id="profilePassStatus" hidden></p>' +

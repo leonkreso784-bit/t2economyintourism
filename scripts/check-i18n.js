@@ -52,6 +52,10 @@
  *  · engleski FALLBACK uz POSTOJEĆI ključ (`t('x', 'Text')` gdje `x` jest u DICT-u) —
  *    mrtav tekst koji se nikad ne prikaže; brojati ga bi značilo kažnjavati opreznost.
  *  · poruke u `throw`/`console` — nisu korisnikov ekran.
+ *  · u `setAttribute(atribut, …)` uvjetni izraz se sudi SAMO kad su OBJE grane literali
+ *    (`uvjet ? 'A' : 'B'`, F3/2 cigla 4a). Grana koja je poziv — `window.t ? t('k') : 'X'`,
+ *    `tr('k', 'X')` — je rezerva uz ključ, a broji li se ona, presuda je o fallbacku
+ *    (u `askConfirm` se danas broji, u predlošcima ne); mjereno 16.09.: 5 takvih mjesta.
  *
  * ── ČEGRTALJKA (obrazac `check:palette`, po izričitom zahtjevu backloga) ───────────────
  * Osnovica `scripts/i18n-baseline.json` drži BROJ nalaza PO DATOTECI. Rast broja u
@@ -466,10 +470,33 @@ function skenirajJs(izvor, datoteka, prijavi) {
     }
   }
 
-  // ③ ključ bez rječnika u t-pozivima (t / mt / tt / _adminT — kućni helperi ključ+fallback)
-  const TPOZIV = /\b(?:t|mt|tt|_adminT)\(\s*(['"])([a-zA-Z0-9_-]+(?:\.[a-zA-Z0-9_-]+)+)\1/g;
+  // ③ ključ bez rječnika u t-pozivima — kućni helperi ključ+fallback: `t` · `mt`
+  // (my-materials, mail-admin) · `tt` · `_adminT` · `pt` (profile.js) · `at` (auth.js).
+  // `pt` i `at` su ušli tek u F3/2 cigli 4a: do tada je ključ bez rječnika u profilu ili
+  // prozoru za prijavu tiho pokazivao engleski fallback, a presuda ga nije vidjela.
+  const TPOZIV = /\b(?:t|mt|tt|pt|at|_adminT)\(\s*(['"])([a-zA-Z0-9_-]+(?:\.[a-zA-Z0-9_-]+)+)\1/g;
   while ((m = TPOZIV.exec(bezKom)) !== null) {
     sudiKljuc(m[2], datoteka, redakNa(bezKom, m.index), 't-poziv', prijavi);
+  }
+
+  // ② setAttribute(atribut, uvjet ? 'A' : 'B') — SINK gore hvata samo literal ODMAH iza
+  // zareza, pa je uvjetni izraz s tekstom u obje grane prolazio: gumb za prijavu („My
+  // profile"/„Sign in") i oko lozinke („Hide/Show password") govorili su engleski na
+  // hrvatskom sučelju (F3/2 cigla 4a). Oblik je NAMJERNO uzak — v. zaglavlje, granice mjere.
+  const SET = /\.setAttribute\(\s*(['"])(?:aria-label|placeholder|title|alt)\1\s*,/g;
+  while ((m = SET.exec(bezKom)) !== null) {
+    const tok = tokeniArgumenta(bezKom, m.index + m[0].length);
+    for (let k = 0; k + 3 < tok.length; k += 1) {
+      if (tok[k].znak !== '?' || tok[k + 1].lit == null || tok[k + 2].znak !== ':' || tok[k + 3].lit == null) continue;
+      for (const grana of [tok[k + 1], tok[k + 3]]) {
+        if (imaSlovo(grana.lit) && !/<[a-zA-Z]/.test(grana.lit)) {
+          prijavi({
+            datoteka, redak: redakNa(bezKom, grana.poz), vrsta: 'sink setAttribute uvjet',
+            tekst: grana.lit.trim().slice(0, 60),
+          });
+        }
+      }
+    }
   }
 
   // ② askConfirm(...) — string-vrijednosti unutar poziva (naslov/poruka/gumbi su ekran)
@@ -502,6 +529,54 @@ function skenirajJs(izvor, datoteka, prijavi) {
       j += 1;
     }
   }
+}
+
+/** Indeks IZA zatvarajućeg navodnika literala koji počinje na `od` (i s `${…}` u kojem su stringovi). */
+function krajLiterala(src, od) {
+  const c = src[od];
+  let j = od + 1;
+  while (j < src.length) {
+    const d = src[j];
+    if (d === '\\') { j += 2; continue; }
+    if (d === c) return j + 1;
+    if (c === '`' && d === '$' && src[j + 1] === '{') {
+      let dubina = 1;
+      j += 2;
+      while (j < src.length && dubina > 0) {
+        const e = src[j];
+        if (e === "'" || e === '"' || e === '`') { j = krajLiterala(src, j); continue; }
+        if (e === '{') dubina += 1;
+        else if (e === '}') dubina -= 1;
+        j += 1;
+      }
+      continue;
+    }
+    j += 1;
+  }
+  return src.length;
+}
+
+/**
+ * Tokeni argumenata poziva od `od` do zagrade koja ga zatvara (dubina počinje s 1):
+ * `{ lit, poz }` za string-literal, `{ znak, poz }` za svaki drugi ne-razmak znak.
+ */
+function tokeniArgumenta(src, od) {
+  const tok = [];
+  let dubina = 1;
+  let j = od;
+  while (j < src.length) {
+    const d = src[j];
+    if (d === "'" || d === '"' || d === '`') {
+      tok.push({ lit: procitajLiteral(src, j), poz: j });
+      j = krajLiterala(src, j);
+      continue;
+    }
+    if (d === '(') dubina += 1;
+    else if (d === ')') { dubina -= 1; if (dubina === 0) break; }
+    if (!/\s/.test(d)) tok.push({ znak: d, poz: j });
+    j += 1;
+  }
+  return tok;
 }
 
 // ── Prikupi datoteke ───────────────────────────────────────────────────────────────────

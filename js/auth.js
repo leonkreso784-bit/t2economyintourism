@@ -212,15 +212,18 @@ const SokratAuth = (function () {
 
     function updateNavButton() {
         const short = currentUser
-            ? (getDisplayName() || (currentUser.email || 'Account').split('@')[0]).split(/\s+/)[0]
-            : (typeof t === 'function' ? t('auth.signIn') : 'Sign in');
+            ? (getDisplayName() || (currentUser.email || at('profile.account', 'Account')).split('@')[0]).split(/\s+/)[0]
+            : at('auth.signIn', 'Sign in');
         document.querySelectorAll('.auth-entry-label').forEach(function (label) {
             label.textContent = short;
         });
         const avatar = currentUser ? navAvatarUrl(currentUser) : null;
+        // F3/2 cigla 4a: ime gumba je bilo engleski u oba jezika (brana nije vidjela uvjetni izraz).
+        // `refreshAuthNav` = ova funkcija, pa ga prekidač jezika precrta odmah.
+        const ime = currentUser ? at('profile.title', 'My Profile') : at('auth.signIn', 'Sign in');
         document.querySelectorAll('.auth-entry').forEach(function (btn) {
             btn.classList.toggle('is-signed-in', !!currentUser);
-            btn.setAttribute('aria-label', currentUser ? 'My profile' : 'Sign in');
+            btn.setAttribute('aria-label', ime);
             setNavAvatar(btn, avatar);
         });
     }
@@ -355,9 +358,10 @@ const SokratAuth = (function () {
         wrap.id = 'authModal';
         wrap.className = 'auth-modal';
         wrap.setAttribute('aria-labelledby', 'authModalTitle');
+        wrap.setAttribute('data-jezik', jezikSucelja());   // na kojem je jeziku tekst upisan (v. openModal)
         wrap.innerHTML =
             '<div class="auth-modal__card">' +
-            '  <button type="button" class="auth-modal__close" data-auth-close aria-label="Close">&times;</button>' +
+            '  <button type="button" class="auth-modal__close" data-auth-close aria-label="' + at('auth.close', 'Close') + '">&times;</button>' +
 
             '  <div id="authSignedOut">' +
             '    <h3 id="authModalTitle" class="auth-modal__title"><i class="fas fa-cloud"></i> ' + at('auth.m.title', 'Sync your progress') + '</h3>' +
@@ -380,7 +384,7 @@ const SokratAuth = (function () {
             '      <input type="email" id="authSignInEmail" class="auth-modal__input" placeholder="you@email.com" required autocomplete="email">' +
             '      <div class="auth-pass-wrap">' +
             '        <input type="password" id="authSignInPassword" class="auth-modal__input" placeholder="' + at('auth.ph.password', 'Password') + '" required autocomplete="current-password">' +
-            '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
+            '        <button type="button" class="auth-pass-toggle" aria-label="' + at('auth.showPassword', 'Show password') + '"><i class="fas fa-eye"></i></button>' +
             '      </div>' +
             '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-right-to-bracket"></i><span>' + at('auth.signIn', 'Sign in') + '</span></button>' +
             '      <button type="button" class="auth-modal__link" id="authForgotLink">' + at('auth.forgot', 'Forgot password?') + '</button>' +
@@ -393,7 +397,7 @@ const SokratAuth = (function () {
             '      <input type="email" id="authSignUpEmail" class="auth-modal__input" placeholder="you@email.com" required autocomplete="email">' +
             '      <div class="auth-pass-wrap">' +
             '        <input type="password" id="authSignUpPassword" class="auth-modal__input" placeholder="' + at('auth.ph.passwordMin', 'Password (min. 8 characters)') + '" required minlength="8" autocomplete="new-password">' +
-            '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
+            '        <button type="button" class="auth-pass-toggle" aria-label="' + at('auth.showPassword', 'Show password') + '"><i class="fas fa-eye"></i></button>' +
             '      </div>' +
             '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-arrow-right"></i><span>' + at('auth.q.continue', 'Continue') + '</span></button>' +
             '    </form>' +
@@ -422,11 +426,11 @@ const SokratAuth = (function () {
             '    <form id="authRecoveryForm" class="auth-modal__form">' +
             '      <div class="auth-pass-wrap">' +
             '        <input type="password" id="authRecoveryPassword" class="auth-modal__input" placeholder="' + at('profile.newPassPlaceholder', 'New password (min. 8 characters)') + '" required minlength="8" autocomplete="new-password">' +
-            '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
+            '        <button type="button" class="auth-pass-toggle" aria-label="' + at('auth.showPassword', 'Show password') + '"><i class="fas fa-eye"></i></button>' +
             '      </div>' +
             '      <div class="auth-pass-wrap">' +
             '        <input type="password" id="authRecoveryPassword2" class="auth-modal__input" placeholder="' + at('profile.repeatNewPass', 'Repeat new password') + '" required minlength="8" autocomplete="new-password">' +
-            '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
+            '        <button type="button" class="auth-pass-toggle" aria-label="' + at('auth.showPassword', 'Show password') + '"><i class="fas fa-eye"></i></button>' +
             '      </div>' +
             '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-check"></i><span>' + at('profile.saveNewPass', 'Save new password') + '</span></button>' +
             '    </form>' +
@@ -527,9 +531,44 @@ const SokratAuth = (function () {
         setStatus('');
     }
 
+    function jezikSucelja() {
+        return (typeof window.getUiLang === 'function') ? window.getUiLang() : 'en';
+    }
+
+    /**
+     * F3/2 cigla 4a — prozor NA JEZIKU SUČELJA. Gradi se jednom (`init`) i tekst mu se upisuje pri
+     * gradnji, pa je poslije prekidača ostajao na jeziku prvog učitavanja. Pregrađuje se pri
+     * OTVARANJU, ne na prekidač: zatvoren se ne vidi, a dok je otvoren prekidač je iza zastora
+     * (`<sokrat-modal>` drži fokus i zatvara se na klik izvan kartice). Svi rukovatelji se vežu u
+     * `injectModal`, a nitko ne drži referencu na stari element — pa je nova gradnja čista.
+     * Upisano ostaje (načelo `data-touched` s naslovnice): prekidač nikad ne briše korisnikov unos.
+     */
+    function prozorNaJezikuSucelja(m) {
+        if (m.getAttribute('data-jezik') === jezikSucelja() || (typeof m.isOpen === 'function' && m.isOpen())) return m;
+        const upisano = Array.prototype.map.call(m.querySelectorAll('input'), function (el) {
+            return { id: el.id, name: el.name, value: el.value, checked: el.checked, tip: el.type };
+        });
+        m.remove();
+        injectModal();
+        const novi = document.getElementById('authModal');
+        upisano.forEach(function (u) {
+            // Radio gumbi upitnika nemaju id — prepoznaju se po imenu grupe i (zakucanoj) vrijednosti.
+            const el = u.id
+                ? document.getElementById(u.id)
+                : (u.tip === 'radio' && u.name
+                    ? novi.querySelector('input[type="radio"][name="' + u.name + '"][value="' + u.value + '"]')
+                    : null);
+            if (!el) return;
+            if (u.tip === 'checkbox' || u.tip === 'radio') el.checked = u.checked;
+            else el.value = u.value;
+        });
+        return novi;
+    }
+
     function openModal() {
-        const m = document.getElementById('authModal');
-        if (!m) return;
+        const zatecen = document.getElementById('authModal');
+        if (!zatecen) return;
+        const m = prozorNaJezikuSucelja(zatecen);
         renderModalState();
         if (!currentUser) showPanel('signin');
         // <sokrat-modal>: open() vodi prikaz/scroll-lock/fokus. Fallback ako element nije upgrade-an.
@@ -874,6 +913,22 @@ const SokratAuth = (function () {
         if (typeof showToast === 'function') showToast(window.t ? t('msg.signedOut') : 'Signed out. Progress stays on this device.');
     }
 
+    // Gumb-oko za prikaz/sakrivanje lozinke — delegirano na document jer se
+    // password polja renderiraju dinamički (auth modal + profil Change password).
+    // Stoji UNUTAR modula (F3/2 cigla 4a) da ime gumba ide kroz `at()`; veže se pri učitavanju
+    // skripte, kao i dok je stajao izvan modula.
+    document.addEventListener('click', function (e) {
+        const btn = e.target.closest('.auth-pass-toggle');
+        if (!btn) return;
+        const input = btn.parentElement.querySelector('input');
+        if (!input) return;
+        const show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        btn.setAttribute('aria-label', show ? at('auth.hidePassword', 'Hide password') : at('auth.showPassword', 'Show password'));
+        const icon = btn.querySelector('i');
+        if (icon) icon.className = show ? 'fas fa-eye-slash' : 'fas fa-eye';
+    });
+
     // ---------- Javno API (koriste cloud-sync.js i profile.js) ----------
 
     return {
@@ -899,18 +954,4 @@ const SokratAuth = (function () {
 
 document.addEventListener('DOMContentLoaded', function () {
     SokratAuth.init();
-});
-
-// Gumb-oko za prikaz/sakrivanje lozinke — delegirano na document jer se
-// password polja renderiraju dinamički (auth modal + profil Change password).
-document.addEventListener('click', function (e) {
-    const btn = e.target.closest('.auth-pass-toggle');
-    if (!btn) return;
-    const input = btn.parentElement.querySelector('input');
-    if (!input) return;
-    const show = input.type === 'password';
-    input.type = show ? 'text' : 'password';
-    btn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
-    const icon = btn.querySelector('i');
-    if (icon) icon.className = show ? 'fas fa-eye-slash' : 'fas fa-eye';
 });

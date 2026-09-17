@@ -556,6 +556,11 @@
     'auth.q.back': { en: '← Back', hr: '← Natrag' },
     'auth.q.skip': { en: 'Skip for now', hr: 'Preskoči zasad' },
     'auth.q.thanks': { en: 'Thanks — welcome to Sokrat!', hr: 'Hvala — dobrodošli u Sokrat!' },
+    // F3/2 cigla 4a: imena gumba bez vidljivog teksta (čita ih čitač ekrana). Oko lozinke dijele
+    // prozor za prijavu i „Promijeni lozinku" u profilu; ime mijenja rukovatelj klika u auth.js.
+    'auth.close': { en: 'Close', hr: 'Zatvori' },
+    'auth.showPassword': { en: 'Show password', hr: 'Prikaži lozinku' },
+    'auth.hidePassword': { en: 'Hide password', hr: 'Sakrij lozinku' },
 
     // ===== Profil (#profile-page; renderProfilePage u profile.js) =====
     'profile.title': { en: 'My Profile', hr: 'Moj profil' },

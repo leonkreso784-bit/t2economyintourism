@@ -139,6 +139,18 @@ slucaj('sink kroz t() → zeleno', 0, vrti(stablo({
   osnovica: {},
 })));
 
+// ⑦b F3/2 cigla 4a: `setAttribute` sudi CIJELI drugi argument, ne samo literal odmah iza
+// zareza. Do tada je `uvjet ? 'A' : 'B'` prolazio — tako su „My profile"/„Sign in" na gumbu
+// za prijavu i „Hide password" na oku lozinke ostali engleski na hrvatskom sučelju.
+slucaj('setAttribute s uvjetnim izrazom i zakucanim tekstom → PAD (obje grane)', 1, vrti(stablo({
+  js: { 'u.js': "btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');\n" },
+  osnovica: {},
+})), (o) => o.includes('Close menu') && o.includes('Open menu'));
+slucaj('setAttribute s uvjetnim izrazom kroz t() → zeleno', 0, vrti(stablo({
+  js: { 'u.js': "btn.setAttribute('aria-label', open ? t('nav.ok') : t('msg.saved'));\n" },
+  osnovica: {},
+})));
+
 // ⑧ askConfirm: KLJUČ (argument t-a) se preskače, FALLBACK je nalaz (K5 razred).
 slucaj('askConfirm: ključ preskočen, engleski fallback = nalaz → PAD', 1, vrti(stablo({
   js: { 'a.js': "askConfirm({ title: t('nav.ok', 'Delete everything?') });\n" },
@@ -150,6 +162,12 @@ slucaj('t() s nepostojećim ključem → PAD „ključ bez rječnika"', 1, vrti(
   js: { 'k.js': "el.textContent = t('studio.nema');\n" },
   osnovica: {},
 })), (o) => o.includes('ključ bez rječnika') && o.includes('studio.nema'));
+// ⑨b Kućni helperi `pt` (profile.js) i `at` (auth.js) nose ključ jednako kao `t`/`mt` — do
+// F3/2 cigle 4a presuda ③ ih nije znala, pa bi ključ bez rječnika ondje tiho pokazao engleski.
+slucaj('pt()/at() s nepostojećim ključem → PAD „ključ bez rječnika"', 1, vrti(stablo({
+  js: { 'h.js': "x = pt('profile.nema', 'Profile'); y = at('auth.nema', 'Sign in');\n" },
+  osnovica: {},
+})), (o) => o.includes('profile.nema') && o.includes('auth.nema'));
 slucaj('data-i18n s nepostojećim ključem → PAD', 1, vrti(stablo({
   html: { 'k.html': '<h1 data-i18n="landing.nema">x</h1>' },
   osnovica: {},

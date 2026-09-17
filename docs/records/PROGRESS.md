@@ -5,6 +5,36 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-17 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/2 cigla 4a: prijava na hrvatskom
+
+- **Leon:** red presuđen 16.09. (profil + materijali + prijava pa MCP); plan zadatka 1 u četiri commita (4a prijava ·
+  4b mjerni ispravak · 4c profil · 4d materijali) → *„možeš krenuti sa 4a"*.
+- **Mjereno prije plana:** 22 nalaza u tri datoteke = 7 pravog engleskog (`aria-label`) + 14 grešaka mjerenja
+  (`askConfirm` ne zna `pt`/`mt`, a broji i rezervu uz POSTOJEĆI ključ — zaglavlje brane kaže da se ne broji, test ⑧
+  kaže da se broji: sukob pravila → 4b, Leonova presuda) + 1 zastarjela rezerva (`profile.js:827`). Svi ključevi iz
+  `pt`/`mt`/`at` postoje u rječniku s hrvatskim.
+- **Kod:** ključevi `auth.close` / `auth.showPassword` / `auth.hidePassword`; gumb u traci kroz `at()` (`profile.title`,
+  `auth.signIn`, rezervno ime `profile.account`); oko lozinke preseljeno u modul (ime kroz `at()`); prozor nosi
+  `data-jezik` i **pregrađuje se pri otvaranju** kad se jezik promijenio (dok je otvoren prekidač je iza zastora —
+  `<sokrat-modal>` drži fokus), upisano se prenosi po id-u (radio po imenu + vrijednosti).
+- **Brana `check:i18n`:** ③ zna `pt` i `at`; `setAttribute(atribut, uvjet ? 'A' : 'B')` se sudi (obje grane literali).
+  ⚠️ **Šire pravilo (svi literali argumenta) je izmjereno i odbačeno za ovu ciglu:** pogađa još 5 mjesta izvan cigle —
+  `learn.js:155` je PRAVA rupa („Open image: … / Learn image", već na popisu uz `learn.js`), a `blocks-renderer.js:207`,
+  `math.js:83`, `offline-store.js:584`, `consent.js:309` su rezerve uz ključ ili lažni pogoci (`'function'`, ključ kroz
+  `T()`). Granica zapisana u zaglavlju; odluka ide uz 4b.
+- **Obrnuto provjereno:** unit ⑦b + ⑨b padaju na staroj brani (izlaz 0 umjesto 1) · brana na starom kodu `auth.js`
+  5 → 9, ostalo nepromijenjeno · `i18n.spec.js` „cigla 4a" na starom kodu pada („Prijava" ≠ „Sign in"), bez pregradnje
+  pada na naslovu („Dobrodošli u Sokrat" poslije prekidača na EN), bez prijenosa upisanog pada na e-mailu ·
+  `topbar-avatar.authed` ④ sa zakucanim imenima pada na „Moj profil". Sve kroz skriptu s točno jednim pogađanjem, datoteka
+  vraćena bajt-identično.
+- **`check:i18n` 161 → 154** (`auth.js` 5 → 0 · `profile.js` 9 → 7).
+- **Gate:** unit brane 33/33 · `auth-error` 28/28 · Playwright 5051 `auth` + `components` + `i18n` × 4 telefona **92/92**
+  · authed (staging, 5051) `topbar-avatar` + `signout-local` + `profile-wall` + `profile-identity` **17/17**
+  (postava prijave prati `baseURL`, pa authed radi i na 5051; 5050 drži tuđi proces, nije diran) · **preflight EXIT 0**.
+  ⚠️ Prva vrtnja preflighta izašla je s 127: Node se srušio PRI GAŠENJU poslije `mail-core` 13/0
+  (`Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)`, libuv na Windowsu). Test cigla ne dira; samostalno 6/6
+  izlaz 0, ponovljeni preflight EXIT 0 bez pada. Zapisano jer se može vratiti — nije kvar ove cigle.
+
 ## 2026-09-16 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/2 cigla 3: jezik prati uređaj
 
 - **Leon (anketa):** samo hrvatski uređaj → hrvatsko sučelje (NE bs/sr/cnr: *„eng i hrvatski su jednako bitni"*);

@@ -167,6 +167,56 @@ test.describe('jezik uređaja', () => {
   });
 });
 
+// F3/2 cigla 4a: PRIJAVA NA JEZIKU SUČELJA. Tri kvara koja brana nije vidjela: ① imena gumba
+// (zatvori, oko lozinke, gumb u traci) bila su engleska u svakom jeziku; ② oko je poslije klika
+// uvijek govorilo „Hide password"; ③ prozor se gradi JEDNOM pri pokretanju, pa je poslije
+// prekidača ostajao na jeziku prvog učitavanja. Upisano ne smije nestati kad se prozor
+// pregradi (isto načelo kao `data-touched` na naslovnici).
+test.describe('F3/2 cigla 4a — prijava prati jezik', () => {
+  test.use({ locale: 'hr-HR' });
+
+  test('hrvatski uređaj → hrvatska imena gumba; prekidač → prozor se otvori na novom jeziku, upisano ostaje', async ({ page }) => {
+    await page.addInitScript(() => {
+      try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* privatni način */ }
+    });
+    await page.goto('/');
+    const gumb = page.locator('#authNavBtn');
+    let cdnOk = true;
+    try { await gumb.waitFor({ state: 'visible', timeout: 15000 }); } catch (e) { cdnOk = false; }
+    test.skip(!cdnOk, 'supabase-js CDN nedostupan — prijava se gasi po dizajnu');
+    expect(await page.evaluate(() => window.getUiLang())).toBe('hr');
+
+    // ① gumb u traci (odjavljen)
+    await expect(gumb, 'ime gumba za prijavu u traci').toHaveAttribute('aria-label', 'Prijava');
+
+    await gumb.click();
+    const prozor = page.locator('#authModal');
+    await expect(prozor).toBeVisible();
+    await expect(prozor.locator('.auth-modal__close'), 'ime gumba za zatvaranje').toHaveAttribute('aria-label', 'Zatvori');
+    const oko = page.locator('#authSignInForm .auth-pass-toggle');
+    await expect(oko, 'ime oka prije klika').toHaveAttribute('aria-label', 'Prikaži lozinku');
+    // ② oko poslije klika
+    await oko.click();
+    await expect(oko, 'ime oka poslije klika').toHaveAttribute('aria-label', 'Sakrij lozinku');
+
+    await page.fill('#authSignInEmail', 'ana@primjer.hr');
+    await prozor.locator('.auth-modal__close').click();
+    await expect(prozor).toBeHidden();
+
+    // ③ prekidač dok je prozor zatvoren → sljedeće otvaranje je na novom jeziku
+    await page.evaluate(() => window.toggleUiLang());
+    expect(await page.evaluate(() => window.getUiLang())).toBe('en');
+    await expect(gumb, 'gumb u traci prati prekidač').toHaveAttribute('aria-label', 'Sign in');
+    await gumb.click();
+    await expect(page.locator('#authModal')).toBeVisible();
+    await expect(page.locator('#authModalTitle'), 'naslov prozora poslije prekidača').toHaveText(/Welcome to Sokrat/);
+    await expect(page.locator('#authModal .auth-modal__close')).toHaveAttribute('aria-label', 'Close');
+    await expect(page.locator('#authSignInForm .auth-pass-toggle')).toHaveAttribute('aria-label', 'Show password');
+    await expect(page.locator('#authSignInEmail'), 'upisani e-mail preživi ponovnu gradnju prozora').toHaveValue('ana@primjer.hr');
+    expect(await page.locator('#authModal').count(), 'točno jedan prozor').toBe(1);
+  });
+});
+
 test.describe('jezik uređaja — susjedni jezici', () => {
   test.use({ locale: 'sr-RS' });
 

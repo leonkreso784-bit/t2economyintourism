@@ -5,6 +5,14 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-17 (OPUS) — **F3/2 cigla 4a: prijava na hrvatskom** — grana `feat/f3-dvojezicnost`
+
+### Popravljeno
+- **Čitač ekrana više ne izgovara engleska imena gumba na hrvatskom sučelju**: zatvaranje prozora za prijavu, oko
+  lozinke (i „Prikaži" i „Sakrij", u prozoru i u profilu) te gumb za prijavu / profil u gornjoj traci.
+- **Prozor za prijavu prati promjenu jezika.** Dotad je ostajao na jeziku prvog učitavanja stranice; sad se otvori na
+  jeziku koji je trenutno odabran, a ono što je korisnik već upisao ostaje.
+
 ## 2026-09-16 (OPUS) — **F3/2 cigla 3: jezik prati uređaj** — grana `feat/f3-dvojezicnost`
 
 ### Promijenjeno

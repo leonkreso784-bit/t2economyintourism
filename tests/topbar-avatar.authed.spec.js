@@ -158,4 +158,18 @@ test.describe('F2/1 ③ — profilna u traci', () => {
       await vrati(page, s);
     }
   });
+
+  // F3/2 cigla 4a: ime gumba prijavljenog korisnika bilo je „My profile" u oba jezika, a oko
+  // lozinke u profilu „Show password". Samo čita — ništa se ne upisuje, pa nema `finally`.
+  test('④ ime gumba u traci i oko lozinke u profilu prate jezik', async ({ page }) => {
+    await naProfilu(page);
+    const gumb = page.locator('#authNavBtn');
+    await expect(gumb).toHaveClass(/is-signed-in/);
+    await expect(gumb).toHaveAttribute('aria-label', 'My Profile');
+    await page.evaluate(() => window.toggleUiLang());
+    expect(await page.evaluate(() => window.getUiLang())).toBe('hr');
+    await expect(gumb, 'ime gumba poslije prekidača').toHaveAttribute('aria-label', 'Moj profil');
+    await expect(page.locator('#profileChangePassForm .auth-pass-toggle').first(), 'oko lozinke u profilu')
+      .toHaveAttribute('aria-label', 'Prikaži lozinku');
+  });
 });
