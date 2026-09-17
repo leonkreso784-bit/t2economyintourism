@@ -5,6 +5,20 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-17 navečer (OPUS, stablo `sokratstudy.f3`) — F6 MCP: PLAN napisan, četiri presude (ADR-038); kod NE postoji
+
+- **Provjereno iz izvora** (ne po sjećanju) sve četiri NEPROVJERENE stavke iz §F6: CIMD u Supabaseu **ne postoji** ·
+  `resource` se prihvaća, ali token nije vezan na naš poslužitelj · besplatni Claude ima **jedan** custom connector ·
+  `supabase-js@2.110.8` ima `auth.oauth`. Usput oborena ranija bilješka „MCP prijavu pišemo sami" (`@supabase/server`
+  to sad radi), izmjereno na STAGINGU što token AI-ja smije pisati, i nađena rupa koju brava u bazi ne doseže
+  (`PUT /auth/v1/user`). Sve u **RASPORED §F6 „Provjereno 17.09."**.
+- **Leon (anketa), sve četiri preporuke → ADR-038:** nacrt u tablici `node_drafts` · adresa `www.sokratstudy.com/mcp`
+  (Supabase URL samo za pokus) · DCR uz popis dopuštenih hostova na stranici za odobrenje · sigurnost u bazi, četiri
+  brane u MCP poslužitelju (+ ponovno pri Prihvati).
+- **Plan = RASPORED §F6** (① konektor + OAuth 5 cigli · ② cjevovod 5 · ③ brane 7), svaka s provjerom koja pada na starom
+  kodu. **Sljedeće: ①/1 okomiti pokus na STAGINGU — tek uz Leonov OK i njegove dashboard-korake** (popis u §F6).
+- Samo docs, lokalno na `feat/f3-dvojezicnost`; push `feat/*` i dalje nije dopušten u postavkama → preview ne postoji.
+
 ## 2026-09-17 (OPUS, stablo `sokratstudy.f3`) — kraj sesije: MCP istraživanje započeto, plan NIJE napisan
 
 - Zadatak 2 (plan F6 MCP) započet istraživanjem; Leon prekinuo sesiju (*„sesija nam je gotova"*). **Plan i kod ne postoje.**

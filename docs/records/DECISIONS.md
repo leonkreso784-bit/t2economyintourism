@@ -4,6 +4,43 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-038 — MCP: nacrt u zasebnoj tablici · naša domena · DCR uz popis hostova · sigurnost u bazi, kvaliteta u poslužitelju
+**Datum:** 2026-09-17 · **Status:** ✅ ODLUČENO (Leon, anketa) · **Vezano:** [ADR-031](#adr-031) (cjevovod, nacrt, četiri brane), [ADR-030](#adr-030), [ADR-026](#adr-026) (MCP invarijante), [ADR-024](#adr-024) (osobni otok), ADR-027 · **Faza:** F6 u [RASPORED.md](../plan/RASPORED.md)
+
+**Kontekst.** [ADR-031](#adr-031) je presudio **što** MCP radi, ali je dvije stvari uzeo kao riješene: da šav za nacrt
+postoji i da je pristup pitanje jedne prijave. Mjerenje 17.09. (RASPORED §F6 „Provjereno") oborilo je obje: nacrt
+osobnog materijala na poslužitelju **ne postoji**, a Supabase OAuth token AI-ja je **običan korisnički JWT + `client_id`**
+— nije vezan na naš poslužitelj (`aud` ostaje `authenticated`) i smije sve što i prijavljeni korisnik. Supabase nema
+CIMD, pa se klijent identificira kroz DCR ili unaprijed registriran klijent.
+
+**Odluke (Leon, 2026-09-17 — prihvaćene sve četiri preporuke):**
+
+1. **Nacrt živi u zasebnoj tablici `node_drafts`.** AI piše samo ondje, nikad u `nodes` / `node_content`; postojeći
+   materijal se ne prepisuje; više nacrta smije postojati usporedo. Materijal nastaje tek korisnikovim **Prihvati** iz
+   obične sesije.
+2. **Adresa konektora na produkciji = `www.sokratstudy.com/mcp`** (Vercel rewrite na Edge Function); Supabase URL služi
+   samo pokusu na stagingu. Adresa se poslije ne mijenja — promjena znači da svaki korisnik ponovno dodaje konektor.
+3. **DCR je uključen, a stranica za odobrenje pušta samo poznate hostove preusmjeravanja** (`claude.ai`, `chatgpt.com`).
+   Supabase DCR hostove ne ograničava; odobrenje traži korisnikovu prijavu s našeg origina, pa se stranica ne zaobilazi.
+4. **Sigurnost u bazi, kvaliteta u MCP poslužitelju.** Token drži broker Anthropica/OpenAI-ja, ne model: model do baze
+   dolazi samo kroz naše alate, a tko drži token dolazi i mimo njih. Zato **čiji su podaci i koje su radnje dopuštene**
+   presuđuje baza (token s `client_id` = zabrana po defaultu), a **četiri brane** žive u poslužitelju i čitaju iste module
+   kao preglednik (`js/card-limits.js` je treći čitatelj, ne kopija) — i ponavljaju se pri **Prihvati**, pa nacrt upisan
+   mimo poslužitelja ne postaje materijal bez brana.
+
+**Posljedice:**
+- ADR-031 ⑤ („šav postoji: `SokratDraft` → `publish_document`") **ne vrijedi za osobni materijal**, a ADR-026 („MCP ne
+  dobiva nijedan nov put upisa, koristi postojećih 7 RPC-ova") je **nadglašen**: tih 7 piše živo, a živo je upravo ono
+  što AI ne smije. MCP dobiva jedan nov put — u nacrt — i nijedan u žive tablice.
+- **Brava ide prije ikakvog OAuth-a na produkciji.** `PUT /auth/v1/user` brava u bazi ne doseže → oslonac je postavka
+  „traži trenutnu lozinku" u dashboardu.
+- Svaki budući RPC je **zatvoren za token AI-ja dok se izričito ne otvori** (inventarska brana, F6 ①/2).
+- `KURIRANE_BOJE` i `normFill` izlaze u zasebne module po kalupu `card-limits.js`, jer ih treba i Deno.
+- Vercel rewrite za MCP promet nije provjeren — provjerava se na previewu prije produkcije; ako ne radi, odluka 2 se
+  otvara ponovno, ne zaobilazi.
+
+---
+
 ## ADR-037 — Pravne stranice nose OBA jezika u stranici; `boot.js` bira prije crtanja
 **Datum:** 2026-09-16 · **Status:** ✅ ODLUČENO (Leon, anketa) · **Vezano:** [ADR-033](#adr-033) (sučelje je dvojezično), ADR-012 (jezik gradiva = program), ADR-027, BUG-025 (`innerHTML` granica) · **Faza:** F3/1 u [RASPORED.md](../plan/RASPORED.md)
 
