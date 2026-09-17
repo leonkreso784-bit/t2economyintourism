@@ -5,6 +5,15 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-17 (OPUS, stablo `sokratstudy.f3`) — kraj sesije: MCP istraživanje započeto, plan NIJE napisan
+
+- Zadatak 2 (plan F6 MCP) započet istraživanjem; Leon prekinuo sesiju (*„sesija nam je gotova"*). **Plan i kod ne postoje.**
+- Nalazi i ispravci ADR-031 pretpostavki zapisani u **RASPORED §F6 „Istraživanje prije plana"** (ADR-027: jedno mjesto).
+  Najvažnije: OAuth token AI-ja smije sve što i korisnik (brava prije uključivanja) · nacrt osobnog materijala na
+  poslužitelju ne postoji · Supabase OAuth 2.1 poslužitelj je beta · MCP prijavu na Edge Functions pišemo sami.
+- Grana `feat/f3-dvojezicnost` = `cf8939a` + ovaj docs-commit, **LOKALNO** — push odbijen (pravilo za `feat/*` nije upisano
+  u `~/.claude/settings.json`), preview ne postoji.
+
 ## 2026-09-17 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/2 cigla 4d: Moji materijali na hrvatskom
 
 - **Leon:** *„može"* na plan 4d. **Time je cigla 4 (zadatak 1) gotova; sljedeće je plan MCP-a (F6).**

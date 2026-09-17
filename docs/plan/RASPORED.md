@@ -281,6 +281,39 @@ repozitorija.
 dolazi kroz chat, datoteku nikad ne vidimo · **sve ide u NACRT** · doseg je **samo vlastito
 gradivo**, ni čitanje kataloga · nikad `is_admin()`, nikad `service_role` · **vježbe su izvan MCP-a**.
 
+**🔎 Istraživanje prije plana (17.09., nedovršeno — sesija prekinuta; PLAN i KOD još ne postoje).** Izvori: Supabase
+dokumentacija (*OAuth 2.1 Server · Getting Started · MCP Authentication · Token Security and RLS · Deploy MCP servers*),
+Claude Help Center (*custom connectors using remote MCP*), OpenAI Help (*Developer mode and MCP apps*). Činjenice:
+
+1. **Supabase Auth može biti OAuth 2.1 poslužitelj za MCP** — **beta, besplatan za vrijeme bete**; uključuje se u
+   dashboardu (*Authentication → OAuth Server*) + *Authorization Path* (npr. `/oauth/consent`) nad *Site URL*. Stranicu za
+   odobrenje gradimo MI, i to smije biti obična stranica u pregledniku (supabase-js `auth.oauth.getAuthorizationDetails` ·
+   `approveAuthorization` · `denyAuthorization`) → uklapa se u statični vanilla JS. Dinamička registracija klijenata (DCR)
+   je opcionalna. Preporučeni su asimetrični JWT ključevi (obavezni samo uz `openid`).
+2. **⚠️ OAuth token je običan `authenticated` JWT + `client_id`.** Tko ga drži, mimo našeg MCP-a smije sve što i
+   prijavljeni korisnik: `publish_node` (piše ŽIVO), `delete_node`, `set_profile_handle`, Edge Function `delete-account`.
+   ⇒ **brava PRIJE uključivanja OAuth-a:** postojeći upisi i osjetljive tablice odbijaju `auth.jwt() ->> 'client_id' IS NOT
+   NULL` (RESTRICTIVE politike / provjera u RPC-u i u `delete-account`); MCP dobiva samo vlastite RPC-ove.
+3. **MCP na Edge Functions:** vodič postoji (MCP TS SDK ili `mcp-lite`, Streamable HTTP), ali *„auth support coming soon"*
+   → 401 s `WWW-Authenticate: Bearer resource_metadata=…`, *Protected Resource Metadata* i provjeru tokena pišemo sami;
+   funkcija ide s `--no-verify-jwt` → `check:functions` (koji traži 401 od svih) treba IMENOVANU iznimku.
+4. **Klijenti:** Claude custom connector bira identitet redom: unaprijed registriran → **CIMD** (ako poslužitelj oglašava
+   `client_id_metadata_document_supported`) → DCR. ChatGPT: *developer mode* (Plus · Pro · Business · Enterprise ·
+   Education, web), OAuth, preporuka CIMD. **NEPROVJERENO:** podržava li Supabase CIMD · prihvaća li parametar `resource`
+   (RFC 8707) · ima li besplatni Claude custom connector · zna li zakucani `supabase-js@2.110.8` `auth.oauth`.
+5. **ADR-031 pretpostavke koje NE stoje:** ⓐ *„šav postoji (SokratDraft → publish_document)"* — `publish_document` je
+   KATALOG + `is_admin()` (MCP ga nikad ne smije), `SokratDraft` živi u PREGLEDNIKU, a `publish_node` piše živi
+   `node_content` → **nacrt osobnog materijala na poslužitelju NE POSTOJI** i mora se projektirati (oblik = Leonova
+   presuda) · ⓑ *„tek nakon seobe"* — seoba otkazana, OAuth ide na postojeće projekte (staging pa prod).
+6. **Oblik podataka za brane:** ③ boja — kategorija ima obavezan `color` (kurirana paleta `KURIRANE_BOJE`) · ④ dopuna —
+   `answers` = broj praznina (D2) je mjerljiv dio „jednoznačnosti" · ② „kartica daje pitanje" — shema nema polje veze
+   (`additionalProperties:false`) → ulaz alata u obliku cjevovoda (kartica nosi svoja pitanja) ili proširenje sheme ·
+   ① `js/card-limits.js` postavlja `root.SokratCardLimits` → Deno ga može čitati; plpgsql ne može (gdje brane žive = odluka).
+
+**Otvoreno za plan (Leon presuđuje):** oblik nacrta na poslužitelju · URL konektora (`…supabase.co/functions/v1/mcp` ili
+`www.sokratstudy.com/mcp` kroz Vercel rewrite) · DCR da/ne · gdje žive brane (Edge Function ili RPC) · redoslijed: prvo
+okomiti pokus na STAGINGU (jedan alat + OAuth + pravi Claude/ChatGPT konektor), pa brava ②, pa cjevovod.
+
 ---
 
 ### F7 · OBJAVA
