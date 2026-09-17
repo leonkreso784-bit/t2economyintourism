@@ -5,6 +5,29 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-17 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/2 cigla 4d: Moji materijali na hrvatskom
+
+- **Leon:** *„može"* na plan 4d. **Time je cigla 4 (zadatak 1) gotova; sljedeće je plan MCP-a (F6).**
+- **Kod:** `my-materials.js` `renderText()` → `window.renderMaterialsText` (kuka u `applyTranslations`, samo dok je
+  `#materials-page` aktivna): crta iz VEĆ UČITANIH podataka (bez mreže) · palo učitavanje pamti `_greska` i crta se kao
+  greška (`drawError`, ista funkcija kao u `refresh`), ne kao prazno stanje · dok prvo učitavanje traje ne radi ništa ·
+  ime u unosu ostaje, s kursorom. „Premjesti u…": natpis „Odustani" u markupu PRAZAN, upisuje ga `openMove` uz naslov.
+  `offline-store.js` `window.renderShelfText` (isti `mountShelf` kao navigacija). Tipovi u `types/globals.d.ts`.
+- **Brana:** novi `tests/materijali-jezik.authed.spec.js` (STAGING): ① „+ Novo → Nova polica", upisano ime, prekidač →
+  traka, unos (placeholder) i polica na hrvatskom, ime ostaje; Escape (ništa se ne sprema) · ③ čitanje stabla preusmjereno
+  na 500 → greška precrtana na hrvatski, gumb „Pokušaj ponovno" ostaje · ② „Premjesti u…" poslije prekidača.
+  ⚠️ **Odstupanje od najavljenog Leonu („ne upisuje ništa"):** ② stvori JEDNU privremenu policu (prozor treba redak, a test
+  ne smije ovisiti o tuđim podacima) i briše je u `finally` (meko, kao `radionica.authed.spec.js`). ① i ③ ne upisuju.
+- **Obrnuto provjereno:** na starom kodu ① pada („New" ≠ „Novo") i ② („Cancel" ≠ „Odustani") · bez grane za grešku pada ③
+  · bez vraćanja imena pada ① na vrijednosti · bez kuke police pada ① na polici. Datoteke vraćene bajt-identično.
+- **`check:i18n` ostaje 124** (kvarovi ponašanja).
+- **Zapisano za poslije (izvan 4d):** gumb „Download for offline" na stranici lekcija (`SokratOffline.mount`) ima istu rupu
+  — ne precrtava se na prekidač (RASPORED F3/2, popis „brana ne vidi").
+- **Gate:** authed staging 5051 (materijali-jezik · my-materials · radionica · material-authoring · node-editor · layout ·
+  card-limits · profile-shelf · profile-jezik) **54/54** · `shelf` + `offline-study` + `materials-entry` + `routes` +
+  `back-model` + `i18n` × 4 telefona **156/156** · typecheck · unit `my-materials` 41/41 · `offline-store` 29/29 ·
+  **preflight EXIT 0**. `a11y` specovi nisu vrćeni (markup stranice nepromijenjen osim praznog natpisa koji JS odmah upiše).
+
 ## 2026-09-17 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/2 cigla 4c: profil na hrvatskom
 
 - **Leon:** *„može super"* na plan 4c.

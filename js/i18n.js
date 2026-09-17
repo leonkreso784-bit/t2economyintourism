@@ -912,6 +912,13 @@
     // F3/2 cigla 4c: kroz `renderProfileText`, koji vrati otvorene forme i ono što korisnik piše.
     const pp = document.getElementById('profile-page');
     if (pp && pp.classList.contains('active') && typeof window.renderProfileText === 'function') window.renderProfileText();
+    // F3/2 cigla 4d: „Moji materijali" (stablo, traka, unos) i polica crtaju se JS-om iz već učitanih
+    // podataka → precrtaj ih bez mreže. Kuke postoje tek kad je paket `materials` učitan.
+    const mp = document.getElementById('materials-page');
+    if (mp && mp.classList.contains('active')) {
+      if (typeof window.renderMaterialsText === 'function') window.renderMaterialsText();
+      if (typeof window.renderShelfText === 'function') window.renderShelfText();
+    }
   }
 
   // Postavi jezik sučelja. persist=true → zapamti kao globalni izbor (default).

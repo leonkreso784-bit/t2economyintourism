@@ -57,6 +57,9 @@ declare global {
     renderProfilePage?: () => void;
     // F3/2 cigla 4c: precrtaj profil na promjenu jezika, a otvorene forme i upisano vrati.
     renderProfileText?: () => void;
+    // F3/2 cigla 4d: precrtaj „Moje materijale" i policu na promjenu jezika (bez mreže).
+    renderMaterialsText?: () => void;
+    renderShelfText?: () => void;
     // K2b: mrvicu crta JS u `textContent` (nikad `innerHTML`), pa je `[data-i18n]` ne
     // dohvaća — i18n je mora precrtati kao i ostale liste građene iz kataloga.
     renderPathbar?: () => void;

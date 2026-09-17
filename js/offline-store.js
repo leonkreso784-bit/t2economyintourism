@@ -654,4 +654,7 @@
     isStale: isStale,
     CACHE: CACHE
   };
+  // F3/2 cigla 4d: kuka prekidača jezika (i18n.js) — polica na „Mojim materijalima" crta se JS-om iz
+  // lokalnog zapisa, pa je ostajala na starom jeziku. Isti poziv kao pri otvaranju stranice (navigation.js).
+  window.renderShelfText = function () { mountShelf(doc.getElementById('shelfList')); };
 })(window);

@@ -281,6 +281,7 @@
   let _loaded = false;       // je li stablo ikad uspješno učitano (→ nema više „skeleton" bljeska)
   let _edit = null;          // {mode:'create',parentId,kind} | {mode:'rename',id,name}
   let _lastDeleted = null;   // id zadnje obrisanog → ponudi „Vrati"
+  let _greska = null;        // zadnje učitavanje palo → prekidač jezika crta grešku, ne prazno stanje
 
   /**
    * Zauzet = UI NIJE interaktivan. Bez ovoga postoji utrka: `refresh()` prekrije stablo
@@ -676,8 +677,9 @@
       '  <p class="mm-move__what" id="mmMoveWhat"></p>' +
       '  <div class="mm-move__list" id="mmMoveList" role="list"></div>' +
       '  <div class="mm-move__actions">' +
-      '    <button type="button" class="cta-button secondary" data-mm-move-cancel><i class="fas fa-xmark" aria-hidden="true"></i><span>' +
-      esc(mt('materials.cancel', 'Cancel')) + '</span></button>' +
+      // Natpis PRAZAN: prozor se gradi jednom, pa bi tekst upisan ovdje ostao na jeziku prvog
+      // otvaranja (F3/2 cigla 4d) — upisuje ga `openMove`, kao i naslov.
+      '    <button type="button" class="cta-button secondary" data-mm-move-cancel><i class="fas fa-xmark" aria-hidden="true"></i><span></span></button>' +
       '  </div>' +
       '</div>';
     document.body.appendChild(m);
@@ -699,6 +701,7 @@
     const m = ensureMoveModal();
     m.setAttribute('data-mm-for', id);
     m.querySelector('#mmMoveTitle').textContent = mt('materials.move', 'Move to…');
+    m.querySelector('[data-mm-move-cancel] span').textContent = mt('materials.cancel', 'Cancel');
     m.querySelector('#mmMoveWhat').textContent = row.name;
     const targets = moveTargets(_rows, id);
     m.querySelector('#mmMoveList').innerHTML = targets.map(function (t) {
@@ -934,14 +937,44 @@
       _rows = res.rows;
       _tree = res.tree;
       _loaded = true;
+      _greska = null;
       // M2: profil-statistika i cloud-sync iteriraju `subjectDataMap` → materijali moraju biti
       // ondje i kad ih korisnik nije otvorio, inače im napredak ne bi bio ni prikazan ni sinkroniziran.
       registerAllStudySubjects();
       draw();
     } catch (err) {
       _rows = []; _tree = [];
-      el.innerHTML = shellHtml(stateHtml('fa-triangle-exclamation',
-        mt('materials.errLoad', 'Could not load your materials.'), humanError(err), true));
+      _greska = err;
+      drawError();
+    }
+  }
+
+  function drawError() {
+    const el = root();
+    if (!el) return;
+    el.innerHTML = shellHtml(stateHtml('fa-triangle-exclamation',
+      mt('materials.errLoad', 'Could not load your materials.'), humanError(_greska), true));
+  }
+
+  /**
+   * F3/2 cigla 4d — PREKIDAČ JEZIKA (kuka `window.renderMaterialsText` u `applyTranslations`). Stranica
+   * je nacrtana JS-om, pa je ostajala na starom jeziku do sljedećeg otvaranja. Crta se iz VEĆ UČITANIH
+   * podataka, bez mreže: pala učitavanja nacrta se kao greška (ne kao prazno stanje), a ime koje korisnik
+   * upravo upisuje ostaje, s kursorom (načelo `data-touched` s naslovnice). Dok se stablo prvi put
+   * učitava ne radi ništa — `refresh` ga ionako crta tek kad stigne, već na novom jeziku.
+   */
+  function renderText() {
+    const el = root();
+    if (!el || !isAvailable()) return;
+    if (_greska) { drawError(); return; }
+    if (!_loaded) return;
+    const stari = el.querySelector('[data-mm-input]');
+    const upis = stari ? { value: stari.value, od: stari.selectionStart, do: stari.selectionEnd } : null;
+    draw();
+    const novi = upis && el.querySelector('[data-mm-input]');
+    if (novi) {
+      novi.value = upis.value;
+      try { novi.setSelectionRange(upis.od, upis.do); } catch (e) { /* polje bez odabira — vrijednost je dovoljna */ }
     }
   }
 
@@ -1188,4 +1221,5 @@
   };
 
   window.SokratMaterials = SokratMaterials;
+  window.renderMaterialsText = renderText;   // F3/2 cigla 4d: kuka prekidača jezika (i18n.js)
 })(typeof window !== 'undefined' ? window : this);

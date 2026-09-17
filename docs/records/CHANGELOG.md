@@ -5,6 +5,14 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-17 (OPUS) — **F3/2 cigla 4d: Moji materijali na hrvatskom** — grana `feat/f3-dvojezicnost`
+
+### Popravljeno
+- **„Moji materijali" i polica prate promjenu jezika odmah** — dotad su ostajali na starom jeziku do sljedećeg
+  otvaranja stranice. Ime nove police ili materijala koje korisnik upravo upisuje ostaje, a ako učitavanje nije uspjelo,
+  poruka o grešci ostaje poruka o grešci.
+- **Prozor „Premjesti u…"** više ne zadržava „Cancel" na jeziku prvog otvaranja.
+
 ## 2026-09-17 (OPUS) — **F3/2 cigla 4c: profil na hrvatskom** — grana `feat/f3-dvojezicnost`
 
 ### Popravljeno
