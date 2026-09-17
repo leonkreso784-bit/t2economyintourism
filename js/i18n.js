@@ -909,8 +909,9 @@
     const bp = document.getElementById('browse-page');
     if (bp && bp.classList.contains('active') && typeof window.renderBrowse === 'function') window.renderBrowse();
     // Profil je renderiran innerHTML-om (ne hvata [data-i18n]) → re-renderiraj ako je otvoren.
+    // F3/2 cigla 4c: kroz `renderProfileText`, koji vrati otvorene forme i ono što korisnik piše.
     const pp = document.getElementById('profile-page');
-    if (pp && pp.classList.contains('active') && typeof window.renderProfilePage === 'function') window.renderProfilePage();
+    if (pp && pp.classList.contains('active') && typeof window.renderProfileText === 'function') window.renderProfileText();
   }
 
   // Postavi jezik sučelja. persist=true → zapamti kao globalni izbor (default).

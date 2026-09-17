@@ -5,6 +5,15 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-17 (OPUS) — **F3/2 cigla 4c: profil na hrvatskom** — grana `feat/f3-dvojezicnost`
+
+### Popravljeno
+- **Promjena jezika na profilu više ne briše ono što korisnik piše.** Otvorene forme (uredi profil, nova lozinka,
+  brisanje računa) ostaju otvorene, s upisanim tekstom, a natpisi se odmah prevedu.
+- **„Član od" ima mjesec na jeziku sučelja** („Član od 9. srpnja 2026.", dotad „9 July 2026").
+- **Greška pri promjeni lozinke na profilu je na jeziku sučelja**, ista kao u prozoru za prijavu — dotad je stizala
+  sirova engleska poruka poslužitelja.
+
 ## 2026-09-17 (OPUS) — **F3/2 cigla 4b: slika u gradivu na hrvatskom · mjera prijevoda ispravljena** — grana `feat/f3-dvojezicnost`
 
 ### Popravljeno

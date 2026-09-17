@@ -5,6 +5,25 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-17 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/2 cigla 4c: profil na hrvatskom
+
+- **Leon:** *„može super"* na plan 4c.
+- **Kod (`profile.js`):** ① `renderProfileText()` — kuka u `applyTranslations` (umjesto golog `renderProfilePage`):
+  zapamti otvorene forme (`FORME_PROFILA`: uredi profil · promijeni lozinku · brisanje računa) i upisane vrijednosti po
+  id-u, nacrta profil, vrati ih; poruke stanja se ne vraćaju · ② **usput nađeno čitanjem, brana ne vidi:** „Član od"
+  je uvijek imao engleski mjesec (`toLocaleDateString('en-GB')`) → `hr-HR` na hrvatskom sučelju · ③ promjena lozinke:
+  `SokratAuth.authError(error)` umjesto sirovog `error.message` · ④ zastarjela rezerva `msg.confirmDeleteCloud`
+  (tvrdila „bit ćeš odjavljen") → tekst iz rječnika kroz `pt()`. Tip `renderProfileText` u `types/globals.d.ts`.
+- **Brana:** novi `tests/profile-jezik.authed.spec.js` (STAGING, **ništa ne upisuje**: forme se ne spremaju, ③ šalje
+  TRENUTNU lozinku → poslužitelj odbija `same_password`, procurjele lozinke preusmjerene na prazan odgovor; test sam
+  tvrdi da je odgovor ≥ 400 i da prevoditelj zna kod, inače ne bi ništa mjerio).
+- **Obrnuto provjereno:** na starom kodu sva tri padaju (forma zatvorena · „Član od 9 July 2026" · „New password should be
+  different from the old password.") · bez vraćanja formi pada ① na „Uredi profil" · bez vraćanja upisanog pada na opisu.
+- **`check:i18n` ostaje 124** (profil je već bio na 0 — ovo su kvarovi ponašanja, ne zakucan tekst).
+- **Gate:** authed staging 5051 (profile-jezik · profile-identity · profile-wall · profile-images · profile-shelf ·
+  topbar-avatar · wipe-history · signout-local · theme-account · mail-notify) **39/39** · `auth` + `i18n` × 4 telefona
+  **60/60** · typecheck · **preflight EXIT 0**.
+
 ## 2026-09-17 (OPUS, stablo `sokratstudy.f3`, `feat/f3-dvojezicnost`) — F3/2 cigla 4b: presuda o rezervi + slika u gradivu
 
 - **Leon (presuda „A"):** engleska rezerva uz ključ koji POSTOJI u rječniku se ne broji. Test ⑧ (koji je tvrdio suprotno)

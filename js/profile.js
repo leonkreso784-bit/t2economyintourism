@@ -473,8 +473,10 @@ function renderProfilePage() {
     }
 
     const created = user.created_at ? new Date(user.created_at) : null;
+    // F3/2 cigla 4c: mjesec je bio engleski i na hrvatskom sučelju („Član od 9 July 2026").
+    const jezikDatuma = (typeof window.getUiLang === 'function' && window.getUiLang() === 'hr') ? 'hr-HR' : 'en-GB';
     const memberSince = created
-        ? created.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+        ? created.toLocaleDateString(jezikDatuma, { day: 'numeric', month: 'long', year: 'numeric' })
         : '—';
     // Ime iz `profile_identity`, s `user_metadata` kao rezervom; nema ni jednog → email kao naslov.
     const displayName = identityOf(user).name;
@@ -635,6 +637,36 @@ function renderProfilePage() {
 
     // Prvi kadar crta ono što znamo bez mreže (JWT), pa se dopuni kad red stigne.
     if (_identityFor !== user.id) loadIdentity(user);
+}
+
+/**
+ * F3/2 cigla 4c — PREKIDAČ JEZIKA NA PROFILU (kuka u `applyTranslations`). Profil je nacrtan
+ * `innerHTML`-om, pa se na promjenu jezika mora nacrtati iznova — a to je zatvaralo otvorene forme i
+ * brisalo ono što korisnik piše (novi opis, nova lozinka, upisani DELETE). Precrtava se ODMAH (pravilo
+ * F3/2), a otvorene forme i upisano se vrate (načelo `data-touched` s naslovnice). Poruke stanja
+ * („Spremam…", greška) se ne vraćaju: kratke su i ostale bi na starom jeziku.
+ */
+const FORME_PROFILA = ['profileEditForm', 'profileChangePassForm', 'profileDeleteAccountForm'];
+
+function renderProfileText() {
+    const root = document.getElementById('profileContent');
+    if (!root) return;
+    const otvorene = FORME_PROFILA.filter(function (id) {
+        const f = document.getElementById(id);
+        return !!f && !f.hidden;
+    });
+    const upisano = Array.prototype.map.call(
+        root.querySelectorAll('form textarea[id], form input[id]:not([type="file"]):not([type="checkbox"]):not([type="radio"])'),
+        function (el) { return { id: el.id, value: el.value }; });
+    renderProfilePage();
+    otvorene.forEach(function (id) {
+        const f = document.getElementById(id);
+        if (f) f.hidden = false;
+    });
+    upisano.forEach(function (u) {
+        const el = document.getElementById(u.id);
+        if (el) el.value = u.value;
+    });
 }
 
 /** Kod iz `set_profile_handle` (supabase/f2-temelj-mreze.sql) → tekst za korisnika. */
@@ -808,7 +840,8 @@ async function changePassword(e) {
     const { error } = await client.auth.updateUser({ password: input.value });
     if (error) {
         status.classList.add('is-error');
-        status.textContent = error.message;
+        // F3/2 cigla 4c: ista poruka kao u prozoru za prijavu — dotad je ovdje išla sirova i engleska.
+        status.textContent = SokratAuth.authError(error);
         return;
     }
     status.hidden = true;
@@ -824,7 +857,9 @@ async function deleteCloudData() {
     if (!user || !client) return;
 
     const ok = await askConfirm({
-        message: window.t ? t('msg.confirmDeleteCloud') : 'Delete ALL study progress stored in the cloud? Progress on this device is kept, but you will be signed out.',
+        // Rezerva je do F3/2 cigle 4c tvrdila suprotno od rječnika („napredak na uređaju ostaje, bit ćeš
+        // odjavljen") — brisanje od U2 ide i kroz uređaj, a korisnik ostaje prijavljen.
+        message: pt('msg.confirmDeleteCloud', 'Delete ALL study progress — in the cloud and on this device? Your account stays. This cannot be undone.'),
         danger: true
     });
     if (!ok) return;

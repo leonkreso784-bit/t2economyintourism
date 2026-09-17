@@ -55,6 +55,8 @@ declare global {
     renderCatalogPrograms?: () => void;
     renderBrowse?: () => void;
     renderProfilePage?: () => void;
+    // F3/2 cigla 4c: precrtaj profil na promjenu jezika, a otvorene forme i upisano vrati.
+    renderProfileText?: () => void;
     // K2b: mrvicu crta JS u `textContent` (nikad `innerHTML`), pa je `[data-i18n]` ne
     // dohvaća — i18n je mora precrtati kao i ostale liste građene iz kataloga.
     renderPathbar?: () => void;
