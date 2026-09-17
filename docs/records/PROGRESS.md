@@ -5,6 +5,30 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-17 kasno (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/1 okomiti pokus na STAGINGU
+
+- **Leon (druga anketa):** stablo `.f6` u istoj sesiji · dashboard kroz Playwright · pokus na njegovom Claude.ai ·
+  ChatGPT Plus → testira se i on · pomoćni subagenti · lozinka = nova cigla ①/2b · dozvola za push `feat/*` → upisana
+  u `~/.claude/settings.json` (samo `git push [-u] origin feat/*`). OK je vrijedio za: stablo, STAGING dashboard, ①/1.
+- **Push:** `feat/f3-dvojezicnost` (preflight zelen) → preview READY
+  `studymaster-git-feat-f3-dvojezicnost-leon-kresos-projects.vercel.app` (čita PROD bazu; F2 dijelovi bez PROD SQL-a
+  mogu javiti grešku).
+- **STAGING dashboard (Playwright profil je već bio prijavljen):** OAuth Server uključen · Authorization Path
+  `/odobrenje.html` · DCR uključen (Supabase upozorava na pecanje → zatvara ga popis hostova) · Site URL
+  `http://localhost:3000` → `http://localhost:5051`. Provjereno izvana (discovery 200, S256, `registration_endpoint`);
+  PROD i dalje `feature_disabled`.
+- **Kod:** `supabase/functions/mcp/{index,alati}.ts` (deploy na STAGING v1, `verify_jwt=false`) · `odobrenje.html` +
+  `js/odobrenje.js` (kopija adrese/ključa/SDK-a iz `auth.js` uz test koji ih veže, kalup `odjava.js`) · i18n `oauth.*`
+  · `css/legal.css` · `scripts/mcp-probe.js` (`npm run mcp:probe`).
+- **Brane:** `mcp:probe` crveno prije deploya (404, 4/7 palo) → 9/9 · `tests/odobrenje.spec.js` 20/20 na 4 profila —
+  prvi prolaz **uhvatio kvar**: `.oauth-actions { display:flex }` gazio `hidden`, gumbi vidljivi i uz odbijen host
+  (klik ne bi radio — vezan tek poslije provjere) → `:not([hidden])` · unit `mcp-alati` 11 + `odobrenje` 18; obrnuta
+  provjera 5/5 mutacija (popis hostova, `skipBrowserRedirect`, `^` pin, `*` stupci, `supabaseAdmin`) obara svoj test.
+- Pomoćni subagent pročitao objavljene pakete (`@supabase/server@1.7.0`, `@modelcontextprotocol/server@2.0.0`):
+  adresa resursa se zadaje, `withSupabase` ne provjerava `role` (brava kroz ulogu ostaje izvediva), stabilan je samo
+  ugniježđeni oblik.
+- **Sljedeće:** Leon spaja Claude.ai na staging (upute u RASPORED §F6) → STOP · zatim ①/2 brava.
+
 ## 2026-09-17 navečer (OPUS, stablo `sokratstudy.f3`) — F6 MCP: PLAN napisan, četiri presude (ADR-038); kod NE postoji
 
 - **Provjereno iz izvora** (ne po sjećanju) sve četiri NEPROVJERENE stavke iz §F6: CIMD u Supabaseu **ne postoji** ·

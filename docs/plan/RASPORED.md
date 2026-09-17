@@ -269,8 +269,9 @@ korisnički JS (ruši ADR-018 — prava cijena nije sandbox nego to da tuđi kô
 
 Presuđeno je **što** i **kojim oblikom** (ADR-030/031) i **kako se gradi** ([ADR-038](../records/DECISIONS.md#adr-038)):
 MCP je **cjevovod** `Learn → kartice → dopune/kviz`, ne skup CRUD-alata. Danas postoji samo read-only pokus izvan
-repozitorija. **Plan napisan 17.09., kod čeka Leonov OK.** Grana: `feat/f6-mcp` od `659ada3` (stranica za odobrenje
-treba F3 mehanizam jezika, „Povezani AI-jevi" profil iz F2). Sve prvo na STAGINGU.
+repozitorija. **Plan napisan 17.09.; ①/1 izveden na STAGINGU, čeka ručni dokaz (Leonov Claude).** Grana `feat/f6-mcp`
+od `a1d1bb5`, stablo `sokratstudy.f6` (stranica za odobrenje treba F3 mehanizam jezika, „Povezani AI-jevi" profil iz
+F2). Sve prvo na STAGINGU.
 
 **Invarijante:** AI je **korisnikov** (mi ne plaćamo tokene → kvalitetu drže brane) · materijal
 dolazi kroz chat, datoteku nikad ne vidimo · **sve ide u NACRT** · doseg je **samo vlastito
@@ -280,9 +281,12 @@ gradivo**, ni čitanje kataloga · nikad `is_admin()`, nikad `service_role` · *
 Authentication · Token Security · Deploy MCP servers* · Claude *custom connectors · Authentication for connectors* ·
 OpenAI *Developer mode* · upit nad STAGING bazom (samo čitanje).
 
-1. **Supabase Auth = OAuth 2.1 poslužitelj** (beta, bez naplate; AI-korisnik je već naš MAU) — **isključen na oba
-   projekta** (`feature_disabled`). Stranicu za odobrenje gradimo mi; zakucani `supabase-js@2.110.8` ima `auth.oauth`
-   (`getAuthorizationDetails` · `approveAuthorization` · `denyAuthorization` · `listGrants` · `revokeGrant`).
+1. **Supabase Auth = OAuth 2.1 poslužitelj** (beta, bez naplate; AI-korisnik je već naš MAU). **PROD isključen.
+   STAGING uključen 17.09.** (Playwright, uz Leonov OK): *Authorization Path* `/odobrenje.html` · DCR uključen ·
+   Site URL `http://localhost:5051` (**bio `http://localhost:3000`**, bez Redirect URL-ova — vratiti poslije pokusa).
+   Zakucani `supabase-js@2.110.8` ima `auth.oauth` (`getAuthorizationDetails` · `approveAuthorization` ·
+   `denyAuthorization` · `listGrants` · `revokeGrant`); ⚠️ `approve`/`deny` **sami preusmjere preglednik** osim uz
+   `{ skipBrowserRedirect: true }` — stranica ga uvijek šalje i preusmjerava tek poslije provjere hosta.
 2. **CIMD NE postoji** (metapodaci nemaju `client_id_metadata_document_supported`, `client_id` mora biti UUID) → Claude
    bira DCR ili unaprijed registriran klijent. **`resource` (RFC 8707) se prihvaća** i veže na kod, ali token nosi
    `aud: authenticated` → **token nije vezan na naš poslužitelj.** DCR ne ograničava hostove preusmjeravanja (samo shemu).
@@ -295,7 +299,9 @@ OpenAI *Developer mode* · upit nad STAGING bazom (samo čitanje).
    (`withOAuthProtectedResource` = 401 + `WWW-Authenticate` + metapodaci resursa · `withSupabase({ auth: 'user' })`;
    ugniježđeni oblik je stabilan, `pipeline` je alpha) + `@modelcontextprotocol/server@2.0.0`, uz `verify_jwt = false`.
    Traži asimetrične ključeve — **oba projekta imaju ES256**. Vodič piše `^` → pinamo točno (pravilo #9).
-   `check:functions` već ima kalup imenovane iznimke (`mail-unsubscribe`).
+   `check:functions` već ima kalup imenovane iznimke (`mail-unsubscribe`). Iz objavljenog paketa (1.7.0): adresa
+   resursa se ZADAJE (`resourceServer`; mi: `MCP_RESOURCE_URL` ili adresa funkcije) · `withSupabase` provjerava samo
+   `sub`, **ne `role`** → brava kroz vlastitu ulogu (①/2) ne ruši prijavu u MCP-u.
 5. **Klijenti:** Claude custom connector na **Free (jedan) · Pro · Max · Team · Enterprise**, callback
    `https://claude.ai/api/mcp/auth_callback`; DCR registrira novi klijent pri svakom spajanju. ChatGPT developer mode samo
    **Plus · Pro · Business · Enterprise · Edu, samo web**.
@@ -313,8 +319,9 @@ OpenAI *Developer mode* · upit nad STAGING bazom (samo čitanje).
 
 | cigla | posao | crveno na starom kodu |
 |---|---|---|
-| **①/1** okomiti pokus | minimalna stranica za odobrenje + Edge Function `mcp` s jednim alatom (vlastite police i materijali, samo čitanje); Leon spaja Claude na staging URL | `scripts/mcp-probe.js`: 401 + `resource_metadata` → staging Auth, S256 (danas 404); ručno: Claude izlista Leonove staging materijale |
+| **①/1** okomiti pokus — ✅ STAGING 17.09. | `odobrenje.html` + `js/odobrenje.js` (popis hostova već ovdje) · Edge Function `mcp` v1 s alatom `procitaj_materijale` (jezgra `alati.ts`, samo čitanje) · `npm run mcp:probe`; Leon spaja Claude.ai na `https://czljmvigkgiajzjxtndq.supabase.co/functions/v1/mcp` | `mcp:probe` prije deploya 4/7 palo (404) → poslije 9/9 · `tests/odobrenje.spec.js` 20/20 (①②④ padali: `display:flex` gazio `hidden`, gumbi vidljivi uz odbijen host) · unit `mcp-alati` 11 + `odobrenje` 18, 5/5 mutacija obara test · **ručno još čeka:** Claude izlista Leonove staging materijale |
 | **①/2** brava | Custom Access Token Hook: token s `client_id` → uloga `mcp_klijent`, **zabrana po defaultu** (samo `mcp_*` RPC + čitanje vlastitih čvorova); `delete-account` i `send-notification` → 403. **Rezerva** ako hook ne smije mijenjati ulogu: provjera `client_id` u svakom RPC-u + inventarska brana | `tests/mcp-brava.authed.spec.js` s PRAVIM OAuth tokenom (test-klijent, Playwright odobri): `publish_node` · `delete_node` · `set_profile_handle` · upload slike · `delete-account` · `PUT /user` na starom kodu prolaze; + svaka RPC ruta koju token vidi mora biti na popisu dopuštenih |
+| **①/2b** lozinka (Leon 17.09.) | profil „Promijeni lozinku" dobiva polje **Trenutna lozinka** (HR/EN, test; provjeriti da ga zakucani supabase-js šalje — `current_password` se u bundleu ne spominje) → TEK ONDA postavka „traži trenutnu lozinku" (staging, pa PROD uz OK). Bez polja bi sama postavka srušila promjenu lozinke | `PUT /auth/v1/user {password}` s OAuth tokenom prolazi; profilna promjena bez stare lozinke pada nakon postavke |
 | **①/3** stranica za odobrenje | prijava uz očuvan `authorization_id` · ime klijenta i host preusmjeravanja · **popis dopuštenih hostova** (`claude.ai`, `chatgpt.com`) · HR/EN · telefon | nepoznat host → nema „Dopusti"; `check:csp/i18n/seo/budget`, Vercel check |
 | **①/4** ugradnja | imenovana iznimka u `check:functions` · točno pinani paketi · **`www.sokratstudy.com/mcp` kroz Vercel rewrite** (provjera na previewu) | `check:functions` crven bez iznimke |
 | **①/5** Povezani AI-jevi | u profilu popis veza + opoziv (`listGrants` / `revokeGrant`) | poslije opoziva token pada |
@@ -353,9 +360,13 @@ Rizik: prestrog prag ④ → AI zapne; zato ③/0 ide prvo.
 **PROD — zadnje, svaki korak uz Leonov izričit OK:** SQL u SQL Editoru → OAuth poslužitelj + hook u dashboardu →
 funkcija → klijent.
 
-**Čeka Leona prije ①/1 (STAGING dashboard):** uključiti *OAuth Server* i DCR · Site URL za pokus =
-`http://localhost:5051` (stranica za odobrenje = Site URL + put; točan put javljam u ①/1) · stanje postavki „traži
-trenutnu lozinku" i „Secure email change" · Claude račun za pokus. U ①/2: *Auth Hooks → Custom Access Token*.
+**Leon, druga anketa 17.09.:** radi se u stablu `.f6` · dashboard kroz Playwright prozor · pokus na njegovom
+Claude.ai računu · **ChatGPT Plus ima → testira se i on** (prije PROD-a) · pomoćni subagenti u radu na F6 (mehanički
+posao i napadač na brave) · lozinka = cigla ①/2b · dozvola za push `feat/*` upisana.
+
+**Čeka Leona za kraj ①/1:** u pregledniku na `http://localhost:5051` prijava na STAGING (override) → Claude.ai →
+*Customize → Connectors → Add custom connector* → staging adresa iz ①/1 → „Dopusti" → pitati Claude za materijale.
+U ①/2: *Auth Hooks → Custom Access Token*.
 
 ---
 

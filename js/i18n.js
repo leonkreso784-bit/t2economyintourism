@@ -634,6 +634,22 @@
     'unsub.missing': { en: 'The link is incomplete — open it again from the email.', hr: 'Poveznica nije potpuna — otvori je ponovno iz maila.' },
     'unsub.error': { en: 'That did not work — please try again.', hr: 'Nije uspjelo — pokušaj ponovno.' },
     'unsub.back': { en: 'Back to Sokrat Study', hr: 'Natrag na Sokrat Study' },
+    // F6 ①/1 — odobrenje.html (korisnikov AI traži pristup, ADR-038)
+    'oauth.pageTitle': { en: 'Connect your AI — Sokrat Study', hr: 'Poveži svoj AI — Sokrat Study' },
+    'oauth.title': { en: 'Connect your AI to Sokrat Study', hr: 'Poveži svoj AI sa Sokrat Studyjem' },
+    'oauth.client': { en: 'App', hr: 'Aplikacija' },
+    'oauth.host': { en: 'Returns to', hr: 'Vraća se na' },
+    'oauth.account': { en: 'Your account', hr: 'Tvoj račun' },
+    'oauth.scope': { en: 'It will be able to see your own study materials. It never sees other people\'s materials.', hr: 'Moći će vidjeti tvoje materijale za učenje. Tuđe materijale nikad ne vidi.' },
+    'oauth.allow': { en: 'Allow', hr: 'Dopusti' },
+    'oauth.deny': { en: 'Deny', hr: 'Odbij' },
+    'oauth.signinLink': { en: 'Sign in to Sokrat Study', hr: 'Prijavi se u Sokrat Study' },
+    'oauth.signin': { en: 'Sign in to Sokrat Study in this browser first, then connect again from your AI app.', hr: 'Prvo se prijavi u Sokrat Study u ovom pregledniku, pa ponovno pokreni povezivanje iz svoje AI aplikacije.' },
+    'oauth.missing': { en: 'This link is incomplete — start connecting again from your AI app.', hr: 'Poveznica nije potpuna — pokreni povezivanje ponovno iz svoje AI aplikacije.' },
+    'oauth.blocked': { en: 'This app is not one we recognise, so it cannot be connected.', hr: 'Ovu aplikaciju ne prepoznajemo, pa se ne može povezati.' },
+    'oauth.error': { en: 'That did not work — please try again.', hr: 'Nije uspjelo — pokušaj ponovno.' },
+    'oauth.done': { en: 'Connected — returning to your AI app…', hr: 'Povezano — vraćamo te u tvoju AI aplikaciju…' },
+    'oauth.denied': { en: 'Not connected — returning to your AI app…', hr: 'Nije povezano — vraćamo te u tvoju AI aplikaciju…' },
     // F3/1: pravne stranice (contact/faq/privacy/terms) i odjava dijele zaglavlje — tekst TIJELA
     // pravnih stranica NIJE ovdje nego u jezičnim blokovima same stranice (`.jezik[lang]`).
     'legal.lang': { en: 'Language: English / Croatian', hr: 'Jezik: hrvatski / engleski' },
