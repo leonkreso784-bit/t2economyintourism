@@ -5,6 +5,36 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-18 kasno (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/2c‑1: brana koja se sama nabraja
+
+- **Leonova presuda o tempu (zapisana u memoriju `temelji-prije-brzine`):** *„sigurnost sistema je najbitnija…
+  najbitniji su temelji… Ne moramo ici ovoliko brzo naprijed… Integracija MCP je masivna faza… trebat ce nam
+  mijeseci."* → ne predlaže se sljedeća cigla dok prethodna nije DOKAZANA, a ne samo zelena.
+- **Napadač na bravu (pomoćni subagent, jeftiniji model, samo čitanje):** nula rupa u bravi, **tri u brani**, sve
+  tri istog razreda — brana je provjeravala ono čega se netko sjetio nabrojati. Nalazi provjereni u kodu prije
+  nego su prijavljeni Leonu; dvije „sumnje“ presuđene jednim čitanjem prava (`graphql_public`, `realtime` →
+  zatvoreno, publikacija prazna).
+- **Odluka (Leon, anketa):** prvi temelj = **sigurnosni proces**, ne nova funkcija.
+- **Cigla:** `supabase/f6-mcp-inventar.sql` — `mcp_brava_inventar()` (`security definer`, `set search_path = ''`,
+  `execute` samo `service_role`) vraća matricu prava iz kataloga baze. Brana je zove preko REST-a ključem koji već
+  ima; `pg` ovisnost + lozinka baze odbačeni (nova ovisnost i nova tajna zbog jedne brane).
+- **`OTVORENO` u `scripts/mcp-brava-check.js`** zamjenjuje popis zabranjenog: danas shema `public` + `select` na
+  `nodes`, **nijedna funkcija**. Svaka cigla koja nešto otvara dopisuje redak s razlogom — taj je redak ujedno
+  dokumentacija dozvole.
+- **Nalaz PRVE vrtnje inventara:** `mcp_klijent` je smio izvršiti `set_updated_at()` i `touch_subject_content()`
+  — jedine dvije trigger-funkcije bez izričitog `revoke`, pa su zadržale PUBLIC EXECUTE od Postgresa. Nisu bile
+  ruta, ali su bile dozvola bez razloga → zatvorene. Okidači rade dalje (EXECUTE se provjerava pri STVARANJU
+  triggera, ne pri upisu).
+- **Obrnuta provjera (bez nje cigla ne vrijedi):** tri privremene dozvole na stagingu → **5 padova, svaki imenuje
+  svoje**, u oba sloja (model iz kataloga + pravi put kroz PostgREST). Najvažniji: `subject_content` vraća HTTP 200
+  s gradivom — invarijanta ADR-031 „ni čitanje kataloga“ do sada NIJE bila izmjerena. Dozvole vraćene, pa lažni
+  `mcp_zapocni_nacrt(...)` u `supabase/*.sql` → inventar crven (suženo izuzeće `/^mcp_/` hvata upravo ime koje
+  ②/1 uvodi).
+- **Poslije:** `mcp:brava` **32/32** (bilo 24) · `test:rls`, `test:storage` zeleni · `test:authed` (dokaz da
+  `revoke` na okidačima ništa nije slomio).
+- **Ostaje:** ①/2c‑2 (Edge Functions moraju biti ili pod stražom ili na popisu s razlogom; bucketi kroz pravi put)
+  · ①/2b lozinka (čeka Leonov OK) · ručni Claude.ai dokaz ①/1.
+
 ## 2026-09-18 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/2: BRAVA nad tokenom korisnikovog AI-ja (STAGING)
 
 - **Leonov OK u toj poruci:** dashboard korak (Auth Hooks) na stagingu. Sve ostalo ①/2, bez produkcije.

@@ -65,6 +65,28 @@ const NULA = '00000000-0000-0000-0000-000000000000';
 /** Kad ①/2b (Trenutna lozinka + postavka) bude isporučen → true, i Auth API postaje tvrda provjera. */
 const OCEKUJ = { authApiZatvoren: false };
 
+/**
+ * JEDINI izričito otvoreni putovi za ulogu `mcp_klijent` (①/2c-1).
+ *
+ * Do 18.09. je brana držala popis ZABRANJENOG — dokazivala je, dakle, da je zatvoreno ono čega se
+ * netko sjetio nabrojati. Audit je našao tri rupe TE vrste i nijednu u samoj bravi, pa je popis
+ * okrenut: `mcp_brava_inventar()` nabroji SVE što u bazi postoji, a ovdje stoji ono malo što smije.
+ * Nova tablica, novi RPC ili zalutali `grant` time obore branu PO DEFAULTU — bez da se itko sjetio
+ * dopisati ih.
+ *
+ * ⚠️ Svaka cigla koja nešto otvara (②/1 `node_drafts`, ②/2 čitanje gradiva…) dopisuje redak OVDJE,
+ *    s razlogom. Taj je redak ujedno i dokumentacija te dozvole.
+ */
+const OTVORENO = {
+  sheme: {
+    public: 'ulaz u shemu — bez njega PostgREST ulozi ne vidi ništa (①/2)'
+  },
+  tablice: {
+    nodes: { prava: ['select'], zasto: 'RLS `nodes_select_own` → samo vlastiti čvorovi (①/2)' }
+  },
+  funkcije: {}   // nijedna — nijedan RPC nije otvoren tokenu korisnikovog AI-ja
+};
+
 /** RPC-ovi koje token AI-ja NE SMIJE zvati — ime → točni argumenti iz `supabase/*.sql`. */
 const ZABRANJENI_RPC = {
   create_node: { p_parent: null, p_kind: 'folder', p_name: 'brava-proba' },
@@ -79,14 +101,19 @@ const ZABRANJENI_RPC = {
   set_profile_identity: { p_display_name: 'Brava', p_bio: '' },
   set_profile_image: { p_kind: 'avatar', p_path: null },
   profile_images_count_mine: {},
-  is_admin: {}
+  is_admin: {},
+  // `_node_own` vraća `public.nodes`, NE `trigger` → izuzeće „okidač nije ruta" na nju se ne odnosi;
+  // drži je zatvorenom jedan `revoke` (f1-nodes.sql), pa ga ovdje netko mora i provjeriti.
+  _node_own: { p_id: NULA },
+  // Inventar iz ①/2c-1 je i sam funkcija u `public` — smije ga zvati isključivo `service_role`.
+  mcp_brava_inventar: {}
 };
 
 /** Funkcije koje NISU ruta: okidači (zovu se iz triggera) i interni pomoćnici (service_role). */
 const OKIDACI = ['handle_new_user', 'node_content_validate', 'nodes_validate', 'set_updated_at',
   'snapshot_content_version', 'snapshot_node_content', 'touch_node_content', 'touch_nodes',
   'touch_profile_identity', 'touch_subject_content'];
-const INTERNE = ['_node_own'];
+const INTERNE = [];
 
 const PNG = Buffer.from(
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
@@ -218,9 +245,79 @@ function provjeriInventar() {
     for (const m of tekst.matchAll(/create\s+(?:or\s+replace\s+)?function\s+public\.([a-z0-9_]+)\s*\(/gi)) imena.add(m[1]);
   }
   const poznato = new Set([...Object.keys(ZABRANJENI_RPC), ...OKIDACI, ...INTERNE]);
-  const nerazvrstane = [...imena].filter((n) => !poznato.has(n) && !/^mcp_/.test(n));
+  // ⚠️ Ovdje je do 18.09. stajalo blanket izuzeće `/^mcp_/` (pisano za hook). Cigla ②/1 dodaje
+  // upravo `mcp_*` RPC-ove, pa bi cijeli budući write-put prošao kroz ovu provjeru nezapaženo.
+  // Izuzeće je zato suženo na TOČNO ime hooka — sve ostalo mora biti razvrstano.
+  const nerazvrstane = [...imena].filter((n) => !poznato.has(n) && n !== 'mcp_access_token_hook');
   record('svaka funkcija iz supabase/*.sql je razvrstana (' + imena.size + ' nađeno)',
     nerazvrstane.length === 0, nerazvrstane.join(', ') || 'nema nerazvrstanih');
+}
+
+/** Matrica prava iz same baze (`mcp_brava_inventar`, service_role). Vraća `{ greska }` ako ne ide. */
+async function dohvatiInventar() {
+  const r = await http('/rest/v1/rpc/mcp_brava_inventar', { method: 'POST', headers: svcHeaders(), body: '{}' });
+  const tekst = await r.text();
+  if (!r.ok) return { greska: 'HTTP ' + r.status + ' ' + tekst.replace(/\s+/g, ' ').slice(0, 160) };
+  try { return JSON.parse(tekst); } catch (e) { return { greska: 'neparsiv odgovor: ' + tekst.slice(0, 120) }; }
+}
+
+/**
+ * Model: što baza TVRDI da uloga smije. Iscrpno — svaka shema, svaka tablica, svaka funkcija.
+ * Mjeri se u OBA smjera: višak (otvoreno a nije na popisu) i manjak (popis tvrdi dozvolu koje
+ * u bazi nema). Bez drugog smjera brana zna ostati zelena zato što je popis mrtav, ne zato što
+ * je brava čvrsta.
+ */
+function provjeriPrava(inv) {
+  record('uloga ' + ULOGA + ' postoji u bazi', inv.postoji === true, inv.postoji ? '' : 'nema je — brava nije primijenjena');
+  if (inv.postoji !== true) return;
+
+  const sheme = Object.entries(inv.sheme || {});
+  const viskoviS = sheme.filter(([ime, ima]) => ima && !(ime in OTVORENO.sheme)).map(([ime]) => ime);
+  record(`nijedna shema izvan popisa nije otvorena (${sheme.length} pregledano)`,
+    viskoviS.length === 0, viskoviS.join(', ') || 'otvoreno samo: ' + Object.keys(OTVORENO.sheme).join(', '));
+
+  const tablice = Object.entries(inv.tablice || {});
+  const viskoviT = [];
+  for (const [ime, prava] of tablice) {
+    const dop = (OTVORENO.tablice[ime] || {}).prava || [];
+    const visak = (prava || []).filter((p) => !dop.includes(p));
+    if (visak.length) viskoviT.push(ime + ' → ' + visak.join('+'));
+  }
+  record(`nijedna tablica nema pravo izvan popisa (${tablice.length} pregledano)`,
+    viskoviT.length === 0, viskoviT.join(' | ') || 'otvoreno samo: ' + Object.keys(OTVORENO.tablice).join(', '));
+
+  const manjak = Object.entries(OTVORENO.tablice)
+    .filter(([ime, o]) => o.prava.some((p) => !((inv.tablice || {})[ime] || []).includes(p)))
+    .map(([ime]) => ime);
+  record('popis otvorenog odgovara bazi (nijedan mrtav redak)', manjak.length === 0,
+    manjak.join(', ') || 'sve s popisa stvarno postoji');
+
+  const funkcije = Object.entries(inv.funkcije || {});
+  const viskoviF = funkcije
+    .filter(([ime, o]) => o.execute && !(ime in OTVORENO.funkcije))
+    .map(([ime, o]) => ime + (o.okidac ? ' (okidač)' : ''));
+  record(`nijedna funkcija u public nije izvršiva ulozi (${funkcije.length} pregledano)`,
+    viskoviF.length === 0, viskoviF.join(' | ') || 'nijedna');
+}
+
+/**
+ * Stvarnost: model iz kataloga vrijedi samo ako se isto vidi kroz PRAVI put (PostgREST).
+ * ⚠️ 200 s praznim `[]` NIJE odbijanje — znači da dozvola POSTOJI a RLS je samo ispraznio
+ *    rezultat. Zato ovdje pada sve što nije greška, a ne „sve što je vratilo redak".
+ */
+async function provjeriCitanjeTablica(inv, token) {
+  const imena = Object.keys(inv.tablice || {}).sort().filter((ime) => !(ime in OTVORENO.tablice));
+  const propusti = [];
+  for (const ime of imena) {
+    const r = await http('/rest/v1/' + encodeURIComponent(ime) + '?select=*&limit=1',
+      { headers: { apikey: ANON, Authorization: 'Bearer ' + token } });
+    const tekst = (await r.text()).replace(/\s+/g, ' ').slice(0, 120);
+    const ok = r.status !== 200 && (r.status === 401 || r.status === 403
+      || (r.status === 404 && /PGRST2/.test(tekst)) || /permission denied/i.test(tekst));
+    if (!ok) propusti.push(ime + ' → HTTP ' + r.status + ' ' + tekst);
+  }
+  record(`nijedna tablica izvan popisa se ne čita kroz PostgREST (${imena.length} probano)`,
+    propusti.length === 0, propusti.join(' | ') || 'sve odbijeno');
 }
 
 (async () => {
@@ -234,6 +331,15 @@ function provjeriInventar() {
 
   console.log('\n=== mcp:brava === (staging ' + ref() + ')\n');
   provjeriInventar();
+
+  console.log('\n— inventar iz baze: sve je zatvoreno osim izričito otvorenog —');
+  const inv = await dohvatiInventar();
+  if (inv.greska) {
+    record('inventar prava se čita (mcp_brava_inventar)', false, inv.greska);
+    console.log('\n  ①/2c-1 SQL nije primijenjen na ovaj projekt — `supabase/f6-mcp-inventar.sql`.');
+    process.exit(1);
+  }
+  provjeriPrava(inv);
 
   let korisnik;
   try { korisnik = await createThrowaway(); }
@@ -268,6 +374,9 @@ function provjeriInventar() {
     record(`RPC ${ime} odbijen`, odbijen(r.status, r.tekst),
       'HTTP ' + r.status + (odbijen(r.status, r.tekst) ? '' : ' ← PROLAZI: ' + r.tekst.replace(/\s+/g, ' ').slice(0, 90)));
   }
+
+  console.log('\n— što token NE SMIJE: čitanje tuđih tablica kroz pravi put —');
+  await provjeriCitanjeTablica(inv, oauth.token);
 
   console.log('\n— što token NE SMIJE: izravan upis i Storage —');
   const upis = await http('/rest/v1/progress', {
