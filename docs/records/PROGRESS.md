@@ -32,8 +32,16 @@ testirano, što slijedi.
   ②/1 uvodi).
 - **Poslije:** `mcp:brava` **32/32** (bilo 24) · `test:rls`, `test:storage` zeleni · `test:authed` (dokaz da
   `revoke` na okidačima ništa nije slomio).
-- **Ostaje:** ①/2c‑2 (Edge Functions moraju biti ili pod stražom ili na popisu s razlogom; bucketi kroz pravi put)
-  · ①/2b lozinka (čeka Leonov OK) · ručni Claude.ai dokaz ①/1.
+- **①/2c‑2 (isti dan, Leonov OK „mozes krenuti"):** Edge Functions i bucketi prestaju ovisiti o tome čega smo se
+  sjetili. Tri nove tvrdnje: svaka funkcija s diska je pod stražom ILI imenovana s razlogom (`EDGE_BEZ_STRAZE`:
+  `mail-unsubscribe` = HMAC iz linka, `mcp` = radi pod korisnikovim RLS-om) · popis nema mrtvog retka · svaka
+  pod stražom ima i živu provjeru AI-tokenom. Upload se sada probija u **svaki bucket iz inventara (3)**, a ne
+  samo u `node-images` — `profile-images` i `lesson-images` dosad nitko nije provjerio.
+  **Obrnuto:** nova funkcija bez straže → crveno · ista pod stražom a bez žive provjere → crveno · mrtav redak
+  → crveno; izvor vraćen **bajt-identično** (sha256 prije/poslije). Poslije: **35/35**, preflight EXIT 0.
+  ⚠️ Bucket-probe nemaju svoju svježu crvenu — mehanizam je izmjeren u ①/2 (prije brave je upload PROŠAO);
+  ovdje pokrivenost čuva ispisani broj bucketa iz inventara, ne popis u skripti.
+- **Ostaje:** ①/2b lozinka (čeka Leonov OK, imenovan) · ručni Claude.ai dokaz ①/1 · ①/3–①/5, pa ② i ③.
 
 ## 2026-09-18 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/2: BRAVA nad tokenom korisnikovog AI-ja (STAGING)
 

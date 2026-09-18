@@ -87,6 +87,23 @@ const OTVORENO = {
   funkcije: {}   // nijedna — nijedan RPC nije otvoren tokenu korisnikovog AI-ja
 };
 
+/**
+ * Edge Functions ne stoje iza Postgresa, pa ih brava iz baze NE DOSEŽE (`verify_jwt` na gatewayu
+ * provjerava samo potpis — izmjereno 18.09.: AI-token je kroz `delete-account` obrisao račun).
+ * Zato svaka funkcija mora biti ili POD STRAŽOM (`_shared/token-guard.ts`) ili ovdje imenovana s
+ * razlogom zašto joj straža ne treba.
+ *
+ * ⚠️ Do ①/2c-2 se ovo oslanjalo na to da smo se SJETILI staviti stražu na dvije funkcije — nova
+ *    funkcija (②, ①/4…) ušla bi bez ijednog crvenog. Popis je sada obveza, ne navika.
+ */
+const EDGE_BEZ_STRAZE = {
+  'mail-unsubscribe': 'autorizira HMAC-potpisan token iz linka, ne JWT-identitet (`verify_jwt = false`)',
+  mcp: 'TO JE konektor — radi pod korisnikovim RLS-om (`withSupabase({ auth: "user" })`), ništa privilegirano'
+};
+
+/** Funkcije pod stražom koje brana ŽIVO gađa AI-tokenom (mora se poklapati sa stražom na disku). */
+const EDGE_ZIVO = ['delete-account', 'send-notification'];
+
 /** RPC-ovi koje token AI-ja NE SMIJE zvati — ime → točni argumenti iz `supabase/*.sql`. */
 const ZABRANJENI_RPC = {
   create_node: { p_parent: null, p_kind: 'folder', p_name: 'brava-proba' },
@@ -253,6 +270,37 @@ function provjeriInventar() {
     nerazvrstane.length === 0, nerazvrstane.join(', ') || 'nema nerazvrstanih');
 }
 
+/**
+ * Svaka Edge Function s diska mora biti pod stražom ili imenovana s razlogom, a svaka pod stražom
+ * mora imati i ŽIVU provjeru dolje — inače brana tvrdi nešto što nikad nije gađala.
+ */
+function provjeriEdgeStraze() {
+  const dir = path.join(__dirname, '..', 'supabase', 'functions');
+  const funkcije = fs.readdirSync(dir, { withFileTypes: true })
+    .filter((d) => d.isDirectory() && d.name !== '_shared')
+    .map((d) => d.name);
+
+  const podStrazom = [];
+  const gole = [];
+  for (const f of funkcije) {
+    if (f in EDGE_BEZ_STRAZE) continue;
+    const put = path.join(dir, f, 'index.ts');
+    const izvor = fs.existsSync(put) ? fs.readFileSync(put, 'utf8') : '';
+    if (/token-guard|biljegTokena/.test(izvor)) podStrazom.push(f); else gole.push(f);
+  }
+  record(`svaka Edge Function je pod stražom ili imenovana s razlogom (${funkcije.length} nađeno)`,
+    gole.length === 0, gole.join(', ') || 'pod stražom: ' + (podStrazom.join(', ') || 'nijedna')
+      + ' · bez nje s razlogom: ' + Object.keys(EDGE_BEZ_STRAZE).join(', '));
+
+  const mrtvi = Object.keys(EDGE_BEZ_STRAZE).filter((f) => !funkcije.includes(f));
+  record('popis funkcija bez straže nema mrtvog retka', mrtvi.length === 0,
+    mrtvi.join(', ') || 'sve s popisa postoji na disku');
+
+  const bezZive = podStrazom.filter((f) => !EDGE_ZIVO.includes(f));
+  record('svaka funkcija pod stražom ima i živu provjeru AI-tokenom', bezZive.length === 0,
+    bezZive.join(', ') || 'živo gađane: ' + EDGE_ZIVO.join(', '));
+}
+
 /** Matrica prava iz same baze (`mcp_brava_inventar`, service_role). Vraća `{ greska }` ako ne ide. */
 async function dohvatiInventar() {
   const r = await http('/rest/v1/rpc/mcp_brava_inventar', { method: 'POST', headers: svcHeaders(), body: '{}' });
@@ -331,6 +379,7 @@ async function provjeriCitanjeTablica(inv, token) {
 
   console.log('\n=== mcp:brava === (staging ' + ref() + ')\n');
   provjeriInventar();
+  provjeriEdgeStraze();
 
   console.log('\n— inventar iz baze: sve je zatvoreno osim izričito otvorenog —');
   const inv = await dohvatiInventar();
@@ -387,18 +436,26 @@ async function provjeriCitanjeTablica(inv, token) {
   const upisTekst = await upis.text();
   record('izravan upis u tablicu progress odbijen', odbijen(upis.status, upisTekst) || upis.status === 401, 'HTTP ' + upis.status);
 
-  const up = await http('/storage/v1/object/node-images/' + korisnik.id + '/brava.png', {
-    method: 'POST',
-    headers: { apikey: ANON, Authorization: 'Bearer ' + oauth.token, 'Content-Type': 'image/png' },
-    body: PNG
-  });
-  // ⚠️ Storage odbijanje NE dolazi kao HTTP 403: izmjereno 18.09. vraća **400** s tijelom
-  // `{"statusCode":"403","code":"AccessDenied","message":"permission denied for schema storage"}`.
-  // Gate koji gleda samo broj bio bi ovdje lažno crven — pa bi se „popravljao" otvaranjem prava.
-  const upTekst = await up.text();
-  const upOdbijen = up.status === 401 || up.status === 403 || /AccessDenied|"statusCode":"40[13]"/.test(upTekst);
-  record('upload slike u vlastiti prefiks odbijen', upOdbijen,
-    'HTTP ' + up.status + ' ' + upTekst.replace(/\s+/g, ' ').slice(0, 70));
+  // ⚠️ Bucketi se NE nabrajaju rukom: dolaze iz inventara, pa novi bucket (①/2c-2) mora sam
+  //    dokazati da je zatvoren. Do sada se gađao samo `node-images` — `profile-images` i
+  //    `lesson-images` nitko nije provjeravao.
+  const bucketi = (inv.bucketi || []).map((b) => b.id);
+  const propusniBucketi = [];
+  for (const b of bucketi) {
+    const up = await http('/storage/v1/object/' + b + '/' + korisnik.id + '/brava.png', {
+      method: 'POST',
+      headers: { apikey: ANON, Authorization: 'Bearer ' + oauth.token, 'Content-Type': 'image/png' },
+      body: PNG
+    });
+    // ⚠️ Storage odbijanje NE dolazi kao HTTP 403: izmjereno 18.09. vraća **400** s tijelom
+    // `{"statusCode":"403","code":"AccessDenied","message":"permission denied for schema storage"}`.
+    // Gate koji gleda samo broj bio bi ovdje lažno crven — pa bi se „popravljao" otvaranjem prava.
+    const upTekst = await up.text();
+    const upOdbijen = up.status === 401 || up.status === 403 || /AccessDenied|"statusCode":"40[13]"/.test(upTekst);
+    if (!upOdbijen) propusniBucketi.push(b + ' → HTTP ' + up.status + ' ' + upTekst.replace(/\s+/g, ' ').slice(0, 60));
+  }
+  record(`upload odbijen u SVAKI bucket (${bucketi.length} iz inventara)`, propusniBucketi.length === 0,
+    propusniBucketi.join(' | ') || bucketi.join(', '));
 
   console.log('\n— što token NE SMIJE: Edge Functions —');
   const sn = await http('/functions/v1/send-notification', {
