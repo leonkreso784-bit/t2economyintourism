@@ -52,6 +52,20 @@ tvrdi(/skipBrowserRedirect: true/.test(OD), 'supabase-js ne preusmjerava sam (sk
 tvrdi((OD.match(/window\.location\.assign\(/g) || []).length === 2 && /dopustenHost\(kamo\)/.test(OD) && /dopustenHost\(d\.redirect_url\)/.test(OD),
   'oba preusmjeravanja idu tek poslije provjere hosta');
 
+// Bez prebacivanja na lokalnoj adresi NEMA tihog povratka na produkciju (izmjereno 18.09. u ručnom
+// pokusu ①/1: stranica je otišla na produkciju, rekla „prijavi se prvo", pa je i prijava završila
+// na PRODUKCIJI, a povezivanje ostalo nedovršeno).
+tvrdi(/function lokalniOrigin\(\)/.test(OD) && /if \(lokalniOrigin\(\)\) return null;/.test(OD),
+  'na localhostu bez prebacivanja projekt() vraća null (nema tihe produkcije)');
+const mjestoLokalno = OD.indexOf('if (lokalniOrigin()) return null;');
+const mjestoProd = OD.indexOf('return { url: PROD_URL, key: PROD_KEY };');
+tvrdi(mjestoLokalno !== -1 && mjestoProd !== -1 && mjestoLokalno < mjestoProd,
+  'provjera lokalne adrese stoji PRIJE povratka na produkciju (inače je mrtva)', { mjestoLokalno, mjestoProd });
+tvrdi(/tr\('oauth\.noProject'/.test(OD), 'stranica to i KAŽE (oauth.noProject), ne šuti');
+const I18N = fs.readFileSync(path.join(KORIJEN, 'js', 'i18n.js'), 'utf8');
+tvrdi(/'oauth\.noProject':\s*\{[^}]*\ben:/.test(I18N) && /'oauth\.noProject':\s*\{[^}]*\bhr:/.test(I18N),
+  'oauth.noProject postoji u rječniku na oba jezika (engleska rezerva nije prijevod)');
+
 tvrdi(/<meta name="robots" content="noindex">/.test(HTML), 'odobrenje.html se ne indeksira');
 tvrdi(!/<script>(?!\s*<\/script>)/.test(HTML) && !/\son[a-z]+=/.test(HTML), 'bez inline skripti i on*-atributa (CSP)');
 tvrdi(/id="oauthActions" hidden/.test(HTML), 'gumbi su skriveni dok provjera hosta ne prođe');

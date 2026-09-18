@@ -29,6 +29,22 @@
 
   const doc = window.document;
 
+  /** Lokalni poslužitelj (pokus), a ne prava adresa. */
+  function lokalniOrigin() {
+    const h = window.location.hostname;
+    return h === 'localhost' || h === '127.0.0.1' || h === '::1' || h === '[::1]';
+  }
+
+  /**
+   * Koji projekt gledamo. Na PRAVOJ adresi je produkcija ispravan odgovor; na `localhost`-u NIJE.
+   *
+   * ⚠️ Izmjereno 18.09. u ručnom pokusu ①/1: prebacivanje na staging je usred pokusa nestalo iz
+   *    preglednika, pa je ova stranica tiho otišla na produkciju — ondje OAuth poslužitelj nije
+   *    uključen i korisnikove sesije nema, pa je stranica rekla „prijavi se prvo". Prijava je
+   *    zatim otišla na PRODUKCIJU, a povezivanje je ostalo nedovršeno (`connect_incomplete`).
+   *    Tihi povratak na produkciju s lokalne adrese je dakle ishod koji ne može uspjeti, a
+   *    izgleda kao tuđa greška → vraćamo `null` i stranica to kaže naglas.
+   */
   function projekt() {
     try {
       const raw = window.localStorage.getItem('sokrat-supabase-override');
@@ -37,7 +53,8 @@
           && typeof o.publishableKey === 'string' && o.publishableKey) {
         return { url: o.url, key: o.publishableKey };
       }
-    } catch (e) { /* bez overridea → produkcija */ }
+    } catch (e) { /* bez prebacivanja → odluka ispod */ }
+    if (lokalniOrigin()) return null;
     return { url: PROD_URL, key: PROD_KEY };
   }
 
@@ -92,10 +109,16 @@
       return;
     }
 
+    const p = projekt();
+    if (!p) {
+      status(tr('oauth.noProject',
+        'This page is running on localhost with no project selected, so it cannot connect anything. Set the staging override in this browser and reload.'), 'error');
+      return;
+    }
+
     let klijent;
     try {
       await ucitajSdk();
-      const p = projekt();
       klijent = window.supabase.createClient(p.url, p.key);
     } catch (e) {
       status(tr('oauth.error', 'That did not work — please try again.'), 'error');

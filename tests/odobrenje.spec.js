@@ -118,3 +118,26 @@ test('⑤ „Odbij" pošalje deny', async ({ page }) => {
   expect(post.length).toBe(1);
   expect(JSON.parse(post[0].tijelo)).toEqual({ action: 'deny' });
 });
+
+// ⑥ POVOD (ručni pokus ①/1, 18.09.): prebacivanje na staging je nestalo iz preglednika, stranica je
+// TIHO otišla na produkciju (gdje OAuth poslužitelj nije uključen), rekla „prijavi se prvo", pa je i
+// prijava završila na PRODUKCIJI. Na lokalnoj adresi tihi povratak na produkciju ne smije postojati.
+test('⑥ na localhostu bez odabranog projekta stranica stane i ne dira produkciju', async ({ page }) => {
+  const vanjski = [];
+  await page.route((url) => url.hostname.endsWith('supabase.co'), async (route) => {
+    vanjski.push(route.request().url());
+    await route.fulfill({ status: 500, contentType: 'application/json', body: '{}' });
+  });
+  await page.addInitScript(() => {
+    try {
+      localStorage.setItem('sokrat-ui-lang', 'hr');
+      localStorage.removeItem('sokrat-supabase-override');
+    } catch (e) { /* private */ }
+  });
+  await page.goto('/odobrenje.html?authorization_id=' + AUTH_ID);
+  await page.waitForFunction(() => typeof window.t === 'function');
+  await expect(page.locator('#oauthStatus')).toContainText('localhostu');
+  await expect(page.locator('#oauthActions')).toBeHidden();
+  await page.waitForTimeout(300);
+  expect(vanjski).toEqual([]);
+});

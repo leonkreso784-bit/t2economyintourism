@@ -41,6 +41,17 @@ testirano, što slijedi.
   → crveno; izvor vraćen **bajt-identično** (sha256 prije/poslije). Poslije: **35/35**, preflight EXIT 0.
   ⚠️ Bucket-probe nemaju svoju svježu crvenu — mehanizam je izmjeren u ①/2 (prije brave je upload PROŠAO);
   ovdje pokrivenost čuva ispisani broj bucketa iz inventara, ne popis u skripti.
+- **Ručni pokus ①/1 (Leon) je PAO — i to je dalo nalaz.** Logovi: prijava na staging 12:15:08 ✅ → Claude
+  registrirao klijenta i preusmjerio na `odobrenje.html` 12:16:26 → **nijedan poziv ni stagingu ni produkciji**
+  → 12:16:44 prijava na **PRODUKCIJU** s referera `http://localhost:5051/`. Znači: prebacivanje na staging je
+  usred pokusa nestalo iz preglednika, stranica se TIHO vratila na produkciju (gdje OAuth poslužitelj nije
+  uključen), rekla „prijavi se prvo", Leon se prijavio svojim računom — na produkciju — i tok je ostao
+  nedovršen (`connect_incomplete`). Potvrda iz drugog smjera: `leonkreso784@gmail.com` NE postoji na stagingu.
+  Naš kod nije brisao prebacivanje (`profile.js` ga izričito čuva).
+- **Cigla iz toga (Leonov OK „moze"):** na lokalnoj adresi bez odabranog projekta `odobrenje.js` više NE pada
+  tiho na produkciju nego stane i to kaže (`oauth.noProject`, HR+EN). Obrnuto: bez te jedne linije padaju 2
+  unit-tvrdnje i spec ⑥ (s PORUKOM tvrdnje, ne sintaksom); izvor vraćen bajt-identično oba puta.
+  `tests/odobrenje.spec.js` **24/24** (bilo 20/20), unit zelen, `npm run bump` (dirano `js/`), preflight EXIT 0.
 - **Ostaje:** ①/2b lozinka (čeka Leonov OK, imenovan) · ručni Claude.ai dokaz ①/1 · ①/3–①/5, pa ② i ③.
 
 ## 2026-09-18 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/2: BRAVA nad tokenom korisnikovog AI-ja (STAGING)

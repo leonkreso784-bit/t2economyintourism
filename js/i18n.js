@@ -647,6 +647,7 @@
     'oauth.signin': { en: 'Sign in to Sokrat Study in this browser first, then connect again from your AI app.', hr: 'Prvo se prijavi u Sokrat Study u ovom pregledniku, pa ponovno pokreni povezivanje iz svoje AI aplikacije.' },
     'oauth.missing': { en: 'This link is incomplete — start connecting again from your AI app.', hr: 'Poveznica nije potpuna — pokreni povezivanje ponovno iz svoje AI aplikacije.' },
     'oauth.blocked': { en: 'This app is not one we recognise, so it cannot be connected.', hr: 'Ovu aplikaciju ne prepoznajemo, pa se ne može povezati.' },
+    'oauth.noProject': { en: 'This page is running on localhost with no project selected, so it cannot connect anything. Set the staging override in this browser and reload.', hr: 'Ova stranica radi na localhostu bez odabranog projekta, pa ništa ne može povezati. Postavi prebacivanje na staging u ovom pregledniku i osvježi stranicu.' },
     'oauth.error': { en: 'That did not work — please try again.', hr: 'Nije uspjelo — pokušaj ponovno.' },
     'oauth.done': { en: 'Connected — returning to your AI app…', hr: 'Povezano — vraćamo te u tvoju AI aplikaciju…' },
     'oauth.denied': { en: 'Not connected — returning to your AI app…', hr: 'Nije povezano — vraćamo te u tvoju AI aplikaciju…' },
