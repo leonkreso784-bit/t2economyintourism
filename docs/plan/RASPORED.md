@@ -269,7 +269,7 @@ korisnički JS (ruši ADR-018 — prava cijena nije sandbox nego to da tuđi kô
 
 Presuđeno je **što** i **kojim oblikom** (ADR-030/031) i **kako se gradi** ([ADR-038](../records/DECISIONS.md#adr-038)):
 MCP je **cjevovod** `Learn → kartice → dopune/kviz`, ne skup CRUD-alata. Danas postoji samo read-only pokus izvan
-repozitorija. **Plan napisan 17.09.; ①/1 izveden na STAGINGU (poslužiteljski dokazan 18.09.: pravi OAuth token → MCP alat vraća 40 materijala), čeka još ručni dokaz iz Leonovog Claudea. ①/2 brava ✅ STAGING 18.09.** Grana `feat/f6-mcp`
+repozitorija. **Plan napisan 17.09.; ①/1 ✅ DOKAZAN OD KRAJA DO KRAJA 18.09.** — Leonov Claude.ai (konektor „Sokrat-Staging", status *connected*) prošao je OAuth i pozvao alat: 40 materijala, police FMTU 1./2. godina i „Moje bilješke". **①/2 brava ✅ · ①/2c brana koja se sama nabraja ✅** (sve STAGING). Grana `feat/f6-mcp`
 od `a1d1bb5`, stablo `sokratstudy.f6` (stranica za odobrenje treba F3 mehanizam jezika, „Povezani AI-jevi" profil iz
 F2). Sve prvo na STAGINGU.
 
@@ -328,7 +328,7 @@ OpenAI *Developer mode* · upit nad STAGING bazom (samo čitanje).
 
 | cigla | posao | crveno na starom kodu |
 |---|---|---|
-| **①/1** okomiti pokus — ✅ STAGING 17.09. | `odobrenje.html` + `js/odobrenje.js` (popis hostova već ovdje) · Edge Function `mcp` v1 s alatom `procitaj_materijale` (jezgra `alati.ts`, samo čitanje) · `npm run mcp:probe`; Leon spaja Claude.ai na `https://czljmvigkgiajzjxtndq.supabase.co/functions/v1/mcp` | `mcp:probe` prije deploya 4/7 palo (404) → poslije 9/9 · `tests/odobrenje.spec.js` 20/20 (①②④ padali: `display:flex` gazio `hidden`, gumbi vidljivi uz odbijen host) · unit `mcp-alati` 11 + `odobrenje` 18, 5/5 mutacija obara test · **ručno još čeka:** Claude izlista Leonove staging materijale |
+| **①/1** okomiti pokus — ✅ STAGING 17.09., **ručno potvrđen 18.09.** | `odobrenje.html` + `js/odobrenje.js` (popis hostova već ovdje) · Edge Function `mcp` v1 s alatom `procitaj_materijale` (jezgra `alati.ts`, samo čitanje) · `npm run mcp:probe`; Leon spaja Claude.ai na `https://czljmvigkgiajzjxtndq.supabase.co/functions/v1/mcp` | `mcp:probe` prije deploya 4/7 palo (404) → poslije 9/9 · `tests/odobrenje.spec.js` 20/20 (①②④ padali: `display:flex` gazio `hidden`, gumbi vidljivi uz odbijen host) · unit `mcp-alati` 11 + `odobrenje` 18, 5/5 mutacija obara test · **ručno POTVRĐENO 18.09.:** Claude izlistao 40 staging materijala (logovi funkcije: 401 → 200, 19:47–19:50) |
 | **①/2** brava — ✅ STAGING 18.09. | `supabase/f6-mcp-brava.sql`: uloga `mcp_klijent` (`GRANT … TO authenticator`, `USAGE` na `public`, `SELECT` na `nodes`) + hook `mcp_access_token_hook` (token s `client_id` → ta uloga) + `is_admin()` više nije PUBLIC. Uz to `_shared/token-guard.ts` (`delete-account`, `send-notification` → 403), jer gateway `verify_jwt` **ne gleda `role`**. Brana: `npm run mcp:brava` (mrežna, staging-only) + unit `token-guard` 8 | **crveno izmjereno na starom kodu: 18/24 palo** — AI-token je stvarao čvorove, uzeo `handle`, mijenjao profil, uploadao sliku, prošao admin-vrata `send-notification` i **obrisao račun** (HTTP 200). Poslije brave 24/24; `test:authed` 149/149, `test:rls`/`test:storage`/`test:delete-account` zeleni (hook ide na SVAKU prijavu); 4/4 mutacije obaraju unit |
 | **①/2b** lozinka (Leon 17.09.) | profil „Promijeni lozinku" dobiva polje **Trenutna lozinka** (HR/EN, test; provjeriti da ga zakucani supabase-js šalje — `current_password` se u bundleu ne spominje) → TEK ONDA postavka „traži trenutnu lozinku" (staging, pa PROD uz OK). Bez polja bi sama postavka srušila promjenu lozinke | `PUT /auth/v1/user {password}` s OAuth tokenom prolazi; profilna promjena bez stare lozinke pada nakon postavke |
 | **①/2c** brana koja se sama nabraja — ①/2c‑1 ✅ STAGING 18.09. | popis ZABRANJENOG → popis OTVORENOG. `supabase/f6-mcp-inventar.sql`: `mcp_brava_inventar()` (`security definer`, `execute` samo `service_role`) nabroji sheme, tablice, funkcije i buckete iz kataloga baze; `OTVORENO` u brani drži ono malo što smije (danas: shema `public`, `select` na `nodes`, **nijedna funkcija**). Uz to: izuzeće `/^mcp_/` suženo na točno ime hooka · `_node_own` i `mcp_brava_inventar` ušli u žive pozive · iscrpna REST-proba čitanja SVAKE tablice izvan popisa (⚠️ 200 s praznim `[]` NIJE odbijanje — znači da dozvola postoji). **①/2c‑2 ✅ STAGING 18.09.:** svaka Edge Function s diska mora biti pod stražom (`_shared/token-guard.ts`) ILI imenovana s razlogom (`mail-unsubscribe` = HMAC iz linka, `mcp` = radi pod korisnikovim RLS-om), svaka pod stražom mora imati i živu provjeru, a upload se probija u SVAKI bucket iz inventara (3), ne samo u `node-images`. | obrnuta provjera na stagingu: tri privremene dozvole (`select` na `subject_content`, `usage` na `graphql_public`, `execute` na `is_admin()`) → **5 padova, svaki imenuje svoje**, uključujući čitanje javnog KATALOGA kroz PostgREST (HTTP 200 s gradivom) — invarijanta ADR-031 „ni čitanje kataloga" do sada nije bila izmjerena. Lažni `mcp_zapocni_nacrt(...)` u `supabase/*.sql` → inventar crven. Za ①/2c‑2 tri mutacije: nova funkcija bez straže → crveno · ista pod stražom a bez žive provjere → crveno · mrtav redak u popisu → crveno (izvor vraćen bajt-identično, sha256 prije/poslije). Poslije povrata **35/35** (bilo 24) |
@@ -374,7 +374,14 @@ funkcija → klijent.
 Claude.ai računu · **ChatGPT Plus ima → testira se i on** (prije PROD-a) · pomoćni subagenti u radu na F6 (mehanički
 posao i napadač na brave) · lozinka = cigla ①/2b · dozvola za push `feat/*` upisana.
 
-**Čeka Leona za kraj ①/1:** u pregledniku na `http://localhost:5051` prijava na STAGING (override, račun
+**✅ ①/1 ZATVOREN 18.09.** Prošao je tek iz trećeg pokusa, i dva pada su dala nalaze koji ostaju kao pravila:
+ⓐ **zadani preglednik otvara stranicu odobrenja** — Leon je radio u Braveu, a zadani je bio Edge, pa prebacivanje
+na staging ondje nije postojalo (→ cijeli tok u JEDNOM pregledniku, i taj mora biti zadani);
+ⓑ stranica se na `localhost`-u tiho vraćala na produkciju → zakrpano (`oauth.noProject`, spec ⑥).
+Dijagnoza je išla kroz `query_logs` (`edge_logs` za OAuth, **`function_edge_logs` za pozive funkcije** — u
+`edge_logs` ih NEMA, što je prvo zavelo na krivi trag).
+
+**(povijest) Čekalo Leona za kraj ①/1:** u pregledniku na `http://localhost:5051` prijava na STAGING (override, račun
 `test-admin@sokrat.local` — jedini staging račun s gradivom: 5 polica, 40 materijala) → Claude.ai →
 *Customize → Connectors → Add custom connector* → staging adresa iz ①/1 → „Dopusti" → pitati Claude za materijale.
 **①/2 dashboard korak je IZVEDEN** (Leonov OK, 18.09.): *Auth Hooks → Customize Access Token (JWT) Claims* →

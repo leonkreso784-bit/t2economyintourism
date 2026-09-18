@@ -52,6 +52,14 @@ testirano, što slijedi.
   tiho na produkciju nego stane i to kaže (`oauth.noProject`, HR+EN). Obrnuto: bez te jedne linije padaju 2
   unit-tvrdnje i spec ⑥ (s PORUKOM tvrdnje, ne sintaksom); izvor vraćen bajt-identično oba puta.
   `tests/odobrenje.spec.js` **24/24** (bilo 20/20), unit zelen, `npm run bump` (dirano `js/`), preflight EXIT 0.
+- **✅ ①/1 ZATVOREN — pravi Claude.ai je spojen i pozvao alat** (19:47–19:50): konektor „Sokrat-Staging" =
+  *connected*, vratio **40 materijala** i police (FMTU 1./2. godina, „Moje bilješke"). Logovi funkcije: `401`
+  (ispravan početak — konektor prvo dobije „traži prijavu") → niz `200`. Sadržaj materijala NE vidi — to je
+  brava ①/2: otvoren je samo `select on nodes`, `node_content` otvara tek ②/2 sa svojom ciglom.
+- **Treći pokus je uspio; prva dva su dala nalaze:** ⓐ **zadani preglednik** otvara stranicu odobrenja — Leon
+  radio u Braveu, zadani bio Edge, pa prebacivanja na staging ondje nije bilo; ⓑ naša stranica se na localhostu
+  tiho vraćala na produkciju (zakrpano). Pouka za dijagnozu: pozivi Edge Functiona su u **`function_edge_logs`**,
+  ne u `edge_logs` — prazan `edge_logs` je nakratko izgledao kao da alat nije ni pozvan.
 - **Ostaje:** ①/2b lozinka (čeka Leonov OK, imenovan) · ručni Claude.ai dokaz ①/1 · ①/3–①/5, pa ② i ③.
 
 ## 2026-09-18 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/2: BRAVA nad tokenom korisnikovog AI-ja (STAGING)
