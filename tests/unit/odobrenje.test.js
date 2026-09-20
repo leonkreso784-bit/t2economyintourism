@@ -49,8 +49,16 @@ const prijeOdluke = OD.slice(0, OD.indexOf('async function odluci'));
 tvrdi(OD.includes('async function odluci'), 'odobrenje ide kroz funkciju odluke (klik)');
 tvrdi(!/approveAuthorization\(|denyAuthorization\(/.test(prijeOdluke), 'otvaranje stranice NE odobrava');
 tvrdi(/skipBrowserRedirect: true/.test(OD), 'supabase-js ne preusmjerava sam (skipBrowserRedirect)');
-tvrdi((OD.match(/window\.location\.assign\(/g) || []).length === 2 && /dopustenHost\(kamo\)/.test(OD) && /dopustenHost\(d\.redirect_url\)/.test(OD),
-  'oba preusmjeravanja idu tek poslije provjere hosta');
+// ⚠️ Do ①/3 je ovo brojalo SAMO `location.assign` — a tada je stranica dobila i `window.open`.
+// Tvrdnja se zvala „oba preusmjeravanja", pa bi treći izlaz sa stranice prošao nezapaženo.
+// Zato se broje OBA načina odlaska: `assign` smije samo poslije provjere hosta, `open` samo na
+// vlastitu naslovnicu (literal '/'), nikad na adresu koja dolazi izvana.
+const assignovi = (OD.match(/window\.location\.assign\(/g) || []).length;
+const openovi = (OD.match(/window\.open\(/g) || []).length;
+tvrdi(assignovi === 2 && /dopustenHost\(kamo\)/.test(OD) && /dopustenHost\(d\.redirect_url\)/.test(OD)
+  && openovi === 1 && /window\.open\('\/'/.test(OD),
+  'svako odlaženje sa stranice je provjereno: 2 × assign tek poslije provjere hosta, 1 × open i to na vlastitu naslovnicu',
+  { assign: assignovi, open: openovi });
 
 // Bez prebacivanja na lokalnoj adresi NEMA tihog povratka na produkciju (izmjereno 18.09. u ručnom
 // pokusu ①/1: stranica je otišla na produkciju, rekla „prijavi se prvo", pa je i prijava završila
@@ -63,8 +71,23 @@ tvrdi(mjestoLokalno !== -1 && mjestoProd !== -1 && mjestoLokalno < mjestoProd,
   'provjera lokalne adrese stoji PRIJE povratka na produkciju (inače je mrtva)', { mjestoLokalno, mjestoProd });
 tvrdi(/tr\('oauth\.noProject'/.test(OD), 'stranica to i KAŽE (oauth.noProject), ne šuti');
 const I18N = fs.readFileSync(path.join(KORIJEN, 'js', 'i18n.js'), 'utf8');
-tvrdi(/'oauth\.noProject':\s*\{[^}]*\ben:/.test(I18N) && /'oauth\.noProject':\s*\{[^}]*\bhr:/.test(I18N),
-  'oauth.noProject postoji u rječniku na oba jezika (engleska rezerva nije prijevod)');
+
+// ⚠️ Do ①/3 je ovdje stajao JEDAN ručno odabran ključ (`oauth.noProject`), pa su tri nova ključa te
+// cigle ušla bez ijednog suca. `check:i18n` ih ne pokriva: on gradi rječnik regexom `'kljuc': {` i
+// provjerava POSTOJI li ključ, ne i ima li oba jezika. Zato se popis ovdje NABRAJA IZ IZVORA —
+// svaki `oauth.*` koji stranica stvarno koristi, iz JS-a i iz markupa. Novi ključ time pada po
+// defaultu, umjesto da čeka da ga se netko sjeti dopisati.
+const oauthKljucevi = new Set();
+for (const m of OD.matchAll(/tr\('(oauth\.[a-zA-Z0-9_.]+)'/g)) oauthKljucevi.add(m[1]);
+for (const m of HTML.matchAll(/data-i18n(?:-aria|-title)?="(oauth\.[a-zA-Z0-9_.]+)"/g)) oauthKljucevi.add(m[1]);
+const bezObaJezika = [...oauthKljucevi].filter((k) => {
+  const tijelo = new RegExp("'" + k.replace(/\./g, '\\.') + "':\\s*\\{([^}]*)\\}").exec(I18N);
+  return !tijelo || !/\ben:/.test(tijelo[1]) || !/\bhr:/.test(tijelo[1]);
+});
+// Prag hvata suprotan kvar: da regex promaši sve, popis bi bio prazan i tvrdnja bi tiho prošla.
+tvrdi(oauthKljucevi.size >= 10 && bezObaJezika.length === 0,
+  `svih ${oauthKljucevi.size} oauth-ključeva sa stranice ima en+hr (nabrojeno iz izvora, ne rukom)`,
+  { nadeno: oauthKljucevi.size, bezObaJezika });
 
 tvrdi(/<meta name="robots" content="noindex">/.test(HTML), 'odobrenje.html se ne indeksira');
 tvrdi(!/<script>(?!\s*<\/script>)/.test(HTML) && !/\son[a-z]+=/.test(HTML), 'bez inline skripti i on*-atributa (CSP)');

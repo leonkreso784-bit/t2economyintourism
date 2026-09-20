@@ -130,10 +130,14 @@ test('⑦ prijava u drugom prozoru → stranica sama nastavi, ID povezivanja ost
   await expect(page.locator('#oauthSigninBtn')).toBeVisible();
   await expect(page.locator('#oauthActions')).toBeHidden();
 
-  const [prozor] = await Promise.all([
-    page.waitForEvent('popup'),
-    page.click('#oauthSigninBtn')
-  ]);
+  // Osluškivač se veže PRIJE klika (inače se događaj može propustiti), ali se ne čeka odmah:
+  // prvo se tvrdi da stranica NIJE otišla s adrese. Tako pad imenuje pravi kvar — gubitak
+  // povezivanja — umjesto da istekne čekanje na prozor koji nikad ne dolazi.
+  const prozorStize = page.waitForEvent('popup', { timeout: 15000 });
+  await page.click('#oauthSigninBtn');
+  await page.waitForTimeout(300);
+  expect(page.url(), 'stranica je otišla sa svoje adrese → povezivanje je izgubljeno').toContain('authorization_id=' + AUTH_ID);
+  const prozor = await prozorStize;
   await expect(page.locator('#oauthStatus')).toContainText('Čekam da se prijaviš');
 
   // Prijava se dogodi u DRUGOM prozoru: on piše u isti localStorage, što u ovoj stranici
@@ -145,6 +149,38 @@ test('⑦ prijava u drugom prozoru → stranica sama nastavi, ID povezivanja ost
   await expect(page.locator('#oauthClient')).toHaveText('Claude');
   await expect(page.locator('#oauthSignin')).toBeHidden();
   expect(page.url(), 'stranica je otišla s adrese i izgubila povezivanje').toContain('authorization_id=' + AUTH_ID);
+});
+
+// ⑧ DRUGA MREŽA. `storage` je dobar mehanizam, ali ga preglednik u nekim stanjima ne pošalje
+// (privatni način, ugrađeni webview). Tada stranicu mora pokrenuti povratak na karticu. Ovdje se
+// sesija upisuje iz ISTE stranice — isti dokument `storage` NE dobiva, pa prve mreže doslovno nema
+// i mjeri se samo druga. Bez ove tvrdnje briše se `visibilitychange` a da ništa ne pocrveni.
+test('⑧ druga mreža: kad `storage` izostane, povratak na karticu ipak nastavi', async ({ page }) => {
+  await podmetniAuth(page);
+  await otvori(page, { upit: '?authorization_id=' + AUTH_ID });
+  await expect(page.locator('#oauthSigninBtn')).toBeVisible();
+
+  await page.evaluate((s) => localStorage.setItem('sb-odobrenjetest-auth-token', JSON.stringify(s)), sesija());
+  await page.waitForTimeout(300);
+  await expect(page.locator('#oauthActions'), 'prva mreža se oglasila — ⑧ tada ne mjeri drugu').toBeHidden();
+
+  await page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
+  await expect(page.locator('#oauthActions')).toBeVisible();
+  await expect(page.locator('#oauthClient')).toHaveText('Claude');
+});
+
+// ⑨ ZAUSTAVLJEN PROZOR. Korisnik na ovu stranicu često stiže iz ugrađenog preglednika AI aplikacije,
+// gdje `window.open` zna vratiti `null`. Tada gumb ne smije tiho ne raditi: stranica mora reći što se
+// dogodilo i ostaviti drugi put. Bez ove tvrdnje ta se poruka može obrisati neprimijećeno.
+test('⑨ preglednik zaustavi novi prozor → stranica to KAŽE, gumb ostaje', async ({ page }) => {
+  await podmetniAuth(page);
+  await page.addInitScript(() => { window.open = function () { return null; }; });
+  await otvori(page, { upit: '?authorization_id=' + AUTH_ID });
+
+  await page.click('#oauthSigninBtn');
+  await expect(page.locator('#oauthStatus')).toContainText('zaustavio novi prozor');
+  await expect(page.locator('#oauthSigninBtn')).toBeVisible();
+  await expect(page.locator('#oauthActions')).toBeHidden();
 });
 
 // ⑥ POVOD (ručni pokus ①/1, 18.09.): prebacivanje na staging je nestalo iz preglednika, stranica je
