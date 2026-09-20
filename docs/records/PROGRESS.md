@@ -5,6 +5,41 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-20 kasno (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/3: prijava usred povezivanja
+
+- **Prvo je izmjereno ŠTO OD CIGLE UOPĆE FALI.** Plan je za ①/3 tražio pet stvari; čitanje koda je
+  pokazalo da su **tri već stigle s ①/1** (ime klijenta, host povratka, popis dopuštenih hostova) i
+  da je HR/EN potpun (svih 19 `oauth.*` ključeva ima oba jezika). Stvarno su falile dvije: prijava
+  koja ne baca nedovršeno povezivanje, i telefon.
+- **Sonda na stagingu prije koda** (ništa nije ostalo u repozitoriju): detalji se PRIJE prijave ne
+  mogu ni pokazati — `GET /auth/v1/oauth/authorizations/<id>` bez tokena vrati **401**; ali
+  nedovršeno povezivanje **preživi obilazak**: u 0 s / 61 s / 181 s još „pending", a odobrenje
+  nakon 181 s prolazi (HTTP 200). Time je odluka pala sama: prijava mora biti prva, ali se smije
+  otvoriti **sa strane**, jer povezivanje ima vremena čekati.
+- **Leonova presuda (mogućnost C):** prijava u DRUGOM prozoru, stranica odobrenja ostaje otvorena i
+  nastavi sama. Odbijeno A (vlastito polje za mail+lozinku — **korisnici s Googleom ostaju zaglavljeni**)
+  i B (cijela prava prijava dovučena na stranicu — pet skripti i CSS na jedinu točku na kojoj se daje
+  pristup). Time se ništa ne duplicira: prijava ostaje ona prava, `js/auth.js` i naslovnica netaknuti.
+- **Cigla** (`e714c0d`): `cekajPrijavu()` u `js/odobrenje.js`, gumb umjesto poveznice u `odobrenje.html`,
+  tri i18n ključa HR/EN (`oauth.signin` prepisan, `signinWaiting` i `signinBlocked` novi). CSS se nije
+  dirao — gumb je postojeći `.unsub-btn`, pa `build:css` nije trebao; `npm run bump` jest.
+- **Mehanizam:** prijavu vidi `storage` — događaj koji preglednik šalje **samo drugim dokumentima istog
+  origina**, dakle točno ovoj stranici kad se sesija upiše u onom drugom prozoru. `visibilitychange` je
+  druga mreža (povratak na karticu kad događaj izostane). Prozor koji je preglednik zaustavio kaže se
+  naglas; kad prijava stigne, prozor se zatvori sam.
+- **Brana ⑦:** bez osvježavanja i bez novog povezivanja stranica iz „prijavi se" prijeđe u
+  „Dopusti / Odbij", a `authorization_id` je i dalje u adresi. Prijava se u testu dogodi iz **pravog
+  drugog prozora** (`prozor.evaluate` piše u localStorage), pa se mjeri stvarni `storage`, ne prečac.
+- **Zeleno:** `tests/odobrenje.spec.js` **28/28** (7 tvrdnji × 4 profila telefona) · preflight **EXIT 0**.
+- **Obrnuta provjera, dvije mutacije, obje crvene, izvor vraćen bajt-identično** (`git checkout --`,
+  `git status` prazan): ① maknuti `storage` + `visibilitychange` → `#oauthActions` ostaje skriven ·
+  ② `location.assign('/')` umjesto `window.open` → nema prozora (pad na `waitForEvent`).
+- **Telefon je izdvojen u zasebnu ciglu ①/3b** (Leon: „stavi kao zasebne cigle"). Izmjereno za nju:
+  `phone-gate.js` zna SPA-ekrane i jedan samostalan dokument (`editor.html`) — `odobrenje.html` ide
+  po tom obrascu, a stanje „Dopusti / Odbij" traži podmetnut Auth kojeg ta brana danas nema.
+- **Novo u radu:** agent `brana-revizor` (`.claude/agents/`, samo čitanje) — stalni sudac pitanja
+  „mjeri li brana ono što tvrdi", nastao iz nalaza od 18.09. (nula rupa u bravi, tri u brani).
+
 ## 2026-09-20 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/5: Povezani AI-jevi (popis + prekid veze)
 
 - **Leon (20.09.):** *„pitaj me sva pitanja normalno ovdje u chatu i objasni mi sve kao da sam budala"* → zapisano u
