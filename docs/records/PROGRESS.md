@@ -39,6 +39,29 @@ testirano, što slijedi.
   po tom obrascu, a stanje „Dopusti / Odbij" traži podmetnut Auth kojeg ta brana danas nema.
 - **Novo u radu:** agent `brana-revizor` (`.claude/agents/`, samo čitanje) — stalni sudac pitanja
   „mjeri li brana ono što tvrdi", nastao iz nalaza od 18.09. (nula rupa u bravi, tri u brani).
+  **Leon je 20.09. dao stalno dopuštenje da sam radim i koristim agente.**
+- **Revizor je ODMAH vratio ovu ciglu** (`bdc4e2b`) — glavna tvrdnja drži, ali **četiri jeftine tvrdnje
+  fale**. Sve četiri provjerene u kodu prije popravka; **nijedna nije bila lažna**:
+  ① **druga mreža nemjerena** — `visibilitychange` se mogao obrisati a da ništa ne pocrveni
+  (grep: nijedan test ga nije spominjao) → tvrdnja ⑧ upisuje sesiju iz **iste** stranice, gdje
+  `storage` po definiciji ne stiže, pa mjeri isključivo drugu mrežu ·
+  ② **zaustavljen prozor bez tvrdnje** — nije egzotika, u ugrađenom pregledniku AI aplikacije
+  `window.open` zna vratiti `null` → tvrdnja ⑨ ·
+  ③ **`unit:52` obećavala više nego mjeri** — zvala se „oba preusmjeravanja idu poslije provjere
+  hosta", a brojala samo `location.assign`, dok je ova cigla uvela **prvi `window.open`** na stranici ·
+  ④ **en+hr se brojao rukom** za jedan odabran ključ → tri nova ključa ušla bez suca. Popis se sad
+  **nabraja iz izvora** (18 ključeva iz js-a i markupa) uz prag koji hvata promašen regex.
+- **Dokazano da ④ pokriva pravu rupu:** s obrisanim `hr:` na `oauth.signinWaiting` **`check:i18n` ostaje
+  ZELEN** (on gradi rječnik regexom `'kljuc': {` i gleda postoji li ključ, ne i ima li oba jezika),
+  a nova tvrdnja pada i **imenuje ključ**.
+- **Pet obrnutih provjera, svaka crvena na svom mjestu, izvor svaki put vraćen bajt-identično:**
+  A bez `visibilitychange` → ⑧ · B zaustavljen prozor prešućen → ⑨ (poruka imenuje razliku) ·
+  C treći izlaz `window.open(kamo)` → unit, uz ispis `{assign:2, open:2}` · D bez `hr:` → unit, uz
+  ime ključa · E `location.assign('/')` → ⑦ **u 7 s umjesto 120 s isteka**, jer ⑦ sad prvo tvrdi da
+  stranica nije otišla sa svoje adrese.
+- **Poslije popravka:** spec **36/36** (9 tvrdnji × 4 profila) · unit odobrenje **18/18** · preflight **EXIT 0**.
+- **Pouka za dalje:** „crveno koje istekne" je slabiji dokaz od „crvenog koje imenuje" — tvrdnju koja
+  imenuje kvar stavi PRIJE čekanja koje može isteći.
 
 ## 2026-09-20 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/5: Povezani AI-jevi (popis + prekid veze)
 
