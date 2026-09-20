@@ -71,6 +71,12 @@
     try { return new URL(adresa).hostname; } catch (e) { return String(adresa || ''); }
   }
 
+  /** Ključ pod kojim supabase-js drži sesiju; mijenja ga DRUGI prozor, ne ovaj. */
+  function kljucSesije(url) {
+    const ref = (String(url).match(/https:\/\/([a-z0-9]+)\.supabase\.co/) || [])[1] || '';
+    return 'sb-' + ref + '-auth-token';
+  }
+
   function tr(key, fb) {
     if (typeof window.t !== 'function') return fb;
     const v = window.t(key);
@@ -100,6 +106,55 @@
     });
   }
 
+  /**
+   * Bez prijave detalji NE POSTOJE: `GET /oauth/authorizations/<id>` vrati 401 (izmjereno
+   * 20.09. na stagingu). Prijava zato mora biti prva — ali se otvara u DRUGOM prozoru, jer
+   * `authorization_id` živi u adresi OVE stranice i odlazak s nje znači novo povezivanje iz
+   * AI aplikacije. Nedovršeno povezivanje taj obilazak preživi: izmjereno je da je i nakon
+   * 3 minute još „pending" i da odobrenje tada prolazi (HTTP 200).
+   *
+   * Prijavu vidimo preko `storage` — događaja koji preglednik šalje SAMO drugim prozorima
+   * istog origina, dakle točno ovom kad se sesija upiše u onom drugom. `visibilitychange`
+   * je druga mreža (povratak na karticu kad događaj izostane, npr. u privatnom načinu).
+   */
+  function cekajPrijavu(klijent, projektUrl) {
+    return new Promise(function (resolve) {
+      status(tr('oauth.signin', 'Sign in to Sokrat Study — we will open sign-in in a second window. Leave this page open; it continues on its own.'), 'error');
+      const omot = el('oauthSignin');
+      omot.hidden = false;
+
+      let prozor = null;
+      let gotovo = false;
+
+      async function provjeri() {
+        if (gotovo) return;
+        const s = (await klijent.auth.getSession()).data.session;
+        if (!s || gotovo) return;
+        gotovo = true;
+        window.removeEventListener('storage', naStorage);
+        doc.removeEventListener('visibilitychange', naVidljivost);
+        try { if (prozor && !prozor.closed) prozor.close(); } catch (e) { /* zatvorio ga korisnik */ }
+        omot.hidden = true;
+        status('', '');
+        resolve(s);
+      }
+
+      function naStorage(e) { if (!e.key || e.key === kljucSesije(projektUrl)) provjeri(); }
+      function naVidljivost() { if (!doc.hidden) provjeri(); }
+
+      window.addEventListener('storage', naStorage);
+      doc.addEventListener('visibilitychange', naVidljivost);
+
+      el('oauthSigninBtn').addEventListener('click', function () {
+        prozor = window.open('/', 'sokrat-prijava');
+        status(prozor
+          ? tr('oauth.signinWaiting', 'Waiting for you to sign in in the other window — come back here when you are done.')
+          : tr('oauth.signinBlocked', 'Your browser blocked the new window. Open Sokrat Study in another tab, sign in there, then come back to this page.'),
+        prozor ? '' : 'error');
+      });
+    });
+  }
+
   async function init() {
     doc.title = tr('oauth.pageTitle', 'Connect your AI — Sokrat Study');
 
@@ -125,12 +180,8 @@
       return;
     }
 
-    const sesija = (await klijent.auth.getSession()).data.session;
-    if (!sesija) {
-      status(tr('oauth.signin', 'Sign in to Sokrat Study in this browser first, then connect again from your AI app.'), 'error');
-      el('oauthSignin').hidden = false;
-      return;
-    }
+    let sesija = (await klijent.auth.getSession()).data.session;
+    if (!sesija) sesija = await cekajPrijavu(klijent, p.url);
 
     const odgovor = await klijent.auth.oauth.getAuthorizationDetails(id);
     const d = odgovor.data;

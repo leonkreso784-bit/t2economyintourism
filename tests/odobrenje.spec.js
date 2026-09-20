@@ -76,8 +76,8 @@ test('① bez authorization_id → objašnjenje, nijedan zahtjev prema Authu', a
 test('② nije prijavljen → poziv na prijavu, detalji se ne traže', async ({ page }) => {
   const pozivi = await podmetniAuth(page);
   await otvori(page, { upit: '?authorization_id=' + AUTH_ID });
-  await expect(page.locator('#oauthSignin')).toBeVisible();
-  await expect(page.locator('#oauthStatus')).toContainText('Prvo se prijavi');
+  await expect(page.locator('#oauthSigninBtn')).toBeVisible();
+  await expect(page.locator('#oauthStatus')).toContainText('drugom prozoru');
   await expect(page.locator('#oauthActions')).toBeHidden();
   expect(pozivi.filter((p) => p.put.includes('/oauth/'))).toEqual([]);
 });
@@ -117,6 +117,34 @@ test('⑤ „Odbij" pošalje deny', async ({ page }) => {
   const post = pozivi.filter((p) => p.metoda === 'POST');
   expect(post.length).toBe(1);
   expect(JSON.parse(post[0].tijelo)).toEqual({ action: 'deny' });
+});
+
+// ⑦ POVOD (①/3): tko na ovu stranicu stigne neprijavljen, dosad je morao POČETI ISPOČETKA iz svoje AI
+// aplikacije — poveznica na prijavu vodila je s ove stranice, a s njom je nestajao i `authorization_id`.
+// Prijava zato ide u DRUGI prozor, a ova stranica čeka i nastavi sama. Tvrdi se upravo to: bez ijednog
+// osvježavanja i bez novog povezivanja, stranica iz „prijavi se" prijeđe u „Dopusti / Odbij".
+// (Da se detalji ne mogu pokazati PRIJE prijave nije naš izbor: poslužitelj na GET bez tokena vrati 401.)
+test('⑦ prijava u drugom prozoru → stranica sama nastavi, ID povezivanja ostaje', async ({ page }) => {
+  await podmetniAuth(page);
+  await otvori(page, { upit: '?authorization_id=' + AUTH_ID });          // bez sesije
+  await expect(page.locator('#oauthSigninBtn')).toBeVisible();
+  await expect(page.locator('#oauthActions')).toBeHidden();
+
+  const [prozor] = await Promise.all([
+    page.waitForEvent('popup'),
+    page.click('#oauthSigninBtn')
+  ]);
+  await expect(page.locator('#oauthStatus')).toContainText('Čekam da se prijaviš');
+
+  // Prijava se dogodi u DRUGOM prozoru: on piše u isti localStorage, što u ovoj stranici
+  // digne `storage` (preglednik ga šalje samo drugim dokumentima istog origina).
+  await prozor.waitForLoadState('domcontentloaded');
+  await prozor.evaluate((s) => localStorage.setItem('sb-odobrenjetest-auth-token', JSON.stringify(s)), sesija());
+
+  await expect(page.locator('#oauthActions')).toBeVisible();
+  await expect(page.locator('#oauthClient')).toHaveText('Claude');
+  await expect(page.locator('#oauthSignin')).toBeHidden();
+  expect(page.url(), 'stranica je otišla s adrese i izgubila povezivanje').toContain('authorization_id=' + AUTH_ID);
 });
 
 // ⑥ POVOD (ručni pokus ①/1, 18.09.): prebacivanje na staging je nestalo iz preglednika, stranica je
