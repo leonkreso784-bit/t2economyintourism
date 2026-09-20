@@ -5,6 +5,29 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-20 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/5: Povezani AI-jevi (popis + prekid veze)
+
+- **Leon (20.09.):** *„pitaj me sva pitanja normalno ovdje u chatu i objasni mi sve kao da sam budala"* → zapisano u
+  memoriju (`komunikacija-s-leonom` t. 9, nadjačava raniju uputu o anketama).
+- **MJERENJE PRVO, kod poslije** (sonda na stagingu, ništa nije ostalo u repozitoriju): prava veza → propusnica radi
+  (200, alat vraća gradivo) → `DELETE /auth/v1/user/oauth/grants?client_id=…` → **204**, veza nestaje s popisa,
+  **obnova odmah 400** — ali **čitanje i MCP alat i dalje rade**. Trajanje propusnice izmjereno: **3600 s (60 min)**.
+  Zaključak: gumb koji tvrdi „pristup je prekinut" bio bi laž do sat vremena.
+- **Leonova presuda (mogućnost A):** istina kao TRAJAN tekst u kartici, ne nestajući toast. Trenutan prekid
+  (provjera popisa pri svakom čitanju) odbačen za sada jer bi sjeo na VRUĆI put svakog korisnika.
+- **Cigla:** `aiCardHtml` + `fillAiGrants` + `revokeAiGrant` u `js/profile.js` (kartica između mail-a i admina),
+  14 i18n ključeva HR/EN, `.profile-ai-*` u `css/profile.css`, `npm run build:css` + `npm run bump`.
+- **Brana `tests/ai-veze.authed.spec.js` (4 tvrdnje, podmeće `/user/oauth/grants` → ništa ne piše na staging):**
+  ① popis + prekidač + trajna napomena · ② **ime aplikacije je TUĐI tekst** (DCR otvoren) i ne smije se izvršiti ·
+  ③ prekid traži potvrdu pa šalje DELETE s točnim `client_id` · ④ prazan popis bez prekidača.
+- **Obrnuto:** maknut `escapeHtmlProfile` → `<img onerror>` se IZVRŠI i ② pada; maknuta napomena → ① pada.
+  ⚠️ Povrat NIJE bio bajt-identičan jer je moja skripta pretvorila CRLF u LF — sadržajno čisto
+  (`git diff --numstat` = 108 dodanih, 0 obrisanih), git vraća završetke sam.
+- **Zeleno:** spec 5/5 (s postavom prijave) · preflight **EXIT 0**.
+- **Usput odgovoreno (istraženo iz izvora):** naš chat na našoj stranici **nije moguć** (pretplata korisnika ne vrijedi
+  izvan njihove aplikacije; API bismo plaćali mi), a zrcalna slika — **naše sučelje u NJIHOVOM chatu** — jest:
+  **MCP Apps**, i Claude i ChatGPT priznaju isti ključ `_meta.ui.resourceUri`. Kandidat za ②/4, odluka prije te cigle.
+
 ## 2026-09-18 kasno (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/2c‑1: brana koja se sama nabraja
 
 - **Leonova presuda o tempu (zapisana u memoriju `temelji-prije-brzine`):** *„sigurnost sistema je najbitnija…

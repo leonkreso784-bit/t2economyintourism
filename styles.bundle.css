@@ -9524,6 +9524,31 @@ sokrat-modal.auth-modal > * {
   gap: 0.6rem;
   flex-wrap: wrap;
 }
+.profile-ai-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  min-height: 44px;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--color-line);
+}
+.profile-ai-row:last-of-type {
+  border-bottom: 0;
+}
+.profile-ai-who {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.profile-ai-who strong {
+  overflow-wrap: anywhere;
+}
+.profile-ai-note {
+  margin-top: 0.75rem;
+}
 .mm {
   margin-top: 16px;
 }

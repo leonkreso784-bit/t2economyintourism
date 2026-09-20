@@ -424,6 +424,109 @@ function mailCardHtml(user) {
         '  </div>';
 }
 
+/* ===== F6 ①/5 — POVEZANI AI-JEVI ============================================================
+ * Korisnik je svom Claudeu/ChatGPT-u dao pristup vlastitom gradivu (MCP konektor). Do ove cigle
+ * taj pristup NIJE mogao povući: nije bilo ni popisa ni prekidača.
+ *
+ * ⚠️ IZMJERENO NA STAGINGU 20.09., i zato tekst glasi kako glasi: prekid veze ubija OBNOVU
+ *    (`refresh` odmah vraća 400), ali propusnica koja je već izdana radi do isteka — izmjereno
+ *    **3600 s**. Gumb koji bi tvrdio „pristup je prekinut" bio bi laž do sat vremena, i to baš u
+ *    trenutku kad korisnik misli da gasi nešto sumnjivo. Zato istina stoji kao TRAJAN tekst u
+ *    kartici, ne kao poruka koja nestane.
+ *
+ * ⚠️ Ime aplikacije dolazi iz DCR-a — registrirati ga može BILO TKO (ADR-038 ③), dakle to je
+ *    tuđi tekst u našem `innerHTML`: ide kroz `escapeHtmlProfile`.
+ */
+function aiCardHtml() {
+    return '  <div class="profile-card profile-card--wide" id="profileAiCard">' +
+        '    <h3 class="profile-card-title"><i class="fas fa-robot" aria-hidden="true"></i> ' + pt('profile.aiTitle', 'Connected AI apps') + '</h3>' +
+        '    <p class="profile-meta">' + pt('profile.aiDesc', 'AI apps you allowed to reach your own materials. They never see the public catalogue or anyone else’s materials.') + '</p>' +
+        '    <div class="profile-ai" id="profileAiList" aria-busy="true"><p class="profile-meta">' + pt('profile.aiLoading', 'Loading…') + '</p></div>' +
+        '  </div>';
+}
+
+/** Oblik odgovora `listGrants()` podnosi i polje i `{ grants: [...] }` — izmjereno je samo da radi. */
+function aiGrantsIz(data) {
+    if (Array.isArray(data)) return data;
+    if (data && Array.isArray(data.grants)) return data.grants;
+    return [];
+}
+
+async function fillAiGrants() {
+    const box = document.getElementById('profileAiList');
+    if (!box) return;
+    const client = (typeof SokratAuth !== 'undefined') ? SokratAuth.getClient() : null;
+    const oauth = client && client.auth && client.auth.oauth;
+    // Stariji SDK bez `auth.oauth` → kartica se ne pretvara u trajni „Loading…", nego nestane.
+    if (!oauth || typeof oauth.listGrants !== 'function') {
+        const card = document.getElementById('profileAiCard');
+        if (card) card.hidden = true;
+        return;
+    }
+
+    let veze = null;
+    try {
+        const r = await oauth.listGrants();
+        if (r && r.error) throw r.error;
+        veze = aiGrantsIz(r && r.data);
+    } catch (e) {
+        veze = null;
+    }
+    const b = document.getElementById('profileAiList');
+    if (!b) return;
+    b.setAttribute('aria-busy', 'false');
+
+    if (veze === null) {
+        b.innerHTML = '<p class="profile-meta">' + pt('profile.aiError', 'The list of connected apps did not load.') + '</p>' +
+            '<div class="profile-actions"><button type="button" class="cta-button secondary" data-ai-retry>' +
+            '<i class="fas fa-rotate"></i><span>' + pt('profile.aiRetry', 'Try again') + '</span></button></div>';
+        return;
+    }
+    if (!veze.length) {
+        b.innerHTML = '<p class="profile-meta">' + pt('profile.aiNone', 'No AI app is connected right now.') + '</p>';
+        return;
+    }
+
+    const jezikDatuma = (typeof window.getUiLang === 'function' && window.getUiLang() === 'hr') ? 'hr-HR' : 'en-GB';
+    b.innerHTML = veze.map(function (g) {
+        const k = (g && g.client) ? g.client : {};
+        const ime = escapeHtmlProfile(k.name || pt('profile.aiUnnamed', 'Unnamed app'));
+        const kada = (g && g.granted_at)
+            ? new Date(g.granted_at).toLocaleDateString(jezikDatuma, { day: 'numeric', month: 'long', year: 'numeric' })
+            : '—';
+        return '<div class="profile-ai-row">' +
+            '<div class="profile-ai-who"><strong>' + ime + '</strong>' +
+            '<span class="profile-meta">' + pt('profile.aiSince', 'Connected') + ' ' + escapeHtmlProfile(kada) + '</span></div>' +
+            '<button type="button" class="cta-button secondary" data-ai-revoke="' + escapeHtmlProfile(k.id || '') + '">' +
+            '<i class="fas fa-link-slash" aria-hidden="true"></i><span>' + pt('profile.aiRevoke', 'Disconnect') + '</span></button>' +
+            '</div>';
+    }).join('') +
+        // Trajna istina, ne nestajuća poruka — v. mjerenje u zaglavlju odjeljka.
+        '<p class="profile-meta profile-ai-note">' + pt('profile.aiNote', 'Disconnecting stops the app from getting new access. Access it already holds keeps working for up to an hour.') + '</p>';
+}
+
+async function revokeAiGrant(clientId) {
+    const client = (typeof SokratAuth !== 'undefined') ? SokratAuth.getClient() : null;
+    const oauth = client && client.auth && client.auth.oauth;
+    if (!oauth || !clientId) return;
+    const ok = await window.askConfirm({
+        title: pt('profile.aiRevokeTitle', 'Disconnect this app?'),
+        message: pt('profile.aiRevokeAsk', 'It will not be able to get new access. Access it already holds keeps working for up to an hour.'),
+        confirmText: pt('profile.aiRevoke', 'Disconnect'),
+        danger: true
+    });
+    if (!ok) return;
+    try {
+        const r = await oauth.revokeGrant({ clientId: clientId });
+        if (r && r.error) throw r.error;
+    } catch (e) {
+        if (typeof showToast === 'function') showToast(pt('profile.aiRevokeErr', 'Not disconnected — please try again.'));
+        return;
+    }
+    if (typeof showToast === 'function') showToast(pt('profile.aiRevoked', 'Disconnected.'));
+    fillAiGrants();
+}
+
 async function toggleMailConsent(btn) {
     const client = (typeof SokratAuth !== 'undefined') ? SokratAuth.getClient() : null;
     if (!client || btn.disabled) return;
@@ -514,6 +617,7 @@ function renderProfilePage() {
         '  </div>' +
 
         mailCardHtml(user) +
+        aiCardHtml() +
 
         // Admin (F4) — renderira se skriveno; SokratAdmin.refresh() ga otkrije samo adminu.
         '  <div class="profile-card profile-card--wide admin-only" style="display:none">' +
@@ -573,6 +677,7 @@ function renderProfilePage() {
 
     renderProfileStats();
     fillShelf(user.id);
+    fillAiGrants();
     // Zid se crta asinkrono i ponovno pri svakom crtežu profila → JEDAN delegat na `#profileContent`
     // (on sam preživi `innerHTML`). „Svi materijali" i prazna pločica idu kroz globalni
     // `[data-goto-materials]` (navigation.js).
@@ -587,6 +692,9 @@ function renderProfilePage() {
             if (e.target.closest('[data-shelf-retry]')) { const u = SokratAuth.getUser(); fillShelf(u && u.id); return; }
             const sw = e.target.closest('#profileMailSwitch');
             if (sw) { toggleMailConsent(sw); return; }
+            const opoziv = e.target.closest('[data-ai-revoke]');
+            if (opoziv) { revokeAiGrant(opoziv.getAttribute('data-ai-revoke')); return; }
+            if (e.target.closest('[data-ai-retry]')) { fillAiGrants(); return; }
             if (e.target.closest('[data-mail-admin]') && window.SokratMailAdmin) window.SokratMailAdmin.open();
         });
     }
