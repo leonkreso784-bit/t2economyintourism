@@ -84,7 +84,9 @@ test.beforeAll(async ({ browser }, testInfo) => {
         m.zaglavlja.forEach((x) => NALAZI.zaglavlje.push(gdje(r) + ' · ' + x));
         m.sitnaPolja.forEach((x) => NALAZI.polja.push(gdje(r) + ' · ' + x));
         r.r.dno.forEach((x) => NALAZI.dno.push(gdje(r) + ' · ' + x));
-        r.r.bocno.forEach((x) => NALAZI.bocno.push(gdje(r) + ' · ' + x));
+        // ⑦ se mjeri u DVIJE faze (na vrhu i na dnu skrola), pa isti element zna doći dvaput
+        // kad zaglavlje ostane u ekranu. Nalaz je isti — broji se jednom.
+        new Set(r.r.bocno.concat(m.bocno)).forEach((x) => NALAZI.bocno.push(gdje(r) + ' · ' + x));
         r.r.spremnik.forEach((x) => NALAZI.spremnik.push(gdje(r) + ' · ' + x));
 
         // ⑩ — v. tvrdnju niže. Nijedan prijavljeni ekran nije u `BEZ_IZREZA`, pa je svaki

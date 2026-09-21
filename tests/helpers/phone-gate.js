@@ -537,6 +537,24 @@ function mjeri(page, rub, faza) {
         // ── ① OTOK ────────────────────────────────────────────────────────────────
         // Kromo SMIJE crtati podlogu ispod otoka (za to `viewport-fit=cover` i postoji);
         // ne smije ondje staviti ništa što se tapka ili čita.
+        // ── ⑦ BOČNI POJAS — MJERI SE I NA VRHU, NE SAMO NA DNU ────────────────────
+        // ⚠️ Do ①/3e se bočni pojas mjerio ISKLJUČIVO u fazi „rubovi", koja stranicu prvo
+        // spusti do dna (to treba ⑥, jer je ondje kvar trajan). Na svakoj stranici koja se
+        // skrola zaglavlje dotad ode s ekrana: izmjereno, pravna stranica odskrola 3 461 px
+        // i logo završi na y = −3442, pa ga ⑦ nikad ne vidi. Kratke stranice (odobrenje,
+        // odjava) prijavljivale su ga, duge nikad — a razlika nije bila u kvaru nego u
+        // DULJINI TEKSTA. Bočni pojas tu ogradu nema (stranica se ne skrola vodoravno), pa
+        // je svaki pogodak trajan i mora se mjeriti ODMAH, prije spuštanja.
+        const PRAG_RUB = 1;
+        const bocnoNaVrhu = [];
+        interaktivni.forEach((k) => {
+            const opisK = (koliko) => ime(k.el) + ' ' + Math.round(koliko) + ' px u pojasu'
+                + ' [' + Math.round(k.b.l) + ',' + Math.round(k.b.t) + '…'
+                + Math.round(k.b.r) + ',' + Math.round(k.b.b) + ']';
+            if (R.left > 0 && R.left - k.b.l > PRAG_RUB) bocnoNaVrhu.push('lijevo · ' + opisK(R.left - k.b.l));
+            if (R.right > 0 && k.b.r - (vw - R.right) > PRAG_RUB) bocnoNaVrhu.push('desno · ' + opisK(k.b.r - (vw - R.right)));
+        });
+
         const uOtoku = interaktivni
             .filter((k) => k.b.t < OTOK - 0.5)
             .map((k) => ime(k.el) + ' y=' + Math.round(k.b.t) + '…' + Math.round(k.b.b));
@@ -799,6 +817,7 @@ function mjeri(page, rub, faza) {
             bannerPx: bannerPx, bannerPct: Math.round(bannerPx / vh * 100),
             uOtoku: uOtoku,
             podIzrezom: podIzrezom,
+            bocno: bocnoNaVrhu,
             sudari: sudari,
             upotrebljivih: upotrebljivi.length,
             prviUpotrebljiv: upotrebljivi.length ? ime(upotrebljivi[0].el) : '—',
