@@ -161,6 +161,41 @@ ne može proći lažno (`test.skip` isključuje `undefined === undefined`, prazn
 - **Neizmjeren rub:** korisnik s lozinkom čiji objekt nema ni `identities` ni `app_metadata` →
   `imaLozinku` daje `false` → nema polja → nakon postavke je zaključan. Nijedna brana to ne vidi.
 
+### Treći krug — postavka UKLJUČENA na stagingu (Leon, 21.09.) i izmjerena
+
+Sonda odmah nakon uključenja, na jednokratnim korisnicima (`d604b5e`):
+
+| što | ishod |
+|---|---|
+| točna trenutna lozinka | **200** — promjena i dalje radi |
+| bez trenutne lozinke | **400 `current_password_required`** — postavka stvarno radi |
+| pogrešna trenutna lozinka | **400 `current_password_invalid`** |
+| **oporavak računa mailom** | **200** — ⚠️ **postavka ga NE lomi** |
+| račun BEZ lozinke postavlja prvu | **200** — korisnik s Googleom prolazi |
+| metapodaci `data:{…}` | **200** — ostaje otvoreno |
+
+⚠️ **Oporavak računa je bio glavna bojazan i sad je zatvorena mjerenjem, ne pretpostavkom:**
+korisnik koji je zaboravio lozinku staru ne zna, pa bi postavka koja to traži i u recovery sesiji
+zatvorila jedini put natrag u račun. GoTrue u toj sesiji `current_password` **ne traži**. Sonda je
+prije uključenja puštena i kao **osnovica** (tada su ② i ③ prolazili s 200), pa razlika nije nagađanje.
+
+⚠️ **Nalaz koji je odredio oblik popravka poruke:** poslužitelj za **oba** slučaja šalje **doslovno
+istu rečenicu** („Current password required when setting new password."), a razlikuje ih **samo
+`error_code`**. Grananje po tekstu strukturno ne može razlikovati „nisi upisao" od „upisao si krivo"
+— korisnik bi na krivu lozinku dobio uputu koju je upravo poslušao. Zato `authError` sudi **po kodu**,
+a tvrdnja koja to čuva glasi: *ista poruka servera + različit kod → različita rečenica*.
+Dvije obrnute provjere: maknuto prepoznavanje krive lozinke → 2 crvene · grananje vraćeno na **tekst**
+→ 2 crvene. Ključeve i hrvatski pokriva **već postojeća samonabrajajuća** tvrdnja u
+`auth-error.test.js` — druga kopija nije dodana (jedna činjenica, jedno mjesto).
+
+Poslije: `auth-error` **33/0** · preflight **EXIT 0** · **prijavljena suita 154/154 s UKLJUČENOM
+postavkom** (prvi put — dakle promjena lozinke kroz sučelje i dalje prolazi).
+
+**Ostaje jedino:** `OCEKUJ.authApiZatvoren` u `scripts/mcp-brava-check.js`, i to **ne kako je plan
+pisao** — vidi nalaz gore: sonda te brane šalje **metapodatke**, a postavka ih ne dira. Mora postati
+**sonda o lozinci** (AI-token bez `current_password` → 400), a metapodaci i e-mail ostaju **imenovana**
+otvorena rupa. Čeka Leonovu riječ.
+
 ### Rupa nađena usput, izvan opsega cigle
 
 `test:unit` u `package.json` je **ručno pisan lanac** od 55 datoteka, a **nijedna brana ne provjerava
