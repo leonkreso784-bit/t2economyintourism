@@ -64,6 +64,29 @@ testirano, što slijedi.
   `privacy`, `terms`) nema nikakvu mjeru za telefon**. Uz to ⓪ „sve ekrane" danas znači „koliko ih je u
   ručnom popisu" → nabrojati `*.html` s diska, svaka obiđena ili imenovana uz razlog.
 
+### ①/3c — pet stranica ulazi u mjeru, i popis se veže za disk (`f8845ae`, `8f61d62`)
+
+- **Leon (21.09.):** *„imas moj ok za sve i naravno da treba sve poravnati"* → odobrene su ①/3c, poravnanje
+  samostalnih stranica i ①/2b. ⚠️ Uzeto kao OK za **cigle i push feature-grane**; `main` i produkcija i dalje
+  traže zasebno pitanje ([[leon-decides-deploys]]).
+- **Red je izabran iz ovisnosti:** poravnanje mijenja ono što ①/3c mjeri → **mjera prvo, pa poravnanje**, da
+  gate dokazuje popravak umjesto da ga prati.
+- **Cigla:** pet pravnih/odjavnih stranica u obilasku → **80 ekrana umjesto 60**. `odjava` se mjeri BEZ tokena
+  (stanje u kojem je pravi posjetitelj i zatekne: istekao ili prepisan link; ništa ne ide mreži).
+- **Nova tvrdnja ⑪** veže popis za **DISK**: svaki `.html` u korijenu je ili obiđen, ili imenovan uz mjesto na
+  kojem se mjeri (`editor.html` → prijavljena suita). Nova stranica pada po defaultu, mrtav unos isto.
+- ⚠️ **GLAVNI NALAZ CIGLE JE IZ OBRNUTE PROVJERE, I OBORIO JE MOJU ZAKRPU DVAPUT.** Izbacivanje stranice iz
+  popisa obilaska **nije** oborilo ⓪ — ⓪ očekivani broj računa **iz istog popisa iz kojeg hoda**, dakle tvrdnja
+  o sebi. Uhvatila ga je samo ⑩ („mrtav unos u `BEZ_IZREZA`"), i to **slučajno**: ta mreža nestaje čim stranice
+  dobiju `cover`. Prva zakrpa je očekivanje gradila iz `G.SAMOSTALNE` i bila je **jednako samoreferentna** —
+  obrnuta provjera je opet ostala zelena. Tek kad očekivani ekrani stoje **uz disk** (`DOKUMENTI[...].ekrani`),
+  izbacivanje pada i **imenuje stranicu**.
+- **Pouka:** *popis koji sam sebi postavlja očekivanje ne mjeri ništa.* Očekivanje mora doći iz izvora koji se
+  ne mijenja zajedno s popisom — ovdje disk. Isti razred kao `OTVORENO` u `mcp-brava-check.js`.
+- **Zeleno:** javna 13/13 (80 ekrana) · prijavljena 13/13 · preflight **EXIT 0**.
+- **Sljedeća cigla ①/3d — poravnanje** (Leonova odluka): šest samostalnih dokumenata dobiva `viewport-fit=cover`
+  + nadoknadu kroz `var(--safe-*)`; `BEZ_IZREZA` time ostaje prazan. Mjera koja će to dokazati već postoji.
+
 ## 2026-09-20 kasno (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/3: prijava usred povezivanja
 
 - **Prvo je izmjereno ŠTO OD CIGLE UOPĆE FALI.** Plan je za ①/3 tražio pet stvari; čitanje koda je
