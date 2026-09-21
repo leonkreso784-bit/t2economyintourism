@@ -52,15 +52,23 @@ const KORIJEN = path.join(__dirname, '..');
  * ⚠️ Popis se provjerava PROTIV DISKA u oba smjera: nova `.html` koju nitko ne mjeri obara branu,
  *    i mrtav unos je obara. Nije iznimka nego pokazivač — svaki redak kaže GDJE se mjeri.
  */
+/**
+ * ⚠️ `ekrani` su IMENA KOJA MORAJU BITI IZMJERENA, i pišu se OVDJE — ne izvode se iz popisa
+ * obilaska. Prva verzija ove tvrdnje gradila ih je iz `G.SAMOSTALNE`, pa je izbacivanje
+ * stranice iz obilaska uklonilo i nju i očekivanje: obrnuta provjera je ostala **zelena**.
+ * Isti razred kao ⓪, samo pomaknut za jedan korak. Izvor istine je DISK (ključevi, provjereni
+ * u oba smjera) plus ovaj izričit popis; `null` znači „ne mjeri ga ova suita" ili „daje više
+ * ekrana nego što ima smisla nabrajati" i tada vrijedi ⓪.
+ */
 const DOKUMENTI = {
-    'index.html': 'ova suita — EKRANI_JAVNI + načini učenja (cijela aplikacija)',
-    'editor.html': 'phone.authed.spec.js — EKRANI_PRIJAVLJENI (Studio i admin traže prijavu)',
-    'odobrenje.html': 'ova suita — EKRANI_ODOBRENJE, oba stanja (①/3b)',
-    'privacy.html': 'ova suita — SAMOSTALNE (①/3c)',
-    'terms.html': 'ova suita — SAMOSTALNE (①/3c)',
-    'faq.html': 'ova suita — SAMOSTALNE (①/3c)',
-    'contact.html': 'ova suita — SAMOSTALNE (①/3c)',
-    'odjava.html': 'ova suita — SAMOSTALNE (①/3c), bez tokena'
+    'index.html': { gdje: 'ova suita — EKRANI_JAVNI + načini učenja (cijela aplikacija)', ekrani: null },
+    'editor.html': { gdje: 'phone.authed.spec.js — EKRANI_PRIJAVLJENI (Studio i admin traže prijavu)', ekrani: null },
+    'odobrenje.html': { gdje: 'ova suita — oba stanja (①/3b)', ekrani: ['odobrenje:prijavi-se', 'odobrenje:dopusti-odbij'] },
+    'privacy.html': { gdje: 'ova suita (①/3c)', ekrani: ['privacy'] },
+    'terms.html': { gdje: 'ova suita (①/3c)', ekrani: ['terms'] },
+    'faq.html': { gdje: 'ova suita (①/3c)', ekrani: ['faq'] },
+    'contact.html': { gdje: 'ova suita (①/3c)', ekrani: ['contact'] },
+    'odjava.html': { gdje: 'ova suita (①/3c), bez tokena', ekrani: ['odjava'] }
 };
 
 test.beforeEach(({}, testInfo) => {
@@ -77,6 +85,8 @@ const NALAZI = {
 let izmjerenoEkrana = 0;
 /** ⑩ — premisa pravila o sigurnoj zoni (①/3b). Tvrda provjera, ne čegrtaljka. */
 const PREMISA = { neprijavljeni: [], mrtvi: [] };
+/** Imena ekrana koja je mjerač STVARNO izmjerio — ⑪ ih uspoređuje s popisom obilaska. */
+const IZMJERENI = new Set();
 
 // ── ODOBRENJE ZA KORISNIKOV AI (①/3b) ────────────────────────────────────────────
 // Prva mjerena stranica koja NIJE aplikacija nego samostalan dokument bez `viewport-fit=
@@ -218,6 +228,7 @@ test.beforeAll(async ({ browser }, testInfo) => {
     const gdje = (r) => r.e.w + 'px ' + r.ekran;
 
     snimka.forEach((r) => {
+        IZMJERENI.add(r.ekran);
         const m = r.m;
         m.uOtoku.forEach((x) => NALAZI.otok.push(gdje(r) + ' · ' + x));
         if (m.kromoPct > G.KROMO_BUDZET_PCT) {
@@ -354,6 +365,19 @@ test('⑪ svaki dokument u korijenu je mjeren, i to piše GDJE', async () => {
         'NOVA .html stranica koju ne mjeri nijedna brana za telefon').toEqual([]);
     expect(Object.keys(DOKUMENTI).filter((f) => !naDisku.includes(f)),
         'mrtav unos — te datoteke u korijenu više nema').toEqual([]);
+
+    // ⚠️ Nađeno obrnutom provjerom ove cigle, u DVA koraka. Izbacivanje stranice iz popisa
+    // obilaska nije oborilo ⓪, jer ⓪ očekivani broj računa IZ ISTOG popisa iz kojeg i hoda —
+    // tvrdnja o sebi. Uhvatila ga je samo ⑩, i to slučajno (ta mreža nestaje čim stranice
+    // dobiju `viewport-fit=cover`). Prva zakrpa je gradila očekivanje iz `G.SAMOSTALNE` i
+    // bila je JEDNAKO samoreferentna — obrnuta provjera je opet ostala zelena. Zato očekivani
+    // ekrani stoje gore, uz disk, a ne u popisu po kojem se hoda.
+    const trazeni = Object.keys(DOKUMENTI)
+        .filter((f) => DOKUMENTI[f].ekrani)
+        .reduce((a, f) => a.concat(DOKUMENTI[f].ekrani), []);
+    expect(trazeni.length, 'nijedan dokument ne traži izmjeren ekran — tvrdnja bi prošla na prazno').toBeGreaterThan(0);
+    expect(trazeni.filter((n) => !IZMJERENI.has(n)),
+        'dokument traži izmjeren ekran, a mjerač ga nije obišao').toEqual([]);
 });
 
 // ⑩ POVOD (①/3b). Tvrdnje ①/⑥/⑦/⑦b nisu univerzalne — vrijede za stranicu koja se
