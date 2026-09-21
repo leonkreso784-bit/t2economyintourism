@@ -191,10 +191,54 @@ Dvije obrnute provjere: maknuto prepoznavanje krive lozinke → 2 crvene · gran
 Poslije: `auth-error` **33/0** · preflight **EXIT 0** · **prijavljena suita 154/154 s UKLJUČENOM
 postavkom** (prvi put — dakle promjena lozinke kroz sučelje i dalje prolazi).
 
-**Ostaje jedino:** `OCEKUJ.authApiZatvoren` u `scripts/mcp-brava-check.js`, i to **ne kako je plan
-pisao** — vidi nalaz gore: sonda te brane šalje **metapodatke**, a postavka ih ne dira. Mora postati
-**sonda o lozinci** (AI-token bez `current_password` → 400), a metapodaci i e-mail ostaju **imenovana**
-otvorena rupa. Čeka Leonovu riječ.
+### Četvrti krug — brava mjeri LOZINKU (Leonov OK, `c16bcb9`)
+
+Zastavica `OCEKUJ.authApiZatvoren` je **maknuta**, ne prebačena na `true`. Plan je govorio da nakon
+postavke ide na `true`, ali sonda te zastavice slala je **metapodatke**, koje postavka ne dira —
+`true` bi dakle tvrdio da je Auth API zatvoren, a to nije istina. **Brana koja tvrdi više nego što
+mjeri gora je od rupe koja je uredno zapisana.**
+
+Umjesto zastavice stoji **popis polja**, gdje svaki redak nosi **točan očekivani odgovor** i stvarno
+se izvede:
+
+| polje | očekivano | što je |
+|---|---|---|
+| `password` bez `current_password` | 400 `current_password_required` | **brava** |
+| `password` s pogrešnom `current_password` | 400 `current_password_invalid` | **brava** (provjera je stvarna, ne „polje je obavezno") |
+| `data` (metapodaci) | 200 | **imenovano otvoreno** |
+| `email` | 400 `email_address_invalid` **ili** 429 `over_email_send_rate_limit` | **imenovano otvoreno** |
+
+**Jedna usporedba pokriva oba smjera:** put koji se otvorio pada jednako kao put koji se zatvorio
+(mrtav unos), pa popis ne može tiho zastarjeti.
+
+⚠️ **Očekivanje nosi i KOD, ne samo HTTP broj:** zatvorena lozinka i otvoren e-mail **oba vraćaju
+400**. Brana koja gleda samo broj bila bi zeleno-slijepa — isti razred kao `PGRST202` u istoj skripti.
+
+⚠️ **Proba e-maila ne šalje nijedan mail:** adresa je namjerno neispravna, pa `400
+email_address_invalid` znači da je token prošao **autorizaciju** i pao tek na obliku → put je otvoren.
+Zatvoren bi izgledao kao **401/403**.
+
+**Dvije tvrdnje da brava ne ubije KORISNIKA** (isto načelo kao postojeće „MCP alat mora raditi"), na
+**zasebnom** jednokratnom korisniku jer promjena lozinke poništava ostale sesije i oborila bi OAuth
+token koji provjere ispod još trebaju: promjena s **točnom** trenutnom lozinkom → 200, i **oporavak
+računa mailom bez stare lozinke** → 200.
+
+**40/40** (bilo 35) · preflight **EXIT 0**.
+
+⚠️ **Obrnuta provjera je našla PRAVI kvar u mojoj brani, ne samo potvrdila je.** Prva verzija je za
+e-mail primala samo `400 email_address_invalid` — a na **drugoj vrtnji unutar prozora** GoTrue vrati
+**429 `over_email_send_rate_limit`**, pa bi brana crvenila bez ijednog stvarnog kvara. Oba ishoda
+dokazuju isto (zahtjev je prošao autorizaciju i ušao u mail-put), pa su oba imenovana. **Lažna se
+uzbuna „popravlja" tako da se brana prestane čitati** — zato to nije popuštanje nego nalaz.
+Dokaz stabilnosti: dvije vrtnje zaredom, obje 40/40.
+
+**Tri mutacije, sve crvene i sve imenuju:** AI šalje uredan zahtjev bez krive lozinke → tvrdnja o
+`current_password_invalid` pada · popis tvrdi da su metapodaci zatvoreni → **mrtav unos** imenovan ·
+(ranije) očekivanje bez `429` → lažno crveno, što je i otkrilo kvar gore.
+
+⚠️ **Pouka, i to DRUGI put u istoj sesiji:** `git checkout --` za povrat mutacije **opet** je obrisao
+nepohranjen popravak (ovaj put ispravak za 429). Pravilo „commit prije mutacije" nije dovoljno —
+mora glasiti **„commit prije SVAKE mutacije, uključujući onu poslije popravka nađenog mutacijom"**.
 
 ### Rupa nađena usput, izvan opsega cigle
 

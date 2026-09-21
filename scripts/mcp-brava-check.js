@@ -118,7 +118,16 @@ const AUTH_POLJA = [
         // obliku → put je OTVOREN. `401/403` bi značilo da se zatvorio → mrtav unos.
         tijelo: () => ({ email: 'brava-proba-' + Date.now() + '@sokrat-test.invalid' }),
         zatvoreno: false,
-        ocekuj: { status: 400, kod: 'email_address_invalid' },
+        // ⚠️ DVA prihvatljiva ishoda, i to nije popuštanje nego NALAZ iz obrnute provjere: na
+        // ponovljenim vrtnjama GoTrue vrati `429 over_email_send_rate_limit` umjesto provjere
+        // oblika. Oba ishoda dokazuju ISTO — zahtjev je prošao autorizaciju i ušao u mail-put;
+        // „zatvoreno" bi ovdje izgledalo kao **401/403**. Da popis prima samo prvi ishod, brana
+        // bi crvenila na svakoj drugoj vrtnji unutar prozora — a lažna se uzbuna „popravlja"
+        // tako da se brana prestane čitati.
+        ocekuj: [
+            { status: 400, kod: 'email_address_invalid' },
+            { status: 429, kod: 'over_email_send_rate_limit' }
+        ],
         zasto: 'promjenu maila postavka o lozinci ne pokriva; prava brana ondje je potvrda koja stiže na OBA mailova'
     }
 ];
@@ -565,8 +574,9 @@ async function provjeriCitanjeTablica(inv, token) {
     const r = await putUser(oauth.token, p.tijelo());
     // JEDNA usporedba za oba smjera: odgovor mora biti TOČNO onaj koji popis tvrdi. Put koji se
     // otvorio pada jednako kao put koji se zatvorio (mrtav unos) — popis time ne može zastarjeti.
-    const slaze = r.status === p.ocekuj.status && r.kod === p.ocekuj.kod;
-    const ocekivano = p.ocekuj.status + ' ' + (p.ocekuj.kod || '(bez koda)');
+    const dopusteni = Array.isArray(p.ocekuj) ? p.ocekuj : [p.ocekuj];
+    const slaze = dopusteni.some((o) => r.status === o.status && r.kod === o.kod);
+    const ocekivano = dopusteni.map((o) => o.status + ' ' + (o.kod || '(bez koda)')).join(' ili ');
     record((p.zatvoreno ? 'odbija: ' : 'IMENOVANO otvoreno (izvan dosega postavke): ') + p.ime, slaze,
       'HTTP ' + r.status + ' ' + (r.kod || '(bez koda)') +
       (slaze ? '' : ' ← očekivano ' + ocekivano +
