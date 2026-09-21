@@ -162,7 +162,7 @@ test.beforeAll(async ({ browser }, testInfo) => {
 
         // ①/3b — stranica odobrenja, oba stanja. Vlastita kartica po stanju: podmetnuti Auth i
         // sesija se postavljaju PRIJE prvog crtanja, pa se ne mogu naknadno ugurati u ovu.
-        for (const stanje of ['prijavi-se', 'dopusti-odbij']) {
+        for (const stanje of G.EKRANI_ODOBRENJE) {
             const p = await otvoriOdobrenje(ctx, stanje);
             snimka.push({
                 e, ekran: 'odobrenje:' + stanje,
@@ -300,7 +300,7 @@ test('⓪ pokrivenost: mjerač je stvarno obišao sve ekrane i sve širine', asy
     // („broj u kriteriju koji nijedan test ne mjeri nije kriterij nego želja").
     const ocekivano = G.EKRANI.length
         * (G.EKRANI_JAVNI.length + 1 + G.NACINI.length + G.NACINI_UVJETNI.length
-           + Object.keys(G.BEZ_IZREZA).length);
+           + G.EKRANI_ODOBRENJE.length);
     expect(izmjerenoEkrana, 'izmjerenih ekrana').toBe(ocekivano);
 });
 

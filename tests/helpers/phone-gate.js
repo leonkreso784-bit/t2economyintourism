@@ -114,6 +114,16 @@ const BEZ_IZREZA = {
     'odobrenje:dopusti-odbij': 'isti dokument, stanje poslije prijave'
 };
 
+/**
+ * Stanja stranice odobrenja koja mjerač OBILAZI (①/3b).
+ *
+ * ⚠️ Namjerno ODVOJENO od `BEZ_IZREZA`, iako danas sadrže isto. To su dva različita pitanja —
+ * „kamo mjerač ide" i „tko smije biti bez `viewport-fit=cover`" — i prva verzija ih je
+ * spojila, pa bi buduća stranica bez `cover`-a koja NIJE dio obilaska tiho podigla očekivani
+ * broj ekrana u tvrdnji ⓪ i srušila je bez veze sa stvarnim kvarom.
+ */
+const EKRANI_ODOBRENJE = ['prijavi-se', 'dopusti-odbij'];
+
 /** Aplikacija je spremna kad su i stanje i katalog na mjestu. */
 const spreman = (page) => page.waitForFunction(
     () => window.AppState && window.SOKRAT_CATALOG && typeof window.navigateTo === 'function',
@@ -878,7 +888,7 @@ function spremiOsnovicu(suita, nalazi) {
 
 module.exports = {
     OTOK, RUB_PORTRET, RUB_LANDSCAPE, EKRANI, EKRANI_JAVNI, EKRANI_PRIJAVLJENI, NACINI,
-    NACINI_UVJETNI, BEZ_IZREZA,
+    NACINI_UVJETNI, BEZ_IZREZA, EKRANI_ODOBRENJE,
     KROMO_BUDZET_PCT,
     spreman, postaviRub, idiNa, otvoriNacin, mjeriStranicu, mjeriRubove,
     usporediSOsnovicom, spremiOsnovicu, kljucNalaza
