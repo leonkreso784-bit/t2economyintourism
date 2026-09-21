@@ -35,9 +35,11 @@
 // i padne na `400` (mail se NE šalje), s bravom staje ranije na `403`. Razlika 400 → 403 je dokaz.
 //
 // ─── ŠTO SVJESNO OSTAJE OTVORENO ────────────────────────────────────────────────────────────────
-// `PUT /auth/v1/user` ide na Auth API, ne kroz Postgres → brava u bazi ga NE doseže. To je cigla
-// ①/2b (polje „Trenutna lozinka" pa postavka u dashboardu). Ovdje se MJERI i ispisuje kao poznata
-// rupa; kad ①/2b bude gotov, `OCEKUJ.authApiZatvoren = true` pretvara to u tvrdu provjeru.
+// `PUT /auth/v1/user` ide na Auth API, ne kroz Postgres → brava u bazi ga NE doseže. Zatvara ga
+// postavka „traži trenutnu lozinku" (①/2b, staging 21.09.) — ali SAMO za lozinku. Zato se svako
+// polje mjeri posebno (`AUTH_POLJA`): lozinka mora biti odbijena, a `data`/`email` su IMENOVANO
+// otvoreni i mjere se da popis ne zastari. Ista provjera pazi i da brava ne ubije KORISNIKA:
+// promjena s točnom lozinkom i oporavak računa mailom moraju proći.
 //
 // Ishod:
 //   - bilo koji zabranjeni put PROĐE                     -> exit 1  (TVRDI gate)
@@ -62,8 +64,64 @@ const REDIRECT = 'https://claude.ai/api/mcp/auth_callback';
 const ULOGA = 'mcp_klijent';
 const NULA = '00000000-0000-0000-0000-000000000000';
 
-/** Kad ①/2b (Trenutna lozinka + postavka) bude isporučen → true, i Auth API postaje tvrda provjera. */
-const OCEKUJ = { authApiZatvoren: false };
+/**
+ * `PUT /auth/v1/user` — ŠTO POSTAVKA „traži trenutnu lozinku" ZATVARA, A ŠTO NE (①/2b, 21.09.).
+ *
+ * Do ①/2b je ovdje stajala zastavica `OCEKUJ.authApiZatvoren`, uz plan da nakon postavke ode na
+ * `true`. ⚠️ **Mjerenje je taj plan oborilo:** postavka vrijedi **samo za promjenu lozinke**, a
+ * sonda te zastavice slala je `data: {…}` — METAPODATKE, koje postavka uopće ne dira. `true` bi
+ * dakle tvrdio da je Auth API zatvoren, a to nije istina. Brana koja tvrdi više nego što mjeri
+ * gora je od rupe koja je uredno zapisana.
+ *
+ * Zato ovdje stoji popis POLJA, ne zastavica, i **svaki se redak stvarno izvede**: svaki nosi
+ * TOČAN očekivani odgovor (`ocekuj`), pa se mjeri jednako u oba smjera — put koji se otvorio
+ * pada, i put koji se zatvorio pada (mrtav unos). `zatvoreno` je samo oznaka za izvještaj, da
+ * čitatelj odmah vidi je li redak brava ili imenovana rupa.
+ *
+ * ⚠️ Zašto očekivanje nosi i KOD, ne samo HTTP broj: zatvorena lozinka i otvoren e-mail oba
+ * vraćaju **400**. Brana koja gleda samo broj ovdje bi bila zeleno-slijepa, isti razred kao
+ * `PGRST202` niže.
+ *
+ * ⚠️ Granica koju ovaj popis NE prelazi: Auth API nije Postgres i nema kataloga iz kojeg bi se
+ * polja sama nabrojala (za razliku od `OTVORENO` niže, koji dolazi iz `mcp_brava_inventar()`).
+ * Polje koje GoTrue doda sutra ovdje se NEĆE pojaviti samo. Poznata granica, ne previd.
+ */
+const AUTH_POLJA = [
+    {
+        ime: 'password BEZ current_password',
+        tijelo: () => ({ password: 'AI-Preuzima-' + crypto.randomBytes(4).toString('hex') + '!9' }),
+        zatvoreno: true,
+        ocekuj: { status: 400, kod: 'current_password_required' },
+        zasto: '①/2b — postavka „traži trenutnu lozinku"; AI lozinku korisnika ne zna'
+    },
+    {
+        ime: 'password s POGREŠNOM current_password',
+        tijelo: () => ({
+            password: 'AI-Preuzima-' + crypto.randomBytes(4).toString('hex') + '!9',
+            current_password: 'OvoSigurnoNijeTocno!123'
+        }),
+        zatvoreno: true,
+        ocekuj: { status: 400, kod: 'current_password_invalid' },
+        zasto: 'provjera je STVARNA, a ne samo „polje je obavezno" — pogađanje ne prolazi'
+    },
+    {
+        ime: 'data (metapodaci)',
+        tijelo: () => ({ data: { brava_proba: Date.now() } }),
+        zatvoreno: false,
+        ocekuj: { status: 200, kod: '' },
+        zasto: 'metapodatke korisnik smije pisati i sam (tema, zrcaljena putanja avatara); postavka o lozinci ih NE dira. `role` ondje ne živi (ADR-024), a `is_admin()` ne čita `user_metadata`.'
+    },
+    {
+        ime: 'email',
+        // NAMJERNO neispravna adresa: proba mjeri smije li token UOPĆE pokušati promjenu maila i
+        // NE šalje nijedan mail. `400 email_address_invalid` = prošao autorizaciju pa pao na
+        // obliku → put je OTVOREN. `401/403` bi značilo da se zatvorio → mrtav unos.
+        tijelo: () => ({ email: 'brava-proba-' + Date.now() + '@sokrat-test.invalid' }),
+        zatvoreno: false,
+        ocekuj: { status: 400, kod: 'email_address_invalid' },
+        zasto: 'promjenu maila postavka o lozinci ne pokriva; prava brana ondje je potvrda koja stiže na OBA mailova'
+    }
+];
 
 /**
  * JEDINI izričito otvoreni putovi za ulogu `mcp_klijent` (①/2c-1).
@@ -180,6 +238,39 @@ async function prijava(email, password) {
   });
   if (!r.ok) throw new Error(`signIn ${r.status}: ${(await r.text()).slice(0, 200)}`);
   return (await r.json()).access_token;
+}
+
+/**
+ * Sesija iz RECOVERY linka — točno ono što dobije korisnik koji je ZABORAVIO lozinku.
+ * Postoji jer je to jedina invarijanta koju bi postavka mogla srušiti nečujno: tko staru lozinku
+ * ne zna, a mora je upisati, ostaje zaključan izvan vlastitog računa. Mail se ne šalje —
+ * `generate_link` vraća token izravno.
+ */
+async function sesijaIzOporavka(email) {
+    const gen = await http('/auth/v1/admin/generate_link', {
+        method: 'POST', headers: svcHeaders(), body: JSON.stringify({ type: 'recovery', email })
+    });
+    if (!gen.ok) throw new Error(`generate_link ${gen.status}: ${(await gen.text()).slice(0, 160)}`);
+    const { hashed_token } = await gen.json();
+    const ver = await http('/auth/v1/verify', {
+        method: 'POST', headers: { apikey: ANON, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'recovery', token_hash: hashed_token })
+    });
+    if (!ver.ok) throw new Error(`verify ${ver.status}: ${(await ver.text()).slice(0, 160)}`);
+    return (await ver.json()).access_token;
+}
+
+/** `PUT /auth/v1/user` zadanim tokenom; vraća status + `error_code` iz tijela. */
+async function putUser(token, tijelo) {
+    const r = await http('/auth/v1/user', {
+        method: 'PUT',
+        headers: { apikey: ANON, Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+        body: JSON.stringify(tijelo)
+    });
+    const tekst = await r.text();
+    let json = {};
+    try { json = JSON.parse(tekst); } catch (e) { /* nije json */ }
+    return { status: r.status, kod: json.error_code || '', tekst: tekst.replace(/\s+/g, ' ').slice(0, 120) };
 }
 
 /** PRAVI OAuth token: svjež DCR klijent → authorize → GET detalja → consent → zamjena koda. */
@@ -466,17 +557,45 @@ async function provjeriCitanjeTablica(inv, token) {
   record('send-notification odbija AI-token ADMINA (403, ne 400)', sn.status === 403,
     'HTTP ' + sn.status + (sn.status === 400 ? ' ← prošao admin-vrata' : ''));
 
-  console.log('\n— Auth API (izvan dosega brave u bazi) —');
-  const put = await http('/auth/v1/user', {
-    method: 'PUT',
-    headers: { apikey: ANON, Authorization: 'Bearer ' + oauth.token, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ data: { brava_proba: true } })
-  });
-  if (OCEKUJ.authApiZatvoren) {
-    record('PUT /auth/v1/user odbijen (①/2b isporučen)', put.status === 401 || put.status === 403, 'HTTP ' + put.status);
-  } else {
-    record('PUT /auth/v1/user IZMJEREN (poznata rupa do ①/2b)', true, 'HTTP ' + put.status);
-    note('brava u bazi ovo ne doseže — zatvara je tek ①/2b (Trenutna lozinka + postavka).');
+  // ─── Auth API: lozinka je ZATVORENA, ostalo je IMENOVANO (①/2b) ──────────────────────────────
+  // Brava u bazi ovo ne doseže — `PUT /auth/v1/user` ide na Auth API mimo Postgresa. Zatvara ga
+  // postavka „traži trenutnu lozinku", i to SAMO za lozinku; zato se svako polje mjeri posebno.
+  console.log('\n— Auth API: što AI-token smije, a što ne (' + AUTH_POLJA.length + ' polja) —');
+  for (const p of AUTH_POLJA) {
+    const r = await putUser(oauth.token, p.tijelo());
+    // JEDNA usporedba za oba smjera: odgovor mora biti TOČNO onaj koji popis tvrdi. Put koji se
+    // otvorio pada jednako kao put koji se zatvorio (mrtav unos) — popis time ne može zastarjeti.
+    const slaze = r.status === p.ocekuj.status && r.kod === p.ocekuj.kod;
+    const ocekivano = p.ocekuj.status + ' ' + (p.ocekuj.kod || '(bez koda)');
+    record((p.zatvoreno ? 'odbija: ' : 'IMENOVANO otvoreno (izvan dosega postavke): ') + p.ime, slaze,
+      'HTTP ' + r.status + ' ' + (r.kod || '(bez koda)') +
+      (slaze ? '' : ' ← očekivano ' + ocekivano +
+        (p.zatvoreno && r.status === 200 ? '; PROŠAO — AI je promijenio lozinku' : '') +
+        (!p.zatvoreno ? '; MRTAV UNOS ili promijenjeno ponašanje' : '')));
+    if (slaze && !p.zatvoreno) note(p.ime + ' — ' + p.zasto);
+  }
+
+  // ─── Brava ne smije ubiti KORISNIKA (isto načelo kao „MCP alat mora raditi") ─────────────────
+  // Zaseban jednokratni korisnik: promjena lozinke poništava ostale sesije, pa bi na glavnom
+  // korisniku oborila OAuth token koji provjere ispod još trebaju.
+  console.log('\n— a korisnik i dalje MORA moći do svoje lozinke —');
+  let kL;
+  try { kL = await createThrowaway(); } catch (e) { kL = null; note('drugi jednokratni korisnik se ne stvara: ' + e.message); }
+  if (kL) {
+    const jwt = await prijava(kL.email, kL.password);
+    const nova = 'Brava-' + crypto.randomBytes(5).toString('hex') + '!9';
+    const ok = await putUser(jwt, { password: nova, current_password: kL.password });
+    record('korisnik s TOČNOM trenutnom lozinkom promijeni lozinku', ok.status === 200,
+      'HTTP ' + ok.status + ' ' + (ok.kod || '') + (ok.status >= 400 ? ' ← postavka je zaključala i korisnika' : ''));
+
+    // Tko je lozinku ZABORAVIO, staru ne zna. Postavka koja bi je tražila i ovdje zatvorila bi
+    // jedini put natrag u račun — i to bez ijednog vidljivog znaka dok se netko ne zaključa.
+    const opor = await sesijaIzOporavka(kL.email);
+    const r2 = await putUser(opor, { password: 'Brava-' + crypto.randomBytes(5).toString('hex') + '!9' });
+    record('OPORAVAK RAČUNA (reset mailom) postavlja novu lozinku BEZ stare', r2.status === 200,
+      'HTTP ' + r2.status + ' ' + (r2.kod || '') + (r2.status >= 400 ? ' ← oporavak računa je SLOMLJEN' : ''));
+
+    await http('/auth/v1/admin/users/' + kL.id, { method: 'DELETE', headers: svcHeaders() }).catch(() => {});
   }
 
   console.log('\n— brisanje računa (zadnje: briše jednokratnog korisnika) —');
