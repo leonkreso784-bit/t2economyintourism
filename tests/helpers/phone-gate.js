@@ -111,8 +111,27 @@ const EKRANI_PRIJAVLJENI = ['materials', 'profile', 'admin', 'editor'];
  */
 const BEZ_IZREZA = {
     'odobrenje:prijavi-se': 'samostalan dokument bez `viewport-fit=cover` — iOS ga slaže unutar sigurne zone',
-    'odobrenje:dopusti-odbij': 'isti dokument, stanje poslije prijave'
+    'odobrenje:dopusti-odbij': 'isti dokument, stanje poslije prijave',
+    privacy: 'pravna stranica bez `viewport-fit=cover` (①/3c)',
+    terms: 'pravna stranica bez `viewport-fit=cover` (①/3c)',
+    faq: 'pravna stranica bez `viewport-fit=cover` (①/3c)',
+    contact: 'pravna stranica bez `viewport-fit=cover` (①/3c)',
+    odjava: 'odjava s maila, bez `viewport-fit=cover` (①/3c)'
 };
+
+/**
+ * Samostalni dokumenti koje mjeri JAVNA brana (①/3c) — ime ekrana = ime datoteke bez `.html`.
+ *
+ * ⚠️ Do ①/3c ih nije mjerio NITKO. Brana je mjerila aplikaciju (`index.html`), Studio
+ * (`editor.html`) i stranicu odobrenja, a pet stranica do kojih vodi podnožje svake druge
+ * stranice — pravila, uvjeti, FAQ, kontakt i odjava s maila — nisu imale nijednu brojku za
+ * telefon. To je isti razred rupe zbog kojeg je ①/3b i nastao: *ekran koji brana ne posjećuje
+ * je ekran koji brana ne vidi*.
+ *
+ * `odjava` se otvara BEZ tokena — tada stranica kaže da poveznica nije potpuna i ništa ne šalje
+ * mreži. To je stanje u kojem je pravi posjetitelj najčešće i zatekne (istekao ili prepisan link).
+ */
+const SAMOSTALNE = ['privacy', 'terms', 'faq', 'contact', 'odjava'];
 
 /**
  * Stanja stranice odobrenja koja mjerač OBILAZI (①/3b).
@@ -907,7 +926,7 @@ function spremiOsnovicu(suita, nalazi) {
 
 module.exports = {
     OTOK, RUB_PORTRET, RUB_LANDSCAPE, EKRANI, EKRANI_JAVNI, EKRANI_PRIJAVLJENI, NACINI,
-    NACINI_UVJETNI, BEZ_IZREZA, EKRANI_ODOBRENJE,
+    NACINI_UVJETNI, BEZ_IZREZA, EKRANI_ODOBRENJE, SAMOSTALNE,
     KROMO_BUDZET_PCT,
     spreman, postaviRub, idiNa, otvoriNacin, mjeriStranicu, mjeriRubove,
     usporediSOsnovicom, spremiOsnovicu, kljucNalaza

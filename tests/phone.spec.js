@@ -36,7 +36,32 @@
 //
 //     PHONE_BASELINE_UPDATE=1 npx playwright test tests/phone.spec.js --project=iPhone-SE-375
 const { test, expect } = require('@playwright/test');
+const fs = require('fs');
+const path = require('path');
 const G = require('./helpers/phone-gate');
+
+const KORIJEN = path.join(__dirname, '..');
+
+/**
+ * ⑪ (①/3c) — GDJE se mjeri svaki dokument iz korijena.
+ *
+ * Do ①/3c je „mjerač je obišao sve ekrane" značilo „obišao je onoliko koliko piše u ručnim
+ * popisima" — dakle tvrdnja o sebi, ne o projektu. Pet stranica (pravila, uvjeti, FAQ, kontakt,
+ * odjava) nije mjerio nitko, a do njih vodi podnožje svake druge stranice.
+ *
+ * ⚠️ Popis se provjerava PROTIV DISKA u oba smjera: nova `.html` koju nitko ne mjeri obara branu,
+ *    i mrtav unos je obara. Nije iznimka nego pokazivač — svaki redak kaže GDJE se mjeri.
+ */
+const DOKUMENTI = {
+    'index.html': 'ova suita — EKRANI_JAVNI + načini učenja (cijela aplikacija)',
+    'editor.html': 'phone.authed.spec.js — EKRANI_PRIJAVLJENI (Studio i admin traže prijavu)',
+    'odobrenje.html': 'ova suita — EKRANI_ODOBRENJE, oba stanja (①/3b)',
+    'privacy.html': 'ova suita — SAMOSTALNE (①/3c)',
+    'terms.html': 'ova suita — SAMOSTALNE (①/3c)',
+    'faq.html': 'ova suita — SAMOSTALNE (①/3c)',
+    'contact.html': 'ova suita — SAMOSTALNE (①/3c)',
+    'odjava.html': 'ova suita — SAMOSTALNE (①/3c), bez tokena'
+};
 
 test.beforeEach(({}, testInfo) => {
     test.skip(testInfo.project.name !== 'iPhone-SE-375',
@@ -171,6 +196,20 @@ test.beforeAll(async ({ browser }, testInfo) => {
             await p.close();
         }
 
+        // ①/3c — pet samostalnih dokumenata. Vlastita kartica jer nisu aplikacija: do njih se
+        // ne ide `navigateTo`-om nego pravom navigacijom, i nemaju `AppState`.
+        for (const ime of G.SAMOSTALNE) {
+            const p = await ctx.newPage();
+            await p.goto('/' + ime + '.html');
+            await p.waitForSelector('main.legal', { state: 'visible', timeout: 20000 });
+            await p.waitForLoadState('load');
+            snimka.push({
+                e, ekran: ime,
+                m: await G.mjeriStranicu(p, e.rub), r: await G.mjeriRubove(p, e.rub)
+            });
+            await p.close();
+        }
+
         await ctx.close();
     }
 
@@ -300,8 +339,21 @@ test('⓪ pokrivenost: mjerač je stvarno obišao sve ekrane i sve širine', asy
     // („broj u kriteriju koji nijedan test ne mjeri nije kriterij nego želja").
     const ocekivano = G.EKRANI.length
         * (G.EKRANI_JAVNI.length + 1 + G.NACINI.length + G.NACINI_UVJETNI.length
-           + G.EKRANI_ODOBRENJE.length);
+           + G.EKRANI_ODOBRENJE.length + G.SAMOSTALNE.length);
     expect(izmjerenoEkrana, 'izmjerenih ekrana').toBe(ocekivano);
+});
+
+// ⑪ POVOD (①/3c). ⓪ iznad tvrdi da je mjerač obišao sve iz POPISA — a popis je pisan rukom, pa
+// je do sad značio „sve čega smo se sjetili". Pet stranica do kojih vodi podnožje svake druge
+// stranice nije mjerio nitko. Ova tvrdnja popis veže za DISK: svaki dokument u korijenu je ili
+// obiđen, ili imenovan uz mjesto na kojem se mjeri. Nova `.html` time pada po defaultu.
+test('⑪ svaki dokument u korijenu je mjeren, i to piše GDJE', async () => {
+    const naDisku = fs.readdirSync(KORIJEN).filter((f) => f.endsWith('.html')).sort();
+    expect(naDisku.length, 'nijedan .html nije nađen — mjera je prazna, ne zelena').toBeGreaterThan(0);
+    expect(naDisku.filter((f) => !(f in DOKUMENTI)),
+        'NOVA .html stranica koju ne mjeri nijedna brana za telefon').toEqual([]);
+    expect(Object.keys(DOKUMENTI).filter((f) => !naDisku.includes(f)),
+        'mrtav unos — te datoteke u korijenu više nema').toEqual([]);
 });
 
 // ⑩ POVOD (①/3b). Tvrdnje ①/⑥/⑦/⑦b nisu univerzalne — vrijede za stranicu koja se
