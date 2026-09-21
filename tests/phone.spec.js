@@ -183,7 +183,7 @@ test.beforeAll(async ({ browser }, testInfo) => {
         m.uOtoku.forEach((x) => NALAZI.otok.push(gdje(r) + ' · ' + x));
         if (m.kromoPct > G.KROMO_BUDZET_PCT) {
             NALAZI.kromo.push(gdje(r) + ' · ' + m.kromoPct + ' % (' + m.nasKromo + ' od '
-                + (m.vh - G.OTOK) + ' px) · ' + m.trake.join(' + '));
+                + m.upotrebljivaVisina + ' px) · ' + m.trake.join(' + '));
         }
         m.sudari.forEach((x) => NALAZI.sukob.push(gdje(r) + ' · ' + x));
         if (m.upotrebljivih === 0) {

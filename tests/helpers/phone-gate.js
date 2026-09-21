@@ -772,6 +772,11 @@ function mjeri(page, rub, faza) {
             stranica: (window.AppState && AppState.nav && AppState.nav.page) || '?',
             vw: vw, vh: vh,
             kromoPx: Math.round(kromoPx), nasKromo: Math.round(nasKromo), kromoPct: kromoPct,
+            // Nazivnik postotka IDE UZ postotak. Poruke su ga prije računale same, kao
+            // `vh - 59`, pa je stranica bez izreza dobivala redak u kojem se broj i postotak
+            // ne slažu („21 % (120 od 509 px)" — 120/509 je 24 %). Mjera koja ispisuje dva
+            // broja koja se međusobno poriču ne da se provjeriti pogledom.
+            upotrebljivaVisina: Math.round(upotrebljivaVisina),
             trake: trake.map((t) => t.ime + ' ' + Math.round(t.t) + '…' + Math.round(t.b)),
             bannerPx: bannerPx, bannerPct: Math.round(bannerPx / vh * 100),
             uOtoku: uOtoku,
