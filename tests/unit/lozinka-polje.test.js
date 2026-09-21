@@ -61,6 +61,65 @@ function ucitajProfil(podmetni) {
     return stvarno;
 }
 
+/**
+ * Lažni DOM koji podnese CIJELI `renderProfilePage()` — vraća element za BILO KOJI id, bilježi
+ * slušače i pozive `focus()`. Postoji zato što tvrdnje o obliku forme moraju gledati **iscrtani
+ * markup**, ne tekst datoteke: `indexOf('id="profileCurrentPassword"')` nad izvorom jednako je
+ * zelen i kad je polje u MRTVOJ grani ternara, dakle kad ga ne dobiva nitko.
+ */
+function svijetDom() {
+    const fokusi = [];
+    const el = {};
+    const napravi = (id) => ({
+        id, value: '', hidden: true, type: '', innerHTML: '', textContent: '',
+        style: {}, dataset: {},
+        classList: { add() {}, remove() {}, contains: () => false, toggle() {} },
+        slusaci: {},
+        addEventListener(ev, fn) { (this.slusaci[ev] = this.slusaci[ev] || []).push(fn); },
+        removeEventListener() {},
+        setAttribute() {}, getAttribute: () => null, removeAttribute() {},
+        querySelector: () => null, querySelectorAll: () => [],
+        appendChild() {}, closest: () => null,
+        focus() { fokusi.push(this.id); },
+    });
+    const korijen = napravi('profileContent');
+    korijen.innerHTML = '';
+    el.profileContent = korijen;
+    const document = {
+        getElementById(id) {
+            if (id === 'profileContent') return korijen;
+            // ⚠️ Element postoji SAMO ako ga ISCRTANI markup stvarno ima. Lažni DOM koji svakom
+            // id-u izmisli element potpuno bi ubio tvrdnju o Google korisniku: `getElementById`
+            // bi vratio „Trenutnu lozinku" i ondje gdje je se nikad nije nacrtalo.
+            if (String(korijen.innerHTML).indexOf('id="' + id + '"') === -1) return null;
+            if (!(id in el)) el[id] = napravi(id);
+            return el[id];
+        },
+        querySelector: () => null,
+        querySelectorAll: () => [],
+        addEventListener() {},
+        createElement: (t) => napravi(t),
+        body: napravi('body'),
+        documentElement: napravi('html'), // `themeCardHtml` čita `data-theme` s njega
+    };
+    return { document, el, fokusi };
+}
+
+/** Iscrtaj profil za zadanog korisnika i vrati ono što je STVARNO završilo u `#profileContent`. */
+function iscrtaj(user) {
+    const svijet = svijetDom();
+    const g = ucitajProfil({
+        document: svijet.document,
+        window: { getUiLang: () => 'en' },
+        SokratAuth: { getUser: () => user, getClient: () => null, openModal() {} },
+        SokratProfileImages: { publicUrl: () => '' },
+        SokratAdmin: { refresh() {} },
+        CloudSync: {},
+    });
+    g.renderProfilePage();
+    return { html: svijet.document.getElementById('profileContent').innerHTML, svijet, g };
+}
+
 /** Najmanji lažni DOM: samo elementi koje `changePassword()` traži po id-u. */
 function lazniDom(polja) {
     const el = {};
@@ -141,17 +200,42 @@ async function stoSalje(polja) {
     tvrdi(!!bezPolja.primljeno && !('current_password' in bezPolja.primljeno),
         '…i `current_password` se NE šalje ni kao prazan string', bezPolja.primljeno);
 
-    // ── ③ markup: redoslijed i autocomplete ──────────────────────────────────────────────────
-    console.log('\n③ oblik polja u formi');
-    const iTrenutna = PROFIL.indexOf('id="profileCurrentPassword"');
-    const iNova = PROFIL.indexOf('id="profileNewPassword"');
-    tvrdi(iTrenutna !== -1, 'polje `profileCurrentPassword` postoji u formi');
+    // ── ③ oblik polja — mjeri se ISCRTANI markup, ne tekst datoteke ──────────────────────────
+    // ⚠️ Prva verzija ovih tvrdnji gledala je `PROFIL.indexOf(...)`, pa je `(imaLozinku(user)`
+    // promijenjen u `(false` prolazio 24/24 ZELENO iako polje ne dobiva NITKO — a to je točno
+    // katastrofa zbog koje cigla postoji (s uključenom postavkom nitko ne mijenja lozinku).
+    // Zato se profil sada stvarno iscrta, dvaput, i sudi se nad dobivenim HTML-om.
+    console.log('\n③ oblik polja u ISCRTANOJ formi');
+    const emailUser = { id: 'u1', email: 'a@b.hr', created_at: '2026-01-01T00:00:00Z', identities: [{ provider: 'email' }] };
+    const googleUser = { id: 'u2', email: 'g@b.hr', created_at: '2026-01-01T00:00:00Z', identities: [{ provider: 'google' }] };
+
+    const { html: htmlEmail, svijet: svijetEmail, g: gEmail } = iscrtaj(emailUser);
+    tvrdi(htmlEmail.length > 500, 'profil se stvarno iscrtao (inače sve ispod mjeri prazan niz)',
+        { duljina: htmlEmail.length });
+    tvrdi(htmlEmail.indexOf('id="profileNewPassword"') !== -1,
+        'forma za lozinku je u iscrtanom markupu (sidro ostalih tvrdnji)');
+
+    const iTrenutna = htmlEmail.indexOf('id="profileCurrentPassword"');
+    const iNova = htmlEmail.indexOf('id="profileNewPassword"');
+    tvrdi(iTrenutna !== -1, 'e-mail korisnik DOBIJE polje „Trenutna lozinka"');
     tvrdi(iTrenutna !== -1 && iNova !== -1 && iTrenutna < iNova, 'stoji PRIJE nove lozinke', { iTrenutna, iNova });
-    const blok = PROFIL.slice(Math.max(0, iTrenutna - 200), iTrenutna + 220);
-    tvrdi(/autocomplete="current-password"/.test(blok),
-        'ima `autocomplete="current-password"` (inače upravitelj lozinki nudi NOVU)');
-    tvrdi(!/minlength=/.test(blok), 'NEMA `minlength` — zatečena lozinka smije biti kraća od današnjeg praga');
-    tvrdi(/imaLozinku\(user\)/.test(PROFIL), 'polje je uvjetovano `imaLozinku(user)`, ne crta se svima');
+
+    // Sudi se nad JEDNIM `<input>`-om, ne nad prozorom oko njega: prozor je hvatao i spomen iz
+    // susjednog komentara, pa bi skraćivanje komentara tvrdnju učinilo zelenom bez atributa.
+    const poljeTag = (/<input[^>]*id="profileCurrentPassword"[^>]*>/.exec(htmlEmail) || [''])[0];
+    tvrdi(poljeTag !== '', 'polje se dade izdvojiti kao jedan `<input>` (inače tvrdnje ispod ne mjere ništa)');
+    tvrdi(/autocomplete="current-password"/.test(poljeTag),
+        'taj `<input>` ima `autocomplete="current-password"` (inače upravitelj lozinki nudi NOVU)');
+    tvrdi(/type="password"/.test(poljeTag), 'taj `<input>` je `type="password"` (lozinka se ne ispisuje na ekran)');
+    tvrdi(/\brequired\b/.test(poljeTag), 'taj `<input>` je `required` (bez toga forma krene bez stare lozinke)');
+    tvrdi(poljeTag !== '' && !/minlength=/.test(poljeTag),
+        'taj `<input>` NEMA `minlength` — zatečena lozinka smije biti kraća od današnjeg praga');
+
+    const { html: htmlGoogle } = iscrtaj(googleUser);
+    tvrdi(htmlGoogle.indexOf('id="profileNewPassword"') !== -1,
+        'korisnik s Googleom i dalje ima formu za lozinku (nije mu ništa zatvoreno)');
+    tvrdi(htmlGoogle.indexOf('id="profileCurrentPassword"') === -1,
+        'korisniku s Googleom polje se NE crta (nema što upisati → `required` bi ga zaključao)');
 
     // ── ④ oba jezika, nabrojana IZ IZVORA ────────────────────────────────────────────────────
     // `check:i18n` gleda POSTOJI li ključ, ne ima li oba jezika — s obrisanim `hr:` ostaje
@@ -167,11 +251,27 @@ async function stoSalje(polja) {
     });
     tvrdi(bezObaJezika.length === 0, 'svaki ključ lozinke ima EN i HR (' + kljucevi.size + ' ključeva)', bezObaJezika);
 
-    // ── ⑤ fokus ne pretpostavlja polje kojeg možda nema ──────────────────────────────────────
-    console.log('\n⑤ fokus pri otvaranju forme');
-    tvrdi(/getElementById\('profileCurrentPassword'\) \|\| document\.getElementById\('profileNewPassword'\)/
-        .test(PROFIL.replace(/\s+/g, ' ')),
-    'fokus pada na prvo polje koje forma IMA (Google korisnik „Trenutnu lozinku" nema)');
+    // ── ⑤ fokus se mora DOGODITI ─────────────────────────────────────────────────────────────
+    // ⚠️ Prva verzija je tražila niz znakova u datoteci, pa je uklanjanje samog `.focus()`
+    // poziva prolazilo zeleno. Sad se rukovatelj klikom stvarno pozove i broje se fokusi.
+    console.log('\n⑤ fokus pri otvaranju forme (rukovatelj se stvarno pozove)');
+    const klik = (svijetEmail.el.profileChangePassBtn && svijetEmail.el.profileChangePassBtn.slusaci.click) || [];
+    tvrdi(klik.length === 1, 'gumb „Promijeni lozinku" ima točno jedan rukovatelj klikom', { koliko: klik.length });
+    if (klik.length === 1) {
+        svijetEmail.fokusi.length = 0;
+        klik[0]();
+        tvrdi(svijetEmail.fokusi[0] === 'profileCurrentPassword',
+            'e-mail korisnik: fokus pada na „Trenutnu lozinku"', svijetEmail.fokusi);
+    }
+    const gg = iscrtaj(googleUser);
+    const klikG = (gg.svijet.el.profileChangePassBtn.slusaci.click || [])[0];
+    tvrdi(typeof klikG === 'function', 'i kod Google korisnika gumb ima rukovatelja');
+    if (klikG) {
+        gg.svijet.fokusi.length = 0;
+        klikG();
+        tvrdi(gg.svijet.fokusi[0] === 'profileNewPassword',
+            'Google korisnik: fokus pada na „Novu lozinku" (polja „Trenutna" nema)', gg.svijet.fokusi);
+    }
 
     console.log('\n  dotaknuto: ' + dotaknuto + ' tvrdnji, palo: ' + pao);
     console.log(pao ? '✗ PALO\n' : '✅ sve prošlo\n');

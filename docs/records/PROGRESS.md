@@ -5,6 +5,171 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-21 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/2b: polje „Trenutna lozinka"
+
+**Zašto ovim redom:** postavka „traži trenutnu lozinku" bez polja u profilu srušila bi promjenu
+lozinke **svima**. Zato prvo polje, pa tek onda dashboard. Da taj redoslijed nije samo oprez nego
+i **bezopasan prvi korak**, izmjereno je prije koda.
+
+### Tri mjerenja prije ijednog retka koda (sonde nisu ostale u repou)
+
+- **Šalje li zakucani `supabase-js@2.110.8` uopće `current_password`?** U bundleu se **ne spominje
+  nijednom** (0 pogodaka) — ali to je bilo pitanje o krivoj stvari. Pravi SDK pušten je u Nodeu s
+  podmetnutim `fetch`-om: `updateUser` **cijeli objekt atributa šalje kao tijelo** `PUT /auth/v1/user`.
+  Kontrola je bila izmišljeno polje `nekoIzmisljenoPolje` — prošlo je jednako, dakle riječ je o
+  prolazu, a ne o popisu dopuštenih imena. **Ime polja je jedino što vrijedi; TypeScript tip nije prepreka.**
+- **Što se događa dok je postavka ISKLJUČENA?** Na stagingu, na jednokratnom korisniku: poslužitelj
+  `current_password` **tiho ignorira** — i POGREŠNA vrijednost prolazi s **HTTP 200** (pa i preko
+  AI-tokena). Zato ovaj commit sam po sebi ne mijenja ponašanje: siguran je kao prvi korak.
+- **Kako prepoznati korisnika koji lozinku NEMA (Google)?** Nalaz je **negativan**:
+  `identities` i `app_metadata.providers` **ne razlikuju** račun bez lozinke od onoga s njom —
+  korisnik kojeg admin API napravi bez lozinke svejedno dobije identitet `email`
+  (oba puta `{"providers":["email"],"identities":["email"]}`). Zato `imaLozinku()` **nije** provjera
+  „ima li hash" nego „je li ovo račun s e-mail putem"; to kod nas vrijedi jer naši putovi upisa
+  lozinku uvijek postave, a Google-račun identitet `email` nema. Ograničenje je zapisano uz funkciju.
+
+### Nalaz koji mijenja oblik ONOGA ŠTO DOLAZI (ne ove cigle)
+
+Dokumentacija i mjerenje slažu se da su **„Require current password"** i **„Require reauthentication"**
+(nonce mailom) **dvije različite postavke**, i da prva vrijedi **samo za promjenu lozinke**.
+`PUT /auth/v1/user` s `data: {…}` (metapodaci) i s `email` ostaje otvoren — izmjereno: **HTTP 200**
+na oba tokena. ⚠️ **Zato `OCEKUJ.authApiZatvoren = true` u `scripts/mcp-brava-check.js` danas ne bi
+mjerio ono što tvrdi:** ta sonda šalje **metapodatke**, a postavka ih ne dira. Kad postavka padne,
+sonda mora postati **sonda o LOZINCI**, a metapodaci/e-mail ostaju imenovana, svjesno otvorena rupa.
+
+### Cigla (`2150156`)
+
+Polje **Trenutna lozinka** stoji **prvo** u formi, ima `autocomplete="current-password"` (bez toga
+upravitelj lozinki u njega nudi NOVU) i **nema `minlength`** — zatečena lozinka smije biti kraća od
+današnjeg praga, a sudi joj poslužitelj. Crta se samo korisniku koji lozinku ima; tko je došao
+Googleom polje ne vidi i `current_password` mu se **ne šalje ni kao prazan string**.
+CSS nije diran (`.profile-pass-form` je `flex column` — treće polje se samo složi), pa `build:css`
+nije trebao; `bump` jest.
+
+### Brana
+
+- **`tests/unit/lozinka-polje.test.js` (24 tvrdnje, novo).** `changePassword()` se **stvarno izvršava**
+  u `vm` sandboxu s lažnim DOM-om i lažnim `SokratAuth`, pa se gleda objekt koji je došao do
+  `updateUser`. ⚠️ Regex nad izvorom ovdje ne bi mjerio ništa: **polje koje se ne pošalje izgleda
+  identično ispravnom**. `imaLozinku()` se isto **poziva**, na 8 slučajeva.
+- **Prijevodi se nabrajaju IZ FORME**, ne pišu rukom — `check:i18n` gleda **postoji li** ključ, ne
+  ima li **oba jezika** (isti nalaz kao u ①/3, i ovdje ponovno dokazan mutacijom).
+- **`profile-jezik.authed.spec.js` ③** dobio je **jedinu tvrdnju koja mjeri ŽICU**: tijelo
+  `PUT /auth/v1/user` stvarno nosi `current_password`. Unit mjeri poziv, ovo mjeri ono što je
+  otišlo — da nas budući SDK koji polja filtrira ne zatekne s uključenom postavkom.
+  Tvrdnja ① dopunjena: i „Trenutna lozinka" mora preživjeti prekidač jezika.
+- Unit namjerno **ne traži tajne** — inače bi jedina brana cigle bila ona koja se bez `.env` tiho preskoči.
+
+### Obrnuta provjera — pet mutacija, svaka crvena na svom mjestu
+
+| mutacija | ishod |
+|---|---|
+| maknuto slanje `current_password` | unit ② crven **i** authed ③ crven, s imenom („tijelo PUT-a ne nosi trenutnu lozinku") |
+| `imaLozinku` uvijek `true` | 3 tvrdnje crvene |
+| obrisan `hr:` prijevod | unit ④ crven — a **`check:i18n` ostaje ZELEN** |
+| `autocomplete` → `new-password` | crven |
+| cijelo polje maknuto iz forme | 4 tvrdnje crvene |
+
+⚠️ **Mutacija koja se NIJE primijenila je također nalaz:** `autocomplete="current-password"` pogodio
+je **2 mjesta** (i komentar), skripta je odbila mutirati i to ispisala. Brojač pogodaka je time
+spriječio lažno „crveno" — pravilo iz ①/3b radi.
+
+⚠️ **Pouka koju sam platio u ovoj cigli:** `git checkout -- js/profile.js` za povrat mutacije
+**obrisao je i cijelu neizcommitanu ciglu** (izmjene su bile samo u radnom stablu). Memorija je to
+već govorila — *„radije commitaj pa `git checkout --`"* — i preskočeno je. Popravljeno ponavljanjem
+izmjena; **od ovdje: commit ide PRIJE prve mutacije, bez iznimke.**
+
+### Zeleno
+
+`test:unit` **554 ✅ / 0 ❌** · `npm run preflight` **EXIT 0** · puna prijavljena Playwright suita
+**154/154** protiv STAGINGA (9,8 min).
+
+### Što ostaje od ①/2b
+
+1. **Dashboard-postavka na stagingu** (Leonova ruka): *Authentication → Sign In / Providers → Email
+   → „Require current password when changing password"*. Prije uključenja **ne** dirati
+   „Require reauthentication" — to je druga postavka (nonce mailom) i nije naš put.
+2. Odmah poslije: izmjeriti **točan kod greške** za pogrešnu trenutnu lozinku (danas bi pao u
+   `invalid_credentials` → „Wrong email or password.", što u ovom kontekstu zavarava) i **ponaša li
+   se korisnik bez lozinke** i dalje kao dosad.
+3. Tek onda `OCEKUJ.authApiZatvoren`, i to kao **sonda o lozinci** (gore).
+
+### Drugi krug — `brana-revizor` VRATIO ciglu, i bio je u pravu
+
+**Jezgra (žica i logika) je držala; pao je cijeli sloj tvrdnji o OBLIKU FORME.** Pet tvrdnji mjerilo
+je **tekst datoteke**, ne iscrtano polje — a to je baš ono što cigla mora čuvati.
+
+⚠️ **Najteži nalaz, provjeren prije ijedne izmjene:** tvrdnja „polje je uvjetovano `imaLozinku(user)`"
+bila je `/imaLozinku\(user\)/.test(IZVOR)` — a **taj niz znakova zadovoljava sama deklaracija
+funkcije** (`function imaLozinku(user) {`). Izmjereno: `/imaLozinku\(user\)/.test('function
+imaLozinku(user) {')` → `true`. Tvrdnja dakle nije mjerila ništa.
+
+⚠️ **Posljedica je bila katastrofalna, ne kozmetička.** Revizor je izveo dvije jednoredne mutacije:
+`(imaLozinku(user)` → `(true` (polje dobiva i korisnik s Googleom, koji ga ne može ispuniti, a
+`required` mu blokira slanje → **trajno zaključan**) i → `(false` (**polje ne dobiva nitko** → s
+uključenom postavkom **nitko ne mijenja lozinku**). Obje su prolazile **24/24 zeleno**, jer
+`indexOf('id="profileCurrentPassword"')` nad izvorom jednako nalazi polje u **mrtvoj grani ternara**.
+
+**Popravak je jedan, i zatvara četiri nalaza odjednom: brana sada STVARNO ISCRTA profil.**
+`renderProfilePage()` se pušta u sandboxu — dvaput, za e-mail i za Google korisnika — i sudi se nad
+`#profileContent.innerHTML`. Uz to:
+- **Lažni DOM više ne izmišlja elemente.** `getElementById` vraća element **samo ako ga iscrtani
+  markup stvarno ima**; inače bi vratio „Trenutnu lozinku" i ondje gdje se nikad nije nacrtala, i
+  tvrdnja o Google korisniku bi lagala.
+- **Sudi se nad JEDNIM `<input>`-om**, ne nad prozorom od ±200 B oko njega. Stari prozor je imao
+  **178 B rezerve** do spomena istog atributa u susjednom komentaru — skraćivanje komentara učinilo
+  bi tvrdnju zelenom **bez atributa**. (Isti taj drugi pogodak već je jednom odbio mutaciju M4.)
+- **Negativna tvrdnja više ne prolazi na nuli.** `!/minlength=/` se prije ocjenjivalo nad zaglavljem
+  datoteke kad sidra nema (`slice(0, 219)`), pa je bila „istinita ni o čemu"; sad se prvo dokazuje
+  **prisutnost** polja pa tek onda odsutnost atributa.
+- **Fokus se mora DOGODITI.** Prije je tražen niz znakova u datoteci, pa je uklanjanje samog
+  `.focus()` poziva prolazilo zeleno. Sad se rukovatelj klikom stvarno pozove i broje se fokusi.
+- **Dodano `required` i `type="password"`** (revizorov N2): spec se na `required` izrijekom oslanja,
+  a nitko ga nije provjeravao — bez njega forma krene bez stare lozinke.
+
+**Šest obrnutih provjera drugog kruga, sve crvene i sve IMENUJU:**
+
+| mutacija | ishod |
+|---|---|
+| `(imaLozinku(user)` → `(true` | 2 crvene (Google dobiva polje; fokus mu pada na krivo) |
+| `(imaLozinku(user)` → `(false` | **8 crvenih** (polje ne dobiva nitko) |
+| maknut `autocomplete` s polja | 1 crvena — **i kad komentar ostane** |
+| maknut `required` | 1 crvena |
+| maknut sam poziv `.focus()` | 2 crvene |
+| (isti poziv, prvi pokušaj) | **3 pogotka → nije se primijenila**, brojač ju je odbio |
+
+Poslije: **33/33** (bilo 24) · `test:unit` **563 ✅ / 0 ❌** · preflight **EXIT 0** · profilni authed
+specovi **8/8**.
+
+**Što je revizor potvrdio kao ispravno:** `vm` sandbox **nije** previše popustljiv — `pozvan === 1`
+je prava kontrola, `primljeno` kreće kao `null`, a nedostajuće polje daje glasan pad; wire-tvrdnja
+ne može proći lažno (`test.skip` isključuje `undefined === undefined`, prazno tijelo pada zatvoreno).
+
+**Njegove napomene koje NISU popravljene — svjesno, da cigla ostane jedna** (čekaju Leonovu riječ):
+- **N3 — nijedna brana ne nabraja mjesta koja mijenjaju lozinku.** Uz profil postoji i
+  `js/auth.js:865` (oporavak), a treće koje netko doda sutra bit će nevidljivo. Obrazac postoji
+  (`OTVORENO` u `mcp-brava-check.js`). **Zašto ne sad:** oporavak računa mjeri sonda odmah nakon
+  flipa, pa ovo štiti od BUDUĆEG trećeg mjesta, ne od ovog flipa.
+- **N1 — brana „oba jezika" pokriva samo `profile.*Pass*`.** Izmjereno: cijeli `js/i18n.js` ima
+  **655 ključeva i nijedan stvarno bez `hr`**, pa bi se tvrdnja mogla okrenuti u „svaki ključ, osim
+  imenovane osnovice" **besplatno**.
+- **S1 — jedina tvrdnja koja mjeri ŽICU u CI-ju se PRESKAČE:** traži `STAGING_TEST_ADMIN_PASSWORD`,
+  a CI jobu se prosljeđuju samo `TEST_ADMIN_*`, i taj job k tome **ne blokira merge**. Naših
+  154/154 je dokaz **jednog trenutka**, ne brana koja se ponavlja.
+- **N5 — tvrdnja „korisnik bez polja i dalje mijenja lozinku" postaje neistinita čim postavka padne**
+  (mjerena je protiv lažnog `updateUser` koji uvijek uspije). ①/2c bi je trebao **okrenuti**, ne ostaviti.
+- **Neizmjeren rub:** korisnik s lozinkom čiji objekt nema ni `identities` ni `app_metadata` →
+  `imaLozinku` daje `false` → nema polja → nakon postavke je zaključan. Nijedna brana to ne vidi.
+
+### Rupa nađena usput, izvan opsega cigle
+
+`test:unit` u `package.json` je **ručno pisan lanac** od 55 datoteka, a **nijedna brana ne provjerava
+da je svaki `tests/unit/*.js` u njemu** — nova datoteka koju se zaboravi upisati **ne vrti se nikad**
+i to izgleda kao zeleno. Isti razred kao `OTVORENO` u `mcp-brava-check.js`. Nije popravljeno ovdje da
+cigla ostane jedna; čeka Leonovu riječ kao zasebna mikro-cigla.
+
+---
+
 ## 2026-09-21 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/3b: telefon, i premisa koju brana nije provjeravala
 
 - **Red je izabran iz ograničenja, ne po ukusu:** ①/4 (`www.sokratstudy.com/mcp`) je Vercel rewrite koji se
