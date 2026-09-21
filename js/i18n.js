@@ -539,6 +539,10 @@
     'auth.st.rateLimit': { en: 'Too many attempts — please wait a minute and try again.', hr: 'Previše pokušaja — pričekaj minutu pa pokušaj ponovno.' },
     'auth.st.badEmail': { en: 'That email address does not look valid.', hr: 'Taj e-mail ne izgleda ispravno.' },
     'auth.st.samePass': { en: 'The new password must be different from the current one.', hr: 'Nova lozinka mora biti različita od trenutne.' },
+    // F6 ①/2b: poslužitelj za OBA slučaja šalje ISTU rečenicu („…required…"), pa se razlikuju
+    // samo po KODU — zato ovdje stoje dvije poruke, a `authError` sudi po kodu, ne po tekstu.
+    'auth.st.currentPassRequired': { en: 'Enter your current password to change it.', hr: 'Upiši trenutnu lozinku da bi je promijenio.' },
+    'auth.st.currentPassWrong': { en: 'That is not your current password.', hr: 'To nije tvoja trenutna lozinka.' },
     'auth.st.genericErr': { en: 'Something went wrong. Please try again.', hr: 'Nešto je pošlo po zlu. Pokušaj ponovno.' },
     'auth.st.serverErr': { en: 'The server could not send the email right now — please try again in a few minutes.', hr: 'Server trenutno ne može poslati e-mail — pokušaj ponovno za par minuta.' },
     'auth.st.redirect': { en: 'Opening secure sign-in…', hr: 'Otvaranje sigurne prijave…' },

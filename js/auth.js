@@ -331,6 +331,18 @@ const SokratAuth = (function () {
         if (code === 'same_password' || /should be different from the old/i.test(raw)) {
             return at('auth.st.samePass', 'The new password must be different from the current one.');
         }
+        // F6 ①/2b — postavka „traži trenutnu lozinku" (uključena na STAGINGU 21.09.).
+        // ⚠️ IZMJERENO: poslužitelj za OBA slučaja šalje DOSLOVNO ISTU rečenicu
+        // („Current password required when setting new password."), a razlikuju se SAMO po kodu:
+        // `current_password_required` (polje prazno) vs `current_password_invalid` (upisana kriva).
+        // Zato se sudi po KODU — grananje po tekstu ta dva slučaja strukturno ne može razlikovati,
+        // pa bi korisnik na krivu lozinku dobio uputu „upiši lozinku" koju je upravo poslušao.
+        if (code === 'current_password_required') {
+            return at('auth.st.currentPassRequired', 'Enter your current password to change it.');
+        }
+        if (code === 'current_password_invalid') {
+            return at('auth.st.currentPassWrong', 'That is not your current password.');
+        }
         // Provider (Google/FB) postoji u kodu, a u dashboardu još nije uključen — namjerno
         // stanje dok Leon ne upiše ključeve; korisnik dobiva put naprijed, ne sirovu grešku.
         if (/provider is not enabled|unsupported provider/i.test(raw)) {

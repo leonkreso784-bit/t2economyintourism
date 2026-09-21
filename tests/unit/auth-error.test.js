@@ -89,6 +89,34 @@ test('same_password → nova mora biti različita', () => {
   assert.match(A.authError({ code: 'same_password', message: 'x' }), /different from the current/i);
 });
 
+// ----------------------------------- F6 ①/2b: „traži trenutnu lozinku" (uključeno 21.09.)
+// ⚠️ IZMJERENO na stagingu: poslužitelj za OBA slučaja šalje DOSLOVNO ISTU rečenicu, a
+// razlikuje ih samo `error_code`. Zato težinu nosi treća tvrdnja: ista poruka + različit kod
+// mora dati RAZLIČITU rečenicu korisniku. Grananje po tekstu bi je oborilo.
+const PORUKA_SERVERA = 'Current password required when setting new password.';
+
+test('current_password_required → traži se trenutna lozinka', () => {
+  assert.match(A.authError({ code: 'current_password_required', message: PORUKA_SERVERA }),
+    /Enter your current password/i);
+});
+
+test('current_password_invalid → kaže da lozinka NIJE točna, ne da je treba upisati', () => {
+  const out = A.authError({ code: 'current_password_invalid', message: PORUKA_SERVERA });
+  assert.match(out, /not your current password/i);
+  assert.doesNotMatch(out, /Enter your current password/i);
+});
+
+test('ista poruka servera + različit kod → različita rečenica (sudi se po KODU, ne po tekstu)', () => {
+  const a = A.authError({ code: 'current_password_required', message: PORUKA_SERVERA });
+  const b = A.authError({ code: 'current_password_invalid', message: PORUKA_SERVERA });
+  assert.notStrictEqual(a, b);
+  // i nijedna ne smije biti sirova rečenica servera
+  assert.notStrictEqual(a, PORUKA_SERVERA);
+  assert.notStrictEqual(b, PORUKA_SERVERA);
+});
+// (Oba nova ključa provjerava već postojeća, SAMONABRAJAJUĆA tvrdnja niže — ona čita ključeve
+//  IZ `authError` i za svaki traži hrvatski. Druga kopija bila bi ručni popis uz nju.)
+
 // --------------------------------------------- mreža za odgovore BEZ koda
 // GoTrue šalje `code` tek od 2024-01-01; stariji/rubni odgovori imaju samo tekst.
 test('bez koda: "Invalid login credentials" se i dalje prepoznaje', () => {
