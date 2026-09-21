@@ -39,6 +39,31 @@ testirano, što slijedi.
   **uokvirene** — traka pozadine gore i dolje umjesto boje od ruba do ruba kakvu ima aplikacija. Radi ispravno;
   pitanje je samo želimo li ih poravnati s aplikacijom (`viewport-fit=cover` + `var(--safe-*)`).
 
+### Drugi krug — revizor brana vratio ciglu (`42298d7`, `56a4dfc`)
+
+- **Jezgra je držala, dvije rupe su bile izvan nje.** Obje provjerene u kodu prije popravka.
+- ⓐ **② KROMO je i dalje PRETPOSTAVLJAO izrez.** Gašenje sam napisao kao **četiri posebne iznimke**, pa je
+  budžet trake ostao računati `vh − 59` i `kromoPx − 59` — dakle **popust na budžet** stranici koja izrez
+  nikad ne dobije. Popravak je ono što je trebalo biti od početka: premisa teče kroz **jednu** varijablu —
+  bez `cover`-a je `rub` sav na nuli. Pojasevi su ionako svi čuvani s `if (R.x > 0)`, pa se ①/⑥/⑦/⑦b gase
+  **sami**, ② prestaje davati popust, a `postaviRub` prestaje ubrizgavati 59/34 px kojih ondje nema.
+  **Četiri iznimke → nijedna.**
+- **Izmjereno, ne pretpostavljeno:** `.legal-nav` privremeno `sticky` i visok 120 px → **novi kod prijavi
+  21 % na 320 px, stari NIŠTA** (120−59 = 61 od 509 = 12 %, ispod budžeta od 20 %). U landscapeu su oba
+  crvena — ondje je `rub.top` ionako 0, pa popusta nema. Točno brojke koje je revizor predvidio.
+- ⓑ **`editor.html` je bio jedini dokument s `cover`-om koji ne gleda nijedna ⑩** — mjeri ga isključivo
+  prijavljena suita. Bilo bi dovoljno obrisati jednu riječ iz njega da se pravila tiho ugase za `editor`
+  i `admin` na sve četiri širine, a **obje suite ostanu zelene**. Prijavljena brana zato ima svoju ⑩;
+  obrnuto provjereno (→ imenuje `editor` i `admin` na sve 4 širine).
+- **Sitno, ali isti razred:** premisa se čita `querySelectorAll(...).some(...)` — s `querySelector` bi drugi
+  `<meta name=viewport>` s `cover`-om iza prvog dao lažno „nema". I poruka ② je bila **peto** mjesto sa
+  zakucanim otokom: pisala je „21 % (120 od 509 px)", a 120/509 je 24 % — dva broja koja se poriču u retku
+  koji se čita pogledom. Nazivnik sad dolazi iz mjere.
+- **Zeleno:** javna 12/12 · prijavljena 13/13 (staging) · preflight **EXIT 0**.
+- **Sljedeća cigla iz istog nalaza (①/3c):** root ima 8 `*.html`, a **pet ih (`contact`, `faq`, `odjava`,
+  `privacy`, `terms`) nema nikakvu mjeru za telefon**. Uz to ⓪ „sve ekrane" danas znači „koliko ih je u
+  ručnom popisu" → nabrojati `*.html` s diska, svaka obiđena ili imenovana uz razlog.
+
 ## 2026-09-20 kasno (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/3: prijava usred povezivanja
 
 - **Prvo je izmjereno ŠTO OD CIGLE UOPĆE FALI.** Plan je za ①/3 tražio pet stvari; čitanje koda je
