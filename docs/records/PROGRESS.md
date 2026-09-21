@@ -87,6 +87,40 @@ testirano, što slijedi.
 - **Sljedeća cigla ①/3d — poravnanje** (Leonova odluka): šest samostalnih dokumenata dobiva `viewport-fit=cover`
   + nadoknadu kroz `var(--safe-*)`; `BEZ_IZREZA` time ostaje prazan. Mjera koja će to dokazati već postoji.
 
+### ①/3d — poravnanje, i rupa u mjeri koja bi ga učinila lažnim (`6060b5a`)
+
+- **Šest samostalnih dokumenata** (odobrenje + 5 pravnih) sad crta od ruba do ruba kao aplikacija:
+  `viewport-fit=cover` + nadoknada kroz `var(--safe-*)` u `css/legal.css`. Podloga trake ide do ruba,
+  pomiče se samo ono što se tapka i čita. **`BEZ_IZREZA` je prazan** — ishod, ne propust.
+- ⚠️ **RUPA U MJERI, BEZ KOJE BI CIJELA CIGLA BILA LAŽNA.** Moje petlje za samostalne dokumente (①/3b i
+  ①/3c) nikad nisu zvale `postaviRub`, pa je stranica imala sigurnu zonu od **0 px** dok ju je `mjeri()`
+  sudio po profilu od **59 px**. Nadoknada se doslovno **nije mogla vidjeti**: prvi prolaz poslije popravka
+  CSS-a vratio je **bajt-identične koordinate**. Te bi stranice ostale crvene što god napisali u CSS-u, a
+  uzrok ne bi bio u njima. `idiNa` to radi za ekrane aplikacije, `mjeriRubove` za svoju fazu — samostalni
+  dokumenti idu mimo oba puta i moraju sami.
+- **Pouka:** *kad popravak ne pomakne nijednu koordinatu, prvo posumnjaj u mjeru, ne u popravak.*
+- **Obrnuto (poslije popravka), dvije mutacije:** nadoknada maknuta iz telefonskog pravila
+  (`@media max-width:480px`) → ① imenuje logo i prekidač · maknuta iz osnovnog pravila → ⑦ imenuje bočni
+  pojas u landscapeu. ⚠️ Prva mutacija je isprva pala **zeleno** jer sam gađao osnovno pravilo, a na
+  telefonskim širinama vrijedi ono iz medijskog upita — *mutacija mora pogoditi pravilo koje stvarno vrijedi
+  na mjerenoj širini.*
+
+### ①/3e — bočni pojas se mjeri i na vrhu (`273cb49`)
+
+- **Nalaz je došao iz obrnute provjere ①/3d:** mutacija koja zaglavlju oduzme bočnu nadoknadu oborila je
+  **samo dvije od šest** stranica. Razlika nije bila u kvaru — sve su geometrijski identične (provjereno:
+  logo na `x=24` na svih šest) — nego u **duljini teksta**.
+- **Izmjereno:** ⑦ se mjerio isključivo u fazi „rubovi", koja stranicu prvo spusti do dna (to treba ⑥, jer je
+  ondje kvar trajan). Stranica koja se skrola dotad odnese zaglavlje s ekrana: `privacy` odskrola **3 461 px**
+  i logo završi na `y = −3442` (`odobrenje` i `odjava` su kratke, skrol 0, pa su jedine prijavljivale).
+  **Isto vrijedi za svaki ekran aplikacije koji se skrola.**
+- **Popravak:** bočni pojas nema ogradu koju ima donji (nema vodoravnog skrola), pa je svaki pogodak trajan
+  i mjeri se **odmah**, prije spuštanja; nalazi obje faze se zbrajaju, isti element u obje = jedan nalaz.
+- **Obrnuto:** ista mutacija sad obori **svih šest** stranica. Bez mutacije javna 13/13 · prijavljena 13/13 ·
+  preflight **EXIT 0** — dakle proširena provjera ne otkriva **nijedan** novi kvar ni u aplikaciji.
+- **Stanje ①:** ostaje **①/2b** (lozinka, Leonov OK dan) i **①/4** (`www.sokratstudy.com/mcp`, traži push
+  grane za preview). Grana `feat/f6-mcp` ahead 21, ništa pushano, PROD netaknut.
+
 ## 2026-09-20 kasno (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/3: prijava usred povezivanja
 
 - **Prvo je izmjereno ŠTO OD CIGLE UOPĆE FALI.** Plan je za ①/3 tražio pet stvari; čitanje koda je
