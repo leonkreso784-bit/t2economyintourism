@@ -31,6 +31,8 @@ const NALAZI = {
     dno: [], bocno: [], spremnik: [], namjestaj: [], polja: []
 };
 let izmjerenoEkrana = 0;
+/** ⑩ — premisa pravila o sigurnoj zoni. Tvrda provjera, ne čegrtaljka (v. javna brana). */
+const PREMISA = { neprijavljeni: [] };
 
 test.beforeAll(async ({ browser }, testInfo) => {
     // Ni port ni putanja sesije se NE prepisuju — oboje stoji u `playwright.config.js`.
@@ -84,6 +86,12 @@ test.beforeAll(async ({ browser }, testInfo) => {
         r.r.dno.forEach((x) => NALAZI.dno.push(gdje(r) + ' · ' + x));
         r.r.bocno.forEach((x) => NALAZI.bocno.push(gdje(r) + ' · ' + x));
         r.r.spremnik.forEach((x) => NALAZI.spremnik.push(gdje(r) + ' · ' + x));
+
+        // ⑩ — v. tvrdnju niže. Nijedan prijavljeni ekran nije u `BEZ_IZREZA`, pa je svaki
+        // ovdje obvezan imati `viewport-fit=cover`.
+        if (!r.m.podIzrezom && !(r.ekran in G.BEZ_IZREZA)) {
+            PREMISA.neprijavljeni.push(gdje(r) + ' · nema `viewport-fit=cover`, a nije u BEZ_IZREZA');
+        }
     });
 
     if (G.spremiOsnovicu('prijavljeno', NALAZI)) {
@@ -152,4 +160,14 @@ test('⑨ dodir ne zumira: nijedno tekstualno polje ispod 16 px (F1/10) — i iz
 test('⓪ pokrivenost: sve prijavljene stranice na sva četiri profila', async () => {
     expect(izmjerenoEkrana, 'izmjerenih prijavljenih ekrana')
         .toBe(G.EKRANI.length * G.EKRANI_PRIJAVLJENI.length);
+});
+
+// ⑩ POVOD: javna brana je istu tvrdnju dobila u ①/3b, ali `editor.html` ondje ne dolazi —
+// on je **jedini dokument koji mjeri isključivo ova suita**. Bez ove tvrdnje bilo bi dovoljno
+// obrisati `viewport-fit=cover` iz `editor.html` da se pravila o sigurnoj zoni TIHO ugase za
+// `editor` i `admin` na sve četiri širine, a obje suite ostanu zelene. Premisa mora biti
+// mjerena ondje gdje se stranica mjeri, ne samo ondje gdje se prvi put primijetila.
+test('⑩ premisa sigurne zone je IZMJERENA i iza prijave', async () => {
+    expect(PREMISA.neprijavljeni,
+        'prijavljen ekran bez `viewport-fit=cover` — pravila o sigurnoj zoni su mu TIHO ugašena').toEqual([]);
 });

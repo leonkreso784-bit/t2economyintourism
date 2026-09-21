@@ -141,13 +141,21 @@ const spreman = (page) => page.waitForFunction(
  * golim `env()`, i zato **nemjerljivo**. Zato T1 uvodi `npm run check:safearea`, koji
  * goli `env()` drži u jednoj jedinoj datoteci (`css/variables.css`).
  */
+// ⚠️ Stranica bez `viewport-fit=cover` na iOS-u sigurnu zonu NIKAD ne dobiva (slaže se
+// unutar nje), pa joj se ovdje ne smije ubrizgati — inače mjera pomakne stranicu za 59/34 px
+// kojih ondje nema, i mjeri raspored koji ne postoji. Premisa se čita sa stranice, po istom
+// pravilu kao u `mjeri()`.
 const postaviRub = (page, rub = RUB_PORTRET) =>
     page.evaluate((v) => {
+        const podIzrezom = Array.prototype.slice
+            .call(document.querySelectorAll('meta[name="viewport"]'))
+            .some((m) => /viewport-fit\s*=\s*cover/.test(m.content || ''));
+        const r = podIzrezom ? v : { top: 0, bottom: 0, left: 0, right: 0 };
         const d = document.documentElement.style;
-        d.setProperty('--safe-top', v.top + 'px');
-        d.setProperty('--safe-bottom', v.bottom + 'px');
-        d.setProperty('--safe-left', v.left + 'px');
-        d.setProperty('--safe-right', v.right + 'px');
+        d.setProperty('--safe-top', r.top + 'px');
+        d.setProperty('--safe-bottom', r.bottom + 'px');
+        d.setProperty('--safe-left', r.left + 'px');
+        d.setProperty('--safe-right', r.right + 'px');
     }, rub);
 
 /**
@@ -320,21 +328,27 @@ function mjeri(page, rub, faza) {
     // Unutrašnjost mjere barata jednim brojem za gornji rub (`OTOK`) — u landscapeu je to
     // 0, pa tvrdnja ① ondje ispravno ne nalazi ništa, a ② mjeri udio pune visine.
     return page.evaluate((ARG) => {
-        const R = ARG.rub;
-        const OTOK = R.top;
-        const FAZA = ARG.faza;
-        const vw = window.innerWidth, vh = window.innerHeight;
-
         // ── PREMISA PRAVILA O SIGURNOJ ZONI ───────────────────────────────────────
         // Tvrdnje ①/⑥/⑦/⑦b vrijede samo za stranicu koja se `viewport-fit=cover`-om
         // IZRIČITO prijavila da crta ispod izreza. Bez te prijave iOS stranicu slaže
-        // UNUTAR sigurne zone (letterbox), pa ispod izreza doslovno nema što stajati i
-        // svaki bi nalaz tih tvrdnji bio izmišljen.
+        // UNUTAR sigurne zone, pa ispod izreza doslovno nema što stajati i svaki bi
+        // nalaz tih tvrdnji bio izmišljen.
         // ⚠️ Do ①/3b se premisa PRETPOSTAVLJALA, jer je svaka mjerena stranica imala
         //    `cover`. Prva bez njega (`odobrenje.html`) dala bi 14 lažnih nalaza.
         //    Zato se sad ČITA sa stranice; tko je smije nemati, piše u `BEZ_IZREZA`.
-        const metaVp = document.querySelector('meta[name="viewport"]');
-        const podIzrezom = /viewport-fit\s*=\s*cover/.test((metaVp && metaVp.content) || '');
+        // ⚠️ Premisa teče kroz JEDNU varijablu — sam `rub`. Prva verzija je gasila četiri
+        //    kategorije nalaza posebno, a ② KROMO je pritom ostao raditi s otokom od 59 px:
+        //    stranica koja izrez nikad ne dobije dobivala je **popust na budžet trake**
+        //    (izmjereno 12 % ondje gdje je stvarno 21 %). Pojasevi su već svi čuvani s
+        //    `if (R.x > 0)`, pa rub na nuli gasi ta pravila SAM, bez ijedne iznimke.
+        const podIzrezom = Array.prototype.slice
+            .call(document.querySelectorAll('meta[name="viewport"]'))
+            .some((m) => /viewport-fit\s*=\s*cover/.test(m.content || ''));
+
+        const R = podIzrezom ? ARG.rub : { top: 0, bottom: 0, left: 0, right: 0 };
+        const OTOK = R.top;
+        const FAZA = ARG.faza;
+        const vw = window.innerWidth, vh = window.innerHeight;
 
         const ime = (el) => {
             if (!el) return 'ništa';
@@ -497,15 +511,15 @@ function mjeri(page, rub, faza) {
                 });
             }
 
-            return podIzrezom
-                ? { dno: dno, bocno: bocno, spremnik: spremnik, podIzrezom: true }
-                : { dno: [], bocno: [], spremnik: [], podIzrezom: false };
+            // Bez `cover`-a je `R` sav na nuli, pa su sva tri popisa prazna sama od sebe —
+            // svaki pojas je gore čuvan s `if (R.x > 0)`. Nema iznimke koju bi trebalo pamtiti.
+            return { dno: dno, bocno: bocno, spremnik: spremnik, podIzrezom: podIzrezom };
         }
 
         // ── ① OTOK ────────────────────────────────────────────────────────────────
         // Kromo SMIJE crtati podlogu ispod otoka (za to `viewport-fit=cover` i postoji);
         // ne smije ondje staviti ništa što se tapka ili čita.
-        const uOtoku = !podIzrezom ? [] : interaktivni
+        const uOtoku = interaktivni
             .filter((k) => k.b.t < OTOK - 0.5)
             .map((k) => ime(k.el) + ' y=' + Math.round(k.b.t) + '…' + Math.round(k.b.b));
 
