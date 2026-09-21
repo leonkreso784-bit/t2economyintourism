@@ -5,6 +5,40 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-21 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/3b: telefon, i premisa koju brana nije provjeravala
+
+- **Red je izabran iz ograničenja, ne po ukusu:** ①/4 (`www.sokratstudy.com/mcp`) je Vercel rewrite koji se
+  može provjeriti **tek na previewu**, a to traži push grane → Leonova riječ usred cigle. ①/3b je cijeli lokalan.
+- **Mjereno prije koda:** postojeći mjerač telefona pušten na `odobrenje.html` (privremena skripta, obrisana).
+  Dao je **14 nalaza** na 8 ekrana — logo i prekidač jezika „ispod Dynamic Islanda" na 320/393/430 px i pod
+  bočnim izrezom u landscapeu.
+- **Nalazi su bili LAŽNI, i to je prava vrijednost cigle.** Tvrdnje ①/⑥/⑦/⑦b vrijede samo za stranicu koja
+  se **`viewport-fit=cover`-om izričito prijavila** da crta ispod izreza — to piše u komentaru same tvrdnje ①
+  („njime se stranica izričito prijavljuje… pa je od tog trenutka svaki nenadoknađeni `env()` regresija").
+  `odobrenje.html` tu prijavu **nema** (kao ni `privacy/terms/faq/contact/odjava`), pa je iOS slaže UNUTAR
+  sigurne zone i ispod izreza doslovno nema što stajati. **Premisa je bila nevidljiva** jer su sve dotad
+  mjerene stranice (`index.html`, `editor.html`) imale `cover`.
+- **Popravak je u mjeraču, ne u stranici:** `podIzrezom` se **čita sa stranice** (`meta[name=viewport]`), a ta
+  četiri pravila bez `cover`-a nemaju predmet. `BEZ_IZREZA` imenuje tko ga smije nemati i **zašto**.
+- **Da se time ne otvori rupa — nova tvrdnja ⑩**, tvrda (osnovica se na nju ne primjenjuje): ekran koji izgubi
+  `cover` a nije imenovan obara branu (inače bi se pravila o sigurnoj zoni gasila brisanjem **jedne riječi iz
+  `<meta>`**), a mrtav unos u popisu obara je isto.
+- **Obilazak odvojen od premise** (`EKRANI_ODOBRENJE` vs `BEZ_IZREZA`): prva verzija ih je spojila, pa bi
+  buduća stranica bez `cover`-a koja nije dio obilaska srušila ⓪ bez veze sa stvarnim kvarom.
+- **Tri obrnute provjere, sve crvene, izvor svaki put vraćen:** ① stranica dobije `cover` → vrati se svih 14
+  nalaza **i** ⑩ javi mrtav unos · ② unos maknut iz popisa → ⑩ imenuje sve 4 širine, a **⓪ ostane zelen**
+  (dokaz da je razdvajanje radilo) · ③ `index.html` izgubi `cover` → ⑩ imenuje svaki ekran aplikacije.
+- ⚠️ **Prva mutacija je TIHO PROMAŠILA** — python `replace` s `',\n'` ne pogađa datoteku s CRLF završecima, pa
+  je mutacija bila prazna, brana je ostala zelena i to je **izgledalo kao rupa u brani**. Uhvaćeno tek jer
+  mutacija nije ispisala koliko je pogodaka imala. **Pravilo: i mutacija je mjerenje — mora reći što je
+  dotaknula, inače lažno crveno postaje lažni nalaz.**
+- **Zeleno:** phone 12/12 (60 ekrana, ⓪ to potvrđuje) · odobrenje 36/36 · preflight **EXIT 0**.
+- **Poznata rupa, svjesno izvan cigle:** `phone.authed.spec.js` vrti iste mjerne funkcije ali nema ⑩; ondje su
+  danas svi ekrani `cover`, pa rupa nije živa.
+- **Otvoreno za Leona (vizualna odluka, ne kvar):** samostalne stranice (odobrenje + pravne) su na iPhoneu
+  **uokvirene** — traka pozadine gore i dolje umjesto boje od ruba do ruba kakvu ima aplikacija. Radi ispravno;
+  pitanje je samo želimo li ih poravnati s aplikacijom (`viewport-fit=cover` + `var(--safe-*)`).
+
 ## 2026-09-20 kasno (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/3: prijava usred povezivanja
 
 - **Prvo je izmjereno ŠTO OD CIGLE UOPĆE FALI.** Plan je za ①/3 tražio pet stvari; čitanje koda je
