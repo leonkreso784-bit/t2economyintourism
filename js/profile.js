@@ -107,6 +107,31 @@ function identityOf(user) {
     };
 }
 
+/**
+ * F6 ①/2b — SMIJEMO LI OD OVOG KORISNIKA TRAŽITI „TRENUTNU LOZINKU"?
+ *
+ * Polje ide samo onome tko lozinku IMA. Tko je došao Googleom nema što upisati, a tražiti mu to
+ * znači zatvoriti mu jedini put do lozinke — isti razred kvara koji cijela cigla sprječava
+ * (postavka bez polja ruši promjenu lozinke svima).
+ *
+ * ⚠️ IZMJERENO 21.09. na stagingu, i nalaz je NEGATIVAN: `app_metadata.providers` i `identities`
+ * NE razlikuju račun BEZ lozinke od onoga s njom — korisnik kojeg admin API napravi bez lozinke
+ * svejedno dobije identitet `email` (oba puta `{"providers":["email"],"identities":["email"]}`).
+ * Zato ovo NIJE provjera „ima li hash" nego „je li ovo račun s e-mail putem": naši putovi upisa
+ * (registracija, oporavak) lozinku uvijek postave, a Google-račun identitet `email` nema.
+ */
+function imaLozinku(user) {
+    if (!user) return false;
+    const identiteti = user.identities;
+    if (Array.isArray(identiteti) && identiteti.length) {
+        return identiteti.some(function (i) { return i && i.provider === 'email'; });
+    }
+    // Rezerva kad `identities` nije u objektu (npr. korisnik složen samo iz JWT-a).
+    const am = user.app_metadata || {};
+    const lista = Array.isArray(am.providers) ? am.providers : (am.provider ? [am.provider] : []);
+    return lista.indexOf('email') !== -1;
+}
+
 // ── SLIKE (F2/2, 2026-09-13) ─────────────────────────────────────────────────
 // Putanja iz baze → javni URL preko `SokratProfileImages.publicUrl` (bucket je javan,
 // Leon 09.09.). URL ide u `src` atribut, dakle u innerHTML: prolazi kroz escape I kroz
@@ -603,6 +628,16 @@ function renderProfilePage() {
         '      <button type="button" class="cta-button secondary" id="profileSignOutBtn"><i class="fas fa-sign-out-alt"></i><span>' + pt('profile.signOut', 'Sign out') + '</span></button>' +
         '    </div>' +
         '    <form id="profileChangePassForm" class="profile-pass-form" hidden>' +
+        // F6 ①/2b: „Trenutna lozinka" ide PRVA i samo korisniku koji lozinku ima (`imaLozinku`).
+        // `autocomplete="current-password"` je ovdje mjera, ne ukras: bez njega upravitelj lozinki
+        // u isto polje nudi NOVU. Bez `minlength` — zatečena lozinka smije biti kraća od današnjeg
+        // praga; provjerava je poslužitelj, ne preglednik.
+        (imaLozinku(user)
+            ? '      <div class="auth-pass-wrap">' +
+              '        <input type="password" id="profileCurrentPassword" class="auth-modal__input" placeholder="' + pt('profile.currentPassPlaceholder', 'Current password') + '" required autocomplete="current-password">' +
+              '        <button type="button" class="auth-pass-toggle" aria-label="' + pt('auth.showPassword', 'Show password') + '"><i class="fas fa-eye"></i></button>' +
+              '      </div>'
+            : '') +
         '      <div class="auth-pass-wrap">' +
         '        <input type="password" id="profileNewPassword" class="auth-modal__input" placeholder="' + pt('profile.newPassPlaceholder', 'New password (min. 8 characters)') + '" required minlength="8" autocomplete="new-password">' +
         '        <button type="button" class="auth-pass-toggle" aria-label="' + pt('auth.showPassword', 'Show password') + '"><i class="fas fa-eye"></i></button>' +
@@ -709,7 +744,12 @@ function renderProfilePage() {
     document.getElementById('profileChangePassBtn').addEventListener('click', function () {
         const form = document.getElementById('profileChangePassForm');
         form.hidden = !form.hidden;
-        if (!form.hidden) document.getElementById('profileNewPassword').focus();
+        // ①/2b: fokus ide na PRVO polje koje forma stvarno ima — korisnik bez lozinke
+        // (Google) „Trenutnu lozinku" nema, pa bi zakucan `profileCurrentPassword` pukao.
+        if (!form.hidden) {
+            (document.getElementById('profileCurrentPassword')
+                || document.getElementById('profileNewPassword')).focus();
+        }
     });
     document.getElementById('profileChangePassForm').addEventListener('submit', changePassword);
     document.getElementById('profileSyncNowBtn').addEventListener('click', async function () {
@@ -928,6 +968,7 @@ async function changePassword(e) {
     if (!client) return;
     const input = document.getElementById('profileNewPassword');
     const repeat = document.getElementById('profileNewPassword2');
+    const current = document.getElementById('profileCurrentPassword');
     const status = document.getElementById('profilePassStatus');
     if (!input || !repeat || !status) return;
     status.hidden = false;
@@ -945,7 +986,17 @@ async function changePassword(e) {
         status.textContent = window.t ? t('auth.st.weakPwned') : 'This password has appeared in a known data breach — please pick a different one.';
         return;
     }
-    const { error } = await client.auth.updateUser({ password: input.value });
+    // F6 ①/2b — UZ NOVU LOZINKU ŠALJE SE I TRENUTNA.
+    // ⚠️ Zakucani `supabase-js@2.110.8` `current_password` NE spominje ni jednom (0 pogodaka u
+    // bundleu), ali `updateUser` cijeli objekt atributa šalje kao tijelo `PUT /auth/v1/user` —
+    // IZMJERENO 21.09. na samom paketu, s kontrolnim izmišljenim poljem koje je prošlo jednako.
+    // Ime polja je dakle jedino što vrijedi; TypeScript tip nije prepreka.
+    // ⚠️ Dok je postavka „traži trenutnu lozinku" ISKLJUČENA, poslužitelj polje tiho ignorira
+    // (izmjereno: i POGREŠNA vrijednost prolazi s HTTP 200) — zato ovaj upis ništa ne mijenja
+    // dok se postavka ne uključi. Baš zato polje mora ići PRVO, a postavka tek za njim.
+    const atributi = { password: input.value };
+    if (current) atributi.current_password = current.value;
+    const { error } = await client.auth.updateUser(atributi);
     if (error) {
         status.classList.add('is-error');
         // F3/2 cigla 4c: ista poruka kao u prozoru za prijavu — dotad je ovdje išla sirova i engleska.
@@ -955,6 +1006,7 @@ async function changePassword(e) {
     status.hidden = true;
     input.value = '';
     repeat.value = '';
+    if (current) current.value = '';
     document.getElementById('profileChangePassForm').hidden = true;
     if (typeof showToast === 'function') showToast(window.t ? t('msg.passwordUpdated') : 'Password updated.');
 }
