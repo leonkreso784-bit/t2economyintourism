@@ -96,6 +96,24 @@ const NACINI_UVJETNI = [
  *  admin-CRUD je ekran kao i svaki drugi (isti popis vozi i `reach-gate`). */
 const EKRANI_PRIJAVLJENI = ['materials', 'profile', 'admin', 'editor'];
 
+/**
+ * Ekrani koji se SMIJU mjeriti bez pravila o sigurnoj zoni — svaki s razlogom (①/3b).
+ *
+ * Tvrdnje ①/⑥/⑦/⑦b imaju smisla samo ako se stranica `viewport-fit=cover`-om prijavila da
+ * crta ispod izreza. Bez te prijave iOS je slaže UNUTAR sigurne zone, pa ispod izreza nema
+ * što stajati. Do ①/3b je to bila TIHA pretpostavka jer je svaka mjerena stranica imala
+ * `cover`; `odobrenje.html` je prva koja ga nema i dala bi **14 izmišljenih nalaza**.
+ *
+ * ⚠️ Popis je obveza u oba smjera: ekran koji izgubi `cover` a nije ovdje obara branu (netko
+ *    bi inače pravila o sigurnoj zoni ugasio brisanjem jedne riječi iz `<meta>`), a mrtav
+ *    unos ovdje obara je isto (stranica je u međuvremenu dobila `cover`, a pravila i dalje
+ *    stoje ugašena).
+ */
+const BEZ_IZREZA = {
+    'odobrenje:prijavi-se': 'samostalan dokument bez `viewport-fit=cover` — iOS ga slaže unutar sigurne zone',
+    'odobrenje:dopusti-odbij': 'isti dokument, stanje poslije prijave'
+};
+
 /** Aplikacija je spremna kad su i stanje i katalog na mjestu. */
 const spreman = (page) => page.waitForFunction(
     () => window.AppState && window.SOKRAT_CATALOG && typeof window.navigateTo === 'function',
@@ -297,6 +315,17 @@ function mjeri(page, rub, faza) {
         const FAZA = ARG.faza;
         const vw = window.innerWidth, vh = window.innerHeight;
 
+        // ── PREMISA PRAVILA O SIGURNOJ ZONI ───────────────────────────────────────
+        // Tvrdnje ①/⑥/⑦/⑦b vrijede samo za stranicu koja se `viewport-fit=cover`-om
+        // IZRIČITO prijavila da crta ispod izreza. Bez te prijave iOS stranicu slaže
+        // UNUTAR sigurne zone (letterbox), pa ispod izreza doslovno nema što stajati i
+        // svaki bi nalaz tih tvrdnji bio izmišljen.
+        // ⚠️ Do ①/3b se premisa PRETPOSTAVLJALA, jer je svaka mjerena stranica imala
+        //    `cover`. Prva bez njega (`odobrenje.html`) dala bi 14 lažnih nalaza.
+        //    Zato se sad ČITA sa stranice; tko je smije nemati, piše u `BEZ_IZREZA`.
+        const metaVp = document.querySelector('meta[name="viewport"]');
+        const podIzrezom = /viewport-fit\s*=\s*cover/.test((metaVp && metaVp.content) || '');
+
         const ime = (el) => {
             if (!el) return 'ništa';
             let s = el.tagName.toLowerCase();
@@ -458,13 +487,15 @@ function mjeri(page, rub, faza) {
                 });
             }
 
-            return { dno: dno, bocno: bocno, spremnik: spremnik };
+            return podIzrezom
+                ? { dno: dno, bocno: bocno, spremnik: spremnik, podIzrezom: true }
+                : { dno: [], bocno: [], spremnik: [], podIzrezom: false };
         }
 
         // ── ① OTOK ────────────────────────────────────────────────────────────────
         // Kromo SMIJE crtati podlogu ispod otoka (za to `viewport-fit=cover` i postoji);
         // ne smije ondje staviti ništa što se tapka ili čita.
-        const uOtoku = interaktivni
+        const uOtoku = !podIzrezom ? [] : interaktivni
             .filter((k) => k.b.t < OTOK - 0.5)
             .map((k) => ime(k.el) + ' y=' + Math.round(k.b.t) + '…' + Math.round(k.b.b));
 
@@ -720,6 +751,7 @@ function mjeri(page, rub, faza) {
             trake: trake.map((t) => t.ime + ' ' + Math.round(t.t) + '…' + Math.round(t.b)),
             bannerPx: bannerPx, bannerPct: Math.round(bannerPx / vh * 100),
             uOtoku: uOtoku,
+            podIzrezom: podIzrezom,
             sudari: sudari,
             upotrebljivih: upotrebljivi.length,
             prviUpotrebljiv: upotrebljivi.length ? ime(upotrebljivi[0].el) : '—',
@@ -846,7 +878,7 @@ function spremiOsnovicu(suita, nalazi) {
 
 module.exports = {
     OTOK, RUB_PORTRET, RUB_LANDSCAPE, EKRANI, EKRANI_JAVNI, EKRANI_PRIJAVLJENI, NACINI,
-    NACINI_UVJETNI,
+    NACINI_UVJETNI, BEZ_IZREZA,
     KROMO_BUDZET_PCT,
     spreman, postaviRub, idiNa, otvoriNacin, mjeriStranicu, mjeriRubove,
     usporediSOsnovicom, spremiOsnovicu, kljucNalaza

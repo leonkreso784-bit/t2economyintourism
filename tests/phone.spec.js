@@ -50,6 +50,59 @@ const NALAZI = {
     dno: [], bocno: [], spremnik: [], namjestaj: [], polja: []
 };
 let izmjerenoEkrana = 0;
+/** ⑩ — premisa pravila o sigurnoj zoni (①/3b). Tvrda provjera, ne čegrtaljka. */
+const PREMISA = { neprijavljeni: [], mrtvi: [] };
+
+// ── ODOBRENJE ZA KORISNIKOV AI (①/3b) ────────────────────────────────────────────
+// Prva mjerena stranica koja NIJE aplikacija nego samostalan dokument bez `viewport-fit=
+// cover`, i prva do koje se ne dolazi navigacijom nego poveznicom iz tuđe aplikacije. Ovdje
+// korisnik daje pristup svom gradivu — ekran koji brana ne posjećuje je ekran koji brana ne
+// vidi, a ovaj se k tome otvara na TELEFONU češće nego bilo koji drugi (poveznica iz chata).
+const ODOBRENJE = {
+    projekt: 'https://odobrenjetest.supabase.co',
+    authId: 'a1b2c3d4-0000-4000-8000-000000000001',
+    povratak: 'https://claude.ai/api/mcp/auth_callback'
+};
+
+function odobrenjeSesija() {
+    const sad = Math.floor(Date.now() / 1000);
+    return {
+        access_token: 'e30.e30.e30', token_type: 'bearer', expires_in: 3600, expires_at: sad + 3600,
+        refresh_token: 'lazni-refresh',
+        user: { id: '00000000-0000-4000-8000-00000000abcd', aud: 'authenticated', role: 'authenticated', email: 'student@primjer.hr' }
+    };
+}
+
+/** Otvori `odobrenje.html` u jednom od dva stanja; Auth je podmetnut, mreža se ne dira. */
+async function otvoriOdobrenje(ctx, stanje) {
+    const page = await ctx.newPage();
+    await page.route(ODOBRENJE.projekt + '/**', (route) => {
+        const u = new URL(route.request().url());
+        if (u.pathname === '/auth/v1/oauth/authorizations/' + ODOBRENJE.authId) {
+            return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({
+                authorization_id: ODOBRENJE.authId, redirect_uri: ODOBRENJE.povratak, scope: '',
+                client: { id: 'c1', name: 'Claude', uri: '', logo_uri: '' },
+                user: { id: '00000000-0000-4000-8000-00000000abcd', email: 'student@primjer.hr' }
+            }) });
+        }
+        return route.fulfill({ status: 404, contentType: 'application/json', body: '{}' });
+    });
+    await page.addInitScript(([p, s]) => {
+        try {
+            localStorage.setItem('sokrat-ui-lang', 'hr');
+            localStorage.setItem('sokrat-supabase-override', JSON.stringify({ url: p, publishableKey: 'sb_publishable_test' }));
+            if (s) localStorage.setItem('sb-odobrenjetest-auth-token', JSON.stringify(s));
+        } catch (e) { /* private */ }
+    }, [ODOBRENJE.projekt, stanje === 'dopusti-odbij' ? odobrenjeSesija() : null]);
+
+    await page.goto('/odobrenje.html?authorization_id=' + ODOBRENJE.authId);
+    await page.waitForFunction(() => typeof window.t === 'function');
+    // Čeka se STANJE, ne vrijeme: fiksna pauza bi izmjerila stranicu prije nego se odluči
+    // što na njoj piše (isti razred kao `smiriPrikaz` niže u helperu).
+    await page.waitForSelector(stanje === 'dopusti-odbij' ? '#oauthActions:not([hidden])' : '#oauthSigninBtn',
+        { state: 'visible', timeout: 20000 });
+    return page;
+}
 
 test.beforeAll(async ({ browser }, testInfo) => {
     // ⚠️ `beforeEach`-preskok NE zaustavlja `beforeAll` — bez ove straže bi se cijelo
@@ -107,6 +160,17 @@ test.beforeAll(async ({ browser }, testInfo) => {
             });
         }
 
+        // ①/3b — stranica odobrenja, oba stanja. Vlastita kartica po stanju: podmetnuti Auth i
+        // sesija se postavljaju PRIJE prvog crtanja, pa se ne mogu naknadno ugurati u ovu.
+        for (const stanje of ['prijavi-se', 'dopusti-odbij']) {
+            const p = await otvoriOdobrenje(ctx, stanje);
+            snimka.push({
+                e, ekran: 'odobrenje:' + stanje,
+                m: await G.mjeriStranicu(p, e.rub), r: await G.mjeriRubove(p, e.rub)
+            });
+            await p.close();
+        }
+
         await ctx.close();
     }
 
@@ -133,7 +197,16 @@ test.beforeAll(async ({ browser }, testInfo) => {
         r.r.dno.forEach((x) => NALAZI.dno.push(gdje(r) + ' · ' + x));
         r.r.bocno.forEach((x) => NALAZI.bocno.push(gdje(r) + ' · ' + x));
         r.r.spremnik.forEach((x) => NALAZI.spremnik.push(gdje(r) + ' · ' + x));
+
+        // ⑩ — premisa se BILJEŽI pri svakom ekranu, da je ne treba pogađati poslije.
+        if (!r.m.podIzrezom && !(r.ekran in G.BEZ_IZREZA)) {
+            PREMISA.neprijavljeni.push(gdje(r) + ' · nema `viewport-fit=cover`, a nije u BEZ_IZREZA');
+        }
     });
+
+    PREMISA.mrtvi = Object.keys(G.BEZ_IZREZA).filter(
+        (k) => !snimka.some((r) => r.ekran === k && r.m.podIzrezom === false)
+    );
 
     if (G.spremiOsnovicu('javno', NALAZI)) {
         console.log('⚠️  phone-baseline.json PREPISAN (javno) — provjeri diff prije commita.');
@@ -226,6 +299,21 @@ test('⓪ pokrivenost: mjerač je stvarno obišao sve ekrane i sve širine', asy
     // izravna pouka BUG-017 („tvrdi gate vrijedi samo koliko pokriva") i K3
     // („broj u kriteriju koji nijedan test ne mjeri nije kriterij nego želja").
     const ocekivano = G.EKRANI.length
-        * (G.EKRANI_JAVNI.length + 1 + G.NACINI.length + G.NACINI_UVJETNI.length);
+        * (G.EKRANI_JAVNI.length + 1 + G.NACINI.length + G.NACINI_UVJETNI.length
+           + Object.keys(G.BEZ_IZREZA).length);
     expect(izmjerenoEkrana, 'izmjerenih ekrana').toBe(ocekivano);
+});
+
+// ⑩ POVOD (①/3b). Tvrdnje ①/⑥/⑦/⑦b nisu univerzalne — vrijede za stranicu koja se
+// `viewport-fit=cover`-om prijavila da crta ispod izreza. Dok su sve mjerene stranice imale
+// `cover`, ta je premisa bila nevidljiva i nitko je nije provjeravao. `odobrenje.html` je prva
+// bez njega: mjerač je na njoj dao **14 nalaza koji na pravom iPhoneu ne postoje**, jer iOS
+// stranicu bez te prijave slaže UNUTAR sigurne zone. Ova tvrdnja zato čuva premisu s obje
+// strane — nitko ne smije ugasiti pravila brisanjem riječi iz `<meta>`, ni ostaviti ih
+// ugašena kad ih stranica opet treba. Nije čegrtaljka: osnovica se na nju ne primjenjuje.
+test('⑩ premisa sigurne zone je IZMJERENA, ne pretpostavljena', async () => {
+    expect(PREMISA.neprijavljeni,
+        'ekran bez `viewport-fit=cover` koji nije imenovan u BEZ_IZREZA — pravila o sigurnoj zoni su mu TIHO ugašena').toEqual([]);
+    expect(PREMISA.mrtvi,
+        'mrtav unos u BEZ_IZREZA — ta stranica sad IMA `viewport-fit=cover`, a pravila su joj i dalje ugašena').toEqual([]);
 });
