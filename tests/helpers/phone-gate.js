@@ -108,16 +108,15 @@ const EKRANI_PRIJAVLJENI = ['materials', 'profile', 'admin', 'editor'];
  *    bi inače pravila o sigurnoj zoni ugasio brisanjem jedne riječi iz `<meta>`), a mrtav
  *    unos ovdje obara je isto (stranica je u međuvremenu dobila `cover`, a pravila i dalje
  *    stoje ugašena).
+ *
+ * ✅ **DANAS JE PRAZAN, i to je ISHOD, ne propust** (①/3d, Leon 2026-09-21: *„naravno da treba
+ *    sve poravnati"*). Svih šest samostalnih dokumenata — stranica odobrenja i pet pravnih —
+ *    dobilo je `viewport-fit=cover` i nadoknadu kroz `var(--safe-*)` u `css/legal.css`, pa
+ *    nijednom više ne treba iznimka. Prazan popis znači da se na **svakoj** mjerenoj stranici
+ *    pravila o sigurnoj zoni stvarno primjenjuju. Kad nešto opet uđe, uz njega mora stajati
+ *    razlog. (Isti oblik kao `scripts/contrast-live-allow.json`, koji je također prazan.)
  */
-const BEZ_IZREZA = {
-    'odobrenje:prijavi-se': 'samostalan dokument bez `viewport-fit=cover` — iOS ga slaže unutar sigurne zone',
-    'odobrenje:dopusti-odbij': 'isti dokument, stanje poslije prijave',
-    privacy: 'pravna stranica bez `viewport-fit=cover` (①/3c)',
-    terms: 'pravna stranica bez `viewport-fit=cover` (①/3c)',
-    faq: 'pravna stranica bez `viewport-fit=cover` (①/3c)',
-    contact: 'pravna stranica bez `viewport-fit=cover` (①/3c)',
-    odjava: 'odjava s maila, bez `viewport-fit=cover` (①/3c)'
-};
+const BEZ_IZREZA = {};
 
 /**
  * Samostalni dokumenti koje mjeri JAVNA brana (①/3c) — ime ekrana = ime datoteke bez `.html`.

@@ -199,6 +199,7 @@ test.beforeAll(async ({ browser }, testInfo) => {
         // sesija se postavljaju PRIJE prvog crtanja, pa se ne mogu naknadno ugurati u ovu.
         for (const stanje of G.EKRANI_ODOBRENJE) {
             const p = await otvoriOdobrenje(ctx, stanje);
+            await G.postaviRub(p, e.rub);
             snimka.push({
                 e, ekran: 'odobrenje:' + stanje,
                 m: await G.mjeriStranicu(p, e.rub), r: await G.mjeriRubove(p, e.rub)
@@ -213,6 +214,13 @@ test.beforeAll(async ({ browser }, testInfo) => {
             await p.goto('/' + ime + '.html');
             await p.waitForSelector('main.legal', { state: 'visible', timeout: 20000 });
             await p.waitForLoadState('load');
+            // ⚠️ BEZ OVOGA JE MJERA NEPOPRAVLJIVA. Chromium ne zna `env()`, pa je sigurna zona na
+            // stranici 0 px — a `mjeri()` sudi po profilu uređaja (59 px). Bez ubrizgavanja se CSS
+            // nadoknada doslovno ne može vidjeti, pa bi stranica ostala crvena što god napisali.
+            // `idiNa` to radi za ekrane aplikacije, `mjeriRubove` za svoju fazu; samostalni
+            // dokumenti idu mimo oba puta i moraju sami. (Nađeno u ①/3d, kad nadoknada nije
+            // pomaknula nijednu koordinatu.)
+            await G.postaviRub(p, e.rub);
             snimka.push({
                 e, ekran: ime,
                 m: await G.mjeriStranicu(p, e.rub), r: await G.mjeriRubove(p, e.rub)
