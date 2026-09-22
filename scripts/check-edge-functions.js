@@ -149,6 +149,8 @@ async function probeGet(slug) {
   console.log('   ' + BASE + '\n');
 
   let fail = 0;
+  let izmjereno = 0;                  // koliko je slugova STVARNO dobilo odgovor
+  const nemjereno = [];               // i koji nisu — mjerač mora reći koliko je dotaknuo
 
   // 1) Sve iz repozitorija MORA biti deployano i MORA tražiti JWT — osim imenovanih javnih.
   const expected = expectedSlugs();
@@ -162,9 +164,18 @@ async function probeGet(slug) {
   for (const slug of expected) {
     let post;
     try { post = await probe(slug); } catch (e) {
-      console.log(`  ⊘ ${slug} — mreža nedostupna (${e.message}); preskačem`);
-      return process.exit(0);                       // offline nije pad gatea
+      // ⚠️ NE PREKIDAJ I NE ODBACUJ već nađene kvarove. Prijašnja verzija je ovdje radila
+      // `return process.exit(0)`, pa je jedan nedostupan zahtjev značio: ostatak funkcija se
+      // ne gleda, stranci iz MUST_BE_GONE se ne gledaju, a ✗ „mrtav zapis" (koji se broji PRIJE
+      // ijednog zahtjeva) se baca — i ljuska vidi ✅. Izmjereno: `CHECK_FUNCTIONS_URL` na
+      // nepostojeći host → jedan redak i EXIT 0, uz nula izmjerenih tvrdnji.
+      // Nula izmjerenih stavki nije uspjeh; „nisam mogao izmjeriti" mora izgledati drukčije
+      // od „izmjerio sam i čisto je".
+      nemjereno.push({ slug, zasto: e.message });
+      console.log(`  ⊘ ${slug} — mreža nedostupna (${e.message}); NIJE MJERENO`);
+      continue;
     }
+    izmjereno++;
     const st = post.status;
 
     // Funkcija koja na produkciji JOŠ NE SMIJE postojati: ondje se tvrdi njezina ODSUTNOST,
@@ -194,15 +205,32 @@ async function probeGet(slug) {
   for (const { slug, why } of MUST_BE_GONE) {
     let st;
     try { st = (await probe(slug)).status; } catch (e) {
-      console.log(`  ⊘ ${slug} — mreža nedostupna; preskačem`);
+      nemjereno.push({ slug, zasto: e.message });
+      console.log(`  ⊘ ${slug} — mreža nedostupna; NIJE MJERENO`);
       continue;
     }
+    izmjereno++;
     if (st === 404) console.log(`  ✓ ${slug} — obrisan (404)`);
     else {
       fail++;
       console.log(`  ✗ ${slug} — JOŠ ŽIVI (HTTP ${st}) — ${why}`);
       console.log(`      obriši: Supabase Dashboard → Edge Functions → ${slug} → Delete`);
     }
+  }
+
+  // DOSEG SE ISPISUJE UVIJEK. Zeleni redak bez broja ne razlikuje „provjerio sam sve i čisto je"
+  // od „nisam stigao provjeriti ništa" — a upravo je to bila rupa (vidi hvatač iznad).
+  const ocekivano = expected.length + MUST_BE_GONE.length;
+  console.log(`\n   (doseg: izmjereno ${izmjereno} od ${ocekivano} funkcija)`);
+
+  if (nemjereno.length) {
+    console.log(`\n⚠️  NIJE MJERENO ${nemjereno.length}: ` + nemjereno.map((n) => n.slug).join(', '));
+    console.log('   Mreža nije bila dostupna — gate NE TVRDI ništa o tim funkcijama.');
+    if (fail) console.log(`   Uz to je ${fail} stvarnih kvarova NAĐENO prije prekida (niže).`);
+    // Izlazni kod 2 (a ne 0) — „nisam mogao izmjeriti" je neuspjeh gatea, ali se RAZLIKUJE
+    // od kvara projekta (1), da CI i čovjek mogu odvojiti tihu mrežu od pokvarenog projekta.
+    if (fail) console.log(`\n❌ ${fail} problem(a) — razlog piše uz svaku stavku.`);
+    process.exit(fail ? 1 : 2);
   }
 
   console.log('\n' + (fail === 0
