@@ -42,6 +42,7 @@
     "check:contrast:live": "node scripts/check-contrast-live.js",
     "palette:breakdown": "node scripts/palette-breakdown.js",
     "check:functions": "node scripts/check-edge-functions.js",
+    "deploy:function": "node scripts/deploy-function.js",
     "mcp:probe": "node scripts/mcp-probe.js",
     "css:debt": "node scripts/css-debt.js",
     "css:diff": "node scripts/css-diff.js",
@@ -87,6 +88,7 @@
     "dotenv": "17.4.2",
     "lightningcss": "1.32.0",
     "pdf-parse": "2.4.5",
+    "supabase": "2.117.0",
     "tailwindcss": "4.3.3",
     "typescript": "6.0.3"
   },

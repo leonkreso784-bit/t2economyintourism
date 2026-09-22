@@ -144,6 +144,13 @@ async function probeGet(slug) {
   return { status: res.status, location: res.headers.get('location') };
 }
 
+// Popisi su IZVOR ISTINE i za `scripts/deploy-function.js` (koja funkcija ide bez `verify_jwt`).
+// Jedan popis, dva čitatelja — nikad druga kopija. Zato se izvoze, a prolaz se pokreće samo
+// kad je ova datoteka POKRENUTA, ne kad je netko `require`-a.
+module.exports = { PUBLIC_FNS, JOS_NE_NA_PRODUKCIJI, MUST_BE_GONE, expectedSlugs };
+
+if (require.main !== module) return;
+
 (async () => {
   console.log('\n=== check:functions — Edge Functions na ' + (process.env.CHECK_FUNCTIONS_URL ? 'ZADANOM PROJEKTU' : 'PRODUKCIJI') + ' ===');
   console.log('   ' + BASE + '\n');
