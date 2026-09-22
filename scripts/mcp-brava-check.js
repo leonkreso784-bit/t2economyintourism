@@ -65,6 +65,14 @@ const ULOGA = 'mcp_klijent';
 const NULA = '00000000-0000-0000-0000-000000000000';
 
 /**
+ * Koliko provjera ova brana MORA izvesti (bez ove same). Čegrtaljka po kalupu `check:final`.
+ * Povod: blok o korisniku koji nije zaključan preskakao se uz običan `note()`, koji ne diže
+ * brojač — ukupno bi palo s 41 na 38, a brana bi i dalje javila „✅ brava drži".
+ * Podiže se SVJESNO, uz novu provjeru; spuštanje bez razloga znači da je nešto tiho otpalo.
+ */
+const OCEKIVANO_PROVJERA = 41;
+
+/**
  * `PUT /auth/v1/user` — ŠTO POSTAVKA „traži trenutnu lozinku" ZATVARA, A ŠTO NE (①/2b, 21.09.).
  *
  * Do ①/2b je ovdje stajala zastavica `OCEKUJ.authApiZatvoren`, uz plan da nakon postavke ode na
@@ -106,6 +114,10 @@ const AUTH_POLJA = [
     },
     {
         ime: 'data (metapodaci)',
+        // ⚠️ `biljeg` se POSLIJE traži u odgovoru: `ocekuj {200, ''}` sam po sebi svodi se na
+        // „status je 200", pa bi i PRAZAN zahtjev (`{}`) prošao jednako — a onda redak ne bi
+        // dokazivao da je rupa otvorena, nego samo da poslužitelj odgovara.
+        biljeg: 'brava_proba',
         tijelo: () => ({ data: { brava_proba: Date.now() } }),
         zatvoreno: false,
         ocekuj: { status: 200, kod: '' },
@@ -128,7 +140,13 @@ const AUTH_POLJA = [
             { status: 400, kod: 'email_address_invalid' },
             { status: 429, kod: 'over_email_send_rate_limit' }
         ],
-        zasto: 'promjenu maila postavka o lozinci ne pokriva; prava brana ondje je potvrda koja stiže na OBA mailova'
+        // ⚠️ 429 stiže iz GoTrueovog MAIL-limitera, a ne iz provjere prava — pa sam po sebi
+        // dokazuje samo da zahtjev nije odbijen prije njega. Da ne zamijeni dokaz tišinom, uz
+        // njega ide KONTROLA: isti zahtjev s neispravnim tokenom mora dati 401. Ako i on dobije
+        // 429, limiter stoji ISPRED identiteta i ovaj redak tada ne dokazuje ništa → prijavljuje
+        // se kao NEMJEREN, ne kao prošao (SKIP nije PASS).
+        kontrolaNaLimitu: true,
+        zasto: 'promjenu maila postavka o lozinci ne pokriva. ⚠️ NEMJERENO ovdje: oslanjamo se na to da dvostruka potvrda (`Secure email change`) traži klik na OBA mailova — to je PRETPOSTAVKA, ne izmjerena činjenica, jer bi mjerenje tražilo slanje pravog maila.'
     }
 ];
 
@@ -249,6 +267,17 @@ async function prijava(email, password) {
   return (await r.json()).access_token;
 }
 
+/** Jednokratni korisnik BEZ lozinke — kakav nastane kad se netko prijavi Googleom (U1). */
+async function createThrowawayBezLozinke() {
+    const email = `mcp-brava-nopw-${Date.now()}@sokrat-test.invalid`;
+    const r = await http('/auth/v1/admin/users', {
+        method: 'POST', headers: svcHeaders(),
+        body: JSON.stringify({ email, email_confirm: true })
+    });
+    if (!r.ok) throw new Error(`createUser ${r.status}: ${(await r.text()).slice(0, 200)}`);
+    return { id: (await r.json()).id, email };
+}
+
 /**
  * Sesija iz RECOVERY linka — točno ono što dobije korisnik koji je ZABORAVIO lozinku.
  * Postoji jer je to jedina invarijanta koju bi postavka mogla srušiti nečujno: tko staru lozinku
@@ -279,7 +308,10 @@ async function putUser(token, tijelo) {
     const tekst = await r.text();
     let json = {};
     try { json = JSON.parse(tekst); } catch (e) { /* nije json */ }
-    return { status: r.status, kod: json.error_code || '', tekst: tekst.replace(/\s+/g, ' ').slice(0, 120) };
+    // `json` ide van jer `200` NIJE dokaz da se išta upisalo — ovaj poslužitelj je već jednom
+    // vratio 200 i tiho progutao polje (`current_password` dok je postavka bila isključena).
+    // Uspješan `PUT /auth/v1/user` vraća AŽURIRANOG korisnika, pa se učinak dade pročitati natrag.
+    return { status: r.status, kod: json.error_code || '', json, tekst: tekst.replace(/\s+/g, ' ').slice(0, 120) };
 }
 
 /** PRAVI OAuth token: svjež DCR klijent → authorize → GET detalja → consent → zamjena koda. */
@@ -571,41 +603,117 @@ async function provjeriCitanjeTablica(inv, token) {
   // postavka „traži trenutnu lozinku", i to SAMO za lozinku; zato se svako polje mjeri posebno.
   console.log('\n— Auth API: što AI-token smije, a što ne (' + AUTH_POLJA.length + ' polja) —');
   for (const p of AUTH_POLJA) {
-    const r = await putUser(oauth.token, p.tijelo());
+    const poslanoTijelo = p.tijelo();
+    const r = await putUser(oauth.token, poslanoTijelo);
     // JEDNA usporedba za oba smjera: odgovor mora biti TOČNO onaj koji popis tvrdi. Put koji se
     // otvorio pada jednako kao put koji se zatvorio (mrtav unos) — popis time ne može zastarjeti.
     const dopusteni = Array.isArray(p.ocekuj) ? p.ocekuj : [p.ocekuj];
-    const slaze = dopusteni.some((o) => r.status === o.status && r.kod === o.kod);
+    let slaze = dopusteni.some((o) => r.status === o.status && r.kod === o.kod);
     const ocekivano = dopusteni.map((o) => o.status + ' ' + (o.kod || '(bez koda)')).join(' ili ');
-    record((p.zatvoreno ? 'odbija: ' : 'IMENOVANO otvoreno (izvan dosega postavke): ') + p.ime, slaze,
-      'HTTP ' + r.status + ' ' + (r.kod || '(bez koda)') +
+    let dodatak = '';
+
+    // Učinak, ne odgovor: uspješan PUT vraća ažuriranog korisnika, pa se biljeg mora pročitati
+    // NATRAG. Bez toga bi i prazan zahtjev (`{}`) prošao jednako — 200 nije dokaz upisa.
+    if (slaze && p.biljeg) {
+      const upisano = ((r.json || {}).user_metadata || {})[p.biljeg];
+      const poslano = (poslanoTijelo.data || {})[p.biljeg];
+      if (upisano === undefined || upisano !== poslano) {
+        slaze = false;
+        dodatak = '; 200 ALI biljeg `' + p.biljeg + '` se ne vidi natrag u odgovoru (poslano '
+          + JSON.stringify(poslano) + ', vraćeno ' + JSON.stringify(upisano) + ') — zahtjev je tiho progutan';
+      }
+    }
+
+    // Kontrola kad je odgovor stigao iz limitera, a ne iz provjere prava (v. `kontrolaNaLimitu`).
+    let nemjeren = false;
+    if (slaze && p.kontrolaNaLimitu && r.status === 429) {
+      const lazni = await putUser('ne.valjan.token', p.tijelo());
+      // IZMJERENO 22.09., da se kontrola ne sudi po pretpostavljenom broju: neispravan token daje
+      // `403 bad_jwt`, a prazan `401 no_authorization`. Oba su odbijanje po IDENTITETU — to je
+      // ono što dokazuje da limiter nije ispred njega. Sve drugo (pogotovo 429) znači da ovaj
+      // redak ništa ne mjeri.
+      const poIdentitetu = lazni.kod === 'bad_jwt' || lazni.kod === 'no_authorization';
+      if (!poIdentitetu) {
+        nemjeren = true;
+        dodatak = '; NEMJEREN: i neispravan token dobije HTTP ' + lazni.status + ' ' + (lazni.kod || '')
+          + ' → limiter stoji ISPRED identiteta, pa 429 ne dokazuje da je put otvoren';
+      } else {
+        dodatak = '; 429 je iz mail-limitera, a neispravan token daje ' + lazni.status + ' ' + lazni.kod
+          + ' → identitet se provjerava PRIJE limitera';
+      }
+    }
+
+    record((p.zatvoreno ? 'odbija: ' : 'IMENOVANO otvoreno (izvan dosega postavke): ') + p.ime,
+      slaze && !nemjeren,
+      'HTTP ' + r.status + ' ' + (r.kod || '(bez koda)') + dodatak +
       (slaze ? '' : ' ← očekivano ' + ocekivano +
         (p.zatvoreno && r.status === 200 ? '; PROŠAO — AI je promijenio lozinku' : '') +
         (!p.zatvoreno ? '; MRTAV UNOS ili promijenjeno ponašanje' : '')));
-    if (slaze && !p.zatvoreno) note(p.ime + ' — ' + p.zasto);
+    if (slaze && !nemjeren && !p.zatvoreno) note(p.ime + ' — ' + p.zasto);
   }
 
   // ─── Brava ne smije ubiti KORISNIKA (isto načelo kao „MCP alat mora raditi") ─────────────────
   // Zaseban jednokratni korisnik: promjena lozinke poništava ostale sesije, pa bi na glavnom
   // korisniku oborila OAuth token koji provjere ispod još trebaju.
   console.log('\n— a korisnik i dalje MORA moći do svoje lozinke —');
-  let kL;
-  try { kL = await createThrowaway(); } catch (e) { kL = null; note('drugi jednokratni korisnik se ne stvara: ' + e.message); }
+  // ⚠️ Ovaj blok se NE SMIJE tiho preskočiti: `note()` ne diže brojač, pa bi pad pri stvaranju
+  // korisnika spustio ukupno s 43 na 40 i brana bi i dalje javila „✅ brava drži" — a razlog zbog
+  // kojeg se korisnik ne da stvoriti (izgubljena admin prava, ugašena registracija, uspavana baza)
+  // točno je okruženje u kojem ove tvrdnje NE vrijede. Zato pada ZATVORENO.
+  let kL = null;
+  try { kL = await createThrowaway(); } catch (e) { record('drugi jednokratni korisnik nastao', false, e.message); }
   if (kL) {
     const jwt = await prijava(kL.email, kL.password);
     const nova = 'Brava-' + crypto.randomBytes(5).toString('hex') + '!9';
     const ok = await putUser(jwt, { password: nova, current_password: kL.password });
-    record('korisnik s TOČNOM trenutnom lozinkom promijeni lozinku', ok.status === 200,
-      'HTTP ' + ok.status + ' ' + (ok.kod || '') + (ok.status >= 400 ? ' ← postavka je zaključala i korisnika' : ''));
+    // ⚠️ HTTP 200 NIJE dokaz da je lozinka promijenjena — ovaj je poslužitelj već jednom vratio
+    // 200 i tiho progutao polje (`current_password` dok je postavka bila isključena). Dokaz je
+    // PRIJAVA novom lozinkom; bez nje bi i `{data:{}}` (nikakva promjena) prošlo kao uspjeh.
+    const ulaz = ok.status === 200 ? await prijava(kL.email, nova).then(() => true, () => false) : false;
+    record('korisnik s TOČNOM trenutnom lozinkom promijeni lozinku I NJOME SE PRIJAVI', ulaz,
+      'PUT ' + ok.status + ' ' + (ok.kod || '') +
+      (ok.status >= 400 ? ' ← postavka je zaključala i korisnika'
+        : ulaz ? ' → prijava novom lozinkom prolazi' : ' ← 200, ali se novom lozinkom NE može prijaviti'));
 
     // Tko je lozinku ZABORAVIO, staru ne zna. Postavka koja bi je tražila i ovdje zatvorila bi
     // jedini put natrag u račun — i to bez ijednog vidljivog znaka dok se netko ne zaključa.
-    const opor = await sesijaIzOporavka(kL.email);
-    const r2 = await putUser(opor, { password: 'Brava-' + crypto.randomBytes(5).toString('hex') + '!9' });
-    record('OPORAVAK RAČUNA (reset mailom) postavlja novu lozinku BEZ stare', r2.status === 200,
-      'HTTP ' + r2.status + ' ' + (r2.kod || '') + (r2.status >= 400 ? ' ← oporavak računa je SLOMLJEN' : ''));
+    const nova2 = 'Brava-' + crypto.randomBytes(5).toString('hex') + '!9';
+    try {
+      const opor = await sesijaIzOporavka(kL.email);
+      const r2 = await putUser(opor, { password: nova2 });
+      const ulaz2 = r2.status === 200 ? await prijava(kL.email, nova2).then(() => true, () => false) : false;
+      record('OPORAVAK RAČUNA (reset mailom) postavi novu lozinku BEZ stare I NJOME SE PRIJAVI', ulaz2,
+        'PUT ' + r2.status + ' ' + (r2.kod || '') +
+        (r2.status >= 400 ? ' ← oporavak računa je SLOMLJEN'
+          : ulaz2 ? ' → prijava novom lozinkom prolazi' : ' ← 200, ali se novom lozinkom NE može prijaviti'));
+    } catch (e) {
+      // Imenovan pad: bez ovoga bi `generate_link` koji udari u limit oborio CIJELU branu
+      // porukom bez koraka — isti razred lažne uzbune koji je zatvoren za 429.
+      record('OPORAVAK RAČUNA (reset mailom) postavi novu lozinku BEZ stare I NJOME SE PRIJAVI', false, e.message);
+    }
 
     await http('/auth/v1/admin/users/' + kL.id, { method: 'DELETE', headers: svcHeaders() }).catch(() => {});
+  }
+
+  // U1 — DRUGI način na koji bi postavka mogla zaključati korisnika, i jedini koji pogađa one
+  // koji su došli Googleom: račun BEZ lozinke koji je tek POSTAVLJA. Stara lozinka ne postoji,
+  // pa je nema što upisati. Mjereno je 21.09. i prošlo, ali dotad nije bilo ni u jednoj brani.
+  let kBez = null;
+  try { kBez = await createThrowawayBezLozinke(); } catch (e) { record('jednokratni korisnik BEZ lozinke nastao', false, e.message); }
+  if (kBez) {
+    const prva = 'Brava-' + crypto.randomBytes(5).toString('hex') + '!9';
+    try {
+      const opor = await sesijaIzOporavka(kBez.email);
+      const r3 = await putUser(opor, { password: prva });
+      const ulaz3 = r3.status === 200 ? await prijava(kBez.email, prva).then(() => true, () => false) : false;
+      record('račun BEZ lozinke (kao Google) postavi PRVU lozinku I NJOME SE PRIJAVI', ulaz3,
+        'PUT ' + r3.status + ' ' + (r3.kod || '') +
+        (r3.status >= 400 ? ' ← postavka je zaključala korisnike bez lozinke'
+          : ulaz3 ? ' → prijava prvom lozinkom prolazi' : ' ← 200, ali se tom lozinkom NE može prijaviti'));
+    } catch (e) {
+      record('račun BEZ lozinke (kao Google) postavi PRVU lozinku I NJOME SE PRIJAVI', false, e.message);
+    }
+    await http('/auth/v1/admin/users/' + kBez.id, { method: 'DELETE', headers: svcHeaders() }).catch(() => {});
   }
 
   console.log('\n— brisanje računa (zadnje: briše jednokratnog korisnika) —');
@@ -618,6 +726,17 @@ async function provjeriCitanjeTablica(inv, token) {
     'HTTP ' + da.status + (da.status === 200 ? ' ← OBRISAO RAČUN' : ''));
 
   await http('/auth/v1/admin/users/' + korisnik.id, { method: 'DELETE', headers: svcHeaders() }).catch(() => {});
+
+  // ─── ČEGRTALJKA NA DOSEGU (kalup `check:final`: „osmi = pad") ────────────────────────────────
+  // Bez ovoga blok koji tiho nestane samo spusti ukupan broj, a brana i dalje javi „brava drži".
+  // Zato se broj IZVEDENIH provjera uspoređuje sa zakucanim: manje = nešto je preskočeno, više =
+  // netko je dodao provjeru a nije podigao osnovicu (pa nitko nije pogledao mjeri li ona išta).
+  const izvedeno = touched;
+  record('doseg: izvedeno točno ' + OCEKIVANO_PROVJERA + ' provjera', izvedeno === OCEKIVANO_PROVJERA,
+    izvedeno === OCEKIVANO_PROVJERA ? '' :
+      'izvedeno ' + izvedeno + (izvedeno < OCEKIVANO_PROVJERA
+        ? ' ← BLOK JE PRESKOČEN, a brana bi inače javila uspjeh'
+        : ' ← nova provjera bez podignute osnovice'));
 
   console.log('\n  dotaknuto: ' + touched + ' provjera, palo: ' + failed);
   console.log(failed ? '✗ BRAVA NE DRŽI\n' : '✅ brava drži\n');
