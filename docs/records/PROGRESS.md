@@ -5,6 +5,45 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-22 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — pinovi Edge Functiona: izvor gotov, deploy BLOKIRAN
+
+Zaseban zahvat (Leonova odluka): dug iz pravila #9 koji je `edge-pinovi` našao ne ostaje u
+osnovici nego se popravlja ciglom s redeployom.
+
+**Izvor je gotov (`1f875b4`):** `jsr:@supabase/supabase-js@2` → **`2.117.0`** u sve tri funkcije;
+osnovica u brani je sad **prazna**. ⚠️ Uklanjanje osnovice bilo je **prisiljeno, ne uredno**: čim su
+pinovi postali točni, tvrdnja o mrtvim unosima je pala i **imenovala sva tri retka** — drugi smjer
+čegrtaljke radi u stvarnom životu, ne samo u mutaciji.
+
+**Mjereno prije pina:**
+- `@2` se **danas** razrješava na **2.117.0** (146 stabilnih 2.x na JSR-u).
+  ⚠️ Prva verzija mog mjerenja naivno je sortirala nizove i stavila `2.117.0-canary.1` **iznad**
+  `2.117.0`; semver to poriče, a raspon se na predizdanje ionako ne razrješava.
+- ⚠️ **KOJU verziju deployane funkcije vrte danas NIJE SE DALO UTVRDITI** — JSR ne daje datume
+  objave kroz `meta.json`. Vodi se kao **nepoznato**, ne kao „vjerojatno ista". Posljedica koja
+  opravdava pin: **svaki redeploy ionako pomiče na 2.117.0**; pin to čini izričitim umjesto slučajnim.
+- Preglednik vrti `2.110.8`; namjerno se ne poravnava (taj je pin vezan uz CDN i SRI).
+
+### ⛔ DEPLOY NA STAGING JE BLOKIRAN — i to nije naš kvar
+`mcp__…__deploy_edge_function` je odbijen **harness-klasifikatorom** uz oznaku *„Production
+Deploy"*, iako cilj **jest staging** (`czljmvigkgiajzjxtndq`). Isti razred kao `apply_migration`
+13.09. **Nije zaobiđeno** — pravilo je javiti i dati Leonu korak.
+**Provjereno da ništa nije djelomično otišlo:** `delete-account` na stagingu je i dalje **v5**,
+isti `ezbr_sha256`, isti `updated_at`; `check:functions` vs staging **6/6 EXIT 0**.
+
+⚠️ **Posljedica za tvrdnju cigle:** pin **nije izvršno provjeren** — `test:delete-account` protiv
+**2.117.0** nije pušten, jer staging još vrti stari build. Dok se ne pusti, cigla je **izvorno
+gotova, mjerno NIJE**.
+
+### ⚠️ NALAZ KOJI MIJENJA OBLIK PRODUKCIJSKOG KORAKA
+`delete-account` na **ovoj grani nije isti** kao na produkciji: F6 mu je dodao **token-guard**
+(6 redaka, commit `12dc806`), koji na produkciji **ne postoji**. Redeploy na produkciju **s ove
+grane** dakle ne bi bio „samo pin" nego bi **uz njega isporučio i F6 sigurnosni kôd** — pod
+izlikom cigle o ovisnostima. To se ne smije dogoditi tiho; produkcijski pin mora ići **s `main`-a**
+ili čekati da F6 ionako dođe (F7).
+
+---
+
 ## 2026-09-22 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/4a: `check:functions` zna za `mcp`, i pinovi dobivaju branu
 
 **Cigla je razrezana na dvoje.** ①/4 nosi tri posla (iznimka u `check:functions` · točno pinani
