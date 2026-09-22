@@ -20,7 +20,7 @@
 //    SVAKI mail ondje. Na produkciji je nema. Mail na izmišljenu adresu (npr. `@sokrat.local`
 //    testnog računa) vraća se kao bounce i kvari ugled verificirane domene.
 
-import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { createClient } from 'jsr:@supabase/supabase-js@2.117.0';
 import { primatelji, provjeriPoruku, sastaviMail, tokenOdjave, SEGMENTI } from '../_shared/mail-core.ts';
 import { biljegTokena } from '../_shared/token-guard.ts';
 

@@ -144,19 +144,17 @@ test('svaka datoteka s diska je ili SKENIRANA ili imenovana s razlogom', () => {
   }
 });
 
-// ČEGRTALJKA S IMENIMA. Ova je brana pri prvom pokretanju našla TRI prava kršenja pravila #9
-// (`jsr:@supabase/supabase-js@2` = raspon glavne verzije), i to u kodu koji F6 ne smije dirati:
-// `delete-account` je NA PRODUKCIJI, a `mail-unsubscribe`/`send-notification` pripadaju grani
-// `feat/f2-mail`. Zato se ne prešućuju nego IMENUJU: popis je zapis duga, ne dopuštenje.
-// Novo kršenje pada po defaultu; popravljeno kršenje pada kao MRTAV UNOS — oba smjera, jedna usporedba.
-const OSNOVICA = [
-  { datoteka: 'supabase/functions/delete-account/index.ts', spec: 'jsr:@supabase/supabase-js@2',
-    zasto: 'funkcija je NA PRODUKCIJI; promjena pina traži redeploy destruktivnog endpointa — zaseban korak uz Leonov OK' },
-  { datoteka: 'supabase/functions/mail-unsubscribe/index.ts', spec: 'jsr:@supabase/supabase-js@2',
-    zasto: 'grana feat/f2-mail — F6 je ne dira' },
-  { datoteka: 'supabase/functions/send-notification/index.ts', spec: 'jsr:@supabase/supabase-js@2',
-    zasto: 'grana feat/f2-mail — F6 je ne dira' },
-];
+// ČEGRTALJKA S IMENIMA — danas PRAZNA, i to je ishod, ne propust.
+//
+// Pri prvom pokretanju (22.09.) ova je brana našla TRI prava kršenja pravila #9
+// (`jsr:@supabase/supabase-js@2` = raspon glavne verzije, koji Deno razrješava pri DEPLOYU, iz
+// mreže, bez lockfilea). Stajala su ovdje imenovana dok Leon nije presudio da se popravljaju
+// zasebnom ciglom s redeployom — i tada su popravljena (pin na `2.117.0`).
+//
+// ⚠️ Da popis nije imao drugu stranu, ovo bi se tiho pretvorilo u dopuštenje koje nitko ne čita.
+// Ovako je uklanjanje bilo PRISILJENO: čim su pinovi postali točni, tvrdnja o mrtvim unosima je
+// pala i imenovala sva tri retka. Prazna osnovica sad znači „nema duga", a ne „nitko nije gledao".
+const OSNOVICA = [];
 const kljuc = (n) => `${n.datoteka}|${n.spec}`;
 
 test('svaki udaljeni specifikator je pinan TOČNO (pravilo #9: `^` je zabranjen)', () => {

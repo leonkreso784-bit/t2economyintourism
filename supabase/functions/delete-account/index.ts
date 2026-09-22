@@ -39,7 +39,7 @@
 //    `lesson-images`) i ostao bi POLUOBRISAN račun. Zato admin-guard stoji PRIJE ijednog brisanja
 //    → operacija prođe cijela ili ne promijeni ništa.
 
-import { createClient, type SupabaseClient } from 'jsr:@supabase/supabase-js@2';
+import { createClient, type SupabaseClient } from 'jsr:@supabase/supabase-js@2.117.0';
 import { biljegTokena } from '../_shared/token-guard.ts';
 
 const PERSONAL_BUCKETS = ['node-images', 'profile-images'];
