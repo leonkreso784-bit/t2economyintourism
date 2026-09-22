@@ -5,6 +5,79 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-22 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/4a: `check:functions` zna za `mcp`, i pinovi dobivaju branu
+
+**Cigla je razrezana na dvoje.** ①/4 nosi tri posla (iznimka u `check:functions` · točno pinani
+paketi · Vercel rewrite), a treći dira **zajednički šav** (`vercel.json` vrijedi i za produkciju)
+i traži odluku o tome na koji projekt preview smije gađati. Zato je ①/4a sve što ne ovisi o toj
+odluci, a rewrite ostaje ①/4b.
+
+### Mjereno prije koda
+
+- **`check:functions` bi na `mcp` bio ZELEN IZ KRIVOG RAZLOGA.** Izmjereno na stagingu:
+  neautenticiran POST daje **401**, ali taj 401 dolazi iz `withOAuthProtectedResource`, ne s
+  gatewaya — funkcija ima `verify_jwt = false`. Gate je dotad sudio po **golom broju**, pa bi
+  jednako ispisao ✓ i kad bi netko vratio `verify_jwt = true`: tada zahtjev pada PRIJE funkcije,
+  klijent nikad ne vidi `WWW-Authenticate` i **konektor je mrtav**, a brana i dalje zelena.
+  Isti razred kao `PGRST202` i kao 400-vs-400 u ①/2b.
+- **Lanac otkrivanja je izmjeren do kraja:** zaglavlje oglašava
+  `resource_metadata="…/functions/v1/mcp/oauth-protected-resource"`, i **taj put stvarno poslužuje**
+  dokument (200), jednako kao i `…/mcp/.well-known/oauth-protected-resource`. RFC 9728 oblik s
+  **prefiksom** (`/.well-known/oauth-protected-resource/functions/v1/mcp`) NE stiže do funkcije —
+  vraća 401 Supabaseova gatewaya. ⚠️ Usput je oborena moja prva tvrdnja da oglašeni put ne
+  poslužuje ništa: razlikuje se od `.well-known` oblika, ali **oba rade**.
+- **`MCP_RESOURCE_URL` na stagingu NIJE postavljen** — zaglavlje oglašava adresu funkcije na
+  Supabaseu. To je ulaz u ①/4b, ne propust.
+- **Paketi su već pinani točno** (`@modelcontextprotocol/server@2.0.0`, `@supabase/server@1.7.0`,
+  nula `^`) — dakle posao ①/4 nije promjena nego **mjera**: dotad to nitko nije provjeravao.
+
+### Cigla
+
+**`scripts/check-edge-functions.js`:**
+- `mcp` ulazi u `PUBLIC_FNS`, ali njegova provjera **ne staje na broju** — tvrdi cijeli lanac:
+  401 → postoji `WWW-Authenticate: Bearer` → nosi `resource_metadata="…"` → ta adresa **stvarno
+  vraća 200** → dokument opisuje **naš** resurs → prijava vodi na **naš** `/auth/v1`.
+- Novi popis **`JOS_NE_NA_PRODUKCIJI`**: `mcp` na produkciji mora biti **odsutan (404)**, i to je
+  tvrdnja, ne izgovor. „Nije još deployano" i „ne smije biti deployano" izgledaju isto — razlika je
+  u tome što drugo netko mora namjerno opozvati. Čim se `mcp` pojavi na produkciji, gate pada i
+  traži da se unos makne uz F7 korak.
+- Mrtav unos u **oba** popisa pada kao i propuštena funkcija (provjera protiv diska).
+- Usput popravljeno: poruka o uspjehu za javne funkcije bila je **zakucana na tekst
+  `mail-unsubscribe`a** („odbija bez potpisa (400) i GET vodi na odjava.html") — s drugom javnom
+  funkcijom ispisivala bi tvrdnju koja nije istina. Sad svaka nosi svoj razlog.
+
+**`tests/unit/edge-pinovi.test.js` (novo, u `test:unit`):** svaki udaljeni uvoz u
+`supabase/functions/**` mora biti pinan točno. Datoteke se **nabrajaju s diska**, komentari se
+odstranjuju prije provjere, a **doseg se ispisuje** (7 datoteka, 5 specifikatora).
+
+⚠️ **Brana je pri prvom pokretanju našla TRI prava kršenja pravila #9** koja dotad nitko nije
+mjerio: `jsr:@supabase/supabase-js@2` je **raspon glavne verzije** — Deno ga razrješava pri deployu,
+iz mreže, bez lockfilea, pa isti commit može dobiti dvije različite verzije. Nijedno se ne popravlja
+u ovoj cigli (`delete-account` je **na produkciji**, druga dva pripadaju grani `feat/f2-mail`), pa
+stoje u **imenovanoj osnovici s razlogom** — zapis duga, ne dopuštenje. Novo kršenje pada po
+defaultu, a popravljeno pada kao **mrtav unos**.
+
+⚠️ **Prva verzija brane nije mjerila ono što tvrdi:** hvatala je bilo koji navodnik s `https://` i
+prijavila `https://api.resend.com/emails/batch` i `https://www.sokratstudy.com` — adrese koje se
+**pozivaju u izvođenju**, a nisu ovisnost. Sad se hvata samo **uvozni položaj**.
+
+### Zeleno
+`check:functions` protiv **stagingu**: 6/6 ✅ · protiv produkcije: `mcp` ✓ (404, po planu), a
+preostala dva ✗ su `feat/f2-mail` funkcije koje na produkciji **stvarno nisu** — nalaz je točan i
+nije u dosegu F6. `test:unit` uključuje `edge-pinovi` 4/4 · **preflight EXIT 0**.
+Bump nije trebao (dirani su `scripts/`, `tests/`, `package.json` — ni `js/**` ni `css/**`).
+
+### Sigurnosno pitanje iz prošle sesije — zatvoreno kao NEMJERLJIVO admin API-jem
+Vidi `docs/records/BACKLOG.md` (prva stavka): **`generate_link` piše onaj token koji zatražiš**
+(`email_change_current` → token za staru adresu, `email_change_new` → za novu), **neovisno o
+postavci** — dakle svaki zaključak izveden iz njega mjeri **alat, ne postavku**. Dvije uzastopne
+sonde dale su suprotne odgovore upravo zbog toga, i prva je bila moja pogrešna tvrdnja da je
+postavka uključena. Jedini valjan put je pravi `PUT /auth/v1/user`, a on **šalje mail** (naša
+domena ima MX preko Porkbuna, pa „nepostojeća adresa" nije tiha). Odluka je Leonova.
+Tri jednokratna korisnika sa stagingu obrisana — **0 siročadi**.
+
+---
+
 ## 2026-09-21 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/2b: polje „Trenutna lozinka"
 
 **Zašto ovim redom:** postavka „traži trenutnu lozinku" bez polja u profilu srušila bi promjenu
