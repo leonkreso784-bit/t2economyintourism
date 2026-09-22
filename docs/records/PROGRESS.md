@@ -67,14 +67,74 @@ preostala dva ✗ su `feat/f2-mail` funkcije koje na produkciji **stvarno nisu**
 nije u dosegu F6. `test:unit` uključuje `edge-pinovi` 4/4 · **preflight EXIT 0**.
 Bump nije trebao (dirani su `scripts/`, `tests/`, `package.json` — ni `js/**` ni `css/**`).
 
-### Sigurnosno pitanje iz prošle sesije — zatvoreno kao NEMJERLJIVO admin API-jem
-Vidi `docs/records/BACKLOG.md` (prva stavka): **`generate_link` piše onaj token koji zatražiš**
-(`email_change_current` → token za staru adresu, `email_change_new` → za novu), **neovisno o
-postavci** — dakle svaki zaključak izveden iz njega mjeri **alat, ne postavku**. Dvije uzastopne
-sonde dale su suprotne odgovore upravo zbog toga, i prva je bila moja pogrešna tvrdnja da je
-postavka uključena. Jedini valjan put je pravi `PUT /auth/v1/user`, a on **šalje mail** (naša
-domena ima MX preko Porkbuna, pa „nepostojeća adresa" nije tiha). Odluka je Leonova.
-Tri jednokratna korisnika sa stagingu obrisana — **0 siročadi**.
+### Obrnuta provjera — 20 mutacija (ADR-027: crveno se zapisuje, ne pamti)
+
+**Prvi krug (11):** A1 mcp-provjera puštena na PRAVI gateway-401 (`delete-account`) → „BEZ zaglavlja"
+(dokaz da razlikovnik razlikuje) · B1 unos maknut → „NIJE deployan" · B2 mrtav unos → „mrtav zapis" ·
+B3 `PROD` pokazuje na staging gdje `mcp` živi → „ŽIVI NA PRODUKCIJI" · C1 oglašena metadata-adresa
+razbijena → pad · C2 očekivani auth-poslužitelj tuđi → pad · D1 `^` u uvozu → „RASPON" · D2 uvoz bez
+verzije → pad · D3 osnovično kršenje popravljeno → „MRTVIH" · **K1** `^` samo u komentaru → ostaje
+zeleno · **K2** `https://` adresa koja se poziva a nije uvoz → ostaje zeleno.
+⚠️ Prvi pokušaj odbio je **tri** mutacije s „0 pogodaka" jer su tražene nizove pisale `\n`, a datoteke
+su **CRLF** — brojač pogodaka je spriječio **lažno crveno**. To je brana nad branom i radila je.
+⚠️ Povrat se **ne smije** suditi po sha radne kopije: `core.autocrlf=true` normalizira nove redove pri
+`git checkout`, pa se hash promijeni iako je sadržaj identičan. Sudi se po `git status`.
+
+**Drugi krug, poslije revizije (9):** F1a nedostupna mreža → **izlaz 2** i „izmjereno 0 od 6" ·
+F1b mrtav zapis + nedostupna mreža → **izlaz 1** (kvar se NE odbacuje) · F2a nova `.js` datoteka s `^` →
+pad · F2b `deno.json` import-map s `^` → pad (uvoz bez ijednog `import` retka) · F2c nepoznat nastavak →
+pad dok ga se ne imenuje · F3a `@latest` → „POMIČNA OZNAKA" · F3b `@beta` (nije bio na starom popisu od
+pet imena) → pad · F3c pomična oznaka **s blagoslovom osnovice** → i dalje pada · K3 put do funkcija
+pogrešan → kontrola protiv nule stvarno pada.
+
+### ⚠️ REVIZIJA VRATILA CIGLU — tri rupe, sve potvrđene pokretanjem (`b1f481a`)
+
+**F1 · PROLAZ NA NULI (najteži, i najtiši).** `check:functions` je na nedostupnoj mreži radio
+`return process.exit(0)`: prekidao prolaz, preskakao strance iz `MUST_BE_GONE` i **odbacivao već
+skupljene kvarove** — uključujući ✗ „mrtav zapis", koji se broji **prije** ijednog zahtjeva.
+Izmjereno: `CHECK_FUNCTIONS_URL` na nepostojeći host → **jedan redak i EXIT 0**, uz nula izmjerenih
+tvrdnji. Time je tiho padala i nova tvrdnja da `mcp` na produkciji ne smije postojati — ona **cijela**
+počiva na izlaznom kodu ove skripte. Sad se nemjereno skuplja, prolaz se ne prekida, **doseg se
+ispisuje** („izmjereno N od M"), a izlaz je **2** za „nisam mogao izmjeriti" i **1** za „projekt je
+pokvaren" — različito, oboje nenulto.
+⚠️ **POUKA IZVAN CIGLE: `catch` koji izlazi s nulom je tvrdnja da je sve u redu.** Ista skripta koja
+je napisana protiv zeleno-slijepog broja imala je zeleno-slijepi **izlaz**.
+
+**F2 · `.ts` filtar je bio popis pisan RUKOM** ondje gdje naslov tvrdi „svaki uvoz u
+`supabase/functions/**`". Deno jednako poslužuje `.js`/`.mjs`/`.tsx`, a `deno.json` smije nositi cijeli
+import-map — sve bi bilo nevidljivo, i brana bi ostala zelena uz `^` u novoj datoteci. Sad je zadano
+**zatvoreno**: svaka datoteka s diska je ili skenirana, ili uvozna mapa koja se čita, ili imenovana u
+`NE_SKENIRA_SE` s razlogom; nepoznat nastavak pada.
+
+**F3 · „latest ni grana" mjerila je pet zapamćenih imena** (bez `beta`, `alpha`, `rc`, `dev`,
+`nightly`…) i **nije imala vlastito crveno**. Sad je pravilo jedno — *verzija je `X.Y.Z` ili nije
+verzija* — i razlikuje **RASPON** (zapisiv dug, smije u osnovicu) od **POMIČNE OZNAKE** (odricanje od
+verzije, ne smije ni imenovano). Time tvrdnja dobiva svrhu koju je obećavala: jedino što osnovica
+izuzima jest ono što ona lovi.
+
+Poslije popravaka: `edge-pinovi` **5/5** (bilo 4) · `check:functions` staging **6/6 EXIT 0** ·
+produkcija **EXIT 1** (dva `feat/f2-mail`, točno) · nedostupan host **EXIT 2** · preflight **EXIT 0**.
+
+### 🔓 Sigurnosno pitanje iz prošle sesije — ODGOVORENO, put je ZATVOREN
+
+**„Secure email change" je UKLJUČEN na stagingu I na produkciji** (Leonov OK za sve tri metode).
+Dvije neovisne metode koje se slažu: ⓐ **mjerenje pravim putem** na stagingu — jednokratni korisnik,
+njegov vlastiti token, `PUT /auth/v1/user` s `email` → u bazi su **oba** tokena
+(`email_change_token_current` **i** `_new`), dakle traži se potvrda i sa **stare** adrese;
+ⓑ **čitanje prekidača** u dashboardu oba projekta. Put „AI promijeni mail → reset lozinke → preuzme
+račun" time **ne prolazi**.
+
+⚠️ **OBORENO USPUT, vrijedi izvan ove stavke:** prvi pokušaj išao je preko admin poziva `generate_link`
+i dao **dva suprotna odgovora u dvije minute**. `generate_link` piše **onaj token koji zatražiš**
+(`email_change_current` → za staru adresu, `email_change_new` → za novu), **neovisno o postavci** —
+mjerio je dakle **alat, ne postavku**, i na toj sam osnovi jednom već krivo rekao da je uključeno.
+**POUKA: kad alat sam bira što će zapisati, ne može biti mjerač te iste stvari.**
+
+⚠️ **I dalje nije zatvoreno:** to je **postavka u dashboardu koju nijedna brana ne gleda** — može se
+isključiti a da ništa ne pocrveni → imenovan korak u **F7**. Uz to je izmjereno da se **staging i
+produkcija razilaze u DVIJE postavke** („Require current password" ON/OFF, „Prevent use of leaked
+passwords" OFF/ON), pa staging **nije vjerna proba** za F7. Tablica je u `BACKLOG.md`.
+Četiri jednokratna korisnika obrisana — **0 siročadi**.
 
 ---
 

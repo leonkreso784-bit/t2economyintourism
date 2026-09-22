@@ -160,7 +160,7 @@ const AUTH_POLJA = [
         // 429, limiter stoji ISPRED identiteta i ovaj redak tada ne dokazuje ništa → prijavljuje
         // se kao NEMJEREN, ne kao prošao (SKIP nije PASS).
         kontrolaNaLimitu: true,
-        zasto: 'promjenu maila postavka o lozinci ne pokriva. ⚠️ NEMJERENO ovdje: oslanjamo se na to da dvostruka potvrda (`Secure email change`) traži klik na OBA mailova — to je PRETPOSTAVKA, ne izmjerena činjenica, jer bi mjerenje tražilo slanje pravog maila.'
+        zasto: 'promjenu maila postavka o lozinci ne pokriva — ali preuzimanje računa zatvara DRUGA postavka, `Secure email change`, koja traži potvrdu s OBJE adrese. ⚠️ IZMJERENO 2026-09-22, dvjema neovisnim metodama, i UKLJUČENA je na stagingu I na produkciji (vidi PROGRESS 22.09.). ⚠️ Ovdje se i dalje NE MJERI: to je postavka u dashboardu koju nijedna brana ne gleda, pa se može isključiti a da ništa ne pocrveni → imenovan korak u F7.'
     }
 ];
 

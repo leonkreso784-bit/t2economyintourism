@@ -21,15 +21,37 @@ s poljem `email` ostaje **imenovano otvoren** (izmjereno: prolazi autorizaciju).
 **AI promijeni mail → zatraži reset lozinke → preuzme račun.** Brava bi pritom ostala zelena, jer je taj
 redak otvoren **po planu**.
 
-⚠️ **Ovo NIJE izmjereno i ne smije se voditi kao da jest.** Mjerenje bi tražilo slanje pravog maila na adresu
-koju kontroliramo, a nemamo je; s `@sokrat-test.invalid` GoTrue odbija oblik prije nego išta pošalje. Zato u
-`scripts/mcp-brava-check.js` uz taj redak stoji izričito **„NEMJERENO — pretpostavka"**, a ne tiha tvrdnja.
+## ✅ **ODGOVORENO 2026-09-22 — prekidač je UKLJUČEN na OBA projekta, put je zatvoren.**
 
-**Gotovo kad** se zna stanje prekidača **na stagingu I na produkciji** (*Authentication → Sign In / Providers →
-Email → Secure email change*). Ako je isključen: uključiti, pa provjeriti da promjena maila postaje „pending"
-umjesto da se primijeni odmah. Ako je uključen: prestaje biti pretpostavka i upisuje se kao izmjerena činjenica.
+Provjereno **dvjema neovisnim metodama koje se slažu**:
 
-**Zašto nije riješeno odmah:** Leon 22.09. presudio da ide u **sljedeću sesiju**.
+1. **Mjerenje pravim putem (staging).** Jednokratni korisnik, njegov vlastiti token, `PUT /auth/v1/user`
+   s poljem `email` — točno put kojim bi išao AI. U bazi su nakon toga **oba** tokena:
+   `email_change_token_current` **I** `email_change_token_new` → traži se potvrda i sa **stare** adrese.
+2. **Čitanje prekidača u dashboardu (staging I produkcija).** *Secure email change* = **uključen** na oba.
+
+**Zato put „AI promijeni mail → reset lozinke → preuzme račun" NE PROLAZI**: bez pristupa staroj adresi
+promjena ostaje „pending" i nikad se ne primijeni.
+
+⚠️ **Što je pritom oboreno, i vrijedi izvan ove stavke:** prvi pokušaj mjerenja išao je preko admin poziva
+`generate_link`, i dao je **dva suprotna odgovora u dvije minute**. Razlog: `generate_link` piše **onaj token
+koji zatražiš** (`email_change_current` → token za staru adresu, `email_change_new` → za novu), **neovisno o
+postavci**. Mjerio je dakle **alat, ne postavku**. Pouka: kad alat sam bira što će zapisati, on ne može biti
+mjerač te iste stvari — mjeri se put kojim ide napadač.
+
+⚠️ **Što i dalje NIJE zatvoreno:** ovo je **postavka u dashboardu koju nijedna brana ne gleda**. Može se
+isključiti a da ništa ne pocrveni. → **imenovan korak u F7** (uz „Require current password", koji je na
+produkciji **isključen**). Stanje prekidača na dan 22.09.:
+
+| postavka | STAGING | PRODUKCIJA |
+|---|---|---|
+| Secure email change | ✅ uključen | ✅ uključen |
+| Require current password when updating | ✅ uključen | ❌ **isključen** (F7) |
+| Prevent use of leaked passwords | ❌ isključen | ✅ uključen |
+| Secure password change (24 h reauth) | ❌ isključen | ❌ isključen |
+
+⚠️ **Usput nađeno:** staging i produkcija razilaze se u **dvije** postavke, pa staging **nije vjerna proba**
+za F7 — to treba poravnati prije objave, inače se na produkciji prvi put mjeri ono što nitko nije vidio.
 
 ### ➖ Nijedna brana ne nabraja MJESTA koja mijenjaju lozinku (2026-09-22, revizija ①/2b, nalaz N3)
 
