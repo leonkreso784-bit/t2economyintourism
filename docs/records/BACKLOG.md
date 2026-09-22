@@ -13,6 +13,36 @@
 > Njihovi zapisi ostaju **ovdje i nedirnuti** jer nose obrazloženje i mjerenja; spec nosi **redoslijed
 > i dokaz**. Kad cigla padne, ovdje se stavlja ✅ s brojkom — ne briše se.
 
+### 🔥 AI-token smije promijeniti E-MAIL — je li „Secure email change" uopće uključen? (2026-09-22, F6 ①/2b)
+
+**Povod.** ①/2b je postavkom „Require current password" zatvorio **lozinku** AI-tokenu, ali `PUT /auth/v1/user`
+s poljem `email` ostaje **imenovano otvoren** (izmjereno: prolazi autorizaciju). Ako dvostruka potvrda
+(**Secure email change** — klik na **OBA** maila, stari i novi) **nije uključena**, put glasi:
+**AI promijeni mail → zatraži reset lozinke → preuzme račun.** Brava bi pritom ostala zelena, jer je taj
+redak otvoren **po planu**.
+
+⚠️ **Ovo NIJE izmjereno i ne smije se voditi kao da jest.** Mjerenje bi tražilo slanje pravog maila na adresu
+koju kontroliramo, a nemamo je; s `@sokrat-test.invalid` GoTrue odbija oblik prije nego išta pošalje. Zato u
+`scripts/mcp-brava-check.js` uz taj redak stoji izričito **„NEMJERENO — pretpostavka"**, a ne tiha tvrdnja.
+
+**Gotovo kad** se zna stanje prekidača **na stagingu I na produkciji** (*Authentication → Sign In / Providers →
+Email → Secure email change*). Ako je isključen: uključiti, pa provjeriti da promjena maila postaje „pending"
+umjesto da se primijeni odmah. Ako je uključen: prestaje biti pretpostavka i upisuje se kao izmjerena činjenica.
+
+**Zašto nije riješeno odmah:** Leon 22.09. presudio da ide u **sljedeću sesiju**.
+
+### ➖ Nijedna brana ne nabraja MJESTA koja mijenjaju lozinku (2026-09-22, revizija ①/2b, nalaz N3)
+
+Danas su dva: `js/profile.js` (profil, šalje `current_password`) i **`js/auth.js:865`** (oporavak lozinke, svjesno
+bez nje — korisnik staru ne zna). Unit-brana ①/2b čita **samo `js/profile.js`**, pa je drugi put **nemjeren**, a
+treći koji netko doda sutra bio bi **nevidljiv**.
+
+**Oblik rješenja je već u kući** (`OTVORENO` u `scripts/mcp-brava-check.js`): pobroji sve `auth.updateUser(`
+pozive u `js/**` čiji argument nosi `password:`, i traži da je svaki **ili** popraćen `current_password` **ili**
+na imenovanom popisu **s razlogom**. Oporavak je svjesna iznimka. Desetak redaka, **pada po defaultu** na treće mjesto.
+
+**Zašto nije riješeno odmah:** Leon 22.09. izabrao **S1** i **`test:unit` popis** kao prva dva; ovo čeka.
+
 ### 🌐 SPREMNOST ZA DRUŠTVENU MREŽU — gap-analiza identiteta i slika (2026-09-13, Leon: *„razmišljaj kao Zuckerberg"*)
 
 **Povod.** F2/2 (slike profila + izrez) je na produkciji; Leon: *„moramo sve pripremiti za kada bude bila socijalna
