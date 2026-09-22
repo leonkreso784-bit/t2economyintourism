@@ -43,7 +43,28 @@ ali grana se razlikuje → **stane i imenuje** (`token-guard.ts` 47 redaka + `de
 nepostojeća funkcija → stane i nabroji postojeće · `mcp`/`mail-unsubscribe` dobivaju `--no-verify-jwt`,
 `send-notification` ne.
 
-### ⛔ DEPLOY NA STAGING JE BLOKIRAN — i to nije naš kvar
+### ✅ DEPLOYANO NA STAGING I IZMJERENO (Leon pokrenuo naredbu 23.09.)
+
+`delete-account` na stagingu: **v5 → v6**, `ezbr_sha256` `3ca7b3e2…` → `0c279ce7…`, **`verify_jwt`
+i dalje `true`** (brana iz wrappera je odradila posao), ostale tri funkcije **netaknute**.
+
+| provjera | ishod |
+|---|---|
+| `check:functions` vs staging | **6/6**, EXIT 0 — funkcija se diže i traži JWT |
+| `npm run test:delete-account` | **EXIT 0** — brisanje, Storage purge oba bucketa (`removedImages=2`), kaskade (napredak, materijali), `user_id` iz tijela **ignoriran**, admin-guard 409 i njegova slika netaknuta |
+| `npm run mcp:brava` | **42/0** — `delete-account` i dalje odbija AI-token s **403** |
+
+⚠️ **Tek ovo zatvara ciglu.** Da smo stali na „deployano je", tvrdili bismo da pin radi na temelju
+toga što se funkcija **digla** — a `check:functions` mjeri samo da odgovara 401. Da `2.117.0` lomi
+`storage.list`, `storage.remove` ili `admin.deleteUser`, to bi se vidjelo **samo** u
+`test:delete-account`. Isti razred kao „HTTP 200 nije dokaz učinka" iz ①/2b.
+
+⚠️ **Usput zabilježeno za produkcijski korak:** CLI pakira drukčije od MCP alata — `entrypoint_path`
+je sad `…/source/supabase/functions/delete-account/index.ts` umjesto `…/source/index.ts`. Relativni
+uvoz `../_shared/token-guard.ts` se svejedno razrješava (dokazano: brava daje 403), ali to znači da
+**put nije stabilan između dvaju načina deploya** — za produkciju koristiti ISTI put (CLI).
+
+### (povijest) ⛔ DEPLOY JE PRIJE TOGA BIO BLOKIRAN — i to nije bio naš kvar
 **Oba puta su odbijena, i to različitim oznakama:** `mcp__…__deploy_edge_function` uz *„Production
 Deploy"*, a `npx supabase functions deploy` uz *„Auto-Mode Bypass"* — iako cilj u oba slučaja **jest
 staging** (`czljmvigkgiajzjxtndq`). Isti razred kao `apply_migration` 13.09. **Nije zaobiđeno** —
@@ -52,9 +73,10 @@ pravilo je javiti i dati Leonu korak. Naredba koju Leon pokreće:
 **Provjereno da ništa nije djelomično otišlo:** `delete-account` na stagingu je i dalje **v5**,
 isti `ezbr_sha256`, isti `updated_at`; `check:functions` vs staging **6/6 EXIT 0**.
 
-⚠️ **Posljedica za tvrdnju cigle:** pin **nije izvršno provjeren** — `test:delete-account` protiv
-**2.117.0** nije pušten, jer staging još vrti stari build. Dok se ne pusti, cigla je **izvorno
-gotova, mjerno NIJE**.
+**Razriješeno:** Leon je pokrenuo naredbu sam (gore). Pouka ostaje zapisana jer se razred ponavlja:
+kad harness odbije radnju, **ne traži treći put** nego napiši gotovu naredbu — i **prvo provjeri da
+ništa nije DJELOMIČNO otišlo** (`list_edge_functions`: ista verzija, isti `ezbr_sha256`), jer
+odbijena i neuspjela radnja izgledaju isto.
 
 ### ⚠️ NALAZ KOJI MIJENJA OBLIK PRODUKCIJSKOG KORAKA
 `delete-account` na **ovoj grani nije isti** kao na produkciji: F6 mu je dodao **token-guard**
