@@ -73,6 +73,20 @@ const NULA = '00000000-0000-0000-0000-000000000000';
 const OCEKIVANO_PROVJERA = 41;
 
 /**
+ * Svaki jednokratni korisnik kojeg brana stvori. Brise se u `finally`, jer PREKID (20 s abort na
+ * hladnom startu Edge Functiona) inace ostavi racun `@sokrat-test.invalid` na stagingu — a to se
+ * vec dogodilo. Brisanje na kraju sretnog puta nije dovoljno.
+ */
+const SMECE = [];
+
+/** Obriše sve jednokratne korisnike koje je ova vrtnja stvorila. Tiho — higijena, ne tvrdnja. */
+async function pometi() {
+    for (const id of SMECE.splice(0)) {
+        await http('/auth/v1/admin/users/' + id, { method: 'DELETE', headers: svcHeaders() }).catch(() => {});
+    }
+}
+
+/**
  * `PUT /auth/v1/user` — ŠTO POSTAVKA „traži trenutnu lozinku" ZATVARA, A ŠTO NE (①/2b, 21.09.).
  *
  * Do ①/2b je ovdje stajala zastavica `OCEKUJ.authApiZatvoren`, uz plan da nakon postavke ode na
@@ -255,7 +269,9 @@ async function createThrowaway() {
     body: JSON.stringify({ email, password, email_confirm: true })
   });
   if (!r.ok) throw new Error(`createUser ${r.status}: ${(await r.text()).slice(0, 200)}`);
-  return { id: (await r.json()).id, email, password };
+  const id = (await r.json()).id;
+  SMECE.push(id);
+  return { id, email, password };
 }
 
 async function prijava(email, password) {
@@ -275,7 +291,9 @@ async function createThrowawayBezLozinke() {
         body: JSON.stringify({ email, email_confirm: true })
     });
     if (!r.ok) throw new Error(`createUser ${r.status}: ${(await r.text()).slice(0, 200)}`);
-    return { id: (await r.json()).id, email };
+    const id = (await r.json()).id;
+    SMECE.push(id);
+    return { id, email };
 }
 
 /**
@@ -738,10 +756,14 @@ async function provjeriCitanjeTablica(inv, token) {
         ? ' ← BLOK JE PRESKOČEN, a brana bi inače javila uspjeh'
         : ' ← nova provjera bez podignute osnovice'));
 
+  await pometi();
   console.log('\n  dotaknuto: ' + touched + ' provjera, palo: ' + failed);
   console.log(failed ? '✗ BRAVA NE DRŽI\n' : '✅ brava drži\n');
   process.exit(failed ? 1 : 0);
-})().catch((e) => {
+})().catch(async (e) => {
+  // ⚠️ I na PREKIDU se mora pomesti: hladan start Edge Functiona zna udariti u 20 s abort, a
+  // svaki takav prekid inače ostavi račun `@sokrat-test.invalid` na stagingu (dogodilo se).
+  await pometi();
   console.log('✗ test je pukao: ' + e.message);
   process.exit(1);
 });

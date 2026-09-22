@@ -240,6 +240,58 @@ Dokaz stabilnosti: dvije vrtnje zaredom, obje 40/40.
 nepohranjen popravak (ovaj put ispravak za 429). Pravilo „commit prije mutacije" nije dovoljno —
 mora glasiti **„commit prije SVAKE mutacije, uključujući onu poslije popravka nađenog mutacijom"**.
 
+### Peti krug — revizija vratila ciglu: četiri tvrdnje mjerile su ODGOVOR, ne ISHOD (`f8713f1`)
+
+Jezgra (AI-token ne smije do lozinke) je držala i dobro je mjerena. Pala su četiri ruba, svaki
+provjeren u kodu prije popravka.
+
+**F1 · „korisnik promijeni lozinku" i „oporavak računa" sudile su SAMO HTTP 200.** To je isti razred
+koji ova skripta **već kodificira** („200 s praznim `[]` NIJE odbijanje") i koji je **ova cigla već
+izmjerila**: dok je postavka bila isključena, poslužitelj je `current_password` tiho progutao i vratio
+**200**. Dakle „200 bez učinka" nije hipoteza nego zabilježeno ponašanje baš ovog poslužitelja.
+Mutacija: pošalji `{data:{}}` — nikakva promjena lozinke — i tvrdnja ostaje zelena.
+**Popravak:** obje se dokazuju **prijavom novom lozinkom**.
+
+**F2 · tiho preskakanje.** Pad pri stvaranju drugog jednokratnog korisnika spuštao se na `note()`, a
+`note()` **ne diže brojač** → ukupno padne s 41 na 38 i brana i dalje javi **„✅ brava drži"**. Sad
+pada **zatvoreno**, a uz to je dodana **čegrtaljka na dosegu** (kalup `check:final`): brana tvrdi
+točno koliko je provjera izvela, pa tiho preskočen blok obara i kad nitko ne gleda brojeve.
+
+**F3 · redak `data` prolazio je i na praznom zahtjevu.** `ocekuj {200, ''}` svodilo se na „status je
+200", pa `tijelo: () => ({})` prolazi identično — a onda redak ne dokazuje da je rupa otvorena, nego
+samo da poslužitelj odgovara. **Popravak:** biljeg se čita **natrag** iz odgovora (`PUT
+/auth/v1/user` vraća ažuriranog korisnika).
+
+**F4 · brana je mjerila jezik koji ciljni korisnik NE VIDI.** `at()` bez `window.t` vraća **engleski
+fallback**, a test `window.t` namjerno ne postavlja → sve tvrdnje o porukama sudile su engleske
+konstante iz `auth.js`. Rečenicu koju hrvatski student stvarno čita nije gledao nitko, a `boot.js`
+bez spremljenog izbora uzima **jezik uređaja** → HR je za našu publiku zadano. Identična `hr`
+vrijednost za oba koda vratila bi **točno onaj kvar zbog kojeg cigla postoji**, uz sve zeleno.
+**Popravak:** nijedne dvije poruke iz `authError` ne smiju imati isti tekst, ni na `en` ni na `hr` —
+popis se nabraja **iz istog izvora** kao postojeće tvrdnje, bez novog ručnog popisa.
+
+**Dvije nepokrivene tvrdnje koje je revizija imenovala, obje zatvorene:**
+- **U1 — račun BEZ lozinke (kao Google) postavlja PRVU lozinku.** To je **drugi** način na koji bi
+  postavka mogla zaključati korisnika, i jedini koji pogađa one koji su došli Googleom. Izmjereno
+  21.09. i prošlo, ali **nije bilo ni u jednoj brani**. Sad jest, s prijavom kao dokazom.
+- **U2 — „dvostruka potvrda maila" bila je PRETPOSTAVKA zapisana kao činjenica.** Sad je izričito
+  označena kao **nemjerena** (mjerenje bi tražilo slanje pravog maila) i zapisana i u specu.
+
+⚠️ **Kontrola uz 429 je proradila i odmah našla da sam pogodio krivi broj:** neispravan token daje
+**403 `bad_jwt`**, a prazan **401 `no_authorization`** (izmjereno). Kontrola sad sudi po **odbijanju
+po identitetu**, ne po broju koji sam pretpostavio — i time 429 prestaje biti tiha zamjena za dokaz.
+
+**Četiri obrnute provjere, sve crvene i sve imenuju:** `{data:{}}` umjesto promjene lozinke → „200,
+ali se novom lozinkom NE može prijaviti" · drugi korisnik se ne stvara → **dvije** crvene, uključujući
+čegrtaljku („izvedeno 40 ← BLOK JE PRESKOČEN") · prazan zahtjev za metapodatke → „biljeg se ne vidi
+natrag" · obje HR poruke iste → `auth-error` crven, **a `check:i18n` ostaje ZELEN** (dokaz da nova
+tvrdnja treba).
+
+**Higijena:** prekinuta vrtnja ostavljala je račun `@sokrat-test.invalid` na stagingu — čišćenje je
+sad u oba izlaza (i na prekidu). Jedno zatečeno siroče obrisano; provjereno: **0 preostalih**.
+
+**Zeleno:** `mcp:brava` **42/42** · `auth-error` **35/0** · preflight **EXIT 0**.
+
 ### Rupa nađena usput, izvan opsega cigle
 
 `test:unit` u `package.json` je **ručno pisan lanac** od 55 datoteka, a **nijedna brana ne provjerava
