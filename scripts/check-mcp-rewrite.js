@@ -25,9 +25,12 @@
 //
 // ─── ZAŠTO NEMA CATCH-ALLA (Leonova odluka 23.09.) ──────────────────────────────────────────────
 // Prvo pravilo je glasilo „www → produkcija, SVE ostalo → staging". Mjerenje ga je oborilo:
-// `https://studymaster.vercel.app` vraća **200** i to je ŽIVA PRODUKCIJSKA adresa koja nije `www`
-// — pod tim bi pravilom produkcijska adresa posluživala `/mcp` iz test-baze. Zato su hostovi
-// IMENOVANI, a nepoznat host ne dobiva rewrite i ostaje 404: pada zatvoreno.
+// projekt ima PRODUKCIJSKE `.vercel.app` aliase koji nisu `www` — `studymaster-leon-kresos-
+// projects.vercel.app` i `studymaster-git-main-…` — pa bi ih to pravilo poslalo u TEST-BAZU.
+// Zato su hostovi IMENOVANI, a nepoznat host ne dobiva rewrite i ostaje 404: pada zatvoreno.
+// ⚠️ Prva zamjena je imala ISTI kvar: preview-regex `^studymaster-[a-z0-9-]+\.vercel\.app$`
+// hvatao je oba ta aliasa, a tablice niže su to propustile jer su koristile IZMIŠLJEN tim-slug.
+// Otud pravilo: imena okruženja se prepisuju IZ PLATFORME, ne iz sjećanja (vidi `DOSEG.provjereno`).
 //
 // ─── GRANICA KOJU OVA BRANA NE MJERI (imenovano, ne prešućeno) ──────────────────────────────────
 // 1. Sufiks `/oauth-protected-resource` dolazi iz tuđeg paketa koji NIJE naša ovisnost (Deno ga
@@ -35,6 +38,8 @@
 //    razlogom. Mjeri ga `--zivo`, protiv stvarnog poslužitelja.
 // 2. Podudara li Vercel `has.type=host` točno onako kako ovdje simuliram — to offline ne može
 //    dokazati nijedna tvrdnja. Zato `--zivo` postoji i zato je preview dio cigle, a ne ukras.
+
+try { require('dotenv').config(); } catch (e) { /* dotenv je neobavezan */ }
 
 const fs = require('fs');
 const path = require('path');
@@ -364,9 +369,25 @@ function vercelovaZastita(res) {
   return null;
 }
 
+/**
+ * Tajna kojom se preskače Vercelova zaštita deploya („Protection Bypass for Automation").
+ * Stoji u `.env` (gitignoran), NIKAD u repozitoriju. Bez nje se preview ne može izmjeriti.
+ */
+const BYPASS = process.env.VERCEL_AUTOMATION_BYPASS_SECRET || '';
+
+/** Zahtjev prema NAŠOJ adresi nosi bypass; prema tuđoj (Supabase) ne — tajna se ne rasipa. */
+function zahtjev(url, baza, opts) {
+  const o = Object.assign({ redirect: 'manual' }, opts || {});
+  if (BYPASS && String(url).startsWith(baza)) {
+    o.headers = Object.assign({}, o.headers, { 'x-vercel-protection-bypass': BYPASS });
+  }
+  return fetch(url, o);
+}
+
 // ════════════════════════════════════════════════════════════════════════════════════════════════
 async function zivo(baza) {
-  console.log(`\n=== check:mcp-rewrite --zivo — ${baza} ===\n`);
+  console.log(`\n=== check:mcp-rewrite --zivo — ${baza} ===`);
+  console.log(`    bypass-tajna: ${BYPASS ? 'JEST u .env' : 'NEMA je u .env'}\n`);
   const host = new URL(baza).hostname;
   const pravila = JSON.parse(fs.readFileSync(VERCEL, 'utf8')).rewrites || [];
 
@@ -378,16 +399,22 @@ async function zivo(baza) {
   // ── Z0: je li adresa uopće MJERLJIVA ─────────────────────────────────────────────────────────
   // Prvi zahtjev služi i kao proba zaštite. Bez ove provjere zaštićen deploy daje 401 koji se
   // ne razlikuje od ispravnog, pa bi „konektor radi" bila tvrdnja o Vercelovoj prijavnoj stranici.
-  const prvi = await fetch(baza + '/mcp', {
-    method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}', redirect: 'manual',
+  const prvi = await zahtjev(baza + '/mcp', baza, {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}',
   });
   const zastita = vercelovaZastita(prvi);
   if (zastita) {
     console.log(`  ⊘ DEPLOY JE ZAŠTIĆEN (${zastita}).`);
     console.log('     Vercelov SSO odgovara PRIJE rewritea, pa se kroz ovu adresu ne može izmjeriti');
     console.log('     ništa o našoj funkciji — njezin 401 i ovaj imaju isti broj.');
-    console.log('     Rješenje je Protection Bypass for Automation (tajna u `x-vercel-protection-bypass`)');
-    console.log('     ili isključena zaštita za preview. NIJE nalaz o kodu.\n');
+    if (BYPASS) {
+      console.log('     ⚠️ Tajna JEST poslana, a zaštita je svejedno odgovorila → tajna je kriva,');
+      console.log('        opozvana, ili nije „Protection Bypass for Automation" ovog projekta.');
+    } else {
+      console.log('     Dodaj `VERCEL_AUTOMATION_BYPASS_SECRET=…` u `.env` (Vercel → Project →');
+      console.log('     Settings → Deployment Protection → Protection Bypass for Automation).');
+    }
+    console.log('     NIJE nalaz o kodu.\n');
     return 2;
   }
 
@@ -402,7 +429,7 @@ async function zivo(baza) {
 
   // Z1 — rewrite nije pojeo aplikaciju. `redirect: 'manual'` je OBAVEZAN: sa slijeđenjem je ova
   // tvrdnja jednom već prošla na Vercelovoj stranici za prijavu (200 od tuđeg dokumenta).
-  const korijen = await fetch(baza + '/', { redirect: 'manual' });
+  const korijen = await zahtjev(baza + '/', baza);
   tvrdi('Z1 aplikacija se i dalje poslužuje na `/`', korijen.status === 200,
     `dobiven ${korijen.status}${korijen.headers.get('location') ? ' → ' + korijen.headers.get('location') : ''}`);
 
@@ -415,7 +442,7 @@ async function zivo(baza) {
 
   // Z4 — oglašeni dokument stvarno postoji i opisuje PREDVIĐENI projekt.
   if (m) {
-    const meta = await fetch(m[1], { redirect: 'manual' });
+    const meta = await zahtjev(m[1], baza);
     const ok = meta.status === 200;
     tvrdi('Z4 oglašeni `resource_metadata` vraća 200', ok, `${m[1]} → ${meta.status}`);
     if (ok) {
@@ -432,7 +459,7 @@ async function zivo(baza) {
   // Z7 — PODPUT kroz NAŠU domenu. Ovo je tvrdnja zbog koje cigla postoji.
   // ⚠️ Ne smije suditi SAMO HTTP broj (nalaz revizije 23.09.): 200 s bilo čim u tijelu — recimo
   // našim `index.html` — izgledao bi jednako. Tvrdi se da je to STVARNO RFC 9728 dokument.
-  const pod = await fetch(baza + '/mcp' + METAPODACI, { redirect: 'manual' });
+  const pod = await zahtjev(baza + '/mcp' + METAPODACI, baza);
   let podTijelo = null;
   if (pod.status === 200) { try { podTijelo = await pod.json(); } catch (_e) { podTijelo = null; } }
   tvrdi('Z7 podput `/mcp' + METAPODACI + '` vraća RFC 9728 dokument NAŠEG resursa',
