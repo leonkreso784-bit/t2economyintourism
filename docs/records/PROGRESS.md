@@ -17,13 +17,13 @@ testirano, što slijedi.
 | izvor `@supabase/server@1.7.0` | adresa metapodataka = `resource` + sufiks, a ruta se hvata **po sufiksu puta na bilo kojoj dubini** |
 | Vercelova shema (`openapi.vercel.sh`) | `has[].value` je objekt **ILI REGEX** — goli string je regex **bez sidara** |
 | apex `sokratstudy.com` | **307** na `www` prije routinga → bezopasan |
-| **`studymaster.vercel.app`** | **200 — ŽIVA produkcijska adresa koja NIJE `www`** |
+| **popis domena projekta** (Vercel API) | `www.sokratstudy.com` · `sokratstudy.com` · **`studymaster-leon-kresos-projects.vercel.app`** · **`studymaster-git-main-leon-kresos-projects.vercel.app`** |
 
 ⚠️ **Zadnji redak je oborio pravilo koje je Leon presudio 22.09.** („www → produkcija, **sve ostalo** →
-staging"). Pod njim bi `studymaster.vercel.app/mcp` — produkcijska adresa — posluživao `/mcp` iz **test-baze**.
-Nije curenje podataka (staging tokeni nisu produkcijski), ali je produkcijska adresa na krivom projektu.
-**Leon presudio 23.09. (anketa): imenovani hostovi, bez catch-alla** — nepoznat host ne dobiva rewrite i
-ostaje 404, dakle **pada zatvoreno**.
+staging"). Projekt ima **dva produkcijska `.vercel.app` aliasa koji nisu `www`** — pod tim bi pravilom
+produkcijske adrese posluživale `/mcp` iz **test-baze**. Nije curenje podataka (staging tokeni nisu
+produkcijski), ali je produkcijska adresa na krivom projektu. **Leon presudio 23.09. (anketa): imenovani
+hostovi, bez catch-alla** — nepoznat host ne dobiva rewrite i ostaje 404, dakle **pada zatvoreno**.
 
 ⚠️ **Zašto rewrite mora pokriti i podputove:** AI prvi zahtjev šalje bez tokena i tek iz 401 sazna gdje je
 prijava (`WWW-Authenticate: Bearer resource_metadata="…"`). Rewrite samo za `/mcp` ostavio bi taj putokaz da
@@ -40,7 +40,7 @@ diska** · T3 host-uvjet je `{eq}` ili **usidren** regex · T4 par golo+podput p
 (grupe se nabrajaju **iz datoteke**, ne rukom) · T5 imenovani hostovi na svoj projekt · T6 **nepoznat host
 bez rewritea**.
 
-**Obrnuta provjera: devet mutacija, svih devet crvenih**, svaka na svojoj tvrdnji, svaka s brojem
+**Obrnuta provjera: deset mutacija, svih deset crvenih**, svaka na svojoj tvrdnji, svaka s brojem
 pogodaka > 0, izvor vraćen čisto (`git status` prazan), brana poslije povrata zelena.
 
 | mutacija | pogodaka | palo |
@@ -54,9 +54,46 @@ pogodaka > 0, izvor vraćen čisto (`git status` prazan), brana poslije povrata 
 | `source` oblik koji brana ne zna suditi | 1 | T4, T5, T6 **uz „ne znam suditi"** |
 | prazan `rewrites` | 4 | T0 |
 | rewrite na slug kojeg nema na disku | 4 | T2 |
+| **širok preview-regex** (pravi kvar od 23.09., vidi niže) | 2 | **T6** |
 
 ⚠️ **Mutacija `{eq}` → goli string je dokaz da kontrolni host treba:** bez njega bi T3 bila tvrdnja o stilu.
 S njim je to tvrdnja da **neusidren regex stvarno pušta tuđi host**.
+
+### ⚠️ CIGLA JE VRAĆENA JEDNOM — prva verzija imala je ISTI kvar koji je tvrdila da zatvara (`b12a85b`)
+
+Prva verzija rewritea (`b365625`) imala je preview-regex `^studymaster-[a-z0-9-]+\.vercel\.app$`. On hvata
+**oba produkcijska aliasa** iz popisa gore → produkcija na staging. **Zašto brana to nije vidjela:** njezine
+tablice `USMJERENJE`/`BEZ_REWRITEA` koristile su **izmišljen tim-slug** (`…-sokrat.vercel.app`), dakle mjerile
+su hostove **kojih nema**. Popravak: hostovi prepisani **iz Vercelovog popisa domena**, preview sužen na
+**alias grane značajke** (`^studymaster-git-feat-…$`) — jedini `.vercel.app` oblik koji nikad nije produkcija.
+Alias **pojedinog deploya** svjesno nije pokriven (ne razlikuje se od produkcijskog bez pogleda unaprijed,
+kojeg Vercelov regex-motor ne podržava; alias grane je stabilan i dovoljan). **Nova mutacija M10 — vraćanje
+širokog regexa — obori T6**, dakle brana bi kvar uhvatila; nedostajala su joj samo prava imena.
+
+⚠️ **POUKA IZVAN CIGLE: popis pisan IZ GLAVE mjeri stavke kojih nema.** Isti razred kao „popis pisan rukom",
+samo se ovdje ruka **izmišljala** umjesto da zaboravi. Imena okruženja se prepisuju **iz platforme**.
+
+⚠️ **POUKA PLAĆENA TREĆI PUT:** mutacije sam pokrenuo **prije nego sam commitao popravak**, pa je
+`git checkout -- vercel.json` iz prve mutacije **obrisao ispravak**. Brojač pogodaka je to uredno prijavio
+(M10 = **0 pogodaka, mutacija odbijena**) umjesto da izmisli crveno — inače bi cijeli krug bio lažan.
+**Pravilo ostaje: commit ide prije SVAKE mutacije, uključujući onu poslije popravka koji je mutacija našla.**
+
+### ⚠️ ŽIVI MOD JE IMAO DVA LAŽNA ZELENA — našlo ih mjerenje na stvarnom previewu
+
+- **Z1** je prolazio jer `fetch` **slijedi preusmjeravanja**: preview vraća 302, pa je tvrdnja „aplikacija se
+  poslužuje" zapravo mjerila **Vercelovu stranicu za prijavu** (200 od tuđeg dokumenta) → sad `redirect: 'manual'`.
+- **Z2** je prihvaćao **Vercelov zaštitni 401** kao 401 iz naše funkcije — isti broj, drugi uzrok → sad **Z0**
+  prepoznaje potpis zaštite (SSO kolačić / preusmjerenje na `vercel.com`) i vraća **izlaz 2**
+  („nisam mogao izmjeriti"), koji se **nikad ne stapa s 1** („pokvareno je").
+- Dodana **čegrtaljka na dosegu** (`OCEKIVANO_OFFLINE` = 7, `OCEKIVANO_ZIVO` = 7; kalup `check:final`):
+  tvrdnja koja tiho nestane spušta ukupno, a ljuska bi i dalje vidjela zeleno.
+
+### ⛔ Preview se zasad NE MOŽE izmjeriti — i to nije nalaz o kodu
+
+Projekt ima `ssoProtection` s dosegom **`all_except_custom_domains`** → **svaki** `.vercel.app` host traži
+Vercelovu prijavu. Posljedica nije samo naša: **ni pravi MCP klijent ondje ne bi prošao.** Mjera traži
+**Protection Bypass for Automation** (tajna u zaglavlju `x-vercel-protection-bypass`) ili isključenu zaštitu
+za preview — **čeka Leonovu odluku**. Brana to prijavljuje kao ⊘, ne kao ✗.
 
 ### Usput
 
