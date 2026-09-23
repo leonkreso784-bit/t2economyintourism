@@ -105,8 +105,19 @@ const BEZ_REWRITEA = [
  * Bez nje tvrdnja koja tiho nestane (rani `return`, petlja koja ne uđe) spušta ukupno,
  * a ljuska i dalje vidi ✅ — isti razred kao `note()` koji ne diže brojač u `mcp-brava-check.js`.
  */
-const OCEKIVANO_OFFLINE = 7;
+const OCEKIVANO_OFFLINE = 8;
 const OCEKIVANO_ZIVO = 7;
+
+/**
+ * Čegrtaljka na DOSEGU (T7), odvojena od čegrtaljke na broju tvrdnji.
+ *
+ * ⚠️ NALAZ REVIZIJE 23.09.: `USMJERENJE = []` i `BEZ_REWRITEA = []` davali su
+ * „✓ T5 (0 × 2 puta)" i „✓ T6 (0 × 2 puta)" uz **EXIT 0**. Brojač TVRDNJI to ne hvata — tvrdnji
+ * je i dalje sedam, samo ne mjere ništa. Doseg zato ima vlastitu tvrdnju.
+ * `provjereno` stoji jer su hostovi prepisani iz Vercelovog popisa domena RUKOM: popis se ne
+ * nabraja sam, pa uz njega ide datum kad je zadnji put uspoređen sa stvarnošću.
+ */
+const DOSEG = { usmjerenje: 2, bezRewritea: 5, provjereno: '2026-09-23' };
 
 const nalazi = [];
 let izmjereno = 0;
@@ -129,6 +140,8 @@ function izvorUMjeru(source) {
   return {
     baza,
     zvijezda,
+    // Rep koji `destination` MORA nositi da parametar stvarno završi u putu (vidi `refOd`).
+    ocekivaniRep: zvijezda ? `/:${m[3]}*` : '',
     pogada(put) {
       if (put === baza) return true;
       if (!zvijezda) return false;
@@ -163,9 +176,19 @@ function usmjeri(pravila, host, put) {
   return { pravilo: null };
 }
 
+/**
+ * Razloži `destination` na ref, slug i **REP** (sve iza sluga).
+ *
+ * ⚠️ NALAZ REVIZIJE 23.09.: prva verzija je regex završavala **bez `$`** i rep BACALA — pa je
+ * `…/functions/v1/mcp` uz `source: "/mcp/:put*"` prolazila **zeleno, 7 ✓**. Vercel neiskorišten
+ * parametar ne stavlja u put nego ga zalijepi kao upit, a `@supabase/server` rutu metapodataka
+ * hvata **po putu** → `/mcp/oauth-protected-resource` prestaje posluživati RFC 9728 dokument,
+ * dok `/mcp` i dalje uredno odgovara. To je **doslovno kvar zbog kojeg cigla postoji**, a brana
+ * ga je previđala jer je mjerila DEFINICIJU (`source` spominje podput), ne POSLJEDICU.
+ */
 function refOd(destination) {
-  const m = String(destination).match(/^https:\/\/([a-z0-9]+)\.supabase\.co\/functions\/v1\/([A-Za-z0-9_-]+)/);
-  return m ? { ref: m[1], slug: m[2] } : null;
+  const m = String(destination).match(/^https:\/\/([a-z0-9]+)\.supabase\.co\/functions\/v1\/([A-Za-z0-9_-]+)(.*)$/);
+  return m ? { ref: m[1], slug: m[2], rep: m[3] || '' } : null;
 }
 
 function imeProjekta(ref) {
@@ -208,14 +231,23 @@ function offline() {
 
   // ── T2: svaki `destination` vodi na POZNAT projekt i na funkciju koja postoji NA DISKU ────────
   const naDisku = expectedSlugs();
-  let t2 = true;
+  const t2loše = [];
   for (const p of pravila) {
     const d = refOd(p.destination);
-    if (!d) { t2 = false; nalazi.push(`destination nije Supabase funkcija: ${p.destination}`); continue; }
-    if (!imeProjekta(d.ref)) { t2 = false; nalazi.push(`nepoznat ref \`${d.ref}\` u ${p.destination}`); continue; }
-    if (naDisku.indexOf(d.slug) === -1) { t2 = false; nalazi.push(`rewrite gađa \`${d.slug}\`, koje nema u supabase/functions/ (mrtav unos)`); }
+    if (!d) { t2loše.push(`destination nije Supabase funkcija: ${p.destination}`); continue; }
+    if (!imeProjekta(d.ref)) { t2loše.push(`nepoznat ref \`${d.ref}\` u ${p.destination}`); continue; }
+    if (naDisku.indexOf(d.slug) === -1) { t2loše.push(`gađa \`${d.slug}\`, koje nema u supabase/functions/ (mrtav unos)`); continue; }
+    // ⚠️ Rep se sudi, ne baca (vidi `refOd`): parametar iz `source`-a mora završiti U PUTU.
+    const mjera = izvorUMjeru(p.source);
+    if (!mjera) { t2loše.push(`ne znam suditi \`source\`: ${JSON.stringify(p.source)}`); continue; }
+    if (d.rep !== mjera.ocekivaniRep) {
+      t2loše.push(`\`${p.source}\` → destination završava ${JSON.stringify(d.rep)}, a mora `
+        + `${JSON.stringify(mjera.ocekivaniRep)} — inače Vercel parametar zalijepi kao UPIT i podput `
+        + 'nikad ne stigne do funkcije');
+    }
   }
-  tvrdi('T2 svaki destination = poznat projekt + funkcija s diska', t2, nalazi[nalazi.length - 1] || '');
+  tvrdi('T2 destination = poznat projekt + funkcija s diska + ISPRAVAN REP',
+    t2loše.length === 0, t2loše.join(' · '));
 
   // ── T3: `has.value` nikad goli NEUSIDREN string (vidi zaglavlje) ──────────────────────────────
   let t3 = true; const t3loše = [];
@@ -245,9 +277,17 @@ function offline() {
     if (!g.golo) { t4 = false; t4loše.push(`${g.baza}: nema golo pravilo`); continue; }
     if (!g.podput) { t4 = false; t4loše.push(`${g.baza}: nema podput pravilo (\`${g.baza}${METAPODACI}\` bi 404-ao → otkrivanje prijave staje)`); continue; }
     const a = refOd(g.golo.destination); const b = refOd(g.podput.destination);
-    if (!a || !b || a.ref !== b.ref) { t4 = false; t4loše.push(`${g.baza}: golo i podput vode na RAZLIČITE projekte`); }
+    if (!a || !b) { t4 = false; t4loše.push(`${g.baza}: destination se ne da razložiti`); continue; }
+    if (a.ref !== b.ref) { t4 = false; t4loše.push(`${g.baza}: golo i podput vode na RAZLIČITE projekte`); continue; }
+    // ⚠️ „Isti projekt" NIJE „ista funkcija" (nalaz revizije 23.09.): podput preusmjeren na
+    // `delete-account` ima isti ref i prolazio bi zeleno, a promet s MCP podputova išao bi u
+    // funkciju za brisanje računa.
+    if (a.slug !== b.slug) {
+      t4 = false;
+      t4loše.push(`${g.baza}: golo ide na \`${a.slug}\`, a podput na \`${b.slug}\` — ista baza, DRUGA funkcija`);
+    }
   }
-  tvrdi(`T4 svaki par je potpun i na istom projektu (grupa: ${grupe.size})`, t4, t4loše.join(' · '));
+  tvrdi(`T4 svaki par je potpun i na istoj FUNKCIJI (grupa: ${grupe.size})`, t4, t4loše.join(' · '));
 
   // ── T5: usmjerenje — imenovani host završi na očekivanom projektu, i na golom putu i na podputu
   let t5 = true; const t5loše = [];
@@ -280,6 +320,20 @@ function offline() {
     }
   }
   tvrdi(`T6 nepoznat host ne dobiva rewrite (${BEZ_REWRITEA.length} × 2 puta)`, t6, t6loše.join(' · '));
+
+  // ── T7: DOSEG — prazan popis ne smije prolaziti (vidi `DOSEG`) ────────────────────────────────
+  const t7loše = [];
+  if (USMJERENJE.length < DOSEG.usmjerenje) {
+    t7loše.push(`USMJERENJE ima ${USMJERENJE.length} hostova, a mora bar ${DOSEG.usmjerenje} — T5 na praznom popisu prolazi ne mjereći ništa`);
+  }
+  if (BEZ_REWRITEA.length < DOSEG.bezRewritea) {
+    t7loše.push(`BEZ_REWRITEA ima ${BEZ_REWRITEA.length} hostova, a mora bar ${DOSEG.bezRewritea} — T6 je jedina koja čuva „pada zatvoreno"`);
+  }
+  if (!Array.from(grupe.values()).some((g) => g.baza === '/mcp')) {
+    t7loše.push('nijedna grupa pravila nema bazu `/mcp` — a cigla postoji zbog nje (T4 na nula grupa prolazi)');
+  }
+  tvrdi(`T7 doseg popisa + postoji grupa za \`/mcp\` (hostovi provjereni ${DOSEG.provjereno})`,
+    t7loše.length === 0, t7loše.join(' · '));
 
   console.log(`\n  dotaknuto: ${pravila.length} rewrite pravila · ${grupe.size} parova · `
     + `${(USMJERENJE.length + BEZ_REWRITEA.length) * 2} (host, put) slučajeva · ${izmjereno} tvrdnji`);
@@ -376,9 +430,16 @@ async function zivo(baza) {
   }
 
   // Z7 — PODPUT kroz NAŠU domenu. Ovo je tvrdnja zbog koje cigla postoji.
+  // ⚠️ Ne smije suditi SAMO HTTP broj (nalaz revizije 23.09.): 200 s bilo čim u tijelu — recimo
+  // našim `index.html` — izgledao bi jednako. Tvrdi se da je to STVARNO RFC 9728 dokument.
   const pod = await fetch(baza + '/mcp' + METAPODACI, { redirect: 'manual' });
-  tvrdi('Z7 podput `/mcp' + METAPODACI + '` prolazi kroz rewrite', pod.status === 200,
-    `dobiven ${pod.status} — rewrite ne pokriva podputove, pa otkrivanje prijave staje`);
+  let podTijelo = null;
+  if (pod.status === 200) { try { podTijelo = await pod.json(); } catch (_e) { podTijelo = null; } }
+  tvrdi('Z7 podput `/mcp' + METAPODACI + '` vraća RFC 9728 dokument NAŠEG resursa',
+    pod.status === 200 && podTijelo !== null && String(podTijelo.resource || '').indexOf(d.ref) !== -1,
+    pod.status !== 200
+      ? `dobiven ${pod.status} — rewrite ne pokriva podputove, pa otkrivanje prijave staje`
+      : `200, ali tijelo nije dokument našeg resursa: ${JSON.stringify(podTijelo).slice(0, 140)}`);
 
   console.log(`\n  dotaknuto: ${izmjereno} tvrdnji protiv ${baza}\n`);
   if (izmjereno !== OCEKIVANO_ZIVO) {
@@ -400,8 +461,15 @@ async function zivo(baza) {
       process.exit(2);
     }
     try { kod = await zivo(baza.replace(/\/+$/, '')); } catch (e) {
-      // Nedostupna mreža NIJE „čisto je". Izlaz 2 = nisam mogao izmjeriti.
-      console.error(`\n⊘ nisam mogao izmjeriti: ${e.message}\n`);
+      // Nedostupna mreža NIJE „čisto je" → izlaz 2. ⚠️ Ali parcijalan pad mreže NE SMIJE odbaciti
+      // već nađene kvarove (nalaz revizije 23.09.; kalup `check-edge-functions.js`): „nisam mogao
+      // izmjeriti" vrijedi samo ako dotad ništa nije palo.
+      console.error(`\n⊘ prekid mjerenja: ${e.message}`);
+      if (nalazi.length) {
+        console.error(`   ⚠️ ali ${nalazi.length} nalaz(a) je već nađeno prije prekida — to ostaje kvar\n`);
+        process.exit(1);
+      }
+      console.error('');
       process.exit(2);
     }
   } else {
