@@ -5,6 +5,81 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-23 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/4b: javna adresa `/mcp` kroz Vercel rewrite
+
+**Cigla `b365625`.** `vercel.json` dobiva rewrite za `/mcp` i `/mcp/*`, po **imenovanim hostovima**.
+
+### Mjereno PRIJE koda — i jedno mjerenje je oborilo presudu od 22.09.
+
+| što | ishod |
+|---|---|
+| `www.sokratstudy.com/mcp` i tri srodna puta | **404** na sva četiri — osnovica potvrđena |
+| izvor `@supabase/server@1.7.0` | adresa metapodataka = `resource` + sufiks, a ruta se hvata **po sufiksu puta na bilo kojoj dubini** |
+| Vercelova shema (`openapi.vercel.sh`) | `has[].value` je objekt **ILI REGEX** — goli string je regex **bez sidara** |
+| apex `sokratstudy.com` | **307** na `www` prije routinga → bezopasan |
+| **`studymaster.vercel.app`** | **200 — ŽIVA produkcijska adresa koja NIJE `www`** |
+
+⚠️ **Zadnji redak je oborio pravilo koje je Leon presudio 22.09.** („www → produkcija, **sve ostalo** →
+staging"). Pod njim bi `studymaster.vercel.app/mcp` — produkcijska adresa — posluživao `/mcp` iz **test-baze**.
+Nije curenje podataka (staging tokeni nisu produkcijski), ali je produkcijska adresa na krivom projektu.
+**Leon presudio 23.09. (anketa): imenovani hostovi, bez catch-alla** — nepoznat host ne dobiva rewrite i
+ostaje 404, dakle **pada zatvoreno**.
+
+⚠️ **Zašto rewrite mora pokriti i podputove:** AI prvi zahtjev šalje bez tokena i tek iz 401 sazna gdje je
+prijava (`WWW-Authenticate: Bearer resource_metadata="…"`). Rewrite samo za `/mcp` ostavio bi taj putokaz da
+vodi u **404** — a `/mcp` bi pritom uredno odgovarao i **sve bi izgledalo ispravno**.
+
+### Brana `npm run check:mcp-rewrite` — IZVODI routing, ne čita ključeve
+
+„`vercel.json` ima ključ `rewrites`" ne tvrdi ništa o tome kamo zahtjev ode. Zato brana za svaki (host, put)
+traži pravilo koje ga hvata i sudi ref na koji vodi. **Oblik `source`-a ili `has`-a koji ne zna suditi je
+PAD, ne preskok** — inače bi nepoznat oblik prolazio kao „nema nalaza".
+
+T0 doseg (nula pravila = pad) · T1 bez komentar-ključeva · T2 destination = poznat projekt + funkcija **s
+diska** · T3 host-uvjet je `{eq}` ili **usidren** regex · T4 par golo+podput potpun i na **istom** projektu
+(grupe se nabrajaju **iz datoteke**, ne rukom) · T5 imenovani hostovi na svoj projekt · T6 **nepoznat host
+bez rewritea**.
+
+**Obrnuta provjera: devet mutacija, svih devet crvenih**, svaka na svojoj tvrdnji, svaka s brojem
+pogodaka > 0, izvor vraćen čisto (`git status` prazan), brana poslije povrata zelena.
+
+| mutacija | pogodaka | palo |
+|---|---|---|
+| maknut podput za `www` | 1 | T4, T5 |
+| `{eq}` → goli string | 2 | **T3 i T6** — kontrolni host `www-sokratstudy-com.napadac.example` prođe |
+| dodan catch-all bez `has` | 2 | T6 |
+| `www` preusmjeren na staging ref | 2 | T5 |
+| tipfeler u refu | 2 | T2, T5 |
+| komentar-ključ u `vercel.json` | 1 | T1 |
+| `source` oblik koji brana ne zna suditi | 1 | T4, T5, T6 **uz „ne znam suditi"** |
+| prazan `rewrites` | 4 | T0 |
+| rewrite na slug kojeg nema na disku | 4 | T2 |
+
+⚠️ **Mutacija `{eq}` → goli string je dokaz da kontrolni host treba:** bez njega bi T3 bila tvrdnja o stilu.
+S njim je to tvrdnja da **neusidren regex stvarno pušta tuđi host**.
+
+### Usput
+
+- **Refovi se više ne prepisuju:** `deploy-function.js` izvozi `PROJEKTI` (uz `require.main` stražu, kalup
+  iz `check-edge-functions.js`), brana ih čita odande. Jedan popis, dva čitatelja. Provjereno da `require`
+  ništa ne pokreće i da pokrenuta skripta i dalje traži argumente.
+- **Ispravljena zastarjela proza u `RASPORED.md` §F6:** još je pisalo da je `Secure email change`
+  **nemjeren**, a izmjeren je i zatvoren 22.09. (uključen na oba projekta, dvije neovisne metode).
+- **`MCP_RESOURCE_URL` ostaje NEPOSTAVLJEN — imenovano otvoreno** (Leonova odluka 23.09.): jedna zakucana
+  adresa ne može biti točna i za `www` i za preview, a `www…/mcp` vodi na produkciju gdje funkcije nema.
+  Flip je **imenovan korak u F7**, zajedno s dvije dashboard-postavke u kojima se staging i produkcija
+  razilaze.
+
+**Preflight EXIT 0** (nova brana je u lancu, provjereno).
+
+### Što slijedi
+
+`--zivo` mjera na **previewu** — to je jedino što može dokazati podudara li Vercel host stvarno ovako i
+prolazi li podput kroz našu domenu. Traži **push grane `feat/f6-mcp`** (Leonov OK dan 22.09.; `main` i
+produkcija i dalje traže zasebno pitanje).
+
+---
+
 ## 2026-09-22 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — pinovi Edge Functiona: izvor gotov, deploy BLOKIRAN
 
 Zaseban zahvat (Leonova odluka): dug iz pravila #9 koji je `edge-pinovi` našao ne ostaje u
