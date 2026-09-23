@@ -88,6 +88,39 @@ samo se ovdje ruka **izmišljala** umjesto da zaboravi. Imena okruženja se prep
 - Dodana **čegrtaljka na dosegu** (`OCEKIVANO_OFFLINE` = 7, `OCEKIVANO_ZIVO` = 7; kalup `check:final`):
   tvrdnja koja tiho nestane spušta ukupno, a ljuska bi i dalje vidjela zeleno.
 
+### ⚠️ `brana-revizor` VRATIO CIGLU — tri nalaza, sva tri potvrđena pokretanjem (`f2c8c69`)
+
+Jezgra je držala (brana izvodi routing, čita refove i slugove iz izvora koji se sam nabraja, stvarno
+je u preflightu), ali **tvrdnja zbog koje cigla postoji nije bila pokrivena**.
+
+- **F1 — najteži. `refOd` je regex završavao BEZ `$` i REP destinacije BACAO.** Zato je
+  `source: "/mcp/:put*"` s destinacijom `…/functions/v1/mcp` (bez `/:put*`) prolazio **zeleno, 7 ✓**.
+  Vercel neiskorišten parametar ne stavlja u put nego ga **zalijepi kao upit**, a `@supabase/server`
+  rutu metapodataka hvata **po putu** → `/mcp/oauth-protected-resource` prestaje posluživati RFC 9728
+  dokument, dok `/mcp` uredno odgovara. **Brana je mjerila DEFINICIJU** (`source` spominje podput),
+  **ne POSLJEDICU** (podput stiže do funkcije). Sad T2 izvodi očekivani rep iz `source`-a i traži da
+  ga `destination` nosi.
+- **F2 — „isti projekt" nije „ista funkcija".** T4 je uspoređivao samo `ref`, pa je podput preusmjeren
+  na **`delete-account`** prolazio zeleno — promet s MCP podputova išao bi u funkciju za brisanje
+  računa. Sad se sudi i `slug`.
+- **F3 — T5/T6 prolaze na NULI.** Prazan `USMJERENJE`/`BEZ_REWRITEA` daje „✓ (0 × 2 puta)" i EXIT 0.
+  **Čegrtaljka na BROJU TVRDNJI to ne hvata** — tvrdnji je i dalje sedam, samo ne mjere ništa. Nova
+  **T7** sudi **DOSEG** (minimum po popisu) i traži da grupa pravila za `/mcp` uopće postoji (T4 na
+  nula grupa prolazi). Uz popis stoji i **datum** zadnje usporedbe sa stvarnošću, jer se ne nabraja sam.
+
+⚠️ **POUKA IZVAN CIGLE, ista kao F1:** *tvrdnja o rewriteu mora suditi CIJELU destinaciju, ne njezin
+prefiks.* Regex bez `$` je tiho odbacivao upravo onaj dio koji nosi razliku između „radi" i
+„putokaz vodi u 404". Rodbinski razred: „tvrdnja o obliku sučelja mora gledati iscrtano, ne izvor".
+
+**Tri napomene iz iste revizije, sve popravljene:** T2 je poruku uzimao iz zajedničkog niza pa je
+ispisivao samo **zadnji** prekršaj i napuhavao broj · **Z7 je sudio samo HTTP broj** (200 s bilo čim u
+tijelu izgledao bi jednako) → sad traži da tijelo bude RFC 9728 dokument našeg resursa · `--zivo` je
+pri **parcijalnom** padu mreže **odbacivao već nađene nalaze** i izlazio 2 → sad „nisam mogao izmjeriti"
+vrijedi samo ako dotad ništa nije palo (kalup `check-edge-functions.js`).
+
+**Poslije revizije: 8 tvrdnji (bilo 7), 12 mutacija nad `vercel.json` + 1 nad branom, sve crvene** —
+F1 → T2, F2 → T4, F3 → T7 (imenuje oba popisa). Izvor vraćen čisto, preflight EXIT 0.
+
 ### ⛔ Preview se zasad NE MOŽE izmjeriti — i to nije nalaz o kodu
 
 Projekt ima `ssoProtection` s dosegom **`all_except_custom_domains`** → **svaki** `.vercel.app` host traži
