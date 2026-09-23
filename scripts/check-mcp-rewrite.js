@@ -2,6 +2,19 @@
 // ===== Gate: rewrite javne adrese `/mcp` (F6 ①/4b) =====
 // Usage: node scripts/check-mcp-rewrite.js                  (npm run check:mcp-rewrite — offline)
 //        node scripts/check-mcp-rewrite.js --zivo <adresa>   (mjeri STVARNI preview / produkciju)
+//        …  --zivo <adresa> --share "<adresa>/?_vercel_share=…"   (kroz Vercelovu zaštitu)
+//
+// ─── KAKO PROĆI KROZ VERCELOVU ZAŠTITU (projekt ima `ssoProtection`) ───────────────────────────
+// Dva puta, oba podržana: ① TRAJNO — `VERCEL_AUTOMATION_BYPASS_SECRET` u `.env` (Vercel → Project
+// → Settings → Deployment Protection → Protection Bypass for Automation); šalje se kao zaglavlje.
+// ② JEDNOKRATNO — share-poveznica koju Vercel izda na 23 h (`?_vercel_share=…`): `--share` ju
+// posjeti, pokupi kolačić `_vercel_jwt` kroz preusmjeravanja (`fetch` ih ne pamti sam) i nosi ga
+// dalje. Propusnica ide SAMO prema našoj adresi, nikad prema Supabaseu.
+//
+// ─── KONTROLA KOJA OVU MJERU ČINI UZROČNOM (izmjereno 23.09.) ──────────────────────────────────
+// Zeleno na jednoj adresi ne dokazuje da ga radi rewrite. Zato se mjeri ISTI deployment na DVA
+// hosta: alias grane (ima pravilo) → Z1–Z7 zeleno, cijeli lanac otkrivanja radi; alias pojedinog
+// deploya (nema pravilo) → `/mcp` je **404**. Razliku radi host-uvjet, ne nešto drugo.
 //
 // ─── ŠTO JE OVDJE NA KOCKI ──────────────────────────────────────────────────────────────────────
 // Korisnikov AI prvi zahtjev šalje BEZ tokena i tek iz odgovora 401 sazna GDJE je prijava:
@@ -375,11 +388,36 @@ function vercelovaZastita(res) {
  */
 const BYPASS = process.env.VERCEL_AUTOMATION_BYPASS_SECRET || '';
 
-/** Zahtjev prema NAŠOJ adresi nosi bypass; prema tuđoj (Supabase) ne — tajna se ne rasipa. */
+/**
+ * Drugi put kroz zaštitu: **share-poveznica** (`?_vercel_share=…`), koju Vercel izda na 23 h.
+ * Ona pri preusmjeravanju postavi kolačić `_vercel_jwt`. Koristi se za JEDNOKRATNU mjeru kad
+ * trajne bypass-tajne nema; `fetch` kolačiće NE pamti sam, pa ih skupljamo ručno kroz hopove.
+ */
+let KOLACIC = process.env.VERCEL_SHARE_COOKIE || '';
+
+async function kolacicIzShare(shareUrl) {
+  let url = shareUrl;
+  const jar = new Map();
+  for (let i = 0; i < 6; i++) {
+    const h = jar.size ? { cookie: [...jar].map(([k, v]) => `${k}=${v}`).join('; ') } : {};
+    const r = await fetch(url, { redirect: 'manual', headers: h });
+    const sve = typeof r.headers.getSetCookie === 'function' ? r.headers.getSetCookie() : [];
+    for (const sc of sve) { const m = String(sc).match(/^([^=]+)=([^;]*)/); if (m) jar.set(m[1], m[2]); }
+    const loc = r.headers.get('location');
+    if (!loc) break;
+    url = new URL(loc, url).toString();
+  }
+  return [...jar].map(([k, v]) => `${k}=${v}`).join('; ');
+}
+
+/** Zahtjev prema NAŠOJ adresi nosi propusnicu; prema tuđoj (Supabase) ne — ne rasipa se. */
 function zahtjev(url, baza, opts) {
   const o = Object.assign({ redirect: 'manual' }, opts || {});
-  if (BYPASS && String(url).startsWith(baza)) {
-    o.headers = Object.assign({}, o.headers, { 'x-vercel-protection-bypass': BYPASS });
+  if (String(url).startsWith(baza)) {
+    const dodatno = {};
+    if (BYPASS) dodatno['x-vercel-protection-bypass'] = BYPASS;
+    if (KOLACIC) dodatno.cookie = KOLACIC;
+    o.headers = Object.assign({}, o.headers, dodatno);
   }
   return fetch(url, o);
 }
@@ -387,7 +425,7 @@ function zahtjev(url, baza, opts) {
 // ════════════════════════════════════════════════════════════════════════════════════════════════
 async function zivo(baza) {
   console.log(`\n=== check:mcp-rewrite --zivo — ${baza} ===`);
-  console.log(`    bypass-tajna: ${BYPASS ? 'JEST u .env' : 'NEMA je u .env'}\n`);
+  console.log(`    propusnica kroz zaštitu: ${BYPASS ? 'bypass-tajna iz .env' : (KOLACIC ? 'share-kolačić (privremen)' : 'NEMA je')}\n`);
   const host = new URL(baza).hostname;
   const pravila = JSON.parse(fs.readFileSync(VERCEL, 'utf8')).rewrites || [];
 
@@ -486,6 +524,14 @@ async function zivo(baza) {
     if (!baza || !/^https?:\/\//.test(baza)) {
       console.error('\n❌ `--zivo` traži adresu, npr. --zivo https://studymaster-git-....vercel.app\n');
       process.exit(2);
+    }
+    // `--share <url>` uzme kolačić iz Vercelove privremene share-poveznice (23 h).
+    const s = args.indexOf('--share');
+    if (s !== -1 && args[s + 1]) {
+      try {
+        KOLACIC = await kolacicIzShare(args[s + 1]);
+        if (!KOLACIC) { console.error('\n❌ share-poveznica nije vratila nijedan kolačić\n'); process.exit(2); }
+      } catch (e) { console.error(`\n❌ share-poveznica nedostupna: ${e.message}\n`); process.exit(2); }
     }
     try { kod = await zivo(baza.replace(/\/+$/, '')); } catch (e) {
       // Nedostupna mreža NIJE „čisto je" → izlaz 2. ⚠️ Ali parcijalan pad mreže NE SMIJE odbaciti

@@ -121,12 +121,37 @@ vrijedi samo ako dotad ništa nije palo (kalup `check-edge-functions.js`).
 **Poslije revizije: 8 tvrdnji (bilo 7), 12 mutacija nad `vercel.json` + 1 nad branom, sve crvene** —
 F1 → T2, F2 → T4, F3 → T7 (imenuje oba popisa). Izvor vraćen čisto, preflight EXIT 0.
 
-### ⛔ Preview se zasad NE MOŽE izmjeriti — i to nije nalaz o kodu
+### ✅ ŽIVA MJERA IZVEDENA — Z1–Z7 ZELENO (7/7) NA PREVIEWU
 
-Projekt ima `ssoProtection` s dosegom **`all_except_custom_domains`** → **svaki** `.vercel.app` host traži
-Vercelovu prijavu. Posljedica nije samo naša: **ni pravi MCP klijent ondje ne bi prošao.** Mjera traži
-**Protection Bypass for Automation** (tajna u zaglavlju `x-vercel-protection-bypass`) ili isključenu zaštitu
-za preview — **čeka Leonovu odluku**. Brana to prijavljuje kao ⊘, ne kao ✗.
+Rewrite radi od kraja do kraja kroz **našu** adresu:
+
+| tvrdnja | ishod |
+|---|---|
+| `POST <preview>/mcp` | **401 IZ NAŠE FUNKCIJE** (ne s gatewaya) |
+| `WWW-Authenticate` | nosi `resource_metadata="…/functions/v1/mcp/oauth-protected-resource"` |
+| ta adresa | **200**, i opisuje **staging** resurs |
+| `authorization_servers` | **staging** `/auth/v1` |
+| `<preview>/mcp/oauth-protected-resource` | **RFC 9728 dokument**, ne samo status 200 |
+| `<preview>/` | i dalje naša aplikacija (rewrite ju nije pojeo) |
+
+⚠️ **Prepreka i kako je zaobiđena.** Projekt ima `ssoProtection` s dosegom `all_except_custom_domains` →
+svaki `.vercel.app` host traži Vercelovu prijavu, a **Vercel API je odbio (403)** da stvorim trajnu
+bypass-tajnu. Brana zato zna **dva** puta kroz zaštitu: trajni `VERCEL_AUTOMATION_BYPASS_SECRET` iz `.env`
+(zaglavlje) i **jednokratnu share-poveznicu** koju Vercel izda na 23 h (`--share`) — ona ju posjeti, pokupi
+kolačić `_vercel_jwt` **kroz preusmjeravanja** (`fetch` ih ne pamti sam) i nosi ga dalje. Propusnica ide
+**samo prema našoj adresi**, nikad prema Supabaseu.
+
+⚠️ **KONTROLA KOJA MJERU ČINI UZROČNOM — bez nje zeleno ne vrijedi ništa.** Mjeren je **isti deployment na
+dva hosta**:
+
+| host | pravilo | `/mcp` |
+|---|---|---|
+| `studymaster-git-feat-f6-mcp-…` (alias grane) | **ima** | **Z1–Z7 zeleno** — cijeli lanac otkrivanja radi |
+| `studymaster-dj7csubed-…` (alias pojedinog deploya) | **nema** | **404** |
+
+Isti kod, isti `vercel.json`, ista zaštita — razliku radi **host-uvjet**. Time su izmjerene i **obje granice**
+koje zaglavlje brane imenuje kao „mjeri ih `--zivo`": sufiks metapodataka i Vercelovo podudaranje hosta.
+⚠️ Na produkciji zaštita nije prepreka (`www` je vlastita domena), ali ondje `mcp` živi tek od **F7**.
 
 ### Usput
 
@@ -144,9 +169,23 @@ za preview — **čeka Leonovu odluku**. Brana to prijavljuje kao ⊘, ne kao �
 
 ### Što slijedi
 
-`--zivo` mjera na **previewu** — to je jedino što može dokazati podudara li Vercel host stvarno ovako i
-prolazi li podput kroz našu domenu. Traži **push grane `feat/f6-mcp`** (Leonov OK dan 22.09.; `main` i
-produkcija i dalje traže zasebno pitanje).
+**①/4b je GOTOV i DOKAZAN** — izvor, brana, revizija i živa mjera s kontrolom. Grana je pushana
+(Leonov OK dan 22.09.); `main` i produkcija i dalje traže **zasebno** pitanje.
+
+Sljedeće, redom kako je Leon izabrao 22.09.:
+1. **S1** — CI preskače jedinu mjeru ŽICE (`tests/profile-jezik.authed.spec.js` ③ dokazuje da tijelo
+   `PUT /auth/v1/user` stvarno nosi `current_password`, ali traži `STAGING_*` tajne kojih CI nema, a taj
+   job k tome **ne blokira merge**).
+2. **`test:unit` se ne nabraja sam** — ručni lanac od 55 datoteka u `package.json`, bez brane da je svaki
+   `tests/unit/*.js` s diska u njemu. Zaboravljen test **ne vrti se nikad**, a izgleda zeleno. Uzor:
+   `tests/unit/axe-gate-usage.test.js` čita `tests/` s diska.
+
+Pa **②** (nacrt — AI prvi put PIŠE; `node_drafts`, ADR-038).
+
+⚠️ **Ostaje imenovano otvoreno iz ove cigle:** trajna bypass-tajna (`VERCEL_AUTOMATION_BYPASS_SECRET`)
+nije stvorena — Vercel API ju je **odbio (403)**, a share-poveznica traje **23 h**. Dok je nema, `--zivo`
+se pokreće uz `--share` i svježu poveznicu. `--zivo` **nije u preflightu** (traži mrežu i preview), pa to
+danas ništa ne blokira; za CI bi trebala trajna tajna.
 
 ---
 
