@@ -48,7 +48,16 @@ const VERCEL = path.join(ROOT, 'vercel.json');
 /** Sufiks na kojem `@supabase/server` poslužuje RFC 9728 dokument. Vidi granicu 1 u zaglavlju. */
 const METAPODACI = '/oauth-protected-resource';
 
-/** Javne adrese koje izlažemo i projekt koji iza njih stoji. */
+/**
+ * Javne adrese koje izlažemo i projekt koji iza njih stoji.
+ *
+ * ⚠️ Hostovi su PREPISANI IZ VERCELOVOG POPISA DOMENA projekta `studymaster` (provjereno 23.09.
+ * kroz Vercel API), ne izmišljeni. Prva verzija ove brane koristila je izmišljen tim-slug i zato
+ * je propustila pravi kvar: preview-regex `^studymaster-[a-z0-9-]+\.vercel\.app$` hvatao je i
+ * `studymaster-leon-kresos-projects.vercel.app` (PRODUKCIJSKI alias) i
+ * `studymaster-git-main-…` (alias grane `main`) — dakle dvije PRODUKCIJSKE adrese išle bi na
+ * STAGING. To je točno onaj kvar zbog kojeg je catch-all i odbačen, samo u drugom obliku.
+ */
 const USMJERENJE = [
   {
     host: 'www.sokratstudy.com',
@@ -56,33 +65,48 @@ const USMJERENJE = [
     zasto: 'jedina prava adresa platforme; `mcp` ondje živi tek od F7',
   },
   {
-    host: 'studymaster-git-feat-f6-mcp-sokrat.vercel.app',
+    host: 'studymaster-git-feat-f6-mcp-leon-kresos-projects.vercel.app',
     projekt: 'staging',
-    zasto: 'preview grane — oblik `<projekt>-git-<grana>-<tim>.vercel.app`',
-  },
-  {
-    host: 'studymaster-9f2c1ab7x-sokrat.vercel.app',
-    projekt: 'staging',
-    zasto: 'preview pojedinog deploya — oblik `<projekt>-<hash>-<tim>.vercel.app`',
+    zasto: 'preview GRANE ZNAČAJKE — jedini `.vercel.app` oblik koji nikad nije produkcija',
   },
 ];
 
-/** Hostovi koji NE SMIJU dobiti rewrite. Ovo je tvrdnja da pravilo pada ZATVORENO. */
+/**
+ * Hostovi koji NE SMIJU dobiti rewrite. Ovo je tvrdnja da pravilo pada ZATVORENO.
+ * Prva tri su STVARNE adrese ovog projekta (Vercel `project.domains`, 23.09.).
+ */
 const BEZ_REWRITEA = [
   {
-    host: 'studymaster.vercel.app',
-    zasto: 'ŽIVI produkcijski `.vercel.app` alias (izmjereno 23.09.: HTTP 200), a nije `www` — '
-      + 'pod catch-all pravilom bi produkcijska adresa gađala TEST-BAZU',
+    host: 'studymaster-leon-kresos-projects.vercel.app',
+    zasto: 'PRODUKCIJSKI `.vercel.app` alias ovog projekta — nije `www`, pa bi ga široko '
+      + 'pisan preview-obrazac poslao u TEST-BAZU (taj je kvar stvarno postojao 23.09.)',
+  },
+  {
+    host: 'studymaster-git-main-leon-kresos-projects.vercel.app',
+    zasto: 'alias grane `main` = produkcijski deploy; isti kvar kao gore',
   },
   {
     host: 'sokratstudy.com',
     zasto: 'apex; Vercel ga 307-a na `www` prije routinga (izmjereno), pa ovdje nema što raditi',
   },
   {
+    host: 'studymaster-7u2uoqad9-leon-kresos-projects.vercel.app',
+    zasto: 'alias POJEDINOG deploya — svjesno NIJE pokriven: ne da se razlikovati od '
+      + 'produkcijskog aliasa bez pogleda unaprijed, a alias grane je stabilan i dovoljan za mjeru',
+  },
+  {
     host: 'www-sokratstudy-com.napadac.example',
     zasto: 'KONTROLA za goli string u `has.value`: kao regex bez sidara zadovoljio bi ga i ovaj host',
   },
 ];
+
+/**
+ * Čegrtaljka na dosegu (kalup: `check:final`). Broj tvrdnji koje prolaz MORA izvesti.
+ * Bez nje tvrdnja koja tiho nestane (rani `return`, petlja koja ne uđe) spušta ukupno,
+ * a ljuska i dalje vidi ✅ — isti razred kao `note()` koji ne diže brojač u `mcp-brava-check.js`.
+ */
+const OCEKIVANO_OFFLINE = 7;
+const OCEKIVANO_ZIVO = 7;
 
 const nalazi = [];
 let izmjereno = 0;
@@ -259,8 +283,31 @@ function offline() {
 
   console.log(`\n  dotaknuto: ${pravila.length} rewrite pravila · ${grupe.size} parova · `
     + `${(USMJERENJE.length + BEZ_REWRITEA.length) * 2} (host, put) slučajeva · ${izmjereno} tvrdnji`);
+  if (izmjereno !== OCEKIVANO_OFFLINE) {
+    nalazi.push(`doseg: izvedeno ${izmjereno} tvrdnji, a očekivano ${OCEKIVANO_OFFLINE}`);
+    console.log(`  ✗ ČEGRTALJKA — izvedeno ${izmjereno} tvrdnji, očekivano ${OCEKIVANO_OFFLINE};`
+      + ' tvrdnja je nestala ili je dodana bez podizanja osnovice');
+  }
   console.log('  ⓘ podudaranje hosta kako ga Vercel STVARNO radi mjeri `--zivo` na previewu.\n');
   return nalazi.length ? 1 : 0;
+}
+
+/**
+ * Potpis VERCELOVE zaštite deploya (SSO), koja odgovara SAMA — prije našeg rewritea.
+ *
+ * ⚠️ POVOD (izmjereno 23.09., i oborilo dvije moje tvrdnje): projekt ima `ssoProtection` s
+ * dosegom `all_except_custom_domains`, pa svaki `.vercel.app` host vraća **401 na `/mcp`** i
+ * **302 na `/`** — a taj 401 izgleda isto kao ispravan 401 iz funkcije. Prva verzija ove brane
+ * je zbog toga imala DVA lažna zelena: Z1 je prošao jer `fetch` slijedi preusmjeravanja pa je
+ * izmjerio VERCELOVU STRANICU ZA PRIJAVU (200), a Z2 je prihvatio zaštitni 401 kao svoj.
+ * Zaštićen deploy se NE MOŽE izmjeriti — to je izlaz **2** („nisam mogao"), ne 1 („pokvareno je").
+ */
+function vercelovaZastita(res) {
+  const sc = String(res.headers.get('set-cookie') || '');
+  const loc = String(res.headers.get('location') || '');
+  if (/_vercel_sso_nonce|_vercel_jwt/.test(sc)) return 'odgovor nosi Vercelov SSO kolačić';
+  if (/vercel\.com\/(sso-api|login)/.test(loc)) return `preusmjerava na Vercelovu prijavu (${loc.slice(0, 60)}…)`;
+  return null;
 }
 
 // ════════════════════════════════════════════════════════════════════════════════════════════════
@@ -274,22 +321,38 @@ async function zivo(baza) {
   if (predvid.greska) { console.log(`  ✗ ${predvid.greska}`); return 1; }
   const d = predvid.pravilo ? refOd(predvid.pravilo.destination) : null;
 
+  // ── Z0: je li adresa uopće MJERLJIVA ─────────────────────────────────────────────────────────
+  // Prvi zahtjev služi i kao proba zaštite. Bez ove provjere zaštićen deploy daje 401 koji se
+  // ne razlikuje od ispravnog, pa bi „konektor radi" bila tvrdnja o Vercelovoj prijavnoj stranici.
+  const prvi = await fetch(baza + '/mcp', {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}', redirect: 'manual',
+  });
+  const zastita = vercelovaZastita(prvi);
+  if (zastita) {
+    console.log(`  ⊘ DEPLOY JE ZAŠTIĆEN (${zastita}).`);
+    console.log('     Vercelov SSO odgovara PRIJE rewritea, pa se kroz ovu adresu ne može izmjeriti');
+    console.log('     ništa o našoj funkciji — njezin 401 i ovaj imaju isti broj.');
+    console.log('     Rješenje je Protection Bypass for Automation (tajna u `x-vercel-protection-bypass`)');
+    console.log('     ili isključena zaštita za preview. NIJE nalaz o kodu.\n');
+    return 2;
+  }
+
   if (!d) {
     console.log(`  ⓘ za host \`${host}\` nijedno pravilo ne hvata → očekuje se 404, kao i prije cigle.`);
-    const r = await fetch(baza + '/mcp', { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}' });
-    tvrdi('Z0 host bez pravila i dalje 404', r.status === 404, `dobiven ${r.status}`);
-    console.log(`\n  dotaknuto: 1 tvrdnja\n`);
+    tvrdi('Z0 host bez pravila i dalje 404', prvi.status === 404, `dobiven ${prvi.status}`);
+    console.log('\n  dotaknuto: 1 tvrdnja\n');
     return nalazi.length ? 1 : 0;
   }
 
   console.log(`  ⓘ pravilo predviđa projekt \`${imeProjekta(d.ref)}\` (${d.ref})\n`);
 
-  // Z1 — rewrite nije pojeo aplikaciju.
-  const korijen = await fetch(baza + '/');
-  tvrdi('Z1 aplikacija se i dalje poslužuje na `/`', korijen.status === 200, `dobiven ${korijen.status}`);
+  // Z1 — rewrite nije pojeo aplikaciju. `redirect: 'manual'` je OBAVEZAN: sa slijeđenjem je ova
+  // tvrdnja jednom već prošla na Vercelovoj stranici za prijavu (200 od tuđeg dokumenta).
+  const korijen = await fetch(baza + '/', { redirect: 'manual' });
+  tvrdi('Z1 aplikacija se i dalje poslužuje na `/`', korijen.status === 200,
+    `dobiven ${korijen.status}${korijen.headers.get('location') ? ' → ' + korijen.headers.get('location') : ''}`);
 
   // Z2/Z3 — prvi zahtjev bez tokena mora nositi putokaz.
-  const prvi = await fetch(baza + '/mcp', { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}' });
   tvrdi('Z2 POST /mcp kroz našu adresu vraća 401', prvi.status === 401, `dobiven ${prvi.status}`);
   const wa = prvi.headers.get('www-authenticate') || '';
   const m = wa.match(/resource_metadata="([^"]+)"/i);
@@ -318,6 +381,10 @@ async function zivo(baza) {
     `dobiven ${pod.status} — rewrite ne pokriva podputove, pa otkrivanje prijave staje`);
 
   console.log(`\n  dotaknuto: ${izmjereno} tvrdnji protiv ${baza}\n`);
+  if (izmjereno !== OCEKIVANO_ZIVO) {
+    nalazi.push(`doseg: izvedeno ${izmjereno} živih tvrdnji, a očekivano ${OCEKIVANO_ZIVO}`);
+    console.log(`  ✗ ČEGRTALJKA — izvedeno ${izmjereno}, očekivano ${OCEKIVANO_ZIVO}`);
+  }
   return nalazi.length ? 1 : 0;
 }
 
@@ -342,6 +409,8 @@ async function zivo(baza) {
   }
 
   if (kod === 0) { console.log('✅ check:mcp-rewrite — bez nalaza\n'); process.exit(0); }
+  // 2 = „nisam mogao izmjeriti" i NIKAD se ne smije stopiti s 1 = „pokvareno je".
+  if (kod === 2) { console.log('⊘ check:mcp-rewrite — nije izmjereno (vidi gore)\n'); process.exit(2); }
   console.log(`\n❌ check:mcp-rewrite — ${nalazi.length} nalaza\n`);
   process.exit(1);
 })();

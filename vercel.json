@@ -31,7 +31,7 @@
       "has": [
         {
           "type": "host",
-          "value": "^studymaster-[a-z0-9-]+\\.vercel\\.app$"
+          "value": "^studymaster-git-feat-[a-z0-9-]+-leon-kresos-projects\\.vercel\\.app$"
         }
       ],
       "destination": "https://czljmvigkgiajzjxtndq.supabase.co/functions/v1/mcp"
@@ -41,7 +41,7 @@
       "has": [
         {
           "type": "host",
-          "value": "^studymaster-[a-z0-9-]+\\.vercel\\.app$"
+          "value": "^studymaster-git-feat-[a-z0-9-]+-leon-kresos-projects\\.vercel\\.app$"
         }
       ],
       "destination": "https://czljmvigkgiajzjxtndq.supabase.co/functions/v1/mcp/:put*"
