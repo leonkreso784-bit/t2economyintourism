@@ -152,6 +152,50 @@ dva hosta**:
 Isti kod, isti `vercel.json`, ista zaštita — razliku radi **host-uvjet**. Time su izmjerene i **obje granice**
 koje zaglavlje brane imenuje kao „mjeri ih `--zivo`": sufiks metapodataka i Vercelovo podudaranje hosta.
 ⚠️ Na produkciji zaštita nije prepreka (`www` je vlastita domena), ali ondje `mcp` živi tek od **F7**.
+✅ **Identitet deploya je ZAPISAN, ne pretpostavljen:** oba hosta su `dpl_G6EGKXfA8CZLDZTkkkMACFaFSwQJ`
+(commit `f3ce72a`) — hash-alias `studymaster-dgz2xatqw-…` **jest** `url` tog istog deploya (Vercel API).
+
+### ⚠️ `brana-revizor` VRATIO CIGLU DRUGI PUT — i opet je bio u pravu (`34a11a9`)
+
+Offline dio je držao, sva tri nalaza prvog kruga stvarno zatvorena, nijedna regresija. Pala su tri ruba,
+**sva tri dokazana pokretanjem, ne zaključkom**:
+
+- **F1 — KONTROLA NIJE BILA KONTROLA, i prolazila je na nuli.** `Z0` je sudio **goli broj**, a 404 ima
+  više uzroka. Dokaz: `--zivo` na host koji **nikad nije postojao** dao je „✓ Z0 … ✅ bez nalaza", **EXIT 0**
+  — ispis **znak po znak isti** kao zapisana kontrola. Popravak je trostruk: ① **uloga se ZADAJE**
+  (`--zivo` pada ako pravila nema, `--kontrola` pada ako ga ima) — prije ju je brana izvodila sama, pa je
+  tipfeler u adresi ili preimenovana grana pretvarao mjeru u zelenu kontrolu; ② **K1** traži da adresa
+  **poslužuje NAŠU aplikaciju** (biljeg = `<title>` **s diska**), inače 404 ne dokazuje ništa; ③ **K2** sudi
+  **uzrok** 404 — izmjereno: nepostojeći host → `DEPLOYMENT_NOT_FOUND`, naš deploy bez te staze →
+  `NOT_FOUND`. ⚠️ Moja prva verzija K2 odbijala je **svaki** `x-vercel-error` i time bi dala **lažno crveno
+  na ispravnoj kontroli** — mjerenje je ispravilo pravilo prije nego je ušlo u zapis.
+- **F2 — PROPUSNICA JE CURILA (sigurnosni).** Odredište se sudilo s `startsWith(baza)` — „počinje li isto"
+  umjesto „je li isti host". Izmjereno da prolaze `https://<baza>@zloban.example/x` (stvarni host je
+  **`zloban.example`**) i `https://<baza>.zloban.example/x`. A **jedini URL koji se ne gradi lokalno je
+  `resource_metadata` IZ ODGOVORA mjerenog poslužitelja** → tko kontrolira taj odgovor, kontrolirao bi i
+  kamo ide naša tajna/kolačić. Sad: `new URL(...).host` + obavezan `https`. Uz to `kolacicIzShare` više ne
+  nosi kolačiće kroz skok na tuđi host (prije **nije imao nikakvu** provjeru).
+- **F3 — IZLAZNI KOD JE LAGAO.** `process.exit()` dok undici drži keep-alive vezu obori Node na Windowsu
+  (libuv tvrdnja), pa ljuska vidi **127** umjesto 0/1/2 — uredno palo mjerenje prijavi se kao **pad alata**.
+  Sad se tijelo odgovora **uvijek pročita**, dispatcher se zatvori, `exitCode` se postavi i proces završi sam.
+
+**Matrica uloga, svih sedam izmjereno i točno:**
+
+| uloga | adresa | kod |
+|---|---|---|
+| offline | — | **0** |
+| `--zivo` | host **s** pravilom | **0** |
+| `--kontrola` | host **bez** pravila (isti deploy) | **0** |
+| `--zivo` | host bez pravila | **1** |
+| `--kontrola` | host s pravilom | **1** |
+| `--kontrola` | host koji **ne postoji** | **1** |
+| `--zivo` | bez propusnice (zaštićen) | **2** |
+
+⚠️ **Ispis više ne nadglašava:** kaže da **našu** adresu dodiruju Z1 Z2 Z3 Z7, a **Z4–Z6 idu izravno na
+Supabase** (jer `MCP_RESOURCE_URL` još nije postavljen — F7). Uz to imenovana granica: **kad flip padne,
+Z5 mora tražiti jednakost hosta**, inače neće razlikovati javnu adresu od Supabaseove (obje nose isti ref).
+⚠️ **Operativno:** Vercel drži **samo jedan aktivan share-token** — novi poništava prethodni, pa se mjeri
+jedan host po jedan. Sa zastarjelim tokenom brana vrati **2**, ne lažno zeleno.
 
 ### Usput
 
