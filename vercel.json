@@ -1,6 +1,52 @@
 {
   "version": 2,
   "name": "sokrat-study",
+  "rewrites": [
+    {
+      "source": "/mcp",
+      "has": [
+        {
+          "type": "host",
+          "value": {
+            "eq": "www.sokratstudy.com"
+          }
+        }
+      ],
+      "destination": "https://naxjubnedhrbhsuasayu.supabase.co/functions/v1/mcp"
+    },
+    {
+      "source": "/mcp/:put*",
+      "has": [
+        {
+          "type": "host",
+          "value": {
+            "eq": "www.sokratstudy.com"
+          }
+        }
+      ],
+      "destination": "https://naxjubnedhrbhsuasayu.supabase.co/functions/v1/mcp/:put*"
+    },
+    {
+      "source": "/mcp",
+      "has": [
+        {
+          "type": "host",
+          "value": "^studymaster-[a-z0-9-]+\\.vercel\\.app$"
+        }
+      ],
+      "destination": "https://czljmvigkgiajzjxtndq.supabase.co/functions/v1/mcp"
+    },
+    {
+      "source": "/mcp/:put*",
+      "has": [
+        {
+          "type": "host",
+          "value": "^studymaster-[a-z0-9-]+\\.vercel\\.app$"
+        }
+      ],
+      "destination": "https://czljmvigkgiajzjxtndq.supabase.co/functions/v1/mcp/:put*"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

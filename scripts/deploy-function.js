@@ -33,6 +33,14 @@ const PROJEKTI = {
   prod: { ref: 'naxjubnedhrbhsuasayu', ime: 'PRODUKCIJA' },
 };
 
+// Refovi su IZVOR ISTINE i za `check-mcp-rewrite.js` — ona sudi koji projekt stoji iza koje
+// javne adrese, a ref prepisan u drugu datoteku bio bi druga kopija koja tiho ostari. Jedan
+// popis, dva čitatelja; isti kalup kao `PUBLIC_FNS` u `check-edge-functions.js`. Zato se izvozi
+// PRIJE glavnog toka: ovaj modul pri `require`-u ne smije ništa deployati ni ispisati.
+module.exports = { PROJEKTI };
+
+if (require.main !== module) return;
+
 const args = process.argv.slice(2);
 const slug = args.find((a) => !a.startsWith('--'));
 const uzmi = (ime) => { const i = args.indexOf('--' + ime); return i === -1 ? null : args[i + 1]; };
