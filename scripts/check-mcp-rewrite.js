@@ -1,8 +1,17 @@
 /* eslint-disable no-console */
 // ===== Gate: rewrite javne adrese `/mcp` (F6 ①/4b) =====
-// Usage: node scripts/check-mcp-rewrite.js                  (npm run check:mcp-rewrite — offline)
-//        node scripts/check-mcp-rewrite.js --zivo <adresa>   (mjeri STVARNI preview / produkciju)
-//        …  --zivo <adresa> --share "<adresa>/?_vercel_share=…"   (kroz Vercelovu zaštitu)
+// Usage: node scripts/check-mcp-rewrite.js                     (npm run check:mcp-rewrite — offline)
+//        node scripts/check-mcp-rewrite.js --zivo <adresa>      (adresa koja MORA imati pravilo)
+//        node scripts/check-mcp-rewrite.js --kontrola <adresa>  (adresa koja ga MORA NEMATI)
+//        …  --share "<adresa>/?_vercel_share=…"                 (kroz Vercelovu zaštitu)
+//
+// ⚠️ ULOGA SE ZADAJE, NE IZVODI. `--zivo` pada ako pravila nema, `--kontrola` pada ako ga ima.
+//    Prije je brana ulogu birala sama iz `vercel.json`, pa se tipfeler u adresi (ili preimenovana
+//    grana) tiho pretvarao u „zelenu kontrolu": izmjereno je da je host koji NIKAD NIJE POSTOJAO
+//    dao ispis znak po znak isti kao ispravna kontrola, uz EXIT 0.
+// ⚠️ Vercel drži SAMO JEDAN aktivan share-token — novi poništava prethodni, pa se mjeri jedan
+//    host po jedan i token se osvježava prije svake vrtnje. Sa zastarjelim tokenom brana vrati
+//    izlaz **2** („nisam mogao izmjeriti"), ne lažno zeleno.
 //
 // ─── KAKO PROĆI KROZ VERCELOVU ZAŠTITU (projekt ima `ssoProtection`) ───────────────────────────
 // Dva puta, oba podržana: ① TRAJNO — `VERCEL_AUTOMATION_BYPASS_SECRET` u `.env` (Vercel → Project
@@ -125,6 +134,7 @@ const BEZ_REWRITEA = [
  */
 const OCEKIVANO_OFFLINE = 8;
 const OCEKIVANO_ZIVO = 7;
+const OCEKIVANO_KONTROLA = 2;
 
 /**
  * Čegrtaljka na DOSEGU (T7), odvojena od čegrtaljke na broju tvrdnji.
@@ -137,8 +147,28 @@ const OCEKIVANO_ZIVO = 7;
  */
 const DOSEG = { usmjerenje: 2, bezRewritea: 5, provjereno: '2026-09-23' };
 
+/**
+ * Izlaz koji NE OBARA PROCES.
+ *
+ * ⚠️ IZMJERENO 23.09.: `process.exit()` dok undici još drži keep-alive vezu obori Node na Windowsu
+ * (`Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)`), a ljuska tada vidi **127** umjesto
+ * 0/1/2 — uredno palo mjerenje prijavi se kao pad alata. **Brana koja laže o izlaznom kodu gora je
+ * od rupe** (isti razred kao `catch` koji izlazi s nulom). Zato: zatvori globalni dispatcher,
+ * postavi `exitCode` i pusti proces da završi sam. Tajmer je `unref`-an pa ne drži petlju; ako ju
+ * nešto ipak drži, izađe s ISPRAVNIM kodom umjesto da visi.
+ */
+function izadji(kod) {
+  process.exitCode = kod;
+  try {
+    const d = globalThis[Symbol.for('undici.globalDispatcher.1')];
+    if (d && typeof d.close === 'function') d.close().catch(() => {});
+  } catch (_e) { /* nije undici — nema što zatvoriti */ }
+  setTimeout(() => process.exit(kod), 3000).unref();
+}
+
 const nalazi = [];
 let izmjereno = 0;
+let zadnjiResurs = '';   // adresa metapodataka koju je poslužitelj oglasio (za pošten ispis dosega)
 function tvrdi(ime, ok, poruka) {
   izmjereno++;
   if (ok) { console.log(`  ✓ ${ime}`); return true; }
@@ -395,12 +425,40 @@ const BYPASS = process.env.VERCEL_AUTOMATION_BYPASS_SECRET || '';
  */
 let KOLACIC = process.env.VERCEL_SHARE_COOKIE || '';
 
+/**
+ * Je li `url` STVARNO na istom hostu kao `baza`.
+ *
+ * ⚠️ NALAZ REVIZIJE 23.09. (sigurnosni): prije je ovdje stajalo `String(url).startsWith(baza)`,
+ * a to odgovara na krivo pitanje — „počinje li isto", umjesto „je li isti host". Dokazano:
+ *   `https://<baza>@zloban.example/x`      → startsWith = true, stvarni host = `zloban.example`
+ *   `https://<baza>.zloban.example/x`      → startsWith = true, stvarni host = poddomena napadača
+ * Jedini URL koji se ovdje ne gradi lokalno je `resource_metadata` IZ ODGOVORA mjerenog
+ * poslužitelja — dakle tko kontrolira taj odgovor, kontrolirao bi i kamo ide naša propusnica.
+ */
+function istiHost(url, baza) {
+  try {
+    const a = new URL(url); const b = new URL(baza);
+    return a.protocol === 'https:' && a.host === b.host;
+  } catch (_e) { return false; }
+}
+
+/**
+ * Share-poveznica (`?_vercel_share=…`) pri preusmjeravanju postavi kolačić `_vercel_jwt`.
+ * `fetch` kolačiće ne pamti, pa ih skupljamo ručno — ali **samo na hostu koji ih je postavio**:
+ * prije je ova petlja slijepo slala skupljene kolačiće SVAKOM sljedećem hopu, kamo god `location`
+ * vodi. Kolačić se šalje hostu koji ga je postavio, i nikome drugom (nalaz revizije 23.09.).
+ */
 async function kolacicIzShare(shareUrl) {
+  const polazni = new URL(shareUrl);
   let url = shareUrl;
   const jar = new Map();
   for (let i = 0; i < 6; i++) {
+    if (!istiHost(url, polazni.origin)) {
+      throw new Error(`share-poveznica vodi na TUĐI host (${new URL(url).host}) — ne nosim kolačić dalje`);
+    }
     const h = jar.size ? { cookie: [...jar].map(([k, v]) => `${k}=${v}`).join('; ') } : {};
     const r = await fetch(url, { redirect: 'manual', headers: h });
+    try { await r.text(); } catch (_e) { /* tijelo se mora potrositi, v. `zahtjev` */ }
     const sve = typeof r.headers.getSetCookie === 'function' ? r.headers.getSetCookie() : [];
     for (const sc of sve) { const m = String(sc).match(/^([^=]+)=([^;]*)/); if (m) jar.set(m[1], m[2]); }
     const loc = r.headers.get('location');
@@ -410,28 +468,52 @@ async function kolacicIzShare(shareUrl) {
   return [...jar].map(([k, v]) => `${k}=${v}`).join('; ');
 }
 
-/** Zahtjev prema NAŠOJ adresi nosi propusnicu; prema tuđoj (Supabase) ne — ne rasipa se. */
-function zahtjev(url, baza, opts) {
+/**
+ * Zahtjev prema NAŠOJ adresi nosi propusnicu; prema svakoj drugoj ne — ne rasipa se.
+ *
+ * ⚠️ TIJELO SE UVIJEK PROČITA, i to nije urednost nego ISPRAVNOST IZLAZNOG KODA (izmjereno
+ * 23.09.): nepročitano tijelo drži utičnicu otvorenom, a `izadji()` nad otvorenom
+ * utičnicom na Windowsu obori proces libuv-tvrdnjom — izlaz tada postane **127**, a mjerenja
+ * koja su uredno pala prijave se kao pad alata. Brana koja laže o izlaznom kodu gora je od rupe.
+ */
+async function zahtjev(url, baza, opts) {
   const o = Object.assign({ redirect: 'manual' }, opts || {});
-  if (String(url).startsWith(baza)) {
+  if (istiHost(url, baza)) {
     const dodatno = {};
     if (BYPASS) dodatno['x-vercel-protection-bypass'] = BYPASS;
     if (KOLACIC) dodatno.cookie = KOLACIC;
     o.headers = Object.assign({}, o.headers, dodatno);
   }
-  return fetch(url, o);
+  const r = await fetch(url, o);
+  let tekst = '';
+  try { tekst = await r.text(); } catch (_e) { tekst = ''; }
+  return {
+    status: r.status,
+    headers: r.headers,
+    tekst,
+    json() { try { return JSON.parse(tekst); } catch (_e) { return null; } },
+  };
 }
 
 // ════════════════════════════════════════════════════════════════════════════════════════════════
-async function zivo(baza) {
-  console.log(`\n=== check:mcp-rewrite --zivo — ${baza} ===`);
+/** Biljeg po kojem se prepoznaje NAŠA aplikacija — čita se s diska, ne prepisuje rukom. */
+function bilijegAplikacije() {
+  try {
+    const m = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8').match(/<title>([^<]+)<\/title>/);
+    return m ? m[1].trim() : null;
+  } catch (_e) { return null; }
+}
+
+async function zivo(baza, kontrola) {
+  console.log(`\n=== check:mcp-rewrite ${kontrola ? '--kontrola' : '--zivo'} — ${baza} ===`);
   console.log(`    propusnica kroz zaštitu: ${BYPASS ? 'bypass-tajna iz .env' : (KOLACIC ? 'share-kolačić (privremen)' : 'NEMA je')}\n`);
   const host = new URL(baza).hostname;
   const pravila = JSON.parse(fs.readFileSync(VERCEL, 'utf8')).rewrites || [];
 
   // Očekivanje se IZVODI iz istih pravila — živa provjera i offline tablica ne mogu se raziće.
   const predvid = usmjeri(pravila, host, '/mcp');
-  if (predvid.greska) { console.log(`  ✗ ${predvid.greska}`); return 1; }
+  // Nalaz mora ući u `nalazi`, inače završni redak kaže „0 nalaza" uz izlaz 1 (revizija, N6).
+  if (predvid.greska) { nalazi.push(predvid.greska); console.log(`  ✗ ${predvid.greska}`); return 1; }
   const d = predvid.pravilo ? refOd(predvid.pravilo.destination) : null;
 
   // ── Z0: je li adresa uopće MJERLJIVA ─────────────────────────────────────────────────────────
@@ -456,10 +538,52 @@ async function zivo(baza) {
     return 2;
   }
 
-  if (!d) {
-    console.log(`  ⓘ za host \`${host}\` nijedno pravilo ne hvata → očekuje se 404, kao i prije cigle.`);
-    tvrdi('Z0 host bez pravila i dalje 404', prvi.status === 404, `dobiven ${prvi.status}`);
-    console.log('\n  dotaknuto: 1 tvrdnja\n');
+  // ── ULOGA SE ZADAJE, NE IZVODI ───────────────────────────────────────────────────────────────
+  // ⚠️ NALAZ REVIZIJE 23.09.: prije je brana ulogu birala sama — ako pravila nema, tiho bi se
+  // pretvorila u „kontrolu", izvela JEDNU tvrdnju i ispisala „✅ bez nalaza", EXIT 0. Dokazano
+  // pokretanjem: `--zivo` na host koji NIKAD NIJE POSTOJAO dao je ispis **znak po znak isti** kao
+  // zapisana kontrola. Tipfeler u adresi ili preimenovana grana time pretvore pozitivnu mjeru u
+  // lažno zelenu kontrolu. Zato uloga sad dolazi izvana i **neslaganje je PAD**.
+  if (kontrola && d) {
+    console.log(`  ✗ --kontrola, a host \`${host}\` IMA pravilo (→ ${d.ref}) — to nije kontrola`);
+    return 1;
+  }
+  if (!kontrola && !d) {
+    console.log(`  ✗ --zivo, a za host \`${host}\` nijedno pravilo ne hvata — mjera nije izvediva`);
+    console.log('     (ako je to namjerno, pokreni s `--kontrola`)');
+    return 1;
+  }
+
+  if (kontrola) {
+    console.log(`  ⓘ kontrola: za host \`${host}\` NEMA pravila → \`/mcp\` ne smije postojati.\n`);
+
+    // ⚠️ K1 postoji jer 404 ima VIŠE uzroka: naš deploy bez host-pravila (željeno), nepostojeći
+    // host, tuđi poslužitelj, ugašena domena. Bez tvrdnje da adresa uopće poslužuje NAŠU
+    // aplikaciju, kontrola je samo „nešto je vratilo 404". Biljeg se čita S DISKA.
+    const korijen = await zahtjev(baza + '/', baza);
+    const tijelo = korijen.tekst;
+    const biljeg = bilijegAplikacije();
+    tvrdi('K1 adresa poslužuje NAŠU aplikaciju (inače 404 ne dokazuje ništa)',
+      korijen.status === 200 && biljeg !== null && tijelo.indexOf(biljeg) !== -1,
+      korijen.status !== 200 ? `GET / → ${korijen.status}` : `200, ali nema biljega ${JSON.stringify(biljeg)} iz index.html`);
+
+    // ⚠️ K2 ne sudi goli broj, ali ni puko POSTOJANJE `x-vercel-error` — to je IZMJERENO 23.09.:
+    //   nepostojeći host           → 404 `x-vercel-error: DEPLOYMENT_NOT_FOUND`  (loša kontrola)
+    //   NAŠ deploy, nema te staze  → 404 `x-vercel-error: NOT_FOUND`             (upravo željeno)
+    // Prva verzija ovog retka odbijala je svaki `x-vercel-error` i time bi dala LAŽNO CRVENO na
+    // ispravnoj kontroli. Sudi se dakle UZROK: zabranjeno je samo ono na razini DEPLOYA.
+    const vercelGreska = String(prvi.headers.get('x-vercel-error') || '');
+    const hostaNema = /DEPLOYMENT_NOT_FOUND|DEPLOYMENT_DELETED|DEPLOYMENT_DISABLED|NOT_FOUND_DEPLOYMENT/i.test(vercelGreska);
+    tvrdi('K2 `/mcp` je 404 IZ NAŠEG DEPLOYA (ne „hosta nema" s Vercelovog ulaza)',
+      prvi.status === 404 && !hostaNema,
+      prvi.status !== 404 ? `dobiven ${prvi.status}` : `404, ali host ne postoji: x-vercel-error=${vercelGreska}`);
+
+    console.log(`\n  dotaknuto: ${izmjereno} tvrdnji protiv ${baza}`);
+    if (izmjereno !== OCEKIVANO_KONTROLA) {
+      nalazi.push(`doseg kontrole: izvedeno ${izmjereno}, očekivano ${OCEKIVANO_KONTROLA}`);
+      console.log(`  ✗ ČEGRTALJKA — izvedeno ${izmjereno}, očekivano ${OCEKIVANO_KONTROLA}`);
+    }
+    console.log('');
     return nalazi.length ? 1 : 0;
   }
 
@@ -479,12 +603,17 @@ async function zivo(baza) {
     wa ? `zaglavlje je: ${wa}` : 'zaglavlja NEMA — tako izgleda 401 s gatewaya, ne iz funkcije');
 
   // Z4 — oglašeni dokument stvarno postoji i opisuje PREDVIĐENI projekt.
+  // ⚠️ GRANICA (nalaz revizije 23.09., vrijedi do F7): ovdje se NE tvrdi da je `resource` baš
+  // NAŠA javna adresa — dok je `MCP_RESOURCE_URL` nepostavljen, ispravna vrijednost JEST
+  // Supabaseova. Kad flip padne, ova tvrdnja mora postati `new URL(resource).host === host`,
+  // inače neće razlikovati ispravnu javnu adresu od Supabaseove (obje nose isti ref).
   if (m) {
+    zadnjiResurs = m[1];
     const meta = await zahtjev(m[1], baza);
     const ok = meta.status === 200;
     tvrdi('Z4 oglašeni `resource_metadata` vraća 200', ok, `${m[1]} → ${meta.status}`);
     if (ok) {
-      const body = await meta.json();
+      const body = meta.json();
       tvrdi('Z5 metapodaci opisuju PREDVIĐENI projekt',
         String(body.resource || '').indexOf(d.ref) !== -1,
         `resource = ${body.resource}, a pravilo vodi na ${d.ref}`);
@@ -499,14 +628,21 @@ async function zivo(baza) {
   // našim `index.html` — izgledao bi jednako. Tvrdi se da je to STVARNO RFC 9728 dokument.
   const pod = await zahtjev(baza + '/mcp' + METAPODACI, baza);
   let podTijelo = null;
-  if (pod.status === 200) { try { podTijelo = await pod.json(); } catch (_e) { podTijelo = null; } }
+  if (pod.status === 200) podTijelo = pod.json();
   tvrdi('Z7 podput `/mcp' + METAPODACI + '` vraća RFC 9728 dokument NAŠEG resursa',
     pod.status === 200 && podTijelo !== null && String(podTijelo.resource || '').indexOf(d.ref) !== -1,
     pod.status !== 200
       ? `dobiven ${pod.status} — rewrite ne pokriva podputove, pa otkrivanje prijave staje`
       : `200, ali tijelo nije dokument našeg resursa: ${JSON.stringify(podTijelo).slice(0, 140)}`);
 
-  console.log(`\n  dotaknuto: ${izmjereno} tvrdnji protiv ${baza}\n`);
+  // ⚠️ POŠTENJE ISPISA (nalaz revizije 23.09.): „7/7" bi nadglasilo. NAŠU adresu dodiruju
+  // Z1, Z2, Z3 i Z7; Z4–Z6 idu IZRAVNO na `*.supabase.co`, jer je `resource` danas Supabaseova
+  // adresa (`MCP_RESOURCE_URL` je svjesno nepostavljen — flip je korak u F7). Dok je tako, lanac
+  // otkrivanja poslije prvog skoka NAPUŠTA našu domenu, i to se mora vidjeti u ispisu.
+  const metaHost = (() => { try { return new URL(String(zadnjiResurs || '')).host; } catch (_e) { return '?'; } })();
+  console.log(`\n  dotaknuto: ${izmjereno} tvrdnji protiv ${baza}`);
+  console.log(`  ⓘ kroz NAŠU adresu: Z1 Z2 Z3 Z7 · izravno na \`${metaHost}\`: Z4 Z5 Z6`);
+  console.log('     (dok `MCP_RESOURCE_URL` nije postavljen, resurs se oglašava Supabaseovom adresom — F7)\n');
   if (izmjereno !== OCEKIVANO_ZIVO) {
     nalazi.push(`doseg: izvedeno ${izmjereno} živih tvrdnji, a očekivano ${OCEKIVANO_ZIVO}`);
     console.log(`  ✗ ČEGRTALJKA — izvedeno ${izmjereno}, očekivano ${OCEKIVANO_ZIVO}`);
@@ -517,41 +653,47 @@ async function zivo(baza) {
 // ════════════════════════════════════════════════════════════════════════════════════════════════
 (async () => {
   const args = process.argv.slice(2);
-  const i = args.indexOf('--zivo');
+  // Uloga se ZADAJE: `--zivo` = ova adresa MORA imati pravilo · `--kontrola` = MORA ga nemati.
+  // Prije je brana ulogu izvodila iz `vercel.json`, pa se promašena adresa tiho pretvarala u
+  // „zelenu kontrolu" (nalaz revizije 23.09., dokazan pokretanjem).
+  const iZ = args.indexOf('--zivo');
+  const iK = args.indexOf('--kontrola');
+  const i = iZ !== -1 ? iZ : iK;
+  const kontrola = iZ === -1 && iK !== -1;
   let kod;
   if (i !== -1) {
     const baza = args[i + 1];
     if (!baza || !/^https?:\/\//.test(baza)) {
-      console.error('\n❌ `--zivo` traži adresu, npr. --zivo https://studymaster-git-....vercel.app\n');
-      process.exit(2);
+      console.error(`\n❌ \`${kontrola ? '--kontrola' : '--zivo'}\` traži adresu, npr. https://studymaster-git-….vercel.app\n`);
+      return izadji(2);
     }
     // `--share <url>` uzme kolačić iz Vercelove privremene share-poveznice (23 h).
     const s = args.indexOf('--share');
     if (s !== -1 && args[s + 1]) {
       try {
         KOLACIC = await kolacicIzShare(args[s + 1]);
-        if (!KOLACIC) { console.error('\n❌ share-poveznica nije vratila nijedan kolačić\n'); process.exit(2); }
-      } catch (e) { console.error(`\n❌ share-poveznica nedostupna: ${e.message}\n`); process.exit(2); }
+        if (!KOLACIC) { console.error('\n❌ share-poveznica nije vratila nijedan kolačić\n'); return izadji(2); }
+      } catch (e) { console.error(`\n❌ share-poveznica nedostupna: ${e.message}\n`); return izadji(2); }
     }
-    try { kod = await zivo(baza.replace(/\/+$/, '')); } catch (e) {
+    try { kod = await zivo(baza.replace(/\/+$/, ''), kontrola); } catch (e) {
       // Nedostupna mreža NIJE „čisto je" → izlaz 2. ⚠️ Ali parcijalan pad mreže NE SMIJE odbaciti
       // već nađene kvarove (nalaz revizije 23.09.; kalup `check-edge-functions.js`): „nisam mogao
       // izmjeriti" vrijedi samo ako dotad ništa nije palo.
       console.error(`\n⊘ prekid mjerenja: ${e.message}`);
       if (nalazi.length) {
         console.error(`   ⚠️ ali ${nalazi.length} nalaz(a) je već nađeno prije prekida — to ostaje kvar\n`);
-        process.exit(1);
+        return izadji(1);
       }
       console.error('');
-      process.exit(2);
+      return izadji(2);
     }
   } else {
     kod = offline();
   }
 
-  if (kod === 0) { console.log('✅ check:mcp-rewrite — bez nalaza\n'); process.exit(0); }
+  if (kod === 0) { console.log('✅ check:mcp-rewrite — bez nalaza\n'); return izadji(0); }
   // 2 = „nisam mogao izmjeriti" i NIKAD se ne smije stopiti s 1 = „pokvareno je".
-  if (kod === 2) { console.log('⊘ check:mcp-rewrite — nije izmjereno (vidi gore)\n'); process.exit(2); }
+  if (kod === 2) { console.log('⊘ check:mcp-rewrite — nije izmjereno (vidi gore)\n'); return izadji(2); }
   console.log(`\n❌ check:mcp-rewrite — ${nalazi.length} nalaza\n`);
-  process.exit(1);
+  return izadji(1);
 })();
