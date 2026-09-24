@@ -348,8 +348,14 @@ postavljen) → **cijeli authed suite, 34 datoteke, nije se izvrtio ni na jednom
 `scripts/ci-tajne.js` (tajne se **čitaju s diska**; `--zahtijevaj` **pada zatvoreno**) · `authed`
 prosljeđuje četiri `STAGING_*` · novi **roll-up `gate` job** (`if: always()`, sudi `!= success`) ·
 pre-push na `main` vrti **punih 154 tvrdnji (~15 min)**, Leonova odluka · brana
-`tests/unit/ci-tajne.test.js` **20/20**. Prije uključivanja izmjereno da suite uopće prolazi:
+brana `tests/unit/ci-tajne.test.js` **30/30**. Prije uključivanja izmjereno da suite uopće prolazi:
 **154/154, 14 min 45 s.**
+⚠️ **Dva kruga revizije, oba vratila ciglu.** Mutacije su našle 2 rupe, `brana-revizor` još **6** — i
+presudio da naslovna tvrdnja *„CI stvarno izvršava suite"* pada na **tri jednoredne izmjene u `ci.yml`**
+(`continue-on-error`, `|| true`, `if: ${{ false }}`) uz branu 22/22 zelenu. Popravci: **popis OTVORENIH**
+ključeva koraka umjesto zabrane jednog oblika · roll-up presuda i pre-push hook se sad **IZVODE** u brani
+(kroz `sh`, sa stubovima) · dvosmjerno uparivanje job↔varijabla · kontrola dosega čitača jobova ·
+novi `scripts/authed-mjera.js` koji **sudi koliko je suite dotaknuo** (brojka „154" bila je proza).
 ⏳ **Čeka Leona izvan repozitorija:** četiri `STAGING_*` u GitHub secrets + required check
 `Gate (sve brane zelene)` (⚠️ time `main` postaje **PR-only**).
 

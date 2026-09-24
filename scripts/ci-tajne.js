@@ -48,15 +48,22 @@ const TESTS_DIR = path.join(KORIJEN, 'tests');
 const KONFIG = path.join(KORIJEN, 'playwright.config.js');
 
 // ── SKUPINA 1: OBAVEZNE — CI ih MORA imati, inače authed suite ne mjeri ništa ────────────
-// Leonova odluka 2026-09-24 (anketa): u GitHub idu ČETIRI STAGING_* tajne. Zašto staging a ne
-// produkcija: `auth.setup.js` na njih preusmjeri aplikaciju (`sokrat-supabase-override`), pa
-// write-testovi gađaju izolirani test-DB i PROD audit (`content_versions`, append-only) ostaje
-// čist — pravilo #8. S produkcijskim `TEST_ADMIN_*` isti suite piše u živi sadržaj.
+// Leonova odluka 2026-09-24: u GitHub idu STAGING_* tajne (u anketi četiri, isti dan dopunjeno
+// service ključem — vidi bilješku uz njega). Zašto staging a ne produkcija: `auth.setup.js` na
+// njih preusmjeri aplikaciju (`sokrat-supabase-override`), pa write-testovi gađaju izolirani
+// test-DB i PROD audit (`content_versions`, append-only) ostaje čist — pravilo #8. S
+// produkcijskim `TEST_ADMIN_*` isti suite piše u živi sadržaj.
 const OBAVEZNE = [
   'STAGING_SUPABASE_URL',
   'STAGING_SUPABASE_ANON',
   'STAGING_TEST_ADMIN_EMAIL',
   'STAGING_TEST_ADMIN_PASSWORD',
+  // ⚠️ DODAN 2026-09-24, i to je PROMJENA ODLUKE ISTOG DANA. U anketi je Leon service ključ
+  // odbio, pa je stajao kao imenovana iznimka s cijenom „6 tvrdnji se preskače". Kad je dodavao
+  // tajne, dodao je i njega → rečenica u kodu („ne ide u GitHub secrets") postala je NEISTINITA.
+  // Odluka na to pitanje: iskoristiti ga. Posljedica: `temelj-mreze` se više NE preskače, CI
+  // mjeri svih 154 tvrdnji kao i lokalno, a preskočenih je NULA.
+  'STAGING_SUPABASE_SERVICE_KEY',
 ];
 
 // ── SKUPINA 2: IMENOVANE IZNIMKE — svjesno IH NEMA u CI-ju, svaka s razlogom ─────────────
@@ -64,10 +71,6 @@ const OBAVEZNE = [
 // tiho zeleno koje ova brana zatvara — razlika je samo u tome što je ovo odluka, a ono je bio
 // propust. Cijena se ovdje ČITA, pa se u izvještaju vidi koliko tvrdnji CI ne mjeri.
 const IMENOVANE_IZNIMKE = {
-  STAGING_SUPABASE_SERVICE_KEY: {
-    zasto: 'Leon 2026-09-24 (anketa): service_role ključ ne ide u GitHub secrets — pun pristup bazi.',
-    cijena: 'tests/temelj-mreze.authed.spec.js se u CI-ju PRESKAČE (6 tvrdnji: ime, vidljivost, kvota).',
-  },
   TEST_ADMIN_EMAIL: {
     zasto: 'Produkcijski račun. Pravilo #8: protiv PROD-a nema automatiziranih write-testova.',
     cijena: 'Nijedna — STAGING_* pokrivaju isti put na izoliranom test-DB-u.',
@@ -86,7 +89,26 @@ const NISU_TAJNE = {
   A11Y_WCAG_MJERENJE: 'uključuje puno WCAG mjerenje u a11y specovima',
   CI: 'postavlja ga GitHub Actions sam',
   SOKRAT_TEST_PORT: 'port test-poslužitelja (više radnih stabala na istom računalu)',
+  PATH: 'brana `ci-tajne` podmeće PATH sa stubovima `npm`/`node` da IZVEDE pre-push hook',
 };
+
+/**
+ * Koliko tvrdnji se u CI-ju smije preskočiti = ZBROJ cijena imenovanih iznimki.
+ * ⚠️ IZVODI SE, NE PIŠE. Prva verzija je taj broj imala zakucan u `authed-mjera.js` (6), pa je
+ * čim je service ključ prešao u OBAVEZNE postao **druga kopija iste činjenice** — a kopija koja
+ * se ne mijenja zajedno s izvorom je točno ono što ADR-027 zabranjuje. Sad: makneš iznimku →
+ * dopušteni broj padne sam, i mjerač odmah traži više izmjerenog.
+ * Cijena se piše slobodnim tekstom, pa se broj čita iz njega („6 tvrdnji"); tekst bez broja
+ * znači NULA preskočenih, dakle pada zatvoreno.
+ */
+function preskocenihPoIznimkama() {
+  let ukupno = 0;
+  for (const o of Object.values(IMENOVANE_IZNIMKE)) {
+    const m = String(o.cijena || '').match(/(\d+)\s*tvrdnj/);
+    if (m) ukupno += Number(m[1]);
+  }
+  return ukupno;
+}
 
 /** Komentari se odstranjuju PRIJE pretrage — proza koja tajnu samo spominje nije ovisnost. */
 const bezKomentara = (src) => src.replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/^\s*\/\/.*$/gm, ' ');
@@ -203,4 +225,5 @@ module.exports = {
   nesvrstane,
   mrtve,
   nedostajuce,
+  preskocenihPoIznimkama,
 };

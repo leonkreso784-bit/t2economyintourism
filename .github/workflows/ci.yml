@@ -180,18 +180,26 @@ jobs:
           STAGING_SUPABASE_ANON: ${{ secrets.STAGING_SUPABASE_ANON }}
           STAGING_TEST_ADMIN_EMAIL: ${{ secrets.STAGING_TEST_ADMIN_EMAIL }}
           STAGING_TEST_ADMIN_PASSWORD: ${{ secrets.STAGING_TEST_ADMIN_PASSWORD }}
+          STAGING_SUPABASE_SERVICE_KEY: ${{ secrets.STAGING_SUPABASE_SERVICE_KEY }}
         run: node scripts/ci-tajne.js --zahtijevaj
 
-      # ⚠️ 6 tvrdnji iz tests/temelj-mreze.authed.spec.js se OVDJE PRESKAČE, i to je odluka a
-      # ne propust: traže STAGING_SUPABASE_SERVICE_KEY, koji svjesno ne ide u GitHub secrets
-      # (Leon, 2026-09-24). Iznimka je imenovana u scripts/ci-tajne.js, zajedno s cijenom.
-      - name: Run authenticated suite (154 tvrdnje, ~15 min)
+      # ⚠️ NIŠTA SE VIŠE NE PRESKAČE. Do 2026-09-24 je ovdje stajalo da se 6 tvrdnji iz
+      # tests/temelj-mreze.authed.spec.js preskače jer STAGING_SUPABASE_SERVICE_KEY svjesno ne
+      # ide u GitHub secrets. Leon ga je isti dan ipak dodao, pa je ta rečenica postala
+      # neistinita → ključ je prešao u OBAVEZNE, CI sad mjeri svih 154 tvrdnji kao i lokalno, a
+      # dopušteni broj preskočenih se IZVODI iz imenovanih iznimki i danas je NULA.
+      # ⚠️ MJERAČ, NE GOLI SUITE. `npm run test:authed` sudi samo izlazni kod, a Playwright pada
+      # zatvoreno tek na DOSLOVNO nula testova — suita u kojoj se sve preskoči završava EXIT 0.
+      # `authed-mjera` ispisuje koliko je tvrdnji dotaknuo i PADA ako ih je manje od osnovice
+      # ili je preskočenih više od imenovanih. Brojka time prestaje biti proza u imenu koraka.
+      - name: Run authenticated suite (mjeri koliko je dotaknuo, ~15 min)
         env:
           STAGING_SUPABASE_URL: ${{ secrets.STAGING_SUPABASE_URL }}
           STAGING_SUPABASE_ANON: ${{ secrets.STAGING_SUPABASE_ANON }}
           STAGING_TEST_ADMIN_EMAIL: ${{ secrets.STAGING_TEST_ADMIN_EMAIL }}
           STAGING_TEST_ADMIN_PASSWORD: ${{ secrets.STAGING_TEST_ADMIN_PASSWORD }}
-        run: npm run test:authed
+          STAGING_SUPABASE_SERVICE_KEY: ${{ secrets.STAGING_SUPABASE_SERVICE_KEY }}
+        run: npm run test:authed:mjeri
       - name: Upload Playwright artifacts on failure
         if: failure()
         uses: actions/upload-artifact@v4

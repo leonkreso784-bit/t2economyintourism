@@ -49,8 +49,8 @@ while read -r local_ref local_sha remote_ref remote_sha; do
         exit 1
       fi
 
-      echo "[pre-push] Authed suite (154 tvrdnje, ~15 min — izmjereno 14 min 45 s)…"
-      if ! npm run test:authed; then
+      echo "[pre-push] Authed suite (~15 min — izmjereno 14 min 45 s)…"
+      if ! npm run test:authed:mjeri; then
         echo ""
         echo "[pre-push] ❌ AUTHED SUITE PAO — push na main ODBIJEN."
         echo "[pre-push]    Pogledaj 'playwright-report/' i 'test-results/'."

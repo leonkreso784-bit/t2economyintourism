@@ -52,7 +52,7 @@ se stvarno izvršava** (6,4 s); dotad je bio samo napisan.
 
 | pitanje | odluka |
 |---|---|
-| koje tajne u GitHub | **četiri `STAGING_*`** (ne produkcijske — pravilo #8; `auth.setup.js` preusmjeri app na staging) |
+| koje tajne u GitHub | **`STAGING_*`, ne produkcijske** (pravilo #8; `auth.setup.js` preusmjeri app na staging). U anketi četiri; **isti dan dopunjeno service ključem** — vidi ispod. |
 | što kad tajne nema | **pada CRVENO** (tišina je bila kvar; repo nema forkove koje bi `exit 0` štitio) |
 | rupa (b) | **kombinacija: roll-up `gate` job + branch protection + authed u pre-push hooku** |
 | što pre-push vrti | **punih 154 tvrdnji (~15 min)**, jer preflight ne vrti **nijedan** prijavljeni test |
@@ -69,12 +69,15 @@ samo „dok CI ne prođe" nego **svaki izravan push** (novi commit po definiciji
   zatvoreno, **imenuje** tajnu i tko je traži, i **ne ispisuje vrijednosti**.
   ⚠️ Učitava `.env` (uvjetno, kao `playwright.config.js`) — bez toga bi u pre-push hooku tvrdila
   da tajni nema iako ih ima, dakle **lažno crveno na ispravnom stablu**.
-- **`ci.yml`:** `authed` prosljeđuje četiri `STAGING_*`, `exit 0` grana **zamijenjena** pozivom
+- **`ci.yml`:** `authed` prosljeđuje pet `STAGING_*`, `exit 0` grana **zamijenjena** pozivom
   `--zahtijevaj`, timeout 15 → **25 min** (mjera je 14 min 45 s; timeout je zaštita od visećeg
   procesa, ne budžet). **Novi `gate` job** = roll-up, `needs: [build, playwright, authed]`,
   `if: always()`, sudi `!= success`.
-- **`.githooks/pre-push`:** na `main` → `preflight` → `--zahtijevaj` → `test:authed`.
-- **`tests/unit/ci-tajne.test.js`** (u `test:unit`) — **20 tvrdnji**.
+- **`.githooks/pre-push`:** na `main` → `preflight` → `--zahtijevaj` → `test:authed:mjeri`.
+- **`scripts/authed-mjera.js`** + `npm run test:authed:mjeri` — vrti suite pa **sudi statistiku**
+  (`expected` ≥ osnovica **154** · `skipped` ≤ granica koja se **IZVODI** iz imenovanih iznimki,
+  danas **0** · `unexpected` = 0) i **ispisuje koliko je dotaknuo**. Dodan u drugom krugu (nalaz F6).
+- **`tests/unit/ci-tajne.test.js`** (u `test:unit`) — **30 tvrdnji** (20 → 22 → 30 kroz dva kruga revizije).
 
 ### Zašto je brana ovakva, i što je ulovila na sebi
 
@@ -99,13 +102,82 @@ prazan, gate pada zatvoreno.
 nađeno Nodeom jer `grep -P` u ovoj ljusci ne radi. I dva zastarjela retka u TESTING.md: `lighthouse`
 job koji ne postoji, i rečenica o „dva repo-secreta".
 
+### Drugi krug — `brana-revizor` VRATIO ciglu, ŠEST nalaza, svi stvarni
+
+Prvi krug (mutacije) našao je dvije rupe; revizor je našao **šest daljnjih**, i presudio da
+**naslovna tvrdnja cigle ne drži kao brana**: jezgra oko tajni je bila izvedena i dobra, ali
+*„CI stvarno izvršava authed suite"* padalo je na **tri jednoredne izmjene u `ci.yml`** uz branu
+**22/22 zelenu** — `continue-on-error: true`, `run: … || true`, `if: ${{ false }}`. Sve tri daju
+job `success` uz **nula izmjerenog**, dakle doslovno kvar zbog kojeg cigla postoji.
+
+| nalaz | razred greške | popravak |
+|---|---|---|
+| **F1** | **popis ZABRANJENOG od jedne stavke** (`exit 0`) — stari čim netko smisli četvrti oblik | **popis OTVORENOG**: svaki ključ koraka mora biti dopušten; `if:` samo `failure()`; `run` ne smije neutralizirati izlazni kod |
+| **F2** | brana je mjerila da u bloku **piše** `!= success`, ne da **presuđuje**; izvedba kroz `sh` bila je **jednokratna mjera, ne brana** | roll-up blok se **izvlači iz `ci.yml` i izvodi** na svakom `test:unit` — **16 kombinacija** (4 joba × `failure`/`cancelled`/`skipped`/**prazno**) |
+| **F3** | **prefiks umjesto veze**: `"<job>:$R_` vezao je ime joba na **bilo koju** `R_*` varijablu | dvosmjerno uparivanje iz `env:` bloka: `R_X → needs.<job>.result`, pa se traži **baš taj** `R_X` |
+| **F4** | **čitač tiho gubio legalna imena** jobova (`Budget:`, `_x:`, rep s komentarom) → takav job **nevidljiv** roll-upu, a `if (!imena.length)` hvata samo potpuni slom | širi raspon **+ kontrola dosega**: broj prepoznatih jobova mora biti jednak broju `runs-on:` blokova |
+| **F5** | **hook se sudio po IMENU**: tražio se podniz `refs/heads/main`, ne da `case` obrazac pogađa | hook se **IZVODI** (`sh` + stubovi `npm`/`node` na `PATH`-u): `main` → sve tri provjere tim redom · `feat/*` → **nula** · stub vrati 1 → **odbija push i ne nastavlja** |
+| **F6** | **ništa nije mjerilo koliko je suite dotaknuo** — „154" je bila proza u imenu koraka; Playwright pada zatvoreno tek na **doslovno nula** testova, pa suita u kojoj se sve preskoči završava **EXIT 0** | novi `scripts/authed-mjera.js` (sudi `expected`/`skipped`/`unexpected`, ispisuje brojke) + **čegrtaljka na 34 `*.authed.spec.js` datoteke** |
+
+⚠️ **Brana je u ovom krugu TRI PUTA uhvatila mene:** `process.env.PATH` iz novog F5 testa prijavila
+je kao **nesvrstanu tajnu** (ispravno — svrstan je s razlogom); `TESTS_DIR` nisam definirao; a
+tvrdnju o hooku koja je **zakucavala ime naredbe** morao sam prepisati da **nabraja naredbe iz
+hooka** — inače brana mjeri IME, ne svojstvo, i pada svaki put kad se naredba preimenuje (pala je
+točno u trenutku prelaska na `:mjeri`).
+
+⚠️ **Pravi kvar u mjeraču, nađen mjerenjem:** zvao sam Playwright preko `npx.cmd`, a Node od zakrpe
+za **CVE-2024-27980** odbija pokrenuti `.cmd`/`.bat` bez `shell: true` → proces se **nije ni
+pokrenuo**. Gore od samog kvara: poruka je okrivila **izvještaj** („JSON se ne da pročitati") umjesto
+**poziva**, i poslala bi sljedećeg čitatelja tražiti kvar na krivom mjestu. Sad se Playwright zove
+kroz `node <@playwright/test/cli>` (bez ljuske, bez PATH-ovisnosti), a **uzrok se imenuje prije
+posljedice**. ▶️ **Pouka vrijedi za svaku našu skriptu koja zove alat.**
+
+⚠️ **Revizorova brojka bila je jedna netočna:** tvrdio je da `test:unit` lanac ima **58** datoteka —
+provjereno, ima **57** (disk isto 57). Ostalih šest nalaza potvrđeno mjerenjem.
+
+**Brana: 20 → 22 → 30 tvrdnji.** Mjerač dokazan u oba smjera: subset od 4 tvrdnje **odbijen** s
+točnom porukom (negativna kontrola pragova), puna vrtnja izmjerena zasebno.
+
+### Treći krug — Leon dodao tajne, i screenshot je riješio zagonetku od 2,5 mjeseca
+
+**✅ TAJNE SU DODANE 24.09.** Na screenshotu popisa repo-secreta vidjela su se i dva iznenađenja:
+
+⚠️ **① Postojao je secret `TEST_ADMIN`, star 2 mjeseca.** Dakle Leon **JEST** odgovorio na onaj
+zapis iz srpnja („⏳ Leon doda repo-secrete") — ali je upisao **`TEST_ADMIN`**, a `ci.yml` je tražio
+**`TEST_ADMIN_EMAIL`**. Jedna riječ razlike, i druga polovica (lozinka) nije ni postojala.
+▶️ **Time povod cigle nije „zaboravljeno" nego „pogrešno imenovano, i nitko nije javio".** Korak je
+na nepostojeću tajnu odgovarao sa `exit 0` → zeleno → 12 vrtnji bez ijedne izmjerene tvrdnje. To je
+najčišći dokaz zašto je tišina bila kvar: **da je job tada pao crveno, greška bi se vidjela isti dan.**
+Leon ga je obrisao (ništa ga nije koristilo).
+
+⚠️ **② Dodao je i `STAGING_SUPABASE_SERVICE_KEY`, koji je u anketi ODBIO.** Time je rečenica u kodu
+(„service_role ključ ne ide u GitHub secrets") postala **neistinita istog dana kad je napisana** —
+točno razred greške koji cigla lovi. Presuđeno anketom: **iskoristiti ga.**
+Posljedica: ključ iz `IMENOVANE_IZNIMKE` → `OBAVEZNE` (sad ih je **5**), `ci.yml` ga prosljeđuje u
+**oba** koraka, `temelj-mreze` se više **ne preskače**, i **CI mjeri svih 154 tvrdnji kao i lokalno**.
+
+⚠️ **POUKA KOJU JE TA PROMJENA IZNUDILA, i vrijedi šire:** granica preskočenih bila je zakucana
+(`DOPUSTENO_PRESKOCENIH = 6`) i **bila je točna točno jedan dan**. Brana ju je čak i čuvala — ali je
+čuvala **literal**, dakle jamčila drift umjesto da ga spriječi. Sad se broj **izvodi iz zbroja cijena
+imenovanih iznimki** (`preskocenihPoIznimkama()`), a brana traži da to **NE bude literal**. Makneš
+iznimku → granica padne sama i mjerač odmah traži više izmjerenog.
+
+**Mjere trećeg kruga:** puna vrtnja mjerača **154 prošlo · 0 preskočeno · 0 palo · EXIT 0** (9 min 27 s)
+· subset od 4 tvrdnje **odbijen** s točnom porukom (negativna kontrola pragova) · brana **31/31**.
+
+⚠️ **Usput plaćena stara zamka:** `python` zamjena u `PROGRESS.md` pukla je na **cp1252** pri ispisu
+hrvatskog znaka — datoteka na sreću nije ni dirnuta jer je pad došao prije upisa. Memorija to već
+nosi: za `.md` s dijakriticima ide **Edit alat**, ne python s ispisom.
+
 ### Čeka Leona (izvan repozitorija, ne mogu sam)
 
-1. **GitHub → Settings → Secrets and variables → Actions:** `STAGING_SUPABASE_URL` ·
-   `STAGING_SUPABASE_ANON` · `STAGING_TEST_ADMIN_EMAIL` · `STAGING_TEST_ADMIN_PASSWORD`.
-   **Dok ih ne doda, `authed` job PADA** — to je namjera, ne kvar.
+1. ~~Secrets~~ **✅ DODANO 24.09.** — pet `STAGING_*` (URL · ANON · TEST_ADMIN_EMAIL ·
+   TEST_ADMIN_PASSWORD · SERVICE_KEY). Stari pogrešno imenovan `TEST_ADMIN` obrisan.
 2. **Settings → Branches → branch protection na `main`:** required check = **`Gate (sve brane zelene)`**.
    ⚠️ Time `main` postaje **PR-only**.
+   ⚠️ **REDOSLIJED JE OBAVEZAN:** GitHub u popis required-provjera nudi **samo provjere koje je nedavno
+   vidio**, a `gate` job dosad nije postojao. Dakle: **tajne → push grane → CI se izvrti → tek onda
+   označi `Gate` kao required.** Obrnuto ga se ne može ni odabrati.
 
 ---
 
