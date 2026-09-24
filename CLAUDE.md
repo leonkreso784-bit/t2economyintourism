@@ -119,8 +119,9 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 - **`npm run test:responsive`** — Playwright, default suite (iPhone profili).
   ⚠️ Prijava zna pasti **iz utrke**, i to nije naš kod — dva lica su opisana u `tests/auth.setup.js`
   (drugo, `is_admin() = false` uz prazan `rpcError`, obori **cijeli** `authenticated` projekt).
-- **`npm run test:authed`** — pozitivan admin-put (storageState; traži `TEST_ADMIN_EMAIL/PASSWORD`;
-  gađa **STAGING** kad su `STAGING_*` u `.env`; u CI-ju zaseban secret-gated job).
+- **`npm run test:authed`** — admin-put, **154 tvrdnje, ~15 min**, **STAGING** kad su `STAGING_*` u
+  `.env`. **Od S1 i u CI-ju i u pre-push hooku na `main`.**
+  ⚠️ `gate` job = jedina required-provjera → `main` je **PR-only**.
 - **`tests/phone.spec.js` + `phone.authed.spec.js`** (mjera: `tests/helpers/phone-gate.js`) —
   **telefon kao STRANICA**: 9 tvrdnji na 320/393/430 px i 852×393, + **sedam** načina učenja
   (`progress` · `exercises`/`blind-map` uvjetni — predmet iz kataloga po značajci). ⚠️ **568×320 svjesno NIJE u brani** (22 tuđa nalaza; `BACKLOG.md`).

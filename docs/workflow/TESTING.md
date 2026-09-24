@@ -117,14 +117,19 @@
 
 ## CI/CD — automatski gate (od 2026-06-29, FOUNDATION_PLAN F1)
 > Iste provjere gore vrte se **automatski na svaki push/PR** preko GitHub Actions (`.github/workflows/ci.yml`).
-- **Lanac (fail-fast):** `npm ci` → `validate:content` → `validate:schema` → `export:json --check` → `verify` → `test:unit` → `typecheck` → `test:rls` → `npx playwright test` (chromium); zasebni `lighthouse` (budžeti) + `authed` job.
-- **`authed` job (F4):** pokreće `npm run test:authed` (pozitivan admin-put) **samo ako je secret `TEST_ADMIN_EMAIL`/`TEST_ADMIN_PASSWORD` postavljen** (Settings → Secrets → Actions); inače se čisto preskoči. Odvojen od glavnog gate-a (može pasti ako je free-tier Supabase uspavan → ne blokira merge osim ako ga učiniš required). **Za aktivaciju: dodaj ta dva repo-secreta.**
+- **Jobovi (4):** `build` (brze brane bez preglednika, fail-fast) · `playwright` (2 sharda, `needs: build`) · `authed` (prijavljeni put) · **`gate` (roll-up)**.
+- **`gate` job (S1, 2026-09-24) = JEDINA provjera koju označavaš kao required.** `needs: [build, playwright, authed]`, `if: always()`, i **sudi** `needs.<job>.result != success` (dakle `cancelled`/`skipped` ne prolaze). Zašto roll-up a ne „označi svaki job": required-popis živi u GitHub postavkama, **izvan repozitorija**, i stari kao svaki ručni popis — a broj jobova raste. Ovako koje jobove pokriva piše u `ci.yml`, i brana traži da `needs` nabraja **sve** ostale.
+- **`authed` job (F4; presuđen S1):** `npm run test:authed`, **154 tvrdnje, ~15 min** (izmjereno 14 min 45 s). Gađa **STAGING** (`auth.setup.js` preusmjeri app kad su `STAGING_*` postavljeni) → PROD audit ostaje čist, pravilo #8. **Tajne u CI-ju su četiri `STAGING_*`** (URL · ANON · TEST_ADMIN_EMAIL · TEST_ADMIN_PASSWORD), Leonova odluka 2026-09-24.
+  ⚠️ **Ne preskače više tiho:** prvi korak je `node scripts/ci-tajne.js --zahtijevaj` i **pada zatvoreno**. Povod je izmjeren istog dana: korak je trajao **0 s u zadnjih 12 vrtnji** (`e23d658` … `921cfbc`) jer je bio `if [ -z "$TEST_ADMIN_EMAIL" ] → exit 0`, a taj secret **nikad nije bio postavljen** → **34 authed datoteke nisu se izvrtjele ni na jednom commitu**, uz 25 s instalacije Chromiuma po vrtnji. Zeleno je značilo „nisam ništa izmjerio".
+  ⚠️ **Imenovano preskočeno u CI-ju:** `tests/temelj-mreze.authed.spec.js` (**6 tvrdnji**) traži `STAGING_SUPABASE_SERVICE_KEY`, koji svjesno **ne ide** u GitHub secrets. Iznimka i njezina **cijena** stoje u `scripts/ci-tajne.js`; brana traži da svaka iznimka ima napisan razlog **i** cijenu.
 - **TVRDI gate:** crveno = **ne mergea se u `main`**. Artefakti (screenshotovi/report) se uploadaju samo na pad.
+- **Koje tajne CI mora imati NE PIŠE SE RUKOM:** `scripts/ci-tajne.js` ih **čita s diska** (`tests/**` + `playwright.config.js`) i svrstava u `OBAVEZNE` / `IMENOVANE_IZNIMKE` / `NISU_TAJNE`. Brana `tests/unit/ci-tajne.test.js` (u `test:unit`, dakle preflight **i** CI) traži: nula nesvrstanih · nula **mrtvih** unosa · `authed` prosljeđuje **točno** obavezne · nema `exit 0` grane · `gate` pokriva sve jobove · hook vrti suite. **Peti spec koji sutra zatreba novu tajnu obori branu umjesto da se preskoči.**
 - **Tok rada „grana → preview → prod":**
   1. Radi na grani (ne direktno na `main`). Push grane → **CI se pokrene** + **Vercel napravi preview-deploy** (zaseban URL, NIJE produkcija).
   2. Provjeri: CI zelen + vizualni pregled na preview URL-u.
   3. Tek kad je zeleno i pregledano → merge u `main` (= produkcijski deploy) **uz izričitu potvrdu korisnika**.
 - **Lokalno prije pusha** (da CI ne bude crven): pokreni isti lanac ručno (`validate:content` → `verify` → `test:unit` → `npx playwright test`).
+- **Pre-push hook na `main` (od S1):** `preflight` → `ci-tajne.js --zahtijevaj` → **`test:authed` (~15 min)**. Leonova odluka 2026-09-24: na `main` ide **punih 154 tvrdnji**. Zašto toliko čekanja: preflight ne vrti **nijedan** test koji se stvarno prijavi — RLS, Storage, publish-RPC i brava na lozinci mjere se **isključivo** authed suiteom, a on je dotad bio izvan i preflighta i CI-ja. Svjestan bypass ostaje `git push --no-verify`.
 
 
 ## ⚠️ ZELENO LOKALNO NIJE ZELENO (2026-08-24)

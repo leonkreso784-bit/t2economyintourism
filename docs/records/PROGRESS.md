@@ -5,6 +5,110 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-24 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — S1: CI je 12 vrtnji mjerio NIŠTA
+
+**Cigla zatvara S1** (imenovan kao nepopravljen u ①/2b): jedina tvrdnja koja mjeri **ŽICU** —
+`tests/profile-jezik.authed.spec.js` ③, koja dokazuje da tijelo `PUT /auth/v1/user` stvarno nosi
+`current_password` — u CI-ju se nije izvršavala.
+
+### Mjereno PRIJE koda — i mjera je oborila zapisanu dijagnozu
+
+Zapis (i checkpoint) tvrdili su **dvije** rupe: (a) CI jobu se prosljeđuju samo `TEST_ADMIN_*`, a
+spec ③ traži `STAGING_TEST_ADMIN_PASSWORD` → `test.skip`; (b) job je odvojen od `build` gatea, pa
+njegov pad ne blokira merge. Oboje je **potvrđeno**. Ali ispod njih je stajala **treća, veća**:
+
+| mjera (GitHub API, `runs → jobs → steps`) | ishod |
+|---|---|
+| trajanje koraka „Run authenticated suite", zadnjih 12 vrtnji (`e23d658` … `921cfbc`) | **0 s, svih 12, zeleno** |
+| korak prije njega („Install Playwright browser") | **25 s, svaki put** |
+
+Nula sekundi = korak je svaki put išao u granu `if [ -z "$TEST_ADMIN_EMAIL" ] → exit 0`, jer taj
+secret **nikad nije bio postavljen** (PROGRESS, `34b3612`, 2026-07-08: *„⏳ Leon doda repo-secrete"*;
+TESTING.md je 2,5 mjeseca nosio *„Za aktivaciju: dodaj ta dva repo-secreta"*).
+
+⚠️ **Dakle nije se preskakala JEDNA tvrdnja nego CIJELI authed suite — 34 datoteke, ni na jednom
+commitu, nijedan put.** Svaka vrtnja je uredno instalirala Chromium pa ga nije upotrijebila.
+**Popravak samo tajne bio bi besmislen**: korak nikad ne dođe do specova.
+
+⚠️ **Razred greške, i vrijedi šire:** zeleno je značilo **„nisam ništa izmjerio"**, a to se u
+izvještaju ne razlikuje od „sve je u redu". Isti razred kao „HTTP 200 nije dokaz učinka" (①/2b) i
+„deployano je nije dokaz da pin radi" (cigla za pinove). **Korak koji smije završiti uspješno bez
+da je išta mjerio nije brana.**
+
+### Obrnuta provjera koju cigla nije smjela preskočiti
+
+Prije uključivanja: **prolazi li tih 34 datoteka uopće?** Nikad nisu vrtjele u CI-ju, pa je
+„zdrave su" bila pretpostavka. Izmjereno lokalno protiv staginga:
+
+| mjera | ishod |
+|---|---|
+| cijeli authed suite | **154/154, EXIT 0, 14 min 45 s** |
+| spec ③ sam (s prijavom) | **3/3 (+ auth-setup), 32 s** |
+
+Suite je zdrav → uključivanje ne daje crveno iz nevezanih razloga. **Prvi put da se ③ vidio kako
+se stvarno izvršava** (6,4 s); dotad je bio samo napisan.
+
+### Odluke (anketa, Leon, 24.09.)
+
+| pitanje | odluka |
+|---|---|
+| koje tajne u GitHub | **četiri `STAGING_*`** (ne produkcijske — pravilo #8; `auth.setup.js` preusmjeri app na staging) |
+| što kad tajne nema | **pada CRVENO** (tišina je bila kvar; repo nema forkove koje bi `exit 0` štitio) |
+| rupa (b) | **kombinacija: roll-up `gate` job + branch protection + authed u pre-push hooku** |
+| što pre-push vrti | **punih 154 tvrdnji (~15 min)**, jer preflight ne vrti **nijedan** prijavljeni test |
+
+⚠️ **Leonu izričito rečeno prije nego dirne postavke:** required status check na `main` ne blokira
+samo „dok CI ne prođe" nego **svaki izravan push** (novi commit po definiciji još nema provjere) →
+`main` postaje **PR-only**, a današnje lokalno `git merge` + `git push` prestaje raditi.
+
+### Isporučeno
+
+- **`scripts/ci-tajne.js`** — jedini izvor istine. Imena tajni **čita s diska** (`tests/**` +
+  `playwright.config.js`, komentari odstranjeni) i svrsta u `OBAVEZNE` / `IMENOVANE_IZNIMKE`
+  (razlog **i cijena**) / `NISU_TAJNE`. `--zahtijevaj` = korak koji CI i hook **izvode**, pada
+  zatvoreno, **imenuje** tajnu i tko je traži, i **ne ispisuje vrijednosti**.
+  ⚠️ Učitava `.env` (uvjetno, kao `playwright.config.js`) — bez toga bi u pre-push hooku tvrdila
+  da tajni nema iako ih ima, dakle **lažno crveno na ispravnom stablu**.
+- **`ci.yml`:** `authed` prosljeđuje četiri `STAGING_*`, `exit 0` grana **zamijenjena** pozivom
+  `--zahtijevaj`, timeout 15 → **25 min** (mjera je 14 min 45 s; timeout je zaštita od visećeg
+  procesa, ne budžet). **Novi `gate` job** = roll-up, `needs: [build, playwright, authed]`,
+  `if: always()`, sudi `!= success`.
+- **`.githooks/pre-push`:** na `main` → `preflight` → `--zahtijevaj` → `test:authed`.
+- **`tests/unit/ci-tajne.test.js`** (u `test:unit`) — **20 tvrdnji**.
+
+### Zašto je brana ovakva, i što je ulovila na sebi
+
+Popis jobova koje roll-up mora pokrivati **čita se iz `ci.yml`**, ne nabraja rukom → novi job koji
+nije u `needs` obori branu. Sudi se **oba smjera**: propuštena tajna **i mrtav unos** (svrstana a
+nitko je ne traži). Jezgra je **izvođenje**, ne čitanje: `--zahtijevaj` se pusti u zasebnom procesu
+za **svaku** obaveznu tajnu praznu i traži se `EXIT 1` **plus** da ispis tu tajnu imenuje.
+
+⚠️ **Brana je pala na PRVOM pokretanju, i to na sebi.** Dva zadnja testa imala su
+`process.env.<izmišljeno>` kao **doslovni tekst**, a kako i ta datoteka leži pod `tests/`,
+nabrajanje ju je (točno!) prijavilo kao nesvrstanu tajnu. Ime se sad **sastavlja u hodu**, pa u
+izvoru ne postoji. **To je ujedno dokaz da nabrajanje radi nad pravim datotekama**, ne samo nad
+podmetnutim nizom — i zato je rješenje komentar, a **ne** iznimka za tu datoteku: iznimka bi
+učinila cijelu datoteku nevidljivom, uključujući tajnu koju netko sutra ovdje stvarno upotrijebi.
+
+⚠️ **Roll-up logika je IZVEDENA, ne pročitana** — `run:` blok izvučen iz `ci.yml` i pušten kroz
+`sh` sa 7 kombinacija ishoda: zeleno **samo** na `success/success/success`; `failure`, `cancelled`,
+`skipped` **i prazna vrijednost** daju EXIT 1. Prazna je važna: da `needs.X.result` ikad dođe
+prazan, gate pada zatvoreno.
+
+⚠️ **Uhvaćeno usput:** cirilično slovo uvuklo se u `ci.yml` (`check:docs` traži **nula** ćirilice) —
+nađeno Nodeom jer `grep -P` u ovoj ljusci ne radi. I dva zastarjela retka u TESTING.md: `lighthouse`
+job koji ne postoji, i rečenica o „dva repo-secreta".
+
+### Čeka Leona (izvan repozitorija, ne mogu sam)
+
+1. **GitHub → Settings → Secrets and variables → Actions:** `STAGING_SUPABASE_URL` ·
+   `STAGING_SUPABASE_ANON` · `STAGING_TEST_ADMIN_EMAIL` · `STAGING_TEST_ADMIN_PASSWORD`.
+   **Dok ih ne doda, `authed` job PADA** — to je namjera, ne kvar.
+2. **Settings → Branches → branch protection na `main`:** required check = **`Gate (sve brane zelene)`**.
+   ⚠️ Time `main` postaje **PR-only**.
+
+---
+
 ## 2026-09-23 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — F6 ①/4b: javna adresa `/mcp` kroz Vercel rewrite
 
 **Cigla `b365625`.** `vercel.json` dobiva rewrite za `/mcp` i `/mcp/*`, po **imenovanim hostovima**.
