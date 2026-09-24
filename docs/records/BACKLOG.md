@@ -117,6 +117,36 @@ GDPR-brisanje čisti sve osobne buckete · i18n na oba jezika · telefon i a11y 
 **Prijedlog reda:** A1–A4 kao jedna cigla „TEMELJ MREŽE" odmah iza F2/1 (dira isti šav: RPC + `user_metadata`) ·
 B5–B6 u §4 stalnu traku · C i D uz F7. ~~Ništa od ovoga nije započeto~~ A1–A4 izvedeno 14.09. (v. gore); B, C, D čekaju.
 
+## ✅ **ZATVORENO 2026-09-24 — uzrok je HLADNA MREŽA, ne trajanje prijelaza.**
+
+Dijagnoza ispod („boja uhvaćena usred prijelaza") bila je **točna ali nepotpuna**: nije govorila
+**zašto** prijelaz uopće krene, pa se lokalno **nije dalo reproducirati** i stavka je stajala 10 dana.
+
+**Mehanizam, izmjeren:** kad `styles.bundle.css` stigne **nakon prvog izračuna stila**, pozadina se
+mijenja iz zadane svijetle u temsku i prijelaz **KRENE** — jer ga propisuje stil koji je tek stigao
+(`body { transition: all .3s }`, `css/variables.css:126`). Lokalno je CSS instantan pa se to nikad ne
+dogodi; na CI runneru povremeno da. Odatle omjer ~2/72.
+
+**Dokaz da je to isti kvar:** oba zabilježena pada rekonstruiraju se **točno** kao interpolacija
+svijetle (247,249,252) i tamne (15,17,21) pozadine — `rgb(75,77,81)` = **74,1 %** puta,
+`rgb(199,201,203)` = **20,9 %**. Uz kašnjenje CSS-a izmjereno: bez smirivanja `rgb(247,249,252)` i
+`getAnimations()` = `["background-color","color"]`; sa smirivanjem `rgb(15,17,21)`.
+
+**Popravak:** boja se mjeri kroz `konacnaPozadina()` → postojeći `smiri()` iz `tests/helpers/axe-gate.js`
+(pisan za BUG-042, isti razred, **pada zatvoreno**). Popravljena **oba** mjesta u specu, ne samo ono koje
+je palo. ⚠️ **Tvrdnje o atributu se i dalje sude BEZ smirivanja** — one su pravi sadržaj testa.
+
+**Uz popravak ide NOVI trajni test** „hladna mreža: CSS stigne poslije prvog kadra" — tvrdi što korisnik
+na sporoj vezi stvarno dobije, i **na starom kodu pada**, dakle je i obrnuta provjera. To je ono što je
+ovoj stavci nedostajalo: rupa je bila zapisana, ali **nije imala test** (ADR-027).
+**Mjera:** `theme-fouc` **84/84** (28 × 3 ponavljanja, 4 profila).
+
+⚠️ **DVIJE POGREŠNE HIPOTEZE PRIJE TE, zapisane u testu da se ne ponove:** spori prijelaz ubačen na
+`DOMContentLoaded` ne reproducira (tema je već primijenjena), a ubačen u `<head>` prije `boot.js`
+također ne — **promjena prije prvog izračuna stila ne stvara prijelaz.**
+
+---
+
 **🧪 Povremeni pad `theme-fouc.spec.js` (nađeno 14.09., star):** scenariji s tamnim uređajem padaju ~2/72 na tvrdnji
 „pozadina nije tamna" — boja `body` uhvaćena USRED prijelaza (npr. `rgb(199,201,203)`), dok je atribut teme točan od prvog
 kadra (nula promjena). Isti omjer i sa `theme.js` od prije F2/1 (izmjereno obrnuto). Popravak brane: čekati mirnu

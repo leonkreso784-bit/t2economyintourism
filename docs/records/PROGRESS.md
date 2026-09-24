@@ -5,6 +5,64 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-24 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — `theme-fouc` flake: uzrok je HLADNA MREŽA
+
+**Povod:** prvi run poslije S1 pusha dao je `playwright shard 1/2` crven — 1 pao od 343. Pao je
+`tests/theme-fouc.spec.js` („uređaj dark → `carbon`"), greška *„pozadina nije tamna: `rgb(75,77,81)`"*.
+**Nije regresija:** S1 commiti ne diraju **ni jednu** datoteku aplikacije (nula `css/`, `js/`, `data/`),
+a pad je od 14.09. zapisan u `BACKLOG.md:120` uz mjeru da pada jednako i na starom kodu.
+⚠️ **Gate je time dokazan u proizvodnji:** jedan job crven → `gate` crven nakon 1 s. Ono što je brana
+dokazivala simulacijom kroz `sh` potvrdio je stvarni CI.
+
+**Leonova odluka (anketa):** popraviti branu **prije** nego `Gate` postane required — inače poznati
+flake blokira merge bez ijedne prave greške.
+
+### Zapisana dijagnoza bila je TOČNA ALI NEPOTPUNA — i zato je stajala 10 dana
+
+BACKLOG je govorio „boja uhvaćena usred prijelaza", ali **ne zašto prijelaz krene**. Bez toga se
+lokalno **nije dalo reproducirati**, pa se nije imalo što popraviti.
+
+⚠️ **DVIJE MOJE HIPOTEZE, OBJE OBORENE VLASTITIM MJERENJEM** (i obje zapisane u test):
+1. spori prijelaz ubačen na `DOMContentLoaded` → **ne reproducira**; stil dolazi nakon što je tema
+   već primijenjena;
+2. spori prijelaz ubačen u `<head>` **prije `boot.js`** → **također ne**, i to je nalaz sam po sebi:
+   **promjena prije prvog izračuna stila ne stvara prijelaz.**
+
+⚠️ **TREĆA JE POGODILA: HLADNA MREŽA.** Kad `styles.bundle.css` stigne **nakon prvog izračuna stila**,
+pozadina se mijenja iz zadane svijetle u temsku i prijelaz **KRENE** — jer ga propisuje stil koji je
+tek stigao (`body { transition: all .3s }`, `css/variables.css:126`). Lokalno je CSS instantan, na CI
+runneru nije. **Time je objašnjen i omjer 2/72, i to zašto lokalno nikad ne pada.**
+
+**Mjera (kašnjenje CSS-a 400 ms, isti profil na kojem je CI pao):**
+
+| | atribut | pozadina | `getAnimations()` |
+|---|---|---|---|
+| stari način (uzorkuje odmah) | `carbon` ✅ | `rgb(247,249,252)` — suma **748** vs prag 200 | **`background-color`, `color`** |
+| uz `smiri()` | `carbon` ✅ | `rgb(15,17,21)` — suma **53** | — |
+
+⚠️ **Dokaz da su CI-padovi isti kvar, prije ijedne reprodukcije:** oba zabilježena pada rekonstruiraju
+se **točno** kao interpolacija svijetle (247,249,252) i tamne (15,17,21) pozadine — `rgb(75,77,81)` je
+**74,1 %** puta, `rgb(199,201,203)` je **20,9 %**. Aritmetika, ne tumačenje. **Atribut teme je pritom
+cijelo vrijeme točan** → prava tvrdnja testa nikad nije bila slomljena, samo je mjerenje boje bilo utrka.
+
+### Isporučeno
+
+- **`konacnaPozadina()`** u `tests/theme-fouc.spec.js` → zove **postojeći `smiri()`** iz
+  `tests/helpers/axe-gate.js` (pisan za BUG-042, isti razred, **pada zatvoreno**). Nije napisan drugi
+  mehanizam — dvije kopije istog znanja su ADR-027.
+- **Popravljena OBA mjesta** koja uzorkuju boju, ne samo ono koje je danas palo (drugo bi palo sljedeći put).
+- ⚠️ **Tvrdnje o atributu NISU dirane** — nula promjena `data-theme`, točna tema u prvom kadru i
+  `color-scheme` čitaju se **iz prvog snimka, prije smirivanja**. Da sam smirio cijelo mjerenje,
+  popravio bih flake i **potiho oslabio tvrdnju koja drži**.
+- **NOVI trajni test „hladna mreža: CSS stigne poslije prvog kadra"** — sonda nije bačena nego je
+  postala brana. Tvrdi što korisnik **na sporoj vezi** stvarno dobije, i **na starom kodu pada** →
+  ujedno je obrnuta provjera. To je ono što je BACKLOG-u nedostajalo: rupa je bila zapisana, ali
+  **nije imala test**.
+
+**Mjere:** `theme-fouc` **84/84** (28 tvrdnji × 3 ponavljanja × 4 profila, 4,4 min) · preflight EXIT 0.
+
+---
+
 ## 2026-09-24 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — S1: CI je 12 vrtnji mjerio NIŠTA
 
 **Cigla zatvara S1** (imenovan kao nepopravljen u ①/2b): jedina tvrdnja koja mjeri **ŽICU** —
