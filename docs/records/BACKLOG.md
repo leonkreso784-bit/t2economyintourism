@@ -53,6 +53,28 @@ produkciji **isključen**). Stanje prekidača na dan 22.09.:
 ⚠️ **Usput nađeno:** staging i produkcija razilaze se u **dvije** postavke, pa staging **nije vjerna proba**
 za F7 — to treba poravnati prije objave, inače se na produkciji prvi put mjeri ono što nitko nije vidio.
 
+### ➖ Odstranjivač komentara na DVA mjesta može pojesti KOD (2026-09-24, nađeno mutacijom u F6 S2)
+
+`scripts/ci-tajne.js:114` i `tests/unit/axe-gate-usage.test.js` odstranjuju komentare **blok pa redak**:
+
+```js
+src.replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/^\s*\/\/.*$/gm, ' ')
+```
+
+⚠️ **Redoslijed je kvar, ne stil.** Običan redak-komentar koji sadrži kosu crtu sa zvjezdicom (npr. kad
+spominje `tests/unit/` + zvjezdicu + `.test.js`) **otvori prividni blok-komentar**, koji se zatvori tek na
+sljedećem pravom `*/` — i sve između nestane, **uključujući kod**. Brana tada sudi tekstu koji je sama
+obrisala, pa tvrdi „nema zabranjenog obrasca" nad prazninom.
+
+**Izmjereno 2026-09-24:** u brani `test-unit-runner` je to bilo **živo** — mutacija koja u runner ubaci
+zakucanu putanju prolazila je **ZELENO**. Ondje je popravljeno (`samoKod`, ide **po retku**, uz tvrdnju
+koja baš to mjeri). Na ova dva mjesta je danas **latentno**: nijedan `a11y*.spec.js` nema taj obrazac u
+retku-komentaru (provjereno), pa brane trenutno mjere ispravno.
+
+**Zašto svejedno stoji ovdje:** latentno znači „čeka prvi komentar koji spomene obrazac koji zabranjuje" —
+a brana o zabranjenim obrascima ih po prirodi spominje. **Gotovo kad** oba mjesta dijele isti odstranjivač
+po retku i kad mutacija nad svakim od njih padne crveno.
+
 ### ➖ Nijedna brana ne nabraja MJESTA koja mijenjaju lozinku (2026-09-22, revizija ①/2b, nalaz N3)
 
 Danas su dva: `js/profile.js` (profil, šalje `current_password`) i **`js/auth.js:865`** (oporavak lozinke, svjesno
