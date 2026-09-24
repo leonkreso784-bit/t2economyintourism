@@ -82,7 +82,16 @@ test.describe('F3/2 cigla 4c — profil prati jezik', () => {
     expect(odgovor.status(), 'ista lozinka mora biti odbijena — inače se ništa nije izmjerilo').toBeGreaterThanOrEqual(400);
     const tijelo = await odgovor.json().catch(() => ({}));
     const sirovo = tijelo.msg || tijelo.message || '';
-    const prevedeno = await page.evaluate((b) => SokratAuth.authError({ code: b.error_code, message: b.msg || b.message }), tijelo);
+    // ⚠️ IZMJERENO 25.09.: poslužitelj vraća DVA oblika iste greške. Goli GoTrue (REST, `apikey`)
+    // šalje `{code: 400, error_code: 'current_password_required', msg: …}`, a odgovor koji uhvati
+    // aplikacija nosi `{code: 'current_password_required', message: …}` — dakle ime koda je u
+    // `code`, ne u `error_code`. Prva verzija čitala je SAMO `error_code`, pa je prevoditelju
+    // slala `undefined`, dobivala natrag sirovu poruku i optuživala prevoditelja za vlastiti
+    // propust. Kvar se vidio tek kad je poslužitelj tu grešku POČEO slati (postavka „traži
+    // trenutnu lozinku", staging 21.09.) — dotad se grana nikad nije izvršila.
+    const kod = tijelo.error_code || tijelo.code || '';
+    expect(typeof kod === 'string' && kod !== '', 'nema koda greške — tvrdnja ne bi ništa dokazala').toBe(true);
+    const prevedeno = await page.evaluate((b) => SokratAuth.authError({ code: b.kod, message: b.poruka }), { kod, poruka: sirovo });
     expect(prevedeno, 'prevoditelj ne zna ovaj kod — tvrdnja ne bi ništa dokazala').not.toBe(sirovo);
     await expect(page.locator('#profilePassStatus'), 'sirova poruka servera').toHaveText(prevedeno);
   });
