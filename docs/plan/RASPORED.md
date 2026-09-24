@@ -356,8 +356,51 @@ presudio da naslovna tvrdnja *„CI stvarno izvršava suite"* pada na **tri jedn
 ključeva koraka umjesto zabrane jednog oblika · roll-up presuda i pre-push hook se sad **IZVODE** u brani
 (kroz `sh`, sa stubovima) · dvosmjerno uparivanje job↔varijabla · kontrola dosega čitača jobova ·
 novi `scripts/authed-mjera.js` koji **sudi koliko je suite dotaknuo** (brojka „154" bila je proza).
-⏳ **Čeka Leona izvan repozitorija:** četiri `STAGING_*` u GitHub secrets + required check
-`Gate (sve brane zelene)` (⚠️ time `main` postaje **PR-only**).
+✅ **Tajne su u GitHubu 24.09.** — **pet** `STAGING_*` (URL · ANON · TEST_ADMIN_EMAIL ·
+TEST_ADMIN_PASSWORD · SERVICE_KEY); stari pogrešno imenovan `TEST_ADMIN` obrisan (ništa ga nije
+koristilo). **Prvi run s tajnama je ZELEN u cijelosti** (`7c1b1b9`): `authed` **154 passed**, korak
+**526 s** — ne 0 s · shard 2/2 **304 passed** · shard 1/2 **346 passed, 0 palo** (prije popravka
+flakea: 1 pao od 343) · **`gate` zelen**. ⚠️ Obrnuta provjera da novi test nije samo preskočen:
+preskočenih je u oba runa **točno 42**, a prošlih **+3** — dakle „hladna mreža" se stvarno izvrtila.
+⏳ **Čeka Leona izvan repozitorija:** required check `Gate (sve brane zelene)`
+(⚠️ time `main` postaje **PR-only**). GitHub nudi samo provjere koje je **nedavno vidio**, pa je to
+moguće tek sad, poslije zelenog runa.
+
+**S2 — `test:unit` se nabraja sam · ✅ 24.09.** `test:unit` je bio **ručno pisan lanac od 57 unosa**
+u `package.json` — duplikat ispisa mape, gdje samo jedna kopija može ostarjeti. ⚠️ **Izmjereno
+PRIJE zahvata, i mjera je odlučila da je cigla preventivna:** lanac 57, disk 57, **nesvrstanih 0,
+mrtvih 0, duplikata 0**. Razred greške je ipak isti koji je S1 zatvarao — datoteka koja se ne vrti
+**ne prijavljuje se kao crvena nego kao tišina**. **Leonova odluka (anketa):** ne brana nad popisom
+nego **runner koji čita disk**, jer brana drift otkriva, a runner ga čini nemogućim. Isporučeno:
+`scripts/test-unit.js` (nabraja s diska **rekurzivno** · **nula datoteka = pad** · **izvedeno mora
+== nabrojano** · ispisuje doseg) + brana `tests/unit/test-unit-runner.test.js` **15/15**, koja runner
+**IZVODI** nad podmetnutim mapama (prazna · nepostojeća · jedan pad · pad u podmapi · nepotpuna
+vrtnja · dva prolaza), ne čita mu tekst. Dokaz istog časa: prvi prolaz javlja **`dotaknuto 58/58`** —
+58. je sama nova brana, koju nitko nije upisao u `package.json`. **22 mutacije, sve crvene i svaka iz
+pravog razloga.**
+⚠️ **REVIZIJA JE CIGLU VRATILA, i bila je u pravu u sve četiri točke** (`brana-revizor` opet — pušta
+se UVIJEK): **(1)** tvrdnja o `package.json` bila je **popis
+ZABRANJENOG**, pa je `--mapa=<uska mapa>` srezao doseg s 58 na 1 uz `EXIT 0` **a brana se nije ni
+pokrenula** (isti nalaz kao F1 u S1) → sad **popis OTVORENOG**; **(2)** svih pet spawnova predavalo je
+`--mapa`, pa preusmjeren `ZADANA_MAPA` nitko ne bi vidio → `nabroji()` se zove **bez argumenta**;
+**(3)** ravno nabrajanje činilo je `tests/unit/mcp/x.test.js` **nevidljivim** dok je `TESTING.md` već
+tvrdio suprotno → **rekurzija**, uz „ime se sudi prije vrste" da mapa nazvana `*.test.js` ne nestane
+iz brojki; **(4)** *„CI stvarno doseže test:unit"* bio je `String.match`, pa su `# run:` i `if: false`
+prolazili zeleno → sad se sudi **položaj** koraka (bez komentara, bez `if:`, `gate` ovisi o jobu).
+⚠️ **Zastavica `--disable-warning` ide na SVE, i to je mjereno:** nijedna od tri datoteke koje su je
+nosile nije ESM — upozorenje dolazi iz `.ts` koju **dinamički uvoze** iz `supabase/functions/`, pa se
+zastavica ne da izvesti iz sintakse testa.
+⚠️ **DVA VLASTITA KVARA, oba nađena mjerenjem a ne čitanjem.** (1) Uvjet „izvedeno != nabrojano"
+u prvoj verziji **nije mogao puknuti nikad**, jer je brojač rastao u svakoj iteraciji — zaštita koja
+izgleda kao zaštita. Sad se unos koji **nije datoteka** (mapa nazvana `*.test.js` uredno prođe kroz
+`readdir`) ne broji u izvedene, pa je grana dosežna. (2) **Odstranjivač komentara u brani pojeo je
+PRAVI KOD:** brisao je najprije blok-komentare, a zaglavlje runnera u običnom retku-komentaru sadrži
+`tests/unit/` + zvjezdicu + `.test.js` — ta kosa crta sa zvjezdicom otvorila je **prividni blok** koji
+se zatvorio tek 53 retka niže. Posljedica: mutacija koja u runner ubaci zakucanu putanju prolazila je
+**ZELENO**. Sad ide **po retku** (`samoKod`), uz tvrdnju koja baš to mjeri (mutacija M12).
+▶️ **Isti oblik postoji i u `tests/unit/axe-gate-usage.test.js`** — ondje je danas **latentan**
+(nijedan a11y spec nema taj obrazac u retku-komentaru), pa je zaveden kao zaseban zahvat, ne kao
+dio ove cigle.
 
 Rizici: beta poslužitelj, mlad `@supabase/server` · **greška u hooku = nitko se ne prijavi** (hook ide na svako izdavanje
 tokena) → nekoliko redaka, prvo staging, izlaz = isključiti hook u dashboardu · `PUT /user` ovisi o postavci ·

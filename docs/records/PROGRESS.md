@@ -5,6 +5,120 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-24 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — CI prvi put ZELEN u cijelosti + S2 `test:unit` se nabraja sam
+
+### 1 · CI run `35951087065` (commit `7c1b1b9`) — **zelen, svih pet jobova**
+
+Prvi run u kojem su **sve** brane zelene, uključujući roll-up `gate`. Mjereno kroz javni GitHub API
+(`runs → jobs → annotations`; `gh` nije instaliran, logovi traže admin, **anotacije su javne**).
+
+| job | prije (`48608ae`) | sada (`7c1b1b9`) |
+|---|---|---|
+| Lint + verify + tests | ✅ | ✅ (`test:unit` 7 s) |
+| Authed admin suite | ✅ 154 passed | ✅ **154 passed**, korak **526 s** |
+| Playwright shard 2/2 | ✅ | ✅ 304 passed / 84 skipped |
+| Playwright shard 1/2 | ❌ **1 failed** / 42 skipped / 343 passed | ✅ **0 failed** / 42 skipped / **346 passed** |
+| Gate (sve brane zelene) | ❌ failure | ✅ **success** |
+
+⚠️ **Obrnuta provjera, jer zeleno samo po sebi ne dokazuje da je novi test vrtio.** Preskočenih je u
+oba runa **točno 42** — identično — a prošlih **+3**. Da je „hladna mreža" bila preskočena, narasla bi
+brojka preskočenih, a nije; narasla je brojka prošlih. Dakle test se **stvarno izvrtio**.
+⚠️ **Pošteno ograničenje:** jedan zeleni run ne dokazuje da je flake mrtav (flake ponekad prođe).
+Dokaz je **reprodukcija u commitu** (hladna mreža) plus to što trajni test sad vrti.
+
+⏳ **Leonova radnja izvan repozitorija:** Settings → Branches → required check
+**`Gate (sve brane zelene)`**. GitHub nudi samo provjere koje je **nedavno vidio**, pa je to moguće
+tek sad. Time `main` postaje **PR-only** — izravan `git push` prestaje raditi, `feat/*` ostaje slobodan.
+
+### 2 · S2 — `test:unit` se nabraja sam (runner čita disk)
+
+**Mjera prije koda, i ona je odredila da je cigla preventivna:** lanac **57** unosa, disk **57**
+datoteka, nesvrstanih **0**, mrtvih **0**, duplikata **0**. Nema drifta *danas* — ali razred greške je
+isti koji je S1 zatvarao: **test koji se ne vrti ne javlja se kao crven nego kao tišina.**
+
+**Leonova odluka (anketa):** runner koji čita disk, ne brana nad ručnim popisom — *brana drift
+otkriva, runner ga čini nemogućim*. Uz to obavezna **tvrdnja o broju**, jer runner koji nabroji nula
+datoteka inače uredno završi `exit 0`.
+
+Isporučeno u jednom commitu (runner i njegova brana ne smiju biti dva commita — runner bez tvrdnje o
+broju **jest** onaj kvar koji cigla zatvara):
+- `scripts/test-unit.js` — nabraja `tests/unit/*.test.js` s diska **rekurzivno**, abecedno;
+  **nula datoteka = pad**; **izvedeno mora biti jednako nabrojanom**; ispisuje doseg `dotaknuto N/N`.
+- `tests/unit/test-unit-runner.test.js` — **15/15**. Šest tvrdnji runner **IZVODE** nad podmetnutom
+  mapom (prazna · nepostojeća · jedan pad · pad u podmapi · nepotpuna vrtnja · dva prolaza), jer bi
+  „u izvoru piše `process.exit(1)`" prošlo i nad kodom koji tu granu nikad ne dosegne (nalaz F2 iz
+  revizije S1).
+- `package.json` — `"test:unit": "node scripts/test-unit.js"`.
+
+**Dokaz istog časa:** prvi prolaz javlja **`dotaknuto 58/58, palo 0`**. Pedeset osma je **sama nova
+brana**, koju nitko nije upisao u `package.json` — to je cijela poanta cigle, izmjerena a ne tvrđena.
+
+⚠️ **Zastavica `--disable-warning=MODULE_TYPELESS_PACKAGE_JSON` ide na SVE, i to je mjereno.** U starom
+lancu su je nosila točno tri unosa. Provjereno **zašto**: nijedna od te tri nije ESM — upozorenje
+dolazi iz `.ts` datoteke koju one **dinamički uvoze** iz `supabase/functions/`. Izvođenje zastavice iz
+sintakse testa bilo bi **krivo**, a iz „uvozi li `.ts`" bio bi novi ručni popis zaobilazno. Zastavica
+ne mijenja nijedan izlazni kod, pa ide na sve i mapiranja nema.
+
+### ⚠️ Dva vlastita kvara — oba našlo MJERENJE, nijedan čitanje
+
+1. **Tvrdnja koja nije mogla puknuti.** Uvjet „izvedeno != nabrojano" bio je **mrtav**: brojač je
+   rastao u svakoj iteraciji, pa je nejednakost bila nemoguća. Zaštita koja izgleda kao zaštita.
+   Popravak: unos koji **nije datoteka** (mapa nazvana `*.test.js` uredno prođe kroz `readdir`) ne
+   broji se u izvedene → grana je dosežna, a mutacija M9 je dokazuje.
+2. **Odstranjivač komentara u brani pojeo je PRAVI KOD.** Brisao je najprije blok-komentare pa tek
+   retke-komentare. Ali zaglavlje runnera u **običnom retku-komentaru** doslovno sadrži `tests/unit/`
+   + zvjezdicu + `.test.js`, i ta kosa crta sa zvjezdicom **otvorila je prividni blok-komentar** koji
+   se zatvorio tek na kraju prvog JSDoc-a **53 retka niže**. Sve između je nestalo — uključujući kod.
+   Posljedica: mutacija M6 (zakucana putanja ubačena u runner) prolazila je **ZELENO**, dakle brana je
+   tvrdila „nema zakucanih putanja" nad tekstom koji je **sama obrisala**. Sad ide **po retku**
+   (`samoKod`), uz zasebnu tvrdnju koja baš to mjeri, i mutaciju M12 koja je dokazuje.
+
+▶️ **ISTI OBLIK POSTOJI NA JOŠ DVA MJESTA** — `scripts/ci-tajne.js:114` i
+`tests/unit/axe-gate-usage.test.js` (ista funkcija, isti redoslijed). Provjereno je li **živ**: danas
+nijedan `a11y*.spec.js` nema taj obrazac u retku-komentaru, pa je rupa **latentna, ne aktivna**.
+Namjerno **nije popravljena u ovoj cigli** — zaseban zahvat.
+
+### ⚠️ REVIZIJA JE CIGLU VRATILA — i bila je u pravu u sve četiri točke
+
+`brana-revizor` je presudio **„brana ne mjeri sve što tvrdi"** uz 8/11 PASS. Sva četiri nalaza su
+stvarna, provjerena su vlastitim mjerenjem i popravljena:
+
+1. **POPIS ZABRANJENOG NIJE BRANA** (isti nalaz kao F1 u S1, i zato najteži). Tvrdnja je nabrajala
+   *loše* oblike, pa su kroz nju prolazili **`--mapa=tests/unit/podskup`** (doseg srezan s 58 na 1,
+   `EXIT 0`, **a brana se u toj vrtnji uopće ne pokrene**), `|| exit 0` i `; exit 0`. Popis zabranjenog
+   nikad ne pokriva sljedeći izmišljeni oblik. Sad je **popis OTVORENOG**: `test:unit` mora biti
+   *točno* jedan oblik, sve ostalo pada dok čovjek svjesno ne doda iznimku.
+2. **ZADANA MAPA SE NIJE MJERILA.** Svih pet spawnova predavalo je `--mapa`, pa bi preusmjeren
+   `ZADANA_MAPA` — jedan redak — prošao neprimijećeno. Sad se `nabroji()` zove **bez argumenta** i
+   uspoređuje s **nezavisnim** čitanjem diska.
+3. **PODMAPA JE BILA TIŠINA.** Ravno nabrajanje činilo je `tests/unit/mcp/x.test.js` nevidljivim, a
+   brojač bi svejedno pisao pun `N/N` — **isti razred greške zbog kojeg cigla postoji, samo jednu
+   razinu niže**, i to dok je `TESTING.md` već tvrdio suprotno. Nabrajanje je sad **rekurzivno**
+   (presedan je u kući: `scripts/ci-tajne.js` to radi uz obrazloženje *„da helper ili novi podfolder
+   ne ostane nevidljiv"*). ⚠️ Rekurzija je usput obesmislila tvrdnju o broju — mapa nazvana
+   `*.test.js` bi se rekurzirala i **nestala** iz obje brojke; zato se **ime sudi prije vrste**, pa
+   takav unos ostane nabrojan i glasno padne.
+4. **„CI STVARNO DOSEŽE `test:unit`" MJERILO JE TEKST.** Bio je `String.match` nad `ci.yml`, pa su
+   `# run: …` i `if: false` prolazili **zeleno** — doslovno kvar koji je S1 zatvarao. Sad se komentari
+   odbacuju i sudi se **položaj**: korak postoji, **nema `if:`**, a roll-up `gate` ovisi o njegovu
+   jobu. Uz to: *„nepostojeća mapa pada zatvoreno"* sudila je **samo izlazni kod**, a neuhvaćena
+   iznimka daje isti signal — sad traži i **imenovan uzrok** u `stderr`.
+
+Dodana je i **čegrtaljka na broju tvrdnji**: obrisana tvrdnja je tišina, pa brana tvrdi vlastiti
+broj. Odmah je i proradila — javila je 15 gdje sam napisao 14.
+
+**Mutacije: 22, sve crvene, svaka iz pravog razloga.** Alat ispisuje **IME** pale tvrdnje, ne samo
+broj — jer *crveno iz pogrešnog razloga nije dokaz*. ⚠️ **Jedna je prvo ispala „crvena iz krivog
+razloga", i provjera je pokazala da je krivo moje OČEKIVANJE, ne brana:** pod mutacijom „nabraja sve
+`.js`" tvrdnja o disku pošteno prolazi, jer `tests/unit` danas ima **0** ne-test `.js` datoteka — ta
+dva filtra su ondje istovjetna. Hvata je tvrdnja koja mjeri nad **podmetnutom** mapom s `helper.js`,
+i baš zato je ona tako i napisana.
+
+**Mjere:** brana **15/15** EXIT 0 · `npm run test:unit` **dotaknuto 58/58, palo 0**, EXIT 0 ·
+mutacije **22/22 crvenih** · stablo nakon mutacija **obnovljeno** (kontrola zelena) · preflight **0**.
+
+---
+
 ## 2026-09-24 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — `theme-fouc` flake: uzrok je HLADNA MREŽA
 
 **Povod:** prvi run poslije S1 pusha dao je `playwright shard 1/2` crven — 1 pao od 343. Pao je

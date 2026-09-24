@@ -28,7 +28,7 @@
 - [ ] `npm run validate:content [id]` → shema sadržaja + quiz indeks + KaTeX currency-safety. Zaštitar generatora.
 - [ ] `npm run validate:schema [id]` → strukturni JSON Schema ugovor (`schema/subject-content.schema.json`, ajv).
 - [ ] `npm run export:json -- --check` → `data/json/**` u sinku s izvornim `.js`. **⚠️ Nakon izmjene `data/*.js` migriranog predmeta obavezan re-export**, inače pada i CI.
-- [ ] `npm run test:unit` → graderi engine-a vježbi + `app-state` + `blocks-renderer` (escape-granica).
+- [ ] `npm run test:unit` → graderi engine-a vježbi + `app-state` + `blocks-renderer` (escape-granica). **Popis se NE piše rukom:** `scripts/test-unit.js` nabraja `tests/unit/*.test.js` **s diska, rekurzivno**, pa se nova datoteka vrti čim padne na disk — **i iz podmape** (`tests/unit/mcp/…`), nema unosa koji se zaboravi. ⚠️ Ravno nabrajanje je u prvoj verziji činilo podmapu nevidljivom uz pun `N/N` — istu zamku kuća već zna, vidi zaglavlje `scripts/ci-tajne.js`. Runner **pada na nuli datoteka** i na nesrazmjeru izvedeno/nabrojano, i **ispisuje doseg** (`dotaknuto N/N`); brana `tests/unit/test-unit-runner.test.js` ga zato IZVODI nad podmetnutim mapama, ne čita mu tekst.
 - [ ] `npm run bump:check` → svi `?v=` tokeni + `CONTENT_VERSION` identični (drift = ručni bump podskupa → BUG-004, ADR-017). Popravak: `npm run bump`.
 - [ ] `npm run build:css -- --check` → `styles.bundle.css` i `css/tokens.static.css` u sinku s manifestom `css/app.css`.
 - [ ] **sve ostale `check:*` brane** (`check:tailwind`, `check:cdn`, `check:palette`, `check:orphan-css`, `check:safearea`, `check:budget`, `check:seo`, `check:contrast`, `check:docs`, `check:state`, `check:lockfile`, …) → **što svaka tvrdi, piše u `CLAUDE.md` §Komande; ZAŠTO postoji, u zaglavlju svoje skripte.**
