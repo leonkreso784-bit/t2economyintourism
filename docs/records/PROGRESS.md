@@ -5,6 +5,78 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-25 (OPUS, stablo `sokratstudy.f3`) — rez za produkciju: F2+F3 spreman, spec optuživao prevoditelja
+
+**Povod (Leonovo pitanje):** *„koliko toga još nije deployano online?"* Izmjereno: produkcija
+(`origin/main` = `61c39dd`) je od **13.09.**, a izvan nje je **149 commita**. Razlog nije nemar nego
+**ponovljeni lanac**: svaka nova sesija odvajala se od PRETHODNE grane, ne od `main`-a — isto što je
+§0 RASPORED-a rješavao 12.09. Razlika je što se ovaj put grane **međusobno sadrže**, pa je posao
+**jedan lanac**, ne šest hrpa.
+
+**Leonova odluka (anketa):** prvo **čist rez** — sve do `feat/f3-dvojezicnost`, **bez MCP-a**.
+Provjereno da je rez stvarno čist: **nula MCP koda, nula izmjena `vercel.json`**.
+⚠️ Zašto to nije sitnica: `vercel.json` na `feat/f6-mcp` gađa `/mcp` s hosta `www.sokratstudy.com`
+na **produkcijski** Supabase, a `mcp` funkcija i brava postoje **samo na stagingu** — spajanje cijele
+F6 grane otvorilo bi put prema funkciji koje nema, bez brave.
+
+**Spajanje je `fast-forward`** (`main` je izravni predak) → nema sudara ni rizika od krive
+rezolucije, za razliku od 13.09. kad je trebalo pet pažljivih koraka.
+
+### ⚠️ CI je na toj grani bio ZELEN, ali jedan od tih zelenih bio je lažan
+
+Run od 17.09. nad `a1d1bb5`: sve zeleno. Ali `authed` je završio **15 s** nakon builda — to je
+točno kvar koji je S1 zatvorio 24.09. (`exit 0` jer tajne nisu bile postavljene). Dakle
+**autentificirana suita nikad nije vrtjela nad ovim kodom**, a rez dira prijavu, profil, Moje
+materijale i mail-prekidač. Pokrenuta lokalno protiv STAGINGA: **148/1**.
+
+### Pao je jedan test — i kvar je bio u SPECU, ne u kodu
+
+`tests/profile-jezik.authed.spec.js:67` (F3/2 cigla 4c) padao je uz *„prevoditelj ne zna ovaj kod"*.
+
+⚠️ **Prva dijagnoza (moja) bila je kriva.** Pretpostavio sam da prevoditelj ne zna kod i cherry-pickao
+popravak s F6 grane. Test je **i dalje padao**. Tek je mjerenje dalo uzrok — poslužitelj vraća **dva
+oblika iste greške**:
+
+| tko pita | oblik tijela |
+|---|---|
+| goli GoTrue (REST, `apikey`) | `{code: 400, error_code: 'current_password_required', msg: …}` |
+| odgovor koji uhvati **aplikacija** | `{code: 'current_password_required', message: …}` |
+
+Spec je čitao **samo `error_code`** → prevoditelju slao `undefined` → dobivao natrag sirovu poruku →
+i **optuživao prevoditelja za vlastiti propust**. Provjereno u pregledniku: `authError({code:
+'current_password_required'})` vraća *„Enter your current password to change it."* — **aplikacija je
+cijelo vrijeme radila ispravno.**
+
+▶️ **Zašto se vidjelo tek sad:** ta se grana **nikad nije izvršila** dok poslužitelj tu grešku nije
+POČEO slati (postavka „traži trenutnu lozinku", staging 21.09.). Spec je pisan 17.09. i tada je
+„prolazio" jer do tvrdnje nije ni dolazio. **Zeleno je značilo „nisam došao dotle", ne „radi"** —
+isti razred kao S1, samo unutar jednog testa.
+
+**Isporučeno (tri commita):**
+- `1ce6259` — cherry-pick `d604b5e`, **samo 3 datoteke** (`js/auth.js`, `js/i18n.js`,
+  `tests/unit/auth-error.test.js`). Sudari su bili **isključivo `?v=` tokeni** (10 datoteka) → uzeta
+  strana grane; `odobrenje.html` **uklonjen** jer je to stranica F6 konektora. Provjereno: nula
+  tragova `mcp`/`odobrenje`/`vercel`. **Nije bio uzrok pada, ali je opravdan** — bez njega prevoditelj
+  tu granu stvarno nema (0 pogodaka), pa bi korisnik usred hrvatskog sučelja vidio sirovu englesku
+  rečenicu ako je postavka uključena i na produkciji.
+- `89b02a1` — `npm run bump`, 118 tokena u 8 datoteka na jedan timestamp.
+- `800d1eb` — spec podnosi **oba** oblika i **pada zatvoreno kad koda nema** (prazan kod bi opet dao
+  sirovu poruku i opet optužio krivoga).
+
+**Obrnuta provjera:** mutacija koja prevoditelju oduzme granu `current_password_required` →
+**1 pao / 3 prošla**, i to baš taj test s pravom porukom; nakon vraćanja **4/4**, stablo čisto.
+
+**Mjere:** `preflight` **EXIT 0** · `test:authed` **149/0** (prije: 148/1) · Playwright oba sharda
+zelena u CI-ju 17.09. i **stvarno vrtjela** (12 min po shardu) · spajanje i dalje **fast-forward**.
+
+**Stanje:** `feat/f3-dvojezicnost` = `800d1eb`, **54 commita ispred `origin/main`**, 103 datoteke.
+`main` **nije dirnut**, ništa pushano. ⏳ Čeka Leona: SQL (`f2-mail-log.sql`, `f2-temelj-mreze.sql`)
+i dvije nove Edge Functions (`send-notification`, `mail-unsubscribe`) na PROD — **prije** deploya,
+inače bi prekidač „Obavijesti mailom" bio vidljiv a mail ne bi stizao. Produkcija danas ima **samo**
+`delete-account`, a ovaj rez je **ne dira**.
+
+---
+
 ## 2026-09-17 navečer (OPUS, stablo `sokratstudy.f3`) — F6 MCP: PLAN napisan, četiri presude (ADR-038); kod NE postoji
 
 - **Provjereno iz izvora** (ne po sjećanju) sve četiri NEPROVJERENE stavke iz §F6: CIMD u Supabaseu **ne postoji** ·
