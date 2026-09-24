@@ -83,8 +83,43 @@ function blokJoba(ime) {
   return redci.slice(start, end).join('\n');
 }
 
+/**
+ * Koraci jednog joba, razrezani na `- name:` (uvlaka 6).
+ * ⚠️ ZAŠTO PO KORAKU, A NE PO JOBU — ovo je nalaz MUTACIJE M1, i bila je prava rupa.
+ * `authed` ima DVA koraka koja prosljeđuju tajne (provjera i sam suite). Dok se sudilo nad
+ * cijelim blokom joba, uklanjanje tajne iz koraka koji vrti suite prošlo je ZELENO: ime je
+ * još stajalo u drugom koraku. Dakle brana je tvrdila „tajna je proslijeđena", a mjerila je
+ * samo „ime se negdje u jobu pojavljuje" — točno razred greške zbog kojeg S1 postoji.
+ */
+function korakoviJoba(blok) {
+  const redci = blok.split('\n');
+  const koraci = [];
+  let tekuci = null;
+  for (const l of redci) {
+    if (/^ {6}- /.test(l)) {
+      if (tekuci) koraci.push(tekuci.join('\n'));
+      tekuci = [l];
+    } else if (tekuci) {
+      tekuci.push(l);
+    }
+  }
+  if (tekuci) koraci.push(tekuci.join('\n'));
+  if (!koraci.length) throw new Error('ci.yml: nijedan korak nije prepoznat — parser i datoteka su se razišli');
+  return koraci;
+}
+
 const JOBOVI = joboviIzCija();
 const BLOK_AUTHED = blokJoba('authed');
+const KORACI_AUTHED = korakoviJoba(BLOK_AUTHED);
+
+/** Korak koji izvodi zadanu naredbu. Pada zatvoreno ako ga nema — inače bi tvrdnja mjerila prazno. */
+function korakKojiVrti(uzorak, opis) {
+  const nadeni = KORACI_AUTHED.filter((k) => uzorak.test(k));
+  if (nadeni.length !== 1) {
+    throw new Error('u authed jobu ima ' + nadeni.length + ' koraka koji vrte ' + opis + ' (treba točno 1)');
+  }
+  return nadeni[0];
+}
 
 // ── ① popis se stvarno nabraja, i nije prazan ───────────────────────────────────────────
 test('nabrajanje s diska nešto nađe (brana ne smije proći na nuli)', () => {
@@ -122,25 +157,36 @@ function proslijedene(blok) {
   return parovi.map(([, env, secret]) => ({ env, secret }));
 }
 
-test('authed job prosljeđuje SVE obavezne tajne (nijedna ne fali)', () => {
-  const imena = new Set(proslijedene(BLOK_AUTHED).map((p) => p.env));
-  const fale = tajne.OBAVEZNE.filter((t) => !imena.has(t));
-  if (fale.length) {
-    throw new Error(
-      'authed job ne prosljeđuje: ' + fale.join(', ') +
-      '\n      → spec koji ih traži bi se u CI-ju TIHO PRESKOČIO (to je S1)'
-    );
-  }
-});
+// ⚠️ SUDI SE PO KORAKU (nalaz mutacije M1). Oba koraka koja trebaju tajne moraju imati SVE
+// četiri: provjera bez njih ne može presuditi, a suite bez njih tiho preskače specove.
+const KRITICNI_KORACI = [
+  { korak: () => korakKojiVrti(/ci-tajne\.js\s+--zahtijevaj/, '`--zahtijevaj`'), opis: 'provjera tajni' },
+  { korak: () => korakKojiVrti(/npm run test:authed/, '`npm run test:authed`'), opis: 'authed suite' },
+];
 
-test('authed job ne prosljeđuje NIŠTA VIŠE (mrtav unos = secret koji ničemu ne služi)', () => {
-  const dopusteno = new Set(tajne.OBAVEZNE);
-  const viska = [...new Set(proslijedene(BLOK_AUTHED).map((p) => p.env))].filter((i) => !dopusteno.has(i));
-  if (viska.length) throw new Error('prosljeđuje se a nije obavezno: ' + viska.join(', '));
-});
+for (const { korak, opis } of KRITICNI_KORACI) {
+  test('korak „' + opis + '" prosljeđuje SVE obavezne tajne (nijedna ne fali)', () => {
+    const imena = new Set(proslijedene(korak()).map((p) => p.env));
+    const fale = tajne.OBAVEZNE.filter((t) => !imena.has(t));
+    if (fale.length) {
+      throw new Error(
+        'korak „' + opis + '" ne prosljeđuje: ' + fale.join(', ') +
+        '\n      → spec koji ih traži bi se u CI-ju TIHO PRESKOČIO (to je S1)'
+      );
+    }
+  });
+
+  test('korak „' + opis + '" ne prosljeđuje NIŠTA VIŠE (mrtav secret ničemu ne služi)', () => {
+    const dopusteno = new Set(tajne.OBAVEZNE);
+    const viska = [...new Set(proslijedene(korak()).map((p) => p.env))].filter((i) => !dopusteno.has(i));
+    if (viska.length) throw new Error('prosljeđuje se a nije obavezno: ' + viska.join(', '));
+  });
+}
 
 test('ime varijable i ime secreta se PODUDARAJU (ne šalje se kriva tajna u pravo polje)', () => {
-  for (const { env, secret } of proslijedene(BLOK_AUTHED)) {
+  const parovi = proslijedene(BLOK_AUTHED);
+  if (!parovi.length) throw new Error('nijedna `IME: ${{ secrets.X }}` veza nije nađena — tvrdnja bi prošla na nuli');
+  for (const { env, secret } of parovi) {
     if (env !== secret) throw new Error(env + ' dobiva secrets.' + secret + ' — različita imena');
   }
 });
@@ -262,12 +308,27 @@ test('--zahtijevaj PADA na svakoj pojedinoj praznoj tajni, i IMENUJE ju', () => 
   }
 });
 
-test('--zahtijevaj NE ISPISUJE vrijednost tajne (ni na padu)', () => {
-  const o = okolinaSaSvime();
-  o[tajne.OBAVEZNE[0]] = '';
-  const r = pusti(o);
-  if (r.ispis.includes('podmetnuto-za-branu')) {
-    throw new Error('ispis sadrži vrijednost druge tajne → CI log bi ju procurio');
+// ⚠️ OVU TVRDNJU JE MUTACIJA M7 ZATEKLA KAKO NE MJERI NIŠTA, i popravak je poučan. Prva
+// verzija praznila je PRVU obaveznu tajnu i tražila da se u ispisu ne pojavi biljeg. Mutacija
+// koja curi ispisivala je vrijednost te ISTE, prve tajne — dakle prazan string — pa je test
+// prošao zeleno nad kodom koji curi. Tvrdnja je mjerila SVOJU postavku, ne ponašanje.
+// Sad: prazni se svaka pozicija po redu, a biljeg nose sve OSTALE — pa curenje bilo koje od
+// njih pada. Uz to biljeg je RAZLIČIT po tajni, da se vidi KOJA je procurila.
+test('--zahtijevaj NE ISPISUJE vrijednost NIJEDNE tajne (ni na padu, ni na kojoj poziciji)', () => {
+  for (const prazna of tajne.OBAVEZNE) {
+    const o = { ...process.env, DOTENV_CONFIG_QUIET: 'true' };
+    for (const t of tajne.OBAVEZNE) o[t] = 'TAJNA-VRIJEDNOST-' + t;
+    o[prazna] = '';
+    const r = pusti(o);
+    for (const t of tajne.OBAVEZNE) {
+      if (t === prazna) continue;
+      if (r.ispis.includes('TAJNA-VRIJEDNOST-' + t)) {
+        throw new Error(
+          'uz praznu ' + prazna + ' ispis sadrži VRIJEDNOST tajne ' + t +
+          ' → CI log bi ju procurio javno'
+        );
+      }
+    }
   }
 });
 
