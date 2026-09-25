@@ -5,6 +5,58 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-25 (OPUS, stablo `sokratstudy.f3`) — PROD koraci reza: baza ✅, tajne ✅, funkcije čekaju Leona
+
+**Stanje na kraju sesije:** produkcijska baza nosi **oba** SQL-a reza, tajne za mail su postavljene,
+**Edge Functions NISU deployane**, push na `main` nije rađen. Korisniku produkcija izgleda isto kao
+prije — nove objekte u bazi ne koristi nijedan kod na `main`-u (sve je aditivno).
+
+### Provjereno prije ijednog koraka (brief nije uzet na riječ)
+
+- **CI `36070510821` (`c626814`):** lint 20 s · oba Playwright sharda zelena sa **stvarnim
+  trajanjem** (733 s / 699 s). ⚠️ **`authed` je zelen, a korak suite trajao je 0 s** — ova grana
+  čita `secrets.TEST_ADMIN_EMAIL`, a ta je tajna 24.09. preimenovana u `STAGING_TEST_ADMIN_EMAIL`;
+  popravak (S1) živi samo na `feat/f6-mcp`. **Isti lažni zeleni kao 17.09., ponovljen na ovom runu.**
+  Dokaz za rez ostaje lokalni `test:authed` 149/0 protiv staginga.
+- `preflight` ponovljen u ovoj sesiji: **EXIT 0** (izlazni kod hvatan u zasebnu datoteku).
+- Rez: fast-forward, `vercel.json` nedirnut, nula MCP datoteka.
+- **`main` je pod rulesetom `Team.rules`** (aktivan od 10.07.: PR + 1 odobrenje, bez force-pusha,
+  bez brisanja). Zadnji commiti na `main`-u (13.09.) ipak su **izravni**, ne merge — vlasnički
+  bypass radi. Required check `Gate (sve brane zelene)` **nije** postavljen (u rulesetu nema
+  pravila za status-provjere).
+- **PROD prije koraka:** od šest RPC-ova koje klijent zove falila su točno dva —
+  `set_profile_handle` i `profile_images_count_mine` — i oba donosi `f2-temelj-mreze.sql`.
+
+### Izvedeno na PROD-u (Leonov OK kroz anketu, jedan po jedan)
+
+1. **`f2-mail-log.sql`** → `mail_log`: 7 stupaca, RLS uključen, **0 politika, 0 grantova**
+   za `anon`/`authenticated` (dohvaća ga samo `service_role`).
+2. **`f2-temelj-mreze.sql`** → +3 stupca na `profile_identity` (`visibility` zadano `'private'`),
+   +3 ograničenja, `reserved_handles` (66 imena, RLS, 0 politika), oba RPC-a; politika
+   `profile-images owner insert` ponovno stvorena i **stvarno nosi `< 20`**. Brojač pozvan bez
+   greške → nema rekurzije `42P17` koja je na stagingu rušila svaki upload.
+3. **Tajne** (Leon, dashboard): `MAIL_UNSUB_SECRET` + `RESEND_API_KEY`, **bez `MAIL_REDIRECT_TO`**
+   (plus suvišan `STAGING_MAIL_UNSUB_SECRET` — funkcije ga ne čitaju). Resend domena verificirana.
+
+### ⚠️ Nezgoda: produkcijska tajna prvo je upisana u STAGING
+
+`npm run test:mail` izmjerio je točno to: **3 pada, sva u T5** — odjava vraća `bad_token` jer
+staging više ne potpisuje tajnom koju test uzima iz `.env`. **Nijedan mail nije otišao čovjeku**
+(`redirected: true` u oba slanja). Tajna je ostala unutar istog računa, pa zamjena nije nužna.
+▶️ **Staging treba vratiti:** ondje `MAIL_UNSUB_SECRET` = vrijednost `STAGING_MAIL_UNSUB_SECRET`
+iz `.env`, pa `test:mail` mora dati **0 padova**.
+
+### Što čeka
+
+Deploy **`send-notification`** (JWT obavezan) + **`mail-unsubscribe`** (`verify_jwt = false`, inače
+one-click odjava iz svakog maila pada) → `npm run check:functions` → push na `main` (zaseban OK) →
+Vercel deploy. **Deploy funkcija radi Leon** — harness mi je deploy na produkciju odbio dvaput
+([Production Deploy]), a SQL korake je propustio.
+
+---
+
+---
+
 ## 2026-09-25 (OPUS, stablo `sokratstudy.f3`) — rez za produkciju: F2+F3 spreman, spec optuživao prevoditelja
 
 **Povod (Leonovo pitanje):** *„koliko toga još nije deployano online?"* Izmjereno: produkcija
