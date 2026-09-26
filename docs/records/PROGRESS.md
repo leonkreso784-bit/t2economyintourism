@@ -5,6 +5,37 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-26 (OPUS, stablo `sokratstudy.f3`) — push na main iz radnog stabla kvario repozitorij: `core.bare = true`
+
+**Simptom:** Leon je pokrenuo `git push origin feat/f3-dvojezicnost:main` iz `.f3` i mislio da je prošlo;
+`origin/main` je ostao `61c39dd`. Uz to je glavno stablo `sokratstudy.dev` prestalo biti radno stablo
+(`fatal: this operation must be run in a work tree`) — Sokratis se ondje nije mogao ni pokrenuti.
+
+**Uzrok (dokazan pokusom u pijesku, s kontrolom):** git kuki **izvozi `GIT_DIR`**, a za push iz
+povezanog radnog stabla to je `.git/worktrees/<ime>`. Pre-push kuka vrti preflight → `test:unit` →
+`check-docs-gate.test.js`, koji u vlastitoj privremenoj mapi radi `git init`. S naslijeđenim `GIT_DIR`-om
+taj `git init` **ponovno inicijalizira pravi repozitorij i postavi `core.bare = true`**. Test time i sam
+padne (u privremenoj mapi nema repozitorija) → preflight padne → kuka odbije push. Trag: `.git/config`
+izmijenjen 27 s nakon `FETCH_HEAD`-a stabla `.f3`, jedini zapis s `bare = true`.
+▶️ Push iz GLAVNOG stabla kuki ne postavlja `GIT_DIR` (izmjereno) — zato 13.09. nije pukao; a ručni
+preflight ga nikad ne vidi, jer `GIT_DIR` postoji samo unutar kuke.
+
+**Popravak:**
+- `.githooks/pre-push` — preflight se vrti u podljusci **bez GIT_\*** varijabli (štiti svaki sadašnji i budući test).
+- `check-docs-gate.test.js` — svaki git u lažnom stablu vrti se s okolinom bez GIT_\* (obrana u dubinu).
+- **Nova brana `tests/unit/git-okolina.test.js`** (u `test:unit`), sve u pijesku, pravi repozitorij se ne dira:
+  ① test s `git init` pokrenut s GIT_DIR-om „žrtve" → žrtva ostaje ne-bare i test prolazi ·
+  ② prava kuka s podmetnutim `npm`-om → preflight **ne vidi** GIT_DIR (i mjerač tvrdi da je npm stvarno pozvan).
+- `sokratstudy.dev`: `git config core.bare false` — vraćeno; `git status` i Sokratis (docs 100/100) rade.
+
+**Obrnuta provjera:** stari test → ① pada 2/6 (žrtva postane bare — incident ponovljen u pijesku) ·
+stara kuka → ② pada 1/6 · nakon vraćanja **6/6**; pravi `.dev` kroz sve mutacije ostao `core.bare=false`.
+
+**„Dokumentacija zaostala"** (Leonov povod) nije potvrđena: `check:docs`/`check:state` zeleni u oba stabla,
+Sokratis 100/100, kašnjenje 0 dana. Najvjerojatnije ju je javio alat koji je čitao pokvareni `.dev`.
+
+---
+
 ## 2026-09-25 (OPUS, stablo `sokratstudy.f3`) — PROD koraci reza: baza ✅, tajne ✅, funkcije čekaju Leona
 
 **Stanje na kraju sesije:** produkcijska baza nosi **oba** SQL-a reza, tajne za mail su postavljene,
@@ -52,8 +83,6 @@ Deploy **`send-notification`** (JWT obavezan) + **`mail-unsubscribe`** (`verify_
 one-click odjava iz svakog maila pada) → `npm run check:functions` → push na `main` (zaseban OK) →
 Vercel deploy. **Deploy funkcija radi Leon** — harness mi je deploy na produkciju odbio dvaput
 ([Production Deploy]), a SQL korake je propustio.
-
----
 
 ---
 
