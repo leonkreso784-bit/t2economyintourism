@@ -5,6 +5,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+### Dodano (grana `feat/hr-1god`, NIJE na produkciji)
+- **Tri nova HR predmeta 1. godine (teorija: skripta, kartice, kviz, dopune):** Statistika (`statistics-hr`),
+  Mikroekonomija (`microeconomics-hr`), Osnove izrade pisanog djela (`academic-writing-hr`) — autorski iz HR
+  materijala kolegija, ne prijevodi. Katalog: 24 → 27 predmeta.
+
 ## 2026-09-26 (OPUS) — 🚀 **REZ F2+F3 NA PRODUKCIJI** — `main` = `aa49f0a`, token `20260925003248`
 
 Fast-forward `61c39dd..aa49f0a` (57 commita), bez MCP-a i bez izmjene `vercel.json` (`/mcp` i dalje 404).

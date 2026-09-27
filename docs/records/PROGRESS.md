@@ -5,6 +5,51 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-27 (OPUS, stablo `sokratstudy.hr1`, grana `feat/hr-1god`) — HR 1. godina: val 1 = tri predmeta (teorija)
+
+**Povod:** predavanja 1. godine počinju 28.09.; na hrvatskom je od 1. godine postojala samo Poslovna informatika.
+Leon: *„bitno je da ubacimo što više predmeta ovaj tjedan"*; raspored predavanja nije bitan.
+
+**Odluke (anketa na početku sesije):**
+- **Vježbe za kvantitativne predmete idu SAD u postojećem JS obliku**, F5 recepti poslije. Time je
+  oborena stavka ankete 06.09. (*„čekaju F5"*); migracija u recepte je samoprovjerljiva.
+- **Zimski semestar = EN 1. god sem 1**, a to su vezni predmeti (ADR-022): Matematika · Statistika · Mikroekonomija ·
+  Osnove izrade pisanog djela. Makroekonomija je u EN katalogu ljetna → poslije.
+
+**Izvori:** Merlin 2025/26 (račun kolegice, prijavila se sama u moj Playwright-prozor; lozinku nisam vidio), samo
+**čitanje** materijala kolegija, bez poruka i ocjena. „Preuzmi sadržaj kolegija" (zip) postoji samo za Promet.
+Skinuto 58 datoteka u `_materials/` (gitignored). **Namjerno preskočeno:** rezultati rokova, raspored grupa, CV
+nastavnika, teme seminara (osobni podaci drugih studenata / nije gradivo). Drive skripte = dopuna (Mikro, OIPD,
+Statistika Q&A, fotografije ispita Matematike). **Merlin je bogat samo za Statistiku i Makro**; Mikro (Pearson) i
+OIPD su ondje prazni, Matematika ima 3 prezentacije demonstratura.
+
+**Isporučeno (3 commita, svaki = jedan predmet, teorija):**
+- `statistics-hr` (`7bd2db3`) — autorski iz predavanja + seminara; **HR ≠ EN** (opisna vs inferencijalna statistika).
+- `microeconomics-hr` (`ce3cafb`) — podjela iz službenih uputa (K1 = Pindyck 1–7, K2 = 8–14 + 18), skripte s Drivea.
+- `academic-writing-hr` (`b3a1bea`) — K1 logika i metode (EN toga nema), K2 pisano djelo + Chicago po predlošku skripte.
+
+**Kako:** graditelji = Claude Code subagenti (Opus), izvlačenje Drive teksta = Sonnet (mehanički posao); recenzija =
+`content-review` po predmetu (Statistika 30+ primjera preračunato, Mikro 83 izračuna / 0 odstupanja).
+
+**Pouke:**
+- ⚠️ **Kviz miješa i PITANJA i OPCIJE** (`js/quiz.js:24-42`). Posljedice za autorstvo: ① pitanje „Nastavak: …"
+  koje ovisi o prethodnom je **nerješivo** — svako pitanje mora nositi svoje podatke (nađeno u Mikro 15× i
+  Statistici); ② pristranost indeksa točnog odgovora u podacima (50–82 % na indeksu 1) studentu **nije vidljiva** —
+  zato skripta za miješanje NIJE primijenjena (tisuće redaka diffa bez koristi).
+- ⚠️ **`answers` kod dopuna = više praznina redom, NE zamjenski odgovori.** Ocjena je točno podudaranje
+  (bez obzira na velika/mala slova, crtica = razmak). Dvosmislene dopune se **preformuliraju**, engine se ne dira.
+- ⚠️ **Studentske bilješke s Drivea imaju činjenične greške** (npr. prosječna stopa = „harmonijska", pravilo
+  zatvaranja poduzeća) → predavanje/udžbenik pobjeđuje; graditelji su ih popisali.
+- `<small>` nije na listi renderera (`js/blocks-renderer.js:93`) → obara `legacy-html-coverage` nakon exporta.
+- `test:responsive`: jedini pad je poznati `theme-fouc` flake (BACKLOG:68) — reproduciran na **čistom HEAD-u** 2/30.
+
+**Otvoreno za Leona:** točnost koju treba potvrditi netko tko je slušao kolegij (OIPD: zarez ispred „i" u Chicago
+primjerima, ključevi Janda/Davidson; Statistika: formula malog uzorka s dvostrukom korekcijom kako je u oba HR izvora).
+
+**Slijedi:** Matematika (teorija) i vježbe Statistike rade usporedo; zatim vježbe Matematike, pa Makroekonomija.
+
+---
+
 ## 2026-09-26 (OPUS, stablo `sokratstudy.f3`) — push na main iz radnog stabla kvario repozitorij: `core.bare = true`
 
 **Simptom:** Leon je pokrenuo `git push origin feat/f3-dvojezicnost:main` iz `.f3` i mislio da je prošlo;
