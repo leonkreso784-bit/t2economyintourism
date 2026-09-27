@@ -5,6 +5,30 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-26 (OPUS) — 🚀 **REZ F2+F3 NA PRODUKCIJI** — `main` = `aa49f0a`, token `20260925003248`
+
+Fast-forward `61c39dd..aa49f0a` (57 commita), bez MCP-a i bez izmjene `vercel.json` (`/mcp` i dalje 404).
+Redoslijed: SQL i funkcije PRIJE pusha, jer push = deploy.
+- **PROD baza:** `f2-mail-log.sql` · `f2-temelj-mreze.sql` (Leonov OK kroz anketu, provjereno na bazi).
+- **PROD Edge Functions:** `send-notification` (JWT) · `mail-unsubscribe` (`verify_jwt = false`) — deployao Leon;
+  `check:functions` zelen. Tajne postavio Leon, bez `MAIL_REDIRECT_TO`.
+- **Provjereno nakon deploya:** Vercel ✅ na `aa49f0a` · CI na `main` ✅ · živa stranica nosi token repozitorija ·
+  `odjava.html` 200 · `/mcp` 404.
+
+### Korisnik dobiva
+- **Cijelo sučelje na hrvatskom** (F3/2) i **pravne stranice na oba jezika** (F3/1).
+- **Zid, radionica i polica** na profilu (F2/5).
+- **Obavijesti mailom** s pristankom i odjavom jednim klikom iz maila (F2/4).
+- **Tema prati račun** i **odjava samo s ovog uređaja** (F2/1).
+
+### Popravljeno (put do produkcije)
+- **Push na `main` iz radnog stabla kvario je repozitorij** (`core.bare = true`) i sam padao: pre-push kuka izvozi
+  `GIT_DIR`, a test je u privremenoj mapi radio `git init`. Kuka sad vrti preflight bez GIT_*; brana
+  `git-okolina.test.js`. Detalji: PROGRESS 26.09.
+
+⏳ **Otvoreno:** prva proba maila s produkcije („Pošalji probu meni") · staging `MAIL_UNSUB_SECRET` još kriv
+(`test:mail` 3 pada u T5) · CI `authed` na ovom kodu je lažno zelen (0 s) dok S1 ne dođe s F6.
+
 ## 2026-09-17 (OPUS) — **F3/2 cigla 4d: Moji materijali na hrvatskom** — grana `feat/f3-dvojezicnost`
 
 ### Popravljeno
