@@ -544,7 +544,7 @@ const SOKRAT_CATALOG = {
       iconGradient: ['#f43f5e', '#fb7185'],
       description: 'Opisna statistika: temeljni pojmovi, uređivanje i prikazivanje podataka, relativni brojevi, srednje vrijednosti, disperzija, asimetrija i zaobljenost, metoda uzorka, korelacija i regresija, vremenski nizovi (KaTeX formule i riješeni primjeri)',
       storageKey: 'statistics-hr-progress',
-      features: { blindMap: false },
+      features: { blindMap: false, exercises: true },
       // AUTORSKI iz HR materijala (predavanja/seminari FMTU 2025/26) — NE prijevod EN statistics. KaTeX (ADR-009).
       lessons: [
         { id: 'first-midterm', name: '1. kolokvij', description: 'Predavanja 1–6: temeljni pojmovi, uređivanje i prikazivanje podataka, relativni brojevi, srednje vrijednosti, mjere disperzije, asimetrija i zaobljenost' },
@@ -556,14 +556,17 @@ const SOKRAT_CATALOG = {
         scripts: [
           'data/statistics-hr/midterm-1.js',
           'data/statistics-hr/midterm-2.js',
-          'data/statistics-hr/final.js'
+          'data/statistics-hr/final.js',
+          'data/statistics-hr/exercises.js'
         ],
         resolve: {
           'first-midterm': 'statisticsHrM1',
           'second-midterm': 'statisticsHrM2',
           'final': 'statisticsHrFinal'
         },
-        dataFormat: 'json' // dual-read; study iz data/json/statistics-hr/*.json
+        dataFormat: 'json', // dual-read; study iz data/json/statistics-hr/*.json; vježbe UVIJEK iz .js
+        codeScripts: ['data/statistics-hr/exercises.js'], // KÔD (generate()) → uvijek iz datoteke, nikad iz baze (BUG-012)
+        exercises: 'statisticsHrExercises'   // window var s interaktivnim vježbama (features.exercises)
       }
     },
     {
