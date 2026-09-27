@@ -600,6 +600,39 @@ const SOKRAT_CATALOG = {
       }
     },
     {
+      id: 'academic-writing-hr',
+      programId: 'hospitality-management-hr',
+      year: 1, semester: 1,
+      name: 'Osnove izrade pisanog djela',
+      shortName: 'OIPD',
+      icon: 'fa-pen-nib',
+      color: '#a855f7',
+      iconGradient: ['#a855f7', '#c084fc'],
+      description: 'Logika i znanstvene metode (pojam, sud, zaključak, dokaz; opće i posebne metode); vrste pisanih djela, seminarski rad, dokumentacijska osnova i citat, bibliografija u Chicago stilu',
+      storageKey: 'academic-writing-hr-progress',
+      features: { blindMap: false },
+      // AUTORSKI iz HR materijala (studentske skripte FMTU) — NE prijevod EN academic-writing.
+      lessons: [
+        { id: 'first-midterm', name: '1. kolokvij', description: 'Logika i metodologija: pojam, sud, zaključak i dokaz; obilježja znanstvene metode; opće metode (promatranje, eksperiment, modeliranje, statistička, komparativna, povijesna, analiza i sinteza, indukcija i dedukcija…)' },
+        { id: 'second-midterm', name: '2. kolokvij', description: 'Pisano djelo: znanstvena, stručna i znanstveno-stručna djela, seminarski rad (stranice i dijelovi), dokumentacijska osnova i citat, bibliografske jedinice u Chicago stilu' },
+        { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus ispitna pitanja kroz sve teme' }
+      ],
+      content: {
+        // final.js MORA se učitati ZADNJI (Object.assign academicWritingHrM1 + academicWritingHrM2 + examPractice).
+        scripts: [
+          'data/academic-writing-hr/midterm-1.js',
+          'data/academic-writing-hr/midterm-2.js',
+          'data/academic-writing-hr/final.js'
+        ],
+        resolve: {
+          'first-midterm': 'academicWritingHrM1',
+          'second-midterm': 'academicWritingHrM2',
+          'final': 'academicWritingHrFinal'
+        },
+        dataFormat: 'json' // dual-read; study iz data/json/academic-writing-hr/*.json
+      }
+    },
+    {
       id: 'management-hr',
       programId: 'hospitality-management-hr',
       year: 1, semester: 2,
