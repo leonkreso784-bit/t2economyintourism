@@ -567,6 +567,39 @@ const SOKRAT_CATALOG = {
       }
     },
     {
+      id: 'microeconomics-hr',
+      programId: 'hospitality-management-hr',
+      year: 1, semester: 1,
+      name: 'Mikroekonomija',
+      shortName: 'MIKRO',
+      icon: 'fa-chart-line',
+      color: '#0ea5e9',
+      iconGradient: ['#0ea5e9', '#38bdf8'],
+      description: 'Pindyck i Rubinfeld: ponuda i potražnja, elastičnost, ponašanje potrošača, nesigurnost, proizvodnja i troškovi; konkurentna tržišta, monopol i monopson, određivanje cijena, oligopol, teorija igara, tržišta faktora, eksternalije i javna dobra (KaTeX formule i riješeni primjeri)',
+      storageKey: 'microeconomics-hr-progress',
+      features: { blindMap: false },
+      // AUTORSKI iz HR materijala (upute kolegija + studentske skripte FMTU; Pindyck kao dopuna). KaTeX (ADR-009).
+      lessons: [
+        { id: 'first-midterm', name: '1. kolokvij', description: 'Poglavlja 1–7: uvodna razmatranja, ponuda i potražnja, elastičnost, ponašanje potrošača, pojedinačna i tržišna potražnja, izbor u uvjetima nesigurnosti, proizvodnja i trošak proizvodnje' },
+        { id: 'second-midterm', name: '2. kolokvij', description: 'Poglavlja 8–14 i 18: maksimalizacija profita, konkurentna tržišta, monopol i monopson, određivanje cijena uz tržišnu moć, monopolistička konkurencija i oligopol, teorija igara, tržišta faktora, eksternalije i javna dobra' },
+        { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus ispitna pitanja kroz sve teme' }
+      ],
+      content: {
+        // final.js MORA se učitati ZADNJI (Object.assign microeconomicsHrM1 + microeconomicsHrM2 + examPractice).
+        scripts: [
+          'data/microeconomics-hr/midterm-1.js',
+          'data/microeconomics-hr/midterm-2.js',
+          'data/microeconomics-hr/final.js'
+        ],
+        resolve: {
+          'first-midterm': 'microeconomicsHrM1',
+          'second-midterm': 'microeconomicsHrM2',
+          'final': 'microeconomicsHrFinal'
+        },
+        dataFormat: 'json' // dual-read; study iz data/json/microeconomics-hr/*.json
+      }
+    },
+    {
       id: 'management-hr',
       programId: 'hospitality-management-hr',
       year: 1, semester: 2,
