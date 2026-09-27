@@ -633,6 +633,39 @@ const SOKRAT_CATALOG = {
       }
     },
     {
+      id: 'math-hr',
+      programId: 'hospitality-management-hr',
+      year: 1, semester: 1,
+      name: 'Matematika',
+      shortName: 'MAT',
+      icon: 'fa-square-root-variable',
+      color: '#16a34a',
+      iconGradient: ['#16a34a', '#4ade80'],
+      description: 'Jednadžbe, funkcije i domena, derivacije, rast, pad i ekstremi, optimizacija troškova i dobiti, elastičnost potražnje; neodređeni integral, kamatni račun, rente, zajam i Gauss-Jordanova metoda (KaTeX formule i riješeni ispitni zadaci)',
+      storageKey: 'math-hr-progress',
+      features: { blindMap: false },
+      // Temelj: EN math (isti FMTU kolegij) + usklađeno s HR demonstraturama i starim ispitima 2023/24. KaTeX (ADR-009).
+      lessons: [
+        { id: 'first-midterm', name: '1. kolokvij', description: 'Jednadžbe (linearne, kvadratne, svodive na kvadratne), funkcije i prirodna domena, derivacije, rast, pad i ekstremi, troškovi, prihod i dobit, elastičnost potražnje' },
+        { id: 'second-midterm', name: '2. kolokvij', description: 'Neodređeni integral, jednostavni i složeni kamatni račun, rente, zajam (otplatna tablica) i Gauss-Jordanova metoda' },
+        { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus riješeni zadaci sa starih ispita' }
+      ],
+      content: {
+        // final.js MORA se učitati ZADNJI (Object.assign mathHrM1 + mathHrM2 + examPractice).
+        scripts: [
+          'data/math-hr/midterm-1.js',
+          'data/math-hr/midterm-2.js',
+          'data/math-hr/final.js'
+        ],
+        resolve: {
+          'first-midterm': 'mathHrM1',
+          'second-midterm': 'mathHrM2',
+          'final': 'mathHrFinal'
+        },
+        dataFormat: 'json' // dual-read; study iz data/json/math-hr/*.json
+      }
+    },
+    {
       id: 'management-hr',
       programId: 'hospitality-management-hr',
       year: 1, semester: 2,
