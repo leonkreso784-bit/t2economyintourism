@@ -46,7 +46,15 @@ OIPD su ondje prazni, Matematika ima 3 prezentacije demonstratura.
 **Otvoreno za Leona:** točnost koju treba potvrditi netko tko je slušao kolegij (OIPD: zarez ispred „i" u Chicago
 primjerima, ključevi Janda/Davidson; Statistika: formula malog uzorka s dvostrukom korekcijom kako je u oba HR izvora).
 
-**Slijedi:** Matematika (teorija) i vježbe Statistike rade usporedo; zatim vježbe Matematike, pa Makroekonomija.
+**Nastavak 28.09. (poslije limita sesije):** `4f6aa28` **Matematika** (teorija; 185 + 52 nezavisnih izračuna,
+0 odstupanja; ⚠️ Gauss-Jordan nema u HR izvorima — zadržan uz napomenu) · `e23d30b` **vježbe Statistike** (43;
+`exercise-review` 25/25 kroz 500 seedova; živo u pregledniku ocijenjeno točno sa zarezom). Playwright na 27
+predmeta: 753 ok; padovi = 2× poznati `theme-fouc` + 2 studio testa pala na timeoutu dok je stroj spavao
+(ponovljeni: 3/3 ok).
+⚠️ **Engine vježbi (Leonova odluka):** `parseAmount` čita jedan separator + točno 3 znamenke kao TISUĆE
+(`2,927` i `2.927` → 2927; pogađa i EN) · sučelje vježbi je na engleskom (Check, New numbers, CHAPTER).
+
+**Slijedi:** vježbe Matematike, pa Makroekonomija (ljetni).
 
 ---
 

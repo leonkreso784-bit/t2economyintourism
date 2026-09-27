@@ -9,6 +9,9 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 - **Tri nova HR predmeta 1. godine (teorija: skripta, kartice, kviz, dopune):** Statistika (`statistics-hr`),
   Mikroekonomija (`microeconomics-hr`), Osnove izrade pisanog djela (`academic-writing-hr`) — autorski iz HR
   materijala kolegija, ne prijevodi. Katalog: 24 → 27 predmeta.
+- **Matematika (`math-hr`, teorija)** — temelj EN `math` (isti kolegij) usklađen s HR demonstraturama i starim
+  ispitima; katalog 28.
+- **Vježbe Statistike na hrvatskom** (`statistics-hr`, 43 vježbe, 25 randomiziranih).
 
 ## 2026-09-26 (OPUS) — 🚀 **REZ F2+F3 NA PRODUKCIJI** — `main` = `aa49f0a`, token `20260925003248`
 
