@@ -86,7 +86,7 @@
 | Academic Writing | `academic-writing-hr` | S3 (study) + S5 (vježbe) | ⬜ | Chicago primjeri = jezično osjetljivi |
 | Microeconomics | `microeconomics-hr` | S4 (KaTeX) | ⬜ | |
 | Macroeconomics | `macroeconomics-hr` | S4 (KaTeX) + S5 | ⬜ | |
-| Statistics | `statistics-hr` | S4 (KaTeX) + S5 | ⬜ | |
+| Statistics | `statistics-hr` | S4 (KaTeX) + S5 | 🟡 **teorija gotova 2026-09-27** (grana `feat/hr-1god`; vježbe slijede) | **Metoda: AUTORSKI iz HR materijala** — Merlin 2025/26 (predavanja 1–9, seminari 1–9, tablice, pregled formula) + Drive ispitna pitanja; **NE prijevod EN-a**: HR kolegij je OPISNA statistika (relativni brojevi, srednje vrijednosti, disperzija, asimetrija, uzorak, korelacija/regresija, vremenski nizovi), EN je inferencijalan. K1 = P1–P6, K2 = P7–P9 (izvor: Drive „STATISTIKA-2.kolokvij"). Brojke: `npm run validate:content -- statistics-hr`. Recenzija: `content-review` + preračun 30+ riješenih primjera Nodeom. ⚠️ Studentske bilješke s Drivea imaju činjenične greške (npr. prosječna stopa = harmonijska) → **predavanje pobjeđuje**. ⚠️ Formula za mali uzorak nosi **dvostruku korekciju** kako je u OBA HR izvora (nestandardno) — ostavljena uz napomenu u learn. ⚠️ RUČNO autorirano → NE `translate-subject.js`. |
 | Mathematics | `math-hr` | S4 (KaTeX) + S5 | ⬜ | |
 | Accounting | `accounting-hr` | S3 (study) + S5 (vježbe) | ⬜ | |
 
