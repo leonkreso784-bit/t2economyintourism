@@ -961,6 +961,39 @@ const SOKRAT_CATALOG = {
         },
         dataFormat: 'json' // dual-read; study iz data/json/geography-hr/*.json
       }
+    },
+    {
+      id: 'econ-hospitality-hr',
+      programId: 'hospitality-management-hr',
+      year: 2, semester: 2,
+      name: 'Ekonomika ugostiteljstva',
+      shortName: 'EUP',
+      icon: 'fa-hotel',
+      color: '#0ea5e9',
+      iconGradient: ['#0ea5e9', '#22d3ee'],
+      description: 'Ekonomika ugostiteljskih poduzeća: obilježja ugostiteljstva, poduzeće i udruživanje, sredstva i amortizacija, troškovi i točka pokrića, poslovni rezultat, mjerila uspješnosti, cijene i kalkulacije, prodaja i investicije (KaTeX formule i riješeni primjeri)',
+      storageKey: 'econ-hospitality-hr-progress',
+      features: { blindMap: false },
+      // AUTORSKI iz HR studentskih skripti i ispitnih pitanja (Drive) — NE prijevod EN econ-hospitality. KaTeX (ADR-009).
+      lessons: [
+        { id: 'first-midterm', name: '1. kolokvij', description: 'Temeljna obilježja ugostiteljstva, ekonomika poduzeća kao znanost, ugostiteljsko poduzeće i udruživanje, načela, poslovna politika, planiranje i kontrola, sredstva poduzeća (obrtaj, likvidnost, solventnost), amortizacija, teorija troškova te planiranje troškova i točka pokrića' },
+        { id: 'second-midterm', name: '2. kolokvij', description: 'Poslovni rezultat i financijski izvještaji, vrijednost poduzeća i izvori financiranja, proizvodnost, ekonomičnost i rentabilnost, politika cijena, kalkulacije, principi prodaje, ekonomika investicija te konkurentnost i kvaliteta' },
+        { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus ispitna pitanja kroz sve teme' }
+      ],
+      content: {
+        // data/econ-hospitality-hr/final.js MORA se učitati zadnji (Object.assign econHospitalityHrM1 + econHospitalityHrM2 + examPractice)
+        scripts: [
+          'data/econ-hospitality-hr/midterm-1.js',
+          'data/econ-hospitality-hr/midterm-2.js',
+          'data/econ-hospitality-hr/final.js'
+        ],
+        resolve: {
+          'first-midterm': 'econHospitalityHrM1',
+          'second-midterm': 'econHospitalityHrM2',
+          'final': 'econHospitalityHrFinal'
+        },
+        dataFormat: 'json' // dual-read; study iz data/json/econ-hospitality-hr/*.json
+      }
     }
   ]
 };
