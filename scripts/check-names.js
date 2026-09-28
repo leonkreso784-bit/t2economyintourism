@@ -21,7 +21,7 @@
  * Jedna stavka po retku; `#` = komentar. Stavka je DOSLOVAN niz, poklapa se samo kao
  * cijela riječ (Unicode granice — `\b` u JS-u ne zna za č/ć/š/ž). Zvjezdica na kraju
  * (`Saš*`) = prefiks, za padeže i posvojne oblike. Ime koje je i dio dopuštenog citata
- * (npr. prezime autora objavljenog članka) upiši S KONTEKSTOM („prof. Bogdan", „(Bogdan)").
+ * (npr. prezime autora objavljenog članka) upiši S KONTEKSTOM („prof. Prezime", „(Prezime)").
  *
  * Mjerač ispisuje koliko je imena i datoteka dotaknuo — pouka iz redizajna: mjerač koji to
  * ne ispiše zna vratiti uvjerljivu nulu. Read-only, bez mreže → `npm run preflight`.
@@ -46,7 +46,7 @@ function parsirajPopis(tekst) {
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const SLOVO = '\\p{L}\\p{N}_';
 
-/** Stavka → regex. Granica se traži samo uz rub koji je slovo (`(Bogdan)` nema slovo na rubu). */
+/** Stavka → regex. Granica se traži samo uz rub koji je slovo (`(Prezime)` nema slovo na rubu). */
 function uRegex(stavka) {
   const prefiks = stavka.endsWith('*');
   const s = prefiks ? stavka.slice(0, -1) : stavka;
