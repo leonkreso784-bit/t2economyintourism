@@ -5,6 +5,15 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-28 (OPUS, stablo `sokratstudy.hr1`, grana `feat/hr-1god`) — HR 1. godina: deploy provjeren, vježbe Matematike, Makroekonomija
+
+**Deploy val 1 (pushao Leon) PROVJEREN, ne preuzet na riječ:** `origin/main` = `3898fe6` · Vercel produkcija READY ·
+živa stranica nosi token `20260928014324` · živi `catalog.js` i `statistics-hr/exercises.js` bajt-identični commitu ·
+28 predmeta · vježbe Statistike otvorene u pregledniku (Playwright nad produkcijom; popis 24 = vježbe 1. kolokvija,
+popis je filtriran po lekciji, ukupno 43). 🚀 redak u CHANGELOG.
+
+**Odluka (Leon):** Gauss-Jordan OSTAJE u `math-hr`, 2. kolokvij — studenti su ga radili kroz vlastite prezentacije.
+
 ## 2026-09-27 (OPUS, stablo `sokratstudy.hr1`, grana `feat/hr-1god`) — HR 1. godina: val 1 = tri predmeta (teorija)
 
 **Povod:** predavanja 1. godine počinju 28.09.; na hrvatskom je od 1. godine postojala samo Poslovna informatika.

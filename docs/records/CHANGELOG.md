@@ -5,7 +5,14 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
-### Dodano (grana `feat/hr-1god`, NIJE na produkciji)
+## 2026-09-28 (OPUS) — 🚀 **HR 1. GODINA (4 predmeta) NA PRODUKCIJI** — `main` = `3898fe6`, token `20260928014324`
+
+Fast-forward `aa49f0a..3898fe6` (8 commita), Leonov OK 28.09., pushao Leon. Samo sadržaj i katalog, bez SQL-a i funkcija.
+- **Provjereno nakon deploya:** Vercel produkcija READY na `3898fe6` · živa stranica nosi token repozitorija ·
+  živi `catalog.js` i `statistics-hr/exercises.js` bajt-identični commitu · 28 predmeta u živom katalogu ·
+  vježbe Statistike se otvaraju u pregledniku (popis + zadatak, 0 grešaka na stranici).
+
+### Korisnik dobiva
 - **Tri nova HR predmeta 1. godine (teorija: skripta, kartice, kviz, dopune):** Statistika (`statistics-hr`),
   Mikroekonomija (`microeconomics-hr`), Osnove izrade pisanog djela (`academic-writing-hr`) — autorski iz HR
   materijala kolegija, ne prijevodi. Katalog: 24 → 27 predmeta.
