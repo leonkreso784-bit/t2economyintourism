@@ -895,6 +895,39 @@ const SOKRAT_CATALOG = {
         },
         dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/ebusiness-hr/*.json)
       }
+    },
+    {
+      id: 'food-nutrition-hr',
+      programId: 'hospitality-management-hr',
+      year: 2, semester: 2,
+      name: 'Hrana i prehrana',
+      shortName: 'HIP',
+      icon: 'fa-utensils',
+      color: '#ef4444',
+      iconGradient: ['#ef4444', '#f87171'],
+      description: 'Hrana i prehrana: kvaliteta i sastojci hrane, konzerviranje, žitarice i kruh, voće i povrće, kava, čaj i kakao, vino, pivo, jaka alkoholna pića, meso, riba, mlijeko i sir, jaja, sigurnost hrane i zdrava prehrana',
+      storageKey: 'food-nutrition-hr-progress',
+      features: { blindMap: false },
+      // AUTORSKI iz HR studentskih skripti i ispitnih pitanja (Drive) — NE prijevod EN food-nutrition.
+      lessons: [
+        { id: 'first-midterm', name: '1. kolokvij', description: 'Kvaliteta i sigurnost hrane, hranjive tvari (bjelančevine, ugljikohidrati, masti, vitamini, minerali), kvarenje i konzerviranje, žitarice i pekarski proizvodi, voće i povrće, kava, čaj, kakao i začini te vino' },
+        { id: 'second-midterm', name: '2. kolokvij', description: 'Pivo, jaka alkoholna pića i likeri, meso i mesni proizvodi, riba, mlijeko i sir, jaja, sigurnost hrane i HACCP te uravnotežena prehrana' },
+        { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus ispitna pitanja kroz sve teme' }
+      ],
+      content: {
+        // data/food-nutrition-hr/final.js MORA se učitati zadnji (Object.assign foodNutritionHrM1 + foodNutritionHrM2 + examPractice)
+        scripts: [
+          'data/food-nutrition-hr/midterm-1.js',
+          'data/food-nutrition-hr/midterm-2.js',
+          'data/food-nutrition-hr/final.js'
+        ],
+        resolve: {
+          'first-midterm': 'foodNutritionHrM1',
+          'second-midterm': 'foodNutritionHrM2',
+          'final': 'foodNutritionHrFinal'
+        },
+        dataFormat: 'json' // dual-read; study iz data/json/food-nutrition-hr/*.json
+      }
     }
   ]
 };

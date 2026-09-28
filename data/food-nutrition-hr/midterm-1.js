@@ -1,0 +1,2276 @@
+// Hrana i prehrana (HR) — M1 (1. kolokvij)
+// AUTORSKI IZ HR MATERIJALA kolegija (studentska skripta „Hrana i prehrana” + prikupljena ispitna
+// pitanja 1. i 2. kolokvija s Drivea); EN predmet food-nutrition samo kao dopuna dubine — NE prijevod.
+// MODEL: kartice <200 znak, detalj u learn.
+// ⚠️ NE pokretati translate-subject.js nad ovim predmetom!
+//
+// Podjela M1/M2 (izvor: ispitna pitanja razdvojena po kolokvijima):
+//   M1 = kvaliteta hrane · makronutrijenti · mikronutrijenti · kvarenje i konzerviranje ·
+//        žitarice i pekarski proizvodi · voće i povrće · kava, čaj, kakao i začini · vino
+//   M2 = pivo · jaka alkoholna pića i likeri · meso · riba · mlijeko i sir · jaja ·
+//        sigurnost hrane i HACCP · uravnotežena prehrana
+// Studentska skripta ne obrađuje kavu/čaj/kakao ni HACCP — te su teme napisane prema ispitnim
+// pitanjima i stručnoj literaturi (EN predmet kao dopuna).
+
+const foodNutritionHrM1 = {
+  "foodQuality": {
+    "name": "Kvaliteta hrane",
+    "icon": "fa-award",
+    "color": "#ef4444",
+    "flashcards": [
+      {
+        "question": "Što je HRANA prema zakonskoj definiciji?",
+        "answer": "Svaka tvar ili proizvod, prerađen, djelomično prerađen ili neprerađen, namijenjen prehrani ljudi ili za koji se opravdano očekuje da će ga ljudi konzumirati.",
+        "explanation": "Uključuje pića, žvakaće gume i vodu namjerno dodanu tijekom proizvodnje."
+      },
+      {
+        "question": "Što se NE smatra hranom?",
+        "answer": "Hrana za životinje, žive životinje, biljke prije ubiranja, lijekovi, kozmetika, duhan, narkotici i psihotropne tvari te ostaci i zagađivači.",
+        "explanation": "Ispitna zamka: piće JEST hrana."
+      },
+      {
+        "question": "Kako se hrana dijeli prema PODRIJETLU?",
+        "answer": "Biljno, životinjsko, biljno-životinjsko (med), mikrobno (ksantan guma, vitamini B2 i B12), fungalno (beta-glukani), mineralno (sol) i sintetsko (olestra, aspartam).",
+        "explanation": "Ciklamati su također sintetskog podrijetla."
+      },
+      {
+        "question": "Što je OLESTRA?",
+        "answer": "Sintetska zamjena za masti koja se ne razgrađuje u probavi, pa nema ni hranjivu ni energetsku vrijednost.",
+        "explanation": "Primjer hrane sintetskog podrijetla."
+      },
+      {
+        "question": "Kako se hrana dijeli prema FUNKCIJI?",
+        "answer": "Gradivna (mlijeko, meso, riba, mahunarke), energetska (masti, šećer, žitarice), regulatorna (voda, voće, povrće) i zaštitna (mlijeko, cjelovite žitarice, voće, povrće).",
+        "explanation": "Ista namirnica može imati više funkcija (npr. mlijeko)."
+      },
+      {
+        "question": "Kako se hrana dijeli prema TRAJNOSTI?",
+        "answer": "Kratkotrajna ili pokvarljiva (mlijeko, meso, jaja, riba), polutrajna (dio voća i povrća, sir, krumpir) i trajna (suhe mahunarke, sol, šećer, brašno).",
+        "explanation": "Kratkotrajna hrana nosi oznaku „upotrijebiti do”."
+      },
+      {
+        "question": "Koliko energije daju hranjive tvari?",
+        "answer": "Bjelančevine i ugljikohidrati 4 kcal/g (≈ 17 kJ), masti 9 kcal/g (≈ 39 kJ). Vitamini, minerali i voda ne daju energiju.",
+        "explanation": "1 kcal ≈ 4,187 kJ."
+      },
+      {
+        "question": "Kako se hranjive tvari dijele prema funkciji i zastupljenosti?",
+        "answer": "Funkcija: energetske (bjelančevine, UH, masti), gradivne (bjelančevine), bioaktivne (vitamini, minerali). Zastupljenost: makronutrijenti i mikronutrijenti.",
+        "explanation": "Hrana je građena od više od 60 hranjivih tvari."
+      },
+      {
+        "question": "Što je KVALITETA hrane?",
+        "answer": "Skup karakteristika koje određuju vrijednost hrane, njezinu prikladnost za konzumaciju i prihvatljivost kod potrošača.",
+        "explanation": "Značajke: hranjiva vrijednost, senzorska svojstva, trajnost, autentičnost i sigurnost. Kanal distribucije NIJE značajka kvalitete."
+      },
+      {
+        "question": "Što je SIGURNOST hrane?",
+        "answer": "Jamstvo da hrana neće naštetiti zdravlju ako se konzumira na predviđeni način. Sigurnost je preduvjet kvalitete.",
+        "explanation": "Detaljno: kategorija „Sigurnost hrane i HACCP” (2. kolokvij)."
+      },
+      {
+        "question": "Koji su ciljevi propisa o hrani?",
+        "answer": "Zaštita zdravlja potrošača, zaštita ekonomskih interesa potrošača, zaštita okoliša i usklađivanje međunarodne trgovine.",
+        "explanation": "Zaštita osobnih interesa proizvođača NIJE cilj propisa."
+      },
+      {
+        "question": "Horizontalna vs vertikalna regulativa?",
+        "answer": "Horizontalna vrijedi za sve skupine hrane (npr. označavanje, higijena); vertikalna se odnosi na pojedine skupine hrane.",
+        "explanation": "Primjer vertikalne: propis o mlijeku i mliječnim proizvodima."
+      },
+      {
+        "question": "Subjektivne vs objektivne metode procjene kvalitete?",
+        "answer": "Subjektivne provode ljudi osjetilima (prihvatljivost, razvoj proizvoda). Objektivne provode uređaji fizikalno-kemijskim analizama (točne, ponovljive, rutinska kontrola).",
+        "explanation": "Objektivne su brže i jeftinije, ali same ne govore je li proizvod prihvatljiv potrošaču."
+      },
+      {
+        "question": "Energetska vs nutritivna gustoća?",
+        "answer": "Energetska gustoća = količina energije u određenoj količini hrane. Nutritivna gustoća = mnogo korisnih nutrijenata uz malo energije.",
+        "explanation": "Prazne kalorije: energija iz nutritivno siromašne hrane (bomboni, zaslađena pića, grickalice)."
+      },
+      {
+        "question": "Što sadrži NUTRITIVNA DEKLARACIJA?",
+        "answer": "Energiju, masti, zasićene masne kiseline, ugljikohidrate, šećere, bjelančevine i sol, na 100 g ili 100 ml proizvoda.",
+        "explanation": "Obvezna od 13. prosinca 2016. Prehrambena vlakna NISU obvezni dio."
+      },
+      {
+        "question": "Koja se senzorska svojstva procjenjuju kojim osjetilom?",
+        "answer": "Vid: boja, oblik, bistroća, sjaj. Njuh: miris. Okus: slatko, slano, kiselo, gorko, umami. Opip: tekstura, tvrdoća. Sluh dopunjuje dojam.",
+        "explanation": "Aroma = okus + miris."
+      },
+      {
+        "question": "„Upotrijebiti do” vs „najbolje upotrijebiti do”?",
+        "answer": "„Upotrijebiti do” – lako kvarljiva hrana (sigurnost). „Najbolje upotrijebiti do” – ostala hrana; označava minimalnu trajnost.",
+        "explanation": "Trajnost = zadržavanje hranjive vrijednosti i senzorskih svojstava kroz određeno vrijeme."
+      },
+      {
+        "question": "Što je AUTENTIČNOST hrane?",
+        "answer": "Vjerodostojnost svih informacija o proizvodu: naziv, sastojci, neto količina, podrijetlo, ekološka proizvodnja, oznake podrijetla, prehrambene i zdravstvene tvrdnje.",
+        "explanation": "Krivotvorenje (npr. razrijeđeni med) je povreda autentičnosti."
+      },
+      {
+        "question": "Što je SLJEDIVOST hrane?",
+        "answer": "Mogućnost praćenja hrane, hrane za životinje, životinja i sastojaka kroz sve faze proizvodnje, prerade i distribucije.",
+        "explanation": "Načelo „korak naprijed – korak natrag” i koncept „od polja do stola”."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Što se prema zakonskoj definiciji UBRAJA u hranu?",
+        "options": ["Piće i žvakaća guma", "Hrana za životinje i žive životinje", "Biljke prije ubiranja plodova", "Duhan i duhanski proizvodi"],
+        "correct": 0
+      },
+      {
+        "question": "Ksantan guma je hrana kojeg podrijetla?",
+        "options": ["Fungalnog", "Mikrobnog", "Mineralnog", "Sintetskog"],
+        "correct": 1
+      },
+      {
+        "question": "Beta-glukani iz nekih gljiva su hrana kojeg podrijetla?",
+        "options": ["Mikrobnog", "Biljno-životinjskog", "Fungalnog", "Sintetskog"],
+        "correct": 2
+      },
+      {
+        "question": "Koliko energije daje 1 g masti?",
+        "options": ["4 kcal (≈ 17 kJ)", "7 kcal (≈ 29 kJ)", "12 kcal (≈ 50 kJ)", "9 kcal (≈ 39 kJ)"],
+        "correct": 3
+      },
+      {
+        "question": "Što NIJE značajka kvalitete hrane?",
+        "options": ["Kanal distribucije", "Hranjiva vrijednost", "Autentičnost", "Senzorska svojstva"],
+        "correct": 0
+      },
+      {
+        "question": "Što NIJE cilj propisa o hrani?",
+        "options": ["Zaštita zdravlja potrošača", "Zaštita interesa proizvođača", "Zaštita okoliša", "Usklađivanje međunarodne trgovine"],
+        "correct": 1
+      },
+      {
+        "question": "Objektivne metode procjene kvalitete hrane:",
+        "options": ["Daju podatak o prihvatljivosti kod potrošača", "Provode ih ljudi koristeći osjetila", "Točne su, pouzdane i ponovljive", "Daju rezultate koji variraju od osobe do osobe"],
+        "correct": 2
+      },
+      {
+        "question": "Nutritivna deklaracija NE mora sadržavati:",
+        "options": ["Sol", "Šećere", "Zasićene masne kiseline", "Prehrambena vlakna"],
+        "correct": 3
+      },
+      {
+        "question": "Oznaka „upotrijebiti do” koristi se za:",
+        "options": ["Lako kvarljivu hranu", "Trajnu hranu poput šećera i soli", "Svu hranu bez iznimke", "Isključivo alkoholna pića"],
+        "correct": 0
+      },
+      {
+        "question": "Aroma hrane je kombinacija:",
+        "options": ["Boje i okusa", "Okusa i mirisa", "Mirisa i teksture", "Okusa i teksture"],
+        "correct": 1
+      },
+      {
+        "question": "Sljedivost hrane temelji se na načelu:",
+        "options": ["„Prvi ulaz – prvi izlaz (FIFO)”", "„Od stola do polja”", "„Korak naprijed – korak natrag”", "„Nulta tolerancija na aditive”"],
+        "correct": 2
+      },
+      {
+        "question": "Horizontalna regulativa o hrani odnosi se na:",
+        "options": ["Pojedinu skupinu hrane, npr. mlijeko i sir", "Samo uvoz hrane iz trećih zemalja", "Samo hranu za posebne prehrambene potrebe", "Sve skupine hrane (označavanje, higijena)"],
+        "correct": 3
+      },
+      {
+        "question": "Suhe mahunarke, sol i šećer pripadaju hrani koja je:",
+        "options": ["Trajna", "Polutrajna", "Kratkotrajna", "Pokvarljiva"],
+        "correct": 0
+      },
+      {
+        "question": "Hrana koja daje mnogo energije, a malo nutrijenata, izvor je:",
+        "options": ["Visoke nutritivne gustoće", "Praznih kalorija", "Niske energetske gustoće", "Zaštitnih tvari"],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Aroma hrane je kombinacija okusa i _______.",
+        "answer": "mirisa",
+        "hint": "Osjet njuha (genitiv)."
+      },
+      {
+        "sentence": "Masti daju _______ kcal po gramu.",
+        "answer": "9",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Bjelančevine i ugljikohidrati daju _______ kcal po gramu.",
+        "answer": "4",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Nutritivna deklaracija obvezna je na svim prehrambenim proizvodima od 13. prosinca _______.",
+        "answer": "2016",
+        "hint": "Godina."
+      },
+      {
+        "sentence": "Uz slatko, slano, kiselo i gorko peti osnovni okus zove se _______.",
+        "answer": "umami",
+        "hint": "Japanska riječ."
+      },
+      {
+        "sentence": "Hrana je građena od više od _______ hranjivih tvari.",
+        "answer": "60",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Ksantan guma je hrana _______ podrijetla.",
+        "answer": "mikrobnog",
+        "hint": "Proizvode je mikroorganizmi."
+      }
+    ],
+    "learn": {
+      "title": "Kvaliteta hrane",
+      "content":
+        '<h3>Što je hrana</h3>' +
+        '<p><strong>Hrana</strong> je svaka tvar ili proizvod, prerađen, djelomično prerađen ili neprerađen, namijenjen prehrani ljudi ili za koji se opravdano može očekivati da će ga ljudi konzumirati. Uključuje <strong>pića</strong>, žvakaće gume i vodu koja se namjerno ugrađuje u hranu tijekom proizvodnje, pripreme ili prerade.</p>' +
+        '<p><strong>Hranom se ne smatraju:</strong> hrana za životinje, žive životinje (osim ako su pripremljene za tržište kao hrana), biljke prije ubiranja, lijekovi, kozmetički proizvodi, duhan i duhanski proizvodi, narkotici i psihotropne tvari te ostaci i zagađivači.</p>' +
+
+        '<h3>Podjele hrane</h3>' +
+        '<h4>Prema podrijetlu</h4>' +
+        '<table>' +
+        '<tr><th>Podrijetlo</th><th>Primjeri</th></tr>' +
+        '<tr><td>Biljno</td><td>kruh, voće, povrće i njihove prerađevine, pivo, vino</td></tr>' +
+        '<tr><td>Životinjsko</td><td>meso i mesni proizvodi, riba, mlijeko i mliječni proizvodi, jaja</td></tr>' +
+        '<tr><td>Biljno-životinjsko</td><td>med, medljikovac, proizvodi na bazi meda</td></tr>' +
+        '<tr><td>Mikrobno</td><td>ksantan guma (zgušnjivač), vitamini B2 i B12, enzimi</td></tr>' +
+        '<tr><td>Fungalno</td><td>beta-glukani iz gljiva (imunostimulirajuće i antitumorsko djelovanje)</td></tr>' +
+        '<tr><td>Mineralno</td><td>kuhinjska sol</td></tr>' +
+        '<tr><td>Sintetsko</td><td>olestra (zamjena za masti bez energetske vrijednosti), aspartam, ciklamati</td></tr>' +
+        '</table>' +
+        '<h4>Prema funkciji</h4>' +
+        '<ul>' +
+        '<li><strong>Gradivna</strong> (gradi i obnavlja organizam): mlijeko, meso, riba, mahunarke, povrće, orašasti plodovi.</li>' +
+        '<li><strong>Energetska</strong>: masti, ulja, šećer, žitarice, sušeno voće, škrobne namirnice.</li>' +
+        '<li><strong>Regulatorna</strong>: voda, voće i povrće.</li>' +
+        '<li><strong>Zaštitna</strong>: mlijeko, cjelovite žitarice, meso, voće i povrće.</li>' +
+        '</ul>' +
+        '<h4>Prema sadržaju hranjivih tvari</h4>' +
+        '<p>Bogata <strong>ugljikohidratima</strong>: žitarice, škrobno povrće, šećeri · bogata <strong>bjelančevinama</strong>: mlijeko, meso, riba, jaja · bogata <strong>mastima</strong>: ulja, masti, orašasti plodovi · bogata <strong>vitaminima i mineralima</strong>: voće i povrće.</p>' +
+        '<h4>Prema trajnosti</h4>' +
+        '<table>' +
+        '<tr><th>Skupina</th><th>Primjeri</th></tr>' +
+        '<tr><td>Kratkotrajna (pokvarljiva)</td><td>mlijeko i mliječni proizvodi, meso, perad, jaja, riba, plodovi mora</td></tr>' +
+        '<tr><td>Polutrajna</td><td>pojedine vrste voća i povrća, sir, krumpir</td></tr>' +
+        '<tr><td>Trajna</td><td>suhe mahunarke, sol, šećer, brašno</td></tr>' +
+        '</table>' +
+        '<p><strong>Prema zajedničkim značajkama</strong> hrana se svrstava u skupine: mlijeko i mliječni proizvodi · jaja · meso · ribe · ulja i masti · žitarice · mahunarke, sjemenke i orašasti plodovi · povrće · voće · šećeri, čokolade i konditorski proizvodi · pića · juhe i umaci · snack proizvodi · proizvodi za posebne prehrambene potrebe.</p>' +
+
+        '<h3>Hranjive tvari (nutrijenti)</h3>' +
+        '<p>Hrana je građena od <strong>više od 60 hranjivih tvari</strong>.</p>' +
+        '<table>' +
+        '<tr><th>Podjela</th><th>Skupine</th></tr>' +
+        '<tr><td>Prema funkciji</td><td><strong>energetske</strong> (bjelančevine, ugljikohidrati, masti) · <strong>gradivne</strong> (bjelančevine) · <strong>bioaktivne</strong> (vitamini, minerali, bioaktivne komponente)</td></tr>' +
+        '<tr><td>Prema zastupljenosti</td><td><strong>makronutrijenti</strong> (bjelančevine, ugljikohidrati, masti, voda) · <strong>mikronutrijenti</strong> (vitamini, minerali, bioaktivne komponente)</td></tr>' +
+        '<tr><td>Prema energetskoj vrijednosti</td><td>daju energiju: bjelančevine i UH <strong>4 kcal/g (≈ 17 kJ/g)</strong>, masti <strong>9 kcal/g (≈ 39 kJ/g)</strong> · ne daju energiju: vitamini, minerali, bioaktivne komponente, voda</td></tr>' +
+        '</table>' +
+        '<div class="tip-box"><strong>Pretvorba:</strong> 1 kcal ≈ 4,187 kJ. Alkohol (etanol) nije hranjiva tvar, ali daje oko 7 kcal/g.</div>' +
+
+        '<h3>Kvaliteta i sigurnost hrane</h3>' +
+        '<p><strong>Kvaliteta hrane</strong> je skup karakteristika koje određuju njezinu vrijednost, prikladnost za konzumaciju i prihvatljivost kod potrošača. Na nju utječu nutritivna i senzorska svojstva, trajnost, pakiranje, označavanje i druge karakteristike. Kvaliteta se prati kod <strong>sirovina, poluproizvoda i gotovih proizvoda</strong>.</p>' +
+        '<p><strong>Sigurnost hrane</strong> je jamstvo da hrana neće štetiti zdravlju ako se konzumira na predviđeni način — ona je <strong>preduvjet kvalitete</strong>.</p>' +
+        '<p><strong>Značajke kvalitete:</strong> hranjiva vrijednost · senzorska svojstva · trajnost · autentičnost · sigurnost (uz sljedivost).</p>' +
+        '<div class="warning-box"><strong>Ispitna zamka:</strong> „kanal distribucije” NIJE značajka kvalitete hrane.</div>' +
+
+        '<h4>Zakonski propisi o hrani</h4>' +
+        '<p>Hrana na tržištu mora zadovoljiti propise Europske unije. <strong>Ciljevi propisa:</strong> zaštita zdravlja potrošača, zaštita ekonomskih interesa potrošača, zaštita okoliša i usklađivanje međunarodne trgovine (uvoza i izvoza). Zaštita osobnih interesa proizvođača nije cilj propisa.</p>' +
+        '<ul>' +
+        '<li><strong>Horizontalna regulativa</strong> — odnosi se na sve skupine hrane (npr. označavanje, higijena).</li>' +
+        '<li><strong>Vertikalna regulativa</strong> — odnosi se na pojedine skupine hrane (npr. mlijeko, vino).</li>' +
+        '</ul>' +
+
+        '<h3>Procjena kvalitete hrane</h3>' +
+        '<p>Kvaliteta se prati redovito tijekom proizvodnje (stabilnost kvalitete) i pri razvoju novih proizvoda (procjena prihvatljivosti).</p>' +
+        '<table>' +
+        '<tr><th>Subjektivne metode</th><th>Objektivne metode</th></tr>' +
+        '<tr><td>provode ih ljudi, osjetilima</td><td>provode ih uređaji, fizikalno-kemijskim metodama</td></tr>' +
+        '<tr><td>rezultati variraju</td><td>rezultati su točni, pouzdani i ponovljivi</td></tr>' +
+        '<tr><td>daju podatak o prihvatljivosti proizvoda</td><td>same ne mogu reći je li proizvod prihvatljiv</td></tr>' +
+        '<tr><td>nužne za razvoj i promociju novih proizvoda</td><td>nužne za rutinsku kontrolu; brže i jeftinije</td></tr>' +
+        '</table>' +
+
+        '<h3>Hranjiva vrijednost i nutritivna deklaracija</h3>' +
+        '<ul>' +
+        '<li><strong>Energetska gustoća</strong> — količina energije u određenoj količini hrane (kcal/g).</li>' +
+        '<li><strong>Prazne kalorije</strong> — energija iz nutritivno siromašne hrane (bomboni, zaslađeni napitci, grickalice).</li>' +
+        '<li><strong>Nutritivna gustoća</strong> — suprotan pojam: mnogo korisnih nutrijenata uz manju energetsku vrijednost.</li>' +
+        '</ul>' +
+        '<p><strong>Nutritivna deklaracija</strong> obvezna je na svim prehrambenim proizvodima od <strong>13. prosinca 2016.</strong> Sadrži: energiju, masti, zasićene masne kiseline, ugljikohidrate, šećere, bjelančevine i sol — na <strong>100 g ili 100 ml</strong>, često i po obroku. Služi informiranom i kontroliranom odabiru hrane.</p>' +
+        '<div class="tip-box">Prehrambena vlakna, vitamini i minerali mogu se navesti dobrovoljno — nisu obvezni dio deklaracije.</div>' +
+
+        '<h3>Senzorska svojstva, trajnost, autentičnost, sljedivost</h3>' +
+        '<table>' +
+        '<tr><th>Osjetilo</th><th>Što procjenjuje</th></tr>' +
+        '<tr><td>Vid</td><td>boja, oblik, veličina, pjenjenje, bistroća ili mutnoća, sjaj</td></tr>' +
+        '<tr><td>Njuh</td><td>miris</td></tr>' +
+        '<tr><td>Okus</td><td>slatko, slano, kiselo, gorko, umami</td></tr>' +
+        '<tr><td>Opip</td><td>tekstura, mekoća, tvrdoća</td></tr>' +
+        '<tr><td>Sluh</td><td>nadopunjuje ukupnu percepciju (npr. hrskavost)</td></tr>' +
+        '</table>' +
+        '<p><strong>Aroma</strong> = kombinacija okusa i mirisa.</p>' +
+        '<p><strong>Trajnost</strong> je svojstvo hrane da kroz određeno vrijeme zadrži hranjivu vrijednost i karakteristična senzorska svojstva. Oznaka <strong>„upotrijebiti do”</strong> koristi se za lako kvarljivu hranu, a <strong>„najbolje upotrijebiti do”</strong> za ostalu hranu i označava minimalnu trajnost.</p>' +
+        '<p><strong>Autentičnost</strong> = vjerodostojnost svih informacija na proizvodu: naziv, sastojci, neto količina, podrijetlo, ekološka proizvodnja, zaštićena oznaka podrijetla, prehrambene i zdravstvene tvrdnje.</p>' +
+        '<p><strong>Sljedivost</strong> = mogućnost praćenja hrane, hrane za životinje, životinja i sastojaka kroz sve faze proizvodnje, prerade i distribucije — načelo <strong>„korak naprijed – korak natrag”</strong> i koncept <strong>„od polja do stola”</strong>.</p>'
+    }
+  },
+
+  "macronutrients": {
+    "name": "Bjelančevine, ugljikohidrati i masti",
+    "icon": "fa-flask",
+    "color": "#f97316",
+    "flashcards": [
+      {
+        "question": "Što su BJELANČEVINE (proteini)?",
+        "answer": "Složeni organski spojevi građeni od aminokiselina povezanih peptidnim vezama.",
+        "explanation": "Energetska vrijednost: 4 kcal/g."
+      },
+      {
+        "question": "Potpune vs nepotpune bjelančevine?",
+        "answer": "Potpune sadrže sve esencijalne aminokiseline (uglavnom hrana životinjskog podrijetla). Nepotpunima nedostaje neka – limitirajuća aminokiselina.",
+        "explanation": "Namirnice životinjskog podrijetla sadrže POTPUNE bjelančevine."
+      },
+      {
+        "question": "Koje su funkcije bjelančevina?",
+        "answer": "Gradivna (rast i obnova), regulacijska (enzimi, hormoni, imunitet, ravnoteža tekućina, prijenos tvari) i energetska (4 kcal/g).",
+        "explanation": "Gradivna je njihova glavna uloga."
+      },
+      {
+        "question": "Koliki je preporučeni unos bjelančevina?",
+        "answer": "Oko 0,8 g po kg tjelesne mase dnevno, odnosno 10–15 % ukupnog energetskog unosa.",
+        "explanation": "Osoba od 70 kg: oko 56 g dnevno."
+      },
+      {
+        "question": "Kako se procjenjuje kvaliteta bjelančevina?",
+        "answer": "Prema aminokiselinskom sastavu, probavljivosti i biološkoj vrijednosti.",
+        "explanation": "Bjelanjak jajeta ima biološku vrijednost oko 94."
+      },
+      {
+        "question": "Što su UGLJIKOHIDRATI?",
+        "answer": "Spojevi ugljika, vodika i kisika; glavni izvor energije za organizam (4 kcal/g).",
+        "explanation": "Preporuka: 45–65 % ukupnog energetskog unosa."
+      },
+      {
+        "question": "Primjeri mono-, di-, oligo- i polisaharida?",
+        "answer": "Mono: glukoza, fruktoza, galaktoza. Di: saharoza, laktoza, maltoza. Oligo: rafinoza, stahioza, verbaskoza. Poli: škrob, glikogen, celuloza.",
+        "explanation": "U polisaharide se ubrajaju i hitin i inulin."
+      },
+      {
+        "question": "Od čega su građeni saharoza, laktoza i maltoza?",
+        "answer": "Saharoza = glukoza + fruktoza. Laktoza = glukoza + galaktoza. Maltoza = glukoza + glukoza.",
+        "explanation": "Disaharid = dvije jedinice jednostavnog šećera."
+      },
+      {
+        "question": "Gdje počinje probava ugljikohidrata?",
+        "answer": "U ustima – enzim amilaza sline (ptijalin) počinje razgrađivati škrob.",
+        "explanation": "Probava se nastavlja u tankom crijevu (amilaza gušterače)."
+      },
+      {
+        "question": "Što je GLIKEMIJSKI INDEKS?",
+        "answer": "Pokazatelj koliko brzo hrana podiže koncentraciju glukoze u krvi: niski < 55, srednji 56–69, visoki ≥ 70.",
+        "explanation": "Glikemijsko opterećenje = GI × količina UH u porciji."
+      },
+      {
+        "question": "Kolika je preporuka za prehrambena vlakna?",
+        "answer": "14 g vlakana na 1000 kcal unosa.",
+        "explanation": "Vlakna mogu biti topljiva i netopljiva."
+      },
+      {
+        "question": "Što su TRIGLICERIDI?",
+        "answer": "Glavni oblik masti u hrani: molekula glicerola povezana s tri masne kiseline.",
+        "explanation": "Lipidi uključuju i fosfolipide (membrane) i sterole (kolesterol)."
+      },
+      {
+        "question": "Zasićene vs nezasićene masne kiseline?",
+        "answer": "Zasićene (bez dvostrukih veza): pretežno životinjske, krute. Nezasićene (jedna ili više dvostrukih veza): pretežno biljne, tekuće (ulja).",
+        "explanation": "Biljne masnoće: u pravilu tekuće i s nezasićenim masnim kiselinama."
+      },
+      {
+        "question": "Jednostruko vs višestruko nezasićene masne kiseline?",
+        "answer": "Jednostruko: jedna dvostruka veza, npr. oleinska (maslinovo ulje). Višestruko: više dvostrukih veza, najvažnije omega-3 i omega-6.",
+        "explanation": "Omega-3 iz ribe: EPA i DHA."
+      },
+      {
+        "question": "Koje su esencijalne masne kiseline?",
+        "answer": "Linolna (omega-6) i alfa-linolenska (omega-3) – organizam ih ne može sam sintetizirati.",
+        "explanation": "Moraju se unijeti hranom."
+      },
+      {
+        "question": "Što je KOLESTEROL?",
+        "answer": "Glavni sterol životinjskog podrijetla; prekursor hormona, vitamina D i žučnih kiselina. Biljna hrana ne sadrži kolesterol.",
+        "explanation": "Izvori: mlijeko, jaja, meso. Maslinovo ulje, soja i kikiriki ga nemaju."
+      },
+      {
+        "question": "Koliki je preporučeni unos masti?",
+        "answer": "20–35 % ukupnog energetskog unosa; zasićene masne kiseline manje od 10 %, kolesterol do 300 mg dnevno.",
+        "explanation": "Masti su najkoncentriraniji izvor energije: 9 kcal/g."
+      },
+      {
+        "question": "Koje su funkcije masti?",
+        "answer": "Energetska rezerva, prijenos vitamina A, D, E i K, izgradnja staničnih membrana i stvaranje hormona.",
+        "explanation": "Vitamini topljivi u mastima apsorbiraju se samo uz masti."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Aminokiseline se u bjelančevinama povezuju:",
+        "options": ["Glikozidnim vezama", "Esterskim vezama", "Peptidnim vezama", "Vodikovim vezama"],
+        "correct": 2
+      },
+      {
+        "question": "Koji od navedenih spojeva NIJE polisaharid?",
+        "options": ["Celuloza", "Glikogen", "Inulin", "Maltoza"],
+        "correct": 3
+      },
+      {
+        "question": "Koji ugljikohidrat NE pripada disaharidima?",
+        "options": ["Škrob", "Saharoza", "Laktoza", "Maltoza"],
+        "correct": 0
+      },
+      {
+        "question": "Saharoza je disaharid građen od:",
+        "options": ["Glukoze i galaktoze", "Glukoze i fruktoze", "Dviju molekula glukoze", "Fruktoze i galaktoze"],
+        "correct": 1
+      },
+      {
+        "question": "Probava ugljikohidrata počinje:",
+        "options": ["U želucu", "U tankom crijevu", "U ustima", "U debelom crijevu"],
+        "correct": 2
+      },
+      {
+        "question": "Namirnica s glikemijskim indeksom 75 ima:",
+        "options": ["Nizak GI", "Srednji GI", "GI koji se ne može odrediti", "Visok GI"],
+        "correct": 3
+      },
+      {
+        "question": "Masnoće biljnog podrijetla u pravilu karakterizira:",
+        "options": ["Tekuće stanje i nezasićene masne kiseline", "Kruto stanje i zasićene masne kiseline", "Tekuće stanje i zasićene masne kiseline", "Kruto stanje i nezasićene masne kiseline"],
+        "correct": 0
+      },
+      {
+        "question": "Oleinska kiselina iz maslinova ulja je masna kiselina koja je:",
+        "options": ["Zasićena", "Jednostruko nezasićena", "Višestruko nezasićena", "Esencijalna omega-3"],
+        "correct": 1
+      },
+      {
+        "question": "Omega-3 masne kiseline su:",
+        "options": ["Jednostruko nezasićene", "Zasićene", "Višestruko nezasićene", "Trans masne kiseline"],
+        "correct": 2
+      },
+      {
+        "question": "Trigliceridi se sastoje od:",
+        "options": ["Glukoze i tri masne kiseline", "Kolesterola i fosfata", "Aminokiselina i glicerola", "Glicerola i masnih kiselina"],
+        "correct": 3
+      },
+      {
+        "question": "Koja od navedenih namirnica sadrži kolesterol?",
+        "options": ["Mlijeko", "Maslinovo ulje", "Suncokretovo ulje", "Kikiriki"],
+        "correct": 0
+      },
+      {
+        "question": "Preporučeni dnevni unos bjelančevina za odraslu osobu iznosi oko:",
+        "options": ["0,2 g/kg tjelesne mase", "0,8 g/kg tjelesne mase", "2,5 g/kg tjelesne mase", "5 g/kg tjelesne mase"],
+        "correct": 1
+      },
+      {
+        "question": "Namirnice životinjskog podrijetla u pravilu sadrže:",
+        "options": ["Nepotpune bjelančevine", "Samo limitirajuće aminokiseline", "Potpune bjelančevine", "Bjelančevine bez esencijalnih aminokiselina"],
+        "correct": 2
+      },
+      {
+        "question": "Esencijalne masne kiseline su:",
+        "options": ["Oleinska i palmitinska", "Stearinska i oleinska", "Palmitinska i stearinska", "Linolna i alfa-linolenska"],
+        "correct": 3
+      },
+      {
+        "question": "Masti bi trebale činiti koliki udio ukupnog energetskog unosa?",
+        "options": ["20–35 %", "45–65 %", "5–10 %", "50–60 %"],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Bjelančevine su građene od _______ povezanih peptidnim vezama.",
+        "answer": "aminokiselina",
+        "hint": "Gradivne jedinice proteina."
+      },
+      {
+        "sentence": "Laktoza je disaharid građen od glukoze i _______.",
+        "answer": "galaktoze",
+        "hint": "Monosaharid mlijeka."
+      },
+      {
+        "sentence": "Hrana s glikemijskim indeksom manjim od _______ ima niski GI.",
+        "answer": "55",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Trigliceridi su građeni od glicerola i tri _______ kiseline.",
+        "answer": "masne",
+        "hint": "Vrsta kiseline u lipidima."
+      },
+      {
+        "sentence": "Unos kolesterola ne bi trebao prelaziti _______ mg dnevno.",
+        "answer": "300",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Esencijalna aminokiselina koje u nepotpunoj bjelančevini nema dovoljno zove se _______ aminokiselina.",
+        "answer": "limitirajuća",
+        "hint": "Ona „ograničava” iskoristivost."
+      },
+      {
+        "sentence": "Preporučeni unos prehrambenih vlakana je 14 g na _______ kcal.",
+        "answer": "1000",
+        "hint": "Broj."
+      }
+    ],
+    "learn": {
+      "title": "Makronutrijenti: bjelančevine, ugljikohidrati i masti",
+      "content":
+        '<p>Hranjive tvari dijele se na <strong>makronutrijente</strong> (bjelančevine, ugljikohidrati, masti) i <strong>mikronutrijente</strong> (vitamini i minerali — zasebna kategorija).</p>' +
+
+        '<h3>Bjelančevine (proteini)</h3>' +
+        '<p><strong>Bjelančevine</strong> su složeni organski spojevi građeni od <strong>aminokiselina</strong> povezanih <strong>peptidnim vezama</strong>.</p>' +
+        '<table>' +
+        '<tr><th>Potpune bjelančevine</th><th>Nepotpune bjelančevine</th></tr>' +
+        '<tr><td>sadrže sve esencijalne aminokiseline u dovoljnoj količini</td><td>nemaju dovoljno svih esencijalnih aminokiselina — sadrže <strong>limitirajuću aminokiselinu</strong></td></tr>' +
+        '<tr><td>uglavnom hrana životinjskog podrijetla (meso, riba, mlijeko, jaja)</td><td>uglavnom hrana biljnog podrijetla (žitarice, mahunarke)</td></tr>' +
+        '</table>' +
+        '<p><strong>Funkcije:</strong> održavanje, rast i razvoj organizma (<em>gradivna</em>) · izgradnja enzima i hormona, rad imunološkog sustava, ravnoteža tekućina, prijenos i pohrana tvari (<em>regulacijska</em>) · izvor energije, <strong>4 kcal/g</strong> (<em>energetska</em>).</p>' +
+        '<p><strong>Kvaliteta bjelančevina</strong> procjenjuje se prema aminokiselinskom sastavu, probavljivosti i biološkoj vrijednosti.</p>' +
+        '<p><strong>Preporučeni unos:</strong> oko <strong>0,8 g/kg tjelesne mase dnevno</strong>, odnosno 10–15 % ukupnog energetskog unosa.</p>' +
+        '<div class="tip-box">Biljne bjelančevine postaju potpunije kombiniranjem — npr. mahunarke + žitarice (grah s kruhom): jedna namirnica nadoknađuje limitirajuću aminokiselinu druge.</div>' +
+
+        '<h3>Ugljikohidrati</h3>' +
+        '<p><strong>Ugljikohidrati</strong> su prirodni spojevi ugljika, vodika i kisika i <strong>glavni izvor energije</strong> za organizam (4 kcal/g).</p>' +
+        '<table>' +
+        '<tr><th>Skupina</th><th>Primjeri</th><th>Napomena</th></tr>' +
+        '<tr><td>Monosaharidi</td><td>glukoza, fruktoza, galaktoza</td><td>jednostavni šećeri</td></tr>' +
+        '<tr><td>Disaharidi</td><td>saharoza, laktoza, maltoza</td><td>dvije jedinice jednostavnih šećera</td></tr>' +
+        '<tr><td>Oligosaharidi</td><td>rafinoza, verbaskoza, stahioza</td><td>npr. u mahunarkama</td></tr>' +
+        '<tr><td>Polisaharidi</td><td>škrob, glikogen, celuloza (i hitin, inulin)</td><td>složeni ugljikohidrati</td></tr>' +
+        '</table>' +
+        '<ul>' +
+        '<li><strong>Saharoza</strong> = glukoza + fruktoza (konzumni šećer)</li>' +
+        '<li><strong>Laktoza</strong> = glukoza + galaktoza (mliječni šećer)</li>' +
+        '<li><strong>Maltoza</strong> = glukoza + glukoza (sladni šećer)</li>' +
+        '</ul>' +
+        '<div class="warning-box"><strong>Česte zamke:</strong> maltoza NIJE polisaharid (disaharid je); škrob NE pripada disaharidima (polisaharid je).</div>' +
+        '<p><strong>Prehrambena vlakna</strong> mogu biti topljiva i netopljiva; preporuka je <strong>14 g na 1000 kcal</strong>.</p>' +
+        '<p><strong>Probava ugljikohidrata</strong> počinje <strong>u ustima</strong>: enzim <strong>amilaza sline (ptijalin)</strong> počinje razgradnju škroba, a probava se završava u tankom crijevu.</p>' +
+        '<h4>Glikemijski indeks (GI)</h4>' +
+        '<p>Pokazuje koliko brzo hrana povisuje koncentraciju glukoze u krvi.</p>' +
+        '<table>' +
+        '<tr><th>GI</th><th>Vrijednost</th></tr>' +
+        '<tr><td>Niski</td><td>manji od 55</td></tr>' +
+        '<tr><td>Srednji</td><td>56–69</td></tr>' +
+        '<tr><td>Visoki</td><td>70 i više</td></tr>' +
+        '</table>' +
+        '<p><strong>Preporučeni unos:</strong> ugljikohidrati <strong>45–65 %</strong> ukupnog energetskog unosa.</p>' +
+
+        '<h3>Masti (lipidi)</h3>' +
+        '<p>Masti su <strong>najkoncentriraniji izvor energije</strong>: <strong>9 kcal/g</strong>.</p>' +
+        '<ul>' +
+        '<li><strong>Trigliceridi</strong> — glicerol + tri masne kiseline (glavni oblik masti i ulja).</li>' +
+        '<li><strong>Fosfolipidi</strong> — važni sastojci staničnih membrana (npr. lecitin).</li>' +
+        '<li><strong>Steroli</strong> — <strong>kolesterol</strong> je glavni sterol životinjskog podrijetla, prekursor hormona, vitamina D i žučnih kiselina.</li>' +
+        '</ul>' +
+        '<h4>Masne kiseline</h4>' +
+        '<table>' +
+        '<tr><th>Vrsta</th><th>Građa</th><th>Tipično podrijetlo i stanje</th></tr>' +
+        '<tr><td>Zasićene</td><td>samo jednostruke veze</td><td>najčešće životinjske, krute (maslac, svinjska mast)</td></tr>' +
+        '<tr><td>Jednostruko nezasićene</td><td>jedna dvostruka veza</td><td>biljna ulja; <strong>oleinska kiselina</strong> iz maslinova ulja</td></tr>' +
+        '<tr><td>Višestruko nezasićene</td><td>više dvostrukih veza</td><td>biljna ulja, riba; najvažnije <strong>omega-3 i omega-6</strong></td></tr>' +
+        '</table>' +
+        '<p><strong>Esencijalne masne kiseline</strong> (organizam ih ne može sintetizirati): <strong>linolna</strong> (omega-6) i <strong>alfa-linolenska</strong> (omega-3).</p>' +
+        '<div class="tip-box"><strong>Podrijetlo i agregatno stanje:</strong> masnoće biljnog podrijetla u pravilu su <strong>tekuće</strong> (ulja) i bogate <strong>nezasićenim</strong> masnim kiselinama; životinjske su u pravilu <strong>krute</strong> i bogate <strong>zasićenim</strong>. Iznimke: kokosovo i palmino ulje (biljna, zasićena) te riblje ulje (životinjsko, nezasićeno).</div>' +
+        '<p><strong>Funkcije masti:</strong> energetska rezerva, prijenos vitamina A, D, E i K, izgradnja staničnih membrana, stvaranje hormona.</p>' +
+        '<p><strong>Preporučeni unos:</strong> <strong>20–35 %</strong> ukupnog energetskog unosa; zasićene masne kiseline <strong>manje od 10 %</strong>; kolesterol <strong>do 300 mg dnevno</strong>.</p>' +
+        '<div class="warning-box"><strong>Kolesterol</strong> se nalazi samo u hrani životinjskog podrijetla — među ponuđenim odgovorima (mlijeko, maslinovo ulje, suncokretovo ulje, soja, kikiriki) izvor kolesterola je samo <strong>mlijeko</strong>.</div>'
+    }
+  },
+
+  "micronutrients": {
+    "name": "Vitamini i minerali",
+    "icon": "fa-capsules",
+    "color": "#84cc16",
+    "flashcards": [
+      {
+        "question": "Što su VITAMINI?",
+        "answer": "Organski spojevi potrebni u malim količinama za normalan rast, razvoj i održavanje organizma. Nemaju energetsku vrijednost.",
+        "explanation": "Organizam ih uglavnom ne može sam stvoriti."
+      },
+      {
+        "question": "Koji su vitamini topljivi u mastima, a koji u vodi?",
+        "answer": "U mastima: A, D, E i K. U vodi: B-kompleks i vitamin C.",
+        "explanation": "Topljivi u mastima mogu se nakupljati u tijelu."
+      },
+      {
+        "question": "Vitamin A – uloga i izvori?",
+        "answer": "Vid, koža, imunitet, rast i razvoj. Izvori: jetra, jaja, žuto-narančasto i tamnozeleno voće i povrće.",
+        "explanation": "Beta-karoten je provitamin A."
+      },
+      {
+        "question": "Vitamin D – uloga i posljedice nedostatka?",
+        "answer": "Omogućuje apsorpciju i ugradnju kalcija i fosfora u kosti i zube. Nedostatak: rahitis, osteomalacija, osteoporoza.",
+        "explanation": "Stvara se u koži pod utjecajem sunca."
+      },
+      {
+        "question": "Vitamin E – uloga?",
+        "answer": "Djeluje kao antioksidans; najviše ga ima u biljnim uljima.",
+        "explanation": "Štiti stanične membrane od oksidacije."
+      },
+      {
+        "question": "Vitamin K – uloga?",
+        "answer": "Sudjeluje u zgrušavanju krvi i zdravlju kostiju.",
+        "explanation": "Izvor: zeleno lisnato povrće."
+      },
+      {
+        "question": "Vitamini B skupine – uloga?",
+        "answer": "Oslobađanje energije i metabolizam ugljikohidrata, masti i bjelančevina. Vitamin B12 nalazi se samo u hrani životinjskog podrijetla.",
+        "explanation": "Folna kiselina (B9) važna je u trudnoći."
+      },
+      {
+        "question": "Vitamin C – uloga i izvori?",
+        "answer": "Stvaranje kolagena, antioksidans, jača imunitet i poboljšava apsorpciju željeza. Izvori: citrusi, bobičasto voće, povrće.",
+        "explanation": "Nedostatak: skorbut. Osjetljiv je na toplinu."
+      },
+      {
+        "question": "Što su MINERALI?",
+        "answer": "Anorganske tvari potrebne za normalno funkcioniranje organizma. Nemaju energetsku vrijednost.",
+        "explanation": "Stabilniji su od vitamina pri toplinskoj obradi."
+      },
+      {
+        "question": "Makrominerali vs mikrominerali?",
+        "answer": "Makro: kalcij, fosfor, magnezij, natrij, kalij, klor, sumpor. Mikro (elementi u tragovima): željezo, cink, jod, selen, bakar, mangan, krom, molibden.",
+        "explanation": "Mikroelementi su potrebni u vrlo malim količinama."
+      },
+      {
+        "question": "Kalcij – uloga?",
+        "answer": "Najzastupljeniji mineral u tijelu: kosti, zubi, živčani sustav, regulacija krvnog tlaka. Apsorpcija ovisi o vitaminu D.",
+        "explanation": "Mlijeko je dobar izvor jer je kalcij u povoljnom omjeru s fosforom."
+      },
+      {
+        "question": "Fosfor i magnezij – uloga?",
+        "answer": "Fosfor: kosti, zubi, DNA, fosfolipidi. Magnezij: mišići, živčani sustav, mineralizacija kostiju.",
+        "explanation": "Oba su makrominerali."
+      },
+      {
+        "question": "Natrij, kalij i klor – uloga?",
+        "answer": "Održavaju ravnotežu tekućina i acido-baznu ravnotežu te prijenos živčanih impulsa.",
+        "explanation": "Elektroliti."
+      },
+      {
+        "question": "Željezo – uloga?",
+        "answer": "Sastavni dio hemoglobina i mioglobina (prijenos kisika). Nedostatak uzrokuje anemiju.",
+        "explanation": "Vitamin C poboljšava apsorpciju biljnog (nehemskog) željeza."
+      },
+      {
+        "question": "Cink, jod i selen – uloga?",
+        "answer": "Cink: rast, imunitet, sinteza DNA. Jod: rad štitne žlijezde. Selen: dio antioksidativnih enzima.",
+        "explanation": "Selen se povezuje s antikancerogenim djelovanjem."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Koji vitamin sprječava rahitis?",
+        "options": ["Vitamin C", "Vitamin D", "Vitamin K", "Vitamin B12"],
+        "correct": 1
+      },
+      {
+        "question": "Vitamini topljivi u mastima su:",
+        "options": ["B1, B2 i C", "C i B-kompleks", "A, D, E i K", "B6, B12 i folna kiselina"],
+        "correct": 2
+      },
+      {
+        "question": "Koji je mineral sastavni dio hemoglobina?",
+        "options": ["Kalcij", "Jod", "Magnezij", "Željezo"],
+        "correct": 3
+      },
+      {
+        "question": "Apsorpcija kalcija ovisi o vitaminu:",
+        "options": ["D", "C", "K", "B1"],
+        "correct": 0
+      },
+      {
+        "question": "Koji vitamin sudjeluje u zgrušavanju krvi?",
+        "options": ["Vitamin A", "Vitamin K", "Vitamin D", "Vitamin C"],
+        "correct": 1
+      },
+      {
+        "question": "Koji je od navedenih minerala mikroelement?",
+        "options": ["Kalcij", "Fosfor", "Jod", "Natrij"],
+        "correct": 2
+      },
+      {
+        "question": "Najzastupljeniji mineral u ljudskom tijelu je:",
+        "options": ["Željezo", "Natrij", "Cink", "Kalcij"],
+        "correct": 3
+      },
+      {
+        "question": "Koji vitamin sudjeluje u stvaranju kolagena i poboljšava apsorpciju željeza?",
+        "options": ["Vitamin C", "Vitamin E", "Vitamin D", "Vitamin K"],
+        "correct": 0
+      },
+      {
+        "question": "Jod je neophodan za pravilan rad:",
+        "options": ["Gušterače", "Štitne žlijezde", "Jetre", "Bubrega"],
+        "correct": 1
+      },
+      {
+        "question": "Vitamin E djeluje ponajprije kao:",
+        "options": ["Hormon rasta", "Izvor energije", "Antioksidans", "Probavni enzim"],
+        "correct": 2
+      },
+      {
+        "question": "Koliko energije daju vitamini i minerali?",
+        "options": ["4 kcal/g", "9 kcal/g", "7 kcal/g", "Ne daju energiju"],
+        "correct": 3
+      },
+      {
+        "question": "Nedostatak željeza uzrokuje:",
+        "options": ["Anemiju", "Rahitis", "Gušavost", "Skorbut"],
+        "correct": 0
+      },
+      {
+        "question": "Vitamin B12 nalazi se:",
+        "options": ["Samo u voću i povrću", "Samo u hrani životinjskog podrijetla", "Samo u žitaricama", "U svim namirnicama podjednako"],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Vitamin _______ omogućuje ugradnju kalcija i fosfora u kosti i zube.",
+        "answer": "D",
+        "hint": "Jedno slovo."
+      },
+      {
+        "sentence": "Željezo je sastavni dio hemoglobina i _______.",
+        "answer": "mioglobina",
+        "hint": "Protein u mišićima."
+      },
+      {
+        "sentence": "Vitamini topljivi u vodi su B-kompleks i vitamin _______.",
+        "answer": "C",
+        "hint": "Jedno slovo."
+      },
+      {
+        "sentence": "Nedostatak željeza uzrokuje _______.",
+        "answer": "anemiju",
+        "hint": "Slabokrvnost."
+      },
+      {
+        "sentence": "Jod je neophodan za pravilan rad _______ žlijezde.",
+        "answer": "štitne",
+        "hint": "Žlijezda na vratu."
+      },
+      {
+        "sentence": "Vitamin B12 nalazi se samo u hrani _______ podrijetla.",
+        "answer": "životinjskog",
+        "hint": "Suprotno od biljnog."
+      }
+    ],
+    "learn": {
+      "title": "Mikronutrijenti: vitamini i minerali",
+      "content":
+        '<h3>Vitamini</h3>' +
+        '<p><strong>Vitamini</strong> su organski spojevi potrebni u malim količinama za normalan rast, razvoj i održavanje organizma. <strong>Nemaju energetsku vrijednost.</strong></p>' +
+        '<ul>' +
+        '<li><strong>Topljivi u mastima:</strong> A, D, E i K — apsorbiraju se uz masti i mogu se nakupljati u tijelu.</li>' +
+        '<li><strong>Topljivi u vodi:</strong> B-kompleks i vitamin C — ne skladište se u većim količinama, osjetljiviji su na obradu.</li>' +
+        '</ul>' +
+        '<table>' +
+        '<tr><th>Vitamin</th><th>Uloga</th><th>Izvori / napomena</th></tr>' +
+        '<tr><td><strong>A</strong></td><td>vid, koža, imunitet, rast i razvoj</td><td>jetra, jaja, žuto-narančasto i tamnozeleno voće i povrće</td></tr>' +
+        '<tr><td><strong>D</strong></td><td>ugradnja kalcija i fosfora u kosti i zube</td><td>nedostatak: <strong>rahitis</strong>, osteomalacija, osteoporoza; stvara se u koži uz sunce</td></tr>' +
+        '<tr><td><strong>E</strong></td><td>antioksidans</td><td>ponajviše biljna ulja</td></tr>' +
+        '<tr><td><strong>K</strong></td><td>zgrušavanje krvi, zdravlje kostiju</td><td>zeleno lisnato povrće</td></tr>' +
+        '<tr><td><strong>B skupina</strong></td><td>oslobađanje energije, metabolizam UH, masti i bjelančevina</td><td>B12 samo u hrani životinjskog podrijetla; B9 (folna kiselina) važna u trudnoći</td></tr>' +
+        '<tr><td><strong>C</strong></td><td>stvaranje kolagena, antioksidans, imunitet, bolja apsorpcija željeza</td><td>citrusi, bobičasto voće, povrće</td></tr>' +
+        '</table>' +
+
+        '<h3>Minerali</h3>' +
+        '<p><strong>Minerali</strong> su anorganske tvari potrebne za normalno funkcioniranje organizma. <strong>Nemaju energetsku vrijednost.</strong></p>' +
+        '<ul>' +
+        '<li><strong>Makrominerali:</strong> kalcij, fosfor, magnezij, natrij, kalij, klor, sumpor.</li>' +
+        '<li><strong>Mikrominerali (mikroelementi, elementi u tragovima):</strong> željezo, cink, jod, selen, bakar, mangan, krom, molibden i drugi.</li>' +
+        '</ul>' +
+        '<table>' +
+        '<tr><th>Mineral</th><th>Uloga</th></tr>' +
+        '<tr><td><strong>Kalcij</strong></td><td>najzastupljeniji mineral u tijelu; kosti, zubi, živčani sustav, regulacija krvnog tlaka. Apsorpcija ovisi o <strong>vitaminu D</strong>.</td></tr>' +
+        '<tr><td><strong>Fosfor</strong></td><td>izgradnja kostiju, zuba, DNA i fosfolipida</td></tr>' +
+        '<tr><td><strong>Magnezij</strong></td><td>mišići, živčani sustav, mineralizacija kostiju</td></tr>' +
+        '<tr><td><strong>Natrij, kalij, klor</strong></td><td>ravnoteža tekućina, acido-bazna ravnoteža, prijenos živčanih impulsa</td></tr>' +
+        '<tr><td><strong>Željezo</strong></td><td>sastavni dio <strong>hemoglobina i mioglobina</strong>; nedostatak uzrokuje <strong>anemiju</strong>. Vitamin C povećava apsorpciju (osobito biljnog, nehemskog željeza).</td></tr>' +
+        '<tr><td><strong>Cink</strong></td><td>rast, razvoj, imunološki sustav, sinteza DNA</td></tr>' +
+        '<tr><td><strong>Jod</strong></td><td>pravilan rad štitne žlijezde</td></tr>' +
+        '<tr><td><strong>Selen</strong></td><td>dio antioksidativnih enzima; povezuje se s antikancerogenim djelovanjem</td></tr>' +
+        '</table>' +
+        '<div class="warning-box"><strong>Ispravak studentske bilješke:</strong> u sažetku pitanja stoji „željezo … povećava vitamin C”. Točno je obrnuto — <strong>vitamin C povećava apsorpciju željeza</strong>.</div>' +
+        '<div class="tip-box"><strong>Pri obradi hrane:</strong> najosjetljiviji su vitamini (osobito C i B skupina — toplina, kisik, svjetlo, ispiranje u vodu), dok su minerali stabilniji.</div>'
+    }
+  },
+
+  "foodPreservation": {
+    "name": "Kvarenje i konzerviranje hrane",
+    "icon": "fa-snowflake",
+    "color": "#06b6d4",
+    "flashcards": [
+      {
+        "question": "Što je KVARENJE hrane?",
+        "answer": "Proces kojim se smanjuju kvaliteta i sigurnost hrane: mijenjaju se boja, okus, miris, tekstura i hranjiva vrijednost, a razvijaju se mikroorganizmi.",
+        "explanation": "Mikrobiološko kvarenje može biti i nevidljivo."
+      },
+      {
+        "question": "Koji su faktori kvarenja hrane?",
+        "answer": "Fizikalno-kemijski (kisik, toplina, svjetlo, zračenje, voda) i biološki (mikroorganizmi, enzimi, štetočine).",
+        "explanation": "Više slobodne vode = brži rast mikroorganizama."
+      },
+      {
+        "question": "Koji mikroorganizmi kvare hranu?",
+        "answer": "Bakterije (najviše kvarenja, stvaraju spore), kvasci (alkoholno vrenje šećera), plijesni (rast na površini) i virusi (množe se samo u živim stanicama).",
+        "explanation": "Plijesni su višestanične gljivice."
+      },
+      {
+        "question": "ABIOZA vs ANABIOZA?",
+        "answer": "Abioza: uništavanje ili uklanjanje mikroorganizama (npr. sterilizacija). Anabioza: usporavanje njihove aktivnosti nepovoljnim uvjetima (hlađenje, sušenje).",
+        "explanation": "Mnemonik: a-bioza = bez života; ana-bioza = život „uspavan”."
+      },
+      {
+        "question": "Što je PASTERIZACIJA?",
+        "answer": "Toplinska obrada na temperaturi nižoj od 100 °C; uništava vegetativne oblike mikroorganizama, ali ne i spore.",
+        "explanation": "Često se provodi u protoku, za tekuće namirnice."
+      },
+      {
+        "question": "Što je STERILIZACIJA?",
+        "answer": "Toplinska obrada na temperaturi višoj od 100 °C (u autoklavu, pod tlakom); uništava i vegetativne oblike i spore.",
+        "explanation": "Proizvodi: konzerve, UHT mlijeko."
+      },
+      {
+        "question": "Što je AUTOKLAV?",
+        "answer": "Uređaj za zagrijavanje pod povišenim tlakom na temperature iznad vrelišta vode – služi za sterilizaciju.",
+        "explanation": "Pod tlakom voda vrije iznad 100 °C."
+      },
+      {
+        "question": "Hlađenje vs zamrzavanje?",
+        "answer": "Hlađenje: iznad točke smrzavanja (oko 0 do +4 °C), usporava mikroorganizme. Zamrzavanje: ispod točke smrzavanja staničnog soka; skladištenje na −18 °C.",
+        "explanation": "Preporučuje se BRZO zamrzavanje (sitni kristali leda)."
+      },
+      {
+        "question": "Što je BLANŠIRANJE?",
+        "answer": "Kratkotrajna toplinska obrada (npr. povrća) prije zamrzavanja radi inaktivacije enzima.",
+        "explanation": "Enzimi bi inače mijenjali boju i okus tijekom skladištenja."
+      },
+      {
+        "question": "Što je LIOFILIZACIJA?",
+        "answer": "Sušenje smrzavanjem: hrana se brzo zamrzne, a led se u vakuumu uklanja sublimacijom. Kvaliteta je vrlo dobro očuvana.",
+        "explanation": "Primjer: instant kava, sušeno voće za müsli."
+      },
+      {
+        "question": "Što je BIOLOŠKO konzerviranje?",
+        "answer": "Korisni mikroorganizmi (bakterije mliječne kiseline, kvasci) stvaraju uvjete nepovoljne za uzročnike kvarenja. Npr. kiseli kupus, krastavci, jogurt.",
+        "explanation": "Temelj je mliječno-kiselo vrenje."
+      },
+      {
+        "question": "Koji su prirodni konzervansi?",
+        "answer": "Šećer, sol, ocat, alkohol i aromatično bilje.",
+        "explanation": "Šećer: džem; sol: suho soljenje i salamurenje; ocat: octena kiselina."
+      },
+      {
+        "question": "Što je KISELJENJE octom?",
+        "answer": "Kemijski postupak konzerviranja octenom kiselinom (octom).",
+        "explanation": "Razlikuj od biološkog kiseljenja (mliječna kiselina nastaje fermentacijom)."
+      },
+      {
+        "question": "Koji su najvažniji kemijski konzervansi?",
+        "answer": "Sorbati, benzoati, propionati, sumporov dioksid, nitriti, nizin i lizozim. Aditivi se označavaju E-brojevima.",
+        "explanation": "Uz konzervanse: antioksidansi i regulatori kiselosti."
+      },
+      {
+        "question": "Koji su novi (netermički) postupci konzerviranja?",
+        "answer": "Visoki hidrostatski tlak, ionizirajuće zračenje („hladna pasterizacija”) i pulsirajuće električno polje.",
+        "explanation": "Čuvaju vitamine, okus i boju uz minimalnu toplinsku obradu."
+      },
+      {
+        "question": "Što je MODIFICIRANA ATMOSFERA?",
+        "answer": "Pakiranje sa smanjenim udjelom kisika i povećanim udjelom CO₂ i dušika radi produljenja trajnosti.",
+        "explanation": "Kod skladištenja voća koristi se kontrolirana atmosfera."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Sterilizacijom se:",
+        "options": ["Uništavaju samo vegetativni oblici mikroba", "Samo usporava rast mikroorganizama", "Uništavaju i vegetativni oblici i spore", "Inaktiviraju samo enzimi u hrani"],
+        "correct": 2
+      },
+      {
+        "question": "Pasterizacija se provodi na temperaturi:",
+        "options": ["Višoj od 100 °C", "Ispod 0 °C", "Od 121 °C pod tlakom", "Nižoj od 100 °C"],
+        "correct": 3
+      },
+      {
+        "question": "Duboko zamrznuta hrana čuva se na:",
+        "options": ["−18 °C", "−4 °C", "0 °C", "−2 °C"],
+        "correct": 0
+      },
+      {
+        "question": "Abioza se temelji na:",
+        "options": ["Usporavanju aktivnosti mikroorganizama", "Uništavanju mikroorganizama u hrani", "Dodavanju korisnih mikroorganizama", "Hlađenju hrane iznad točke smrzavanja"],
+        "correct": 1
+      },
+      {
+        "question": "Koji je postupak primjer anabioze?",
+        "options": ["Sterilizacija", "Ultrafiltracija", "Sušenje", "Ionizirajuće zračenje"],
+        "correct": 2
+      },
+      {
+        "question": "Liofilizacija je:",
+        "options": ["Zagrijavanje hrane pod povišenim tlakom", "Kratko potapanje u vruću vodu", "Dodavanje octene kiseline", "Sušenje smrznute hrane pod vakuumom"],
+        "correct": 3
+      },
+      {
+        "question": "Blanširanje se provodi prije zamrzavanja radi:",
+        "options": ["Inaktivacije enzima", "Uklanjanja spora", "Povećanja udjela vode", "Stvaranja velikih kristala"],
+        "correct": 0
+      },
+      {
+        "question": "Kiseljenje octenom kiselinom je:",
+        "options": ["Biološki postupak konzerviranja", "Kemijski postupak konzerviranja", "Fizikalni postupak zamrzavanja", "Postupak uklanjanja vode"],
+        "correct": 1
+      },
+      {
+        "question": "Koji je od navedenih konzervansa prirodni?",
+        "options": ["Natrijev benzoat", "Kalijev sorbat", "Ocat", "Sumporov dioksid"],
+        "correct": 2
+      },
+      {
+        "question": "„Hladna pasterizacija” je drugi naziv za:",
+        "options": ["Sterilizaciju u autoklavu", "Blanširanje", "Liofilizaciju", "Ionizirajuće zračenje"],
+        "correct": 3
+      },
+      {
+        "question": "Biološki konzervirano povrće dobiva se:",
+        "options": ["Mliječno-kiselom fermentacijom", "Dodatkom kemijskih konzervansa", "Sterilizacijom u autoklavu", "Liofilizacijom pod vakuumom"],
+        "correct": 0
+      },
+      {
+        "question": "Koja skupina mikroorganizama uzrokuje najveći broj kvarenja hrane?",
+        "options": ["Virusi", "Bakterije", "Kvasci", "Plijesni"],
+        "correct": 1
+      },
+      {
+        "question": "Mikrobiološko kvarenje hrane:",
+        "options": ["Uvijek se vidi golim okom", "Nastaje samo na svjetlu", "Može biti nevidljivo", "Nastaje samo bez vode"],
+        "correct": 2
+      },
+      {
+        "question": "Autoklav je uređaj za:",
+        "options": ["Zamrzavanje na −40 °C", "Sušenje hrane na suncu", "Dimljenje mesa i ribe", "Zagrijavanje pod tlakom iznad vrelišta"],
+        "correct": 3
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Pasterizacija uništava _______ oblike mikroorganizama, ali ne i spore.",
+        "answer": "vegetativne",
+        "hint": "Aktivni oblici, suprotno od spora."
+      },
+      {
+        "sentence": "Sterilizacija se provodi na temperaturama višim od _______ °C.",
+        "answer": "100",
+        "hint": "Vrelište vode."
+      },
+      {
+        "sentence": "Konzerviranje uništavanjem ili uklanjanjem mikroorganizama naziva se _______.",
+        "answer": "abioza",
+        "hint": "Suprotno od anabioze."
+      },
+      {
+        "sentence": "Uređaj za sterilizaciju pod povišenim tlakom zove se _______.",
+        "answer": "autoklav",
+        "hint": "Počinje s „auto”."
+      },
+      {
+        "sentence": "Kratkotrajna toplinska obrada povrća prije zamrzavanja zove se _______.",
+        "answer": "blanširanje",
+        "hint": "Inaktivira enzime."
+      },
+      {
+        "sentence": "Aditivi se na deklaraciji označavaju _______-brojevima.",
+        "answer": "E",
+        "hint": "Jedno slovo."
+      },
+      {
+        "sentence": "Sušenje smrznute hrane pod vakuumom naziva se _______.",
+        "answer": "liofilizacija",
+        "hint": "Instant kava."
+      }
+    ],
+    "learn": {
+      "title": "Kvarenje i konzerviranje hrane",
+      "content":
+        '<h3>Kvarenje hrane</h3>' +
+        '<p><strong>Kvarenje</strong> je proces kojim se smanjuju kvaliteta i sigurnost hrane. Očituje se promjenama boje, okusa, mirisa, teksture i hranjive vrijednosti te razvojem mikroorganizama. <strong>Mikrobiološko kvarenje može biti nevidljivo</strong> — hrana može izgledati ispravno, a sadržavati uzročnike bolesti.</p>' +
+        '<table>' +
+        '<tr><th>Fizikalno-kemijski faktori</th><th>Biološki faktori</th></tr>' +
+        '<tr><td><strong>Kisik</strong> — oksidacija masti, gubitak vitamina, arome i vode</td><td><strong>Mikroorganizmi</strong> — bakterije, kvasci, plijesni, virusi</td></tr>' +
+        '<tr><td><strong>Toplina</strong> — ubrzava kemijske reakcije i rast mikroorganizama</td><td><strong>Enzimi</strong> — razgradnja sastojaka, promjene boje, teksture, mirisa</td></tr>' +
+        '<tr><td><strong>Svjetlo i zračenje</strong> — promjena boje, razgradnja vitamina</td><td><strong>Štetočine</strong> — glodavci i insekti uništavaju i kontaminiraju hranu</td></tr>' +
+        '<tr><td><strong>Voda</strong> — više slobodne vode pogoduje mikroorganizmima</td><td></td></tr>' +
+        '</table>' +
+        '<h4>Mikroflora kvarenja</h4>' +
+        '<ul>' +
+        '<li><strong>Bakterije</strong> — razmnožavaju se diobom, mogu stvarati <strong>spore</strong>; uzrokuju najveći broj kvarenja.</li>' +
+        '<li><strong>Kvasci</strong> — uzrokuju alkoholno vrenje šećera.</li>' +
+        '<li><strong>Plijesni</strong> — višestanične gljivice koje rastu na površini hrane.</li>' +
+        '<li><strong>Virusi</strong> — razmnožavaju se samo u živim stanicama domaćina.</li>' +
+        '</ul>' +
+
+        '<h3>Konzerviranje — dva pristupa</h3>' +
+        '<p><strong>Konzerviranje</strong> je skup postupaka kojima se produljuje trajnost hrane i sprječava kvarenje.</p>' +
+        '<table>' +
+        '<tr><th>Abioza</th><th>Anabioza</th></tr>' +
+        '<tr><td>uništavanje ili uklanjanje mikroorganizama</td><td>usporavanje aktivnosti mikroorganizama nepovoljnim uvjetima</td></tr>' +
+        '<tr><td>sterilizacija, ultrafiltracija, zračenje</td><td>hlađenje, zamrzavanje, sušenje, šećer, sol, fermentacija</td></tr>' +
+        '</table>' +
+        '<p><strong>Klasični postupci:</strong> pasterizacija, sterilizacija, hlađenje, zamrzavanje, uklanjanje vode, biološko konzerviranje i konzerviranje dodacima.</p>' +
+
+        '<h3>Toplinska obrada</h3>' +
+        '<table>' +
+        '<tr><th></th><th>Pasterizacija</th><th>Sterilizacija</th></tr>' +
+        '<tr><td>Temperatura</td><td><strong>ispod 100 °C</strong> (tekuće namirnice često u protoku)</td><td><strong>iznad 100 °C</strong>, pod povišenim tlakom</td></tr>' +
+        '<tr><td>Učinak</td><td>uništava <strong>vegetativne oblike</strong> mikroorganizama</td><td>uništava vegetativne oblike <strong>i spore</strong></td></tr>' +
+        '<tr><td>Primjeri</td><td>mlijeko (72 °C, 15–20 s), sokovi, pivo</td><td>konzerve, UHT mlijeko</td></tr>' +
+        '</table>' +
+        '<p><strong>Autoklav</strong> je uređaj za zagrijavanje pod povišenim tlakom na temperature iznad vrelišta — za sterilizaciju.</p>' +
+
+        '<h3>Hlađenje i zamrzavanje</h3>' +
+        '<ul>' +
+        '<li><strong>Hlađenje</strong> — čuvanje iznad točke smrzavanja (obično <strong>0 do +4 °C</strong>); usporava razvoj mikroorganizama i kemijske reakcije.</li>' +
+        '<li><strong>Modificirana atmosfera</strong> — manje kisika, više CO₂ i dušika u pakiranju.</li>' +
+        '<li><strong>Zamrzavanje</strong> — snižavanje temperature ispod točke smrzavanja staničnog soka; voda kristalizira u led. Preporučuje se <strong>brzo zamrzavanje</strong> (sitni kristali) i skladištenje na <strong>−18 °C</strong>.</li>' +
+        '<li><strong>Blanširanje</strong> — kratka toplinska obrada povrća prije zamrzavanja radi <strong>inaktivacije enzima</strong>.</li>' +
+        '</ul>' +
+
+        '<h3>Uklanjanje vode</h3>' +
+        '<ul>' +
+        '<li><strong>Sušenje</strong> — uklanjanje vode iz krute hrane; sprječava rast mikroorganizama.</li>' +
+        '<li><strong>Koncentriranje</strong> — za tekuću hranu (sokovi, sirupi).</li>' +
+        '<li><strong>Liofilizacija</strong> — hrana se brzo zamrzne, a led se pod vakuumom uklanja sublimacijom; vrlo dobro čuva kvalitetu (instant kava).</li>' +
+        '</ul>' +
+
+        '<h3>Biološko konzerviranje</h3>' +
+        '<p>Temelji se na <strong>kontroliranom djelovanju korisnih mikroorganizama</strong> (bakterija i kvasaca) koji svojom aktivnošću stvaraju nepovoljne uvjete za uzročnike kvarenja.</p>' +
+        '<p><strong>Primjeri:</strong> mliječno-kiselo vrenje u preradi mlijeka (jogurt, kiselo mlijeko) i povrća (kiseli kupus, kisela repa, krastavci, masline). Biološki konzervirano povrće dobiva se konzerviranjem <strong>mliječnom kiselinom nastalom fermentacijom šećera iz samog povrća</strong>.</p>' +
+
+        '<h3>Konzerviranje dodacima</h3>' +
+        '<table>' +
+        '<tr><th>Prirodni konzervansi</th><th>Kemijski dodaci (aditivi, E-brojevi)</th></tr>' +
+        '<tr><td><strong>Šećer</strong> — džem, marmelada, kandirano voće</td><td><strong>Konzervansi</strong> — sorbati, benzoati, propionati, sumporov dioksid, nitriti, nizin, lizozim</td></tr>' +
+        '<tr><td><strong>Sol</strong> — suho soljenje ili salamurenje</td><td><strong>Antioksidansi</strong> — sprječavaju oksidacijske promjene</td></tr>' +
+        '<tr><td><strong>Ocat</strong> — konzervira octenom kiselinom</td><td><strong>Regulatori kiselosti</strong> — povećavaju ili smanjuju pH</td></tr>' +
+        '<tr><td><strong>Alkohol</strong> — pri višim koncentracijama</td><td></td></tr>' +
+        '<tr><td><strong>Aromatično bilje</strong></td><td></td></tr>' +
+        '</table>' +
+        '<div class="tip-box"><strong>Kiseljenje octom</strong> je <em>kemijski</em> postupak konzerviranja (dodana octena kiselina); kiseljenje kupusa mliječno-kiselim vrenjem je <em>biološki</em> postupak.</div>' +
+
+        '<h3>Novi (netermički) postupci</h3>' +
+        '<ul>' +
+        '<li><strong>Visoki hidrostatski tlak</strong> — uništava mikroorganizme uz očuvanje vitamina, okusa i boje.</li>' +
+        '<li><strong>Ionizirajuće zračenje</strong> — „hladna pasterizacija”; produljuje trajnost.</li>' +
+        '<li><strong>Pulsirajuće električno polje</strong> — kratki impulsi jakog električnog polja inaktiviraju mikroorganizme.</li>' +
+        '</ul>'
+    }
+  },
+
+  "cerealsBakery": {
+    "name": "Žitarice i proizvodi od žitarica",
+    "icon": "fa-bread-slice",
+    "color": "#d97706",
+    "flashcards": [
+      {
+        "question": "Što su ŽITARICE?",
+        "answer": "Biljke iz porodice trava; zauzimaju najveći dio svjetskih poljoprivrednih površina. Najvažnije: pšenica, kukuruz i riža.",
+        "explanation": "Pseudožitarice: amarant i kvinoja."
+      },
+      {
+        "question": "Krušne vs nekrušne žitarice?",
+        "answer": "Krušne: pšenica i raž (same daju kruh). Nekrušne: kukuruz, ječam, zob, proso, riža, heljda, sirak.",
+        "explanation": "Krušne imaju bjelančevine koje stvaraju glutensku mrežu."
+      },
+      {
+        "question": "Koji su dijelovi zrna žitarice?",
+        "answer": "Omotač (vlakna, minerali), endosperm (najveći dio, škrob i bjelančevine) i klica (ulja, bjelančevine, vitamini, minerali).",
+        "explanation": "Klica je nutritivno najvrjedniji dio zrna."
+      },
+      {
+        "question": "Po čemu je važna KLICA?",
+        "answer": "Nutritivno je najvrjedniji dio zrna i glavni izvor masti; sadrži i bjelančevine, vitamine i minerale.",
+        "explanation": "Pri mljevenju bijelog brašna se uklanja."
+      },
+      {
+        "question": "Što je GLUTEN?",
+        "answer": "Bjelančevinska mreža koja u zamjesu nastaje iz glijadina i glutenina; tijestu daje elastičnost i zadržava plin.",
+        "explanation": "Nalazi se u pšenici, raži i ječmu."
+      },
+      {
+        "question": "Što je CELIJAKIJA?",
+        "answer": "Bolest, odnosno preosjetljivost (autoimuna reakcija) organizma na gluten.",
+        "explanation": "Liječi se prehranom bez glutena."
+      },
+      {
+        "question": "Što označava TIP brašna?",
+        "answer": "Udio mineralnih tvari (pepela) u brašnu: tip 550 ≈ 0,55 % pepela. Veći tip = tamnije brašno i više minerala.",
+        "explanation": "Pepeo = ostatak nakon spaljivanja = mineralne tvari."
+      },
+      {
+        "question": "Koji su tipovi pšeničnog brašna?",
+        "answer": "Bijelo 400 i 550, polubijelo 700 i 850, crno 1100 i 1600. Raženo: 750, 950, 1250.",
+        "explanation": "Kukuruzno i heljdino brašno ne razvrstavaju se u tipove."
+      },
+      {
+        "question": "Koje brašno za bijeli, a koje za crni kruh?",
+        "answer": "Bijeli kruh: brašno tipa 550. Crni kruh: brašno tipa 1100.",
+        "explanation": "Cjelovito brašno sadrži sve dijelove zrna u prirodnom omjeru."
+      },
+      {
+        "question": "Koji su osnovni mlinski proizvodi?",
+        "answer": "Prekrupa, krupica i brašno – dobivaju se mljevenjem i usitnjavanjem žitarica.",
+        "explanation": "Kvaliteta brašna: boja, miris, okus, vlažnost, granulacija."
+      },
+      {
+        "question": "Koje su osnovne sirovine za kruh?",
+        "answer": "Brašno, voda, sol i pekarski kvasac.",
+        "explanation": "Kvasac razgrađuje šećere u alkohol i CO₂ koji diže tijesto."
+      },
+      {
+        "question": "Direktni vs indirektni postupak proizvodnje kruha?",
+        "answer": "Direktni: sve sirovine se zamijese odjednom. Indirektni: najprije se priprema predtijesto ili kiselo tijesto.",
+        "explanation": "Indirektni daje bolju aromu."
+      },
+      {
+        "question": "Koje su faze proizvodnje kruha?",
+        "answer": "Zamjes (nastaje glutenska mreža), fermentacija, oblikovanje, završna fermentacija, pečenje (200–250 °C) i hlađenje.",
+        "explanation": "Pri pečenju škrob želatinizira, a bjelančevine koaguliraju."
+      },
+      {
+        "question": "Što je KISELO TIJESTO?",
+        "answer": "Tijesto koje fermentiraju bakterije mliječne kiseline i kvasci; poboljšava aromu, mikrobiološku stabilnost, probavljivost i hranjivu vrijednost.",
+        "explanation": "Može nastati spontano ili uz starter kulture."
+      },
+      {
+        "question": "Što je NITAVOST kruha?",
+        "answer": "Bolest kruha koju uzrokuje Bacillus subtilis: sredina postaje ljepljiva i rasteže se u niti, uz neugodan miris.",
+        "explanation": "Spore preživljavaju pečenje."
+      },
+      {
+        "question": "Koliko raženog brašna mora imati raženi kruh?",
+        "answer": "Najmanje 70 % raženog brašna.",
+        "explanation": "Posebne vrste kruha: mliječni, tost, kruh sa sjemenkama."
+      },
+      {
+        "question": "Kako se proizvodi TJESTENINA i po čemu se razlikuje od kruha?",
+        "answer": "Pšenična krupica i voda: zamijesi se, oblikuje i suši. Za razliku od kruha nema kvasca, fermentacije ni pečenja.",
+        "explanation": "Kvaščeve gljivice se NE dodaju."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Krušne žitarice su:",
+        "options": ["Pšenica i raž", "Kukuruz i riža", "Ječam i zob", "Proso i heljda"],
+        "correct": 0
+      },
+      {
+        "question": "Glavni izvor masti u zrnu žitarice je:",
+        "options": ["Endosperm", "Klica", "Omotač", "Pljevica"],
+        "correct": 1
+      },
+      {
+        "question": "Najveći dio zrna žitarice, bogat škrobom, je:",
+        "options": ["Klica", "Omotač", "Endosperm", "Pljevica"],
+        "correct": 2
+      },
+      {
+        "question": "Omotač zrna žitarice bogat je:",
+        "options": ["Škrobom i jednostavnim šećerima", "Uljima i vitaminom E", "Glutenom i škrobom", "Vlaknima i mineralima"],
+        "correct": 3
+      },
+      {
+        "question": "Tip brašna označava:",
+        "options": ["Udio mineralnih tvari (pepela)", "Udio glutena u brašnu", "Stupanj finoće mljevenja", "Udio vlage u brašnu"],
+        "correct": 0
+      },
+      {
+        "question": "Za bijeli kruh najčešće se koristi brašno tipa:",
+        "options": ["1100", "550", "1600", "850"],
+        "correct": 1
+      },
+      {
+        "question": "Brašno tipa 1100 koristi se za:",
+        "options": ["Bijeli kruh", "Tjesteninu od krupice", "Crni kruh", "Fine kolače"],
+        "correct": 2
+      },
+      {
+        "question": "Gluten nastaje iz bjelančevina:",
+        "options": ["Albumina i globulina", "Kazeina i albumina", "Amiloze i amilopektina", "Glijadina i glutenina"],
+        "correct": 3
+      },
+      {
+        "question": "Raženi kruh mora sadržavati najmanje:",
+        "options": ["70 % raženog brašna", "30 % raženog brašna", "50 % raženog brašna", "100 % raženog brašna"],
+        "correct": 0
+      },
+      {
+        "question": "Što se NE dodaje u proizvodnji tjestenine?",
+        "options": ["Voda", "Kvasac", "Pšenična krupica", "Jaja (kod jajčane tjestenine)"],
+        "correct": 1
+      },
+      {
+        "question": "Nitavost kruha uzrokuje:",
+        "options": ["Saccharomyces cerevisiae", "Lactobacillus bulgaricus", "Bacillus subtilis", "Aspergillus niger"],
+        "correct": 2
+      },
+      {
+        "question": "Što NIJE mana pekarskih proizvoda?",
+        "options": ["Nagorjela kora", "Gnjecava sredina", "Deformiran oblik", "Kanal distribucije"],
+        "correct": 3
+      },
+      {
+        "question": "Koje se brašno NE razvrstava u tipove?",
+        "options": ["Kukuruzno", "Pšenično", "Raženo", "Pšenično polubijelo"],
+        "correct": 0
+      },
+      {
+        "question": "Kruh se peče na temperaturi:",
+        "options": ["100–120 °C", "200–250 °C", "60–80 °C", "300–350 °C"],
+        "correct": 1
+      },
+      {
+        "question": "Celijakija je preosjetljivost na:",
+        "options": ["Laktozu", "Kazein", "Gluten", "Fruktozu"],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Preosjetljivost organizma na gluten naziva se _______.",
+        "answer": "celijakija",
+        "hint": "Bolest."
+      },
+      {
+        "sentence": "Gluten nastaje iz glijadina i _______.",
+        "answer": "glutenina",
+        "hint": "Druga glutenska bjelančevina."
+      },
+      {
+        "sentence": "Raženi kruh mora sadržavati najmanje _______ % raženog brašna.",
+        "answer": "70",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Nutritivno najvrjedniji dio zrna žitarice je _______.",
+        "answer": "klica",
+        "hint": "Iz nje raste nova biljka."
+      },
+      {
+        "sentence": "Kiselo tijesto nastaje djelovanjem kvasaca i bakterija _______ kiseline.",
+        "answer": "mliječne",
+        "hint": "Kao u jogurtu."
+      },
+      {
+        "sentence": "Tjestenina se proizvodi od pšenične _______ i vode.",
+        "answer": "krupice",
+        "hint": "Mlinski proizvod krupnije granulacije od brašna."
+      },
+      {
+        "sentence": "Nitavost kruha uzrokuje bakterija Bacillus _______.",
+        "answer": "subtilis",
+        "hint": "Latinski naziv vrste."
+      }
+    ],
+    "learn": {
+      "title": "Žitarice i proizvodi od žitarica",
+      "content":
+        '<h3>Žitarice</h3>' +
+        '<p><strong>Žitarice</strong> su biljke iz porodice trava koje zauzimaju najveći dio svjetskih poljoprivrednih površina. Najvažnije su <strong>pšenica, kukuruz i riža</strong>; u <strong>pseudožitarice</strong> se ubrajaju amarant i kvinoja.</p>' +
+        '<table>' +
+        '<tr><th>Skupina</th><th>Žitarice</th></tr>' +
+        '<tr><td>Krušne</td><td><strong>pšenica i raž</strong> — same mogu dati kruh</td></tr>' +
+        '<tr><td>Nekrušne</td><td>kukuruz, ječam, zob, proso, riža, heljda, sirak</td></tr>' +
+        '</table>' +
+        '<h4>Građa zrna</h4>' +
+        '<table>' +
+        '<tr><th>Dio</th><th>Sastav</th></tr>' +
+        '<tr><td><strong>Omotač</strong></td><td>bogat prehrambenim vlaknima, mineralima i fitokemikalijama</td></tr>' +
+        '<tr><td><strong>Endosperm</strong></td><td>najveći dio zrna: škrob, bjelančevine, vitamini B skupine (uz aleuronski sloj)</td></tr>' +
+        '<tr><td><strong>Klica</strong></td><td>ulja (<strong>glavni izvor masti</strong>), bjelančevine, vitamini i minerali — nutritivno najvrjedniji dio</td></tr>' +
+        '</table>' +
+        '<h4>Hranjiva vrijednost</h4>' +
+        '<ul>' +
+        '<li><strong>Ugljikohidrati</strong> — najzastupljeniji; glavnina je škrob u endospermu.</li>' +
+        '<li><strong>Bjelančevine</strong> — albumini, globulini, prolamini i glutelini. U pšenici iz <strong>glijadina i glutenina</strong> nastaje <strong>gluten</strong>, koji tijestu daje elastičnost i dobra pekarska svojstva.</li>' +
+        '<li><strong>Masti</strong> — u manjim količinama, uglavnom u klici i aleuronskom sloju.</li>' +
+        '<li><strong>Vitamini i minerali</strong> — najviše u omotaču i klici, zato su <strong>cjelovite žitarice</strong> nutritivno vrjednije.</li>' +
+        '</ul>' +
+
+        '<h3>Mlinski proizvodi i brašno</h3>' +
+        '<p>Mlinski proizvodi dobivaju se mljevenjem i usitnjavanjem žitarica: <strong>prekrupa, krupica i brašno</strong>.</p>' +
+        '<p><strong>Tip brašna</strong> označava <strong>udio mineralnih tvari (pepela)</strong>: broj tipa ≈ udio pepela u postocima × 1000 (tip 550 ≈ 0,55 % pepela). Veći tip znači više minerala i tamniju boju.</p>' +
+        '<table>' +
+        '<tr><th>Brašno</th><th>Tipovi</th><th>Upotreba</th></tr>' +
+        '<tr><td>Pšenično bijelo</td><td>400, 550</td><td>bijeli kruh (T-550), kolači</td></tr>' +
+        '<tr><td>Pšenično polubijelo</td><td>700, 850</td><td>polubijeli kruh</td></tr>' +
+        '<tr><td>Pšenično crno</td><td>1100, 1600</td><td>crni kruh (T-1100)</td></tr>' +
+        '<tr><td>Raženo</td><td>750, 950, 1250</td><td>raženi kruh</td></tr>' +
+        '</table>' +
+        '<p><strong>Kukuruzno i heljdino brašno ne razvrstavaju se u tipove.</strong> <strong>Cjelovito brašno</strong> sadrži sve dijelove zrna u prirodnom omjeru. Kvaliteta brašna procjenjuje se prema boji, mirisu, okusu, vlažnosti i granulaciji.</p>' +
+
+        '<h3>Pekarski proizvodi i kruh</h3>' +
+        '<p>Pekarski proizvodi rade se od brašna, vode, kvasca, soli i drugih dodataka; dijele se na kruh, peciva i ostale pekarske proizvode.</p>' +
+        '<ul>' +
+        '<li><strong>Direktni postupak</strong> — sve sirovine zamijese se odjednom.</li>' +
+        '<li><strong>Indirektni postupak</strong> — najprije se priprema predtijesto ili kiselo tijesto.</li>' +
+        '</ul>' +
+        '<h4>Proizvodnja kruha</h4>' +
+        '<ol>' +
+        '<li><strong>Sirovine</strong>: brašno, voda, sol, pekarski kvasac (<em>Saccharomyces cerevisiae</em>). Kvasac razgrađuje šećere u alkohol i <strong>CO₂</strong>, koji diže tijesto.</li>' +
+        '<li><strong>Zamjes</strong> — najvažniji korak; nastaje glutenska mreža.</li>' +
+        '<li><strong>Fermentacija</strong> (dizanje) — razvoj volumena, strukture i arome.</li>' +
+        '<li><strong>Oblikovanje i završna fermentacija</strong>.</li>' +
+        '<li><strong>Pečenje</strong> pri <strong>200–250 °C</strong> — želatinizacija škroba, koagulacija bjelančevina, boja i aroma kore.</li>' +
+        '<li><strong>Hlađenje</strong> — stabilizira strukturu prije skladištenja i prodaje.</li>' +
+        '</ol>' +
+        '<p><strong>Kiselo tijesto</strong> nastaje djelovanjem bakterija mliječne kiseline i kvasaca (spontano ili uz starter kulture). Prednosti: bolja aroma, veća mikrobiološka stabilnost, lakša probavljivost, veća hranjiva vrijednost.</p>' +
+        '<h4>Vrste proizvoda</h4>' +
+        '<ul>' +
+        '<li><strong>Kruh</strong>: pšenični, raženi (<strong>najmanje 70 % raženog brašna</strong>), kukuruzni, miješani; <strong>posebne vrste</strong>: mliječni kruh, tost, kruh sa sjemenkama.</li>' +
+        '<li><strong>Ostali proizvodi</strong>: štrukli, burek, savijače, mlinci, grisini, krafne.</li>' +
+        '<li><strong>Fini pekarski proizvodi</strong>: keksi, krekeri, medenjaci, paprenjaci, makroni, biskviti.</li>' +
+        '</ul>' +
+        '<h4>Kvaliteta, mane i bolesti</h4>' +
+        '<p>Kvaliteta se procjenjuje prema okusu, teksturi i boji. <strong>Mane</strong>: ispucala, nečista ili nagorjela kora, gnjecava sredina, deformiran oblik, nepoželjan okus ili miris.</p>' +
+        '<ul>' +
+        '<li><strong>Nitavost</strong> — bolest kruha koju uzrokuje <strong>Bacillus subtilis</strong>; sredina postaje ljepljiva i rasteže se u niti.</li>' +
+        '<li><strong>Pljesnivost</strong> — plijesan na površini tijekom skladištenja.</li>' +
+        '</ul>' +
+        '<div class="warning-box"><strong>Zamka:</strong> „kanal distribucije” nije mana pekarskih proizvoda.</div>' +
+
+        '<h3>Tjestenina i tijesta</h3>' +
+        '<p><strong>Tjestenina</strong> se dobiva miješanjem <strong>pšenične krupice i vode</strong>, oblikovanjem i <strong>sušenjem</strong>: priprema sirovina → zamjes → oblikovanje → sušenje → pakiranje.</p>' +
+        '<div class="tip-box"><strong>Razlika tehnološkog postupka tjestenine i kruha:</strong> kruh = brašno + voda + sol + <strong>kvasac</strong> → fermentacija → <strong>pečenje</strong>. Tjestenina = krupica + voda (bez kvasca, bez fermentacije) → oblikovanje → <strong>sušenje</strong>.</div>' +
+        '<p><strong>Tijesta</strong> (lisnato, dizano, vučeno, krumpirovo) prodaju se svježa, zamrznuta ili gotova.</p>' +
+
+        '<h3>Zdravstveni značaj</h3>' +
+        '<p>Proizvodi od žitarica važan su izvor energije, bjelančevina, vitamina B skupine, minerala i prehrambenih vlakana. Redovita konzumacija <strong>cjelovitih žitarica</strong> povezuje se s manjim rizikom od kardiovaskularnih bolesti, dijabetesa tipa 2, pretilosti i nekih karcinoma.</p>' +
+        '<p><strong>Celijakija</strong> je bolest, odnosno preosjetljivost organizma na gluten.</p>'
+    }
+  },
+
+  "fruitsVegetables": {
+    "name": "Voće, povrće i prerađevine",
+    "icon": "fa-apple-whole",
+    "color": "#22c55e",
+    "flashcards": [
+      {
+        "question": "Koje su skupine VOĆA?",
+        "answer": "Jezgričavo (jabuka, kruška), koštičavo (šljiva, trešnja), bobičasto (jagoda), orašasto (orah, badem), agrumi (naranča) i južno voće (banana, smokva).",
+        "explanation": "Južno voće: banana, ananas, datulje, smokve."
+      },
+      {
+        "question": "Koje je voće KOŠTIČAVO?",
+        "answer": "Šljiva, trešnja, višnja, marelica, breskva – plod s jednom tvrdom košticom.",
+        "explanation": "Jezgričavo (jabučasto) voće ima više sjemenki u kućištu: jabuka, kruška, dunja."
+      },
+      {
+        "question": "Što je ORAŠASTO (lupinasto) voće?",
+        "answer": "Orah, lješnjak, badem (i kokos) – specifično po velikom udjelu masti, uglavnom nezasićenih, i visokoj energetskoj vrijednosti.",
+        "explanation": "Kokos je voće posebno bogato mastima."
+      },
+      {
+        "question": "Koje su skupine POVRĆA?",
+        "answer": "Plodasto, lisnato, cvjetasto, mahunasto, stabljičasto, lukovičasto, korjenasto i gomoljasto.",
+        "explanation": "Mahunasto: grah, grašak, leća, slanutak."
+      },
+      {
+        "question": "Gomoljasto vs korjenasto povrće?",
+        "answer": "Gomoljasto: krumpir, batat. Korjenasto: mrkva, celer, peršin, rotkvica, cikla.",
+        "explanation": "Lukovičasto: luk, češnjak."
+      },
+      {
+        "question": "Kakav je sastav voća i povrća?",
+        "answer": "Voda 75–95 %; od hranjivih tvari najviše ugljikohidrata; malo bjelančevina i masti; vitamin C, karotenoidi i minerali.",
+        "explanation": "Zbog vode je energetska vrijednost niska."
+      },
+      {
+        "question": "Po čemu su važne MAHUNARKE?",
+        "answer": "Sadrže 18–35 % bjelančevina – važan biljni izvor proteina; bogate su škrobom, vlaknima, B vitaminima i mineralima.",
+        "explanation": "Kombiniraju se sa žitaricama radi bolje iskoristivosti aminokiselina."
+      },
+      {
+        "question": "Koji pigmenti daju boju voću i povrću?",
+        "answer": "Klorofil – zeleno. Karotenoidi – žuto, narančasto, crveno. Antocijani – crveno, plavo, ljubičasto. Antoksantini – bijelo i svjetložuto.",
+        "explanation": "Kuhanjem klorofil prelazi u maslinasto-smeđi feofitin."
+      },
+      {
+        "question": "Enzimsko vs neenzimsko posmeđivanje?",
+        "answer": "Enzimsko: enzimi uz kisik (npr. prerezana jabuka). Neenzimsko: karamelizacija i Maillardova reakcija.",
+        "explanation": "Termičkom obradom najviše stradaju vitamini, minerali su stabilniji."
+      },
+      {
+        "question": "Kako se skladišti voće i povrće?",
+        "answer": "Oko 0 °C, relativna vlažnost 85–90 %, uz kontroliranu atmosferu (manje O₂, više CO₂).",
+        "explanation": "Nakon berbe nastavljaju se disanje, transpiracija i enzimska aktivnost."
+      },
+      {
+        "question": "Koje su prerađevine voća?",
+        "answer": "Poluproizvodi (pulpa, kaša, vodeni ekstrakt), želirani proizvodi (džem, ekstra džem, žele, marmelada, pekmez), kandirano, sušeno i zamrznuto voće, sokovi.",
+        "explanation": "Prerađevine povrća: zamrznuto, sterilizirano, marinirano, kiselo povrće, sokovi."
+      },
+      {
+        "question": "Džem vs marmelada?",
+        "answer": "Džem: od bilo kojeg voća (najmanje 35 g voća na 100 g; ekstra džem 45 g). Marmelada: samo od agruma (citrusa).",
+        "explanation": "Žele se radi od voćnog soka."
+      },
+      {
+        "question": "Što je PEKMEZ?",
+        "answer": "Proizvod dobiven ukuhavanjem voćne pulpe ili kaše, s malo dodanog šećera ili bez njega.",
+        "explanation": "Prema pitanjima kolegija: najviše 25 % dodanog šećera."
+      },
+      {
+        "question": "Kolika je preporuka unosa voća i povrća?",
+        "answer": "Najmanje 400 g voća i povrća dnevno.",
+        "explanation": "Smanjuje rizik srčanih bolesti, pretilosti, dijabetesa tipa 2 i nekih karcinoma."
+      },
+      {
+        "question": "Koji su najvažniji fitonutrijenti?",
+        "answer": "Karotenoidi, flavonoidi, fenolne kiseline, tanini i organosumporni spojevi – imaju zaštitnu ulogu u organizmu.",
+        "explanation": "Organosumporni spojevi: luk i češnjak."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Banane i smokve pripadaju:",
+        "options": ["Koštičavom voću", "Jezgričavom voću", "Bobičastom voću", "Južnom voću"],
+        "correct": 3
+      },
+      {
+        "question": "Orasi, lješnjaci i bademi su:",
+        "options": ["Orašasto voće", "Koštičavo voće", "Jezgričavo (jabučasto) voće", "Bobičasto voće"],
+        "correct": 0
+      },
+      {
+        "question": "Šljiva pripada skupini:",
+        "options": ["Jezgričavog voća", "Koštičavog voća", "Bobičastog voća", "Agruma"],
+        "correct": 1
+      },
+      {
+        "question": "Krumpir i batat pripadaju:",
+        "options": ["Korjenastom povrću", "Lukovičastom povrću", "Gomoljastom povrću", "Plodastom povrću"],
+        "correct": 2
+      },
+      {
+        "question": "Mrkva i celer pripadaju:",
+        "options": ["Gomoljastom povrću", "Cvjetastom povrću", "Lisnatom povrću", "Korjenastom povrću"],
+        "correct": 3
+      },
+      {
+        "question": "Koje je voće posebno bogato mastima?",
+        "options": ["Kokos", "Jabuka", "Naranča", "Šljiva"],
+        "correct": 0
+      },
+      {
+        "question": "Od hranjivih tvari (izuzev vode) u povrću je najveći udio:",
+        "options": ["Bjelančevina", "Ugljikohidrata", "Masti", "Vitamina"],
+        "correct": 1
+      },
+      {
+        "question": "Marmelada se prema propisima proizvodi od:",
+        "options": ["Bilo koje vrste voća", "Isključivo jabuka", "Agruma (citrusa)", "Voćnog soka bez pulpe"],
+        "correct": 2
+      },
+      {
+        "question": "Crvenu, plavu i ljubičastu boju voću daju:",
+        "options": ["Klorofili", "Antoksantini", "Karotenoidi", "Antocijani"],
+        "correct": 3
+      },
+      {
+        "question": "Maillardova reakcija je primjer:",
+        "options": ["Neenzimskog posmeđivanja", "Enzimskog posmeđivanja", "Mliječno-kiselog vrenja", "Blanširanja"],
+        "correct": 0
+      },
+      {
+        "question": "Mahunarke sadrže otprilike:",
+        "options": ["1–3 % bjelančevina", "18–35 % bjelančevina", "50–60 % bjelančevina", "5–8 % bjelančevina"],
+        "correct": 1
+      },
+      {
+        "question": "Koliko voća i povrća treba dnevno pojesti prema preporukama?",
+        "options": ["Najviše 100 g", "Točno 1 kg", "Najmanje 400 g", "Najmanje 50 g"],
+        "correct": 2
+      },
+      {
+        "question": "Energetska vrijednost voća i povrća je niska zbog:",
+        "options": ["Visokog udjela masti", "Niskog udjela vode", "Visokog udjela bjelančevina", "Visokog udjela vode"],
+        "correct": 3
+      },
+      {
+        "question": "Višnja pripada skupini:",
+        "options": ["Koštičavog voća", "Bobičastog voća", "Južnog voća", "Orašastog voća"],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Voće i povrće sadrže 75–_______ % vode.",
+        "answer": "95",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Zelenu boju biljkama daje _______.",
+        "answer": "klorofil",
+        "hint": "Pigment fotosinteze."
+      },
+      {
+        "sentence": "Crvenu, plavu i ljubičastu boju voću daju _______.",
+        "answer": "antocijani",
+        "hint": "Isti pigment daje boju crnom vinu."
+      },
+      {
+        "sentence": "Voće i povrće skladišti se pri relativnoj vlažnosti zraka 85–_______ %.",
+        "answer": "90",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Mahunarke se preporučuje kombinirati sa _______ radi bolje iskoristivosti aminokiselina.",
+        "answer": "žitaricama",
+        "hint": "Pšenica, kukuruz, riža."
+      },
+      {
+        "sentence": "Karamelizacija i Maillardova reakcija su _______ posmeđivanje.",
+        "answer": "neenzimsko",
+        "hint": "Bez sudjelovanja enzima."
+      },
+      {
+        "sentence": "Dnevno se preporučuje najmanje _______ g voća i povrća.",
+        "answer": "400",
+        "hint": "Broj."
+      }
+    ],
+    "learn": {
+      "title": "Voće, povrće i prerađevine",
+      "content":
+        '<h3>Voće</h3>' +
+        '<p><strong>Voće</strong> su plodovi kultiviranih voćaka i samoniklih biljaka koji se koriste svježi ili prerađeni.</p>' +
+        '<table>' +
+        '<tr><th>Skupina</th><th>Primjeri</th></tr>' +
+        '<tr><td>Jezgričavo (jabučasto)</td><td>jabuka, kruška, dunja</td></tr>' +
+        '<tr><td>Koštičavo</td><td>šljiva, trešnja, višnja, marelica, breskva</td></tr>' +
+        '<tr><td>Bobičasto</td><td>jagoda, malina, borovnica, ribiz</td></tr>' +
+        '<tr><td>Orašasto (lupinasto)</td><td>orah, badem, lješnjak (i kokos)</td></tr>' +
+        '<tr><td>Agrumi (citrusi)</td><td>naranča, mandarina, limun, grejp</td></tr>' +
+        '<tr><td>Južno voće</td><td>banana, ananas, datulje, smokve</td></tr>' +
+        '</table>' +
+        '<div class="warning-box"><strong>Pazi na nazive:</strong> „jezgričavo” voće (jabuka, kruška — sjemenke u kućištu) nije isto što i „jezgrasto/jezgrovito” — tim se nazivom u nekim ispitnim pitanjima označava <strong>orašasto (lupinasto)</strong> voće, npr. orah, kokos, badem.</div>' +
+        '<p><strong>Kvaliteta voća:</strong> zrelo, zdravo, neoštećeno, bez stranih mirisa i okusa te bez nedopuštenih količina zaštitnih sredstava.</p>' +
+
+        '<h3>Povrće</h3>' +
+        '<p><strong>Povrće</strong> su jestivi dijelovi povrtlarskih kultura, svježi ili obrađeni.</p>' +
+        '<table>' +
+        '<tr><th>Skupina</th><th>Primjeri</th></tr>' +
+        '<tr><td>Plodasto</td><td>rajčica, paprika, krastavac, tikva</td></tr>' +
+        '<tr><td>Lisnato</td><td>salata, špinat, kelj, kupus</td></tr>' +
+        '<tr><td>Cvjetasto</td><td>cvjetača, brokula, artičoka</td></tr>' +
+        '<tr><td>Mahunasto</td><td>grah, grašak, leća, slanutak</td></tr>' +
+        '<tr><td>Stabljičasto</td><td>šparoga, korabica</td></tr>' +
+        '<tr><td>Lukovičasto</td><td>luk, češnjak, poriluk</td></tr>' +
+        '<tr><td>Korjenasto</td><td>mrkva, celer, peršin, rotkvica, cikla</td></tr>' +
+        '<tr><td>Gomoljasto</td><td>krumpir, batat</td></tr>' +
+        '</table>' +
+        '<p><strong>Kvaliteta povrća:</strong> svježe, zdravo, bez truleži, štetnika, bolesti i mehaničkih oštećenja.</p>' +
+
+        '<h3>Hranjiva vrijednost</h3>' +
+        '<ul>' +
+        '<li><strong>Voda</strong> — najzastupljeniji sastojak, <strong>75–95 %</strong> mase.</li>' +
+        '<li><strong>Ugljikohidrati</strong> — glukoza, fruktoza, saharoza, škrob, celuloza, pektin. Od hranjivih tvari (bez vode) u povrću je <strong>najveći udio ugljikohidrata</strong>.</li>' +
+        '<li><strong>Bjelančevine i masti</strong> — u malim količinama (iznimke: mahunarke i orašasto voće).</li>' +
+        '<li><strong>Vitamini i minerali</strong> — vitamin C, karotenoidi; kalcij, magnezij, fosfor, željezo.</li>' +
+        '<li><strong>Energetska vrijednost</strong> — niska zbog visokog udjela vode.</li>' +
+        '</ul>' +
+        '<table>' +
+        '<tr><th>Posebne skupine</th><th>Obilježja</th></tr>' +
+        '<tr><td><strong>Mahunarke</strong></td><td>18–35 % bjelančevina; bogate škrobom, vlaknima, B vitaminima i mineralima; kombiniraju se sa žitaricama radi bolje iskoristivosti aminokiselina</td></tr>' +
+        '<tr><td><strong>Orašasti plodovi</strong></td><td>mnogo masti (uglavnom nezasićenih), bjelančevina, B vitamina i minerala; vrlo visoka energetska vrijednost. Voće posebno bogato mastima: <strong>kokos</strong></td></tr>' +
+        '</table>' +
+
+        '<h3>Pigmenti i promjene tijekom obrade</h3>' +
+        '<table>' +
+        '<tr><th>Pigment</th><th>Boja</th></tr>' +
+        '<tr><td>Klorofil</td><td>zelena</td></tr>' +
+        '<tr><td>Karotenoidi</td><td>žuta, narančasta, crvena (npr. beta-karoten, likopen)</td></tr>' +
+        '<tr><td>Antocijani</td><td>crvena, plava, ljubičasta</td></tr>' +
+        '<tr><td>Antoksantini</td><td>bijela i svjetložuta</td></tr>' +
+        '</table>' +
+        '<ul>' +
+        '<li><strong>Termička obrada</strong> mijenja boju, teksturu, okus i hranjivu vrijednost; najosjetljiviji su vitamini, minerali su stabilniji.</li>' +
+        '<li><strong>Posmeđivanje</strong>: <strong>enzimsko</strong> (enzimi + kisik, npr. prerezana jabuka) ili <strong>neenzimsko</strong> (karamelizacija, Maillardova reakcija).</li>' +
+        '</ul>' +
+
+        '<h3>Skladištenje</h3>' +
+        '<p>Nakon berbe nastavljaju se disanje, transpiracija i enzimska aktivnost. Trajnost se produljuje <strong>kontroliranom atmosferom</strong> (manje kisika, više CO₂), pri temperaturi oko <strong>0 °C</strong> i relativnoj vlažnosti <strong>85–90 %</strong>.</p>' +
+
+        '<h3>Prerađevine voća i povrća</h3>' +
+        '<ul>' +
+        '<li><strong>Poluproizvodi</strong>: voćna pulpa, voćna kaša, vodeni ekstrakt voća.</li>' +
+        '<li><strong>Želirani proizvodi</strong>: <strong>džem</strong> (najmanje 35 g voća na 100 g), <strong>ekstra džem</strong> (45 g), <strong>žele</strong> (od voćnog soka), <strong>marmelada</strong> (samo od <strong>agruma</strong>), <strong>pekmez</strong> (ukuhana voćna pulpa ili kaša, s malo šećera ili bez njega — prema pitanjima kolegija najviše 25 % dodanog šećera).</li>' +
+        '<li><strong>Ostalo voće</strong>: kandirano, sušeno, zamrznuto voće; voćni sokovi.</li>' +
+        '<li><strong>Prerađevine povrća</strong>: zamrznuto, sterilizirano, pasterizirano, marinirano i biološki konzervirano povrće, sušeno povrće, sokovi (npr. prerađevine rajčice: sok, pire, koncentrat, kečap).</li>' +
+        '<li><strong>Biološki konzervirano povrće</strong> — mliječno-kiselom fermentacijom: kiseli kupus, kisela repa.</li>' +
+        '</ul>' +
+
+        '<h3>Značaj za zdravlje</h3>' +
+        '<p>Preporučuje se <strong>najmanje 400 g voća i povrća dnevno</strong>. Redovita konzumacija doprinosi zdravlju srca i krvnih žila, smanjuje rizik od pretilosti, dijabetesa tipa 2 i nekih karcinoma, poboljšava probavu i jača imunitet.</p>' +
+        '<p><strong>Fitonutrijenti</strong>: karotenoidi, flavonoidi, fenolne kiseline, tanini i organosumporni spojevi — zaštitna uloga u organizmu.</p>' +
+        '<div class="tip-box"><strong>Iz ispitnih pitanja:</strong> kao „sirovo voće bogato vodom” traži se <strong>šipak</strong>; kao voće bogato mastima <strong>kokos</strong>; kao koštičavo voće <strong>šljiva, trešnja, višnja</strong>; kao gomoljasto povrće <strong>krumpir i batat</strong>.</div>'
+    }
+  },
+
+  "coffeeTeaCocoa": {
+    "name": "Kava, čaj, kakao i začini",
+    "icon": "fa-mug-hot",
+    "color": "#92400e",
+    "flashcards": [
+      {
+        "question": "Arabika vs robusta?",
+        "answer": "Arabika (oko 60 %; starija literatura navodi 70 %): blaga, aromatična, manje kofeina, skuplja. Robusta (oko 40 %): gorča, oporija, manje kisela, više kofeina, jeftinija.",
+        "explanation": "U svakoj bobici kave nalaze se dvije polukuglaste sjemenke – zrna."
+      },
+      {
+        "question": "Suha vs mokra obrada kave?",
+        "answer": "Suha: plodovi se suše na suncu – „neprana” kava, jeftinija (robusta). Mokra: potapanje u vodu i fermentacija – „prana” kava (arabika).",
+        "explanation": "Rezultat je sirova (zelena) kava u jutenim vrećama."
+      },
+      {
+        "question": "Što se događa pri PRŽENJU kave?",
+        "answer": "Pri 200–220 °C, 15–20 min, razvijaju se smeđa boja (melanoidini) i aroma, zrno gubi vodu i masu. Kofein se bitno ne mijenja; nastaje akrilamid.",
+        "explanation": "Prženjem na različite načine dobivaju se različite vrste i mješavine."
+      },
+      {
+        "question": "Koliko kofeina ima kava?",
+        "answer": "Pržena kava oko 1–2,5 % kofeina (robusta više od arabike). Kava bez kofeina najviše 0,1 %.",
+        "explanation": "Umjereno: 3–4 šalice dnevno (300–400 mg kofeina)."
+      },
+      {
+        "question": "Odakle potječe MOKA kava?",
+        "answer": "S Arapskog poluotoka – nazvana je po jemenskoj luci Mocha, odakle se kava izvozila.",
+        "explanation": "Kava je u Europu stigla preko arapskog i osmanskog svijeta."
+      },
+      {
+        "question": "Koje su vrste kave na tržištu?",
+        "answer": "Mješavine, kava bez kofeina, instant kava (liofilizirana), ekstrakt kave i nadomjesci kave (prženi ječam, slad, cikorija – bez kofeina).",
+        "explanation": "Nadomjesci = surogati kave."
+      },
+      {
+        "question": "Što je ČAJ?",
+        "answer": "Napitak od listova i pupoljaka biljke Camellia sinensis.",
+        "explanation": "Napitci od drugih biljaka su biljni čajevi (nadomjesci čaja)."
+      },
+      {
+        "question": "Kako se dijele vrste čaja prema fermentaciji?",
+        "answer": "Nefermentirani: bijeli, zeleni i žuti. Polufermentirani: oolong. Fermentirani: crni čaj.",
+        "explanation": "Sve vrste nastaju od iste biljke, različitom obradom."
+      },
+      {
+        "question": "Što je „fermentacija” čaja?",
+        "answer": "Oksidacija katehina pomoću enzima polifenol-oksidaze. Kod zelenog čaja enzimi se odmah inaktiviraju toplinom.",
+        "explanation": "Bijeli čaj se samo kratko vene i suši."
+      },
+      {
+        "question": "Koji alkaloidi se nalaze u čaju?",
+        "answer": "Tein (kofein), teobromin i teofilin.",
+        "explanation": "Tein je isti spoj kao kofein."
+      },
+      {
+        "question": "Što su SUROGAT (biljni) čajevi?",
+        "answer": "Nadomjesci čaja od drugih biljaka: kamilica, metvica, lipa, šipak; rooibos (bez kofeina); mate (s kofeinom).",
+        "explanation": "Čaj od šipka je tipičan nadomjestak."
+      },
+      {
+        "question": "Gdje se uzgaja KAKAOVAC?",
+        "answer": "Theobroma cacao raste u vlažnim tropima; najviše kakaa proizvodi zapadna Afrika (Obala Bjelokosti, Gana).",
+        "explanation": "Plod je dug 15–25 cm i težak 400–500 g."
+      },
+      {
+        "question": "Kakav je sastav kakao-zrna?",
+        "answer": "Masti (kakao-maslac) 50–56 %, bjelančevine oko 12–14 %, teobromin 1,2–1,6 %, malo kofeina i oko 6 % polifenola.",
+        "explanation": "Kakao-zrno je od kave, čaja i kakaa daleko najbogatije mastima."
+      },
+      {
+        "question": "Što je TEOBROMIN?",
+        "answer": "Alkaloid karakterističan za kakao i čokoladu; blaži stimulans od kofeina.",
+        "explanation": "Theobroma = „hrana bogova”."
+      },
+      {
+        "question": "Što je KAKAO-LOM?",
+        "answer": "Očišćena, pržena i usitnjena jezgra kakao-zrna, bez ljuske i klice.",
+        "explanation": "Mljevenjem loma nastaje kakao-masa."
+      },
+      {
+        "question": "Kako se dobiva KAKAO-PRAH?",
+        "answer": "Kakao-masa se preša: izdvaja se kakao-maslac, a ostaje kakao-pogača, koja se melje u kakao-prah.",
+        "explanation": "Kakao-maslac je osnova čokolade."
+      },
+      {
+        "question": "Kako se proizvodi čokolada?",
+        "answer": "Miješanje (kakao-masa, kakao-maslac, šećer, mlijeko u prahu), valjanje za glatku teksturu i konširanje (razvoj arome, viskoznost).",
+        "explanation": "Konširanje je završna faza."
+      },
+      {
+        "question": "Što je KAPSAICIN?",
+        "answer": "Spoj koji daje ljutinu ljutoj paprici (chilli).",
+        "explanation": "Začinska paprika ima ga malo ili nimalo."
+      },
+      {
+        "question": "Koji je začin mineralnog podrijetla, a što je senf?",
+        "answer": "Mineralnog podrijetla je kuhinjska sol. Senf je začinska pasta od mljevenih sjemenki gorušice, octa, vode, soli i začina.",
+        "explanation": "Većina začina je biljnog podrijetla."
+      },
+      {
+        "question": "Što je BURMUT?",
+        "answer": "Fino mljeveni, aromatizirani duhanski prah koji se šmrče (rjeđe žvače).",
+        "explanation": "Duhan se prema zakonskoj definiciji NE smatra hranom."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Alkaloid karakterističan za kakao je:",
+        "options": ["Kapsaicin", "Teobromin", "Nikotin", "Solanin"],
+        "correct": 1
+      },
+      {
+        "question": "Kakao-prah dobiva se:",
+        "options": ["Prženjem kakao-maslaca", "Fermentacijom kakao-ploda", "Mljevenjem kakao-pogače", "Konširanjem čokolade"],
+        "correct": 2
+      },
+      {
+        "question": "Udio masti u kakao-zrnu iznosi oko:",
+        "options": ["10–15 %", "25–30 %", "70–80 %", "50–56 %"],
+        "correct": 3
+      },
+      {
+        "question": "Kakao-lom je:",
+        "options": ["Pržena jezgra bez ljuske i klice", "Ostatak nakon prešanja kakao-mase", "Neprerađen plod kakaovca", "Mješavina kakaa i šećera"],
+        "correct": 0
+      },
+      {
+        "question": "Koja vrsta kave ima više kofeina?",
+        "options": ["Arabika", "Robusta", "Moka", "Kava bez kofeina"],
+        "correct": 1
+      },
+      {
+        "question": "Oolong čaj je:",
+        "options": ["Nefermentiran", "Potpuno fermentiran", "Polufermentiran", "Biljni nadomjestak čaja"],
+        "correct": 2
+      },
+      {
+        "question": "Crni čaj je:",
+        "options": ["Nefermentiran", "Polufermentiran", "Nadomjestak od šipka", "Fermentiran"],
+        "correct": 3
+      },
+      {
+        "question": "Čaj je napitak od listova biljke:",
+        "options": ["Camellia sinensis", "Theobroma cacao", "Coffea arabica", "Humulus lupulus"],
+        "correct": 0
+      },
+      {
+        "question": "Koji spoj daje ljutinu chilli papričici?",
+        "options": ["Teobromin", "Kapsaicin", "Kofein", "Lecitin"],
+        "correct": 1
+      },
+      {
+        "question": "Začin mineralnog podrijetla je:",
+        "options": ["Papar", "Cimet", "Sol", "Senf"],
+        "correct": 2
+      },
+      {
+        "question": "Burmut je:",
+        "options": ["Nadomjestak kave od cikorije", "Vrsta fermentiranog čaja", "Prah od kakao-pogače", "Aromatizirani duhanski prah"],
+        "correct": 3
+      },
+      {
+        "question": "Kofein u prženoj kavi iznosi oko:",
+        "options": ["1–2,5 %", "10–12 %", "0,01 %", "25–30 %"],
+        "correct": 0
+      },
+      {
+        "question": "Kava bez kofeina smije sadržavati najviše:",
+        "options": ["1 % kofeina", "0,1 % kofeina", "2,5 % kofeina", "5 % kofeina"],
+        "correct": 1
+      },
+      {
+        "question": "Tijekom prženja kave udio kofeina:",
+        "options": ["Potpuno se razgradi", "Udvostruči se", "Ostaje gotovo nepromijenjen", "Prelazi u teobromin"],
+        "correct": 2
+      },
+      {
+        "question": "Najveći proizvođač kakaa je:",
+        "options": ["Južna Europa", "Sjeverna Amerika", "Srednja Azija", "Zapadna Afrika"],
+        "correct": 3
+      },
+      {
+        "question": "Alkaloidi u čaju su:",
+        "options": ["Tein, teobromin i teofilin", "Nikotin i kapsaicin", "Kazein i avidin", "Solanin i tomatin"],
+        "correct": 0
+      },
+      {
+        "question": "Rooibos je:",
+        "options": ["Crni čaj iz Indije", "Biljni napitak bez kofeina", "Vrsta zelenog čaja", "Nadomjestak kave od ječma"],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Kakao-prah dobiva se mljevenjem kakao-_______.",
+        "answer": "pogače",
+        "hint": "Ostatak nakon prešanja kakao-mase."
+      },
+      {
+        "sentence": "Alkaloid karakterističan za kakao je _______.",
+        "answer": "teobromin",
+        "hint": "Theobroma = hrana bogova."
+      },
+      {
+        "sentence": "Čaj se dobiva od biljke Camellia _______.",
+        "answer": "sinensis",
+        "hint": "Latinski naziv vrste."
+      },
+      {
+        "sentence": "Ljutinu paprici daje spoj _______.",
+        "answer": "kapsaicin",
+        "hint": "Chilli."
+      },
+      {
+        "sentence": "Završna faza proizvodnje čokolade u kojoj se razvija puna aroma zove se _______.",
+        "answer": "konširanje",
+        "hint": "Dugotrajno miješanje."
+      },
+      {
+        "sentence": "Kava nazvana po jemenskoj luci zove se _______ kava.",
+        "answer": "moka",
+        "hint": "Luka Mocha."
+      },
+      {
+        "sentence": "Vrsta kave s više kofeina i gorčim, oporijim okusom zove se _______.",
+        "answer": "robusta",
+        "hint": "Nije arabika."
+      }
+    ],
+    "learn": {
+      "title": "Kava, čaj, kakao i začini",
+      "content":
+        '<div class="tip-box">Studentska skripta ovu temu ne obrađuje, ali je u ispitnim pitanjima 1. kolokvija česta (kakao, teobromin, vrste čaja, kofein, začini). Ova sekcija napisana je prema ispitnim pitanjima i stručnoj literaturi.</div>' +
+
+        '<h3>Kava</h3>' +
+        '<p>Kava je tropska zimzelena biljka; u svakoj bobici nalaze se dvije polukuglaste sjemenke — <strong>zrna kave</strong>.</p>' +
+        '<table>' +
+        '<tr><th></th><th>Arabika</th><th>Robusta</th></tr>' +
+        '<tr><td>Udio u proizvodnji</td><td>oko 60 % (starija literatura navodi 70 %)</td><td>oko 40 %</td></tr>' +
+        '<tr><td>Okus</td><td>blag, aromatičan</td><td>gorči, oporiji, manje kiseo</td></tr>' +
+        '<tr><td>Kofein (sirova zrna)</td><td>manje (oko 1,2 %)</td><td>više (oko 2,4 %)</td></tr>' +
+        '<tr><td>Cijena</td><td>viša</td><td>niža (otpornija biljka)</td></tr>' +
+        '<tr><td>Uzgoj</td><td>Brazil, Kolumbija, Indija</td><td>Azija, Afrika</td></tr>' +
+        '</table>' +
+        '<p><strong>Moka kava</strong> potječe s <strong>Arapskog poluotoka</strong> — ime je dobila po jemenskoj luci Mocha.</p>' +
+        '<h4>Obrada i prženje</h4>' +
+        '<ul>' +
+        '<li><strong>Suha obrada</strong> — sušenje plodova na suncu; jeftinija, „neprana” kava (robusta).</li>' +
+        '<li><strong>Mokra obrada</strong> — potapanje u vodu i fermentacija; „prana” kava (arabika).</li>' +
+        '<li><strong>Prženje</strong> — 200–220 °C, 15–20 min: nastaju smeđa boja (melanoidini) i aroma, zrno gubi vodu i masu; <strong>kofein se bitno ne mijenja</strong>; nastaje potencijalno štetni akrilamid.</li>' +
+        '</ul>' +
+        '<p><strong>Kofein:</strong> pržena kava sadrži oko <strong>1–2,5 %</strong>; <strong>kava bez kofeina najviše 0,1 %</strong>. Umjereno je 3–4 šalice dnevno (300–400 mg kofeina).</p>' +
+        '<p><strong>Na tržištu:</strong> mješavine, kava bez kofeina, instant kava (liofilizacija), ekstrakt kave i <strong>nadomjesci kave</strong> (prženi ječam, ječmeni slad, cikorija — bez kofeina).</p>' +
+
+        '<h3>Čaj</h3>' +
+        '<p><strong>Čaj</strong> je napitak od listova i pupoljaka biljke <strong>Camellia sinensis</strong>. „Fermentacija” čaja zapravo je <strong>oksidacija katehina</strong> enzimom polifenol-oksidazom.</p>' +
+        '<table>' +
+        '<tr><th>Vrsta</th><th>Fermentacija</th><th>Obrada</th></tr>' +
+        '<tr><td>Bijeli</td><td>nefermentiran</td><td>pupoljci i mladi listovi samo kratko uvenu i osuše se</td></tr>' +
+        '<tr><td>Zeleni</td><td>nefermentiran</td><td>enzimi se odmah inaktiviraju toplinom (para, prženje)</td></tr>' +
+        '<tr><td>Žuti</td><td>nefermentiran (uz kratko „znojenje”)</td><td>kao zeleni, uz kratku blagu oksidaciju</td></tr>' +
+        '<tr><td>Oolong</td><td>polufermentiran</td><td>kratka, djelomična oksidacija</td></tr>' +
+        '<tr><td>Crni</td><td>fermentiran</td><td>uvenuće, uvijanje, potpuna oksidacija, sušenje</td></tr>' +
+        '</table>' +
+        '<p><strong>Alkaloidi čaja:</strong> <strong>tein</strong> (isti spoj kao kofein), <strong>teobromin</strong> i <strong>teofilin</strong>.</p>' +
+        '<p><strong>Surogat (biljni) čajevi</strong> — nadomjesci čaja od drugih biljaka: kamilica, metvica, lipa, <strong>šipak</strong>, voćni čajevi; <strong>rooibos</strong> (Južna Afrika, bez kofeina, bogat polifenolima); <strong>mate</strong> (sadrži kofein).</p>' +
+
+        '<h3>Kakao i čokolada</h3>' +
+        '<p><strong>Kakaovac</strong> (<em>Theobroma cacao</em>) raste u vlažnim tropima; najviše kakaa proizvodi <strong>zapadna Afrika</strong> (Obala Bjelokosti, Gana). Plod je dug 15–25 cm.</p>' +
+        '<p><strong>Sastav kakao-zrna:</strong> masti <strong>50–56 %</strong>, bjelančevine oko 12–14 %, <strong>teobromin</strong> 1,2–1,6 % (alkaloid karakterističan za kakao), malo kofeina, polifenoli oko 6 %.</p>' +
+        '<h4>Od zrna do kakao-praha</h4>' +
+        '<ol>' +
+        '<li>Berba → <strong>fermentacija</strong> (razvija okus i aromu) → sušenje.</li>' +
+        '<li>Čišćenje i <strong>prženje</strong> → uklanjanje ljuske i klice → <strong>kakao-lom</strong> (očišćena, pržena, usitnjena jezgra).</li>' +
+        '<li>Mljevenje loma → <strong>kakao-masa</strong>.</li>' +
+        '<li>Prešanje kakao-mase → <strong>kakao-maslac</strong> (izdvojena mast) + <strong>kakao-pogača</strong>.</li>' +
+        '<li>Mljevenje kakao-pogače → <strong>kakao-prah</strong>.</li>' +
+        '</ol>' +
+        '<p><strong>Čokolada:</strong> miješanje (kakao-masa, kakao-maslac, šećer, mlijeko u prahu) → valjanje (glatka tekstura) → <strong>konširanje</strong> (dugo miješanje; razvija punu aromu i podešava viskoznost).</p>' +
+
+        '<h3>Začini i duhan</h3>' +
+        '<ul>' +
+        '<li><strong>Kapsaicin</strong> — spoj koji daje ljutinu ljutoj paprici (chilli).</li>' +
+        '<li><strong>Začin mineralnog podrijetla</strong> — kuhinjska <strong>sol</strong>; većina ostalih začina je biljnog podrijetla (papar, cimet, klinčić, začinsko bilje).</li>' +
+        '<li><strong>Senf</strong> — začinska pasta od mljevenih sjemenki gorušice, octa, vode, soli i začina.</li>' +
+        '<li><strong>Burmut</strong> — fino mljeveni, aromatizirani duhanski prah koji se šmrče (rjeđe žvače). Duhan se prema zakonskoj definiciji ne smatra hranom.</li>' +
+        '</ul>'
+    }
+  },
+
+  "wine": {
+    "name": "Vino",
+    "icon": "fa-wine-glass",
+    "color": "#9f1239",
+    "flashcards": [
+      {
+        "question": "Što je VINO?",
+        "answer": "Alkoholno piće s najmanje 8,5 % vol. alkohola, dobiveno potpunom ili djelomičnom alkoholnom fermentacijom svježeg grožđa ili mošta.",
+        "explanation": "Udio alkohola u vinu najčešće je 9–15 % vol."
+      },
+      {
+        "question": "Vinarstvo, vinifikacija i enologija?",
+        "answer": "Vinarstvo: proizvodnja vina i proizvoda od grožđa. Vinifikacija: prerada grožđa u vino, od berbe do punjenja u boce. Enologija: znanost o vinu.",
+        "explanation": "Uzgojem vinove loze bavi se vinogradarstvo."
+      },
+      {
+        "question": "Koje su vinogradarske regije Hrvatske?",
+        "answer": "Slavonija i hrvatsko Podunavlje, Hrvatska Istra i Kvarner, Dalmacija te Središnja bregovita Hrvatska.",
+        "explanation": "Prvi tragovi proizvodnje vina stari su oko 7500 godina (južni Kavkaz)."
+      },
+      {
+        "question": "ZOI vs ZOZP?",
+        "answer": "ZOI (zaštićena oznaka izvornosti): grožđe i proizvodnja u cijelosti s određenog područja. ZOZP (zaštićena oznaka zemljopisnog podrijetla): najmanje 85 % grožđa.",
+        "explanation": "ZOI je stroža oznaka."
+      },
+      {
+        "question": "Runjenje, muljanje i masulj?",
+        "answer": "Runjenje: odvajanje peteljki od bobica. Muljanje: gnječenje bobica. Masulj: smjesa krutih i tekućih dijelova grožđa.",
+        "explanation": "Dozrijevanjem grožđa raste šećer, a smanjuju se kiseline."
+      },
+      {
+        "question": "Mošt i samotok?",
+        "answer": "Mošt: sok dobiven iz masulja ocjeđivanjem i prešanjem. Samotok: najkvalitetniji dio mošta koji iscuri sam, bez prešanja.",
+        "explanation": "Obrada mošta: sumporenje, hlađenje, taloženje, korekcija sastava."
+      },
+      {
+        "question": "Zašto se provodi SUMPORENJE?",
+        "answer": "SO₂ inaktivira prirodnu mikrofloru mošta, djeluje antiseptički (konzervans) i kao antioksidans.",
+        "explanation": "SO₂ je alergen i mora se navesti na etiketi („sadrži sulfite”)."
+      },
+      {
+        "question": "Što predviđa šećer u moštu?",
+        "answer": "Količinu alkohola u budućem vinu; grožđe sadrži oko 20 % šećera.",
+        "explanation": "Fermentacijom šećer prelazi u etanol i CO₂."
+      },
+      {
+        "question": "Spontana vs dirigirana fermentacija?",
+        "answer": "Spontana: vrenje započinju prirodni kvasci s grožđa. Dirigirana: dodaju se selekcionirani vinski kvasci (Saccharomyces cerevisiae).",
+        "explanation": "Dirigirana je predvidljivija."
+      },
+      {
+        "question": "Kako se razlikuje proizvodnja bijelog i crnog vina?",
+        "answer": "Bijelo vino vrije u moštu (bez kožica). Crno vrije u masulju – iz kožice se izdvajaju boja i tanini.",
+        "explanation": "Ružičasto: kratak kontakt mošta s kožicom crnog grožđa."
+      },
+      {
+        "question": "Što je MACERACIJA kod crnog vina?",
+        "answer": "Izdvajanje antocijana (boja), tanina (okus i struktura) i aroma iz kožice tijekom vrenja u masulju.",
+        "explanation": "Duža maceracija = tamnije i taninskije vino."
+      },
+      {
+        "question": "Što su ANTOCIJANI?",
+        "answer": "Crveni do ljubičasti pigmenti u kožici crnog grožđa; daju boju crnom vinu.",
+        "explanation": "Meso bobice većine sorti je bezbojno."
+      },
+      {
+        "question": "Što je KLOBUK?",
+        "answer": "Sloj kožica i sjemenki koji CO₂ tijekom vrenja crnog vina potiskuje na površinu; redovito se potapa.",
+        "explanation": "Potapanjem se bolje izdvajaju boja i tanini, a sprječava se octikavost."
+      },
+      {
+        "question": "Što je MALOLAKTIČNA fermentacija?",
+        "answer": "Bakterije mliječne kiseline pretvaraju jabučnu kiselinu u mliječnu: kiselost se smanjuje, a vino postaje mekše i stabilnije.",
+        "explanation": "Tipična za crna vina."
+      },
+      {
+        "question": "Koji su postupci njege i dozrijevanja vina?",
+        "answer": "Nadolijevanje posuda, pretakanje, kupažiranje, bistrenje, stabilizacija i filtracija.",
+        "explanation": "Alkoholna fermentacija NIJE postupak njege."
+      },
+      {
+        "question": "Što je KUPAŽIRANJE?",
+        "answer": "Sljubljivanje – miješanje vina ili moštova dviju ili više sorti (ili berbi) radi ujednačene i bolje kakvoće.",
+        "explanation": "Primjer: bordoške mješavine."
+      },
+      {
+        "question": "Koje su BOLESTI vina?",
+        "answer": "Mikrobiološke promjene: octikavost, vinski cvijet, sluzavost, prevrnuto vino, zavrelica i manitno vrenje.",
+        "explanation": "Uzrokuju ih bakterije i kvasci."
+      },
+      {
+        "question": "Koje su MANE vina?",
+        "answer": "Kemijske i fizikalne promjene: posmeđivanje, lom (zamućenje), miris na sumporovodik, miris na čep, teški metali, okus na gorki badem.",
+        "explanation": "Posmeđivanje je posljedica oksidacije."
+      },
+      {
+        "question": "Octikavost i vinski cvijet?",
+        "answer": "Octikavost: octene bakterije pretvaraju alkohol u octenu kiselinu. Vinski cvijet: kvasci stvaraju bjelkastu prevlaku na površini vina.",
+        "explanation": "Obje nastaju uz pristup zraka."
+      },
+      {
+        "question": "Što je FILOKSERA?",
+        "answer": "Trsna uš koja je krajem 19. st. uništila europske vinograde; rješenje je cijepljenje loze na otporne američke podloge.",
+        "explanation": "Napada korijen vinove loze."
+      },
+      {
+        "question": "Kako se proizvode PJENUŠAVA vina?",
+        "answer": "CO₂ nastaje sekundarnom fermentacijom: Champagne metodom (u boci) ili Charmat metodom (u velikim tankovima).",
+        "explanation": "Specijalna vina su i biser, gazirana, likerska i slatka vina."
+      },
+      {
+        "question": "Likerska i slatka vina?",
+        "answer": "Likerska: 15–22 % alkohola (Madeira, Porto, Sherry). Slatka: s većom količinom neprevrelog šećera (prošek, ledeno vino).",
+        "explanation": "Likerska se nazivaju i jaka vina."
+      },
+      {
+        "question": "Kako se mirna vina dijele po šećeru?",
+        "answer": "Suha do 4 g/L, polusuha do 12 g/L, poluslatka do 45 g/L, slatka iznad 45 g/L.",
+        "explanation": "Granice ovise i o kiselosti, ali ovo su osnovne vrijednosti."
+      },
+      {
+        "question": "Koja su PREDIKATNA vina?",
+        "answer": "Kasna berba, izborna berba, izborna berba bobica, izborna berba prosušenih bobica i ledeno vino.",
+        "explanation": "Arhivsko vino NIJE predikat – to je oznaka dugo čuvanog vina."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Šećer u moštu je prediktor:",
+        "options": ["Intenziteta boje vina", "Udjela tanina u vinu", "Količine alkohola u vinu", "Kiselosti gotovog vina"],
+        "correct": 2
+      },
+      {
+        "question": "Sumporenje u proizvodnji vina provodi se radi:",
+        "options": ["Povećanja udjela šećera", "Izdvajanja boje iz kožice", "Pretvaranja jabučne kiseline", "Inaktivacije prirodne mikroflore"],
+        "correct": 3
+      },
+      {
+        "question": "Crno vino vrije:",
+        "options": ["U masulju", "U moštu bez kožica", "Isključivo u boci", "Samo u hrastovoj bačvi"],
+        "correct": 0
+      },
+      {
+        "question": "Boju crnom vinu daju:",
+        "options": ["Tanini iz sjemenki", "Antocijani iz kožice", "Klorofil iz peteljke", "Karotenoidi iz mesa bobice"],
+        "correct": 1
+      },
+      {
+        "question": "Što NIJE postupak njege i dozrijevanja vina?",
+        "options": ["Pretakanje", "Kupažiranje", "Alkoholna fermentacija", "Stabilizacija"],
+        "correct": 2
+      },
+      {
+        "question": "Kupažiranje je:",
+        "options": ["Odvajanje peteljki od bobica", "Dodavanje sumporova dioksida", "Gnječenje bobica grožđa", "Sljubljivanje različitih vina"],
+        "correct": 3
+      },
+      {
+        "question": "Koja je od navedenih promjena MANA (a ne bolest) vina?",
+        "options": ["Posmeđivanje", "Octikavost", "Vinski cvijet", "Sluzavost"],
+        "correct": 0
+      },
+      {
+        "question": "Octikavost vina uzrokuju:",
+        "options": ["Plijesni na čepu", "Octene bakterije", "Teški metali", "Sumporovodik"],
+        "correct": 1
+      },
+      {
+        "question": "Kod Champagne metode sekundarna fermentacija odvija se:",
+        "options": ["U velikom tanku", "U hrastovoj bačvi", "U boci", "Prije runjenja"],
+        "correct": 2
+      },
+      {
+        "question": "Mirno vino s više od 45 g/L šećera je:",
+        "options": ["Suho", "Polusuho", "Poluslatko", "Slatko"],
+        "correct": 3
+      },
+      {
+        "question": "Suha vina sadrže šećera:",
+        "options": ["Do 4 g/L", "Do 45 g/L", "Više od 45 g/L", "Od 12 do 45 g/L"],
+        "correct": 0
+      },
+      {
+        "question": "Ledeno vino je:",
+        "options": ["Pjenušavo vino", "Slatko vino", "Likersko vino", "Suho vino"],
+        "correct": 1
+      },
+      {
+        "question": "Koje vino NIJE predikatno?",
+        "options": ["Kasna berba", "Ledeno vino", "Arhivsko vino", "Izborna berba bobica"],
+        "correct": 2
+      },
+      {
+        "question": "Likerska (jaka) vina sadrže:",
+        "options": ["8,5–10 % alkohola", "3–5 % alkohola", "40–45 % alkohola", "15–22 % alkohola"],
+        "correct": 3
+      },
+      {
+        "question": "Klobuk nastaje tijekom proizvodnje:",
+        "options": ["Crnog vina", "Bijelog vina", "Pjenušavog vina", "Piva"],
+        "correct": 0
+      },
+      {
+        "question": "Minimalna alkoholna jakost vina je:",
+        "options": ["3,5 % vol.", "8,5 % vol.", "15 % vol.", "37,5 % vol."],
+        "correct": 1
+      },
+      {
+        "question": "Samotok je:",
+        "options": ["Mošt iz najjačeg prešanja", "Talog na dnu bačve nakon vrenja", "Mošt koji iscuri bez prešanja", "Vino nakon prvog pretakanja"],
+        "correct": 2
+      },
+      {
+        "question": "Kod ZOZP-a s određenog područja mora potjecati:",
+        "options": ["Svo grožđe i cijela proizvodnja", "Samo punjenje u boce", "Najmanje 50 % grožđa", "Najmanje 85 % grožđa"],
+        "correct": 3
+      },
+      {
+        "question": "Malolaktičnom fermentacijom:",
+        "options": ["Jabučna kiselina prelazi u mliječnu", "Šećer prelazi u alkohol", "Alkohol prelazi u octenu kiselinu", "Mliječna kiselina prelazi u jabučnu"],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Smjesa krutih i tekućih dijelova grožđa zove se _______.",
+        "answer": "masulj",
+        "hint": "Nastaje muljanjem."
+      },
+      {
+        "sentence": "Odvajanje peteljki od bobica zove se _______.",
+        "answer": "runjenje",
+        "hint": "Prvi korak prerade grožđa."
+      },
+      {
+        "sentence": "Gnječenje bobica grožđa zove se _______.",
+        "answer": "muljanje",
+        "hint": "Nakon runjenja."
+      },
+      {
+        "sentence": "Pri malolaktičnoj fermentaciji jabučna kiselina prelazi u _______ kiselinu.",
+        "answer": "mliječnu",
+        "hint": "Kao u jogurtu."
+      },
+      {
+        "sentence": "Suha vina sadrže do _______ g/L šećera.",
+        "answer": "4",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Kod Champagne metode sekundarna fermentacija pjenušavog vina odvija se u _______.",
+        "answer": "boci",
+        "hint": "Ne u tanku."
+      },
+      {
+        "sentence": "Trsna uš koja je uništila europske vinograde zove se _______.",
+        "answer": "filoksera",
+        "hint": "Krajem 19. stoljeća."
+      }
+    ],
+    "learn": {
+      "title": "Vino",
+      "content":
+        '<h3>Osnovni pojmovi</h3>' +
+        '<ul>' +
+        '<li><strong>Vino</strong> — alkoholno piće s <strong>najmanje 8,5 % vol.</strong> alkohola, dobiveno potpunom ili djelomičnom alkoholnom fermentacijom svježeg grožđa ili mošta. Većina vina ima <strong>9–15 % vol.</strong></li>' +
+        '<li><strong>Vinarstvo</strong> — djelatnost proizvodnje vina i proizvoda od grožđa.</li>' +
+        '<li><strong>Vinifikacija</strong> — postupci prerade grožđa u vino, od berbe do punjenja u boce.</li>' +
+        '<li><strong>Enologija</strong> — znanost o vinu (proizvodnja, njega i čuvanje); uzgojem loze bavi se vinogradarstvo.</li>' +
+        '</ul>' +
+        '<p><strong>Povijest:</strong> prvi tragovi proizvodnje vina stari su oko 7500 godina i potječu s južnog Kavkaza; loza se proširila Mediteranom, a danas se uzgaja uglavnom u umjerenoj klimi. Krajem 19. stoljeća europske je vinograde uništila <strong>filoksera</strong> (trsna uš koja napada korijen); rješenje je bilo cijepljenje na otporne američke podloge.</p>' +
+        '<h4>Vinogradarske regije Hrvatske</h4>' +
+        '<p>Slavonija i hrvatsko Podunavlje · Hrvatska Istra i Kvarner · Dalmacija · Središnja bregovita Hrvatska.</p>' +
+        '<table>' +
+        '<tr><th>Oznaka</th><th>Uvjet</th></tr>' +
+        '<tr><td><strong>ZOI</strong> — zaštićena oznaka izvornosti</td><td>grožđe i proizvodnja <strong>u cijelosti</strong> s određenog područja</td></tr>' +
+        '<tr><td><strong>ZOZP</strong> — zaštićena oznaka zemljopisnog podrijetla</td><td><strong>najmanje 85 %</strong> grožđa s određenog područja</td></tr>' +
+        '</table>' +
+
+        '<h3>Prerada grožđa</h3>' +
+        '<ol>' +
+        '<li><strong>Dozrijevanje</strong> — raste količina šećera (u zrelom grožđu oko <strong>20 %</strong>), a smanjuje se količina kiselina. <strong>Šećer u moštu prediktor je količine alkohola</strong> u vinu.</li>' +
+        '<li><strong>Berba</strong> — kada grožđe postigne tehnološku zrelost.</li>' +
+        '<li><strong>Runjenje</strong> — odvajanje peteljki od bobica.</li>' +
+        '<li><strong>Muljanje</strong> — gnječenje bobica → nastaje <strong>masulj</strong> (smjesa krutih i tekućih dijelova grožđa).</li>' +
+        '</ol>' +
+
+        '<h3>Bijela, crna i ružičasta vina</h3>' +
+        '<table>' +
+        '<tr><th></th><th>Bijelo vino</th><th>Crno vino</th></tr>' +
+        '<tr><td>Vrenje</td><td><strong>u moštu</strong> (masulj se odmah preša)</td><td><strong>u masulju</strong> (s kožicama)</td></tr>' +
+        '<tr><td>Cilj</td><td>svježina i aroma</td><td>izdvajanje boje (antocijani) i tanina iz kožice</td></tr>' +
+        '<tr><td>Temperatura vrenja</td><td>niža (oko 15–18 °C)</td><td>viša (oko 22–25 °C)</td></tr>' +
+        '</table>' +
+        '<h4>Bijelo vino</h4>' +
+        '<ul>' +
+        '<li><strong>Mošt</strong> — sok dobiven iz masulja ocjeđivanjem i prešanjem; najkvalitetniji dio je <strong>samotok</strong> (iscuri sam, bez prešanja).</li>' +
+        '<li><strong>Obrada mošta</strong>: <strong>sumporenje</strong> (SO₂ inaktivira prirodnu mikrofloru, djeluje antiseptički i antioksidativno), hlađenje, taloženje (bistrenje mošta, obično 12–24 sata) i korekcija sastava.</li>' +
+        '<li><strong>Fermentacija</strong> — spontana (prirodni kvasci) ili dirigirana (selekcionirani kvasci <em>Saccharomyces cerevisiae</em>): šećer → etanol + CO₂.</li>' +
+        '</ul>' +
+        '<h4>Crno vino</h4>' +
+        '<ul>' +
+        '<li><strong>Maceracija</strong> — izdvajanje <strong>antocijana</strong> (boja iz kožice crnog grožđa), <strong>tanina</strong> (okus i struktura) i aroma.</li>' +
+        '<li><strong>Klobuk</strong> — sloj kožica i sjemenki koji CO₂ potiskuje na površinu; redovito se potapa ili razbija.</li>' +
+        '<li><strong>Malolaktična fermentacija</strong> — bakterije mliječne kiseline pretvaraju jabučnu kiselinu u mliječnu: manja kiselost, veća stabilnost, mekši okus.</li>' +
+        '</ul>' +
+        '<p><strong>Ružičasta vina</strong> — kratki kontakt mošta s kožicom crnog grožđa ili postupak sličan proizvodnji bijelih vina.</p>' +
+
+        '<h3>Njega i dozrijevanje</h3>' +
+        '<p>Dozrijevanjem se razvijaju aroma, okus i stabilnost. <strong>Postupci njege:</strong> nadolijevanje posuda, <strong>pretakanje</strong>, <strong>kupažiranje</strong> (sljubljivanje — miješanje vina ili moštova dviju ili više sorti), bistrenje, <strong>stabilizacija</strong> i <strong>filtracija</strong>. Prije punjenja u boce vino mora biti kemijski i mikrobiološki stabilno.</p>' +
+        '<div class="warning-box"><strong>Zamka:</strong> alkoholna fermentacija NIJE postupak njege vina — ona prethodi njezi.</div>' +
+
+        '<h3>Bolesti i mane vina</h3>' +
+        '<table>' +
+        '<tr><th>Bolesti (mikroorganizmi)</th><th>Mane (kemijske i fizikalne promjene)</th></tr>' +
+        '<tr><td><strong>Octikavost</strong> — octene bakterije pretvaraju alkohol u octenu kiselinu</td><td><strong>Posmeđivanje</strong> — oksidacija</td></tr>' +
+        '<tr><td><strong>Vinski cvijet</strong> — kvasci stvaraju bjelkastu prevlaku na površini</td><td><strong>Lom</strong> — zamućenje (npr. željezni, bakreni, bjelančevinasti lom)</td></tr>' +
+        '<tr><td><strong>Sluzavost</strong> — vino postaje uljasto i sluzavo</td><td><strong>Miris na sumporovodik</strong> (pokvarena jaja)</td></tr>' +
+        '<tr><td><strong>Prevrnuto vino</strong>, <strong>zavrelica</strong>, <strong>manitno vrenje</strong></td><td><strong>Miris na čep</strong>, <strong>teški metali</strong>, <strong>okus na gorki badem</strong></td></tr>' +
+        '</table>' +
+
+        '<h3>Specijalna vina</h3>' +
+        '<p>Dobivena od svježeg grožđa, mošta ili vina posebnim tehnološkim postupcima: pjenušava, biser i gazirana, likerska i slatka vina.</p>' +
+        '<ul>' +
+        '<li><strong>Pjenušava vina</strong> — CO₂ iz <strong>sekundarne fermentacije</strong>: <strong>Champagne metoda</strong> (u boci) ili <strong>Charmat metoda</strong> (u velikim tankovima — brže i jeftinije).</li>' +
+        '<li><strong>Likerska (jaka) vina</strong> — <strong>15–22 %</strong> alkohola: Madeira, Porto, Sherry.</li>' +
+        '<li><strong>Slatka vina</strong> — veća količina neprevrelog šećera: <strong>prošek</strong>, <strong>ledeno vino</strong> (grožđe smrznuto na trsu).</li>' +
+        '</ul>' +
+
+        '<h3>Vina na tržištu</h3>' +
+        '<p><strong>Obavezni podaci na etiketi:</strong> vrsta vina, alkoholna jakost, neto količina, podrijetlo, serija i alergeni (sulfiti).</p>' +
+        '<table>' +
+        '<tr><th>Mirna vina prema šećeru</th><th>Neprevreli šećer</th></tr>' +
+        '<tr><td>Suha</td><td>do 4 g/L</td></tr>' +
+        '<tr><td>Polusuha</td><td>do 12 g/L</td></tr>' +
+        '<tr><td>Poluslatka</td><td>do 45 g/L</td></tr>' +
+        '<tr><td>Slatka</td><td>više od 45 g/L</td></tr>' +
+        '</table>' +
+        '<p><strong>Predikatna vina</strong> (iz grožđa posebne zrelosti): kasna berba, izborna berba, izborna berba bobica, izborna berba prosušenih bobica i ledeno vino. <strong>Arhivsko vino nije predikat</strong> — to je oznaka vina dugo čuvanog u podrumu.</p>'
+    }
+  }
+};
+
+if (typeof window !== 'undefined') { window.foodNutritionHrM1 = foodNutritionHrM1; }
+if (typeof module !== 'undefined' && module.exports) { module.exports = foodNutritionHrM1; }
