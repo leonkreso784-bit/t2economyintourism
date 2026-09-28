@@ -103,103 +103,103 @@ const foodNutritionHrFinalExamPractice = {
   "quiz": [
     {
       "question": "Mliječno-kiselo vrenje NE koristi se u proizvodnji:",
-      "options": ["Kiselog kupusa", "Jogurta", "Piva", "Fermentiranih kobasica"],
-      "correct": 2
+      "options": ["Kiselog kupusa", "Jogurta", "Fermentiranih kobasica", "Piva"],
+      "correct": 3
     },
     {
       "question": "U kojem se od navedenih proizvoda kvasac NE koristi?",
-      "options": ["Kruhu", "Pivu", "Vinu", "Tjestenini"],
-      "correct": 3
+      "options": ["Tjestenini", "Kruhu", "Pivu", "Vinu"],
+      "correct": 0
     },
     {
       "question": "Koji su proizvodi toplinski obrađeni na temperaturi iznad 100 °C?",
-      "options": ["Riblje konzerve i UHT mlijeko", "Pasterizirano mlijeko i pivo", "Pršut i kulen", "Jogurt i kefir"],
-      "correct": 0
+      "options": ["Pasterizirano mlijeko i pivo", "Riblje konzerve i UHT mlijeko", "Pršut i kulen", "Jogurt i kefir"],
+      "correct": 1
     },
     {
       "question": "Antocijani daju boju:",
-      "options": ["Žumanjku i mrkvi", "Crnom vinu i bobičastom voću", "Kakao-prahu i kavi", "Svježem goveđem mesu"],
-      "correct": 1
+      "options": ["Žumanjku i mrkvi", "Kakao-prahu i kavi", "Crnom vinu i bobičastom voću", "Svježem goveđem mesu"],
+      "correct": 2
     },
     {
       "question": "Koja je namirnica bogata bjelančevinama i mastima, a gotovo bez ugljikohidrata?",
-      "options": ["Kruh", "Jabuka", "Jaje", "Pivo"],
-      "correct": 2
+      "options": ["Kruh", "Jabuka", "Pivo", "Jaje"],
+      "correct": 3
     },
     {
       "question": "Na −18 °C čuvaju se:",
-      "options": ["Pasterizirano mlijeko i jaja", "Maslac i jogurt", "Svježi kruh i tjestenina", "Duboko zamrznuta riba i meso"],
-      "correct": 3
+      "options": ["Duboko zamrznuta riba i meso", "Pasterizirano mlijeko i jaja", "Maslac i jogurt", "Svježi kruh i tjestenina"],
+      "correct": 0
     },
     {
       "question": "Koji je par sirovine i pića točan?",
-      "options": ["Agava – tequila", "Jabuke – rum", "Šećerna trska – calvados", "Vinski talog – gin"],
-      "correct": 0
+      "options": ["Jabuke – rum", "Agava – tequila", "Šećerna trska – calvados", "Vinski talog – gin"],
+      "correct": 1
     },
     {
       "question": "Enzimi se namjerno inaktiviraju toplinom kod:",
-      "options": ["Fermentacije crnog čaja", "Blanširanja povrća i zelenog čaja", "Zrenja mesa", "Slađenja ječma"],
-      "correct": 1
+      "options": ["Fermentacije crnog čaja", "Zrenja mesa", "Blanširanja povrća i zelenog čaja", "Slađenja ječma"],
+      "correct": 2
     },
     {
       "question": "Koji od navedenih spojeva NIJE alkaloid?",
-      "options": ["Kofein", "Teobromin", "Lecitin", "Teofilin"],
-      "correct": 2
+      "options": ["Kofein", "Teobromin", "Teofilin", "Lecitin"],
+      "correct": 3
     },
     {
       "question": "Vitamin B12 može se unijeti iz:",
-      "options": ["Voća i povrća", "Žitarica i mahunarki", "Biljnih ulja", "Mlijeka, jaja i mesa"],
-      "correct": 3
+      "options": ["Mlijeka, jaja i mesa", "Voća i povrća", "Žitarica i mahunarki", "Biljnih ulja"],
+      "correct": 0
     },
     {
       "question": "Biljno željezo iz hrane bolje se iskorištava uz:",
-      "options": ["Vitamin C", "Kofein", "Tanine iz čaja", "Kalcij iz mlijeka"],
-      "correct": 0
+      "options": ["Kofein", "Vitamin C", "Tanine iz čaja", "Kalcij iz mlijeka"],
+      "correct": 1
     },
     {
       "question": "Omega-3 masne kiseline EPA i DHA najviše su zastupljene u:",
-      "options": ["Maslacu", "Masnoj ribi", "Svinjskoj masti", "Kokosovom ulju"],
-      "correct": 1
+      "options": ["Maslacu", "Svinjskoj masti", "Masnoj ribi", "Kokosovom ulju"],
+      "correct": 2
     },
     {
       "question": "Koji od navedenih proizvoda NIJE fermentiran?",
-      "options": ["Kefir", "Kiseli kupus", "Sladoled", "Pivo"],
-      "correct": 2
+      "options": ["Kefir", "Kiseli kupus", "Pivo", "Sladoled"],
+      "correct": 3
     },
     {
       "question": "Koji je pokazatelj svježine ispravno povezan s namirnicom?",
-      "options": ["Velika zračna komora – svježe jaje", "Gusta sluz – svježa riba", "Ljepljiva sredina – svjež kruh", "Crvene škrge – riba"],
-      "correct": 3
+      "options": ["Crvene škrge – riba", "Velika zračna komora – svježe jaje", "Gusta sluz – svježa riba", "Ljepljiva sredina – svjež kruh"],
+      "correct": 0
     },
     {
       "question": "Maillardova reakcija odgovorna je za smeđu boju:",
-      "options": ["Kore kruha i pržene kave", "Crnog vina", "Žumanjka", "Zelenog povrća"],
-      "correct": 0
+      "options": ["Crnog vina", "Kore kruha i pržene kave", "Žumanjka", "Zelenog povrća"],
+      "correct": 1
     },
     {
       "question": "Koja je preporuka Svjetske zdravstvene organizacije ispravna?",
-      "options": ["Najviše 50 g soli dnevno", "Najmanje 400 g voća i povrća dnevno", "Najmanje 30 % energije iz dodanih šećera", "Najviše 5 g vlakana dnevno"],
-      "correct": 1
-    },
-    {
-      "question": "Koja je od navedenih opasnosti biološka?",
-      "options": ["Živa u tuni", "Komadić stakla u džemu", "Anisakis u sirovoj ribi", "Ostatak deterdženta na posuđu"],
+      "options": ["Najviše 50 g soli dnevno", "Najmanje 30 % energije iz dodanih šećera", "Najmanje 400 g voća i povrća dnevno", "Najviše 5 g vlakana dnevno"],
       "correct": 2
     },
     {
-      "question": "Što bi u HACCP planu mogla biti kritična granica pri pasterizaciji mlijeka?",
-      "options": ["Datum „najbolje upotrijebiti do”", "Oznaka uzgoja jaja", "Tip brašna 550", "72 °C tijekom 15 sekundi"],
+      "question": "Koja je od navedenih opasnosti biološka?",
+      "options": ["Živa u tuni", "Komadić stakla u džemu", "Ostatak deterdženta na posuđu", "Anisakis u sirovoj ribi"],
       "correct": 3
     },
     {
-      "question": "Višestruka (dvostruka ili trostruka) destilacija karakteristična je za:",
-      "options": ["Cognac i irski whiskey", "Armagnac i pivo", "Vino i pivo", "Kefir i jogurt"],
+      "question": "Što bi u HACCP planu mogla biti kritična granica pri pasterizaciji mlijeka?",
+      "options": ["72 °C tijekom 15 sekundi", "Datum „najbolje upotrijebiti do”", "Oznaka uzgoja jaja", "Tip brašna 550"],
       "correct": 0
     },
     {
-      "question": "Osoba s celijakijom smije jesti:",
-      "options": ["Raženi kruh", "Rižu i kukuruz", "Pivo od ječmenog slada", "Pšeničnu tjesteninu"],
+      "question": "Višestruka (dvostruka ili trostruka) destilacija karakteristična je za:",
+      "options": ["Armagnac i pivo", "Cognac i irski whiskey", "Vino i pivo", "Kefir i jogurt"],
       "correct": 1
+    },
+    {
+      "question": "Osoba s celijakijom smije jesti:",
+      "options": ["Raženi kruh", "Pivo od ječmenog slada", "Rižu i kukuruz", "Pšeničnu tjesteninu"],
+      "correct": 2
     }
   ],
   "fillBlanks": [
@@ -294,9 +294,11 @@ const foodNutritionHrFinalExamPractice = {
       '<li>„Hmelj daje gorčinu i djeluje antiseptički.” — <strong>točno</strong>.</li>' +
       '<li>„Soljenjem se konzervira isključivo morska riba.” — <strong>netočno</strong>.</li>' +
       '<li>„Kemijske opasnosti uključuju parazite.” — <strong>netočno</strong> (biološke).</li>' +
+      '<li>„Djelovanjem enzima bjelančevine se razgrađuju na monosaharide.” — <strong>netočno</strong> (na aminokiseline).</li>' +
+      '<li>„Crno vino vrije u moštu.” — <strong>netočno</strong> (u masulju).</li>' +
       '</ul>' +
 
-      '<div class="warning-box"><strong>Studentske bilješke s greškama — što vrijedi prema stručnoj literaturi:</strong> vitamin C povećava apsorpciju željeza (ne obrnuto) · enologija je znanost o vinu, a uzgojem loze bavi se vinogradarstvo · samotok iscuri <em>bez</em> prešanja · „jezgričavo” voće (jabuka, kruška) nije isto što i „jezgrovito/lupinasto” (orah, badem) · medica je rakija ili liker s medom, a ne voćni liker (u ključu je bila točna samo zato što ostali ponuđeni odgovori nisu likeri od voća) · za jaja predavanja navode da <em>mogu pridonijeti</em> sniženju krvnog tlaka, iako jedan sažetak tvrdi suprotno.</div>'
+      '<div class="warning-box"><strong>Studentske bilješke s greškama — što vrijedi prema stručnoj literaturi:</strong> vitamin C povećava apsorpciju željeza (ne obrnuto) · enologija je znanost o vinu, a uzgojem loze bavi se vinogradarstvo · samotok iscuri <em>bez</em> prešanja · „jezgričavo” voće (jabuka, kruška) nije isto što i „jezgrovito/lupinasto” (orah, badem) · voćni liker u ispitnom pitanju je <strong>orahovac</strong> (medica je rakija s medom) · sniženje krvnog tlaka JEST prednost jaja (u pitanju „što nije prednost” točno je poboljšanje peristaltike crijeva) · nitavost je bolest, a ne mana kruha · probavu škroba u ustima započinje amilaza sline (ptijalin), a ne pepsin · na pitanje o energiji 1 g masti nijedna ponuđena vrijednost (1,8–6,9 kcal) nije točna: točno je 9 kcal.</div>'
   }
 };
 

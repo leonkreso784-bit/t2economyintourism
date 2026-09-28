@@ -24,8 +24,8 @@ const foodNutritionHrM2 = {
       },
       {
         "question": "Koje su osnovne sirovine za pivo?",
-        "answer": "Slad, voda, hmelj i kvasac.",
-        "explanation": "U nekim se podjelama hmelj navodi kao dodatna sirovina („začin” piva)."
+        "answer": "Slad (od ječma), voda i kvasac; hmelj se dodaje radi gorčine, arome i antiseptičkog djelovanja.",
+        "explanation": "Skripta navodi četiri sirovine s hmeljem, ali u ispitnom ključu hmelj NIJE osnovna sirovina."
       },
       {
         "question": "Što je SLAD?",
@@ -39,7 +39,7 @@ const foodNutritionHrM2 = {
       },
       {
         "question": "Kakva je uloga HMELJA?",
-        "answer": "Daje gorčinu i aromu, djeluje antiseptički i pridonosi stabilnosti pjene. Koriste se ženski cvjetovi (šišarice) biljke Humulus lupulus.",
+        "answer": "Daje gorčinu i aromu, djeluje antiseptički, pospješuje koagulaciju bjelančevina i stabilnost pjene. Koriste se šišarice biljke Humulus lupulus.",
         "explanation": "Kuhanje sladovine s hmeljem = hmeljenje."
       },
       {
@@ -103,6 +103,11 @@ const foodNutritionHrM2 = {
         "explanation": "EBC = europska ljestvica boje piva."
       },
       {
+        "question": "Koji su zdravstveni učinci umjerene konzumacije piva?",
+        "answer": "Poboljšava probavu, potiče izlučivanje probavnih sokova i tekućine (diuretik) te nadoknađuje elektrolite. NE poboljšava mentalne performanse.",
+        "explanation": "Uz umjerenost: najviše 2–3 jedinice alkohola dnevno."
+      },
+      {
         "question": "Kakav je sastav i energetska vrijednost piva?",
         "answer": "Oko 92,9 % vode, 3,9 % alkohola i 2,5 % ugljikohidrata; oko 45 kcal na 100 ml. Sadrži B vitamine i kalij.",
         "explanation": "Preporuka: najviše 2–3 jedinice alkohola dnevno, za žene upola manje."
@@ -110,8 +115,28 @@ const foodNutritionHrM2 = {
     ],
     "quiz": [
       {
-        "question": "U proizvodnji piva NE provodi se:",
-        "options": ["Slađenje", "Destilacija", "Hmeljenje", "Kuhanje sladovine"],
+        "question": "Koji se od navedenih postupaka NE provodi u proizvodnji piva?",
+        "options": ["Proizvodnja slada", "Destilacija", "Naknadno vrenje mladog piva", "Dorada piva"],
+        "correct": 1
+      },
+      {
+        "question": "Što od navedenog NIJE uloga hmelja u proizvodnji piva?",
+        "options": ["Antiseptičko djelovanje", "Postizanje gorčine piva", "Osnovna je sirovina za pivo", "Pospješuje koagulaciju bjelančevina"],
+        "correct": 2
+      },
+      {
+        "question": "Što od navedenog NE spada u zdravstvene učinke piva?",
+        "options": ["Poboljšava probavu hrane", "Nadoknađuje elektrolite nakon napora", "Potiče izlučivanje tekućine", "Poboljšava mentalne performanse"],
+        "correct": 3
+      },
+      {
+        "question": "Pivo donjeg vrenja dobiva se postupkom ___, a pivo gornjeg vrenja postupkom ___:",
+        "options": ["Dekokcija – infuzija", "Infuzija – dekokcija", "Slađenje – infuzija", "Komljenje – slađenje"],
+        "correct": 0
+      },
+      {
+        "question": "Postupak u kojem se ukupna masa komine postupno zagrijava, a dobiva se visoko prevrelo pivo s više alkohola, zove se:",
+        "options": ["Dekokcija", "Infuzija", "Bistrenje", "Slađenje"],
         "correct": 1
       },
       {
@@ -120,8 +145,8 @@ const foodNutritionHrM2 = {
         "correct": 2
       },
       {
-        "question": "Glavno vrenje piva daje:",
-        "options": ["Sladovinu", "Kominu", "Slad", "Mlado pivo"],
+        "question": "Glavnim vrenjem, koje traje 4–5 dana, dobiva se:",
+        "options": ["Sladovina", "Pivski trop", "Stabilizirano pivo", "Mlado pivo"],
         "correct": 3
       },
       {
@@ -229,19 +254,19 @@ const foodNutritionHrM2 = {
         '<tr><th>Sirovina</th><th>Uloga</th></tr>' +
         '<tr><td><strong>Slad</strong></td><td>proklijali i osušeni <strong>ječam</strong>; izvor fermentabilnih šećera. Niža temperatura sušenja → svijetla piva, viša → tamna</td></tr>' +
         '<tr><td><strong>Voda</strong></td><td>oko <strong>90 %</strong> piva; <strong>tvrdoća vode</strong> (soli kalcija i magnezija) utječe na okus</td></tr>' +
-        '<tr><td><strong>Hmelj</strong></td><td>ženski cvjetovi (šišarice) biljke <em>Humulus lupulus</em>: <strong>gorčina, aroma, antiseptičko djelovanje</strong>, stabilnost pjene. Sadrži <strong>lupulin</strong> — žuti prah s gorkim smolama i eteričnim uljima</td></tr>' +
+        '<tr><td><strong>Hmelj</strong></td><td>ženski cvjetovi (šišarice) biljke <em>Humulus lupulus</em>: <strong>gorčina, aroma, antiseptičko djelovanje</strong>, <strong>koagulacija bjelančevina</strong> (bistrenje sladovine), stabilnost pjene. Sadrži <strong>lupulin</strong> — žuti prah s gorkim smolama i eteričnim uljima</td></tr>' +
         '<tr><td><strong>Kvasac</strong></td><td>pretvara šećere u alkohol i CO₂; utječe na okus i aromu</td></tr>' +
         '</table>' +
-        '<div class="tip-box">Skripta navodi četiri osnovne sirovine. U nekim se ispitnim pitanjima hmelj ne ubraja u osnovne sirovine nego se opisuje kao dodatak koji daje gorčinu i aromu i djeluje antiseptički — oba opisa odnose se na istu ulogu hmelja.</div>' +
+        '<div class="tip-box">Skripta navodi četiri osnovne sirovine, ali u ispitnom pitanju „što nije uloga hmelja” točan je odgovor <strong>„osnovna je sirovina za proizvodnju piva”</strong> — prema ključu kolegija osnovne su sirovine slad (ječam), voda i kvasac, a hmelj je dodatak. Uloge hmelja: antiseptičko djelovanje, gorčina, hmeljna aroma i koagulacija bjelančevina.</div>' +
 
         '<h3>Proizvodnja piva — četiri faze</h3>' +
         '<h4>1. Proizvodnja slada (slađenje)</h4>' +
         '<p>Ječam se <strong>moči, klija i suši</strong>. Klijanjem se aktiviraju enzimi koji će razgraditi škrob.</p>' +
         '<h4>2. Proizvodnja sladovine</h4>' +
         '<ul>' +
-        '<li><strong>Ukomljavanje (komljenje)</strong> — miješanje mljevenog slada i vode; enzimi pretvaraju netopljive sastojke u topljive (škrob → fermentabilni šećeri).</li>' +
-        '<li><strong>Infuzija</strong> — postupno zagrijavanje cijele komine; više fermentabilnih šećera; za piva <strong>gornjeg</strong> vrenja.</li>' +
-        '<li><strong>Dekokcija</strong> — dio komine se odvaja, kuha i vraća; više neprevrelog ekstrakta; za piva <strong>donjeg</strong> vrenja.</li>' +
+        '<li><strong>Ukomljavanje (komljenje)</strong> — miješanje mljevenog slada i vode; enzimi pretvaraju netopljive sastojke u topljive (škrob → maltoza i glukoza, koje kvasac poslije prevodi u alkohol).</li>' +
+        '<li><strong>Infuzija</strong> — <strong>ukupna masa komine</strong> postupno se zagrijava; škrob prelazi u fermentabilne šećere pa nastaje <strong>visoko prevrelo pivo</strong> s više alkohola i manje neprevrelog ekstrakta; za piva <strong>gornjeg</strong> vrenja.</li>' +
+        '<li><strong>Dekokcija</strong> — dio komine se odvaja, kuha i vraća (komljenje i kuhanje slada); saharifikacija se usmjerava na više neprevrelog ekstrakta (dekstrini) — punoća okusa, manje alkohola; za piva <strong>donjeg</strong> vrenja.</li>' +
         '<li><strong>Hmeljenje</strong> — kuhanje sladovine s hmeljem (gorčina, aroma, stabilnost).</li>' +
         '</ul>' +
         '<h4>3. Alkoholno vrenje</h4>' +
@@ -270,7 +295,7 @@ const foodNutritionHrM2 = {
         '</table>' +
 
         '<h3>Prehrambena vrijednost</h3>' +
-        '<p>Prosječno <strong>92,9 % vode, 3,9 % alkohola, 2,5 % ugljikohidrata</strong>; oko <strong>45 kcal na 100 ml</strong>. Sadrži vitamine B skupine te kalij, fosfor, magnezij i kalcij. Umjerena konzumacija može potaknuti probavu, djelovati diuretički i nadoknaditi elektrolite. <strong>Preporuka:</strong> ne više od 2–3 jedinice alkohola dnevno, za žene približno upola manje.</p>'
+        '<p>Prosječno <strong>92,9 % vode, 3,9 % alkohola, 2,5 % ugljikohidrata</strong>; oko <strong>45 kcal na 100 ml</strong>. Sadrži vitamine B skupine te kalij, fosfor, magnezij i kalcij. Umjerena konzumacija poboljšava probavu, potiče izlučivanje probavnih sokova i tekućine (diuretik) te nadoknađuje elektrolite nakon napora. <strong>Poboljšanje mentalnih performansi NIJE</strong> učinak piva. <strong>Preporuka:</strong> ne više od 2–3 jedinice alkohola dnevno, za žene približno upola manje.</p>'
     }
   },
 
@@ -303,6 +328,11 @@ const foodNutritionHrM2 = {
         "question": "Što je DOZRIJEVANJE jakih pića?",
         "answer": "Oplemenjivanje destilata u posudama, najčešće hrastovim bačvama: mijenjaju se boja, aroma i okus. Traje od nekoliko dana do više od 10 godina.",
         "explanation": "Boja whiskyja i konjaka dolazi iz bačve."
+      },
+      {
+        "question": "Koja se jaka pića dobivaju posebnim postupcima?",
+        "answer": "Votka, domaći brandy, domaći rum te jaka alkoholna pića od voća i likeri.",
+        "explanation": "Npr. aromatiziranjem etilnog alkohola ili maceracijom."
       },
       {
         "question": "Kako se proizvode RAKIJE?",
@@ -391,8 +421,8 @@ const foodNutritionHrM2 = {
       },
       {
         "question": "Što je PUNČ?",
-        "answer": "Topli miješani napitak od jakog alkoholnog pića (najčešće ruma), vode ili čaja, šećera, limuna i začina.",
-        "explanation": "Grog = rum razrijeđen vrućom vodom."
+        "answer": "Prema kolegiju: liker od etilnog alkohola i ruma (ili domaćeg ruma), aromatiziran destilatima i maceratima agruma i eteričnim uljima.",
+        "explanation": "Punčem se zove i topli napitak od ruma, čaja, šećera i limuna."
       },
       {
         "question": "Po čemu se ocjenjuje kvaliteta jakih pića?",
@@ -407,89 +437,104 @@ const foodNutritionHrM2 = {
         "correct": 3
       },
       {
-        "question": "Rum je:",
-        "options": ["Šećerna rakija", "Voćna rakija", "Žitna rakija", "Vinska rakija"],
+        "question": "Rum se svrstava u ___, a calvados u ___ rakije:",
+        "options": ["šećerne – voćne", "voćne – šećerne", "žitne – voćne", "šećerne – žitne"],
         "correct": 0
+      },
+      {
+        "question": "Postupak kojim se grijanjem tekućine s etanolom hlapive tvari odvajaju od nehlapivih, pa hlađenjem vraćaju u tekuće stanje, zove se:",
+        "options": ["Rektifikacija", "Destilacija", "Deflegmacija", "Infuzija"],
+        "correct": 1
+      },
+      {
+        "question": "Koje se rakije proizvode isključivo iz vinskog destilata dobivenog destilacijom vina na manje od 86 % vol.?",
+        "options": ["Rakije od vinskog taloga", "Rakije od prevrele komine grožđa", "Rakije od vina", "Šećerne rakije"],
+        "correct": 2
+      },
+      {
+        "question": "Rum je:",
+        "options": ["Voćna rakija", "Žitna rakija", "Vinska rakija", "Šećerna rakija"],
+        "correct": 3
       },
       {
         "question": "Calvados je:",
-        "options": ["Šećerna rakija", "Jabučna rakija", "Žitna rakija", "Liker od anisa"],
-        "correct": 1
+        "options": ["Jabučna rakija", "Šećerna rakija", "Žitna rakija", "Liker od anisa"],
+        "correct": 0
       },
       {
         "question": "Tequila se dobiva destilacijom fermentiranog soka:",
-        "options": ["Šećerne trske", "Kukuruza", "Agave", "Grožđa"],
-        "correct": 2
+        "options": ["Šećerne trske", "Agave", "Kukuruza", "Grožđa"],
+        "correct": 1
       },
       {
-        "question": "Koje je od navedenih pića voćni liker?",
-        "options": ["Cognac", "Calvados", "Šljivovica", "Višnjevac"],
-        "correct": 3
+        "question": "Koje od navedenih pića pripada kategoriji voćnih likera?",
+        "options": ["Cognac", "Calvados", "Orahovac", "Pelinkovac"],
+        "correct": 2
       },
       {
         "question": "Cognac se proizvodi isključivo u francuskoj pokrajini:",
-        "options": ["Charente", "Gaskonja", "Normandija", "Jerez"],
-        "correct": 0
+        "options": ["Gaskonja", "Normandija", "Jerez", "Charente"],
+        "correct": 3
       },
       {
         "question": "Armagnac se razlikuje po tome što se:",
-        "options": ["Proizvodi od jabuka", "Destilira samo jednom", "Ne čuva u bačvama", "Aromatizira imelom"],
-        "correct": 1
+        "options": ["Destilira samo jednom", "Proizvodi od jabuka", "Ne čuva u bačvama", "Aromatizira imelom"],
+        "correct": 0
       },
       {
         "question": "Whisky mora dozrijevati u hrastovim bačvama najmanje:",
-        "options": ["6 mjeseci", "1 godinu", "3 godine", "10 godina"],
-        "correct": 2
+        "options": ["6 mjeseci", "3 godine", "1 godinu", "10 godina"],
+        "correct": 1
       },
       {
         "question": "Gin se aromatizira:",
-        "options": ["Zvjezdastim anisom", "Korom limuna", "Pelinom", "Bobicama borovice"],
-        "correct": 3
+        "options": ["Zvjezdastim anisom", "Korom limuna", "Bobicama borovice", "Pelinom"],
+        "correct": 2
       },
       {
         "question": "Destilacija je:",
-        "options": ["Odvajanje hlapivih od nehlapivih tvari", "Pretvaranje šećera u alkohol kvascem", "Potapanje bilja i voća u alkohol", "Miješanje destilata različite starosti"],
-        "correct": 0
+        "options": ["Pretvaranje šećera u alkohol kvascem", "Potapanje bilja i voća u alkohol", "Miješanje destilata različite starosti", "Odvajanje hlapivih od nehlapivih tvari"],
+        "correct": 3
       },
       {
         "question": "Biska je istarska rakija s dodatkom:",
-        "options": ["Rute", "Imele", "Meda", "Pelina"],
-        "correct": 1
+        "options": ["Imele", "Rute", "Meda", "Pelina"],
+        "correct": 0
       },
       {
         "question": "Likeri sadrže najmanje:",
-        "options": ["40 % alkohola i nimalo šećera", "5 % alkohola i 10 g/L šećera", "15 % alkohola i 70–100 g/L šećera", "37,5 % alkohola i 250 g/L šećera"],
-        "correct": 2
-      },
-      {
-        "question": "Zadarski maraschino proizvodi se od:",
-        "options": ["Šljive bistrice", "Grožđa maraštine", "Kruške viljamovke", "Višnje maraske"],
-        "correct": 3
-      },
-      {
-        "question": "Rakije od vina proizvode se destilacijom vina na manje od:",
-        "options": ["86 % vol.", "37,5 % vol.", "60 % vol.", "96 % vol."],
-        "correct": 0
-      },
-      {
-        "question": "Vinjak je:",
-        "options": ["Rakija od komine", "Vinska rakija", "Liker od višanja", "Rakija od šljiva"],
+        "options": ["40 % alkohola i nimalo šećera", "15 % alkohola i 70–100 g/L šećera", "5 % alkohola i 10 g/L šećera", "37,5 % alkohola i 250 g/L šećera"],
         "correct": 1
       },
       {
-        "question": "Ponovna destilacija radi jačeg destilata daje:",
-        "options": ["Komovicu", "Macerat", "Prepečenicu", "Mošt"],
+        "question": "Zadarski maraschino proizvodi se od:",
+        "options": ["Šljive bistrice", "Grožđa maraštine", "Višnje maraske", "Kruške viljamovke"],
         "correct": 2
       },
       {
-        "question": "Bourbon mora sadržavati najmanje:",
-        "options": ["51 % raži", "100 % ječmenog slada", "30 % pšenice", "51 % kukuruza"],
+        "question": "Rakije od vina proizvode se destilacijom vina na manje od:",
+        "options": ["37,5 % vol.", "60 % vol.", "96 % vol.", "86 % vol."],
         "correct": 3
       },
       {
-        "question": "Travarica je:",
-        "options": ["Rakija aromatizirana biljem", "Liker od pelina", "Rakija od vinskog taloga", "Šećerna rakija"],
+        "question": "Vinjak je:",
+        "options": ["Vinska rakija", "Rakija od komine", "Liker od višanja", "Rakija od šljiva"],
         "correct": 0
+      },
+      {
+        "question": "Ponovna destilacija radi jačeg destilata daje:",
+        "options": ["Komovicu", "Prepečenicu", "Macerat", "Mošt"],
+        "correct": 1
+      },
+      {
+        "question": "Bourbon mora sadržavati najmanje:",
+        "options": ["51 % raži", "100 % ječmenog slada", "51 % kukuruza", "30 % pšenice"],
+        "correct": 2
+      },
+      {
+        "question": "Travarica je:",
+        "options": ["Liker od pelina", "Rakija od vinskog taloga", "Šećerna rakija", "Rakija aromatizirana biljem"],
+        "correct": 3
       }
     ],
     "fillBlanks": [
@@ -540,14 +585,16 @@ const foodNutritionHrM2 = {
         '<li><strong>dodavanjem aroma i sladila</strong> alkoholu (likeri).</li>' +
         '</ul>' +
         '<p>Većina destiliranih pića na tržištu ima oko <strong>28–45 % vol.</strong> (rakije od voća i vina najmanje 37,5 %, whisky najmanje 40 %), a likeri od 15 % naviše.</p>' +
+        '<p><strong>Jaka alkoholna pića dobivena po posebnim postupcima</strong>: votka, domaći brandy, domaći rum te jaka alkoholna pića od voća i likeri.</p>' +
         '<p><strong>Povijest:</strong> Arapi su u 8. i 9. st. destilirali aromatsko i ljekovito bilje; u 11. st. razvija se destilacija alkohola; od 13. st. proizvode se alkoholni destilati u Europi i Kini; u 17. st. uvodi se dvostruka destilacija, u 19. st. rektifikacija.</p>' +
 
         '<h3>Destilacija i dozrijevanje</h3>' +
-        '<p><strong>Destilacija</strong> je odvajanje <strong>hlapivih od nehlapivih tvari</strong> zagrijavanjem i naknadnim hlađenjem para. Destilat je uglavnom alkohol i voda uz manje količine drugih spojeva. <strong>Destilacija uvijek slijedi nakon fermentacije</strong> — sav alkohol nastaje vrenjem, destilacija ga samo koncentrira.</p>' +
+        '<p><strong>Destilacija</strong> je odvajanje <strong>hlapivih od nehlapivih tvari</strong> zagrijavanjem i naknadnim hlađenjem para. Destilat je uglavnom alkohol i voda uz manje količine drugih spojeva. <strong>Destilacija uvijek slijedi nakon fermentacije</strong> — sav alkohol nastaje vrenjem, destilacija ga samo koncentrira. Etanol ima niže vrelište od vode, pa prije prelazi u paru i tako se odvaja.</p>' +
         '<p><strong>Cilj:</strong> povećati koncentraciju alkohola i izdvojiti poželjne aromatske spojeve, a ukloniti nepoželjne (prvijenac, patoka).</p>' +
         '<ul>' +
         '<li><strong>Redestilacija</strong> — ponovna destilacija za jači destilat; takva rakija zove se <strong>prepečenica</strong>.</li>' +
         '<li><strong>Rektifikacija</strong> — višestruko pročišćavanje alkohola u kolonama (vodka, neutralni alkohol).</li>' +
+        '<li><strong>Deflegmacija</strong> — djelomična kondenzacija para u koloni kojom se para obogaćuje alkoholom (dio rektifikacije, a ne sama destilacija).</li>' +
         '<li><strong>Dozrijevanje</strong> — oplemenjivanje destilata, najčešće u <strong>hrastovim bačvama</strong>; mijenjaju se boja, aroma i okus. Traje od nekoliko dana do više od 10 godina.</li>' +
         '</ul>' +
 
@@ -559,14 +606,14 @@ const foodNutritionHrM2 = {
         '<tr><th>Piće</th><th>Obilježja</th></tr>' +
         '<tr><td><strong>Vinjak</strong></td><td>hrvatska vinska rakija („hrvatski konjak”): najmanje 1 godinu u hrastovim spremnicima ili 6 mjeseci u hrastovim bačvama</td></tr>' +
         '<tr><td><strong>Stari vinjak</strong></td><td>najmanje 3 godine u hrastovim bačvama</td></tr>' +
-        '<tr><td><strong>Cognac</strong></td><td>isključivo francuska pokrajina <strong>Charente</strong>; vino se destilira <strong>dvaput</strong> u bakrenim kotlovima i dozrijeva u hrastovim bačvama</td></tr>' +
+        '<tr><td><strong>Cognac</strong></td><td>isključivo francuska pokrajina <strong>Charente</strong>; vino se destilira <strong>dvaput</strong> u bakrenim kotlovima i dozrijeva u hrastovim bačvama; prije punjenja miješaju se destilati raznih godišta i razrjeđuju destiliranom vodom radi ujednačene boje, okusa i jakosti</td></tr>' +
         '<tr><td><strong>Armagnac</strong></td><td>pokrajina <strong>Gaskonja</strong>; destilira se <strong>samo jednom</strong></td></tr>' +
         '<tr><td><strong>Sherry brandy</strong></td><td>španjolska pokrajina Jerez</td></tr>' +
         '<tr><td><strong>Metaxa</strong></td><td>grčki brandy; kvaliteta označena zvjezdicama</td></tr>' +
         '</table>' +
         '<h4>Rakije od grožđa i komine</h4>' +
         '<ul>' +
-        '<li><strong>Loza (lozovača)</strong> — destilacija prevrelog grožđanog <strong>masulja</strong>.</li>' +
+        '<li><strong>Loza (lozovača)</strong> — destilacija prevrelog grožđanog <strong>masulja</strong> na manje od 86 % vol. alkohola.</li>' +
         '<li><strong>Komovica</strong> — destilacija fermentirane grožđane <strong>komine</strong>; najmanje 37,5 %.</li>' +
         '<li><strong>Droždenka</strong> — destilacija <strong>vinskog taloga</strong>.</li>' +
         '<li><strong>Biska</strong> (istarska, s <strong>imelom</strong>), <strong>ruta</strong> (s rutom), <strong>medica</strong> (s dodanim <strong>medom</strong>), <strong>travarica</strong> (aromatizirana raznim aromatičnim biljem) — aromatizirane, „specijalne” rakije.</li>' +
@@ -606,8 +653,8 @@ const foodNutritionHrM2 = {
         '</table>' +
         '<h4>Hrvatska jaka alkoholna pića</h4>' +
         '<p>Stara i slavonska šljivovica · loza · travarica · biska · <strong>pelinkovac</strong> (biljni liker u kojem dominira pelin) · <strong>zadarski maraschino</strong> (liker od višnje maraske, najmanje 32 %).</p>' +
-        '<p><strong>Punč</strong> — topli miješani napitak od jakog pića (najčešće ruma), vode ili čaja, šećera, limuna i začina.</p>' +
-        '<div class="warning-box"><strong>Oprez s ispitnim ključem:</strong> u jednom studentskom sažetku kao „voćni liker” stoji medica. Medica je rakija ili liker s dodanim <strong>medom</strong>, a ne voćni liker; tipični voćni likeri su višnjevac, orahovac i limoncello. Među odgovorima cognac, calvados, pelinkovac i absint jedino medica nije ni rakija od vina/voća ni biljni liker — zato je bila označena kao točna.</div>' +
+        '<p><strong>Punč</strong> — prema materijalima kolegija <strong>liker</strong> dobiven aromatiziranjem etilnog alkohola i ruma (ili domaćeg ruma) destilatima i maceratima agruma i eteričnim uljima. U ugostiteljstvu se punčem zove i topli miješani napitak od ruma, čaja, šećera i limuna.</p>' +
+        '<div class="warning-box"><strong>Oprez s ispitnim ključem:</strong> u skraćenom sažetku ispitnih pitanja kao „voćni liker” stajala je medica, ali puni tekst pitanja nudi orahovac, cognac, calvados, pelinkovac, absint i medicu — točan je <strong>orahovac</strong>. Medica je rakija s dodanim <strong>medom</strong>, a ne voćni liker.</div>' +
 
         '<h3>Kvaliteta i nedostaci</h3>' +
         '<ul>' +
@@ -718,7 +765,7 @@ const foodNutritionHrM2 = {
       {
         "question": "Koji su trajni suhomesnati proizvodi?",
         "answer": "Pršut, suha šunka, suha lopatica, buđola, suha pečenica, suha slanina i panceta.",
-        "explanation": "Panceta je od svinjske potrbušine."
+        "explanation": "Panceta: pravokutni proizvod od svinjske potrbušine, sa ili bez hrskavice i kože."
       },
       {
         "question": "Trajne vs obarene kobasice?",
@@ -734,12 +781,17 @@ const foodNutritionHrM2 = {
     "quiz": [
       {
         "question": "Bijelo meso je:",
-        "options": ["Kozletina", "Pačetina", "Svinjetina", "Konjetina"],
-        "correct": 1
+        "options": ["Pačetina", "Kozletina", "Svinjetina", "Konjetina"],
+        "correct": 0
       },
       {
         "question": "Crveno meso NE uključuje:",
-        "options": ["Govedinu", "Janjetinu", "Pačetinu", "Kozletinu"],
+        "options": ["Govedinu", "Pačetinu", "Janjetinu", "Kozletinu"],
+        "correct": 1
+      },
+      {
+        "question": "Što je od navedenog učinak SPOROG zamrzavanja mesa?",
+        "options": ["Nastaju sitni kristali leda", "Manji je kalo odmrzavanja", "Intenzivna denaturacija bjelančevina pri odmrzavanju", "Manje se oštećuje mišićno tkivo"],
         "correct": 2
       },
       {
@@ -932,7 +984,7 @@ const foodNutritionHrM2 = {
         '</table>' +
         '<ul>' +
         '<li><strong>Zrenje</strong> poboljšava senzorska svojstva; <strong>fermentacija</strong> — mikroorganizmi pretvaraju šećere u mliječnu kiselinu, pH pada.</li>' +
-        '<li><strong>Trajni suhomesnati proizvodi</strong>: pršut, suha šunka, suha lopatica, buđola, suha pečenica, suha slanina, <strong>panceta</strong> (od svinjske potrbušine).</li>' +
+        '<li><strong>Trajni suhomesnati proizvodi</strong>: pršut, suha šunka, suha lopatica, buđola, suha pečenica, suha slanina, <strong>panceta</strong> (pravokutni proizvod od svinjske potrbušine, sa ili bez hrskavice i kože).</li>' +
         '<li><strong>Trajne kobasice</strong>: <strong>kulen</strong>, zimska salama, čajna kobasica, srijemska kobasica.</li>' +
         '<li><strong>Fermentirane polusuhe (polutrajne) kobasice</strong>: fermentacija, kraće sušenje i zrenje, često dimljenje.</li>' +
         '<li><strong>Obarene kobasice</strong>: nadjev od fino usitnjenog mesa, toplinski obrađen vrućom vodom ili parom — npr. <strong>hrenovke</strong>.</li>' +
@@ -984,7 +1036,7 @@ const foodNutritionHrM2 = {
       },
       {
         "question": "Kako prepoznati svježu ribu?",
-        "answer": "Bistre, izbočene oči, crvene škrge, vlažna i sjajna koža, rijetka prozirna sluz te čvrsto i elastično meso.",
+        "answer": "Bistre, pune oči, jasno crvene škrge, sjajna koža tipične boje, rijetka prozirna sluz, stisnut analni otvor, čvrsto i elastično meso.",
         "explanation": "Gusta, mutna sluz NIJE znak svježine."
       },
       {
@@ -1035,74 +1087,79 @@ const foodNutritionHrM2 = {
         "correct": 2
       },
       {
-        "question": "Bijela riba je:",
-        "options": ["Inćun", "Tuna", "Palamida", "Oslić"],
+        "question": "Što od navedenog NIJE karakteristika konzerviranja ribe soljenjem?",
+        "options": ["Tijekom soljenja dolazi do dehidracije", "Nastaju biokemijske promjene proteina i masti", "Provodi se dok je riba u rigor mortisu", "Konzervira se isključivo morska riba"],
         "correct": 3
+      },
+      {
+        "question": "Bijela riba je:",
+        "options": ["Oslić", "Inćun", "Tuna", "Palamida"],
+        "correct": 0
       },
       {
         "question": "List se svrstava u:",
-        "options": ["Bijelu ribu", "Plavu ribu", "Hrskavičnjače", "Glavonošce"],
-        "correct": 0
+        "options": ["Plavu ribu", "Bijelu ribu", "Hrskavičnjače", "Glavonošce"],
+        "correct": 1
       },
       {
         "question": "Marinada se svrstava u:",
-        "options": ["Riblje konzerve", "Polukonzerve od ribe", "Smrznute proizvode", "Sušenu ribu"],
-        "correct": 1
-      },
-      {
-        "question": "Što NIJE znak svježe ribe?",
-        "options": ["Crvene škrge", "Bistre oči", "Gusta, mutna sluz", "Čvrsto elastično meso"],
+        "options": ["Riblje konzerve", "Smrznute proizvode", "Polukonzerve od ribe", "Sušenu ribu"],
         "correct": 2
       },
       {
-        "question": "Preporučuje se jesti ribu:",
-        "options": ["Jednom mjesečno", "Svaki dan po 500 g", "Samo zimi", "Dvaput tjedno"],
+        "question": "Što od navedenog NIJE karakteristika svježe ribe?",
+        "options": ["Bistre i pune oči", "Stisnut analni otvor", "Jasno crvene škrge", "Gusta sluz"],
         "correct": 3
+      },
+      {
+        "question": "Preporuka za konzumaciju ribe je:",
+        "options": ["2 jedinice serviranja tjedno", "1 jedinica serviranja tjedno", "100 g ribe tjedno", "3–4 serviranja mjesečno"],
+        "correct": 0
       },
       {
         "question": "Temperatura u dubini zamrznute ribe mora biti:",
-        "options": ["−18 °C", "−4 °C", "0 °C", "−8 °C"],
-        "correct": 0
+        "options": ["−4 °C", "−18 °C", "0 °C", "−8 °C"],
+        "correct": 1
       },
       {
         "question": "Karakterističan riblji miris daje:",
-        "options": ["Histamin", "Trimetilamin", "Lecitin", "Mioglobin"],
-        "correct": 1
+        "options": ["Histamin", "Lecitin", "Trimetilamin", "Mioglobin"],
+        "correct": 2
       },
       {
         "question": "Soljenjem se konzervira:",
-        "options": ["Isključivo morska riba", "Isključivo slatkovodna riba", "Morska i slatkovodna riba", "Isključivo plava riba"],
-        "correct": 2
+        "options": ["Isključivo morska riba", "Isključivo slatkovodna riba", "Isključivo plava riba", "Morska i slatkovodna riba"],
+        "correct": 3
       },
       {
         "question": "Trajnost ribljih konzervi je oko:",
-        "options": ["3 mjeseca", "3 tjedna", "10 godina", "3 godine"],
-        "correct": 3
+        "options": ["3 godine", "3 mjeseca", "3 tjedna", "10 godina"],
+        "correct": 0
       },
       {
         "question": "Najvažnije omega-3 masne kiseline u ribi su:",
-        "options": ["EPA i DHA", "Oleinska i stearinska", "Linolna i palmitinska", "LDL i HDL"],
-        "correct": 0
-      },
-      {
-        "question": "Parazit koji se može naći u sirovoj ribi je:",
-        "options": ["Salmonella", "Anisakis", "Campylobacter", "Listeria"],
+        "options": ["Oleinska i stearinska", "EPA i DHA", "Linolna i palmitinska", "LDL i HDL"],
         "correct": 1
       },
       {
-        "question": "Skuša, tuna i losos su:",
-        "options": ["Nemasne ribe", "Hrskavičnjače", "Masne ribe", "Srednje masne ribe"],
+        "question": "Parazit koji se može naći u sirovoj ribi je:",
+        "options": ["Salmonella", "Campylobacter", "Anisakis", "Listeria"],
         "correct": 2
       },
       {
-        "question": "Uzgoj morskih organizama naziva se:",
-        "options": ["Slatkovodno ribarstvo", "Ribolov", "Poleđivanje", "Marikultura"],
+        "question": "Skuša, tuna i losos su:",
+        "options": ["Nemasne ribe", "Hrskavičnjače", "Srednje masne ribe", "Masne ribe"],
         "correct": 3
       },
       {
-        "question": "Riblje polukonzerve imaju trajnost do:",
-        "options": ["18 mjeseci", "3 godine", "7 dana", "5 godina"],
+        "question": "Uzgoj morskih organizama naziva se:",
+        "options": ["Marikultura", "Slatkovodno ribarstvo", "Ribolov", "Poleđivanje"],
         "correct": 0
+      },
+      {
+        "question": "Riblje polukonzerve imaju trajnost do:",
+        "options": ["3 godine", "18 mjeseci", "7 dana", "5 godina"],
+        "correct": 1
       }
     ],
     "fillBlanks": [
@@ -1166,7 +1223,7 @@ const foodNutritionHrM2 = {
         '<p><strong>Omega-3 masne kiseline EPA i DHA</strong> najvažnije su masne kiseline u ribi.</p>' +
 
         '<h3>Kakvoća ribe</h3>' +
-        '<p><strong>Svježa riba:</strong> bistre oči, crvene škrge, vlažna i sjajna koža, rijetka i prozirna sluz, čvrsto i elastično meso. <strong>Gusta, mutna sluz nije znak svježine.</strong></p>' +
+        '<p><strong>Svježa riba:</strong> bistre i pune oči, jasno crvene škrge, vlažna i sjajna koža tipične boje za vrstu, rijetka i prozirna sluz, stisnut analni otvor, čvrsto i elastično meso (udubljenje od pritiska prsta nestaje kad se pritisak popusti). <strong>Gusta, mutna sluz nije znak svježine.</strong></p>' +
         '<p><strong>Promjene nakon izlova:</strong> pojačano lučenje sluzi → <strong>rigor mortis</strong> (posmrtna ukočenost) → zrenje → kvarenje. <strong>Trimetilamin (TMA)</strong> daje karakterističan „riblji” miris.</p>' +
 
         '<h3>Konzerviranje ribe</h3>' +
@@ -1176,7 +1233,7 @@ const foodNutritionHrM2 = {
         '<li><strong>Riblje konzerve</strong> — sterilizacija u hermetički zatvorenoj ambalaži (sardine, papaline, inćuni, tuna); trajnost oko <strong>3 godine</strong>.</li>' +
         '<li><strong>Riblje polukonzerve</strong> — pasterizirane ili nepasterizirane, trajnost do <strong>18 mjeseci</strong>: <strong>marinade</strong>, slani inćuni, <strong>kavijar</strong> (soljena ikra jesetre) i riblja ikra.</li>' +
         '<li><strong>Smrznuti proizvodi</strong> — smrznuta i panirana riba, čuvaju se ispod −18 °C.</li>' +
-        '<li><strong>Soljena riba</strong> — jedna od najstarijih metoda konzerviranja; soli se i morska i slatkovodna riba.</li>' +
+        '<li><strong>Soljena riba</strong> — jedna od najstarijih metoda konzerviranja; soli se i morska i slatkovodna riba. Provodi se dok je riba u <strong>rigor mortisu</strong>; sol izaziva <strong>dehidraciju</strong> i biokemijske promjene bjelančevina i masti; u promet dolazi cijela, s glavom ili bez glave, utrobe i repa.</li>' +
         '<li><strong>Sušena riba</strong> — na zraku ili u kontroliranim uvjetima.</li>' +
         '<li><strong>Dimljena riba</strong> — najčešće losos i haringa, <strong>toplim ili hladnim</strong> dimljenjem.</li>' +
         '</ul>' +
@@ -1302,83 +1359,88 @@ const foodNutritionHrM2 = {
     "quiz": [
       {
         "question": "Ugljikohidrat s najvećim udjelom u mlijeku je:",
-        "options": ["Saharoza", "Laktoza", "Maltoza", "Škrob"],
-        "correct": 1
+        "options": ["Saharoza", "Maltoza", "Laktoza", "Škrob"],
+        "correct": 2
+      },
+      {
+        "question": "Postupak koji poboljšava viskoznost mlijeka i omogućuje potpunu otopljenost dopuštenih dodataka zove se:",
+        "options": ["Standardizacija masti", "Mikrofiltracija", "Deaeracija", "Homogenizacija"],
+        "correct": 3
       },
       {
         "question": "Najvažnija bjelančevina mlijeka je:",
-        "options": ["Gluten", "Avidin", "Kazein", "Mioglobin"],
-        "correct": 2
+        "options": ["Kazein", "Gluten", "Avidin", "Mioglobin"],
+        "correct": 0
       },
       {
         "question": "Homogenizacija mlijeka:",
-        "options": ["Uništava sve mikroorganizme i spore", "Povećava udio laktoze u mlijeku", "Odvaja kazein od sirutke", "Usitnjava globule mliječne masti"],
-        "correct": 3
+        "options": ["Uništava sve mikroorganizme i spore", "Usitnjava globule mliječne masti", "Povećava udio laktoze u mlijeku", "Odvaja kazein od sirutke"],
+        "correct": 1
       },
       {
         "question": "Punomasno mlijeko sadrži najmanje:",
-        "options": ["3,5 % mliječne masti", "0,5 % mliječne masti", "1,5 % mliječne masti", "10 % mliječne masti"],
-        "correct": 0
+        "options": ["0,5 % mliječne masti", "1,5 % mliječne masti", "3,5 % mliječne masti", "10 % mliječne masti"],
+        "correct": 2
       },
       {
         "question": "UHT mlijeko zagrijava se na:",
-        "options": ["72 °C 15–20 sekundi", "135–140 °C nekoliko sekundi", "40 °C 30 minuta", "100 °C jedan sat"],
-        "correct": 1
+        "options": ["72 °C 15–20 sekundi", "40 °C 30 minuta", "100 °C jedan sat", "135–140 °C nekoliko sekundi"],
+        "correct": 3
       },
       {
         "question": "Kod kefira uz mliječnu kiselinu nastaju i:",
-        "options": ["Octena kiselina i voda", "Kazein i laktoza", "Alkohol i CO₂", "Nitriti i nitrati"],
-        "correct": 2
+        "options": ["Alkohol i CO₂", "Octena kiselina i voda", "Kazein i laktoza", "Nitriti i nitrati"],
+        "correct": 0
       },
       {
         "question": "Stepka (mlaćenica) je nusproizvod proizvodnje:",
-        "options": ["Sira", "Sladoleda", "Jogurta", "Maslaca"],
-        "correct": 3
+        "options": ["Sira", "Maslaca", "Sladoleda", "Jogurta"],
+        "correct": 1
       },
       {
         "question": "Koji sir NE spada u tradicionalne hrvatske sireve?",
-        "options": ["Feta", "Paški sir", "Tounjski sir", "Škripavac"],
-        "correct": 0
+        "options": ["Paški sir", "Tounjski sir", "Feta", "Škripavac"],
+        "correct": 2
       },
       {
         "question": "Paški sir je:",
-        "options": ["Kravlji svježi sir", "Ovčji ekstra tvrdi sir", "Kozji sir u salamuri", "Dimljeni kravlji sir"],
-        "correct": 1
+        "options": ["Kravlji svježi sir", "Kozji sir u salamuri", "Dimljeni kravlji sir", "Ovčji ekstra tvrdi sir"],
+        "correct": 3
       },
       {
         "question": "Albuminski sirevi dobivaju se iz:",
-        "options": ["Punomasnog vrhnja", "Maslaca", "Sirutke", "Kiselog mlijeka"],
-        "correct": 2
+        "options": ["Sirutke", "Punomasnog vrhnja", "Maslaca", "Kiselog mlijeka"],
+        "correct": 0
       },
       {
         "question": "Sladoled je:",
-        "options": ["Fermentirani mliječni napitak", "Proizvod butrifikacije vrhnja", "Nusproizvod proizvodnje sira", "Zamrznuti mliječni proizvod"],
-        "correct": 3
-      },
-      {
-        "question": "Butrifikacija je postupak u proizvodnji:",
-        "options": ["Maslaca", "Jogurta", "Sira", "Sladoleda"],
-        "correct": 0
-      },
-      {
-        "question": "Jogurt nastaje djelovanjem bakterija:",
-        "options": ["Acetobacter i Gluconobacter", "S. thermophilus i L. bulgaricus", "Bacillus subtilis i B. cereus", "Salmonella i Campylobacter"],
+        "options": ["Fermentirani mliječni napitak", "Zamrznuti mliječni proizvod", "Proizvod butrifikacije vrhnja", "Nusproizvod proizvodnje sira"],
         "correct": 1
       },
       {
-        "question": "Sirovo mlijeko nije zagrijavano iznad:",
-        "options": ["72 °C", "100 °C", "40 °C", "135 °C"],
+        "question": "Butrifikacija je postupak u proizvodnji:",
+        "options": ["Jogurta", "Sira", "Maslaca", "Sladoleda"],
         "correct": 2
       },
       {
-        "question": "Pasterizirano mlijeko u hladnjaku traje:",
-        "options": ["3–4 mjeseca", "1–2 dana", "Godinu dana", "8–14 dana"],
+        "question": "Jogurt nastaje djelovanjem bakterija:",
+        "options": ["Acetobacter i Gluconobacter", "Bacillus subtilis i B. cereus", "Salmonella i Campylobacter", "S. thermophilus i L. bulgaricus"],
         "correct": 3
       },
       {
-        "question": "Gouda, edamer i trapist su:",
-        "options": ["Polutvrdi sirevi", "Ekstra tvrdi sirevi", "Sirevi u salamuri", "Svježi sirevi"],
+        "question": "Sirovo mlijeko nije zagrijavano iznad:",
+        "options": ["40 °C", "72 °C", "100 °C", "135 °C"],
         "correct": 0
+      },
+      {
+        "question": "Pasterizirano mlijeko u hladnjaku traje:",
+        "options": ["3–4 mjeseca", "8–14 dana", "1–2 dana", "Godinu dana"],
+        "correct": 1
+      },
+      {
+        "question": "Gouda, edamer i trapist su:",
+        "options": ["Ekstra tvrdi sirevi", "Sirevi u salamuri", "Polutvrdi sirevi", "Svježi sirevi"],
+        "correct": 2
       }
     ],
     "fillBlanks": [
@@ -1442,7 +1504,7 @@ const foodNutritionHrM2 = {
         '<tr><td>Djelomično obrano</td><td>1,5–1,8 % mliječne masti</td></tr>' +
         '<tr><td>Obrano</td><td>najviše <strong>0,5 %</strong> mliječne masti</td></tr>' +
         '</table>' +
-        '<p><strong>Primarna obrada:</strong> filtriranje · <strong>standardizacija</strong> (podešavanje udjela masti → standardizirano mlijeko) · <strong>homogenizacija</strong> (usitnjavanje globula masti; sprječava izdvajanje vrhnja i ujednačuje viskoznost) · uklanjanje mikroorganizama · toplinska obrada.</p>' +
+        '<p><strong>Primarna obrada:</strong> filtriranje · <strong>standardizacija</strong> (podešavanje udjela masti → standardizirano mlijeko) · <strong>homogenizacija</strong> (usitnjavanje globula masti; sprječava izdvajanje vrhnja, poboljšava viskoznost i omogućuje potpunu otopljenost dopuštenih dodataka) · uklanjanje mikroorganizama (npr. mikrofiltracija) · deaeracija (uklanjanje zraka) · toplinska obrada.</p>' +
         '<table>' +
         '<tr><th></th><th>Pasterizacija</th><th>Sterilizacija (UHT)</th></tr>' +
         '<tr><td>Uvjeti</td><td>72 °C, 15–20 sekundi</td><td>135–140 °C, nekoliko sekundi</td></tr>' +
@@ -1579,7 +1641,17 @@ const foodNutritionHrM2 = {
     "quiz": [
       {
         "question": "Oznakom „0” označavaju se jaja iz:",
-        "options": ["Kaveznog uzgoja", "Ekološkog uzgoja", "Podnog uzgoja", "Slobodnog uzgoja"],
+        "options": ["Kaveznog uzgoja", "Podnog uzgoja", "Slobodnog uzgoja", "Ekološkog uzgoja"],
+        "correct": 3
+      },
+      {
+        "question": "Što od navedenog NE predstavlja prednost konzumacije jaja?",
+        "options": ["Poboljšanje peristaltike crijeva", "Sniženje krvnog tlaka", "Protuupalno djelovanje", "Proteini visoke biološke vrijednosti"],
+        "correct": 0
+      },
+      {
+        "question": "Metoda potapanja jajeta u 12 %-tnu vodenu otopinu soli radi provjere svježine zove se:",
+        "options": ["Prosvjetljivanje ovoskopom", "Denzitometrija", "Spektroskopija", "Fosforescencija"],
         "correct": 1
       },
       {
@@ -1729,7 +1801,7 @@ const foodNutritionHrM2 = {
         '<h3>Zdravstveni učinci</h3>' +
         '<p><strong>Prednosti (prema predavanjima):</strong> velika nutritivna gustoća i visokokvalitetni proteini · mogu pridonijeti sniženju krvnog tlaka · protuupalno i antioksidativno djelovanje · bolja bioraspoloživost pojedinih minerala.</p>' +
         '<p><strong>Rizici:</strong> kontaminacija bakterijama <strong>Salmonella</strong> i <strong>Campylobacter</strong> — preko ljuske ili nakon nesenja.</p>' +
-        '<div class="warning-box"><strong>Proturječje u izvorima:</strong> skripta i predavanja navode da jaja <em>mogu pridonijeti sniženju krvnog tlaka</em>, a jedan studentski sažetak ispitnih pitanja tvrdi suprotno („konzumacija jaja ne snizuje krvni tlak”). Uči prema predavanjima, a na ispitu pažljivo pročitaj koje su prednosti ponuđene.</div>'
+        '<div class="warning-box"><strong>Ispitno pitanje:</strong> „što ne predstavlja prednost konzumacije jaja” nudi protuupalno i antioksidativno djelovanje, proteine visoke biološke vrijednosti, bolju bioraspoloživost minerala, sniženje krvnog tlaka i <strong>poboljšanje peristaltike crijeva</strong> — točan je posljednji; sniženje krvnog tlaka JEST prednost prema predavanjima.</div>'
     }
   },
 
@@ -1757,6 +1829,16 @@ const foodNutritionHrM2 = {
         "question": "Koje su vrste opasnosti u hrani?",
         "answer": "Biološke (bakterije, virusi, paraziti, plijesni), kemijske (pesticidi, teški metali, toksini, sredstva za čišćenje, alergeni) i fizikalne (staklo, metal, kamenčići).",
         "explanation": "Paraziti su BIOLOŠKA, a ne kemijska opasnost."
+      },
+      {
+        "question": "Koje su skupine kemijskih opasnosti u hrani?",
+        "answer": "Onečišćivači iz okoliša, onečišćivači nastali tijekom prerade ili čuvanja, namjerno dodani onečišćivači i prirodni toksini.",
+        "explanation": "Paraziti NISU kemijska nego biološka opasnost."
+      },
+      {
+        "question": "Validacija, audit i kontrolna mjera?",
+        "answer": "Validacija: dokaz da je HACCP plan učinkovit. Audit: neovisan pregled provedbe sustava. Kontrolna mjera: radnja kojom se opasnost sprečava ili smanjuje.",
+        "explanation": "Verifikacija uključuje validaciju, audit, testiranje proizvoda i pregled zapisa."
       },
       {
         "question": "Što je HACCP?",
@@ -1816,64 +1898,69 @@ const foodNutritionHrM2 = {
         "correct": 3
       },
       {
-        "question": "Verifikacija u HACCP sustavu NE uključuje:",
-        "options": ["Propisivanje korektivnih mjera", "Provjeru učinkovitosti sustava", "Pregled evidencija", "Dodatne analize uzoraka"],
+        "question": "Verifikacija kao dio HACCP sustava NE uključuje:",
+        "options": ["Propisivanje korektivnih mjera", "Validaciju", "Audit sustava HACCP", "Pregled rezultata zapisa"],
         "correct": 0
+      },
+      {
+        "question": "Plan mjera ili promatranja kritične kontrolne točke u odnosu na njezine kritične granice zove se:",
+        "options": ["Verifikacija", "Monitoring", "Validacija", "Sljedivost"],
+        "correct": 1
       },
       {
         "question": "Korektivne mjere provode se kada:",
-        "options": ["Stigne nova pošiljka sirovina", "Je prekoračena kritična granica", "Završi radna smjena", "Proizvod dobije novu etiketu"],
-        "correct": 1
+        "options": ["Stigne nova pošiljka sirovina", "Završi radna smjena", "Je prekoračena kritična granica", "Proizvod dobije novu etiketu"],
+        "correct": 2
       },
       {
         "question": "Monitoring u HACCP sustavu je:",
-        "options": ["Uklanjanje hrane s tržišta", "Vraćanje hrane od potrošača", "Planirano promatranje ili mjerenje na KKT", "Godišnji pregled cijelog sustava"],
-        "correct": 2
+        "options": ["Uklanjanje hrane s tržišta", "Vraćanje hrane od potrošača", "Godišnji pregled cijelog sustava", "Planirano promatranje ili mjerenje na KKT"],
+        "correct": 3
       },
       {
         "question": "Povlačenje hrane provodi se:",
-        "options": ["Nakon što je hrana stigla do potrošača", "Isključivo nakon inspekcijskog nadzora", "Isključivo za hranu iz uvoza", "Dok je hrana još u distribucijskom lancu"],
-        "correct": 3
+        "options": ["Dok je hrana još u distribucijskom lancu", "Nakon što je hrana stigla do potrošača", "Isključivo nakon inspekcijskog nadzora", "Isključivo za hranu iz uvoza"],
+        "correct": 0
       },
       {
-        "question": "Kemijske opasnosti u hrani NE uključuju:",
-        "options": ["Parazite", "Ostatke pesticida", "Teške metale", "Ostatke sredstava za čišćenje"],
-        "correct": 0
+        "question": "Što od navedenog NIJE skupina kemijskih opasnosti u hrani?",
+        "options": ["Prirodni toksini", "Paraziti", "Onečišćivači iz okoliša", "Namjerno dodani onečišćivači"],
+        "correct": 1
       },
       {
         "question": "Komadić stakla u hrani je:",
-        "options": ["Kemijska opasnost", "Fizikalna opasnost", "Biološka opasnost", "Kritična granica"],
-        "correct": 1
+        "options": ["Kemijska opasnost", "Biološka opasnost", "Fizikalna opasnost", "Kritična granica"],
+        "correct": 2
       },
       {
         "question": "Lanac hrane je:",
-        "options": ["Popis svih sastojaka na deklaraciji proizvoda", "Isključivo hladni lanac zamrznute hrane", "Slijed djelatnosti od primarne proizvodnje do potrošnje", "Mreža trgovina istog vlasnika u regiji"],
-        "correct": 2
+        "options": ["Popis svih sastojaka na deklaraciji proizvoda", "Isključivo hladni lanac zamrznute hrane", "Mreža trgovina istog vlasnika u regiji", "Slijed djelatnosti od primarne proizvodnje do potrošnje"],
+        "correct": 3
       },
       {
         "question": "Prvo načelo HACCP-a je:",
-        "options": ["Verifikacija", "Korektivne mjere", "Dokumentacija", "Analiza opasnosti"],
-        "correct": 3
-      },
-      {
-        "question": "Salmonella u jajima je:",
-        "options": ["Biološka opasnost", "Kemijska opasnost", "Fizikalna opasnost", "Korektivna mjera"],
+        "options": ["Analiza opasnosti", "Verifikacija", "Korektivne mjere", "Dokumentacija"],
         "correct": 0
       },
       {
-        "question": "Primarnu odgovornost za sigurnost hrane ima:",
-        "options": ["Potrošač", "Subjekt u poslovanju s hranom", "Isključivo inspekcija", "Isključivo dobavljač ambalaže"],
+        "question": "Salmonella u jajima je:",
+        "options": ["Kemijska opasnost", "Biološka opasnost", "Fizikalna opasnost", "Korektivna mjera"],
         "correct": 1
       },
       {
-        "question": "Temperatura jezgre od najmanje 72 °C pri kuhanju u HACCP planu primjer je:",
-        "options": ["Korektivne mjere", "Verifikacije", "Kritične granice", "Opoziva"],
+        "question": "Primarnu odgovornost za sigurnost hrane ima:",
+        "options": ["Potrošač", "Isključivo inspekcija", "Subjekt u poslovanju s hranom", "Isključivo dobavljač ambalaže"],
         "correct": 2
       },
       {
-        "question": "Vraćanje nesigurne hrane koja je već kod potrošača zove se:",
-        "options": ["Povlačenje", "Verifikacija", "Monitoring", "Opoziv"],
+        "question": "Temperatura jezgre od najmanje 72 °C pri kuhanju u HACCP planu primjer je:",
+        "options": ["Korektivne mjere", "Verifikacije", "Opoziva", "Kritične granice"],
         "correct": 3
+      },
+      {
+        "question": "Vraćanje nesigurne hrane koja je već kod potrošača zove se:",
+        "options": ["Opoziv", "Povlačenje", "Verifikacija", "Monitoring"],
+        "correct": 0
       }
     ],
     "fillBlanks": [
@@ -1926,7 +2013,7 @@ const foodNutritionHrM2 = {
         '<table>' +
         '<tr><th>Vrsta</th><th>Primjeri</th></tr>' +
         '<tr><td><strong>Biološke</strong></td><td>bakterije (Salmonella, Campylobacter, Listeria), virusi, <strong>paraziti</strong> (Anisakis u ribi, Trichinella u mesu), plijesni i njihovi toksini</td></tr>' +
-        '<tr><td><strong>Kemijske</strong></td><td>ostaci pesticida i veterinarskih lijekova, teški metali (živa, olovo), prirodni toksini (histamin), ostaci sredstava za čišćenje i dezinfekciju, nedopušteni aditivi; alergeni</td></tr>' +
+        '<tr><td><strong>Kemijske</strong></td><td>četiri skupine: <strong>onečišćivači iz okoliša</strong>, <strong>onečišćivači nastali tijekom prerade ili čuvanja</strong> (npr. akrilamid), <strong>namjerno dodani onečišćivači</strong> i <strong>prirodni toksini</strong>. Primjeri: ostaci pesticida i veterinarskih lijekova, teški metali (živa, olovo), prirodni toksini (histamin), ostaci sredstava za čišćenje i dezinfekciju, nedopušteni aditivi; alergeni</td></tr>' +
         '<tr><td><strong>Fizikalne</strong></td><td>staklo, metal, kamenčići, komadići kosti, plastika, drvo</td></tr>' +
         '</table>' +
         '<div class="warning-box"><strong>Zamka:</strong> kemijske opasnosti NE uključuju parazite — paraziti su živi organizmi, dakle <strong>biološka</strong> opasnost.</div>' +
@@ -1941,7 +2028,7 @@ const foodNutritionHrM2 = {
         '<li><strong>Utvrđivanje kritičnih granica</strong> — mjerljivih kriterija koji odvajaju prihvatljivo od neprihvatljivog (npr. temperatura jezgre najmanje 72 °C, hladnjak do +4 °C, pH).</li>' +
         '<li><strong>Monitoring</strong> — planirani slijed promatranja ili mjerenja kojim se provjerava je li KKT pod kontrolom (tko, što, kada, kako mjeri).</li>' +
         '<li><strong>Korektivne mjere</strong> — provode se kad monitoring pokaže da je <strong>kritična granica prekoračena</strong> (npr. dodatno kuhanje, prilagodba hladnjaka, odbacivanje proizvoda).</li>' +
-        '<li><strong>Verifikacija</strong> — provjera <strong>djeluje li sustav učinkovito</strong>: pregled evidencija, dodatne analize, interni audit, kalibracija uređaja. Verifikacija NE uključuje propisivanje korektivnih mjera.</li>' +
+        '<li><strong>Verifikacija</strong> — provjera <strong>djeluje li sustav učinkovito</strong>; uključuje <strong>validaciju</strong>, <strong>audit</strong> sustava, <strong>testiranje proizvoda</strong> i <strong>pregled rezultata zapisa</strong> (uz kalibraciju uređaja). Verifikacija NE uključuje propisivanje korektivnih mjera.</li>' +
         '<li><strong>Dokumentacija i evidencija</strong> — pisani HACCP plan i zapisi o monitoringu, korektivnim mjerama i verifikaciji.</li>' +
         '</ol>' +
         '<table>' +
@@ -1950,12 +2037,13 @@ const foodNutritionHrM2 = {
         '<tr><td>Korektivna mjera</td><td>Što činimo kad granica nije zadovoljena?</td></tr>' +
         '<tr><td>Verifikacija</td><td>Radi li cijeli sustav kako treba?</td></tr>' +
         '</table>' +
+        '<ul><li><strong>Kontrolna mjera</strong> — bilo koja radnja kojom se opasnost sprečava, uklanja ili smanjuje na prihvatljivu razinu.</li><li><strong>Validacija</strong> — dokaz da su elementi HACCP plana (npr. kritične granice) stvarno učinkoviti.</li><li><strong>Audit</strong> — sustavan i neovisan pregled provodi li se sustav kako je planiran.</li><li><strong>Preduvjetni program</strong> — osnovni higijenski uvjeti i aktivnosti potrebni u cijelom lancu hrane.</li></ul>' +
 
         '<h3>Sljedivost, povlačenje i opoziv</h3>' +
         '<p><strong>Sljedivost</strong> — svaki subjekt mora znati od koga je primio i kome je isporučio hranu (<strong>„korak naprijed – korak natrag”</strong>). Zahvaljujući oznaci serije i datuma, nesigurna serija može se brzo pronaći.</p>' +
         '<table>' +
         '<tr><th>Povlačenje</th><th>Opoziv</th></tr>' +
-        '<tr><td>uklanjanje nesigurne hrane dok je još <strong>u distribucijskom lancu</strong> (skladište, veletrgovina, trgovina)</td><td>vraćanje hrane koja je <strong>već stigla do potrošača</strong>; potrošači se obavještavaju</td></tr>' +
+        '<tr><td>uklanjanje nesigurne hrane dok je još <strong>u distribucijskom lancu</strong> (skladište, veletrgovina, trgovina); potrošače nije potrebno obavještavati</td><td>vraćanje hrane koja je <strong>već stigla do potrošača</strong>; potrošači se obavještavaju</td></tr>' +
         '</table>'
     }
   },
@@ -2069,73 +2157,73 @@ const foodNutritionHrM2 = {
     "quiz": [
       {
         "question": "Tri načela uravnotežene prehrane su:",
-        "options": ["Raznolikost, umjerenost i ravnoteža", "Post, detoksikacija i suplementi", "Brojanje kalorija, vaganje i post", "Visok unos bjelančevina, masti i soli"],
-        "correct": 0
+        "options": ["Post, detoksikacija i suplementi", "Raznolikost, umjerenost i ravnoteža", "Brojanje kalorija, vaganje i post", "Visok unos bjelančevina, masti i soli"],
+        "correct": 1
       },
       {
         "question": "Prema WHO-u unos soli trebao bi biti najviše:",
-        "options": ["15 g dnevno", "5 g dnevno", "25 g dnevno", "1 g tjedno"],
-        "correct": 1
+        "options": ["15 g dnevno", "25 g dnevno", "5 g dnevno", "1 g tjedno"],
+        "correct": 2
       },
       {
         "question": "ITM od 27 označava:",
-        "options": ["Normalnu uhranjenost", "Pothranjenost", "Prekomjernu tjelesnu masu", "Pretilost 2. stupnja"],
-        "correct": 2
+        "options": ["Normalnu uhranjenost", "Pothranjenost", "Pretilost 2. stupnja", "Prekomjernu tjelesnu masu"],
+        "correct": 3
       },
       {
         "question": "Najpromjenjivija komponenta energetske potrošnje je:",
-        "options": ["Energija bazalnog metabolizma", "Termički efekt probave hrane", "Energija za rast kose i noktiju", "Termički efekt tjelesne aktivnosti"],
-        "correct": 3
+        "options": ["Termički efekt tjelesne aktivnosti", "Energija bazalnog metabolizma", "Termički efekt probave hrane", "Energija za rast kose i noktiju"],
+        "correct": 0
       },
       {
         "question": "Energija bazalnog metabolizma čini:",
-        "options": ["60–75 % potrošnje", "5–10 % potrošnje", "25–30 % potrošnje", "90–100 % potrošnje"],
-        "correct": 0
+        "options": ["5–10 % potrošnje", "60–75 % potrošnje", "25–30 % potrošnje", "90–100 % potrošnje"],
+        "correct": 1
       },
       {
         "question": "DASH prehrana namijenjena je:",
-        "options": ["Očuvanju zdravlja mozga", "Snižavanju krvnog tlaka", "Povećanju mišićne mase", "Liječenju celijakije"],
-        "correct": 1
+        "options": ["Očuvanju zdravlja mozga", "Povećanju mišićne mase", "Snižavanju krvnog tlaka", "Liječenju celijakije"],
+        "correct": 2
       },
       {
         "question": "MIND prehrana usmjerena je na:",
-        "options": ["Snižavanje krvnog tlaka", "Mršavljenje postom", "Zdravlje mozga", "Sportsku izvedbu"],
-        "correct": 2
+        "options": ["Snižavanje krvnog tlaka", "Mršavljenje postom", "Sportsku izvedbu", "Zdravlje mozga"],
+        "correct": 3
       },
       {
         "question": "Glavna masnoća nordijske prehrane je:",
-        "options": ["Maslinovo ulje", "Maslac", "Svinjska mast", "Repičino ulje"],
-        "correct": 3
+        "options": ["Repičino ulje", "Maslinovo ulje", "Maslac", "Svinjska mast"],
+        "correct": 0
       },
       {
         "question": "Temelj piramide prehrane iz 1992. čine:",
-        "options": ["Kruh, žitarice, riža i tjestenina", "Voće i povrće", "Meso, riba i jaja", "Masti, ulja i šećeri"],
-        "correct": 0
+        "options": ["Voće i povrće", "Kruh, žitarice, riža i tjestenina", "Meso, riba i jaja", "Masti, ulja i šećeri"],
+        "correct": 1
       },
       {
         "question": "Oznaka FOPL na prednjoj strani ambalaže je:",
-        "options": ["Obavezna za svu hranu", "Dobrovoljna", "Obavezna samo za alkohol", "Zabranjena u EU"],
-        "correct": 1
-      },
-      {
-        "question": "Natpis „bogato vlaknima” primjer je:",
-        "options": ["Zdravstvene tvrdnje", "Nutritivne deklaracije", "Prehrambene tvrdnje", "Oznake podrijetla"],
+        "options": ["Obavezna za svu hranu", "Obavezna samo za alkohol", "Dobrovoljna", "Zabranjena u EU"],
         "correct": 2
       },
       {
-        "question": "Dodani šećeri prema WHO-u trebaju činiti najviše:",
-        "options": ["30 % energije (≈ 150 g)", "1 % energije (≈ 5 g)", "50 % energije (≈ 250 g)", "10 % energije (≈ 50 g)"],
+        "question": "Natpis „bogato vlaknima” primjer je:",
+        "options": ["Zdravstvene tvrdnje", "Nutritivne deklaracije", "Oznake podrijetla", "Prehrambene tvrdnje"],
         "correct": 3
       },
       {
-        "question": "Termički efekt hrane iznosi oko:",
-        "options": ["10 % energetskog unosa", "50 % energetskog unosa", "1 % energetskog unosa", "75 % energetskog unosa"],
+        "question": "Dodani šećeri prema WHO-u trebaju činiti najviše:",
+        "options": ["10 % energije (≈ 50 g)", "30 % energije (≈ 150 g)", "1 % energije (≈ 5 g)", "50 % energije (≈ 250 g)"],
         "correct": 0
       },
       {
-        "question": "ITM se računa kao:",
-        "options": ["Visina (cm) − 100", "Masa (kg) / visina² (m²)", "Masa (kg) × visina (m)", "Opseg struka / opseg bokova"],
+        "question": "Termički efekt hrane iznosi oko:",
+        "options": ["50 % energetskog unosa", "10 % energetskog unosa", "1 % energetskog unosa", "75 % energetskog unosa"],
         "correct": 1
+      },
+      {
+        "question": "ITM se računa kao:",
+        "options": ["Visina (cm) − 100", "Masa (kg) × visina (m)", "Masa (kg) / visina² (m²)", "Opseg struka / opseg bokova"],
+        "correct": 2
       }
     ],
     "fillBlanks": [
