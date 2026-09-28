@@ -5,7 +5,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
-## 2026-09-29 (OPUS) — 🧹 **Imena stvarnih osoba maknuta iz sadržaja, komentara i docs-a** (grana `feat/hr-1god`, NIJE na produkciji)
+## 2026-09-29 (OPUS) — 🚀 **IMENA MAKNUTA + BRANA `check:names` NA PRODUKCIJI** — `main` = `268aa74`, token `20260928165846`
+
+Pushao Leon (harness je meni odbio push na produkciju). **Provjereno nakon deploya:** Vercel produkcija READY na `268aa74` ·
+živi token = repo · živi `catalog.js` = commit (sadržajno; lokalno je samo CRLF) · 0 imena u živom katalogu · 29 predmeta ·
+`diff:db te2` = 0 razlika (re-sync u PROD bazu napravljen).
+
+### Sadržaj zahvata
 
 Odluke ankete 28./29.09.: svi FMTU nastavnici (uklj. autore FMTU udžbenika) i sve privatne osobe osim Leona → **uloga, ne rupa**.
 Objavljena djela autora izvan FMTU-a (Blanchard, Pindyck, Babić, Žager i sur., Chicago primjeri) ostaju. Git povijest netaknuta.
