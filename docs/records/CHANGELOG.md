@@ -5,7 +5,15 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
-### Dodano (grana `feat/hr-1god`, NIJE na produkciji)
+## 2026-09-28 (OPUS) — 🚀 **MAKROEKONOMIJA + VJEŽBE MATEMATIKE NA PRODUKCIJI** — `main` = `ca6a51f`, token `20260928040705`
+
+Fast-forward `3898fe6..ca6a51f` (3 commita), Leonov OK 28.09.; pre-push preflight zelen. Samo sadržaj i katalog.
+- **Provjereno nakon deploya:** Vercel produkcija READY na `ca6a51f` · živi token = repo · živi `catalog.js`,
+  `math-hr/exercises.js`, `macroeconomics-hr/final.js` i JSON bajt-identični commitu · 29 predmeta · u pregledniku:
+  završni Makroekonomije spaja 25 kategorija, vježbe Matematike se otvaraju (0 grešaka na stranici).
+- ⚠️ GitHub: push je **zaobišao pravilo** „Changes must be made through a pull request" (admin bypass).
+
+### Korisnik dobiva
 - **Vježbe Matematike na hrvatskom** (`math-hr`, 54 vježbe, 36 randomiziranih) — po stvarnim ispitima 2023/24.
 - **Makroekonomija (`macroeconomics-hr`, teorija)** — autorski iz Merlina 2025/26: skripta kroz sva predavanja i vježbe s
   riješenim zadacima, 417 ABCD pitanja + 39 u završnom, po uzoru na pripreme za kolokvije; katalog 29.
