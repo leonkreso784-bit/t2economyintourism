@@ -674,6 +674,39 @@ const SOKRAT_CATALOG = {
       }
     },
     {
+      id: 'macroeconomics-hr',
+      programId: 'hospitality-management-hr',
+      year: 1, semester: 2,
+      name: 'Makroekonomija',
+      shortName: 'MAKRO',
+      icon: 'fa-chart-area',
+      color: '#f59e0b',
+      iconGradient: ['#f59e0b', '#fbbf24'],
+      description: 'Temeljni pojmovi, BDP i nacionalno računovodstvo, AD–AS model, potrošnja, štednja i investicije, fiskalna i monetarna politika, IS-LM, otvoreno gospodarstvo i platna bilanca, tržište rada (KaTeX formule i riješeni zadaci s vježbi i priprema za kolokvij)',
+      storageKey: 'macroeconomics-hr-progress',
+      features: { blindMap: false },
+      // AUTORSKI iz HR materijala (Merlin 2025/26: predavanja, vježbe, pripreme za kolokvije) — NE prijevod EN macroeconomics. KaTeX (ADR-009).
+      lessons: [
+        { id: 'first-midterm', name: '1. kolokvij', description: 'Predavanja 1–5: temeljni pojmovi makroekonomije, nacionalno računovodstvo, makroekonomski model i AD–AS, potrošnja, štednja i investicije, uvod u fiskalnu politiku' },
+        { id: 'second-midterm', name: '2. kolokvij', description: 'Predavanja 6–11: fiskalna politika, monetarna makroekonomija, IS-LM, otvoreno gospodarstvo i platna bilanca, tržište rada, ekonomske krize, turizam u makroekonomiji' },
+        { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus ispitna pitanja iz priprema za kolokvije' }
+      ],
+      content: {
+        // final.js MORA se učitati ZADNJI (Object.assign macroeconomicsHrM1 + macroeconomicsHrM2 + examPractice).
+        scripts: [
+          'data/macroeconomics-hr/midterm-1.js',
+          'data/macroeconomics-hr/midterm-2.js',
+          'data/macroeconomics-hr/final.js'
+        ],
+        resolve: {
+          'first-midterm': 'macroeconomicsHrM1',
+          'second-midterm': 'macroeconomicsHrM2',
+          'final': 'macroeconomicsHrFinal'
+        },
+        dataFormat: 'json' // dual-read; study iz data/json/macroeconomics-hr/*.json
+      }
+    },
+    {
       id: 'management-hr',
       programId: 'hospitality-management-hr',
       year: 1, semester: 2,

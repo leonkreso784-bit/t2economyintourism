@@ -7,6 +7,8 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ### Dodano (grana `feat/hr-1god`, NIJE na produkciji)
 - **Vježbe Matematike na hrvatskom** (`math-hr`, 54 vježbe, 36 randomiziranih) — po stvarnim ispitima 2023/24.
+- **Makroekonomija (`macroeconomics-hr`, teorija)** — autorski iz Merlina 2025/26: skripta kroz sva predavanja i vježbe s
+  riješenim zadacima, 417 ABCD pitanja + 39 u završnom, po uzoru na pripreme za kolokvije; katalog 29.
 
 ## 2026-09-28 (OPUS) — 🚀 **HR 1. GODINA (4 predmeta) NA PRODUKCIJI** — `main` = `3898fe6`, token `20260928014324`
 

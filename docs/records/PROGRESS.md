@@ -24,6 +24,16 @@ popis je filtriran po lekciji, ukupno 43). 🚀 redak u CHANGELOG.
 - Odgovori |x| < 0,1 uz toleranciju 0,01 (upis „0" je prolazio) izbačeni iz prostora parametara.
 `math-hr` sad dijeli `data/math/math-lib.js` s EN-om (jedan izvor, ne kopija).
 
+**Makroekonomija (`macroeconomics-hr`, teorija):** 30 izvora s Merlina → tekst (Sonnet; 0 skenova, 0 pravih duplikata) →
+**dva graditelja usporedo** (K1 = predavanja 1–5 + završni, K2 = predavanja 6–11) po zajedničkom briefu (learn prvi) →
+`content-review` s mjerom **pokrivenosti learna prema izvoru** (97–100 % po izvoru) → ispravci istim graditeljima.
+- K2 nije izvozio `window.macroeconomicsHrM2` → završni bi tiho bio bez 2. kolokvija; uhvatio K1, dodan redak.
+- **Trag po duljini:** točan odgovor bio je jedini najdulji u 54 % pitanja (slučajno 25 %) → 13,2 % (vlastita mjera nad 456).
+- Dopune: grader traži točno poklapanje (samo mala slova i razmaci) → 35 dopuna preformulirano da vode do jednog oblika.
+- ⚠️ **Moja mjera duplikata dopuna prvo je gledala NULU stavki** (polje je `fillBlanks`, ne `fill`) i javila „0";
+  s pravim poljem 152 dopune, 1 duplikat → zamijenjen. Mjerač mora ispisati koliko je dotaknuo.
+- Otvoreno za Leona: predavanja 10–11 bez izvora; grafovi samo riječima.
+
 ## 2026-09-27 (OPUS, stablo `sokratstudy.hr1`, grana `feat/hr-1god`) — HR 1. godina: val 1 = tri predmeta (teorija)
 
 **Povod:** predavanja 1. godine počinju 28.09.; na hrvatskom je od 1. godine postojala samo Poslovna informatika.
