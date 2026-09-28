@@ -994,6 +994,39 @@ const SOKRAT_CATALOG = {
         },
         dataFormat: 'json' // dual-read; study iz data/json/econ-hospitality-hr/*.json
       }
+    },
+    {
+      id: 'marketing-hr',
+      programId: 'hospitality-management-hr',
+      year: 2, semester: 2,
+      name: 'Marketing',
+      shortName: 'MKT',
+      icon: 'fa-bullhorn',
+      color: '#ec4899',
+      iconGradient: ['#ec4899', '#f472b6'],
+      description: 'Marketing: pojam i razvoj marketinške koncepcije, marketinško okruženje (PESTLE), tržište i razmjena vrijednosti, segmentacija i pozicioniranje (STP), ponašanje potrošača i istraživanje tržišta, marketinški splet (proizvod, cijena, distribucija, promocija), novi digitalni trendovi u promociji te planiranje, organiziranje i kontrola marketinških aktivnosti',
+      storageKey: 'marketing-hr-progress',
+      features: { blindMap: false },
+      // PRIJEVOD EN `marketing` (HR izvora nema — Leon, anketa 29.09.); struktura i `correct` identični EN-u.
+      lessons: [
+        { id: 'first-midterm', name: '1. kolokvij', description: 'Pojam marketinga, marketinško okruženje, tržište i razmjena vrijednosti, segmentacija i pozicioniranje, ponašanje potrošača i istraživanje tržišta, proizvod, cijena (teme 1–8)' },
+        { id: 'second-midterm', name: '2. kolokvij', description: 'Distribucija, promocija (integrirana marketinška komunikacija), novi trendovi u promociji, planiranje te organiziranje i kontrola marketinga (teme 9–13)' },
+        { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus ispitna pitanja kroz sve teme' }
+      ],
+      content: {
+        // data/marketing-hr/final.js MORA se učitati zadnji (Object.assign marketingHrM1 + marketingHrM2 + examPractice)
+        scripts: [
+          'data/marketing-hr/midterm-1.js',
+          'data/marketing-hr/midterm-2.js',
+          'data/marketing-hr/final.js'
+        ],
+        resolve: {
+          'first-midterm': 'marketingHrM1',
+          'second-midterm': 'marketingHrM2',
+          'final': 'marketingHrFinal'
+        },
+        dataFormat: 'json' // dual-read; study iz data/json/marketing-hr/*.json
+      }
     }
   ]
 };

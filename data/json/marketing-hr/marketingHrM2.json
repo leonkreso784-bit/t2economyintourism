@@ -1,0 +1,752 @@
+{
+  "distribution": {
+    "id": "vwsjm9",
+    "name": "Distribucija",
+    "icon": "fa-truck",
+    "color": "#06b6d4",
+    "flashcards": [
+      {
+        "id": "l79ban",
+        "question": "Što je distribucija u marketingu?",
+        "answer": "Sve aktivnosti nužne za isporuku proizvoda od proizvođača do potrošača. Ima dva elementa: marketinške (distribucijske) kanale i fizičku distribuciju.",
+        "explanation": "Distribucija povezuje proizvođača i potrošača."
+      },
+      {
+        "id": "zmh0q1",
+        "question": "Koja je razlika između izravnih i neizravnih marketinških kanala?",
+        "answer": "Izravni kanali dopiru do potrošača bez posrednika (od vrata do vrata, kataloška prodaja, vlastite trgovine). Neizravni koriste posrednike (veletrgovce, trgovce na malo, agente, brokere).",
+        "explanation": "Odluke o kanalima obuhvaćaju i broj kanala te intenzitet distribucije."
+      },
+      {
+        "id": "zk8v00",
+        "question": "Što je duljina kanala distribucije?",
+        "answer": "Broj razina (posrednika) koje kanal obuhvaća. Kraći kanali odgovaraju malom broju koncentriranih potrošača, a dulji velikom broju potrošača raspršenih na širokom području.",
+        "explanation": "Duljina = broj razina kanala."
+      },
+      {
+        "id": "tvfher",
+        "question": "Koje su tri osnovne funkcije kanala distribucije?",
+        "answer": "Transakcijske (kupnja, prodaja, preuzimanje rizika zalihama), logističke (okupljanje, skladištenje, prijevoz, kontakt s potrošačima) i pomoćne (informacije, promocija, financiranje).",
+        "explanation": "Zajedno isporučuju proizvode potrošačima."
+      },
+      {
+        "id": "ehp1jh",
+        "question": "Koja su tri intenziteta distribucije?",
+        "answer": "Intenzivna (što više prodajnih mjesta – novine, bezalkoholna pića), selektivna (manji broj odabranih mjesta – namještaj, kućanski aparati) i ekskluzivna (jedan distributer – automobili, satovi).",
+        "explanation": "Intenzitet = broj posrednika na svakoj razini kanala."
+      },
+      {
+        "id": "2raism",
+        "question": "Što je veletrgovac i koje funkcije obavlja?",
+        "answer": "Prodaje proizvode poslovnim subjektima koji ih preprodaju ili koriste. Objedinjuje ponudu više proizvođača, skladišti, grupira i prevozi proizvode te financira, informira i promovira.",
+        "explanation": "Daje vremensku i prostornu prednost."
+      },
+      {
+        "id": "69pjfw",
+        "question": "Kako se posrednici dijele prema tome preuzimaju li vlasništvo nad proizvodima?",
+        "answer": "Posrednici koji preuzimaju vlasništvo (veletrgovci, trgovci na malo) i oni koji ne preuzimaju (agenti i brokeri). Agenti i brokeri naplaćuju proviziju.",
+        "explanation": "Agent povezuje kupce i prodavatelje; broker je u izravnom kontaktu s prodavateljima i angažira se povremeno."
+      },
+      {
+        "id": "hhhgg6",
+        "question": "Koje su glavne funkcije trgovaca na malo?",
+        "answer": "Nabava od veletrgovaca/proizvođača, informiranje potrošača i proizvođača (o potrebama potrošača), naplata, skladištenje i označavanje cijena te završne transakcije s potrošačima.",
+        "explanation": "Cilj: zadovoljstvo i lojalnost potrošača."
+      },
+      {
+        "id": "w36m4y",
+        "question": "Što je fizička distribucija i koje su njezine funkcije?",
+        "answer": "Aktivnosti koje smanjuju troškove isporuke i povećavaju zadovoljstvo potrošača. Funkcije: prijevoz, skladištenje i upravljanje zalihama.",
+        "explanation": "Proces: ciljevi -> obrada narudžbi/zalihe -> organizacija prijevoza -> kontrola. Prijevoz je obično najveći trošak."
+      }
+    ],
+    "quiz": [
+      {
+        "id": "wvoy50",
+        "question": "Distribucija obuhvaća dva elementa:",
+        "options": [
+          "Oglašavanje i osobnu prodaju",
+          "Marketinške kanale i fizičku distribuciju",
+          "Trgovinu na veliko i trgovinu na malo",
+          "Agente i brokere kao posrednike"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "ph6hcq",
+        "question": "Prodaja bezalkoholnih pića i novina kroz što više prodajnih mjesta je:",
+        "options": [
+          "Ekskluzivna distribucija",
+          "Selektivna distribucija",
+          "Intenzivna distribucija",
+          "Izravna distribucija"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "glzbqq",
+        "question": "Posrednici koji NE preuzimaju vlasništvo nad proizvodima su:",
+        "options": [
+          "Veletrgovci i trgovci na malo",
+          "Agenti i brokeri",
+          "Proizvođači i potrošači",
+          "Distributeri"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "hwljm9",
+        "question": "Prijevoz, skladištenje i upravljanje zalihama funkcije su:",
+        "options": [
+          "Promocije",
+          "Fizičke distribucije",
+          "Trgovine na veliko",
+          "Osobne prodaje"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "1hy9sz",
+        "question": "Dulji kanal distribucije prikladan je kada su potrošači:",
+        "options": [
+          "Malobrojni i koncentrirani",
+          "Brojni i raspršeni na širokom području",
+          "Isključivo poslovni kupci",
+          "Smješteni uz samog proizvođača"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "id": "vpl5ke",
+        "sentence": "Kanali distribucije obavljaju transakcijske, logističke i _______ funkcije.",
+        "answer": "pomoćne",
+        "hint": "Engl. facilitating; HR: pom…"
+      },
+      {
+        "id": "lhgm42",
+        "sentence": "Distribucija u kojoj samo jedan distributer ima isključiva prava prodaje naziva se _______ distribucija.",
+        "answer": "ekskluzivna",
+        "hint": "Posuđenica (engl. exclusive); npr. automobili, satovi..."
+      },
+      {
+        "id": "00ixhj",
+        "sentence": "_______ prodaje proizvode poduzećima koja ih preprodaju ili koriste.",
+        "answer": "Veletrgovac",
+        "hint": "Između proizvođača i trgovca na malo (jedna riječ)..."
+      },
+      {
+        "id": "r3mepa",
+        "sentence": "Duljina kanala distribucije je broj _______ koje kanal obuhvaća.",
+        "answer": "razina",
+        "hint": "Engl. levels — stupnjevi posrednika u kanalu..."
+      }
+    ],
+    "learn": {
+      "id": "emcopp",
+      "title": "Tema 9 – Distribucija",
+      "content": "\n<h3>1) Što je distribucija</h3>\n<p>Distribucija obuhvaća sve aktivnosti nužne da bi proizvodi bili isporučeni od proizvođača do potrošača. Ima dva elementa:</p>\n<ul>\n<li><strong>Marketinški (distribucijski) kanali</strong></li>\n<li><strong>Fizička distribucija</strong></li>\n</ul>\n<p>Kanali mogu biti <strong>izravni</strong> (bez posrednika: od vrata do vrata, kataloška prodaja, vlastite trgovine) ili <strong>neizravni</strong> (s posrednicima). Ključne odluke: izravni ili neizravni, jedan ili više kanala te <em>intenzitet</em> distribucije.</p>\n\n<h3>2) Duljina i funkcije kanala</h3>\n<p><strong>Duljina kanala</strong> = broj razina koje kanal obuhvaća. Kraći kanali odgovaraju malom broju koncentriranih potrošača, a dulji velikom broju raspršenih potrošača.</p>\n<div class=\"formula-box\">\n<p>Kanali obavljaju tri funkcije: <strong>transakcijske</strong> (kupnja, prodaja, preuzimanje rizika) + <strong>logističke</strong> (okupljanje, skladištenje, prijevoz, kontakt) + <strong>pomoćne</strong> (informacije, promocija, financiranje).</p>\n</div>\n\n<h3>3) Intenzitet distribucije</h3>\n<table>\n<tr><th>Intenzitet</th><th>Značenje</th><th>Primjeri</th></tr>\n<tr><td><strong>Intenzivna</strong></td><td>Što više prodajnih mjesta</td><td>Novine, bezalkoholna pića, voda</td></tr>\n<tr><td><strong>Selektivna</strong></td><td>Ograničen broj pažljivo odabranih mjesta</td><td>Namještaj, kućanski aparati</td></tr>\n<tr><td><strong>Ekskluzivna</strong></td><td>Isključiva prava jednom distributeru</td><td>Automobili, satovi</td></tr>\n</table>\n<p>Pri izboru kanala razmatra se njegova <strong>efikasnost</strong> (najmanje resursa), <strong>efektivnost</strong> (zadovoljava ciljno tržište) i <strong>prilagodljivost</strong> (prilagodba novim uvjetima).</p>\n\n<h3>4) Veletrgovci i trgovci na malo</h3>\n<ul>\n<li><strong>Veletrgovci</strong> prodaju poduzećima koja proizvode preprodaju/koriste; objedinjuju, skladište, grupiraju i prevoze proizvode (vremenska i prostorna prednost). Mogu biti samostalni (preuzimaju vlasništvo: s punom ili ograničenom uslugom) ili ovisni (agenti i brokeri, koji zarađuju proviziju).</li>\n<li><strong>Trgovci na malo</strong> prodaju krajnjim potrošačima; funkcije: nabava proizvoda, informiranje potrošača, informiranje proizvođača o potrebama potrošača, naplata, skladištenje i označavanje cijena te završne transakcije. Vrste: trgovci prehrambenim proizvodima, trgovci proizvodima za osobnu uporabu i kućanstvo te trgovci bez prodavaonice.</li>\n</ul>\n\n<h3>5) Fizička distribucija i trendovi</h3>\n<p>Fizička distribucija smanjuje troškove isporuke i povećava zadovoljstvo potrošača. Funkcije: <strong>prijevoz</strong>, <strong>skladištenje</strong>, <strong>upravljanje zalihama</strong>. Proces: definirati ciljeve -> obrada narudžbi/zalihe -> organizacija prijevoza -> kontrola i ocjena rezultata.</p>\n<div class=\"example-box\">\n<p><strong>Trendovi:</strong> partnerstva među članovima lanca, napredna tehnologija (baze podataka, analiza potražnje), portali i digitalna tržišta.</p>\n</div>\n\n<div class=\"tip-box\">\n<h4><i class=\"fas fa-lightbulb\"></i> Fokus za kolokvij</h4>\n<p>Znaj izravne i neizravne kanale, tri funkcije kanala, tri intenziteta (s primjerima), uloge veletrgovca i trgovca na malo te fizičku distribuciju.</p>\n</div>\n"
+    }
+  },
+  "promotion": {
+    "id": "ogbdhm",
+    "name": "Promocija (integrirana marketinška komunikacija)",
+    "icon": "fa-bullhorn",
+    "color": "#f43f5e",
+    "flashcards": [
+      {
+        "id": "jdbd6l",
+        "question": "Koji su elementi komunikacijskog procesa?",
+        "answer": "Pošiljatelj, kodiranje, poruka, medij, dekodiranje, primatelj i povratna informacija – uz smetnje (šum). Tržišna komunikacija je dvosmjeran proces.",
+        "explanation": "Povratna informacija čini je dvosmjernom."
+      },
+      {
+        "id": "dx15gx",
+        "question": "Što je integrirana marketinška komunikacija (IMK)?",
+        "answer": "Pristup u kojem se sve promocijske aktivnosti tretiraju kao cjelina koja kroz sve medije šalje jedinstvenu, dosljednu poruku radi najvećeg učinka (sinergija).",
+        "explanation": "Neintegrirana komunikacija zbunjuje potrošače."
+      },
+      {
+        "id": "nspdds",
+        "question": "Koji su ciljevi promocijskih aktivnosti?",
+        "answer": "Informirati, diferencirati proizvod, povećati potražnju (primarnu = cijela kategorija, ili sekundarnu = određena marka), stabilizirati prodaju (ublažiti sezonalnost) i istaknuti vrijednost.",
+        "explanation": "Primarna nasuprot sekundarnoj potražnji česta je ispitna tema."
+      },
+      {
+        "id": "czd0xh",
+        "question": "Koja je razlika između strategije guranja (push) i povlačenja (pull)?",
+        "answer": "Push promovira proizvod sljedećem članu kanala (osobna prodaja, unapređenje prodaje). Pull promovira izravno potrošačima (oglašavanje, unapređenje prodaje, PR, publicitet). Najčešća je kombinacija.",
+        "explanation": "Push ide s tokom proizvoda; pull povlači potražnju unatrag kroz kanal."
+      },
+      {
+        "id": "41xeoe",
+        "question": "Koji su elementi promocijskog spleta?",
+        "answer": "Oglašavanje, osobna prodaja, unapređenje prodaje, odnosi s javnošću i publicitet.",
+        "explanation": "Razlikuju se po plaćanju, osobnosti kontakta i tome koliko ih poduzeće kontrolira."
+      },
+      {
+        "id": "ufmuge",
+        "question": "Što je oglašavanje i koje su njegove tri funkcije?",
+        "answer": "Plaćeno, neosobno predstavljanje informacija velikom broju potrošača putem masovnih medija. Funkcije: informirati (uvođenje), uvjeriti (rast / konkurencija) i podsjetiti (oglašavanje marke).",
+        "explanation": "Dvije kategorije: oglašavanje proizvoda i institucionalno oglašavanje (oglašavanje organizacije)."
+      },
+      {
+        "id": "ubmdu1",
+        "question": "Što je osobna prodaja?",
+        "answer": "Izravna komunikacija prodavača i potencijalnog potrošača radi utvrđivanja potreba i prenošenja koristi proizvoda. Obuhvaća primanje i pribavljanje narudžbi te podršku; najviše se koristi za B2B.",
+        "explanation": "Fleksibilna je – omogućuje pregovaranje tijekom kontakta; pribavljanje narudžbi je njezin kreativni dio."
+      },
+      {
+        "id": "qrgrlr",
+        "question": "Što je unapređenje prodaje i kome je namijenjeno?",
+        "answer": "Kratkoročne tehnike koje potiču pozitivan odgovor. Ciljevi: krajnji potrošači (kuponi, pokloni, uzorci, povrat novca), trgovina (izlaganje u prodavaonici, nagrade) i B2B subjekti (sajmovi).",
+        "explanation": "Kratkoročni poticaj na kupnju."
+      },
+      {
+        "id": "cgq1eo",
+        "question": "Koja je razlika između odnosa s javnošću i publiciteta?",
+        "answer": "PR-om poduzeće izravno upravlja radi pozitivnog imidža (konferencije za medije, događaji, donacije, stvaranje vijesti). Publicitet je neplaćena medijska komunikacija na koju utječe samo neizravno.",
+        "explanation": "PR je upravljan; publicitet nije."
+      }
+    ],
+    "quiz": [
+      {
+        "id": "6hz7yq",
+        "question": "Tretiranje svih promocijskih aktivnosti kao jedne jedinstvene, dosljedne poruke je:",
+        "options": [
+          "Strategija guranja kroz kanal",
+          "Integrirana marketinška komunikacija",
+          "Publicitet u masovnim medijima",
+          "Osobna prodaja kupcima"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "vhzgly",
+        "question": "Promoviranje proizvoda izravno potrošačima kako bi se potražnja povukla kroz kanal je:",
+        "options": [
+          "Strategija guranja",
+          "Strategija povlačenja",
+          "Unapređenje prodaje",
+          "Kodiranje"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "ku8xk0",
+        "question": "Plaćeno, neosobno predstavljanje putem masovnih medija je:",
+        "options": [
+          "Osobna prodaja",
+          "Publicitet",
+          "Oglašavanje",
+          "Odnosi s javnošću"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "fbayhc",
+        "question": "Kuponi, besplatni uzorci i povrat novca alati su:",
+        "options": [
+          "Oglašavanja",
+          "Unapređenja prodaje",
+          "Odnosa s javnošću",
+          "Osobne prodaje"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "0pdhtn",
+        "question": "Neplaćena medijska komunikacija kojom poduzeće ne može upravljati je:",
+        "options": [
+          "Oglašavanje",
+          "Odnosi s javnošću",
+          "Publicitet",
+          "Osobna prodaja"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "id": "hbkf0p",
+        "sentence": "Tržišna komunikacija odvija se u dva _______ jer uključuje povratnu informaciju.",
+        "answer": "smjera",
+        "hint": "Djeluju i pošiljatelj i primatelj..."
+      },
+      {
+        "id": "ffufy4",
+        "sentence": "Strategija _______ promovira proizvod sljedećem članu kanala distribucije.",
+        "answer": "guranja",
+        "hint": "Hrvatski naziv; suprotno od povlačenja (pull)..."
+      },
+      {
+        "id": "9jqk3o",
+        "sentence": "Tri funkcije oglašavanja su informiranje, uvjeravanje i _______.",
+        "answer": "podsjećanje",
+        "hint": "Oglašavanje marke..."
+      },
+      {
+        "id": "hqwxos",
+        "sentence": "Neplaćeno medijsko izvještavanje kojim poduzeće ne upravlja naziva se _______.",
+        "answer": "publicitet",
+        "hint": "Za razliku od odnosa s javnošću..."
+      }
+    ],
+    "learn": {
+      "id": "vgp7oj",
+      "title": "Tema 10 – Promocija (integrirana marketinška komunikacija)",
+      "content": "\n<h3>1) Komunikacijski proces</h3>\n<p>Uspjeh na tržištu nije moguć bez komunikacije – prijenosa poruka između prodavatelja i potrošača. To je <strong>dvosmjeran</strong> proces.</p>\n<div class=\"formula-box\">\n<p><strong>Pošiljatelj -> kodiranje -> poruka -> medij -> dekodiranje -> primatelj -> povratna informacija</strong> (uz moguće <em>smetnje / šum</em>).</p>\n</div>\n\n<h3>2) Integrirana marketinška komunikacija (IMK)</h3>\n<p>IMK tretira sve promocijske aktivnosti kao cjelinu koja šalje <strong>jedinstvenu, dosljednu poruku</strong> neovisno o mediju, radi najvećeg učinka (sinergija). Uspješna poruka privlači pozornost, razumije se i potiče odgovor.</p>\n\n<h3>3) Ciljevi i strategije</h3>\n<ul>\n<li><strong>Ciljevi:</strong> informirati, diferencirati proizvod, povećati potražnju (primarna = kategorija / sekundarna = marka), stabilizirati prodaju, istaknuti vrijednost.</li>\n<li><strong>Strategija guranja (push):</strong> promocija usmjerena sljedećem članu kanala (osobna prodaja, unapređenje prodaje).</li>\n<li><strong>Strategija povlačenja (pull):</strong> promocija izravno potrošačima (oglašavanje, unapređenje prodaje, odnosi s javnošću, publicitet).</li>\n<li><strong>Kombinacija</strong> obiju je najčešća.</li>\n</ul>\n\n<h3>4) Promocijski splet</h3>\n<table>\n<tr><th>Element</th><th>Što je</th></tr>\n<tr><td><strong>Oglašavanje</strong></td><td>Plaćena, neosobna komunikacija masovnim medijima; funkcije: informirati, uvjeriti, podsjetiti</td></tr>\n<tr><td><strong>Osobna prodaja</strong></td><td>Izravna komunikacija prodavača i potrošača (primanje narudžbi, pribavljanje narudžbi, podrška); uglavnom B2B</td></tr>\n<tr><td><strong>Unapređenje prodaje</strong></td><td>Kratkoročne tehnike poticanja kupnje (kuponi, pokloni, uzorci, sajmovi)</td></tr>\n<tr><td><strong>Odnosi s javnošću</strong></td><td>Upravljana komunikacija radi izgradnje pozitivnog imidža</td></tr>\n<tr><td><strong>Publicitet</strong></td><td>Neplaćena medijska komunikacija kojom poduzeće ne može upravljati</td></tr>\n</table>\n\n<h3>5) Odnosi s javnošću nasuprot publicitetu</h3>\n<div class=\"example-box\">\n<p><strong>Odnosima s javnošću</strong> poduzeće izravno upravlja (konferencije za medije, događaji, donacije, stvaranje vijesti). <strong>Publicitet</strong> je u domeni medija – poduzeće na njega utječe samo neizravno.</p>\n</div>\n\n<div class=\"warning-box\">\n<h4><i class=\"fas fa-exclamation-triangle\"></i> Česta pogreška</h4>\n<p>Ne miješaj odnose s javnošću (upravlja ih poduzeće) s publicitetom (neplaćen, neupravljan). Ni za jedno se ne plaća medijski prostor, ali samo odnose s javnošću poduzeće kontrolira (aktivnosti odnosa s javnošću ipak stvaraju troškove).</p>\n</div>\n\n<div class=\"tip-box\">\n<h4><i class=\"fas fa-lightbulb\"></i> Fokus za kolokvij</h4>\n<p>Znaj elemente komunikacijskog procesa, IMK, strategije guranja i povlačenja, pet elemenata promocijskog spleta i razliku između odnosa s javnošću i publiciteta.</p>\n</div>\n"
+    }
+  },
+  "newTrendsPromotion": {
+    "id": "eyea8h",
+    "name": "Novi trendovi u promociji",
+    "icon": "fa-wifi",
+    "color": "#a855f7",
+    "flashcards": [
+      {
+        "id": "dsf23p",
+        "question": "Koji tehnološki temelj pokreće nove promocijske trendove?",
+        "answer": "Internet, internetske aplikacije i mobilna komunikacija. Internet pruža dvije ključne usluge: World Wide Web i e-poštu.",
+        "explanation": "Tehnologija izravno preoblikuje oglašavanje i odnose s javnošću."
+      },
+      {
+        "id": "gi8xaw",
+        "question": "Koja je razlika između interneta, intraneta i ekstraneta?",
+        "answer": "Internet = globalna mreža računalnih mreža. Intranet = privatna mreža samo unutar organizacije. Ekstranet = intranet proširen na ovlaštene vanjske strane (potrošače, dobavljače, distributere).",
+        "explanation": "Doseg se širi: interno -> partneri -> globalno. Intranet koristi iste standarde kao internet."
+      },
+      {
+        "id": "pqtdwg",
+        "question": "Što je SEO i zašto je važan?",
+        "answer": "Optimizacija za tražilice (Search Engine Optimization) – postupci kojima se poboljšava položaj web-stranice u rezultatima tražilica (Google, Bing, Yahoo) radi više posjetitelja i potencijalnih kupaca.",
+        "explanation": "Viši položaj znači više prometa."
+      },
+      {
+        "id": "jy07a3",
+        "question": "Koji su najčešći alati promocije na webu?",
+        "answer": "Banneri (popularni, često s audiom/videom, traže čestu obnovu), sponzorski banneri (poveznica na stranicu sponzora) i online kuponi (oblik unapređenja prodaje).",
+        "explanation": "Web-stranica je dio interneta."
+      },
+      {
+        "id": "s9ao5p",
+        "question": "Kako se e-pošta koristi u promociji?",
+        "answer": "Kao interaktivan alat „jedan na jedan” za oglašavanje i odnose s javnošću; gradi bliže odnose putem popisa za raspravu/slanje. Poruke: originalne, točne, zanimljive i kratke.",
+        "explanation": "Potrošači mogu biti suzdržani (privatnost); rizik je da se poruka doživi kao spam."
+      },
+      {
+        "id": "ez6q68",
+        "question": "Što je blog i kako se koristi u marketingu?",
+        "answer": "Interaktivne objave (tekst, a ponekad i slike, video, audio) fizičke ili pravne osobe za ciljnu publiku; koristi se u oglašavanju i odnosima s javnošću, u izravnom kontaktu s potrošačima.",
+        "explanation": "Često povezuje proizvod poduzeća s aktualnim događajima."
+      },
+      {
+        "id": "4mnu47",
+        "question": "Što je newsletter?",
+        "answer": "Elektronička publikacija o određenoj temi (informacije, savjeti, mišljenja) koja se redovito šalje pretplatnicima (obično besplatno). Najvažniji pretplatnici su potrošači; koristi se i interno.",
+        "explanation": "Za primanje je potrebna pretplata. Interno se šalje zaposlenicima."
+      },
+      {
+        "id": "5xqjiz",
+        "question": "Što je webinar?",
+        "answer": "Online seminar koji se održava putem interneta; uklanja potrebu za izravnom prezentacijom, može biti uživo ili snimljen, smanjuje troškove i omogućuje dvosmjernu komunikaciju.",
+        "explanation": "Interaktivan je: publika aktivno sudjeluje pitanjima i raspravom."
+      },
+      {
+        "id": "bjewo2",
+        "question": "Kako se društvene mreže i mobilni uređaji koriste u promociji?",
+        "answer": "Društvene mreže (Facebook, Instagram, YouTube, LinkedIn, TikTok…) razmjenjuju multimediju i dosežu ljude sličnih interesa. Mobilni marketing cilja određenu publiku, vrijeme, lokaciju i učestalost.",
+        "explanation": "Izbor mreže = vrsta poduzeća + ciljana publika. Doseg mobilnog marketinga je mjerljiv."
+      }
+    ],
+    "quiz": [
+      {
+        "id": "5oqzbk",
+        "question": "Privatna mreža koja se koristi samo unutar organizacije je:",
+        "options": [
+          "Internet",
+          "Intranet",
+          "Ekstranet",
+          "Web-stranica"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "mqyv1d",
+        "question": "Poboljšanje položaja web-stranice u rezultatima pretraživanja je:",
+        "options": [
+          "SEO",
+          "Oglašavanje bannerima",
+          "Webinar",
+          "Newsletter"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "819efr",
+        "question": "Online seminar koji omogućuje dvosmjernu komunikaciju u stvarnom vremenu je:",
+        "options": [
+          "Blog",
+          "Newsletter",
+          "Webinar",
+          "Banner"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "ll7l8d",
+        "question": "Elektronička publikacija koja se redovito šalje pretplatnicima je:",
+        "options": [
+          "Webinar",
+          "Newsletter",
+          "Banner",
+          "Ekstranet"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "ea6ex4",
+        "question": "Internet pruža dvije ključne usluge:",
+        "options": [
+          "Intranet i ekstranet",
+          "World Wide Web i e-poštu",
+          "SEO i bannere",
+          "Blog i newsletter"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "id": "8plx7j",
+        "sentence": "Ekstranet je _______ proširen na ovlaštene vanjske strane, npr. dobavljače.",
+        "answer": "intranet",
+        "hint": "Privatna interna mreža organizacije..."
+      },
+      {
+        "id": "k2lfmh",
+        "sentence": "_______ poboljšava položaj web-stranice u rezultatima tražilica.",
+        "answer": "SEO",
+        "hint": "Search Engine Optimization..."
+      },
+      {
+        "id": "v9aiyc",
+        "sentence": "_______ je online seminar koji se održava putem interneta.",
+        "answer": "webinar",
+        "hint": "Web + seminar..."
+      },
+      {
+        "id": "ybe3s1",
+        "sentence": "Dvije ključne usluge interneta su World Wide Web i elektronička _______.",
+        "answer": "pošta",
+        "hint": "Elektroničke poruke..."
+      }
+    ],
+    "learn": {
+      "id": "mqar4y",
+      "title": "Tema 11 – Novi trendovi u promocijskim aktivnostima",
+      "content": "\n<h3>1) Nova tehnološka rješenja</h3>\n<p>Tehnologija – prije svega <strong>internet, internetske aplikacije i mobilna komunikacija</strong> – izravno utječe na nove trendove u oglašavanju i odnosima s javnošću. Internet (globalna mreža mreža) pruža dvije ključne usluge: <strong>World Wide Web</strong> i <strong>e-poštu</strong>.</p>\n<div class=\"example-box\">\n<p><strong>Internet</strong> = globalan, javan. <strong>Intranet</strong> = privatan, samo interni. <strong>Ekstranet</strong> = intranet proširen na ovlaštene partnere (potrošače, dobavljače, distributere).</p>\n</div>\n\n<h3>2) Web-stranica i SEO</h3>\n<p>Web-stranica je dio interneta; dizajneri ključne informacije postavljaju ondje kamo čitatelj najprije pogleda. <strong>SEO (optimizacija za tražilice)</strong> poboljšava položaj stranice u rezultatima pretraživanja (Google, Bing, Yahoo) radi više posjetitelja i potencijalnih kupaca.</p>\n<p>Uobičajeni alati promocije na webu:</p>\n<ul>\n<li><strong>Banneri</strong> – najpopularniji oblik; tekst + audio/video; traže čestu obnovu</li>\n<li><strong>Sponzorski banneri</strong> – poveznica na web-stranicu sponzora</li>\n<li><strong>Online kuponi</strong> – alat unapređenja prodaje</li>\n</ul>\n\n<h3>3) E-pošta, blog, newsletter, webinar</h3>\n<ul>\n<li><strong>E-pošta:</strong> „jedan na jedan”, interaktivna; za oglašavanje i odnose s javnošću; poruke moraju biti originalne, točne, zanimljive i kratke; potrošači mogu pružati otpor (privatnost).</li>\n<li><strong>Blog:</strong> interaktivne objave (tekst, slika, video, audio) osobe ili poduzeća; izravan kontakt s potrošačima.</li>\n<li><strong>Newsletter:</strong> redovita elektronička publikacija za pretplatnike (obično besplatna).</li>\n<li><strong>Webinar:</strong> online seminar; uživo ili snimljen; niži troškovi; dvosmjerno sudjelovanje.</li>\n</ul>\n\n<h3>4) Društvene mreže i mobilni uređaji</h3>\n<p><strong>Društvene mreže</strong> (Facebook, Instagram, YouTube, LinkedIn, TikTok, Pinterest…) razmjenjuju multimediju i dosežu ljude sličnih interesa; pravi izbor ovisi o poduzeću i publici. <strong>Mobilni marketing</strong> sve je važniji na B2B i B2C tržištima: cilja određenu publiku, vrijeme, lokaciju i učestalost, uz mjerljiv doseg.</p>\n\n<div class=\"tip-box\">\n<h4><i class=\"fas fa-lightbulb\"></i> Fokus za kolokvij</h4>\n<p>Razlikuj internet, intranet i ekstranet, definiraj SEO i opiši alate na webu (bannere, sponzorske bannere, online kupone), e-poštu, blog, newsletter, webinar, društvene mreže i mobilne uređaje.</p>\n</div>\n"
+    }
+  },
+  "marketingPlanning": {
+    "id": "tfkxok",
+    "name": "Planiranje marketinga",
+    "icon": "fa-clipboard-list",
+    "color": "#16a34a",
+    "flashcards": [
+      {
+        "id": "absx39",
+        "question": "Što obuhvaća upravljanje marketinškim aktivnostima?",
+        "answer": "Planiranje, organiziranje i kontrolu marketinških aktivnosti kako bi se organizacija prilagođavala promjenama u okruženju, predviđala ih i djelovala proaktivno, a ne reaktivno.",
+        "explanation": "Marketinški napor = temelj proaktivnog djelovanja."
+      },
+      {
+        "id": "ljhn4d",
+        "question": "Što je planiranje marketinga i koja mu je svrha?",
+        "answer": "Proces prepoznavanja prilika i prijetnji te definiranja aktivnosti potrebnih za ostvarenje marketinških ciljeva. Svrha mu je prepoznati i stvoriti konkurentske prednosti.",
+        "explanation": "Razine: strateška (duga, široka) nasuprot taktičkoj (kratka, uska)."
+      },
+      {
+        "id": "h2ccbt",
+        "question": "Koja je razlika između strateškog i operativnog marketinškog plana?",
+        "answer": "Strateški: opći dugoročni ciljevi, prilagodba okruženju, vanjske informacije; misija, ciljevi, strategija. Operativni: svakodnevni kratkoročni ciljevi, interne informacije; taktika (4P, usluge).",
+        "explanation": "Strateški je važniji, rješava jedinstvene i rizične probleme i ocjenjuje se dugoročno; operativni rješava ponavljajuće probleme i ocjenjuje se odmah."
+      },
+      {
+        "id": "exw32f",
+        "question": "Koji su koraci procesa planiranja marketinga?",
+        "answer": "Izrada izjave o misiji, analiza situacije, utvrđivanje ciljeva i formuliranje strategija.",
+        "explanation": "Misija -> situacija -> ciljevi -> strategije."
+      },
+      {
+        "id": "2sc9uj",
+        "question": "Što je izjava o misiji i kakva mora biti?",
+        "answer": "Izjava koja poduzeću daje jasnu svrhu i fokus te ga čini jedinstvenim i usmjerenim na potrošača. Mora biti jedinstvena, usmjerena na potrošača, utemeljena na kompetencijama i realna.",
+        "explanation": "Istraživanja povezuju jasnu misiju s višim prosječnim povratom na ulaganje (ROI)."
+      },
+      {
+        "id": "6hyx0w",
+        "question": "Što je SWOT analiza?",
+        "answer": "Analiza situacije unutarnjih čimbenika (snage, slabosti) i vanjskih čimbenika (prilike, prijetnje). Pomaže planirati svladavanje slabosti, rano prepoznati prijetnje i uočiti prilike.",
+        "explanation": "Unutarnji: S/W. Vanjski: O/T."
+      },
+      {
+        "id": "o6bhdt",
+        "question": "Koja je razlika između kvantitativnih i kvalitativnih marketinških ciljeva?",
+        "answer": "Kvantitativni su brojčani (rast prodaje, dobiti, tržišnog udjela, zadovoljstva; smanjenje troškova). Kvalitativni nisu brojčani (inovacija ponude, novi kanali, obuka, imidž marke, lojalnost).",
+        "explanation": "Svaki cilj odgovara na pitanja: što, u kojem razdoblju, koliko. Ciljevi moraju biti mjerljivi, realni, dosljedni i hijerarhijski."
+      },
+      {
+        "id": "org19v",
+        "question": "Što je Ansoffova matrica (tržište/proizvod)?",
+        "answer": "Alat za izbor strategije: penetracija tržišta (postojeće tržište + postojeći proizvod), razvoj tržišta (novo + postojeći), razvoj proizvoda (postojeće + novi), diverzifikacija (novo + novi).",
+        "explanation": "Diverzifikacija nosi najveći rizik."
+      },
+      {
+        "id": "sh1frl",
+        "question": "Koji se pristupi ciljnom tržištu biraju u taktičkoj fazi?",
+        "answer": "Nediferencirani, koncentrirani i diferencirani marketinški pristup, u kombinaciji s odlukama o marketinškom spletu (4P).",
+        "explanation": "Taktika obuhvaća strategije ciljnog tržišta i marketinškog spleta."
+      }
+    ],
+    "quiz": [
+      {
+        "id": "j5c0av",
+        "question": "Svrha planiranja marketinga je:",
+        "options": [
+          "Smanjiti sve marketinške troškove",
+          "Prepoznati i stvoriti konkurentske prednosti",
+          "Zamijeniti prodajno osoblje",
+          "Izbjeći istraživanje tržišta"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "vu13js",
+        "question": "Unutarnji čimbenici SWOT analize su:",
+        "options": [
+          "Prilike i prijetnje",
+          "Snage i slabosti",
+          "Prodaja i dobit",
+          "Misija i vizija"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "yc8j10",
+        "question": "Ulazak na NOVO tržište s NOVIM proizvodom (najveći rizik) je:",
+        "options": [
+          "Penetracija tržišta",
+          "Razvoj tržišta",
+          "Razvoj proizvoda",
+          "Diverzifikacija"
+        ],
+        "correct": 3
+      },
+      {
+        "id": "2tod98",
+        "question": "Povećanje tržišnog udjela za 6 % primjer je:",
+        "options": [
+          "Kvalitativnog cilja",
+          "Kvantitativnog cilja",
+          "Izjave o misiji",
+          "Taktike"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "mquol3",
+        "question": "Prvi korak procesa planiranja marketinga je:",
+        "options": [
+          "Formulirati strategije",
+          "Izraditi izjavu o misiji",
+          "Poduzeti korektivne mjere",
+          "Organizirati se prema proizvodima"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "id": "u5ynr7",
+        "sentence": "_______ analiza ispituje unutarnje snage/slabosti i vanjske prilike/prijetnje.",
+        "answer": "SWOT",
+        "hint": "S-W-O-T..."
+      },
+      {
+        "id": "iyfnwi",
+        "sentence": "U Ansoffovoj matrici diverzifikacija znači ulazak s novim proizvodom na _______ tržište.",
+        "answer": "novo",
+        "hint": "Nije postojeće..."
+      },
+      {
+        "id": "st5ikv",
+        "sentence": "Izjava o _______ daje poduzeću jedinstvenu svrhu usmjerenu na potrošača.",
+        "answer": "misiji",
+        "hint": "Početak procesa planiranja..."
+      },
+      {
+        "id": "c19uww",
+        "sentence": "Ciljevi moraju biti mjerljivi, realni, dosljedni i _______.",
+        "answer": "hijerarhijski",
+        "hint": "Poredani po razinama..."
+      }
+    ],
+    "learn": {
+      "id": "nh8ods",
+      "title": "Tema 12 – Planiranje marketinških aktivnosti",
+      "content": "\n<h3>1) Upravljanje marketinškim aktivnostima</h3>\n<p>Upravljanje marketingom znači <strong>planiranje, organiziranje i kontrolu</strong> kako bi se organizacija prilagođavala promjenama u okruženju i predviđala ih – djelujući proaktivno, a ne reaktivno. Treba objediniti snage, usmjeriti se na prilike i izbjegavati prijetnje.</p>\n\n<h3>2) Planiranje marketinga</h3>\n<p>Planiranje je proces prepoznavanja prilika i prijetnji te definiranja aktivnosti za ostvarenje ciljeva; svrha mu je <strong>prepoznati i stvoriti konkurentske prednosti</strong>.</p>\n<table>\n<tr><th></th><th>Strateški plan</th><th>Operativni plan</th></tr>\n<tr><td>Ciljevi</td><td>Opći, dugoročni</td><td>Svakodnevni, kratkoročni</td></tr>\n<tr><td>Vrijeme</td><td>Dugoročna usmjerenost</td><td>Kratkoročna usmjerenost</td></tr>\n<tr><td>Informacije</td><td>Pretežno vanjske</td><td>Pretežno interne</td></tr>\n<tr><td>Određuje</td><td>Misiju, ciljeve, strategiju</td><td>Taktiku: proizvod, cijena, promocija, kanali</td></tr>\n</table>\n\n<h3>3) Proces planiranja</h3>\n<ul>\n<li><strong>Izrada izjave o misiji</strong> – kakva je pozicija poduzeća?</li>\n<li><strong>Analiza situacije</strong> – gdje je poduzeće sada?</li>\n<li><strong>Utvrđivanje ciljeva</strong> – što treba učiniti?</li>\n<li><strong>Formuliranje strategija</strong> – koje potrebe potrošača zadovoljiti?</li>\n</ul>\n\n<h3>4) Misija, SWOT i ciljevi</h3>\n<p><strong>Misija</strong> mora biti jedinstvena, usmjerena na potrošača, utemeljena na kompetencijama i realna. <strong>SWOT</strong> analizira unutarnje snage/slabosti (Strengths/Weaknesses) i vanjske prilike/prijetnje (Opportunities/Threats).</p>\n<div class=\"example-box\">\n<p><strong>Ciljevi</strong> su kvantitativni (npr. +6 % tržišnog udjela, +4,5 % dobiti) ili kvalitativni (npr. novi kanali, jači imidž marke). Moraju biti mjerljivi, realni, dosljedni i hijerarhijski.</p>\n</div>\n\n<h3>5) Formuliranje strategija – Ansoffova matrica</h3>\n<table>\n<tr><th></th><th>Postojeći proizvod</th><th>Novi proizvod</th></tr>\n<tr><td><strong>Postojeće tržište</strong></td><td>Penetracija tržišta</td><td>Razvoj proizvoda</td></tr>\n<tr><td><strong>Novo tržište</strong></td><td>Razvoj tržišta</td><td>Diverzifikacija (najveći rizik)</td></tr>\n</table>\n<p>U taktičkoj fazi bira se pristup ciljnom tržištu (nediferencirani, koncentrirani, diferencirani) te strategije marketinškog spleta.</p>\n\n<div class=\"tip-box\">\n<h4><i class=\"fas fa-lightbulb\"></i> Fokus za kolokvij</h4>\n<p>Znaj razliku strateškog i operativnog plana, četiri koraka planiranja, zahtjeve za misiju, SWOT, kvantitativne i kvalitativne ciljeve te četiri Ansoffove strategije.</p>\n</div>\n"
+    }
+  },
+  "organizingControlling": {
+    "id": "a4wtvs",
+    "name": "Organiziranje i kontrola",
+    "icon": "fa-sitemap",
+    "color": "#eab308",
+    "flashcards": [
+      {
+        "id": "0ulr7j",
+        "question": "Što je organiziranje marketinških aktivnosti?",
+        "answer": "Delegiranje i grupiranje zadataka u organizacijske jedinice i raspodjela resursa za njihovu provedbu, kako bi poduzeće brzo i učinkovito odgovaralo na prijetnje i prilike.",
+        "explanation": "Struktura ovisi o broju tržišta i proizvoda."
+      },
+      {
+        "id": "3p8v8b",
+        "question": "Koja su četiri načina organiziranja marketinških aktivnosti?",
+        "answer": "Prema funkcijama, prema tržištima/potrošačima, prema proizvodima i matrična organizacija.",
+        "explanation": "Izbor ovisi o tome koliko tržišta i proizvoda poduzeće ima."
+      },
+      {
+        "id": "xn82ev",
+        "question": "Kada je prikladno organiziranje prema FUNKCIJAMA?",
+        "answer": "Kad je organizacija na malom broju tržišta s malo proizvoda. Aktivnosti (istraživanje, razvoj proizvoda, distribucija, promocija, cijene, usluge) dodjeljuju se zaposlenicima pojedinih funkcija.",
+        "explanation": "Malo tržišta, malo proizvoda."
+      },
+      {
+        "id": "72pwj8",
+        "question": "Kada je prikladno organiziranje prema TRŽIŠTIMA/POTROŠAČIMA?",
+        "answer": "Kad je poduzeće prisutno na mnogo tržišta s malo proizvoda i potrebna je specijalizacija po tržištima (obilježja potrošača razlikuju se među tržištima).",
+        "explanation": "Mnogo tržišta, malo proizvoda."
+      },
+      {
+        "id": "q2zgx9",
+        "question": "Kada je prikladno organiziranje prema PROIZVODIMA i tko ga vodi?",
+        "answer": "Kad je poduzeće na malom broju tržišta s mnogo proizvoda, osobito uz inovacije. Voditelj proizvoda (product manager) vodi proizvod ili skupinu proizvoda od razvoja do prodaje.",
+        "explanation": "Malo tržišta, mnogo proizvoda."
+      },
+      {
+        "id": "sei3mj",
+        "question": "Kada se koristi MATRIČNA organizacija?",
+        "answer": "Kad je poduzeće na više tržišta s mnogo proizvoda. Gradi timove funkcijskih i proizvodnih stručnjaka; uključuje mnogo stručnjaka i brže reagira na tržišne promjene.",
+        "explanation": "Mnogo tržišta, mnogo proizvoda."
+      },
+      {
+        "id": "9ijtqc",
+        "question": "Što je marketinška kontrola?",
+        "answer": "Proces praćenja ostvarenja planiranih ciljeva i otkrivanja odstupanja prije nego što postanu štetna.",
+        "explanation": "Uspoređuje planirane i ostvarene rezultate."
+      },
+      {
+        "id": "xbpo7e",
+        "question": "Koje su četiri vrste marketinške kontrole?",
+        "answer": "Godišnja (godišnji plan, provodi uprava), kontrola profitabilnosti (koje operacije donose dobit ili gubitak), kontrola učinkovitosti (ulaganja i troškovi) i strateška kontrola.",
+        "explanation": "Strateška kontrola: najbolje korištenje prilika na tržištu, u proizvodima i kanalima. Četiri pogleda na uspješnost."
+      },
+      {
+        "id": "hichmq",
+        "question": "Koji su koraci procesa marketinške kontrole?",
+        "answer": "Utvrditi standarde uspješnosti, usporediti planirane i ostvarene rezultate te poduzeti korektivne mjere (izmjena ciljeva, standarda, marketinškog spleta, strategija ili organizacije).",
+        "explanation": "Uobičajeni parametri: prodaja, dobit, marketinški troškovi, pozicioniranje, lojalnost."
+      }
+    ],
+    "quiz": [
+      {
+        "id": "yz69hg",
+        "question": "Izgradnja timova funkcijskih i proizvodnih stručnjaka za mnogo tržišta i mnogo proizvoda je:",
+        "options": [
+          "Organiziranje prema funkcijama",
+          "Organiziranje prema proizvodima",
+          "Matrična organizacija",
+          "Organiziranje prema tržištima"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "oaljku",
+        "question": "Organiziranje prema FUNKCIJAMA odgovara poduzeću koje ima:",
+        "options": [
+          "Mnogo tržišta i mnogo proizvoda",
+          "Mali broj tržišta i proizvoda",
+          "Isključivo nova tržišta",
+          "Nijedan proizvod"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "buo9xm",
+        "question": "Utvrđivanje koje operacije donose dobit, a koje gubitak je:",
+        "options": [
+          "Godišnja kontrola",
+          "Kontrola profitabilnosti",
+          "Kontrola učinkovitosti",
+          "Strateška kontrola"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "n8d6yh",
+        "question": "Proces marketinške kontrole započinje:",
+        "options": [
+          "Poduzimanjem korektivnih mjera",
+          "Utvrđivanjem standarda uspješnosti",
+          "Usporedbom s konkurentima",
+          "Snižavanjem cijena"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "qopv99",
+        "question": "Voditelj proizvoda koji vodi proizvod od razvoja do prodaje odražava organiziranje prema:",
+        "options": [
+          "Funkcijama",
+          "Tržištima",
+          "Proizvodima",
+          "Geografiji"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "id": "smcnu1",
+        "sentence": "Organiziranje marketinških aktivnosti znači delegiranje i grupiranje zadataka te raspodjelu _______.",
+        "answer": "resursa",
+        "hint": "Ono što je potrebno za provedbu zadataka (engl. resources)..."
+      },
+      {
+        "id": "675v5g",
+        "sentence": "_______ organizacija spaja funkcijske i proizvodne stručnjake za mnogo tržišta i proizvoda.",
+        "answer": "Matrična",
+        "hint": "Mreža od dviju dimenzija..."
+      },
+      {
+        "id": "7fy0sv",
+        "sentence": "Marketinška kontrola otkriva _______ prije nego što postanu štetna.",
+        "answer": "odstupanja",
+        "hint": "Razlike između planiranog i ostvarenog..."
+      },
+      {
+        "id": "ancd9d",
+        "sentence": "Četiri vrste kontrole su godišnja kontrola, kontrola profitabilnosti, kontrola učinkovitosti i _______ kontrola.",
+        "answer": "strateška",
+        "hint": "Najbolje korištenje prilika na tržištu/u proizvodima..."
+      }
+    ],
+    "learn": {
+      "id": "ifwgnw",
+      "title": "Tema 13 – Organiziranje i kontrola marketinških aktivnosti",
+      "content": "\n<h3>1) Organiziranje marketinških aktivnosti</h3>\n<p>Organiziranje znači <strong>delegiranje i grupiranje zadataka</strong> u organizacijske jedinice i <strong>raspodjelu resursa</strong>, kako bi poduzeće brzo odgovaralo na prijetnje i prilike. Struktura ovisi o tome koliko tržišta i proizvoda poduzeće ima.</p>\n<table>\n<tr><th>Oblik</th><th>Najbolji kada...</th></tr>\n<tr><td><strong>Prema funkcijama</strong></td><td>Malo tržišta, malo proizvoda</td></tr>\n<tr><td><strong>Prema tržištima/potrošačima</strong></td><td>Mnogo tržišta, malo proizvoda</td></tr>\n<tr><td><strong>Prema proizvodima</strong></td><td>Malo tržišta, mnogo proizvoda (vodi voditelj proizvoda)</td></tr>\n<tr><td><strong>Matrična</strong></td><td>Mnogo tržišta, mnogo proizvoda (funkcijski + proizvodni stručnjaci)</td></tr>\n</table>\n\n<h3>2) Marketinška kontrola</h3>\n<p>Marketinška kontrola prati ostvarenje planiranih ciljeva i otkriva <strong>odstupanja prije nego što postanu štetna</strong>. Postoje četiri vrste:</p>\n<ul>\n<li><strong>Godišnja kontrola</strong> – kontrola godišnjeg plana, provodi je uprava</li>\n<li><strong>Kontrola profitabilnosti</strong> – koje operacije donose dobit ili gubitak</li>\n<li><strong>Kontrola učinkovitosti</strong> – učinkovitost marketinških ulaganja i utjecaj troškova</li>\n<li><strong>Strateška kontrola</strong> – najbolje korištenje prilika na tržištu, u proizvodima i kanalima</li>\n</ul>\n\n<h3>3) Proces marketinške kontrole</h3>\n<div class=\"formula-box\">\n<p><strong>Utvrditi standarde uspješnosti -> usporediti planirano i ostvareno -> poduzeti korektivne mjere.</strong></p>\n</div>\n<ul>\n<li><strong>Uobičajeni parametri:</strong> prodaja, dobit, marketinški troškovi, pozicioniranje proizvoda, lojalnost potrošača.</li>\n<li><strong>Usporedba s konkurentima:</strong> analiza prodaje/troškova, dobit, tržišni udio, razvoj novih proizvoda i kanala.</li>\n<li><strong>Korekcije</strong> mijenjaju ciljeve, standarde uspješnosti, marketinški splet, strategije ili organizaciju marketinških aktivnosti.</li>\n</ul>\n\n<div class=\"tip-box\">\n<h4><i class=\"fas fa-lightbulb\"></i> Fokus za kolokvij</h4>\n<p>Poveži svaki oblik organiziranja s odgovarajućom situacijom tržišta/proizvoda, nabroji četiri vrste kontrole i reproduciraj trostupanjski proces kontrole.</p>\n</div>\n"
+    }
+  }
+}
