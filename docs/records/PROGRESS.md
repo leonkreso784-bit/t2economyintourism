@@ -14,6 +14,16 @@ popis je filtriran po lekciji, ukupno 43). 🚀 redak u CHANGELOG.
 
 **Odluka (Leon):** Gauss-Jordan OSTAJE u `math-hr`, 2. kolokvij — studenti su ga radili kroz vlastite prezentacije.
 
+**Vježbe Matematike (`math-hr`, 54, 36 randomiziranih):** graditelj (Opus) po fotografijama ispita 2023/24 i demonstraturama →
+`exercise-review` (vlastiti preračun kroz CIJELI prostor parametara, 0 blokatora) → tri ispravka istom graditelju:
+- **Statični `prompt` randomizirane vježbe se ne prikazuje** (`resolveExercise` ga pregazi generiranim) → upute o
+  zaokruživanju su bile nevidljive u 10/36. Mjera (upute u statičnom, ne u prikazanom) na ostalim paketima: Statistika HR
+  0/25, EN Makro 0/24, EN Matematika 0/28, EN Statistika 0/23 — kvar je bio samo u novom paketu; kontrola: math-hr prije
+  ispravka 10/36, poslije 0/36.
+- Konformni kamatnjak: uputa da se računa s nezaokruženim faktorom (proširena tolerancija bi pustila pogrešne postupke).
+- Odgovori |x| < 0,1 uz toleranciju 0,01 (upis „0" je prolazio) izbačeni iz prostora parametara.
+`math-hr` sad dijeli `data/math/math-lib.js` s EN-om (jedan izvor, ne kopija).
+
 ## 2026-09-27 (OPUS, stablo `sokratstudy.hr1`, grana `feat/hr-1god`) — HR 1. godina: val 1 = tri predmeta (teorija)
 
 **Povod:** predavanja 1. godine počinju 28.09.; na hrvatskom je od 1. godine postojala samo Poslovna informatika.

@@ -9,8 +9,8 @@
 //
 // Podjela: M2 = neodređeni integral · kamatni račun · rente · zajam · Gauss-Jordanova metoda.
 //   Elastičnost je u M1 (HR Projektni zadatak 1 iz 2023/24), za razliku od EN gdje ide uz integral.
-//   ⚠ Gauss-Jordan: u EN silabusu je tema 11, ali NIJEDAN pregledani HR izvor (formule za 2. kolokvij,
-//   završni ispit) ga ne spominje — zadržan kao kraća zadnja tema; provjeriti s nastavnikom.
+//   Gauss-Jordan: u EN silabusu je tema 11; nijedan pregledani HR izvor ga ne spominje, ali OSTAJE u 2. kolokviju
+//   (Leonova odluka 28.09.: studenti su ga radili kroz vlastite prezentacije, zato ga nema na Merlinu).
 //
 // MODEL: kartice < 200 znakova, detalj u learn.
 // ⚠️ NE pokretati translate-subject.js nad ovim predmetom!

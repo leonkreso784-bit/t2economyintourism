@@ -646,7 +646,7 @@ const SOKRAT_CATALOG = {
       iconGradient: ['#16a34a', '#4ade80'],
       description: 'Jednadžbe, funkcije i domena, derivacije, rast, pad i ekstremi, optimizacija troškova i dobiti, elastičnost potražnje; neodređeni integral, kamatni račun, rente, zajam i Gauss-Jordanova metoda (KaTeX formule i riješeni ispitni zadaci)',
       storageKey: 'math-hr-progress',
-      features: { blindMap: false },
+      features: { blindMap: false, exercises: true },
       // Temelj: EN math (isti FMTU kolegij) + usklađeno s HR demonstraturama i starim ispitima 2023/24. KaTeX (ADR-009).
       lessons: [
         { id: 'first-midterm', name: '1. kolokvij', description: 'Jednadžbe (linearne, kvadratne, svodive na kvadratne), funkcije i prirodna domena, derivacije, rast, pad i ekstremi, troškovi, prihod i dobit, elastičnost potražnje' },
@@ -654,18 +654,23 @@ const SOKRAT_CATALOG = {
         { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus riješeni zadaci sa starih ispita' }
       ],
       content: {
-        // final.js MORA se učitati ZADNJI (Object.assign mathHrM1 + mathHrM2 + examPractice).
+        // final.js MORA se učitati prije vježbi (Object.assign mathHrM1 + mathHrM2 + examPractice).
+        // math-lib.js (window.MathLib, ZAJEDNIČKI s EN math) mora se učitati PRIJE exercises.js.
         scripts: [
           'data/math-hr/midterm-1.js',
           'data/math-hr/midterm-2.js',
-          'data/math-hr/final.js'
+          'data/math-hr/final.js',
+          'data/math/math-lib.js',
+          'data/math-hr/exercises.js'
         ],
         resolve: {
           'first-midterm': 'mathHrM1',
           'second-midterm': 'mathHrM2',
           'final': 'mathHrFinal'
         },
-        dataFormat: 'json' // dual-read; study iz data/json/math-hr/*.json
+        dataFormat: 'json', // dual-read; study iz data/json/math-hr/*.json; vježbe UVIJEK iz .js
+        codeScripts: ['data/math/math-lib.js', 'data/math-hr/exercises.js'], // KÔD (generate() + lib) → uvijek iz datoteke, nikad iz baze (BUG-012)
+        exercises: 'mathHrExercises'   // window var s interaktivnim vježbama (features.exercises)
       }
     },
     {
