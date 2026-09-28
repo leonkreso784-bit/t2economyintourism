@@ -1,5 +1,5 @@
 // Specifični oblici turizma (HR) — M2 (2. kolokvij)
-// AUTORSKI IZ HRVATSKE SKRIPTE (prof. dr. sc. Daniela Gračan, FMTU Opatija) + ispitna pitanja.
+// AUTORSKI IZ HRVATSKE SKRIPTE (nositelj kolegija, FMTU Opatija) + ispitna pitanja.
 // MODEL: kartice = kratke definicije (<200 znak), detalj u learn.
 // ⚠️ NE pokretati translate-subject.js nad ovim predmetom!
 

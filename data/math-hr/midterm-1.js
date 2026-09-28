@@ -1,8 +1,8 @@
 // Matematika (HR) — M1 (1. kolokvij)
 // FMTU Opatija, 1. godina, zimski semestar (nastava od 28.09.).
 // Temelj: EN math (isti FMTU kolegij) + usklađeno s HR demonstraturama i starim ispitima.
-//   HR izvori: Merlin — tri prezentacije demonstratura (1. demonstrature 17.10.2024., isto u verziji
-//   A. Tomiek; 2. i 3. demonstrature 24.10. i 8.11.2024.) + Drive — 18 fotografija (studentske
+//   HR izvori: Merlin — tri prezentacije demonstratura (1. demonstrature 17.10.2024., i u drugoj
+//   verziji; 2. i 3. demonstrature 24.10. i 8.11.2024.) + Drive — 18 fotografija (studentske
 //   bilješke „Jednadžbe”/„Domena funkcije”, riješeni kolokvij, „Projektni zadatak 1, Redovni Opatija”
 //   2023/24, „Formulas for 2. Midterm” 2023/24, Završni ispit grupa B 2023/24).
 //   NE doslovan prijevod EN predmeta: redoslijed i primjeri po HR demonstraturama i ispitima.

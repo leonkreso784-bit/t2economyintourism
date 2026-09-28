@@ -931,7 +931,7 @@ nego što mu je dan razlog da mu je stalo. To je najskuplja moguća prva interak
 adut (**cijeli katalog gotovog gradiva**) bio nevidljiv na ulazu.
 
 > ⚠️ **BROJ PREDMETA SE NIKAD NE PIŠE RUKOM — ni u ovom specu, ni u markupu** (2026-08-15). Ovaj
-> odjeljak je nastao dok ih je bilo **22**; istog dana kad su Sašine dvije HR grane mergeane postalo
+> odjeljak je nastao dok ih je bilo **22**; istog dana kad su suradnikove dvije HR grane mergeane postalo
 > ih je **24**, i svaka rečenica koja je broj nosila u sebi odmah je bila neistinita. Isti razred
 > greške već je bio **na produkciji**: landing je pisao „17 predmeta" jer je brojao samo primarni
 > program (CHANGELOG 2026-08-09). Broj dolazi iz `allReachableSubjects()`, tekst iz

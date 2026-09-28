@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-29 (OPUS, stablo `sokratstudy.hr1`, grana `feat/hr-1god`) — micanje imena stvarnih osoba
+
+**Popis ciljanim grepom** (titule/uloge + prezimena iz zaglavlja izvora + `-ić` prezimena + uobičajena imena), bez agenta.
+Razvrstano A (student vidi) / B (komentar) / C (docs) / D (memorija, lokalni agenti) i pokazano Leonu prije izmjena.
+**Odluke (anketa):** suradnik → uloga svugdje · Dwyer = FMTU predavač → van · Chicago članak Bogdan/Bareša/Hađina **ostaje**
+(citat objavljenog djela) · memorija: samo platformski (Alisa, Antea; Sergej iz DECISIONS), ostali projekti netaknuti.
+**Izvedeno dvjema skriptama s brojačem** (svaka zamjena mora pogoditi točno jednom, inače ništa nije zapisano): 33 zamjene u
+`data/**` (22 datoteke) → `export:json` (samo `te2` JSON promijenjen — ostalo su komentari) · 14 točnih + 202 zamjene
+suradnika u `docs/**`, memoriji i `content-review` agentu. validate:content 0 grešaka · validate:schema 0 neispravnih · bump.
+**Čeka:** `te2` (EN) se čita iz baze → `diff:db te2` pa re-sync PROD = zaseban OK · brana protiv povratka imena (anketa) · deploy uz OK.
+
 ## 2026-09-28 (OPUS, stablo `sokratstudy.hr1`, grana `feat/hr-1god`) — HR 1. godina: deploy provjeren, vježbe Matematike, Makroekonomija
 
 **Deploy val 1 (pushao Leon) PROVJEREN, ne preuzet na riječ:** `origin/main` = `3898fe6` · Vercel produkcija READY ·
@@ -1574,7 +1585,7 @@ popravlja za pola boda ali ne zatvara.
 (13 ruta × 3 teme) · `check:palette` 0 · `check:tokens` bez novog · `build:css` + `bump` +
 `build:og` (poveznice u pretpregledu sad nose boju marke).
 Usput ispravljeno u CLAUDE.md: `check:contrast` broji **292**, ne 358 (ostarjelo kad je `paper`
-maknut), i zaostatak „HR nosi Sasa" iz jutrosnjeg otkazivanja.
+maknut), i zaostatak „HR nosi suradnik" iz jutrosnjeg otkazivanja.
 
 **Snimka poslana Leonu** prije deploya — gumbi i znak su sad ista boja.
 
@@ -1595,7 +1606,7 @@ bio izgraden kao **preview** grane, pa ga integracija preskace. Zadnji `target: 
 datoteke koje postoje u STAROM kodu) vraca **403** s `private, no-store`, dakle zastita, ne stanje.
 Ranija tvrdnja "produkcija nema loader.js" je time **bezvrijedna**, ne dokaz.
 
-**2. Suradnik otkazan.** Leon: *"Sasu mozes maknut, on je otkazan, nema nista od njega, bio je
+**2. Suradnik otkazan.** Leon: *"suradnika mozes maknut, on je otkazan, nema nista od njega, bio je
 ljen i nije nista radio."* Role-router u CLAUDE.md **ukinut** (git user.name se vise ne provjerava);
 `workflow/TEAM.md` → `archive/TEAM.md` s pecatom; ADR-023 dobio status ⚰️ OTKAZANO uz napomenu da
 **t.5 (ADR-022 pull-forward) ostaje** jer nije ovisio o njemu; HR-ploca u `subjects/README.md`
@@ -4704,12 +4715,12 @@ ostalo** → petlja pada bez ijedne posebne iznimke.
 
 ---
 
-## 2026-08-15 (OPUS) — **Sašine dvije zaostale grane mergeane. Šum se ne spaja, šum se regenerira**
+## 2026-08-15 (OPUS) — **Suradnikove dvije zaostale grane mergeane. Šum se ne spaja, šum se regenerira**
 
-> Leon: *„danas ćemo morat mergat Sašin rad jer ne može ići ovako više."*
+> Leon: *„danas ćemo morat mergat suradnikov rad jer ne može ići ovako više."*
 
 **Grana `merge/sasa-hr` (osnovana na `main` `9637f4a`), dva `--no-ff` mergea → `main` `58ecec5` → NA PRODUKCIJI**
-(Leonov OK: *„Da, push na main."*). Sašino autorstvo je **očuvano u povijesti**: mergeane su prave grane, nije
+(Leonov OK: *„Da, push na main."*). Suradnikovo autorstvo je **očuvano u povijesti**: mergeane su prave grane, nije
 prepisan sadržaj. Usput, na Leonov OK, **`feat/c3-vlastito-gradivo` je prvi put gurnuta na origin** — 26 commita
 (C2, popravak C2, tri C3 cigle, lanac opskrbe) dotad je postojalo **samo na Leonovu disku**, bez ijedne kopije.
 
@@ -4731,7 +4742,7 @@ u rasponu svojih opcija · svaki `fillBlanks` ima `answer` · struktura `final =
 {examPractice})` potvrđena u obje. **0 kartica preko SOFT praga 200** — ni u pitanju ni u odgovoru, u obje
 grane; `validate:content` daje 174 i 184 kartice s 93,1 % odnosno 83,2 % u pojasu 101–200. To je **stroži
 model od zatečenog kataloga**, gdje je 46,2 % kartica preko 200. Činjenična točnost vs HR skripta ostaje
-Sašina domena (ADR-020) i nije provjeravana.
+Suradnikova domena (ADR-020) i nije provjeravana.
 
 **Gate.** `preflight` **EXIT 0** — 10/10 (ovdje ih je 10, ne 13: `check:palette`/`check:contrast`/`check:cdn`
 žive na granama C2/C3 i još nisu na `main`-u). `verify` 0/0 s oba nova predmeta ožičena · `bump:check` 78
@@ -4739,7 +4750,7 @@ tokena na `20260815040802` · `export:json --check` bez drifta · `validate:sche
 suita. **`browse.spec.js` je izdržao** — Leonov popravak `388e3c5` izvodi očekivani broj iz
 `subjectsOf(pid, 2)`, pa dva nova HR predmeta 2. godine više ne mogu srušiti tvrdnju kao `te2-hr` svojedobno.
 
-**Stanje kataloga: 22 → 24 predmeta** (17 EN + **7 HR**). Time je Sašin STOP-nalog **ispunjen**; S4+S5
+**Stanje kataloga: 22 → 24 predmeta** (17 EN + **7 HR**). Time je suradnikov STOP-nalog **ispunjen**; S4+S5
 (4 kvantitativna HR) ostaje pauziran do kraja frontend redizajna.
 
 **Produkcijska provjera (pravilo #7) — 12/12.** Vercel `dpl_6DzY6PxH…` READY target=production · token
@@ -4749,7 +4760,7 @@ koju je C1 obrisao — to je bila jedina stvarna opasnost ovog razrješenja i pr
 
 **`main` → C3 grana je NAPRAVLJEN** (`ef3a63a`). Sudar je bio točno onih **11 datoteka** koje sam izmjerio
 unaprijed — 8 token-datoteka i 3 dnevnika; `data/catalog.js` i `docs/subjects/README.md` nisu konfliktirali.
-Razrješenje je isto pravilo kao kod Sašinih grana, **ali obrnuta strana**: ondje je Sašina strana bila šum
+Razrješenje je isto pravilo kao kod suradnikovih grana, **ali obrnuta strana**: ondje je suradnikova strana bila šum
 pa je uzeta `main`-ova, ovdje je `main`-ova šum (samo bumpovi) pa je uzeta naša — C3 nosi pravi landing u
 `index.html`. ⚠️ **`git checkout --ours` NIJE korišten na `CLAUDE.md`**: uzima CIJELU našu verziju i poništio
 bi ono što se izvan sukoba već uredno spojilo. `PROGRESS`/`CHANGELOG`: obje strane dodaju unos NA VRH, pa git
@@ -5151,7 +5162,7 @@ razlikovati od ispravnog. Kriv je postao kad je tema postala varijabla.
   nijedan piksel, dakle jedina prilika da temelj ode na prod uz atributivnu gresku.
   Gate: preflight 0 + **puna suita 337/0/30 skip**. Verificirano na zivoj stranici: `styles.css` → 404,
   `--color-indigo-500` vise ne postoji.
-- **Sasin stop-nalog** (TEAM.md §9): dovrsi dvije grane redom → mergea sam uz OK dan UNAPRIJED → javi
+- **Suradnikov stop-nalog** (TEAM.md §9): dovrsi dvije grane redom → mergea sam uz OK dan UNAPRIJED → javi
   Leonu na Instagram → stani do kraja frontenda. S4+S5 pauziran. Uz upozorenje koje bi ga stajalo pola
   dana: **`styles.css` je obrisan**, obje njegove grane ga diraju → rebase javlja modify/delete.
 - **Spec §7.6 — smjer izgleda je APPLE** (Leon: *„apple smijer naravno to se podrazumijeva“*).
@@ -5680,7 +5691,7 @@ Kvadratići idu kroz **postojeće** `updateCard`/`updateQuiz`/`updateFill` opove
 
 | # | mjesto | tvrdilo | stvarnost |
 |---|---|---|---|
-| 1 | `workflow/TEAM.md:131` | *„Nakon ova 4 → Saša prelazi na **IZGRADNJU MATURE**"* | matura izbačena 2026-08-02; **jedina neistina koju čita čovjek** |
+| 1 | `workflow/TEAM.md:131` | *„Nakon ova 4 → suradnik prelazi na **IZGRADNJU MATURE**"* | matura izbačena 2026-08-02; **jedina neistina koju čita čovjek** |
 | 2 | `plan/ROADMAP.md` zaglavlje | *„Trenutni rad = CREATE_BACKEND **F5**"*, `CREATE_BACKEND_SPEC.md` ← **AKTIVNO** | F5 na produkciji od 06.08., a dokument je u `archive/` → **`plan/` je pokazivao na arhivu kao na aktivni spec** |
 | 3 | `product/PRD.md` §4 | *„Faza 1: UGC MVP — korisnik uploada PDF/PPT → AI radi skriptu"* | izgrađeno je **ručno autorstvo**; AI dolazi kroz **korisnikov** AI (MCP, ADR-026) — pa ni kvote troška nisu na nama |
 | 4 | `product/PRD.md` §7 | *„Nema sustava uloga — jedini autor sam ja"* | postoji `profiles.role` + `is_admin()` + suradnik s deploy-permisijom |
@@ -5729,9 +5740,9 @@ Ugovor: **tekst = kurirani tokeni** (kontrast kritičan), **akcent = slobodni `#
 18 hrvatskih nizova: **materijal** + **polica** (rod praćen: „Nova polica", „nadređenu policu"). EN već je bio ispravan. Pet nizova namjerno i dalje kaže „gradivo" — tri na landingu (opisuje katalog) i dva na study-stranici koja je **jedan dijeljeni DOM** za oba svijeta.
 
 ### 6) M5 — duljina kartice: **izmjereno prije odluke**
-Leonov nalaz iz živog pregleda. 5379 kartica: **pitanja 0 preko 200** (max 134), **odgovori 2487 = 46,2 %** preko 200, 928 preko 300, **48 preko 500**. Razliveno kroz sve predmete → potvrđuje da je standard **platformski** problem, ne Sašin. **Tvrdo ograničenje na 200 srušilo bi pola kataloga.** Leon odabrao strop **500**; podijeljeno u M5a (vođenje u editoru — odmah zaustavlja rast) i M5b (skratiti **25 jedinstvenih** zatečenih pa tek onda `maxLength` u shemi — inače crven CI).
+Leonov nalaz iz živog pregleda. 5379 kartica: **pitanja 0 preko 200** (max 134), **odgovori 2487 = 46,2 %** preko 200, 928 preko 300, **48 preko 500**. Razliveno kroz sve predmete → potvrđuje da je standard **platformski** problem, ne suradnikov. **Tvrdo ograničenje na 200 srušilo bi pola kataloga.** Leon odabrao strop **500**; podijeljeno u M5a (vođenje u editoru — odmah zaustavlja rast) i M5b (skratiti **25 jedinstvenih** zatečenih pa tek onda `maxLength` u shemi — inače crven CI).
 
-### 7) Sašin brzi pregled
+### 7) suradnikov brzi pregled
 Zadnji commit **2026-07-27** (11 dana). Dvije grane izvan `main`-a: `content/entrepreneurship-hr` (3) i `content/ebusiness-hr` (1). Kvaliteta dobra — opseg čist, **0 kartica preko 200** (max 198/199), Final = M1+M2+examPractice. **Ćirilica koju je skener našao NIJE njegova** — `MPS` je u `data/macroeconomics/` već na `main`-u. ⚠️ Obje grane diraju `data/catalog.js` + cache-tokene → **druga po redu će konfliktirati**. Naš dug: `check:docs` skenira ćirilicu u `.md`, ali **`data/**` nitko ne skenira**.
 
 **Tri zamke uhvaćene u izvedbi (zapamtiti):** ① `data-be-color` je **već zauzet** (boja teksta) → akcent mora biti `data-be-bcolor`. ② `JSON.stringify` nad shemom preformatira cijeli fajl (**480 izmjena umjesto 19**) → shema se mijenja **tekstualno**. ③ **Test je prošao iz krivog razloga** — `toHaveText` prolazi i na sakrivenom elementu; čekaj stvarni ishod, klikaj pravim gumbom, tvrdi `toBeVisible`.
@@ -5920,12 +5931,12 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 
 ---
 
-## 2026-07-28-b (OPUS) — 🚀 F6 (boje teksta) + U8.7 (upload slike) NA PROD + Sašin novi zadatak
-**Kontekst:** Leon (post-compact) „pregledaj projekt" → pitanja o rokovima → „kreni na prvu ciglu, nastavi normalno" → Sašin zadatak → „zavrsimo do kraja pa spremimo za compact".
+## 2026-07-28-b (OPUS) — 🚀 F6 (boje teksta) + U8.7 (upload slike) NA PROD + suradnikov novi zadatak
+**Kontekst:** Leon (post-compact) „pregledaj projekt" → pitanja o rokovima → „kreni na prvu ciglu, nastavi normalno" → suradnikov zadatak → „zavrsimo do kraja pa spremimo za compact".
 **🎨 F6 — bogatija paleta boja teksta (4→8) → 🚀 PROD (`31688b6`).** +cyan/blue/violet/pink (legibilne na dark); **JEDINI izvor = `TB_COLORS`** u `block-editor.js` → allowlist + serijalizator-regex + swatch-evi svi izvedeni (uklonjena **drift-zamka**: regex bio hard-kodiran); renderer allowlist usklađen (sigurnosna granica); +4 `.lb-color-*` CSS. unit +2 (66/0). **Grana-higijena:** F6 prvo greškom na `u8.7` grani → premješten na `feature/f6-text-colors` (off main; izolirani `git diff | git apply` za miješani block-editor.js/test) → `u8.7` grana očišćena na U8.7-only. Vercel `dpl_Dhrt…` READY.
 **🖼 U8.7 — upload slike (F2) → 🚀 PROD (`3634a1e`).** **Redoslijed (U4-obrazac): PROD infra PRVO** — `apply_migration` bucket `lesson-images` na PROD `naxjubnedhrbhsuasayu` (public read + 4 RLS policyja `is_admin()`, 5 MB, png/jpeg/webp/gif); **verificirano SQL-om** (bucket + 4 policyja postoje). **PA klijent:** merge `u8.7`→main na zasebnoj `release/u8.7-merge` grani (konflikti SAMO token-fajlovi → `--ours` + re-bump; block-editor.js/test se ČISTO auto-spojili — F6 boje + U8.7 upload = različite regije; oba feature-a potvrđena u kodu, 0 markera), preflight EXIT 0 → main ff. Vercel `dpl_4HTC…` **READY target=production**. Upload radi na produu (bucket postoji). Dokaz uploada = 27/27 vs staging (isti bucket-config) → prod-test-slika svjesno preskočena (bez zagađenja).
 **⚠️ Klasifikator:** docs-push i F6-push prošli kroz moj alat (retry); U8.7 merge blokiran 3× pa napokon prošao na čistom fast-forwardu. Sve verificirano pravilom #7 (Vercel READY).
-**👥 SAŠIN NOVI ZADATAK (zapisano TEAM.md §2/§3/§9 + subjects/README + CLAUDE.md → 🚀 `2fd468a` na main):** aktiviran **S4+S5 za `macroeconomics-hr`·`statistics-hr`·`math-hr`·`accounting-hr`** (razlog = **vježbe moraju biti na hrvatskom**; ta 4 jedina imaju vježbe; vježbe = **SAMO string-polja**, `generate/answer/type` nedirljivi) → nakon 4 → **izgradnja mature**. **🆕 DEPLOY-PERMISIJA:** Saša sam mergea VLASTITI PR u main (=deploy) **TEK uz Leonov izričit approval** (standard=savršeno); direktan push i dalje nemoguć. **📌 HR→BAZA:** kad HR program potpun (2 god) → HR predmeti u Supabase (Leon/Claude, ne Saša).
+**👥 SAŠIN NOVI ZADATAK (zapisano TEAM.md §2/§3/§9 + subjects/README + CLAUDE.md → 🚀 `2fd468a` na main):** aktiviran **S4+S5 za `macroeconomics-hr`·`statistics-hr`·`math-hr`·`accounting-hr`** (razlog = **vježbe moraju biti na hrvatskom**; ta 4 jedina imaju vježbe; vježbe = **SAMO string-polja**, `generate/answer/type` nedirljivi) → nakon 4 → **izgradnja mature**. **🆕 DEPLOY-PERMISIJA:** suradnik sam mergea VLASTITI PR u main (=deploy) **TEK uz Leonov izričit approval** (standard=savršeno); direktan push i dalje nemoguć. **📌 HR→BAZA:** kad HR program potpun (2 god) → HR predmeti u Supabase (Leon/Claude, ne suradnik).
 **SLIJEDI:** U8.6 vizual + **MOBILNI editor** · F8 lista · U8.8 chart. (Strateški: v. memorija — UGC v1 privatni + MCP-admin→matura→UGC; spec odgođen.) Merged grane (`f6-text-colors`/`u8.7-image-upload`/`docs/sasa-quant-task`/`release/u8.7-merge`) mogu se obrisati.
 
 ## 2026-07-27/28 (OPUS) — 🚀 STUDIO EDITOR + RIZIK-SPRINT NA PROD + U8.7 upload slike (F2)
@@ -5940,8 +5951,8 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 **SLIJEDI:** prod bucket `lesson-images` na sljedećem deployu (uz OK) · **U8.6 vizual + MOBILNI editor** (Leonov zahtjev — editor neupotrebljiv na mobitelu) · F6 text-boja · F8 lista · U8.8 chart.
 
 ## 2026-07-26-i (OPUS) — 🚀 te2-hr DEPLOYAN NA PROD + profil-README
-**Kontekst:** Leon nakon editor-fixeva: „pregledaj Sašin PR #4 i ako je dobro pusti na deploy" + „napiši mi profil-README i pomozi oko achievementa".
-**Sašin PR #4 (te2-hr Ekonomika turizma) — lead-review (ono što MOGU):** scope=samo sadržaj+`?v=` bump (index.html/styles.css/etc = čisti bump, 0 platformske logike, provjereno liniju po liniju) · CI zelen (Vercel/Lighthouse/Lint+verify+tests/Authed) · **ćirilica 0** (M1/M2/Final) · model kartica ≤200 (max 195, avg 138–155, 0 prekršaja) · struktura M1 7kat/51fc/44q/36f + M2 7kat/43fc/41q/35f · **Final=Object.assign 15kat** (7+7+examPractice, 0 višak/manjak). **NE mogu:** činjenična točnost vs HR skripta (nemam materijale) = Sašina domena (autor, ADR-020). **DEPLOY (uz izričito Leonovo dopuštenje):** nema `gh` → local `--no-ff` merge `origin/content/te2-hr`→`main` (`7fb2d61`) → gate-ovi svi 0 (verify/bump/css/typecheck/schema/export-drift/unit) + `validate:content te2-hr` 0/0 → `git push origin main` (`388e3c5..7fb2d61`, protect-main bypass=Leon). **Verificirano:** PR #4 = **Merged**, **Vercel Production „Deployment completed"=SUCCESS**, te2-hr u catalog.js (7 ref). **22 predmeta live (17 EN + 5 HR file-served).** **profil-README:** iskreno pokresan napuhani stack (11 jezika/React/Docker/Blender… → JS/TS/Python/HTML/CSS + Supabase/PostgreSQL/Vercel/Node/Playwright/Git = ono što STVARNO stoji u repoima); README spremljen u scratchpad (`PROFILE_README.md`). **SLIJEDI:** achievementi (trebaju Leonov GitHub-login — dane upute) · U8.6b/c vizual · U8.7 upload · Saša `content/entrepreneurship-hr` (nova grana, još nije PR).
+**Kontekst:** Leon nakon editor-fixeva: „pregledaj suradnikov PR #4 i ako je dobro pusti na deploy" + „napiši mi profil-README i pomozi oko achievementa".
+**Suradnikov PR #4 (te2-hr Ekonomika turizma) — lead-review (ono što MOGU):** scope=samo sadržaj+`?v=` bump (index.html/styles.css/etc = čisti bump, 0 platformske logike, provjereno liniju po liniju) · CI zelen (Vercel/Lighthouse/Lint+verify+tests/Authed) · **ćirilica 0** (M1/M2/Final) · model kartica ≤200 (max 195, avg 138–155, 0 prekršaja) · struktura M1 7kat/51fc/44q/36f + M2 7kat/43fc/41q/35f · **Final=Object.assign 15kat** (7+7+examPractice, 0 višak/manjak). **NE mogu:** činjenična točnost vs HR skripta (nemam materijale) = suradnikova domena (autor, ADR-020). **DEPLOY (uz izričito Leonovo dopuštenje):** nema `gh` → local `--no-ff` merge `origin/content/te2-hr`→`main` (`7fb2d61`) → gate-ovi svi 0 (verify/bump/css/typecheck/schema/export-drift/unit) + `validate:content te2-hr` 0/0 → `git push origin main` (`388e3c5..7fb2d61`, protect-main bypass=Leon). **Verificirano:** PR #4 = **Merged**, **Vercel Production „Deployment completed"=SUCCESS**, te2-hr u catalog.js (7 ref). **22 predmeta live (17 EN + 5 HR file-served).** **profil-README:** iskreno pokresan napuhani stack (11 jezika/React/Docker/Blender… → JS/TS/Python/HTML/CSS + Supabase/PostgreSQL/Vercel/Node/Playwright/Git = ono što STVARNO stoji u repoima); README spremljen u scratchpad (`PROFILE_README.md`). **SLIJEDI:** achievementi (trebaju Leonov GitHub-login — dane upute) · U8.6b/c vizual · U8.7 upload · suradnik `content/entrepreneurship-hr` (nova grana, još nije PR).
 
 ## 2026-07-26-h (OPUS) — EDITOR-FIX: „gdje je drag" → drag vidljiv + živi (duboka revizija)
 **Kontekst:** Leon nakon F7 K6: „ma gdje je drag, pregledaj/testiraj cijeli editor sa screenshotovima, mislim da ima grešaka." Napravio **duboku vizualnu reviziju kroz 12 stanja** (0 console-grešaka).
@@ -6026,7 +6037,7 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 **SLIJEDI: K1** (uredljiv naslov kvadratića → `updateCategory{name}`) **čim Leon kaže „kreni" — NE graditi dok ne kaže.** Commiti: `80a2e3f` (FEEDBACK) · `6a93389`+`cea655d` (F7 SPEC+odluke). Pushano preview; prod netaknut. [[editor-must-be-real-product]] [[preflight-before-every-push]] [[follow-recorded-plan-dont-reopen]]
 
 ## 2026-07-25-e (OPUS) — U8.6a vizualni prolaz (Studio shell/preview „čisto i bogato")
-**Kontekst:** Leon delegirao Sašin te2-hr (PR #4 — dopuštenje da sam objavi kad dovrši lead-review) → „ti nastavi sa 8.6". Prizemljenje: usporedba mockupa C (`design/mockups/editor-c-tok.html`) i `css/studio.css` pokazala da kosti VEĆ nose većinu vizualnog jezika (tokeni/staklo-topbar/dot-grid/accent-trake/gradijent-tabovi) → U8.6 je **polish, ne prepis** (kako plan i predviđa). Jaz = RICHNESS (animacije/hover/glow/shimmer/scrollbar). U8.6 podijeljen: **a = Studio shell+preview (st-*), b = block-editor edit-surface (be-*), c = mikro-interakcije + B/I-overlap fix.**
+**Kontekst:** Leon delegirao suradnikov te2-hr (PR #4 — dopuštenje da sam objavi kad dovrši lead-review) → „ti nastavi sa 8.6". Prizemljenje: usporedba mockupa C (`design/mockups/editor-c-tok.html`) i `css/studio.css` pokazala da kosti VEĆ nose većinu vizualnog jezika (tokeni/staklo-topbar/dot-grid/accent-trake/gradijent-tabovi) → U8.6 je **polish, ne prepis** (kako plan i predviđa). Jaz = RICHNESS (animacije/hover/glow/shimmer/scrollbar). U8.6 podijeljen: **a = Studio shell+preview (st-*), b = block-editor edit-surface (be-*), c = mikro-interakcije + B/I-overlap fix.**
 **U8.6a ✅ (aditivni CSS-sloj, `css/studio.css`, scope `#editor-page`):**
 - **Ulazna animacija `stpop`** SAMO na read-only preview (st-kv/st-fcard/st-qz/st-fill — crta se rijetko: pick lekcije / promjena taba); **NE na `st-edit-item`** (edit-mod se re-crta na svaku draft-op → pop bi jarko trzao). Odluka svjesna.
 - **Hover-podizanje + glow na accent-traci** kvadratića (`box-shadow` na `::before` u boji sekcije); **blagi 3D nagib** (`rotateX(2deg)` + `perspective`) na flip-kartici.
@@ -6034,7 +6045,7 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 - st-prefiksana keyframe imena (globalna su → izbjegnut sudar); sve ADITIVNO preko postojećih selektora (0 strukturne promjene).
 **Dokazi:** **authed studio 13/13 uživo** (nula funkcionalne regresije od CSS-a) · screenshot-tura (shell/learn + kartice + kv-hover) **0 console-grešaka** · bump 104. Commit `9c7dc01`. Prod netaknut.
 **⚠️ PROPUST + POPRAVAK (`a9b39e8`):** nakon izmjene `css/studio.css` pokrenuo sam `bump` ali **zaboravio `npm run build:css`** (studio.css JE bundle-modul #29/29) → `styles.bundle.css` out-of-sync → CI job „Lint+verify+tests" **pao na `build:css --check`** (2 commita crvena). Authed suite je prošao pa me lažno umirilo. Regeneriran bundle + re-bump → **preflight EXIT 0** (reproducira baš taj gate). **POUKA (memorija):** `npm run preflight` PRIJE svakog pusha (i feature-grane — pre-push hook štiti samo `main`); redoslijed `css→build:css→bump→preflight→push`. [[preflight-before-every-push]]
-**Saši (PR #4 te2-hr):** tehnički besprijekoran (rebasean na main `388e3c5`, CI zelen, 0 ćirilice, model kartica avg ~145/max 195/0>200, 13 kat/84 fc/77 quiz/65 fill, catalog čist, platformske datoteke = samo `?v=` bump) → Leon dao dopuštenje da SAM objavi nakon sadržajnog lead-reviewa (točnost vs HR skripta, balans kviza). Poruka pripremljena za PR (nemam `gh`/token u okruženju → Leon lijepi).
+**Suradniku (PR #4 te2-hr):** tehnički besprijekoran (rebasean na main `388e3c5`, CI zelen, 0 ćirilice, model kartica avg ~145/max 195/0>200, 13 kat/84 fc/77 quiz/65 fill, catalog čist, platformske datoteke = samo `?v=` bump) → Leon dao dopuštenje da SAM objavi nakon sadržajnog lead-reviewa (točnost vs HR skripta, balans kviza). Poruka pripremljena za PR (nemam `gh`/token u okruženju → Leon lijepi).
 **SLIJEDI: U8.6b** (block-editor be-* edit-surface na isti vizualni jezik) → U8.6c (mikro-interakcije + B/I-overlap) → U8.7 upload/U8.8 chart. [[follow-recorded-plan-dont-reopen]] [[pace-short-stretches-check-in]] [[live-login-verifies-crud]]
 
 ## 2026-07-25-d (OPUS) — U8.10 tablica-paste (paste iz Excela/Worda → grid + ergonomija)
@@ -6076,7 +6087,7 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 - **Tvrdi fail po dizajnu** (za razliku od `check:final`/`load-probe` graceful-skipa): crveni run = keep-alive ne radi = vidljiv signal. Guard traži **neprazan JSON-redak** (`[{…]`) — dokaz da je upit prošao kroz Postgres, ne samo gateway; prazan `[]`/error-objekt = fail.
 - **Dokazi:** YAML parse OK (job `ping`, cron+dispatch) · **identična komanda uživo vs PROD → `[{"subject_id":"marketing"}]`** (read-only, 1 redak) · guard negativno testiran (`[]` FAIL / error-objekt FAIL / pravi redak PASS). Bez bumpa (workflow-yml nije css/js/data).
 - **⚠️ KLJUČNO OGRANIČENJE (zapisano u workflow + §12.4):** GitHub pokreće `schedule` SAMO s default-grane → workflow se **AKTIVIRA TEK MERGE-om na `main`**; postojeći CI `authed` job budi bazu samo na push (ljeti bez pusheva ne štiti).
-**Sprint sad 7/7 IZGRAĐENO** (#1–#7). **PREOSTALO SAMO AKTIVACIJA NA PRODU:** merge grane na `main` = aktivira #4 (cron) + deploya #5 (pin+SRI) + cijeli U8 Studio — **jedan „idemo na prod" trenutak uz Leonov izričit OK**. Nakon toga: povratak U8 (U8.5e → f → U8.10 → U8.6 VIZUAL) + Saša te2-hr rebase→PR→lead-review.
+**Sprint sad 7/7 IZGRAĐENO** (#1–#7). **PREOSTALO SAMO AKTIVACIJA NA PRODU:** merge grane na `main` = aktivira #4 (cron) + deploya #5 (pin+SRI) + cijeli U8 Studio — **jedan „idemo na prod" trenutak uz Leonov izričit OK**. Nakon toga: povratak U8 (U8.5e → f → U8.10 → U8.6 VIZUAL) + suradnik te2-hr rebase→PR→lead-review.
 
 ## 2026-07-24 (OPUS) — RISK-SPRINT #3 backup KOMPLETAN (sprint 6/7) + compact-prep
 **Kontekst:** Nastavak istog dana. Leon odabrao #3 kao sljedeću ciglu; nakon istrage ADR-016 zaključeno da **lokalna** backup-skripta sa `service_role` iz `.env` NIJE prekršaj (ADR-016 zabranjuje samo DEPLOYane sustave; presedan = `migrate-content.js` već koristi `SUPABASE_SERVICE_KEY`). Leon dao izričit „da" za lokalni `service_role`.
@@ -6103,7 +6114,7 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 
 ## 2026-07-23-d (OPUS) — te2-hr platformski fix (→PROD) + RISK-SANACIJA SPRINT (#1/#2/#6)
 **Kontekst:** Nakon compacta Leon: *„riješio bih sve rizike sada da platforma bude bez ikakvih problema"* + cilj *„savršeno radi + spremno do 9. mjeseca"*. Nova živa projekt-analiza (gateovi zeleni; potvrđeno u kodu: CDN libovi pinnani ali 0 SRI; supabase-js `@2` plutajući; nema backup-skripte user-podataka; XSS-granica = v2 kurirani + v1 DOMPurify, raw-fallback samo ako DOMPurify padne = sad bezopasno). **Ljestvica rizika re-rangirana za RUJAN** (nema korisnika ljeti → gubitak *trenutnih* podataka NIJE prioritet; prioritet = besprijekorno za studente u rujnu).
-**te2-hr blocker → PROD ✅ (`388e3c5`):** Saša javio 3. autorski HR predmet (Ekonomika turizma) = **prvi HR year-2**. Otkrio bug: `tests/browse.spec.js:45` očekivani broj year-2 računao nad **CIJELIM katalogom** (`subjects.filter(s=>s.year===2)`), a render prikazuje **samo prvi program** → 9≠8 (poklapalo se dok HR nije imao y2; svaki budući HR year-2 bi rušio). **Fix:** očekivani broj sad zove ISTI `SokratCatalog.subjectsOf(faculties[0].programs[0].id, 2)` koji render koristi → točno po konstrukciji, future-proof. Dokaz: browse.spec **8/8** + node-simulacija te2-hr (stari→9 PADA, novi→8 PROLAZI). Test-only (bez bumpa) → **`main` `f59eed0..388e3c5`** (`git checkout` blokiran → `git worktree` od origin/main; push blokiran klasifikatorom pa prošao uz Leonov izričit per-push OK; Vercel `dpl_8K7t…` READY target=production, student-nevidljivo). Sweep: jedini slomljeni test = taj (`landing`/`sidebar` već program-scopani). → Saša: rebase te2-hr na novi main → PR → lead-review.
+**te2-hr blocker → PROD ✅ (`388e3c5`):** suradnik javio 3. autorski HR predmet (Ekonomika turizma) = **prvi HR year-2**. Otkrio bug: `tests/browse.spec.js:45` očekivani broj year-2 računao nad **CIJELIM katalogom** (`subjects.filter(s=>s.year===2)`), a render prikazuje **samo prvi program** → 9≠8 (poklapalo se dok HR nije imao y2; svaki budući HR year-2 bi rušio). **Fix:** očekivani broj sad zove ISTI `SokratCatalog.subjectsOf(faculties[0].programs[0].id, 2)` koji render koristi → točno po konstrukciji, future-proof. Dokaz: browse.spec **8/8** + node-simulacija te2-hr (stari→9 PADA, novi→8 PROLAZI). Test-only (bez bumpa) → **`main` `f59eed0..388e3c5`** (`git checkout` blokiran → `git worktree` od origin/main; push blokiran klasifikatorom pa prošao uz Leonov izričit per-push OK; Vercel `dpl_8K7t…` READY target=production, student-nevidljivo). Sweep: jedini slomljeni test = taj (`landing`/`sidebar` već program-scopani). → suradnik: rebase te2-hr na novi main → PR → lead-review.
 **Risk-sprint 7 cigli, 3 GOTOVE (sve PREVIEW, bez pusha na main):**
 - **#1 Deploy-guard ✅ (`dcc84c3`+`aacaa23`):** `npm run preflight` (verify·bump·css·typecheck·schema·export·unit u 1 komandi) + `.githooks/pre-push` (blokira main-push ako preflight padne; aktivacija `git config core.hooksPath .githooks`; bypass `--no-verify`) + `.gitattributes` `.githooks/**`=LF (CRLF u shebangu puca na Unix). End-to-end dokazano (main-ref→preflight→✅, ne-main→skip). Rješava Tier-1: bypass-push na main preskače CI → nevidljiv/slomljen deploy (BUG-004).
 - **#2 `final`-drift check ✅ (`a1b416b`):** `scripts/check-final-drift.js` (`npm run check:final`). **Nalaz:** file-drift STRUKTURNO nemoguć (svih 21 predmet = runtime `Object.assign({}, M1, M2, {examPractice})`, i dir-based i 4 stara root); jedina površina = **BAZNI** materijaliziran `final` red (publish-RPC propagira). Read-only anon (predložak = `rls-check`), graceful skip na uspavanu bazu, **NIJE u preflight** (mrežno). Uživo protiv PROD: **0 drifta** (16/16 tro-dijelnih; 5 preskočeno = 4 HR + business-informatics ne-3-dijelni).
@@ -6112,7 +6123,7 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 
 ## 2026-07-23 (OPUS) — R1 (grana sync s main) + U8.9 math-tipkovnica (MathLive: a=math-field + b=paleta)
 **Kontekst:** Leon nakon inženjerske analize cijelog projekta: „sve pripremit da nema rizika" → **R-sekvenca** (EDITOR_PLAN §12.3: R1 hitno + tripwiri T1–T4). Zatim na MathLive spike: „ovo je baš tipkovnica-tipkovnica, treba kao Photomath" → odabir (AskUserQuestion) = **„čista paleta (Photomath keypad)"**.
-**R1 ✅ (`daae27c`+`f981537`):** grana bila **53↑/4↓** od main (Sašini `sit-hr`+`traffic-hr`). `git merge origin/main -X ours` (`git checkout --ours` blokirao klasifikator → strategija) — **svih 10 konflikata inspektirano rukom = SVI „zadrži feature":** content-loader/sw/manifest/styles/4×legal-HTML + svih 10 index.html blokova = ČISTI `?v=` tokeni; index.html script-blok = feature **superset** (blocks-renderer/block-editor/admin-editors/studio.js); **HR ide preko IDENTIČNOG `catalog.js`** → ništa izgubljeno. Jedini SADRŽAJNI spoj = `subjects/README` (feature management-„OBJAVLJEN" + main sit/traffic-„LIVE", ručno). main-ovi novi fajlovi ušli (`data/{sit,traffic}-hr/*`). **T4** = `package.json` metadata (opis/keywords/homepage→sokratstudy.com). Gateovi: verify 0/0 · bump 103 · css 29 · typecheck 0 · unit 12/12 · schema 63/0 · export drift 0 · **responsive+authed 248/0**. Grana sad **55↑/0↓**; Vercel preview READY; prod NETAKNUT.
+**R1 ✅ (`daae27c`+`f981537`):** grana bila **53↑/4↓** od main (suradnikovi `sit-hr`+`traffic-hr`). `git merge origin/main -X ours` (`git checkout --ours` blokirao klasifikator → strategija) — **svih 10 konflikata inspektirano rukom = SVI „zadrži feature":** content-loader/sw/manifest/styles/4×legal-HTML + svih 10 index.html blokova = ČISTI `?v=` tokeni; index.html script-blok = feature **superset** (blocks-renderer/block-editor/admin-editors/studio.js); **HR ide preko IDENTIČNOG `catalog.js`** → ništa izgubljeno. Jedini SADRŽAJNI spoj = `subjects/README` (feature management-„OBJAVLJEN" + main sit/traffic-„LIVE", ručno). main-ovi novi fajlovi ušli (`data/{sit,traffic}-hr/*`). **T4** = `package.json` metadata (opis/keywords/homepage→sokratstudy.com). Gateovi: verify 0/0 · bump 103 · css 29 · typecheck 0 · unit 12/12 · schema 63/0 · export drift 0 · **responsive+authed 248/0**. Grana sad **55↑/0↓**; Vercel preview READY; prod NETAKNUT.
 **U8.9a ✅ (`89bc6d1`):** `<math-field>` (MathLive) zamjenjuje sirovo `tex`-polje u formula-editoru. Adapter (biblioteka pod 4 uvjeta): `ensureMathLive()` = **lijeni CDN-loader** (SAMO kad admin otvori editor → student ne dohvati = nula perf/bundle), keyboard OFF (`mathVirtualKeyboardPolicy='manual'`), **graceful fallback** `mathFieldsToInputs` na sirovi `<input>` ako CDN padne. `setupMathField`: živi preview na `input` (BEZ op-a → nema op-spama) + JEDAN commit na `change` (blur). `draw()`→`enhanceMathFields`. Izlaz LaTeX → isti `block.tex` → **student KaTeX NEPROMIJENJEN**.
 **U8.9b ✅ (`ba9c937`):** NAŠA čista **paleta „Photomath keypad"** (ono što je Leon tražio) = 4 grupe template-gumba (strukture a⁄b·xⁿ·xₙ·√·ⁿ√·() / operatori Σ·∫·∏·lim·d⁄dx / grčka π·α·β·θ·Δ·μ·λ·σ / relacije ≤·≥·≠·≈·±·×·÷··∞) → `mf.insert(latex,{selectionMode:'placeholder'})` (`#?`=prazna kutija, `#@`=selekcija); **mousedown+preventDefault** čuva selekciju math-fielda (isti obrazac kao B/I traka). VIZUAL grub (čisto-i-bogato = U8.6).
 **U8.9c ✅ (`f841c2b` + placeholder-fix `46adb74`) — Leonov živi test na previewu („razlomci fale, radije kao Casio kalkulator, analiziraj duboko"):** dubinska analiza po predmetima (ekonomija/statistika/matematika) → 2 nalaza. (1) „razlomci fale" = problem JASNOĆE (gumb `a⁄b` izgleda kao tekst) → **KaTeX-renderirane labele** (`keyLabelHtml`+`katex.renderToString`, keširano `_keyTexCache`; KaTeX nezakačan→tekst-fallback) → razlomak/korijen/potencija/∑/∫ gumbi prikazuju PRAVU matematiku. (2) prave rupe → paleta 4→8 grupa: **NOVA Statistika** (x̄ `\bar` = sredina! · x̂ · (ⁿₖ) `\binom` · x′ · % · `,`) + Funkcije+logₐ + Strukture+|x|/n! + Analiza+∬/∂ + **Brojevi-grid** + Operacije+**⌫** (`!cmd:deleteBackward` → nova command-staza u mousedown, uz insert) + Grčka+γ/φ/ω/Ω + Relacije+**skupovi/logika** (∪∩∅⊂∉∝≡⇒). **BUG-fix (`46adb74`):** preview je pokazivao `\placeholder` CRVENO → `js/math.js renderMath` +`macros` (`\placeholder`→sivi □ + obrambeno `\mleft`/`\mright`/`\differentialD`/`\exponentialE`/`\imaginaryI`) → prazne kutije □ i u editoru I kod studenta (JEDAN renderer); test zaključava `.katex-error=0`. Napomena: INP-warning ~228ms (MathLive teška lib, autorska strana, benigno). css: broj-grid + gumbi 44px + `.be-mathkey .katex`.
@@ -6175,7 +6186,7 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 **Dokazi:** live-smoke (Playwright, privremen pa izbrisan): render → **stablo 57 skripti** → klik business-informatics/midterm-1 → canvas **4 mode-taba** + preview + breadcrumb `.now`, **0 grešaka** · unit **130/0** · typecheck 0 · **admin-regresija smoke+admin.spec 40/40** (0 real errors) · verify 0/0 · build:css 29 sinc · bump **103** (`20260720224024`) · syntax-check svih dirnutih JS 4/4. Backend U7 100% reused; prod netaknut (main=`a106daa`). **SLIJEDI: U8.2** (blok-editor jezgra → learn-pane canvasa, VIDLJIVO).
 
 ## 2026-07-20-b (OPUS) — U7d+U7e → U7 KOMPLETAN · U8a · ⚠️ STRATEŠKI ZAOKRET (Studio-kosti, vizual zadnji)
-**Kontekst:** post-compact analiza → Leon vodio kroz U7d→U7e→U8a; na živom previewu U8a presudio zaokret. Kraj sesije → pred-compact audit (pravilo #6). Usput: Sašin rad pregledan (0 novog od 07-16; management-hr čist, 0 ćirilice, 126 avg).
+**Kontekst:** post-compact analiza → Leon vodio kroz U7d→U7e→U8a; na živom previewu U8a presudio zaokret. Kraj sesije → pred-compact audit (pravilo #6). Usput: Suradnikov rad pregledan (0 novog od 07-16; management-hr čist, 0 ćirilice, 126 avg).
 1. **U7d ✅ (`de6ee9b`) — schema v2 + validator + round-trip:** `subject-content.schema.json` `learn` → `anyOf(content|blocks)` (sav v1 valjan: **validate:schema 57/0**) + `block` (`oneOf` 9 tipova, `additionalProperties:false`+`const type`) + `inline`/`run` (ugovor 1:1 prati `blocks-renderer.js`). `validate-content.js` `validateBlocks`. Bez DB DDL (blokovi u payload jsonb). Novi `schema-v2-blocks.test.js` **16/16** (prihvaća v2/9 tipova · odbija 9 pokvarenih · round-trip bit-točan + renderer identičan). Runtime NEDIRNUT → bump nije trebao.
 2. **U7e ✅ (`84cd084`) — blok-ops u draftu:** `addBlock/removeBlock/reorderBlocks/updateLearnBlock` nad `cat.learn.blocks` (jedan nivo dublje → `_dispatch` razrješava ugniježđeni niz, reuse idempotentni `_struct*`; add kreira learn+blocks u praznom/v1 modu, `content` netaknut). draft-store **50/50** (+13; uklj. dvostruka `applyOpsTo` na sibling = kao jednom → publish-put netaknut). **U7 TIME KOMPLETAN (a–e).** bump 99.
 3. **U8a ✅ (`4794498`) — vizualni blok-editor (jezgra):** `js/block-editor.js` (`renderEditor` + `mount` event-delegacija → U7e ops + tip-menu; `swappedOrder`) unit **18/18** + `css/block-editor.css` (28. modul) + admin bolt-on (learn dual-mode; v1 nedirnut). bump 101. Pushan preview.
@@ -6222,17 +6233,17 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 **Kontekst:** Leon: „idemo A prvo, sve treba biti savršeno" → A = DB id-resync (preduvjet za item delete/reorder; U2a DB-zrcalo je pre-id). Prvo poslije-deploy uskladili feature/u6 s main (merge `e26c1a6`; 9 bump-datoteka `--ours` + PROGRESS oba-zadržana; token `20260717034340`; gateovi zeleni) i potvrdili PR #2 (ceb0eaf predak main-a → auto-merged).
 1. **„datoteke==baza" dokaz (read-only):** skripta uspoređuje DB payload vs `data/json/*` uz **strip svih `id` ključeva** (md5 stabilnog stringa) → **51/51 sadržajno identično** (0 divergencija, 0 nedostajućih). Time je resync dokazano čisto-aditivan (samo id-jevi, sadržaj nepromijenjen, studentima nevidljiv).
 2. **Resync (PROD write, service_role, Leonov izričit „pokreni sve"):** `migrate-content.js <predmet>` za **16 eng. predmeta** (econ-hospitality preskočen — već imao id-jeve od 07-16). Rezultat: id-jevi u bazi, `version` 1→**3** (dupli upis — moj loop + Leonov paralelni terminal-run `migrate-content.js` bez arg.). Sadržaj re-verificiran identičan. **→ item delete/reorder ODBLOKIRAN za eng. predmete.**
-3. **HR-epizoda + removal:** Leonov no-arg run ubacio i **management-hr + business-informatics-hr** u bazu → obrnuo file-first (opcija B). Leon (nakon objašnjenja dual-read=baza-pobjeđuje → HR-u-bazi znači Sašine buduće file-izmjene nevidljive bez re-synca; DB-benefit admin-edit se za HR ne koristi; sesija već imala 2 drift-incidenta): **maknuti.** `DELETE 6 HR redova` (MCP, RETURNING; BEFORE-DELETE trigger snapshotao u `content_versions` = vratljivo re-migracijom). **Verificirano:** 17 predmeta / 51 red, HR=0, 6 HR audit-snapshota, files==DB **51/51 čisto**. HR opet file-first (dual-read → JSON = isti sadržaj; studentima nevidljivo).
+3. **HR-epizoda + removal:** Leonov no-arg run ubacio i **management-hr + business-informatics-hr** u bazu → obrnuo file-first (opcija B). Leon (nakon objašnjenja dual-read=baza-pobjeđuje → HR-u-bazi znači suradnikove buduće file-izmjene nevidljive bez re-synca; DB-benefit admin-edit se za HR ne koristi; sesija već imala 2 drift-incidenta): **maknuti.** `DELETE 6 HR redova` (MCP, RETURNING; BEFORE-DELETE trigger snapshotao u `content_versions` = vratljivo re-migracijom). **Verificirano:** 17 predmeta / 51 red, HR=0, 6 HR audit-snapshota, files==DB **51/51 čisto**. HR opet file-first (dual-read → JSON = isti sadržaj; studentima nevidljivo).
 4. **Nalaz — `management-hr` nema id-jeve** (kreiran 07-15, NAKON U2a 07-11; rebalans ih nije dodao) → treba `add-item-ids.js` + re-export prije nego podrži item delete/reorder. business-informatics-hr ima (117). **Odgođeno** (nije prioritet sad).
 **SLIJEDI: U6e — item delete/reorder UI** (obriši 🗑 + presloži ↑↓ po kartici/kvizu/fillu, ožičeno na postojeće U6a `remove*`/`reorder*` ops) na eng. predmetima → živa verif (staging authed) → C-vizual U8.
 
 ## 2026-07-17 (OPUS) — 🚀 Management (HR) rebalans kartica OBJAVLJEN NA PRODUKCIJI + HR-u-Supabase odluka
-**Kontekst:** post-compact detaljna analiza projekta (metrike uživo: 377 commita, `js/` 8099 LOC, 20 predmeta, 41 ADR, gateovi zeleni; kod zdrav — 1 TODO, 0 `console.log`). Provjera Sašinog rada: **danas 0 commita**; jučer (07-16) nova grana `content/management-hr-rebalance` (`ceb0eaf`) = rebalans kartica po modelu. Leon: „pregledaj i analiziraj da ga možemo deplojat" → „da deplojaj".
+**Kontekst:** post-compact detaljna analiza projekta (metrike uživo: 377 commita, `js/` 8099 LOC, 20 predmeta, 41 ADR, gateovi zeleni; kod zdrav — 1 TODO, 0 `console.log`). Provjera suradnikovog rada: **danas 0 commita**; jučer (07-16) nova grana `content/management-hr-rebalance` (`ceb0eaf`) = rebalans kartica po modelu. Leon: „pregledaj i analiziraj da ga možemo deplojat" → „da deplojaj".
 1. **Lead-review (worktree na `ceb0eaf`, node_modules junction):** svi gateovi zeleni — verify 0/0 · bump 96=`20260716203055` · export --check 0 drift · schema 0 · validate:content 0/0 · css sinc · **ćirilica 0** · opseg content-only (platformski = samo bump-tokeni). Rebalans izmjeren: M1/M2/Final kartice avg 347/389/359→**123/134/127**, >200 prekršaji **217→0**; learn narastao +15k/+21k znak; ~11% pad volumena = dedup (spot-check 2 najveće: „PET FUNKCIJA" 663→178, „ČETIRI RESURSA" 285→46; detalj u learn/explanation, ne odrezan). Kviz/fill netaknuti.
 2. **Ključni deploy-nalaz (read-only MCP na PROD):** `management-hr` NIJE u `subject_content` (baza = samo EN `management` + 16 drugih; oba HR = file-served preko dual-reada). → deploy = SAMO merge datoteka; **NEMA DB re-synca** (za razliku od econ-hospitality fixa koji JEST bio u bazi).
-3. **Deploy (uz izričit per-push OK):** `git merge --no-ff origin/content/management-hr-rebalance` (`08dd383`, čuva Sašino autorstvo `ceb0eaf`) → re-gate zeleno → push `0b29289..08dd383` (Leon = bypass na `protect-main`). Vercel `dpl_AVYf…` READY (SHA `08dd383`, target production). **Live-verified:** prod JSON 86 kartica avg 123/0>200 · token `20260716203055` živ u index.html.
-4. **HR-u-Supabase = ODGOĐENO (Leonova odluka, opcija B):** `migrate-content.js <id>` radi UPSERT → ubacuje HR (dry-run potvrdio 3 reda/predmet za oba), ali seed usred aktivnog HR-buildouta = trenje (baza postaje autoritativna → svaki file-edit onda traži re-sync ili admin-„Objavi") + drift-rizik za značajku (admin-uredljivost) koju HR zasad ne troši. **Okidač za seed:** Saša završi HR-buildout (sadržaj se smiri) ILI se HR želi uređivati kroz admin-editor. Zapisano.
-**SLIJEDI:** provjeriti da je Sašin **GitHub PR #2 auto-zatvoren** mergeom (`gh` nedostupan lokalno) · `feature/u6-structural-ops` je sad iza `main`-a → kasnije rebase · nastavak U6 (item delete/reorder čeka DB id-resync) → C-vizual U8.
+3. **Deploy (uz izričit per-push OK):** `git merge --no-ff origin/content/management-hr-rebalance` (`08dd383`, čuva suradnikovo autorstvo `ceb0eaf`) → re-gate zeleno → push `0b29289..08dd383` (Leon = bypass na `protect-main`). Vercel `dpl_AVYf…` READY (SHA `08dd383`, target production). **Live-verified:** prod JSON 86 kartica avg 123/0>200 · token `20260716203055` živ u index.html.
+4. **HR-u-Supabase = ODGOĐENO (Leonova odluka, opcija B):** `migrate-content.js <id>` radi UPSERT → ubacuje HR (dry-run potvrdio 3 reda/predmet za oba), ali seed usred aktivnog HR-buildouta = trenje (baza postaje autoritativna → svaki file-edit onda traži re-sync ili admin-„Objavi") + drift-rizik za značajku (admin-uredljivost) koju HR zasad ne troši. **Okidač za seed:** suradnik završi HR-buildout (sadržaj se smiri) ILI se HR želi uređivati kroz admin-editor. Zapisano.
+**SLIJEDI:** provjeriti da je suradnikov **GitHub PR #2 auto-zatvoren** mergeom (`gh` nedostupan lokalno) · `feature/u6-structural-ops` je sad iza `main`-a → kasnije rebase · nastavak U6 (item delete/reorder čeka DB id-resync) → C-vizual U8.
 
 ## 2026-07-16 (OPUS) — ✅ U6d živa verifikacija (authed E2E + smoke) + ⚠ prod test-kartica
 **Kontekst:** Leon isprobao kategorije-UI na previewu; usput objavio test-karticu („theory of cost" + šaljivi tekst) na PROD econ-hospitality (kliknuo „Objavi") → tražio smoke + Playwright test.
@@ -6248,7 +6259,7 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 **Gateovi:** verify 0/0 · typecheck 0 · draft-store unit **37/37** · `node --check` OK · bump 96 (`20260716165908`) · build:css --check u sinku. Grana pushana. **Kategorije-UI time KOMPLETNA (add/edit/reorder/remove).** **SLIJEDI:** DB id-resync (Leonov OK) → item delete/reorder → živa verifikacija (staging authed) → C-vizual (U8).
 
 ## 2026-07-16 (OPUS) — 🧱 U6d-1: kategorije-UI (dodaj / uredi) na grani
-**Kontekst:** post-compact projekt-analiza (git kroz vrijeme — Leon 363 commita / Saša 7, Saša samo Management HR i tek 5 dana na timu; danas Saša 0). Leon: „kreni" → nastavak U6, sljedeća odblokirana cigla. Grana `feature/u6-structural-ops` (PREVIEW).
+**Kontekst:** post-compact projekt-analiza (git kroz vrijeme — Leon 363 commita / suradnik 7, suradnik samo Management HR i tek 5 dana na timu; danas suradnik 0). Leon: „kreni" → nastavak U6, sljedeća odblokirana cigla. Grana `feature/u6-structural-ops` (PREVIEW).
 1. **U6d-1 kategorije-UI DODAJ+UREDI (`211daad`):** „Uredi" gumb (`data-admin-cat-edit`) na zaglavlju svake kategorije + „Dodaj kategoriju" (`data-admin-cat-add`) na dnu — SAMO u draft-modu. Novi `adminCatModal` (`<sokrat-modal>` singleton) s poljima **name / icon (fa-*) / color** piše u DRAFT: **Dodaj** → `addCategory` op (svjež 6-char ključ = id, prazni nizovi flashcards/quiz/fillBlanks → svi „Dodaj" modovi odmah vidljivi; idempotentno po ključu); **Uredi** → `updateCategory` op (patcha SAMO name/icon/color; nizovi/ključ netaknuti — whitelist to i sam brani).
 2. **Ops-sloj U6b nedirnut** → publish-put + sibling-replay (`applyOpsTo`) ostaju isti; sve aditivno na admin.js/i18n.js/profile.css. i18n HR/EN +7 (addCategory/editCategory/catName/catIcon/catColor/catNameErr). CSS: lebdeći „Uredi" na kartici kategorije + široki „Dodaj kategoriju" + color-swatch.
 **Gateovi:** verify 0/0 · typecheck 0 · draft-store unit **37/37** · `node --check` admin.js+i18n.js OK · bump 96 (`20260716145042`) · build:css --check u sinku. Grana pushana na origin (preview). Live-verifikacija (staging authed) ide sa ostatkom U6. **SLIJEDI:** U6d-2 kategorije reorder/remove (odblokirano) → DB id-resync (Leonov OK) → item delete/reorder → živa verifikacija → C-vizual (U8).
@@ -6262,7 +6273,7 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 **Gateovi (svaka cigla):** draft unit 37/37 · typecheck 0 · Playwright **234/0** (svi authed admin/draft/publish) · bump 96 po cigli. Grana pushana na origin (preview: `studymaster-git-feature-u6-structural-ops...`). **SLIJEDI (poslije compacta):** kategorije-UI · DB id-resync → delete/reorder · živa verifikacija · C-vizual (U8).
 
 ## 2026-07-15 (OPUS) — 📏 Kartica-standard zapisan u kanon + soft validator (prioritet #1)
-**Kontekst:** post-compact pregled cijelog projekta (sve gateove izmjerio uživo — verify 0/0, bump 96/96, css sync, typecheck 0, unit 19/19; kod zdrav). **Podatkovni nalaz „kartice prevelike" = tvrdo potvrđen:** izmjereno `answer` polje kroz 4847 kartica → **prosjek 229 znak, 56% preko 200**; najgori sit/management/management-hr/traffic (~350). **Platformski, ne Sašin** (`management` EN 351 ≈ `management-hr` 358). Kviz-nebalans (M1÷M2 ≥1.6×) samo 4/19: management-hr 2.6×, statistics 2.0×, management 1.7×, geography 1.6× (final = najveći je ISPRAVNO — kopija M1+M2). Leon: „idemo prvo riješit prioritete pa nastavit crud kasnije."
+**Kontekst:** post-compact pregled cijelog projekta (sve gateove izmjerio uživo — verify 0/0, bump 96/96, css sync, typecheck 0, unit 19/19; kod zdrav). **Podatkovni nalaz „kartice prevelike" = tvrdo potvrđen:** izmjereno `answer` polje kroz 4847 kartica → **prosjek 229 znak, 56% preko 200**; najgori sit/management/management-hr/traffic (~350). **Platformski, ne suradnikov** (`management` EN 351 ≈ `management-hr` 358). Kviz-nebalans (M1÷M2 ≥1.6×) samo 4/19: management-hr 2.6×, statistics 2.0×, management 1.7×, geography 1.6× (final = najveći je ISPRAVNO — kopija M1+M2). Leon: „idemo prvo riješit prioritete pa nastavit crud kasnije."
 1. **Kartica-standard = KANON.** `CONTENT_SCHEMA.md` §Standard duljine (tablica granica: `answer` ≤200 znak jezgra, `explanation` ≤250 nijansa, detalj→`learn`; render: answer+explanation zajedno na stražnjoj → oboje kratko; „ne nabrajaj 5 stavki"; pravilo palca „ako skrolaš karticu → krivo mjesto") + checklist-stavka. `CONTENT_GENERATOR.md` §Pravila: model + ⚠ upisati ≤200 u schema-prompt prije sljedećeg pokretanja generatora. Root-cause = standard nikad nije bio eksplicitan.
 2. **Soft validator** (Leon izabrao „dokumentiraj + soft, ne tvrdi gate"): `scripts/validate-content.js` — po-predmetni sažetak kartica >200 (broj/%/prosjek), NE ruši build (warnings ne mijenjaju exit); `validate:content <id>` daje detaljan popis pojedinačnih prekršitelja (lokacija+duljina+preview) za autora koji aktivno popravlja predmet. Rezultat: **Greške 0 · Upozorenja 19** (jedan po predmetu = „dashboard sadržajnog duga"; brojke se poklopile s ručnom analizom).
 **Bez bumpa** (dirao samo docs + dev-skriptu, ne shipane assete). typecheck 0. **SLIJEDI:** branch cleanup (9 merganih grana) pa **U6** kad Leon kaže.
@@ -6270,18 +6281,18 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 ## 2026-07-15 (OPUS) — 🐛 BUG-020 (kviz curi) popravljen+deployan · model sadržaja potvrđen
 **Kontekst:** Leon živo našao bug + izrazio nezadovoljstvo sadržajem (kartice prevelike, learn tanak).
 1. **BUG-020 (kviz curi između predmeta) — RIJEŠEN + 🚀 DEPLOYAN (`ddfc9f7`, token `20260715004951`).** Korijen (sistemski, „navigacija"): study-stranica = JEDAN dijeljeni DOM; `initStudyPage()` na novoj lekciji resetira flashcards+fill (`init*()`), ali za kviz zove SAMO `updateQuizCategories()` (dropdown) → kviz je bio jedini mod bez reseta → in-progress kviz prethodne lekcije procurio. Fix: `resetQuiz()` (`js/quiz.js`) + poziv u `initStudyPage` pod „reset SVIH pod-modova" komentarom (da se klasa ne ponovi). Regresija `tests/quiz-reset.spec.js` — **dokazano pada bez fixa** (isključen-reset run: setupVisible=false). Gateovi: smoke 19/0, typecheck 0, verify 0/0. Live-verified: `resetQuiz` + poziv u serviranom kodu. BUGS.md §BUG-020.
-2. **Sadržajni model — potvrđen (Leon, AskUserQuestion): kartice = kratke definicije (<200 znak.), learn = cijela skripta.** Podatkovni nalaz: problem je **platformski, ne Sašin** (EN `management` original avg 355 znak./kartica; uzor = te2 avg 174). Demo na grani `content/model-demo-management-hr` (foundations: kartice avg 363→85, learn 1269→5017; činjenice identične, detalj preseljen kartice→learn; **NIJE mergean**). Preview live na Vercelu (studymaster projekt).
-3. **Management sadržajni rebalans → Saša** (Leon: „pusti to sada, on će riješiti"): kviz-pitanja neuravnotežena po lekciji (M1 72 / M2 28 / Final 108 = M1+M2 pa najveći) + rollout modela = Sašin posao (HR content = njegov domen). Standard treba upisati u CONTENT_SCHEMA/GENERATOR kad se vratimo sadržaju.
+2. **Sadržajni model — potvrđen (Leon, AskUserQuestion): kartice = kratke definicije (<200 znak.), learn = cijela skripta.** Podatkovni nalaz: problem je **platformski, ne suradnikov** (EN `management` original avg 355 znak./kartica; uzor = te2 avg 174). Demo na grani `content/model-demo-management-hr` (foundations: kartice avg 363→85, learn 1269→5017; činjenice identične, detalj preseljen kartice→learn; **NIJE mergean**). Preview live na Vercelu (studymaster projekt).
+3. **Management sadržajni rebalans → suradnik** (Leon: „pusti to sada, on će riješiti"): kviz-pitanja neuravnotežena po lekciji (M1 72 / M2 28 / Final 108 = M1+M2 pa najveći) + rollout modela = suradnikov posao (HR content = njegov domen). Standard treba upisati u CONTENT_SCHEMA/GENERATOR kad se vratimo sadržaju.
 **SLIJEDI (platforma): U6 strukturne ops** (nova grana s main, EDITOR_UX dizajn).
 
-## 2026-07-15 (OPUS) — 🚀 Management (HR) OBJAVLJEN: prvi Sašin content-PR mergean (opcija B)
-**Kontekst:** post-compact pregled cijelog projekta → sve zeleno; nalaz = **Saša je 2026-07-14 navečer odradio doradu po opciji B** (2 nova commita `36cdcb1`+`00a9ef1`). Leon: „napravi sve da možemo Sašin rad objaviti." Radim kao voditelj: integracija → review → gateovi → objava.
-1. **Due-diligence PR-a:** grana 7 ispred / 20 iza main (merge-base `79f17c7`). **Platformski file-ovi u diffu (index/styles/sw/manifest/legal-stranice/content-loader) = ISKLJUČIVO `npm run bump` tokeni** (ripgrep-provjera svih 7: nula ne-bump izmjena) → **nula prekršaja TEAM.md §2** (Saša ostao u content-opsegu, samo obavezni bump).
-2. **Integracija (merge, NE rebase — čuvam Sašino autorstvo/SHA):** `integ/management-hr` = main + `git merge --no-ff origin/content/management-hr` → konflikti = 10 bump-file + `subjects/README` redak. Riješeno: README ručno (LIVE 2026-07-15), bump-file-ovi `--ours` + **`npm run bump`** = svjež uniforman token **`20260715002009`** → merge-commit `fec1a35`.
+## 2026-07-15 (OPUS) — 🚀 Management (HR) OBJAVLJEN: prvi suradnikov content-PR mergean (opcija B)
+**Kontekst:** post-compact pregled cijelog projekta → sve zeleno; nalaz = **Suradnik je 2026-07-14 navečer odradio doradu po opciji B** (2 nova commita `36cdcb1`+`00a9ef1`). Leon: „napravi sve da možemo suradnikov rad objaviti." Radim kao voditelj: integracija → review → gateovi → objava.
+1. **Due-diligence PR-a:** grana 7 ispred / 20 iza main (merge-base `79f17c7`). **Platformski file-ovi u diffu (index/styles/sw/manifest/legal-stranice/content-loader) = ISKLJUČIVO `npm run bump` tokeni** (ripgrep-provjera svih 7: nula ne-bump izmjena) → **nula prekršaja TEAM.md §2** (suradnik ostao u content-opsegu, samo obavezni bump).
+2. **Integracija (merge, NE rebase — čuvam suradnikovo autorstvo/SHA):** `integ/management-hr` = main + `git merge --no-ff origin/content/management-hr` → konflikti = 10 bump-file + `subjects/README` redak. Riješeno: README ručno (LIVE 2026-07-15), bump-file-ovi `--ours` + **`npm run bump`** = svjež uniforman token **`20260715002009`** → merge-commit `fec1a35`.
 3. **Content-review (merge=produkcija → moram vidjeti):** terminologija po opciji B ✓ (KADROVIRANJE = 3. od 5 W&K funkcija · efikasnost/efektivnost) · 2 nove kat žive · **Drucker fact-fix činjenično točan i `correct`-indeksi provjereni** (otac modernog=Drucker `correct:2` · Drucker→sistemski `correct:1` · Fayol→operacijski `correct:1`). **Nalaz:** 1 ćirilični artefakt prijevoda (`Manualne` u netočnom distraktoru) → **popravljen** `d7bec06` + re-export JSON + Grep-potvrda 0 ćirilice u cijelom `management-hr`.
 4. **Gateovi (integrirani rezultat):** verify 0/0 · bump:check 96=`20260715002009` · validate:content 0/0 · validate:schema 3/0 · export --check u sinku · unit 19/0 · build:css sinc.
-**Objava:** FF `main`→integ + push = produkcija (uz izričit Leonov per-push OK). PR #1 se time zatvara (Sašin head postaje predak main-a).
-**SLIJEDI: U6 strukturne ops** (nova grana s `main`, u EDITOR_UX dizajnu) · docx→tekst skripta prije Sašinog S6 · napomena Saši: ripgrep ćirilica-sken prije PR-a.
+**Objava:** FF `main`→integ + push = produkcija (uz izričit Leonov per-push OK). PR #1 se time zatvara (suradnikov head postaje predak main-a).
+**SLIJEDI: U6 strukturne ops** (nova grana s `main`, u EDITOR_UX dizajnu) · docx→tekst skripta prije suradnikovog S6 · napomena suradniku: ripgrep ćirilica-sken prije PR-a.
 
 ## 2026-07-14 (OPUS) — 🚀 U4 + U-UX DEPLOYANI NA PRODUKCIJU (`056d963`)
 **Kontekst:** post-compact pregled cijelog projekta → sve zeleno (git/gateovi/Supabase/PR) → Leon dao izričit OK za deploy. **Redoslijed (sveti): PROD SQL PRIJE klijenta.**
@@ -6290,7 +6301,7 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 3. **Back-port + deploy:** ispravak u `data/entrepreneurship/midterm-1.js` (navodnici→zagrade) + JSON re-export (M1+Final, `--check` čist) + `npm run bump` (`20260714183628`) → commit `056d963` → ff-merge `design/u-ux`→main → **push na main blokiran dok Leon nije dao IZRIČITU per-push potvrdu** („moze kreni" = opći go, ne per-push) → push `79f17c7..056d963` (Leon = bypass-admin na `protect-main`).
 4. **Live-verified:** `CONTENT_VERSION='20260714183628'` · `admin.js`→`publish_document` · entrepreneurship zagrade žive na PROD JSON-u. Živi Objavi-put dokazan **kompozicijom** (RPC prisutan na PROD + klijent živ + isti E2E zelen na stagingu 9/9); ručni admin-smoke = opcionalna Leonova završna provjera.
 **Gateovi (prije pusha):** verify 0/0 · typecheck 0 · validate:content entrepreneurship 0/0 · export --check 0 · bump 96. **Docs sweep:** CLAUDE.md + checkpoint-memorija + CHANGELOG/PROGRESS/HISTORY (U4+U-UX DEPLOYANO, cv 22→24, back-port).
-**SLIJEDI: U6 strukturne ops** (nova grana s `main`, u EDITOR_UX dizajnu) · **Saša PR #1 = odluka B** (HR skripte=izvor) → dorada → merge.
+**SLIJEDI: U6 strukturne ops** (nova grana s `main`, u EDITOR_UX dizajnu) · **Suradnik PR #1 = odluka B** (HR skripte=izvor) → dorada → merge.
 
 ## 2026-07-14 (FABLE) — 🎨 U-UX KOMPLETAN: 3 kruga feedbacka → smjer C potvrđen → EDITOR_UX.md v0.9
 **Kontekst:** Leon pregledao mockupe uživo (Start-Process otvaranja). **Njegova ideja = varijanta C „Tok"** („spojio bih A i B — da na 3. koraku vodiča bude studio") → izgrađena + 3 kruga feedbacka ugrađena ISTI DAN:
@@ -6299,15 +6310,15 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 3. **Krug 3 (`854a1dd`):** Leon: „izgleda jako mršavo" → **potpuni vizualni redizajn „čisto i bogato"** (staklo+glow topbar, gradijent CTA, dot-grid canvas, pill-tabovi, kvadratići s akcent-glowom i pop-animacijama, 3D-hover kartice, shimmer premium, wizard s numeriranim koracima) + **resize-ručka: povuci donju liniju kvadratića = veća kućica** → §5.1 t.8. Gotcha: `backdrop-filter` = stacking context → z-index na kontejneru tabova.
 **PRESUDA (Leon): smjer C POTVRĐEN** — „za sada tek toliko OK" → **`docs/archive/EDITOR_UX.md` v0.9 = dizajn-ugovor** (filozofija Studio+wizard, regije, kvadratić-anatomija, token-palete s nasljeđivanjem, vizualni standard, sigurnosne invarijante, mapiranje na model, otvorene rupe za U6–U8: fill-UI/reorder/mobile/undo/upload). QA smoke **36/36**. **SLIJEDI: deploy (U4 + design grana) uz Leonov OK → U6 strukturne ops u EDITOR_UX dizajnu.**
 
-**➕ Nalaz pred-compact audita (isti dan): Sašin PR #1 🟢 READY FOR REVIEW** — Saša se **sam** rebasean na novi main + odradio **§5.2 uz SVE HR materijale** (K1 + završna skripta + 4 seta ispitnih pitanja; učinkovitost/djelotvornost → efikasnost/efektivnost) i ažurirao svoj ploča-redak (`d9b8ee8`). **Terminološko pitanje Leonu** (u ploči): HR skripte = W&K 5 funkcija/„kadrovi", EN Lussier = 4/„ljudski resursi" — zadržana opcija A (vjerno EN-u), Leon odlučuje o dubljem usklađivanju. Naši docs ažurirani (TEAM.md §9, CLAUDE.md TIM+napomene, ploča-redak sinkroniziran s njegovim za čist merge); stari zadatak „poslati Saši poruku o rebaseu" = NADIĐEN.
-**⚖️ LEONOVA ODLUKA (isti dan): opcija B — HR SKRIPTE = izvor istine, ne prijevod EN-a** („ne smije biti izvor iz prijevoda nego iz skripti jer su različiti profesori"). Potvrđuje TEAM.md §5 „HR materijali = autoritet"; zapisano kao trajno pravilo za sve `-hr` predmete (TEAM.md §9). PR #1 se vraća Saši na doradu (W&K okvir, „kadroviranje/kadrovi") → merge nakon dorade.
+**➕ Nalaz pred-compact audita (isti dan): Suradnikov PR #1 🟢 READY FOR REVIEW** — suradnik se **sam** rebasean na novi main + odradio **§5.2 uz SVE HR materijale** (K1 + završna skripta + 4 seta ispitnih pitanja; učinkovitost/djelotvornost → efikasnost/efektivnost) i ažurirao svoj ploča-redak (`d9b8ee8`). **Terminološko pitanje Leonu** (u ploči): HR skripte = W&K 5 funkcija/„kadrovi", EN Lussier = 4/„ljudski resursi" — zadržana opcija A (vjerno EN-u), Leon odlučuje o dubljem usklađivanju. Naši docs ažurirani (TEAM.md §9, CLAUDE.md TIM+napomene, ploča-redak sinkroniziran s njegovim za čist merge); stari zadatak „poslati suradniku poruku o rebaseu" = NADIĐEN.
+**⚖️ LEONOVA ODLUKA (isti dan): opcija B — HR SKRIPTE = izvor istine, ne prijevod EN-a** („ne smije biti izvor iz prijevoda nego iz skripti jer su različiti profesori"). Potvrđuje TEAM.md §5 „HR materijali = autoritet"; zapisano kao trajno pravilo za sve `-hr` predmete (TEAM.md §9). PR #1 se vraća suradniku na doradu (W&K okvir, „kadroviranje/kadrovi") → merge nakon dorade.
 
 ## 2026-07-13 (FABLE, 2. sesija, nastavak) — 🎨 U-UX START: 2 interaktivna mockupa editora (čekaju Leonovu presudu)
 Grana **`design/u-ux`** (s `feature/u4-publish-rpc`, da nosi svježe docs). **`design/mockups/`** — samostojeći HTML-ovi (Sokrat tokeni iz `css/variables.css`, Inter+Space Grotesk; nisu dio appa, bez bumpa): **`index.html`** (okvir odluke + §5.1 kriteriji) · **A „Studio"** (`editor-a-studio.html`; Notion-lite: stablo strukture s ＋ na svakoj razini · blok-editor s ＋ između blokova (tekst/naslov/slika/YouTube) · inspektor s boja-tokenima + premium-AI kutija (disabled) · mode-tabovi = samo odabrani; kartica-flip + kviz-builder skica) · **B „Vodič"** (`editor-b-vodic.html`; wizard 1-Gdje?/2-Što sadrži?/3-Piši: kaskadna struktura s „dodaj novi", veliki mode-izbori „imaš izbore", learn ＋ = KVADRATIĆ s naslovom/tekstom/slikama/grafovima, fiksna Objavi traka). **QA: Playwright smoke 15/15** (0 JS grešaka; + izbornik, draft-brojač, tab/pilula prebacivanje, flip, disabled premium, wizard koraci). **ČEKA: Leon pregledava (lokalno ili Vercel preview `/design/mockups/`) → presuda → `EDITOR_UX.md`** (moguće i miješanje: B-wizard za novo + A-studio za uređivanje). U4 i dalje čeka deploy-OK.
 **+ VARIJANTA C „Tok" (Leonova ideja nakon pregleda A i B — „spojio bih a i b, da na 3. koraku vodiča bude studio"):** `editor-c-tok.html` — **Studio = dom, wizard = modal preko njega**: „＋ Nova skripta" otvori B-korake (Gdje?/Što sadrži?) → „✨ Kreni pisati" te ispusti u Studio (tabovi = točno odabrani modovi, canvas dočeka sa starter-kvadratićem, novi predmet upisan u stablo); kvadratići = B-toplina u A-layoutu (numerirani, hover-lift, media-gumbi), ＋ između blokova (pločice) + veliki ＋ na dnu. Index ažuriran (C prva, označena kao spoj). **QA smoke ukupno 26/26.** C = kandidat za presudu.
 
 ## 2026-07-13 (FABLE, 2. sesija) — 🔐 U4 KOMPLETAN: publish-RPC (atomično + base_version) + security-pregled
-**Kontekst:** post-compact reground (svi gateovi re-pokrenuti zeleni; obje Supabase baze ACTIVE_HEALTHY; Sašin PR #1 još čeka rebase). Usput **security-pregled na Leonovo pitanje:** RLS živo dokazan (`test:rls` vs PROD: anon vidi 0 progress/profiles/cv; policyji provjereni SQL-om), signup = 30 req/h/IP + obavezna email potvrda + built-in SMTP limit; **gap = CAPTCHA** (dashboard + sitna auth.js izmjena; F6 kandidat) · Leaked Password Protection i dalje OFF (BACKLOG).
+**Kontekst:** post-compact reground (svi gateovi re-pokrenuti zeleni; obje Supabase baze ACTIVE_HEALTHY; suradnikov PR #1 još čeka rebase). Usput **security-pregled na Leonovo pitanje:** RLS živo dokazan (`test:rls` vs PROD: anon vidi 0 progress/profiles/cv; policyji provjereni SQL-om), signup = 30 req/h/IP + obavezna email potvrda + built-in SMTP limit; **gap = CAPTCHA** (dashboard + sitna auth.js izmjena; F6 kandidat) · Leaked Password Protection i dalje OFF (BACKLOG).
 
 **U4 (grana `feature/u4-publish-rpc` s maina + merge f4 docs-commita):**
 - **d1 (`1e89f99`):** `supabase/u4-publish-rpc.sql` — `version` stupac + `touch_subject_content` trigger + **`publish_document`** (SECURITY DEFINER; is_admin → FOR UPDATE → base_version → validacija → svi redovi u 1 transakciji; EXECUTE revokean anon). Primijenjen SAMO na staging (MCP). **Živa verifikacija REST-om 10/10:** anon 401 · conflict · **atomičnost** (valjan+nevaljan batch = ništa) · bad_payload · publish v1→2 · stale-base · revert v2→3; MCP: md5 == baseline, cv +2.
@@ -6319,9 +6330,9 @@ Grana **`design/u-ux`** (s `feature/u4-publish-rpc`, da nosi svježe docs). **`d
 ## 2026-07-13 (FABLE) — 🚀 PRVI F4 DEPLOY NA PRODUKCIJU + preslagivanje plana (dizajn prije editora)
 **Kontekst:** Leon iskreno: admin CRUD mu sam po sebi ne koristi — gradi se kao TEMELJ UGC-a, a frontend ga žulja i želi ga prilagoditi „u pravom trenutku". Odluke (AskUserQuestion): **(1) redizajn = oboje, postupno** — prvo editor/autorsko sučelje (UGC sjeme), pa osvježenje ostatka platforme kao zasebna faza; **(2) deploy f4→main = DA, sada.**
 
-**🚀 DEPLOY (`5d24a96..79f17c7`, ff-merge uz izričit OK):** CI zelen na SHA (uklj. authed suite) + bump:check 96 ✓ prije merga; Vercel check `success`. **Live-verified:** token `20260712180655` · `draft-store.js`/`admin.js` 200 · `sw.js` `max-age=0` + SW_VERSION bumpan · BUG-019 fix živ · `#admin-page` skriven. Za studente nevidljivo (sve iza `is_admin()`; write-RLS na PROD-u od 6.7.). **Docs sad na main-u** → TEAM.md §2/§5.8/§9 privremeno pravilo (redak u PR-OPISU) UKINUTO; subjects-ploča natrag na normalu. ⚠️ Sašin PR #1 → trivijalan rebase + `npm run bump` (TEAM.md §7; javiti mu).
+**🚀 DEPLOY (`5d24a96..79f17c7`, ff-merge uz izričit OK):** CI zelen na SHA (uklj. authed suite) + bump:check 96 ✓ prije merga; Vercel check `success`. **Live-verified:** token `20260712180655` · `draft-store.js`/`admin.js` 200 · `sw.js` `max-age=0` + SW_VERSION bumpan · BUG-019 fix živ · `#admin-page` skriven. Za studente nevidljivo (sve iza `is_admin()`; write-RLS na PROD-u od 6.7.). **Docs sad na main-u** → TEAM.md §2/§5.8/§9 privremeno pravilo (redak u PR-OPISU) UKINUTO; subjects-ploča natrag na normalu. ⚠️ suradnikov PR #1 → trivijalan rebase + `npm run bump` (TEAM.md §7; javiti mu).
 
-**🎨 PRESLAGIVANJE U-staze (EDITOR_PLAN §12 napomena):** nakon **U4 publish-RPC** ide **U-UX dizajn-faza** (2–3 interaktivna HTML mockupa → Leon presudi → `EDITOR_UX.md`) pa se U6/U7/U8 grade JEDNOM u tom dizajnu („pravi trenutak" za editor = prije editor-koda); **U5 odgođen** (admin-only kozmetika); **osvježenje cijele platforme = zasebna faza nakon U-staze** (kandidat uz F5/pred-UGC; ne usred CRUD-a i ne dok Saša gura content-PR-ove — CSS konflikti).
+**🎨 PRESLAGIVANJE U-staze (EDITOR_PLAN §12 napomena):** nakon **U4 publish-RPC** ide **U-UX dizajn-faza** (2–3 interaktivna HTML mockupa → Leon presudi → `EDITOR_UX.md`) pa se U6/U7/U8 grade JEDNOM u tom dizajnu („pravi trenutak" za editor = prije editor-koda); **U5 odgođen** (admin-only kozmetika); **osvježenje cijele platforme = zasebna faza nakon U-staze** (kandidat uz F5/pred-UGC; ne usred CRUD-a i ne dok suradnik gura content-PR-ove — CSS konflikti).
 
 **SLIJEDI: U4 publish-RPC** (atomično: validacija+upis+verzija+final-sync+`base_version`; gradi se i verificira na stagingu).
 
@@ -6336,12 +6347,12 @@ Grana **`design/u-ux`** (s `feature/u4-publish-rpc`, da nosi svježe docs). **`d
 
 ---
 
-## 2026-07-12 (FABLE, 3. sesija) — BUG-019 fix (profil ⇄ admin petlja) · Sašin DRAFT PR #1 pregledan · post-compact reground
+## 2026-07-12 (FABLE, 3. sesija) — BUG-019 fix (profil ⇄ admin petlja) · suradnikov DRAFT PR #1 pregledan · post-compact reground
 **Kontekst:** korisnik živim klikanjem našao navigacijski bug u admin toku + izrazio da je admin/draft UX grub. Odluka korisnika: **sad SAMO bugfix; bogato editor-sučelje ostaje po planu (U8)** — držimo se EDITOR_PLAN §12.
 
 **🐛 BUG-019 (fix na `foundation/f4`):** back iz admina pregazio jedno-slotni `profileReturnPage` → petlja profil ⇄ admin, početna nedostižna. Fix = 1 uvjet u `navigateTo()` (dolazak IZ ADMINA ne prepisuje cilj profila). Regresijski test `admin.spec.js` „BUG-019" (pravi klikovi, 4 profila) — **dokazano PADA bez fixa** (stash-provjera), s fixom admin suite **36/36**. Gate: verify 0/0 · typecheck 0 · unit **213/0** · bump 96 (`20260712180655`). Napomena za U8: pravi navigacijski stog + browser History API (sistemska back-gesta) idu uz editor-UX redizajn, ne krpati sad.
 
-**👥 Saša — DRAFT PR #1 otvoren (13:50):** `content/management-hr` → `main`, head `9d2f5c3` (bez novog koda). Pregledano: diff u TEAM.md §2 granicama (catalog +31/−0 čista adicija, identičan EN-u u icon/color/god/sem; bump-datoteke = samo `?v=` tokeni), **CI na PR-u sav zelen**, redak za ploču u PR-OPISU po privremenom pravilu ✓. Ostaje DRAFT do §5.2 (čeka Leonove materijale na Driveu) → onda „Ready for review"; **merge = Leon** (= deploy). Ploča ažurirana + 3 sitna doc-drifta počišćena (`96e3405`: docs/README ADR-raspon, CATALOG_ARCHITECTURE §9 nadiđen, VISION §7 MONETIZATION postoji).
+**👥 suradnik — DRAFT PR #1 otvoren (13:50):** `content/management-hr` → `main`, head `9d2f5c3` (bez novog koda). Pregledano: diff u TEAM.md §2 granicama (catalog +31/−0 čista adicija, identičan EN-u u icon/color/god/sem; bump-datoteke = samo `?v=` tokeni), **CI na PR-u sav zelen**, redak za ploču u PR-OPISU po privremenom pravilu ✓. Ostaje DRAFT do §5.2 (čeka Leonove materijale na Driveu) → onda „Ready for review"; **merge = Leon** (= deploy). Ploča ažurirana + 3 sitna doc-drifta počišćena (`96e3405`: docs/README ADR-raspon, CATALOG_ARCHITECTURE §9 nadiđen, VISION §7 MONETIZATION postoji).
 
 ---
 
@@ -6374,7 +6385,7 @@ Grana **`design/u-ux`** (s `feature/u4-publish-rpc`, da nosi svježe docs). **`d
 ---
 
 ## 2026-07-11 (FABLE, kasnije) — U2.5: placement dual-mode (ADR-022 identitet predmeta)
-**Kontekst:** nastavak nakon compacta; korisnik potvrdio prioritet = dovršetak admin CRUD-a (draft+editor staza, EDITOR_PLAN.md §12 = nastavak F4); U2.5 prva jer je zacementirana „odmah iza U2" (ADR-023) i skida ovisnost sa Sašine S7. Sve na `foundation/f4` (preview).
+**Kontekst:** nastavak nakon compacta; korisnik potvrdio prioritet = dovršetak admin CRUD-a (draft+editor staza, EDITOR_PLAN.md §12 = nastavak F4); U2.5 prva jer je zacementirana „odmah iza U2" (ADR-023) i skida ovisnost sa suradnikove S7. Sve na `foundation/f4` (preview).
 
 **U2.5 — placement dual-mode (`b969892`, ✅ dokazano):**
 - **`data/catalog.js`:** predmet se smjesta legacy poljima (`programId/year/semester`) ILI `placement: [{faculty, program, year, semester}, …]` — dijeljeni „vezni" predmet na više koordinata, sadržaj+`storageKey` JEDNOM (CATALOG_ARCHITECTURE §5). Novi helperi `placementsOf()` (legacy derivacija) + `isInProgram()`; `yearsOf/subjectsOf/semestersOf` preko placementa. **Legacy predmeti vraćaju ISTE reference** (ponašanje identično); placement-predmet = plitka kopija dekorirana koordinatama pogođenog placementa (prikaz year/semester), `content/storageKey` dijele referencu s originalom.
@@ -6383,14 +6394,14 @@ Grana **`design/u-ux`** (s `feature/u4-publish-rpc`, da nosi svježe docs). **`d
 - **Dokazi:** `tests/unit/catalog-placement.test.js` **11/11** (legacy ekvivalencija po referencama · sintetički dijeljeni predmet u 3 smjera in-memory · **gate dokazano PADA (exit 1) na svih 5 prekršaja** nad `tests/fixtures/catalog-placement-invalid.js`, valjan fixture prolazi) · `verify` 0/0 · typecheck 0 (dodani potpisi u `types/globals.d.ts`) · unit lanac 197/0 · **smoke 223/0** · `npm run bump` (95 tokena).
 - **Napomene:** staging nije bio potreban (čisto klijentski/catalog sloj — baza nedirnuta). Stvarni MUH/MUT/MOR programi i podjela veznih predmeta = S7 (silabusi presuđuju, §8).
 
-**Stanje:** `b969892` na `foundation/f4`. Produkcija (`main` `5d24a96`) NETAKNUTA. **SLIJEDI: U3 draft-sloj** (DraftStore + ops + edit-mode ljuska, EDITOR_PLAN.md §4.1) — ulaz u draft+editor stazu koju je korisnik potvrdio kao prioritet. Usput uočeno: Saša pushao `9d2f5c3` na `content/management-hr` (catalog-unos po šabloni + JSON export + bump — čisto, PR još nije otvoren).
+**Stanje:** `b969892` na `foundation/f4`. Produkcija (`main` `5d24a96`) NETAKNUTA. **SLIJEDI: U3 draft-sloj** (DraftStore + ops + edit-mode ljuska, EDITOR_PLAN.md §4.1) — ulaz u draft+editor stazu koju je korisnik potvrdio kao prioritet. Usput uočeno: Suradnik pushao `9d2f5c3` na `content/management-hr` (catalog-unos po šabloni + JSON export + bump — čisto, PR još nije otvoren).
 
 ---
 
-## 2026-07-11 (OPUS) — U2a: stabilni id-jevi po stavci na svih 18 · branch-vidljivost docs (Saša)
-**Kontekst:** nastavak nakon compacta; U2a = prva polovica U2 (EDITOR_PLAN.md §12). Sve na `foundation/f4` (preview). Usput riješena Sašina „ne vidim TEAM.md" situacija.
+## 2026-07-11 (OPUS) — U2a: stabilni id-jevi po stavci na svih 18 · branch-vidljivost docs (suradnik)
+**Kontekst:** nastavak nakon compacta; U2a = prva polovica U2 (EDITOR_PLAN.md §12). Sve na `foundation/f4` (preview). Usput riješena suradnikova „ne vidim TEAM.md" situacija.
 
-**Branch-vidljivost (Saša) — `c26dcfc`:** Saša klonirao repo, ne vidi `docs/workflow/TEAM.md` jer svi `docs/**` + role-router žive samo na `foundation/f4`, a klon padne na `main` (zamrznut 07-06; f4 = 32 commita ispred). **Odluka:** NE guramo zaseban prod-push za docs → landaju na `main` s eventualnim `f4→main` deployem; dotad Saša čita na `foundation/f4`, radi po TEAM.md §2/§3 (grana s `main` → PR na `main`). Zapisano TEAM.md §9 + S1. + isporučena **catalog-šablona** za `management-hr` (S2 obveza).
+**Branch-vidljivost (suradnik) — `c26dcfc`:** suradnik klonirao repo, ne vidi `docs/workflow/TEAM.md` jer svi `docs/**` + role-router žive samo na `foundation/f4`, a klon padne na `main` (zamrznut 07-06; f4 = 32 commita ispred). **Odluka:** NE guramo zaseban prod-push za docs → landaju na `main` s eventualnim `f4→main` deployem; dotad suradnik čita na `foundation/f4`, radi po TEAM.md §2/§3 (grana s `main` → PR na `main`). Zapisano TEAM.md §9 + S1. + isporučena **catalog-šablona** za `management-hr` (S2 obveza).
 
 **U2a — stabilni id-jevi (`b490172`, ✅ dokazano):**
 - **`scripts/add-item-ids.js`** (nova migracija, esprima range-based, **AST-surgical** — čuva formatiranje/komentare): dodaje `id` (6-char random) svakoj kartici/quizu/fillu/kategoriji/learn. Idempotentna; **sigurnosni re-parse** odbija nevaljan JS; document-vs-single-category detekcija (final `examPractice`); inline-vs-newline insert; indent-safe.
@@ -6403,7 +6414,7 @@ Grana **`design/u-ux`** (s `feature/u4-publish-rpc`, da nosi svježe docs). **`d
 
 ---
 
-## 2026-07-10 (OPUS) — U1 staging Supabase + test-only override · Sašin onboarding operativan
+## 2026-07-10 (OPUS) — U1 staging Supabase + test-only override · suradnikov onboarding operativan
 **Kontekst:** nastavak nakon compacta; U1 = prva U-cigla (EDITOR_PLAN.md §12). Sve na grani `foundation/f4` (preview).
 
 **U1 — STAGING Supabase (`40dc07b` kod + `3fde8fe` docs, ✅ dokazano):**
@@ -6413,10 +6424,10 @@ Grana **`design/u-ux`** (s `feature/u4-publish-rpc`, da nosi svježe docs). **`d
 - **Dokazi:** `test:authed` **6/6 vs staging** (login na staging, isAdmin=true, editori iz file-fallbacka jer je staging `subject_content` prazan → dual-read pada na datoteke) · **write-verify** admin-JWT PATCH → staging `content_versions` +1 (snapshot `orig`) · **rls-check OK vs staging** (anon čita javni sadržaj, blokiran na progress/profiles/content_versions) · usput dokazano da je **audit append-only i adminu** (klijentski DELETE odbijen RLS-om) · **PROD `content_versions`=22 NETAKNUT** (51 subject_content, 4 profiles). Gate: verify 0/0 · bump:check 95 · typecheck 0 · `npm run bump`. Staging počišćen (sc=0/cv=0/profiles=1).
 - **Napomena:** staging dashboard „low success rate" = benigno (Supabaseovi health-probe-ovi dominiraju idle projekt; svi request-logovi 200). **TODO → BACKLOG:** Supabase Auth rate-limiting prijava.
 
-**Sašin onboarding — operativno GOTOVO (`a7fd38a`+`1b43836`):**
-- GitHub **`chemp12`** = collaborator (Write); `main` ruleset **`protect-main`** (Active: require PR + 1 approval, restrict deletions, block force-push; Leon = bypass admin; status-checkovi se dodaju nakon prvog CI-runa iz padajuće liste, NE ručno — spriječen self-lock).
-- Slotovi TEAM.md §9 zaključani: **pilot = Management (HR)** · ritam **24–48h** · **API ključ = Saša sam kreira (vlastiti, sigurnije); financiranje B = Leon refundira gotovinom** (~$15–30 ukupno). Objašnjen CI, branch-workflow (grana iz `main`, ne iz `foundation/f4`), preview≠produkcija. Starter-poruka za Sašu pripremljena.
-- Preostaje Saši: napraviti ključ + prihvatiti invite + **S1** (klon, `npm ci`, gateovi zeleni). Naša obveza prije njegovog S6: **docx→tekst skripta**.
+**Suradnikov onboarding — operativno GOTOVO (`a7fd38a`+`1b43836`):**
+- GitHub **`suradnikov-racun`** = collaborator (Write); `main` ruleset **`protect-main`** (Active: require PR + 1 approval, restrict deletions, block force-push; Leon = bypass admin; status-checkovi se dodaju nakon prvog CI-runa iz padajuće liste, NE ručno — spriječen self-lock).
+- Slotovi TEAM.md §9 zaključani: **pilot = Management (HR)** · ritam **24–48h** · **API ključ = suradnik sam kreira (vlastiti, sigurnije); financiranje B = Leon refundira gotovinom** (~$15–30 ukupno). Objašnjen CI, branch-workflow (grana iz `main`, ne iz `foundation/f4`), preview≠produkcija. Starter-poruka za suradnika pripremljena.
+- Preostaje suradniku: napraviti ključ + prihvatiti invite + **S1** (klon, `npm ci`, gateovi zeleni). Naša obveza prije njegovog S6: **docx→tekst skripta**.
 
 **Usput:** provjera ispita „Economics of Hospitality" (2. međuispit) protiv `econ-hospitality` sadržaja — **5/5 tema pokriveno**, točni odgovori potvrđeni iz gradiva (prior/post kalkulacija, marža, gross/net/new investicije, osnovni fin. izvještaji, vrste prihoda); 3/5 imaju direktan quiz+fill, 2/5 (marža-definicija, vrste-prihoda) samo flashcard/learn — opcija dodati 2 quiz+2 fill kasnije.
 
@@ -6435,13 +6446,13 @@ Grana **`design/u-ux`** (s `feature/u4-publish-rpc`, da nosi svježe docs). **`d
 
 **Stanje:** grana `foundation/f4` lokalno (commiti ispred origina; push = preview uz OK). **Slijedi: U1 staging Supabase → U2 schema v2 (ID-jevi).**
 
-### 👥 TIM: Saša Vudrag se pridružuje (ista sesija, nastavak — ADR-023 + TEAM.md)
-- **Kontekst:** Leon doveo prvog suradnika (Saša Vudrag, student prog. inž. na Algebri; dogovoreno 2026-07-08). Zadaci: **HR program do pune 2 godine** (prijevod + HR materijali: PDF/skripte/ispitna pitanja Word), zatim MUT/MOR smjerovi. Zahtjev: „mora biti savršeno da ne srušimo sustav".
-- **`docs/workflow/TEAM.md` (novi):** uloge (Leon = jedini merge/deploy) · **tvrde granice za Sašu+njegovog Claudea** (§2: smije SAMO `data/<subj>-hr/`+export+catalog-unos+svoj redak ploče+bump kroz alat; sve ostalo zabranjeno) · workflow grana→PR→CI→review→merge · **S-cigle S1–S7** · definition-of-done (**„prijevod je BAZA, HR materijali su AUTORITET"** — pouka te2 ugrađena) · least-privilege (vlastiti Anthropic ključ s budget-capom; BEZ Supabase/Vercel/TEST_ADMIN) · anti-drift dnevnik-pravila.
-- **Role-router u CLAUDE.md:** `git config user.name` → Sašin Claude STANE i čita TEAM.md §2 (naš CLAUDE.md se učitava i njemu!).
+### 👥 TIM: Content-suradnik se pridružuje (ista sesija, nastavak — ADR-023 + TEAM.md)
+- **Kontekst:** Leon doveo prvog suradnika (content-suradnik, student prog. inž. na Algebri; dogovoreno 2026-07-08). Zadaci: **HR program do pune 2 godine** (prijevod + HR materijali: PDF/skripte/ispitna pitanja Word), zatim MUT/MOR smjerovi. Zahtjev: „mora biti savršeno da ne srušimo sustav".
+- **`docs/workflow/TEAM.md` (novi):** uloge (Leon = jedini merge/deploy) · **tvrde granice za suradnika+njegovog Claudea** (§2: smije SAMO `data/<subj>-hr/`+export+catalog-unos+svoj redak ploče+bump kroz alat; sve ostalo zabranjeno) · workflow grana→PR→CI→review→merge · **S-cigle S1–S7** · definition-of-done (**„prijevod je BAZA, HR materijali su AUTORITET"** — pouka te2 ugrađena) · least-privilege (vlastiti Anthropic ključ s budget-capom; BEZ Supabase/Vercel/TEST_ADMIN) · anti-drift dnevnik-pravila.
+- **Role-router u CLAUDE.md:** `git config user.name` → suradnikov Claude STANE i čita TEAM.md §2 (naš CLAUDE.md se učitava i njemu!).
 - **ADR-023** (DECISIONS.md): suradnički model + **ADR-022 PULL-FORWARD = U2.5** (odmah iza U1+U2, umjesto „nakon F4"; 3 tvrda uvjeta: uzastopno-ne-isprepleteno · aditivno/dual-mode · gate+staging). Obrazloženje: identitet prije write-puta; alternativa (MUT/MOR copy-paste) = veći rizik. ADR-022 status ažuriran.
-- **EDITOR_PLAN.md §12:** +U2.5 red + napomena o paralelnoj S-stazi (jedina ovisnost S7←U2.5). **subjects/README.md:** HR sekcija → **statusna ploča svih 17 predmeta** (S-faze; Saša ažurira samo nju). **docs/README:** +TEAM.md red.
-- **Procjena izvedivosti (dano korisniku):** HR MuH kompletan ~2–3 mj (S2 pilot ~tjedan · S3 batch 4–6 tj · S4/S5 +2–4 tj); trošak API ~$15–30; MUT/MOR spremni za ~4–6 tj platformskog rada (U1+U2+U2.5) — prije nego što Saši zatrebaju. **Otvoreni slotovi (TEAM.md §9):** pilot-predmet (prijedlog Management) · budget-cap iznos · Sašin GitHub username · review-ritam.
+- **EDITOR_PLAN.md §12:** +U2.5 red + napomena o paralelnoj S-stazi (jedina ovisnost S7←U2.5). **subjects/README.md:** HR sekcija → **statusna ploča svih 17 predmeta** (S-faze; suradnik ažurira samo nju). **docs/README:** +TEAM.md red.
+- **Procjena izvedivosti (dano korisniku):** HR MuH kompletan ~2–3 mj (S2 pilot ~tjedan · S3 batch 4–6 tj · S4/S5 +2–4 tj); trošak API ~$15–30; MUT/MOR spremni za ~4–6 tj platformskog rada (U1+U2+U2.5) — prije nego što suradniku zatrebaju. **Otvoreni slotovi (TEAM.md §9):** pilot-predmet (prijedlog Management) · budget-cap iznos · suradnikov GitHub username · review-ritam.
 - **Naše nove obveze:** docx→tekst skripta (Word intake) · ADR-022/U2.5 na vrijeme · review 24–48 h · šablona catalog-unosa (S2).
 
 ---
@@ -7264,7 +7275,7 @@ koje je profesorica zadala studentima pa iz njih predavala — NE seminari). **K
 ## 2026-06-24 — NOVI predmet: Traffic in Tourism (1. god, sem 2) — ručno iz predavanja
 **Sljedeći predmet 1. godine po roadmapu** ([[content-roadmap-sequencing]]). Korisnik dostavio 13 PDF-ova
 (`…/1. godina Hospitality Managament/Traffic in tourism`). Ručno (NE generator) jer je činjenično specifičan i ima rupe/izvještaje.
-- **Analiza + plan:** `docs/subjects/TRAFFIC_PLAN.md`. Silabus (DINP, prof. Nataša Kovačić, 6 ECTS) = autoritet: **1. kolokvij = tjedan 7 → K1 = tjedni 1–6,
+- **Analiza + plan:** `docs/subjects/TRAFFIC_PLAN.md`. Silabus (DINP, 6 ECTS) = autoritet: **1. kolokvij = tjedan 7 → K1 = tjedni 1–6,
   K2 = tjedni 7–15.** Klasifikacija materijala: **8 nastavnih deckova** (INTRO admin + TJ3/TJ4&5/Rail/Air/Maritime/SAFETY/Sustainable) + **4 EU izvještaja**
   (CO2/road-safety/climate/figures) korišteni SAMO kao izvor činjenica (safety+ecology), NE kao teme. **Rupe** (tjedni 1–2 theoretical basis + interdependence;
   tjedan 10 value&quality) autorski iz silabusa + standardne transportne teorije (INTRO.pdf je samo administrativan).
@@ -7280,7 +7291,7 @@ koje je profesorica zadala studentima pa iz njih predavala — NE seminari). **K
 ---
 
 ## 2026-06-23 — PRVI GENERATOR-PILOT: Academic Writing (study + citation exercises) + generator očvrsnut
-**Prvi predmet izgrađen end-to-end kroz generator** (1. god, sem 1; prof. Bogdan, *Essentials of Academic Writing*). 13 PDF predavanja → 12 tema.
+**Prvi predmet izgrađen end-to-end kroz generator** (1. god, sem 1; *Essentials of Academic Writing*). 13 PDF predavanja → 12 tema.
 - **Pipeline:** stage PDF-ova u `tmp/` podmape (midterm-1/2) s čistim imenima → `build-topics` → `generate-subject` (Sonnet) → `assemble-subject` →
   catalog + bump (`20260681`). Granica **K1=tjedni 1–6 / K2=8–14** (kolokvij tjedan 7, zato nema tjedna 7). Study: **24 kat / 336 fc / 286 quiz / 240 fill**
   (K1: fundamentals/lit-review/research-methods/thesis-structure/databases; K2: types-of-publications, **Chicago** books/journals/other, research-qualities,
@@ -7866,7 +7877,7 @@ magic-link maila/sat (dovoljno za MVP; kasnije custom SMTP).
 ## 2026-06-12 — ✅ TOURISM ECONOMICS (te2) restrukturiran + REBUILD iz PDF predavanja (2. sem-1 predmet)
 **te2 prešao sa starog 2-lekcijskog oblika na standard „2 kolokvija + finalni" — i sadržaj je PREPISAN IZ PROFESORSKIH
 PREDAVANJA (nije puki split starog).** Prvi prolaz je bio vjeran split starog `te2FinalData` (72 fc) — korisnik s pravom javio
-da je **premalo i staro**, pa je sadržaj rebuildan iz 10 PDF-ova (Smolčić Jurdana / Soldić Frleta / Dwyer, FMTU 2025/26).
+da je **premalo i staro**, pa je sadržaj rebuildan iz 10 PDF-ova (nositelji kolegija, FMTU 2025/26).
 **Granica kolokvija iz silabusa** (slajd „Important dates"): **K1 = jedinice 1.–6., K2 = 7.–12.** (potvrdio korisnik).
 
 - **Nova mapa `data/te2/`**: `midterm-1.js` (`te2M1`) + `midterm-2.js` (`te2M2`) + `final.js`
@@ -7877,10 +7888,10 @@ da je **premalo i staro**, pa je sadržaj rebuildan iz 10 PDF-ova (Smolčić Jur
   s primjerima + cost leadership/differentiation/focus). **61 fc / 42 quiz / 28 fill.**
 - **K2 (Units 7–12)** = 5 kat: `pricing` (U7 — **ISPRAVAK: price JEST najkritičnija/najprilagodljivija varijabla**, stari je
   tvrdio suprotno; sve podstrategije: skimming/penetration/price discrimination/peak-load/bundling…), `expenditure`
-  (U8 Dwyer — 7 učinaka, direct/indirect/induced, **5 tipova multiplikatora + realnost: multiplikator ≤ 2**, leakages, I-O/CGE),
+  (U8 — 7 učinaka, direct/indirect/induced, **5 tipova multiplikatora + realnost: multiplikator ≤ 2**, leakages, I-O/CGE),
   `tsa` (U9–10 — tourism expenditure, contribution vs impact, TSA, characteristic vs connected, Code of Ethics), `environment`
   (U11 — market failure, **4 tipa dobara** private/common/club/public, tragedy of the commons, carrying capacity), `sustainability`
-  (U12 Dwyer — 3 stupa, growth management vs degrowth, **Easterlin paradox, decoupling myth, rebound effects**, regenerativni turizam).
+  (U12 — 3 stupa, growth management vs degrowth, **Easterlin paradox, decoupling myth, rebound effects**, regenerativni turizam).
   **62 fc / 40 quiz / 30 fill.**
 - **Finalni** = 10 tematskih kat + obnovljena **`examPractice` (All Units)** (format ispita 30%/10 pitanja 5+5 + cross-topic sinteza).
   **Ukupno finalni: 11 kat / 135 fc / 94 quiz / 66 fill** (gotovo 2× više od splita; sve iz slajdova).

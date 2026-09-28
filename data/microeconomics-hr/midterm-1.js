@@ -3,7 +3,7 @@
 // MODEL: kartice <200 znak, detalj u learn.
 // ⚠️ NE pokretati translate-subject.js nad ovim predmetom!
 //
-// Podjela po uputama kolegija 2025./26. (izv. prof. dr. sc. Daniel Dragičević): K1 = Pindyck & Rubinfeld,
+// Podjela po uputama kolegija 2025./26. (nositelj kolegija): K1 = Pindyck & Rubinfeld,
 // Mikroekonomija (5. izd., Mate 2005.), poglavlja 1–7. K2 = poglavlja 8–14 i 18 (vidi midterm-2.js).
 // KaTeX: \\( \\) inline, \\[ \\] blok; postotak u formuli = \\%; NIKAD jedan dolar-znak.
 

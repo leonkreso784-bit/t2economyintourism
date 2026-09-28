@@ -1,5 +1,5 @@
 // ===== ENTREPRENEURSHIP AND INNOVATION - 1. KOLOKVIJ (K1: Weeks 2-7) =====
-// Source: lecture slides Weeks 2-7 (Week 8 = midterm 1) - Prof. V. Skokic / Dr. Yoo Ri Kim
+// Source: lecture slides Weeks 2-7 (Week 8 = midterm 1) (course lecturers)
 // Category keys preserved from legacy data-entrepreneurship.js -> user progress preserved.
 
 const entrepreneurshipM1 = {

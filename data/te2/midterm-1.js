@@ -1,5 +1,5 @@
 // ===== TOURISM ECONOMICS (te2) — Midterm 1 (Units 1–6) =====
-// REBUILD iz profesorskih predavanja (FMTU Opatija, Smolčić Jurdana / Soldić Frleta / Dwyer, 2025/26):
+// REBUILD iz profesorskih predavanja (FMTU Opatija, nositelji kolegija, 2025/26):
 //   "Key concepts and tourism market", "Tourism demand", "Tourism supply: production, costs & supply",
 //   "Tourism and market structure". Granica kolokvija po silabusu (slajd "Important dates"):
 //   1. test = jedinice 1.–6. (4.11.2025.).

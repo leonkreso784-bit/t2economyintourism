@@ -39,7 +39,7 @@ const te2ExamPractice = {
             id: "0vr8ql",
             question: "Explain the expenditure chain and the realistic size of the tourism multiplier.",
             answer: "Tourist expenditure → Direct (paid to suppliers) + Indirect (upstream supply chain) + Induced (recipients spend incomes) = Total Effect. Multiplier = Total Impact / Direct Expenditure. In reality it is unlikely to EXCEED 2 (when indirect = direct, multiplier = 2), so €100 m of new expenditure adds < €200 m to GDP. Leakages and factor constraints shrink it.",
-            explanation: "A key reality check from Dwyer's lectures against inflated multiplier claims."
+            explanation: "A key reality check from the lectures against inflated multiplier claims."
         },
         {
             id: "nv3wa9",

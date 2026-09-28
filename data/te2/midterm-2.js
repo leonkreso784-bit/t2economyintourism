@@ -1,7 +1,7 @@
 // ===== TOURISM ECONOMICS (te2) — Midterm 2 (Units 7–12) =====
 // REBUILD iz profesorskih predavanja (FMTU Opatija, 2025/26): "Strategic pricing" (U7),
-//   "Economic Impacts of Tourism" (Dwyer, U8), "Economic contribution & TSA" (U9–10),
-//   "Tourism and the environment" (U11), "Sustainable Tourism Development" (Dwyer, U12).
+//   "Economic Impacts of Tourism" (U8), "Economic contribution & TSA" (U9–10),
+//   "Tourism and the environment" (U11), "Sustainable Tourism Development" (U12).
 // Granica kolokvija po silabusu (slajd "Important dates"): 2. test = jedinice 7.–12. (13.01.2026.).
 // Kategorije: pricing (U7), expenditure (U8), tsa (U9–10), environment (U11), sustainability (U12).
 // Oblik po docs/architecture/CONTENT_SCHEMA.md. Pri izmjeni bumpaj CONTENT_VERSION (js/content-loader.js).
@@ -286,7 +286,7 @@ const te2M2 = {
                 id: "lfy9zq",
                 question: "How large is the tourism multiplier in reality?",
                 answer: "Not as large as the industry thinks — more sophisticated modelling shows it is unlikely to EXCEED 2. When indirect effects = direct effects, the multiplier value is 2. So €100 million of new tourism expenditure is likely to add LESS than €200 million to household income or GDP.",
-                explanation: "A key 'reality check' from Dwyer's lectures against over-stated multiplier claims."
+                explanation: "A key 'reality check' from the lectures against over-stated multiplier claims."
             },
             {
                 id: "hpkjlq",
@@ -435,7 +435,7 @@ const te2M2 = {
                 </div>
 
                 <div class="warning-box">
-                    <h4><i class="fas fa-triangle-exclamation"></i> Reality Check (Dwyer)</h4>
+                    <h4><i class="fas fa-triangle-exclamation"></i> Reality Check (lectures)</h4>
                     <p>The multiplier is <strong>unlikely to exceed 2</strong> — when indirect effects = direct effects, the multiplier value is 2, so €100 m of new expenditure adds <strong>&lt; €200 m</strong> to GDP. It is shrunk by <strong>leakages</strong> (imported goods, capital goods, factor payments abroad, external promotion), <strong>factor constraints</strong> (land, labour, capital), and real <strong>exchange-rate appreciation</strong>. Models used: Input-Output (I-O) and Computable General Equilibrium (CGE).</p>
                 </div>
             `
@@ -897,7 +897,7 @@ const te2M2 = {
                 id: "nhbfvl",
                 question: "What is 'tourism growth mania' and why is it criticised?",
                 answer: "The implicit assumption that the market requires ever-increasing economic growth, where 'more' (more GDP, income, jobs) is wrongly equated with 'better' and with social progress. It is criticised because GDP does not measure quality of life, well-being or happiness, and tourism's drive for expansion destroys the very environments that attract visitors.",
-                explanation: "Growth ≠ progress — a central theme of Dwyer's critique."
+                explanation: "Growth ≠ progress — a central theme of the lectures."
             },
             {
                 id: "w5txcn",
@@ -969,7 +969,7 @@ const te2M2 = {
                 id: "r3sbkw",
                 question: "What is meant by 'sustainable well-being' rather than 'sustainable development'?",
                 answer: "Human well-being is now widely regarded as the primary public-policy objective. Destination managers and researchers should treat sustainable development not as an 'end in itself' but as a STEPPING STONE towards the enhanced well-being of residents — i.e. focus on sustainable well-being.",
-                explanation: "Dwyer's 'Beyond GDP' / well-being perspective on tourism."
+                explanation: "The lectures' 'Beyond GDP' / well-being perspective on tourism."
             }
         ],
 

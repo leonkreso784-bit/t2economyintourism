@@ -10,7 +10,7 @@
 //     riješeni kolokvij iz bilježnice (domena, derivacija u točki, rast/pad, minimum prosječnih
 //     troškova, ekstremi), bilješke „Jednadžbe”/„Domena funkcije”/„Elastičnost”/„Troškovi”,
 //     „Formulas for 2. Midterm” 2023/24 s dopisanim formulama.
-//   - Merlin: 1. demonstrature (I. Šafar; A. Tomiek), 2. i 3. demonstrature.
+//   - Merlin: 1. demonstrature (dvije verzije), 2. i 3. demonstrature.
 //   - Oblik i dio zadataka: EN pack istog FMTU kolegija (data/math/exercises.js).
 //   Zapis = teorija predmeta: T(Q), T̄(Q), M(Q)=T'(Q), P(Q), P̄(Q), D(Q)=P−T; E = (p/q)·dq/dp;
 //   S_n (pre) / S_n' (post) buduća, A_n' (pre) / A_n (post) sadašnja vrijednost rente;

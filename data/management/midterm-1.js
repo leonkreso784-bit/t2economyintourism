@@ -1,5 +1,5 @@
 // ===== MANAGEMENT — 1st MIDTERM (K1) =====
-// Source: lecture decks TU2–TU7 (Prof. Vanja Vitezić PhD, FMTU Opatija, 1st year HM, summer term).
+// Source: lecture decks TU2–TU7 (course lecturer, FMTU Opatija, 1st year HM, summer term).
 // Textbook: Lussier, R. N. (2021). Management Fundamentals: Concepts, Applications, and Skill
 // Development, 9th ed. (SAGE).
 // K1 boundary follows the textbook's five-part structure: Part I Global Management Environment +

@@ -177,7 +177,7 @@ za svih 22 živa predmeta. Zato ide zadnja: kad M1 i M2 stoje, ovo je jedina pro
 | odgovori > 500 | 48 (max **736**) |
 
 Razliveno je **kroz sve predmete** (food-nutrition 295 · entrepreneurship 254 · microeconomics 196…),
-što potvrđuje raniji zapis: **standard je platformski problem, ne Sašin.** Sašin noviji sadržaj
+što potvrđuje raniji zapis: **standard je platformski problem, ne suradnikov.** suradnikov noviji sadržaj
 standard *poštuje* (max 198/199) jer ga je dobio kao pravilo; naš stariji EN sadržaj mu prethodi.
 
 **Posljedica za dizajn:** tvrdo ograničenje na 200 **srušilo bi gotovo pola kataloga** → ne dolazi u obzir

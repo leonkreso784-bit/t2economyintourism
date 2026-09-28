@@ -1,5 +1,5 @@
 // ===== Business Informatics — Midterm 2 (Chapters 7–11) =====
-// Izvor: profesorske prezentacije (Tomislav Car, FMTU Opatija, 2024/25).
+// Izvor: profesorske prezentacije (nositelj kolegija, FMTU Opatija, 2024/25).
 // Oblik po docs/architecture/CONTENT_SCHEMA.md. Pokreni `npm run verify` nakon izmjena.
 
 const businessInformaticsM2 = {

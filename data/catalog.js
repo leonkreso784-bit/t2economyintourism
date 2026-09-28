@@ -342,7 +342,7 @@ const SOKRAT_CATALOG = {
       icon: 'fa-route',
       color: '#f59e0b',
       iconGradient: ['#f59e0b', '#fbbf24'],
-      description: 'Transport in tourism (Mrnjavac; Prof. Kovačić): the theoretical basis of traffic & its interdependence with tourism, mobility & travel patterns, and every transport mode both as a connector and as a tourism product — road, rail (+ funicular/cable car), air and water — plus the value & quality of services, safety, ecological aspects and the future of transport (EU Sustainable & Smart Mobility Strategy).',
+      description: 'Transport in tourism: the theoretical basis of traffic & its interdependence with tourism, mobility & travel patterns, and every transport mode both as a connector and as a tourism product — road, rail (+ funicular/cable car), air and water — plus the value & quality of services, safety, ecological aspects and the future of transport (EU Sustainable & Smart Mobility Strategy).',
       storageKey: 'traffic-progress',
       features: { blindMap: false },
       // K1 (weeks 1–6) + K2 (weeks 7–15, 1st mid-term in week 7) + final (hybrid). Boundary AUTHORITATIVE from the syllabus (DINP).
@@ -367,7 +367,7 @@ const SOKRAT_CATALOG = {
       icon: 'fa-square-root-variable',
       color: '#16a34a',
       iconGradient: ['#16a34a', '#4ade80'],
-      description: 'Mathematics for economists (Mihalinčić & Mrša Haber): the field of real numbers, equations on ℝ, functions (incl. exponential, logarithmic & trigonometric), differentiation and the analysis of increase/decrease & extrema — with worked economic applications (cost, revenue, profit, marginal & average cost). A quantitative subject (KaTeX formulas + interactive exercises).',
+      description: 'Mathematics for economists: the field of real numbers, equations on ℝ, functions (incl. exponential, logarithmic & trigonometric), differentiation and the analysis of increase/decrease & extrema — with worked economic applications (cost, revenue, profit, marginal & average cost). A quantitative subject (KaTeX formulas + interactive exercises).',
       storageKey: 'math-progress',
       features: { blindMap: false, exercises: true },
       // K1 = topics 1–5 (real numbers → extrema), K2 = topics 6–11. Boundary AUTHORITATIVE from the syllabus.
@@ -449,7 +449,7 @@ const SOKRAT_CATALOG = {
       icon: 'fa-pen-nib',
       color: '#a855f7',
       iconGradient: ['#a855f7', '#c084fc'],
-      description: 'The Essentials of Academic Writing (Bogdan): acquiring knowledge & scientific method, the literature review, means & methods of scientific research, thesis structure, bibliographic databases & search, types of publications, research ethics — and the Chicago Manual of Style for citing books, journals and other sources.',
+      description: 'The Essentials of Academic Writing: acquiring knowledge & scientific method, the literature review, means & methods of scientific research, thesis structure, bibliographic databases & search, types of publications, research ethics — and the Chicago Manual of Style for citing books, journals and other sources.',
       storageKey: 'academic-writing-progress',
       features: { blindMap: false, exercises: true },
       // K1 (weeks 1–6) + K2 (weeks 8–14, exam at week 7) + final (hybrid). First subject built via the content generator pipeline.
@@ -777,7 +777,7 @@ const SOKRAT_CATALOG = {
       icon: 'fa-route',
       color: '#f59e0b',
       iconGradient: ['#f59e0b', '#fbbf24'],
-      description: 'Promet u turizmu (Mrnjavac; prof. Kovačić): teorijske osnove prometa i njegova međuovisnost s turizmom, mobilnost i putovanja te svaki prometni oblik kao konektor i kao dio turističkog proizvoda — cestovni, željeznički (+ uspinjača/žičara), zračni i vodeni — uz vrijednost i kvalitetu usluge, sigurnost, ekološke aspekte i budućnost prometa (EU strategija održive i pametne mobilnosti)',
+      description: 'Promet u turizmu: teorijske osnove prometa i njegova međuovisnost s turizmom, mobilnost i putovanja te svaki prometni oblik kao konektor i kao dio turističkog proizvoda — cestovni, željeznički (+ uspinjača/žičara), zračni i vodeni — uz vrijednost i kvalitetu usluge, sigurnost, ekološke aspekte i budućnost prometa (EU strategija održive i pametne mobilnosti)',
       storageKey: 'traffic-hr-progress',
       features: { blindMap: false },
       lessons: [

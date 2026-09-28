@@ -1,5 +1,5 @@
 // ===== SPECIAL INTEREST TOURISM — 2nd MIDTERM (K2) =====
-// Source: lecture slides 8–15 (Prof. B. Pavlakovič Farrell, FMTU, 1st year HM).
+// Source: lecture slides 8–15 (course lecturer, FMTU, 1st year HM).
 // K2 boundary from the syllabus schedule: everything taught AFTER the 1st midterm exam —
 // Nautical, (Event), Sports, (Outdoor & wildlife), Luxury, Dark, Health, Film tourism.
 // NOTE: the "Nautical tourism" slide deck is image-only (no extractable text), so the

@@ -1,6 +1,6 @@
 // ===== TRAFFIC IN TOURISM — 2nd MIDTERM (K2) =====
-// Source: lecture decks of Assoc. Prof. Nataša Kovačić, PhD (FMTU Opatija, 1st year HM, summer term).
-// Core textbook: Mrnjavac, Edna. 2006. Promet u turizmu. Opatija: FTHM.
+// Source: course lecture decks (FMTU Opatija, 1st year HM, summer term).
+// Core textbook: FMTU course textbook "Promet u turizmu" (Opatija: FTHM, 2006).
 // EU sources mined for facts: Sustainable & Smart Mobility Strategy COM(2020)789; Key figures on
 // European transport 2024 (Eurostat); CO2 emissions from cars (EP/EEA); EU road-safety annual report.
 // K2 boundary is AUTHORITATIVE from the syllabus + INTRO deck: the 2nd mid-term is in week 15, so

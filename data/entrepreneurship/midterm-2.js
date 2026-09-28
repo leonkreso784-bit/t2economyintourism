@@ -1,5 +1,5 @@
 // ===== ENTREPRENEURSHIP AND INNOVATION - 2. KOLOKVIJ (K2: Weeks 9-13) =====
-// Source: lecture slides Weeks 9-13 - Prof. V. Skokic / Dr. Yoo Ri Kim
+// Source: lecture slides Weeks 9-13 (course lecturers)
 // Category keys preserved from legacy data-entrepreneurship.js -> user progress preserved.
 
 const entrepreneurshipM2 = {

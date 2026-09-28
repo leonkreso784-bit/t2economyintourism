@@ -6,7 +6,7 @@
 > catalog `traffic` (year 1, sem 2, `fa-route`/`#f59e0b`); cache `20260685`; gate zelen (validate 0/0, verify 0/0, Playwright 68/68).
 
 ## Izvor istine
-- **Silabus = `Obrazac DINP_ENGL_MUH 2024-2025.pdf`** (prof. Nataša Kovačić, 6 ECTS, 60h = 30L+30S).
+- **Silabus = `Obrazac DINP_ENGL_MUH 2024-2025.pdf`** (6 ECTS, 60h = 30L+30S).
 - 13 PDF-ova u `…/1. godina Hospitality Managament/Traffic in tourism/` (izvan repo-a, kao i ostali materijali).
 - Ekstrakcija: `node scripts/pdf-text.js "<pdf>"` → `tmp-traffic/` (gitignored).
 

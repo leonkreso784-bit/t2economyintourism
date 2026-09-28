@@ -1,6 +1,6 @@
 // ===== TRAFFIC IN TOURISM — 1st MIDTERM (K1) =====
-// Source: lecture decks of Assoc. Prof. Nataša Kovačić, PhD (FMTU Opatija, 1st year HM, summer term).
-// Core textbook: Mrnjavac, Edna. 2006. Promet u turizmu. Opatija: FTHM.
+// Source: course lecture decks (FMTU Opatija, 1st year HM, summer term).
+// Core textbook: FMTU course textbook "Promet u turizmu" (Opatija: FTHM, 2006).
 // K1 boundary is AUTHORITATIVE from the official syllabus (DINP) + INTRO deck: the 1st mid-term is in
 // week 7, so K1 = weeks 1–6:
 //   1. Theoretical Basis of Traffic (week 1)
