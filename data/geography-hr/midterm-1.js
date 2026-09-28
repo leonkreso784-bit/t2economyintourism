@@ -357,64 +357,69 @@ const geographyHrM1 = {
     ],
     "quiz": [
       {
-        "question": "Koji od navedenih čimbenika potražnje pripada skupini SOCIOEKONOMSKIH?",
-        "options": ["Moda", "Prometna sredstva", "Slobodno vrijeme", "Vjera"],
+        "question": "Koji od navedenih čimbenika ponude pripada skupini RECEPTIVNIH?",
+        "options": ["Pejzažni čimbenik", "Zračni promet", "Objekti za zabavu", "Etnosocijalni čimbenik"],
         "correct": 2
       },
       {
-        "question": "Koji od navedenih čimbenika ponude pripada skupini RECEPTIVNIH?",
-        "options": ["Pejzažni čimbenik", "Cestovni promet", "Manifestacije", "Komunalna infrastruktura"],
+        "question": "Koji od navedenih čimbenika potražnje pripada skupini SOCIOEKONOMSKIH?",
+        "options": ["Moda", "Prometna sredstva", "Vjera", "Slobodno vrijeme"],
         "correct": 3
       },
       {
         "question": "Koji od navedenih čimbenika ponude pripada skupini RECEPTIVNIH?",
-        "options": ["Prehrambeni kapaciteti", "Klimatski", "Željeznički promet", "Umjetnički"],
+        "options": ["Komunalna infrastruktura", "Pejzažni čimbenik", "Cestovni promet", "Manifestacije"],
         "correct": 0
+      },
+      {
+        "question": "Koji od navedenih čimbenika ponude pripada skupini RECEPTIVNIH?",
+        "options": ["Klimatski", "Prehrambeni kapaciteti", "Željeznički promet", "Umjetnički"],
+        "correct": 1
       },
       {
         "question": "Koji od navedenih čimbenika pripada ATRAKTIVNIM PRIRODNIM čimbenicima ponude?",
-        "options": ["Manifestacijski", "Pejzažni", "Smještajni", "Zračni"],
-        "correct": 1
+        "options": ["Manifestacijski", "Smještajni", "Pejzažni", "Zračni"],
+        "correct": 2
       },
       {
         "question": "Koji od navedenih čimbenika ponude pripada skupini KOMUNIKATIVNIH?",
-        "options": ["Kulturno-povijesni", "Sportski objekti", "Cestovni", "Hidrogeografski"],
-        "correct": 2
+        "options": ["Kulturno-povijesni", "Sportski objekti", "Hidrogeografski", "Cestovni"],
+        "correct": 3
       },
       {
         "question": "Koji od navedenih čimbenika pripada ATRAKTIVNIM ANTROPOGENIM čimbenicima?",
-        "options": ["Biogeografski", "Riječni promet", "Smještajni kapaciteti", "Manifestacije"],
-        "correct": 3
+        "options": ["Manifestacije", "Biogeografski", "Riječni promet", "Smještajni kapaciteti"],
+        "correct": 0
       },
       {
         "question": "Koji se čimbenici ubrajaju u SOCIOPSIHOLOŠKE čimbenike potražnje?",
-        "options": ["Ugled i moda", "Urbanizacija i industrijalizacija", "Promet i prometna organizacija", "Financijska sredstva i slobodno vrijeme"],
-        "correct": 0
+        "options": ["Urbanizacija i industrijalizacija", "Ugled i moda", "Promet i prometna organizacija", "Financijska sredstva i slobodno vrijeme"],
+        "correct": 1
       },
       {
         "question": "Što od navedenog ubrajamo u SEKUNDARNU turističku ponudu?",
-        "options": ["Klimu", "Prometnu mrežu", "Pejzaž", "Kulturno-povijesne spomenike"],
-        "correct": 1
-      },
-      {
-        "question": "Koji od navedenih čimbenika spada u skupinu ANTROPOGENIH čimbenika ponude?",
-        "options": ["Klimatski", "Geomorfološki", "Umjetnički", "Hidrogeografski"],
+        "options": ["Klimu", "Pejzaž", "Prometnu mrežu", "Kulturno-povijesne spomenike"],
         "correct": 2
       },
       {
-        "question": "Koji čimbenik NE pripada čimbenicima ponude?",
-        "options": ["Atraktivni", "Komunikativni", "Receptivni", "Socioekonomski"],
+        "question": "Koji od navedenih čimbenika spada u skupinu ANTROPOGENIH čimbenika ponude?",
+        "options": ["Klimatski", "Geomorfološki", "Hidrogeografski", "Umjetnički"],
         "correct": 3
       },
       {
-        "question": "Koji od navedenih čimbenika ubrajamo u PRIRODNU turističku ponudu?",
-        "options": ["Pejzažni", "Etnosocijalni", "Ambijentalni", "Manifestacijski"],
+        "question": "Koji čimbenik NE pripada čimbenicima ponude?",
+        "options": ["Socioekonomski", "Atraktivni", "Komunikativni", "Receptivni"],
         "correct": 0
       },
       {
-        "question": "Turoperatori su posrednici koji:",
-        "options": ["grade i vode hotelske kapacitete", "organiziraju putovanja u svoje ime", "upravljaju nacionalnim parkovima", "propisuju i naplaćuju turističke takse"],
+        "question": "Koji od navedenih čimbenika ubrajamo u PRIRODNU turističku ponudu?",
+        "options": ["Etnosocijalni", "Pejzažni", "Ambijentalni", "Manifestacijski"],
         "correct": 1
+      },
+      {
+        "question": "Turoperatori su posrednici koji:",
+        "options": ["grade i vode hotelske kapacitete", "upravljaju nacionalnim parkovima", "organiziraju putovanja u svoje ime", "propisuju i naplaćuju turističke takse"],
+        "correct": 2
       }
     ],
     "fillBlanks": [
@@ -581,63 +586,63 @@ const geographyHrM1 = {
     "quiz": [
       {
         "question": "Kako se naziva dio sunčeve energije koji dolazi do Zemljine površine?",
-        "options": ["Albedo", "Radijacijska bilanca", "Insolacija", "Evaporacija"],
-        "correct": 2
+        "options": ["Albedo", "Radijacijska bilanca", "Evaporacija", "Insolacija"],
+        "correct": 3
       },
       {
         "question": "Kako se nazivaju turistički resursi koji obuhvaćaju reljefne raznolikosti Zemlje?",
-        "options": ["Hidrogeografski", "Biogeografski", "Pejsažni", "Geomorfološki"],
-        "correct": 3
+        "options": ["Geomorfološki", "Hidrogeografski", "Biogeografski", "Pejsažni"],
+        "correct": 0
       },
       {
         "question": "Fango je:",
-        "options": ["ljekovito blato", "vrsta termalnog izvora", "lokalni vjetar", "krški ponor"],
-        "correct": 0
+        "options": ["vrsta termalnog izvora", "ljekovito blato", "lokalni vjetar", "krški ponor"],
+        "correct": 1
       },
       {
         "question": "Najveći alpski ledenjak je:",
-        "options": ["Pasterze", "Aletsch", "Mer de Glace", "Hintereis"],
-        "correct": 1
+        "options": ["Pasterze", "Mer de Glace", "Aletsch", "Hintereis"],
+        "correct": 2
       },
       {
         "question": "Koja je klima turistički najprivlačnija?",
-        "options": ["Ekvatorijalna", "Tropsko-monsunska", "Mediteranska", "Umjereno svježa"],
-        "correct": 2
+        "options": ["Ekvatorijalna", "Tropsko-monsunska", "Umjereno svježa", "Mediteranska"],
+        "correct": 3
       },
       {
         "question": "Mistral je lokalni vjetar u:",
-        "options": ["Alpama", "arapskim pustinjama", "pampama", "Provansi"],
-        "correct": 3
+        "options": ["Provansi", "Alpama", "arapskim pustinjama", "pampama"],
+        "correct": 0
       },
       {
         "question": "Koja je morska struja topla?",
-        "options": ["Golfska", "Labradorska", "Kanarska", "Humboldtova"],
-        "correct": 0
+        "options": ["Labradorska", "Golfska", "Kanarska", "Humboldtova"],
+        "correct": 1
       },
       {
         "question": "Najdublje jezero na svijetu je:",
-        "options": ["Kaspijsko jezero", "Bajkalsko jezero", "Balaton", "Mrtvo more"],
-        "correct": 1
-      },
-      {
-        "question": "Najviši slap na svijetu je:",
-        "options": ["Niagara", "Viktorijini slapovi", "Angel", "Skradinski buk"],
+        "options": ["Kaspijsko jezero", "Balaton", "Bajkalsko jezero", "Mrtvo more"],
         "correct": 2
       },
       {
-        "question": "Postojnska jama nalazi se u:",
-        "options": ["Švicarskoj", "Hrvatskoj", "Austriji", "Sloveniji"],
+        "question": "Najviši slap na svijetu je:",
+        "options": ["Niagara", "Viktorijini slapovi", "Skradinski buk", "Angel"],
         "correct": 3
       },
       {
-        "question": "Klisura Loreley nalazi se na rijeci:",
-        "options": ["Rajna", "Dunav", "Rona", "Laba"],
+        "question": "Postojnska jama nalazi se u:",
+        "options": ["Sloveniji", "Švicarskoj", "Hrvatskoj", "Austriji"],
         "correct": 0
       },
       {
-        "question": "Koja tri elementa tvore svaki pejsaž?",
-        "options": ["More, klima, kopno i otoci", "Tlo i reljef, vegetacija, čovjek", "Planine, rijeke, gradovi, ceste", "Flora, fauna, klima i vode"],
+        "question": "Klisura Loreley nalazi se na rijeci:",
+        "options": ["Dunav", "Rajna", "Rona", "Laba"],
         "correct": 1
+      },
+      {
+        "question": "Koja tri elementa tvore svaki pejsaž?",
+        "options": ["More, klima, kopno i otoci", "Planine, rijeke, gradovi, ceste", "Tlo i reljef, vegetacija, čovjek", "Flora, fauna, klima i vode"],
+        "correct": 2
       }
     ],
     "fillBlanks": [
@@ -815,53 +820,53 @@ const geographyHrM1 = {
     "quiz": [
       {
         "question": "Kojim prijevoznim sredstvom međunarodni turisti najviše putuju u Hrvatsku (zadnje desetljeće)?",
-        "options": ["Zrakoplovom (niskotarifnim)", "Organiziranim autobusom", "Osobnim automobilom", "Brodom i trajektom"],
-        "correct": 2
+        "options": ["Zrakoplovom (niskotarifnim)", "Organiziranim autobusom", "Brodom i trajektom", "Osobnim automobilom"],
+        "correct": 3
       },
       {
         "question": "Koji dio prometnog sustava ima najveći udio u međunarodnim turističkim kretanjima u svijetu?",
-        "options": ["Željeznički promet", "Riječni promet", "Pomorski promet", "Zračni promet"],
-        "correct": 3
+        "options": ["Zračni promet", "Željeznički promet", "Riječni promet", "Pomorski promet"],
+        "correct": 0
       },
       {
         "question": "Koja je grana prometa najmlađa?",
-        "options": ["Zračni", "Cestovni", "Željeznički", "Pomorski"],
-        "correct": 0
+        "options": ["Cestovni", "Zračni", "Željeznički", "Pomorski"],
+        "correct": 1
       },
       {
         "question": "Turistička regija u kojoj je turizam dominantna djelatnost je:",
-        "options": ["heterogena", "homogena", "subregija", "zona"],
-        "correct": 1
+        "options": ["heterogena", "subregija", "homogena", "zona"],
+        "correct": 2
       },
       {
         "question": "Prva faza analize turističkih resursa je:",
-        "options": ["valorizacija", "sistematizacija", "inventarizacija", "zaštita"],
-        "correct": 2
+        "options": ["valorizacija", "sistematizacija", "zaštita", "inventarizacija"],
+        "correct": 3
       },
       {
         "question": "Agenda 21 usvojena je na konferenciji UN-a:",
-        "options": ["u Stockholmu 1972.", "u Helsinkiju 1997.", "u Parizu 1986.", "u Riju 1992."],
-        "correct": 3
-      },
-      {
-        "question": "Stradun i zagrebački Gornji grad primjeri su kojih resursa?",
-        "options": ["Ambijentalnih", "Etnosocijalnih", "Manifestacijskih", "Pejsažnih"],
+        "options": ["u Riju 1992.", "u Stockholmu 1972.", "u Helsinkiju 1997.", "u Parizu 1986."],
         "correct": 0
       },
       {
-        "question": "Koja cesta povezuje Karlovac i Senj?",
-        "options": ["Karolina", "Jozefina", "Lujzijana", "Terezijana"],
+        "question": "Stradun i zagrebački Gornji grad primjeri su kojih resursa?",
+        "options": ["Etnosocijalnih", "Ambijentalnih", "Manifestacijskih", "Pejsažnih"],
         "correct": 1
       },
       {
-        "question": "Turistički centar se od turističkog mjesta razlikuje po tome što:",
-        "options": ["nema vlastitih smještajnih kapaciteta", "se uvijek nalazi na morskoj obali", "ima dodatne funkcije (promet, zdravstvo, uprava)", "prostorno je manji od turističkog lokaliteta"],
+        "question": "Koja cesta povezuje Karlovac i Senj?",
+        "options": ["Karolina", "Lujzijana", "Jozefina", "Terezijana"],
         "correct": 2
       },
       {
-        "question": "Đakovački vezovi i Vinkovačke jeseni primjeri su kojih resursa?",
-        "options": ["Ambijentalnih", "Umjetničkih", "Kulturno-povijesnih", "Manifestacijskih"],
+        "question": "Turistički centar se od turističkog mjesta razlikuje po tome što:",
+        "options": ["nema vlastitih smještajnih kapaciteta", "se uvijek nalazi na morskoj obali", "prostorno je manji od turističkog lokaliteta", "ima dodatne funkcije (promet, zdravstvo, uprava)"],
         "correct": 3
+      },
+      {
+        "question": "Đakovački vezovi i Vinkovačke jeseni primjeri su kojih resursa?",
+        "options": ["Manifestacijskih", "Ambijentalnih", "Umjetničkih", "Kulturno-povijesnih"],
+        "correct": 0
       }
     ],
     "fillBlanks": [
@@ -1074,93 +1079,93 @@ const geographyHrM1 = {
     "quiz": [
       {
         "question": "Koja je najzapadnija točka Hrvatske?",
-        "options": ["Rt Savudrija", "Rt Kamenjak", "Rt Oštra", "Umag"],
-        "correct": 0
+        "options": ["Rt Kamenjak", "Rt Savudrija", "Rt Oštra", "Umag"],
+        "correct": 1
       },
       {
         "question": "Koja je najsjevernija točka Hrvatske?",
-        "options": ["Mursko Središće u Međimurju", "Žabnik kod Svetog Martina na Muri", "Čakovec", "Kotoriba na Muri"],
-        "correct": 1
+        "options": ["Mursko Središće u Međimurju", "Čakovec", "Žabnik kod Svetog Martina na Muri", "Kotoriba na Muri"],
+        "correct": 2
       },
       {
         "question": "Koji je najistočniji grad Hrvatske?",
-        "options": ["Vukovar", "Osijek", "Ilok", "Vinkovci"],
-        "correct": 2
+        "options": ["Vukovar", "Osijek", "Vinkovci", "Ilok"],
+        "correct": 3
       },
       {
         "question": "Najjužnija točka Hrvatske je:",
-        "options": ["otok Lastovo", "Cavtat u Konavlima", "otok Mljet (Saplunara)", "otočić Galijula (Palagruža)"],
-        "correct": 3
+        "options": ["otočić Galijula (Palagruža)", "otok Lastovo", "Cavtat u Konavlima", "otok Mljet (Saplunara)"],
+        "correct": 0
       },
       {
         "question": "Koja je oznaka paneuropskog koridora najvažnijeg za povezivanje Hrvatske s emitivnim tržištima?",
-        "options": ["Koridor X", "Koridor V.b", "Koridor V.c", "Koridor VII"],
-        "correct": 0
+        "options": ["Koridor V.b", "Koridor X", "Koridor V.c", "Koridor VII"],
+        "correct": 1
       },
       {
         "question": "Sporedni koridor Budimpešta–Zagreb–Rijeka ima oznaku:",
-        "options": ["X.a", "V.b", "V.c", "X"],
-        "correct": 1
+        "options": ["X.a", "V.c", "V.b", "X"],
+        "correct": 2
       },
       {
         "question": "Koji reljef prevladava u Primorsko-goranskoj županiji i Istri?",
-        "options": ["Lesni ravnjak", "Aluvijalna nizina", "Krški reljef", "Vulkanski reljef"],
-        "correct": 2
+        "options": ["Lesni ravnjak", "Aluvijalna nizina", "Vulkanski reljef", "Krški reljef"],
+        "correct": 3
       },
       {
         "question": "Koji reljef čini atrakcijsku osnovu hrvatskih otoka?",
-        "options": ["Vulkanski", "Glacijalni", "Pješčani (dine)", "Krški"],
-        "correct": 3
+        "options": ["Krški", "Vulkanski", "Glacijalni", "Pješčani (dine)"],
+        "correct": 0
       },
       {
         "question": "Koji je od ponuđenih otoka najsunčaniji?",
-        "options": ["Hvar", "Krk", "Cres", "Rab"],
-        "correct": 0
+        "options": ["Krk", "Hvar", "Cres", "Rab"],
+        "correct": 1
       },
       {
         "question": "Koji su hrvatski otoci vulkanskog podrijetla?",
-        "options": ["Susak i Unije", "Jabuka i Brusnik", "Vis i Biševo", "Lastovo i Mljet"],
-        "correct": 1
+        "options": ["Susak i Unije", "Vis i Biševo", "Jabuka i Brusnik", "Lastovo i Mljet"],
+        "correct": 2
       },
       {
         "question": "Koja rijeka u Hrvatskoj ima najveći potencijal za unutarnju plovidbu?",
-        "options": ["Sava", "Kupa", "Dunav", "Drava"],
-        "correct": 2
+        "options": ["Sava", "Kupa", "Drava", "Dunav"],
+        "correct": 3
       },
       {
         "question": "Koja od rijeka ima najveći potencijal za rafting?",
-        "options": ["Drava", "Sava", "Mirna", "Cetina"],
-        "correct": 3
+        "options": ["Cetina", "Drava", "Sava", "Mirna"],
+        "correct": 0
       },
       {
         "question": "Najveće prirodno jezero u Hrvatskoj je:",
-        "options": ["Vransko jezero kod Biograda", "Peručko jezero", "Vransko jezero na Cresu", "Crveno jezero kod Imotskog"],
-        "correct": 0
+        "options": ["Peručko jezero", "Vransko jezero kod Biograda", "Vransko jezero na Cresu", "Crveno jezero kod Imotskog"],
+        "correct": 1
       },
       {
         "question": "Najviši vrh Hrvatske je:",
-        "options": ["Sveti Jure (Biokovo)", "Dinara", "Vaganski vrh (Velebit)", "Bjelolasica"],
-        "correct": 1
-      },
-      {
-        "question": "Prvo turističko društvo u Hrvatskoj osnovano je 1868. u:",
-        "options": ["Opatiji", "Dubrovniku", "Hvaru", "Crikvenici"],
+        "options": ["Sveti Jure (Biokovo)", "Vaganski vrh (Velebit)", "Dinara", "Bjelolasica"],
         "correct": 2
       },
       {
-        "question": "Koja makroregija zauzima najveću površinu i ima najviše stanovnika?",
-        "options": ["Primorska", "Planinska", "Sve su podjednake", "Panonsko-peripanonska"],
+        "question": "Prvo turističko društvo u Hrvatskoj osnovano je 1868. u:",
+        "options": ["Opatiji", "Dubrovniku", "Crikvenici", "Hvaru"],
         "correct": 3
       },
       {
-        "question": "Strujanje zraka s mora prema kopnu tijekom dana zove se:",
-        "options": ["zmorac", "kopnenjak", "bura", "jugo"],
+        "question": "Koja makroregija zauzima najveću površinu i ima najviše stanovnika?",
+        "options": ["Panonsko-peripanonska", "Primorska", "Planinska", "Sve su podjednake"],
         "correct": 0
       },
       {
-        "question": "Granica južnog krškog i sjevernog nekrškog prostora Hrvatske prolazi kod:",
-        "options": ["Zagreba", "Karlovca", "Gospića", "Siska"],
+        "question": "Strujanje zraka s mora prema kopnu tijekom dana zove se:",
+        "options": ["kopnenjak", "zmorac", "bura", "jugo"],
         "correct": 1
+      },
+      {
+        "question": "Granica južnog krškog i sjevernog nekrškog prostora Hrvatske prolazi kod:",
+        "options": ["Zagreba", "Gospića", "Karlovca", "Siska"],
+        "correct": 2
       }
     ],
     "fillBlanks": [
@@ -1382,73 +1387,73 @@ const geographyHrM1 = {
     "quiz": [
       {
         "question": "Koliko Hrvatska ima nacionalnih parkova?",
-        "options": ["6", "11", "8", "12"],
-        "correct": 2
+        "options": ["6", "11", "12", "8"],
+        "correct": 3
       },
       {
         "question": "Koji je najstariji nacionalni park u Hrvatskoj (1949.)?",
-        "options": ["Krka", "Risnjak", "Brijuni", "Plitvička jezera"],
-        "correct": 3
+        "options": ["Plitvička jezera", "Krka", "Risnjak", "Brijuni"],
+        "correct": 0
       },
       {
         "question": "Koji je nacionalni park proglašen posljednji (1999.)?",
-        "options": ["Sjeverni Velebit", "Kornati", "Krka", "Mljet"],
-        "correct": 0
+        "options": ["Kornati", "Sjeverni Velebit", "Krka", "Mljet"],
+        "correct": 1
       },
       {
         "question": "Koje zaštićeno područje Primorske Hrvatske ima najveći broj turističkih dolazaka?",
-        "options": ["NP Kornati", "NP Krka", "NP Brijuni", "NP Mljet"],
-        "correct": 1
+        "options": ["NP Kornati", "NP Brijuni", "NP Krka", "NP Mljet"],
+        "correct": 2
       },
       {
         "question": "Koje od navedenih NIJE nacionalni park?",
-        "options": ["Risnjak", "Paklenica", "Biokovo", "Kornati"],
-        "correct": 2
+        "options": ["Risnjak", "Paklenica", "Kornati", "Biokovo"],
+        "correct": 3
       },
       {
         "question": "Koji park prirode obuhvaća poplavno područje Drave i Dunava u Baranji?",
-        "options": ["Medvednica", "Učka", "Telašćica", "Kopački rit"],
-        "correct": 3
+        "options": ["Kopački rit", "Medvednica", "Učka", "Telašćica"],
+        "correct": 0
       },
       {
         "question": "Europsko selo roda Čigoč nalazi se u parku prirode:",
-        "options": ["Lonjsko polje", "Kopački rit", "Papuk", "Žumberak–Samoborsko gorje"],
-        "correct": 0
+        "options": ["Kopački rit", "Lonjsko polje", "Papuk", "Žumberak–Samoborsko gorje"],
+        "correct": 1
       },
       {
         "question": "Prvi hrvatski UNESCO geopark je park prirode:",
-        "options": ["Učka", "Papuk", "Biokovo", "Dinara"],
-        "correct": 1
+        "options": ["Učka", "Biokovo", "Papuk", "Dinara"],
+        "correct": 2
       },
       {
         "question": "Eufrazijeva bazilika (UNESCO) nalazi se u:",
-        "options": ["Puli", "Rovinju", "Poreču", "Zadru"],
-        "correct": 2
+        "options": ["Puli", "Rovinju", "Zadru", "Poreču"],
+        "correct": 3
       },
       {
         "question": "Starogradsko polje (UNESCO) nalazi se na otoku:",
-        "options": ["Braču", "Korčuli", "Visu", "Hvaru"],
-        "correct": 3
-      },
-      {
-        "question": "Katedrala sv. Jakova, upisana na UNESCO-ov popis, nalazi se u:",
-        "options": ["Šibeniku", "Trogiru", "Zadru", "Splitu"],
+        "options": ["Hvaru", "Braču", "Korčuli", "Visu"],
         "correct": 0
       },
       {
-        "question": "Koji je jedini hrvatski nacionalni park samostalno upisan kao UNESCO svjetska baština?",
-        "options": ["Krka", "Plitvička jezera", "Kornati", "Brijuni"],
+        "question": "Katedrala sv. Jakova, upisana na UNESCO-ov popis, nalazi se u:",
+        "options": ["Trogiru", "Šibeniku", "Zadru", "Splitu"],
         "correct": 1
       },
       {
-        "question": "Strogi rezervat Bijele i Samarske stijene nalazi se na:",
-        "options": ["Velebitu", "Biokovu", "Velikoj Kapeli", "Učki"],
+        "question": "Koji je jedini hrvatski nacionalni park samostalno upisan kao UNESCO svjetska baština?",
+        "options": ["Krka", "Kornati", "Plitvička jezera", "Brijuni"],
         "correct": 2
       },
       {
-        "question": "Najmanji hrvatski nacionalni park po površini je:",
-        "options": ["Mljet", "Risnjak", "Paklenica", "Brijuni"],
+        "question": "Strogi rezervat Bijele i Samarske stijene nalazi se na:",
+        "options": ["Velebitu", "Biokovu", "Učki", "Velikoj Kapeli"],
         "correct": 3
+      },
+      {
+        "question": "Najmanji hrvatski nacionalni park po površini je:",
+        "options": ["Brijuni", "Mljet", "Risnjak", "Paklenica"],
+        "correct": 0
       }
     ],
     "fillBlanks": [
@@ -1554,6 +1559,11 @@ const geographyHrM1 = {
     "color": "#06b6d4",
     "flashcards": [
       {
+        "question": "Koji hrvatski grad s milijunskim brojem noćenja ima UNESCO baštinu?",
+        "answer": "Poreč — više od 4,6 milijuna noćenja godišnje i Eufrazijeva bazilika (UNESCO 1997.).",
+        "explanation": "Najveća kupališna destinacija Istre."
+      },
+      {
         "question": "Koji je udio Istre u hrvatskom turizmu?",
         "answer": "U Istri boravi oko 20 % turista, koji ostvaruju oko trećinu svih noćenja u Hrvatskoj.",
         "explanation": "Jedna od najvažnijih turističkih regija RH."
@@ -1646,69 +1656,74 @@ const geographyHrM1 = {
     ],
     "quiz": [
       {
+        "question": "Koji grad s milijunskim brojem turističkih noćenja ima zaštićenu UNESCO baštinu?",
+        "options": ["Umag", "Poreč", "Medulin", "Crikvenica"],
+        "correct": 1
+      },
+      {
         "question": "Gdje se nalazi Augustov hram?",
-        "options": ["U Puli", "U Splitu", "U Zadru", "U Poreču"],
-        "correct": 0
+        "options": ["U Splitu", "U Zadru", "U Puli", "U Poreču"],
+        "correct": 2
       },
       {
         "question": "Koji je grad u unutrašnjosti Istre poznat po tartufima i filmskom festivalu?",
-        "options": ["Pazin", "Motovun", "Buzet", "Labin"],
-        "correct": 1
+        "options": ["Pazin", "Buzet", "Labin", "Motovun"],
+        "correct": 3
       },
       {
         "question": "Koji grad na Krku je poznat po enološkim karakteristikama (žlahtina)?",
-        "options": ["Baška", "Punat", "Vrbnik", "Omišalj"],
-        "correct": 2
+        "options": ["Vrbnik", "Baška", "Punat", "Omišalj"],
+        "correct": 0
       },
       {
         "question": "Koji je grad poznat po Eufrazijevoj bazilici i antičkom rasteru ulica?",
-        "options": ["Rovinj", "Umag", "Novigrad", "Poreč"],
-        "correct": 3
+        "options": ["Rovinj", "Poreč", "Umag", "Novigrad"],
+        "correct": 1
       },
       {
         "question": "Viteška igra Trka na prstenac održava se u:",
-        "options": ["Barbanu", "Pazinu", "Humu", "Sinju"],
-        "correct": 0
+        "options": ["Pazinu", "Humu", "Barbanu", "Sinju"],
+        "correct": 2
       },
       {
         "question": "Koje se istarsko mjesto naziva „najmanjim gradom na svijetu”?",
-        "options": ["Roč", "Hum", "Grožnjan", "Oprtalj"],
-        "correct": 1
+        "options": ["Roč", "Grožnjan", "Oprtalj", "Hum"],
+        "correct": 3
       },
       {
         "question": "Koje su mjesto zvali „zimski Beč” i „jadranska Nizza”?",
-        "options": ["Crikvenicu", "Lovran", "Opatiju", "Mali Lošinj"],
-        "correct": 2
+        "options": ["Opatiju", "Crikvenicu", "Lovran", "Mali Lošinj"],
+        "correct": 0
       },
       {
         "question": "Najstarija i najveća marina na Jadranu nalazi se u:",
-        "options": ["Puli", "Opatiji", "Rabu", "Puntu"],
-        "correct": 3
-      },
-      {
-        "question": "Bašćanska ploča pronađena je na otoku:",
-        "options": ["Krku", "Cresu", "Rabu", "Lošinju"],
-        "correct": 0
-      },
-      {
-        "question": "Koji je otok poznat po četiri zvonika svog grada i pješčanim plažama Lopara?",
-        "options": ["Krk", "Rab", "Pag", "Cres"],
+        "options": ["Puli", "Puntu", "Opatiji", "Rabu"],
         "correct": 1
       },
       {
-        "question": "Rimski amfiteatar Arena nalazi se u:",
-        "options": ["Solinu", "Rijeci", "Puli", "Zadru"],
+        "question": "Bašćanska ploča pronađena je na otoku:",
+        "options": ["Cresu", "Rabu", "Krku", "Lošinju"],
         "correct": 2
       },
       {
-        "question": "Koji je dio Istre turistički najrazvijeniji?",
-        "options": ["Bijela Istra", "Siva Istra", "Središnja Istra", "Crvena Istra"],
+        "question": "Koji je otok poznat po četiri zvonika svog grada i pješčanim plažama Lopara?",
+        "options": ["Krk", "Pag", "Cres", "Rab"],
         "correct": 3
       },
       {
-        "question": "Centar za zaštitu bjeloglavih supova nalazi se u:",
-        "options": ["Belom na Cresu", "Baški na Krku", "Osoru na Cresu", "Loparu na Rabu"],
+        "question": "Rimski amfiteatar Arena nalazi se u:",
+        "options": ["Puli", "Solinu", "Rijeci", "Zadru"],
         "correct": 0
+      },
+      {
+        "question": "Koji je dio Istre turistički najrazvijeniji?",
+        "options": ["Bijela Istra", "Crvena Istra", "Siva Istra", "Središnja Istra"],
+        "correct": 1
+      },
+      {
+        "question": "Centar za zaštitu bjeloglavih supova nalazi se u:",
+        "options": ["Baški na Krku", "Osoru na Cresu", "Belom na Cresu", "Loparu na Rabu"],
+        "correct": 2
       }
     ],
     "fillBlanks": [
@@ -1751,7 +1766,7 @@ const geographyHrM1 = {
 </ul>
 <table>
 <tr><th>Područje</th><th>Destinacije i atrakcije</th></tr>
-<tr><td><strong>Zapadnoistarsko primorje</strong> (Dragonja – Barbariga)</td><td><strong>Umag</strong> (ATP teniski turnir, blizina Italije i Ljubljane); <strong>Savudrija</strong> (najzapadnija točka, najstariji aktivni svjetionik iz 1818.); <strong>Novigrad</strong>; <strong>Poreč</strong> — Eufrazijeva bazilika (6. st., UNESCO 1997.), antički raster (dekuman i kardo), Plava i Zelena laguna, jama Baredine; <strong>Vrsar</strong> — naturističko naselje Koversada; <strong>Rovinj</strong> — „istarski Saint-Tropez”, jezgra na nekadašnjem otočiću, crkva sv. Eufemije, Crveni otok, zaštićeno priobalje; <strong>Bale</strong> — nalazište kostiju dinosaura (1992.)</td></tr>
+<tr><td><strong>Zapadnoistarsko primorje</strong> (Dragonja – Barbariga)</td><td><strong>Umag</strong> (ATP teniski turnir, blizina Italije i Ljubljane); <strong>Savudrija</strong> (najzapadnija točka, najstariji aktivni svjetionik iz 1818.); <strong>Novigrad</strong>; <strong>Poreč</strong> — Eufrazijeva bazilika (6. st., UNESCO 1997.), antički raster (dekuman i kardo), Plava i Zelena laguna, jama Baredine; <strong>više od 4,6 milijuna noćenja</strong> — grad s milijunskim prometom i UNESCO baštinom; <strong>Vrsar</strong> — naturističko naselje Koversada; <strong>Rovinj</strong> — „istarski Saint-Tropez”, jezgra na nekadašnjem otočiću, crkva sv. Eufemije, Crveni otok, zaštićeno priobalje; <strong>Bale</strong> — nalazište kostiju dinosaura (1992.)</td></tr>
 <tr><td><strong>Južnoistarsko primorje</strong></td><td><strong>Pula</strong> — Arena (1. st.), <strong>Augustov hram</strong>, Slavoluk Sergijevaca, Herkulova i Dvojna vrata, brodogradilište Uljanik; Verudela, Medulin, Fažana, rt Kamenjak (orhideje); Nezakcij (glavni grad Histra); <strong>Vodnjan</strong> (mumije u crkvi sv. Blaža); <strong>Barban</strong> (Trka na prstenac od 1696.); <strong>NP Brijuni</strong></td></tr>
 <tr><td><strong>Istočnoistarsko primorje</strong></td><td><strong>Rabac</strong> (kupališna destinacija), <strong>Labin</strong> (srednjovjekovna jezgra, rudarska zbirka), park skulptura Dubrova</td></tr>
 <tr><td><strong>Središnja Istra</strong></td><td><strong>Pazin</strong> (Pazinska jama, Kaštel s Etnografskim muzejom); <strong>Motovun</strong> (brijeg 277 m, filmski festival, tartufi, očuvane zidine); <strong>Istarske toplice</strong> (33–35 °C, reumatske bolesti); <strong>Buzet</strong> (grad tartufa); <strong>Roč</strong> i <strong>Hum</strong> (glagoljaštvo, Aleja glagoljaša; Hum — „najmanji grad na svijetu”); Grožnjan (grad umjetnika), Momjan, Oprtalj</td></tr>
@@ -1883,78 +1898,78 @@ const geographyHrM1 = {
     "quiz": [
       {
         "question": "Koja je hrvatska destinacija polazište za kružna putovanja?",
-        "options": ["Zadar", "Dubrovnik", "Šibenik", "Makarska"],
-        "correct": 1
+        "options": ["Zadar", "Šibenik", "Makarska", "Dubrovnik"],
+        "correct": 3
       },
       {
         "question": "Koji grad ima najkvalitetnije i najljepše plaže u Hrvatskoj?",
-        "options": ["Zadar", "Trogir", "Makarska", "Šibenik"],
-        "correct": 2
+        "options": ["Makarska", "Zadar", "Trogir", "Šibenik"],
+        "correct": 0
       },
       {
         "question": "Koji je grad poznat po uskim uličicama i katedrali pod zaštitom UNESCO-a?",
-        "options": ["Zadar", "Omiš", "Makarska", "Šibenik"],
-        "correct": 3
+        "options": ["Zadar", "Šibenik", "Omiš", "Makarska"],
+        "correct": 1
       },
       {
         "question": "Koja rijeka ima najveći potencijal za rafting?",
-        "options": ["Cetina", "Krka", "Neretva", "Zrmanja"],
-        "correct": 0
+        "options": ["Krka", "Neretva", "Cetina", "Zrmanja"],
+        "correct": 2
       },
       {
         "question": "Koje je područje južne Dalmacije poznato po enološkim specifičnostima (Dingač, Postup)?",
-        "options": ["Konavle", "Pelješac", "Elafiti", "Mljet"],
-        "correct": 1
+        "options": ["Konavle", "Elafiti", "Mljet", "Pelješac"],
+        "correct": 3
       },
       {
         "question": "Koji grad je poznat po Morskim orguljama i crkvi sv. Donata?",
-        "options": ["Split", "Šibenik", "Zadar", "Nin"],
-        "correct": 2
+        "options": ["Zadar", "Split", "Šibenik", "Nin"],
+        "correct": 0
       },
       {
         "question": "Katedrala sv. Lovre s Radovanovim portalom nalazi se u:",
-        "options": ["Splitu", "Šibeniku", "Korčuli", "Trogiru"],
-        "correct": 3
+        "options": ["Splitu", "Trogiru", "Šibeniku", "Korčuli"],
+        "correct": 1
       },
       {
         "question": "Mjesto na nekadašnjem otočiću s crkvom sv. Jurja na vrhu i vinogradima babića je:",
-        "options": ["Primošten", "Vodice", "Rogoznica", "Pirovac"],
-        "correct": 0
+        "options": ["Vodice", "Rogoznica", "Primošten", "Pirovac"],
+        "correct": 2
       },
       {
         "question": "Sinjska alka održava se od:",
-        "options": ["1696.", "1715.", "1868.", "1910."],
-        "correct": 1
+        "options": ["1696.", "1868.", "1910.", "1715."],
+        "correct": 3
       },
       {
         "question": "Koji se otok naziva „jadranska Madeira”?",
-        "options": ["Vis", "Brač", "Hvar", "Korčula"],
-        "correct": 2
-      },
-      {
-        "question": "Modra špilja nalazi se na otočiću:",
-        "options": ["Ravniku", "Lokrumu", "Svecu", "Biševu"],
-        "correct": 3
-      },
-      {
-        "question": "Koja je otočna skupina najrazvedenija na Mediteranu?",
-        "options": ["Kornati", "Elafiti", "Brijuni", "Lastovsko otočje"],
+        "options": ["Hvar", "Vis", "Brač", "Korčula"],
         "correct": 0
       },
       {
-        "question": "Paška čipka i paški sir potječu s otoka:",
-        "options": ["Raba", "Paga", "Ugljana", "Dugog otoka"],
+        "question": "Modra špilja nalazi se na otočiću:",
+        "options": ["Ravniku", "Biševu", "Lokrumu", "Svecu"],
         "correct": 1
       },
       {
-        "question": "Dioklecijanova palača nalazi se u:",
-        "options": ["Solinu", "Trogiru", "Splitu", "Zadru"],
+        "question": "Koja je otočna skupina najrazvedenija na Mediteranu?",
+        "options": ["Elafiti", "Brijuni", "Kornati", "Lastovsko otočje"],
         "correct": 2
       },
       {
-        "question": "Najstariji arboretum u Hrvatskoj je:",
-        "options": ["Opeka", "Lisičine", "Maksimir", "Trsteno"],
+        "question": "Paška čipka i paški sir potječu s otoka:",
+        "options": ["Raba", "Ugljana", "Dugog otoka", "Paga"],
         "correct": 3
+      },
+      {
+        "question": "Dioklecijanova palača nalazi se u:",
+        "options": ["Splitu", "Solinu", "Trogiru", "Zadru"],
+        "correct": 0
+      },
+      {
+        "question": "Najstariji arboretum u Hrvatskoj je:",
+        "options": ["Opeka", "Trsteno", "Lisičine", "Maksimir"],
+        "correct": 1
       }
     ],
     "fillBlanks": [
@@ -2139,63 +2154,63 @@ const geographyHrM1 = {
     "quiz": [
       {
         "question": "Kraj kojeg je grada najvažnije nalazište neandertalaca?",
-        "options": ["Krapine", "Varaždina", "Vukovara", "Karlovca"],
-        "correct": 0
+        "options": ["Varaždina", "Vukovara", "Krapine", "Karlovca"],
+        "correct": 2
       },
       {
         "question": "Koji je povijesni lokalitet kod Vukovara?",
-        "options": ["Hušnjakovo", "Vučedol", "Nezakcij", "Salona"],
-        "correct": 1
+        "options": ["Hušnjakovo", "Nezakcij", "Salona", "Vučedol"],
+        "correct": 3
       },
       {
         "question": "Koji je grad na istoku Hrvatske poznat po enološkim specifičnostima?",
-        "options": ["Vinkovci", "Slavonski Brod", "Ilok", "Osijek"],
-        "correct": 2
+        "options": ["Ilok", "Vinkovci", "Slavonski Brod", "Osijek"],
+        "correct": 0
       },
       {
         "question": "Koji je grad u hrvatskom Podunavlju poznat po enološkim specifičnostima?",
-        "options": ["Našice", "Županja", "Nova Gradiška", "Erdut"],
-        "correct": 3
+        "options": ["Našice", "Erdut", "Županja", "Nova Gradiška"],
+        "correct": 1
       },
       {
         "question": "Koji je oblik reljefa atrakcija u Planinskoj Hrvatskoj?",
-        "options": ["Krški reljef", "Lesni ravnjak", "Pješčane dine", "Vulkanski krateri"],
-        "correct": 0
+        "options": ["Lesni ravnjak", "Pješčane dine", "Krški reljef", "Vulkanski krateri"],
+        "correct": 2
       },
       {
         "question": "Najveće hodočasničko središte kontinentalne Hrvatske je:",
-        "options": ["Ludbreg", "Marija Bistrica", "Krasno", "Trški vrh"],
-        "correct": 1
+        "options": ["Ludbreg", "Krasno", "Trški vrh", "Marija Bistrica"],
+        "correct": 3
       },
       {
         "question": "Rodna kuća Nikole Tesle nalazi se u:",
-        "options": ["Gospiću", "Otočcu", "Smiljanu", "Perušiću"],
-        "correct": 2
-      },
-      {
-        "question": "Ergela lipicanaca i Vezovi vezani su uz:",
-        "options": ["Požegu", "Vinkovce", "Našice", "Đakovo"],
-        "correct": 3
-      },
-      {
-        "question": "S usponom na koju je planinu povezan osnutak hrvatskog planinarstva?",
-        "options": ["Klek", "Risnjak", "Snježnik", "Učku"],
+        "options": ["Smiljanu", "Gospiću", "Otočcu", "Perušiću"],
         "correct": 0
       },
       {
-        "question": "Rastoke s mlinicama na slapovima nalaze se kod:",
-        "options": ["Ozlja", "Slunja", "Duge Rese", "Ogulina"],
+        "question": "Ergela lipicanaca i Vezovi vezani su uz:",
+        "options": ["Požegu", "Đakovo", "Vinkovce", "Našice"],
         "correct": 1
       },
       {
-        "question": "Koji je temeljni turistički resurs Panonske Hrvatske?",
-        "options": ["Pješčane plaže", "Visokoplaninski vrhovi", "Termomineralne vode", "Otoci i poluotoci"],
+        "question": "S usponom na koju je planinu povezan osnutak hrvatskog planinarstva?",
+        "options": ["Risnjak", "Snježnik", "Klek", "Učku"],
         "correct": 2
       },
       {
-        "question": "Koliki udio turističkog prometa Planinske Hrvatske ostvaruju Plitvička jezera?",
-        "options": ["Oko četvrtine", "Oko polovine", "Gotovo cijeli", "Oko tri četvrtine"],
+        "question": "Rastoke s mlinicama na slapovima nalaze se kod:",
+        "options": ["Ozlja", "Duge Rese", "Ogulina", "Slunja"],
         "correct": 3
+      },
+      {
+        "question": "Koji je temeljni turistički resurs Panonske Hrvatske?",
+        "options": ["Termomineralne vode", "Pješčane plaže", "Visokoplaninski vrhovi", "Otoci i poluotoci"],
+        "correct": 0
+      },
+      {
+        "question": "Koliki udio turističkog prometa Planinske Hrvatske ostvaruju Plitvička jezera?",
+        "options": ["Oko četvrtine", "Oko tri četvrtine", "Oko polovine", "Gotovo cijeli"],
+        "correct": 1
       }
     ],
     "fillBlanks": [

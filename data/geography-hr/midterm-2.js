@@ -17,6 +17,36 @@ const geographyHrM2 = {
     "color": "#0ea5e9",
     "flashcards": [
       {
+        "question": "Koje su velike turističko-geografske regije svijeta (regionalizacija kolegija)?",
+        "answer": "Europa, Orijent, Afrika južno od Sahare, Južna Azija, Pacifička Azija, Australija s Oceanijom, Angloamerika i Latinska Amerika.",
+        "explanation": "Druga podjela od UNWTO-ovih pet regija."
+      },
+      {
+        "question": "Kojoj regiji pripadaju Malezija i Fidži?",
+        "answer": "Malezija — Pacifičkoj Aziji; Fidži — Australiji s Oceanijom.",
+        "explanation": "Pacifička Azija = istočna i jugoistočna Azija."
+      },
+      {
+        "question": "Kojoj regiji pripadaju Namibija i Sejšeli?",
+        "answer": "Afrika južno od Sahare (Sejšeli su otočna država uz istočnu Afriku).",
+        "explanation": "Sjeverna Afrika pripada Orijentu."
+      },
+      {
+        "question": "Koja je regija obilježena niskom gustoćom naseljenosti, bogatom baštinom i vrlo nestabilnim turističkim kretanjima?",
+        "answer": "Afrika južno od Sahare.",
+        "explanation": "Nestabilnost: politička kriza, epidemije, slaba infrastruktura."
+      },
+      {
+        "question": "Koja je regija od 2015. prva po udjelu potrošnje u globalnom turizmu?",
+        "answer": "Pacifička Azija — zbog Kine, najvećeg emitivnog tržišta po potrošnji (prema ispitnom ključu).",
+        "explanation": "Kina je prva po potrošnji turista."
+      },
+      {
+        "question": "Kojoj regiji pripadaju Bahami?",
+        "answer": "Latinskoj Americi — ona obuhvaća Meksiko, Srednju Ameriku, Karipsko-bahamsko otočje i Južnu Ameriku.",
+        "explanation": "Angloamerika = SAD i Kanada."
+      },
+      {
         "question": "Koja organizacija prati svjetski turizam?",
         "answer": "UNWTO — Svjetska turistička organizacija UN-a (danas UN Tourism), sa sjedištem u Madridu.",
         "explanation": "Objavljuje podatke o dolascima, prihodima i potrošnji po regijama."
@@ -69,6 +99,36 @@ const geographyHrM2 = {
     ],
     "quiz": [
       {
+        "question": "Koja od navedenih država pripada turističko-geografskoj regiji Pacifička Azija?",
+        "options": ["Indija", "Egipat", "Malezija", "Fidži"],
+        "correct": 2
+      },
+      {
+        "question": "Koja od navedenih država pripada regiji Australija s Oceanijom?",
+        "options": ["Filipini", "Indonezija", "Šri Lanka", "Fidži"],
+        "correct": 3
+      },
+      {
+        "question": "Koja država pripada regiji Afrika južno od Sahare?",
+        "options": ["Namibija", "Maroko", "Tunis", "Egipat"],
+        "correct": 0
+      },
+      {
+        "question": "Koja je regija obilježena niskom gustoćom naseljenosti, bogatom baštinom i vrlo nestabilnim turističkim kretanjima?",
+        "options": ["Orijent", "Afrika južno od Sahare", "Južna Azija", "Latinska Amerika"],
+        "correct": 1
+      },
+      {
+        "question": "Koja zemlja pripada Latinskoj Americi?",
+        "options": ["Kanada", "Island", "Bahami", "Grenland"],
+        "correct": 2
+      },
+      {
+        "question": "Koja je regija od 2015. prva prema udjelu potrošnje u globalnom turizmu?",
+        "options": ["Europa", "Angloamerika", "Orijent", "Pacifička Azija"],
+        "correct": 3
+      },
+      {
         "question": "Koja zemlja ima najviše međunarodnih turističkih dolazaka?",
         "options": ["Francuska", "SAD", "Španjolska", "Kina"],
         "correct": 0
@@ -110,6 +170,11 @@ const geographyHrM2 = {
       }
     ],
     "fillBlanks": [
+      {
+        "sentence": "Malezija pripada turističko-geografskoj regiji Pacifička _______.",
+        "answer": "Azija",
+        "hint": "Kontinent (nominativ)."
+      },
       {
         "sentence": "Prema UNWTO-u je 2019. u svijetu zabilježeno oko 1,5 _______ međunarodnih dolazaka.",
         "answer": "milijardi",
@@ -166,6 +231,20 @@ const geographyHrM2 = {
 <tr><td>Australija</td><td>oko 7,7 mil. km² (najmanji)</td><td>slabo naseljena, bogata prirodnim resursima</td></tr>
 </table>
 <p><strong>Mediteran (Sredozemlje)</strong> je bioregija kojoj pripadaju Španjolska, Italija, Grčka, Hrvatska, Turska i sjeverna Afrika — najprivlačnija turistička regija svijeta (mediteranska klima, more, antička baština).</p>
+<h3>Turističko-geografska regionalizacija svijeta (kolegij)</h3>
+<p>Uz pet UNWTO-ovih regija kolegij koristi podjelu svijeta na <strong>velike turističko-geografske regije</strong>:</p>
+<table>
+<tr><th>Regija</th><th>Obuhvat i primjeri iz ispitnih pitanja</th></tr>
+<tr><td><strong>Europa</strong></td><td>vodeća regija po dolascima</td></tr>
+<tr><td><strong>Orijent</strong></td><td>sjeverna Afrika i jugozapadna Azija (Bliski istok) — Egipat, Tunis, Maroko, Turska, Jordan, Izrael, UAE</td></tr>
+<tr><td><strong>Afrika južno od Sahare</strong></td><td>npr. <strong>Namibija</strong>, Kenija, Tanzanija, JAR, <strong>Sejšeli</strong>; <strong>niska gustoća naseljenosti, bogata prirodna i kulturna baština, vrlo nestabilna turistička kretanja</strong></td></tr>
+<tr><td><strong>Južna Azija</strong></td><td>Indija, Nepal, Šri Lanka, Maldivi</td></tr>
+<tr><td><strong>Pacifička Azija</strong></td><td>istočna i jugoistočna Azija — Kina, Japan, Koreja, <strong>Malezija</strong>, Tajland, Singapur; prema ispitnom ključu <strong>od 2015. prva po udjelu potrošnje</strong> u globalnom turizmu (zbog Kine)</td></tr>
+<tr><td><strong>Australija s Oceanijom</strong></td><td>Australija, Novi Zeland, <strong>Fidži</strong> i ostali pacifički otoci</td></tr>
+<tr><td><strong>Angloamerika</strong></td><td>SAD i Kanada</td></tr>
+<tr><td><strong>Latinska Amerika</strong></td><td>Meksiko, Srednja Amerika, <strong>Karipsko-bahamsko otočje (npr. Bahami)</strong>, Južna Amerika</td></tr>
+</table>
+<p>Ispitni ključ navodi i da je <strong>Orijent 2011. bio treći po prihodima</strong> od turizma — podatak nije iz UNWTO-ove podjele i ovdje ga ne možemo provjeriti; pamti ga kao tvrdnju iz ključa.</p>
 `
     }
   },
@@ -175,6 +254,16 @@ const geographyHrM2 = {
     "icon": "fa-umbrella-beach",
     "color": "#f97316",
     "flashcards": [
+      {
+        "question": "Koji su glavni gradovi Kanarskih otoka i koji je otok najposjećeniji?",
+        "answer": "Las Palmas (Gran Canaria) i Santa Cruz de Tenerife; najposjećeniji je otok Tenerife.",
+        "explanation": "Kanari: kupališni turizam kroz cijelu godinu."
+      },
+      {
+        "question": "Koje je najveće središte nautičkog turizma u Grčkoj?",
+        "answer": "Krf (Jonski otoci).",
+        "explanation": "Jonski otoci: Krf, Zakintos, Kefalonija."
+      },
       {
         "question": "Zašto je Španjolska studija slučaja svjetskog turizma?",
         "answer": "Druga je u svijetu po dolascima i prihodima; spaja masovni kupališni turizam (coste, otoci) s gradskim i kulturnim turizmom.",
@@ -262,125 +351,135 @@ const geographyHrM2 = {
       },
       {
         "question": "Koje more je između Grčke i Turske i koji su otoci u njemu?",
-        "answer": "Egejsko more — Kikladi (Santorini, Mykonos) i Dodekanez (Rodos, najveći otok skupine).",
+        "answer": "Egejsko more — Kikladi (Santorini, Mykonos) i Dodekanez (Rodos, najveći i najistočniji veći otok skupine).",
         "explanation": "Jonski otoci (Krf, Zakintos, Kefalonija) su na zapadu Grčke."
       }
     ],
     "quiz": [
       {
-        "question": "U kojem se gradu nalazi europski Guggenheimov muzej?",
-        "options": ["Bilbau", "Madridu", "Barceloni", "Valenciji"],
+        "question": "Koja je kupališna destinacija, uz Las Palmas, najposjećenija na Kanarskim otocima?",
+        "options": ["Santa Cruz de Tenerife", "Palma de Mallorca", "Málaga", "Ibiza"],
         "correct": 0
+      },
+      {
+        "question": "Koji je grčki otok najveće središte nautičkog turizma?",
+        "options": ["Kreta", "Krf", "Rodos", "Mykonos"],
+        "correct": 1
+      },
+      {
+        "question": "U kojem se gradu nalazi europski Guggenheimov muzej?",
+        "options": ["Madridu", "Barceloni", "Bilbau", "Valenciji"],
+        "correct": 2
       },
       {
         "question": "U kojem se gradu nalazi muzej Prado?",
-        "options": ["Sevilli", "Madridu", "Barceloni", "Lisabonu"],
-        "correct": 1
+        "options": ["Sevilli", "Barceloni", "Lisabonu", "Madridu"],
+        "correct": 3
       },
       {
         "question": "U kojem se gradu nalazi Sagrada Família?",
-        "options": ["Madridu", "Granadi", "Barceloni", "Bilbau"],
-        "correct": 2
+        "options": ["Barceloni", "Madridu", "Granadi", "Bilbau"],
+        "correct": 0
       },
       {
         "question": "Koje je hodočasničko svetište na sjeverozapadu Španjolske?",
-        "options": ["Montserrat", "Lourdes", "Fátima", "Santiago de Compostela"],
-        "correct": 3
+        "options": ["Montserrat", "Santiago de Compostela", "Lourdes", "Fátima"],
+        "correct": 1
       },
       {
         "question": "U kojoj se regiji nalazi Lloret de Mar?",
-        "options": ["Costa Brava", "Costa del Sol", "Costa Blanca", "Costa de la Luz"],
-        "correct": 0
+        "options": ["Costa del Sol", "Costa Blanca", "Costa Brava", "Costa de la Luz"],
+        "correct": 2
       },
       {
         "question": "Málaga se nalazi u regiji:",
-        "options": ["Costa Cálida", "Costa del Sol", "Costa Dorada", "Costa Brava"],
-        "correct": 1
+        "options": ["Costa Cálida", "Costa Dorada", "Costa Brava", "Costa del Sol"],
+        "correct": 3
       },
       {
         "question": "Cartagena se nalazi u regiji:",
-        "options": ["Costa Blanca", "Costa del Azahar", "Costa Cálida", "Costa Tropical"],
-        "correct": 2
+        "options": ["Costa Cálida", "Costa Blanca", "Costa del Azahar", "Costa Tropical"],
+        "correct": 0
       },
       {
         "question": "Na kojem se Balearskom otoku nalazi Palma?",
-        "options": ["Ibizi", "Menorci", "Formenteri", "Mallorci"],
-        "correct": 3
+        "options": ["Ibizi", "Mallorci", "Menorci", "Formenteri"],
+        "correct": 1
       },
       {
         "question": "Koji je atraktivni vulkanski otok u blizini Španjolske?",
-        "options": ["Tenerife", "Mallorca", "Sardinija", "Korzika"],
-        "correct": 0
+        "options": ["Mallorca", "Sardinija", "Tenerife", "Korzika"],
+        "correct": 2
       },
       {
         "question": "U kojoj se europskoj državi tradicionalno održava corrida?",
-        "options": ["Italiji", "Španjolskoj", "Grčkoj", "Francuskoj"],
-        "correct": 1
+        "options": ["Italiji", "Grčkoj", "Francuskoj", "Španjolskoj"],
+        "correct": 3
       },
       {
         "question": "Koji je grad uništen erupcijom Vezuva?",
-        "options": ["Ostija", "Paestum", "Pompeji", "Sorrento"],
-        "correct": 2
+        "options": ["Pompeji", "Ostija", "Paestum", "Sorrento"],
+        "correct": 0
       },
       {
         "question": "Koje je glavno talijansko kupalište na Jadranu?",
-        "options": ["Sanremo", "Amalfi", "Taormina", "Rimini"],
-        "correct": 3
+        "options": ["Sanremo", "Rimini", "Amalfi", "Taormina"],
+        "correct": 1
       },
       {
         "question": "Najstarije sveučilište u zapadnom svijetu nalazi se u:",
-        "options": ["Bologni", "Padovi", "Parizu", "Oxfordu"],
-        "correct": 0
+        "options": ["Padovi", "Parizu", "Bologni", "Oxfordu"],
+        "correct": 2
       },
       {
         "question": "Koje more čini prirodnu atrakciju Genove?",
-        "options": ["Tirensko", "Ligursko", "Jadransko", "Jonsko"],
-        "correct": 1
+        "options": ["Tirensko", "Jadransko", "Jonsko", "Ligursko"],
+        "correct": 3
       },
       {
         "question": "Na kojem moru leži Napulj?",
-        "options": ["Ligurskom", "Jonskom", "Tirenskom", "Jadranskom"],
-        "correct": 2
+        "options": ["Tirenskom", "Ligurskom", "Jonskom", "Jadranskom"],
+        "correct": 0
       },
       {
         "question": "Umjetničko razdoblje nastalo u doba protureformacije je:",
-        "options": ["renesansa", "gotika", "romanika", "barok"],
-        "correct": 3
+        "options": ["renesansa", "barok", "gotika", "romanika"],
+        "correct": 1
       },
       {
         "question": "Koja se turistička destinacija nalazi u talijanskim Alpama?",
-        "options": ["Sestriere", "Rimini", "Capri", "Positano"],
-        "correct": 0
+        "options": ["Rimini", "Capri", "Sestriere", "Positano"],
+        "correct": 2
       },
       {
         "question": "Najviši aktivni vulkan Europe, na Siciliji, je:",
-        "options": ["Vezuv", "Etna", "Stromboli", "Hekla"],
-        "correct": 1
-      },
-      {
-        "question": "Kojoj grčkoj regiji pripadaju Sparta, Olimpija i Mikena?",
-        "options": ["Atici", "Makedoniji", "Peloponezu", "Tesaliji"],
-        "correct": 2
-      },
-      {
-        "question": "Najveći grčki otok, središte minojske kulture, je:",
-        "options": ["Rodos", "Krf", "Santorini", "Kreta"],
+        "options": ["Vezuv", "Stromboli", "Hekla", "Etna"],
         "correct": 3
       },
       {
-        "question": "U kojem se moru nalaze Santorini i Rodos?",
-        "options": ["Egejskom", "Jonskom", "Crnom", "Libijskom"],
+        "question": "Kojoj grčkoj regiji pripadaju Sparta, Olimpija i Mikena?",
+        "options": ["Peloponezu", "Atici", "Makedoniji", "Tesaliji"],
         "correct": 0
       },
       {
-        "question": "Krf, Zakintos i Kefalonija pripadaju:",
-        "options": ["Kikladima", "Jonskim otocima", "Dodekanezu", "Sporadima"],
+        "question": "Najveći grčki otok, središte minojske kulture, je:",
+        "options": ["Rodos", "Kreta", "Krf", "Santorini"],
         "correct": 1
       },
       {
-        "question": "U središtu kojeg se grada nalazi Akropola?",
-        "options": ["Soluna", "Rima", "Atene", "Istanbula"],
+        "question": "U kojem se moru nalaze Santorini i Rodos?",
+        "options": ["Jonskom", "Crnom", "Egejskom", "Libijskom"],
         "correct": 2
+      },
+      {
+        "question": "Krf, Zakintos i Kefalonija pripadaju:",
+        "options": ["Kikladima", "Dodekanezu", "Sporadima", "Jonskim otocima"],
+        "correct": 3
+      },
+      {
+        "question": "U središtu kojeg se grada nalazi Akropola?",
+        "options": ["Atene", "Soluna", "Rima", "Istanbula"],
+        "correct": 0
       }
     ],
     "fillBlanks": [
@@ -439,7 +538,7 @@ const geographyHrM2 = {
 </table>
 <ul>
 <li><strong>Balearski otoci</strong> (Sredozemlje): <strong>Mallorca</strong> (glavni grad <strong>Palma</strong>), Menorca, Ibiza (noćni život), Formentera.</li>
-<li><strong>Kanarski otoci</strong> (Atlantik, uz Afriku; vulkanski, cijelogodišnji turizam): <strong>Tenerife</strong> — NP Teide, vulkan Teide (3715 m, najviši vrh Španjolske); Gran Canaria, Lanzarote.</li>
+<li><strong>Kanarski otoci</strong> (Atlantik, uz Afriku; vulkanski, cijelogodišnji turizam): glavni gradovi <strong>Las Palmas</strong> (Gran Canaria) i <strong>Santa Cruz de Tenerife</strong>; <strong>Tenerife</strong> je najposjećeniji otok — NP Teide, vulkan Teide (3715 m, najviši vrh Španjolske); Gran Canaria, Lanzarote.</li>
 <li><strong>Gradovi i kultura:</strong> <strong>Madrid</strong> — muzej <strong>Prado</strong>, Kraljevska palača; <strong>Barcelona</strong> — <strong>Sagrada Família</strong> i Park Güell (Gaudí); <strong>Bilbao</strong> — <strong>Guggenheimov muzej</strong> (1997.), koji je industrijski grad stavio na kulturnu kartu svijeta; <strong>Sevilla</strong> (katedrala, Alcázar); <strong>Granada</strong> (Alhambra, Sierra Nevada); Córdoba (Mezquita); Toledo; Pamplona (San Fermín).</li>
 <li><strong>Vjerski turizam:</strong> <strong>Santiago de Compostela</strong> (Galicija, sjeverozapad) — grob sv. Jakova, hodočasnički put Camino.</li>
 </ul>
@@ -462,11 +561,11 @@ const geographyHrM2 = {
 <tr><td><strong>Peloponez</strong></td><td><strong>Olimpija</strong> (kolijevka Olimpijskih igara), <strong>Mikena</strong> (mikenska kultura), <strong>Sparta</strong>, Korintski kanal, Epidaur</td></tr>
 <tr><td>Makedonija</td><td>Solun, Halkidiki, Atos</td></tr>
 <tr><td><strong>Kreta</strong></td><td>najveći grčki otok — <strong>minojska kultura</strong>, palača Knosos</td></tr>
-<tr><td><strong>Egejski otoci</strong></td><td>Kikladi (<strong>Santorini</strong>, Mykonos), Dodekanez (<strong>Rodos</strong> — najveći otok skupine, uz tursku obalu; Kos)</td></tr>
-<tr><td><strong>Jonski otoci</strong></td><td><strong>Krf</strong>, <strong>Zakintos</strong>, <strong>Kefalonija</strong>, Itaka</td></tr>
+<tr><td><strong>Egejski otoci</strong></td><td>Kikladi (<strong>Santorini</strong>, Mykonos), Dodekanez (<strong>Rodos</strong> — najveći i najistočniji veći otok skupine, uz tursku obalu; Kos)</td></tr>
+<tr><td><strong>Jonski otoci</strong></td><td><strong>Krf</strong> (najveće središte nautičkog turizma u Grčkoj), <strong>Zakintos</strong>, <strong>Kefalonija</strong>, Itaka</td></tr>
 </table>
 <p><strong>Egejsko more</strong> je more između Grčke i Turske.</p>
-<div class="warning-box"><strong>Ispravci ključeva iz prikupljenih pitanja:</strong> Kreta je poznata po <strong>minojskoj</strong> kulturi, a <strong>mikenska</strong> kultura vezana je uz Mikenu na Peloponezu. Rodos je <strong>najveći</strong> otok Dodekaneza (najistočniji je malen otok Kastelorizo). Delfi i Teba nalaze se u središnjoj Grčkoj — ključ ih svrstava u Atiku jer se ta dva područja u turističkoj regionalizaciji često obrađuju zajedno.</div>
+<div class="warning-box"><strong>Ispravci ključeva iz prikupljenih pitanja:</strong> Kreta je poznata po <strong>minojskoj</strong> kulturi, a <strong>mikenska</strong> kultura vezana je uz Mikenu na Peloponezu. Rodos je <strong>najveći</strong> i najistočniji <strong>veći</strong> otok Dodekaneza (sasvim najistočniji je malen otok Kastelorizo) — odgovor „Rodos” na pitanje o najistočnijem otoku zato prihvati. Delfi i Teba nalaze se u središnjoj Grčkoj — ključ ih svrstava u Atiku jer se ta dva područja u turističkoj regionalizaciji često obrađuju zajedno.</div>
 `
     }
   },
@@ -476,6 +575,11 @@ const geographyHrM2 = {
     "icon": "fa-tower-observation",
     "color": "#6366f1",
     "flashcards": [
+      {
+        "question": "Što je Champagne?",
+        "answer": "Pokrajina istočno od Pariza poznata po vinskim cestama i pjenušcu (šampanjcu).",
+        "explanation": "Francuska: vina, sirevi (brie), konjak."
+      },
       {
         "question": "Koja je rijeka turistička atrakcija Pariza?",
         "answer": "Seine — povezuje Pariz s La Mancheom i Atlantskim oceanom; krstarenja uz Eiffelov toranj, Louvre i Notre-Dame.",
@@ -539,74 +643,79 @@ const geographyHrM2 = {
     ],
     "quiz": [
       {
+        "question": "Pokrajina istočno od Pariza poznata po vinskim cestama i pjenušcu je:",
+        "options": ["Burgundija", "Champagne", "Provansa", "Normandija"],
+        "correct": 1
+      },
+      {
         "question": "Koja rijeka čini prirodnu turističku atrakciju Pariza i povezuje ga s Atlantskim oceanom?",
-        "options": ["Loira", "Rona", "Garonne", "Seine"],
-        "correct": 3
+        "options": ["Loira", "Rona", "Seine", "Garonne"],
+        "correct": 2
       },
       {
         "question": "Koji se višemilijunski grad u zoni UTC+1 može pohvaliti sjedištem UNESCO-a?",
-        "options": ["Pariz", "Berlin", "Rim", "Madrid"],
-        "correct": 0
+        "options": ["Berlin", "Rim", "Madrid", "Pariz"],
+        "correct": 3
       },
       {
         "question": "Kako se naziva najveće katoličko hodočasničko središte na jugu Francuske?",
-        "options": ["Avignon", "Lourdes", "Chartres", "Reims"],
-        "correct": 1
+        "options": ["Lourdes", "Avignon", "Chartres", "Reims"],
+        "correct": 0
       },
       {
         "question": "Grad u južnoj Francuskoj poznat po međunarodnom filmskom festivalu je:",
-        "options": ["Nica", "Marseille", "Cannes", "Toulon"],
-        "correct": 2
+        "options": ["Nica", "Cannes", "Marseille", "Toulon"],
+        "correct": 1
       },
       {
         "question": "Koja je vrsta turizma razvijena u Vichyju?",
-        "options": ["Zimski", "Kongresni", "Nautički", "Termalni (lječilišni)"],
-        "correct": 3
+        "options": ["Zimski", "Kongresni", "Termalni (lječilišni)", "Nautički"],
+        "correct": 2
       },
       {
         "question": "Koja je vrsta turizma dominantna u Biarritzu?",
-        "options": ["Kupališni", "Termalni", "Planinski", "Vjerski"],
-        "correct": 0
+        "options": ["Termalni", "Planinski", "Vjerski", "Kupališni"],
+        "correct": 3
       },
       {
         "question": "Koja je vrsta turizma razvijena u Burgundiji?",
-        "options": ["Nautički", "Ruralni", "Zimski", "Kongresni"],
-        "correct": 1
+        "options": ["Ruralni", "Nautički", "Zimski", "Kongresni"],
+        "correct": 0
       },
       {
         "question": "Najposjećeniji muzej na svijetu je:",
-        "options": ["Ermitaž", "Prado", "Louvre", "Britanski muzej"],
-        "correct": 2
-      },
-      {
-        "question": "Koju državu tunel ispod La Manchea spaja s Francuskom?",
-        "options": ["Belgiju", "Nizozemsku", "Irsku", "Ujedinjeno Kraljevstvo"],
-        "correct": 3
-      },
-      {
-        "question": "Koji se višemilijunski grad u zoni UTC±0 ističe kao poslovno središte globalnog značaja?",
-        "options": ["London", "Lisabon", "Dublin", "Madrid"],
-        "correct": 0
-      },
-      {
-        "question": "Kako se zove središnja poslovna zona Londona?",
-        "options": ["Westminster", "London City", "Soho", "Camden"],
+        "options": ["Ermitaž", "Louvre", "Prado", "Britanski muzej"],
         "correct": 1
       },
       {
-        "question": "Po čemu je poznat Moher u irskoj turističkoj regiji Shannon?",
-        "options": ["Po ledenjacima", "Po termalnim izvorima", "Po klifovima", "Po vulkanima"],
+        "question": "Koju državu tunel ispod La Manchea spaja s Francuskom?",
+        "options": ["Belgiju", "Nizozemsku", "Ujedinjeno Kraljevstvo", "Irsku"],
         "correct": 2
       },
       {
-        "question": "Koji je europski grad poznat po kanalima i položaju ispod razine mora?",
-        "options": ["Bruges", "Hamburg", "Kopenhagen", "Amsterdam"],
+        "question": "Koji se višemilijunski grad u zoni UTC±0 ističe kao poslovno središte globalnog značaja?",
+        "options": ["Lisabon", "Dublin", "Madrid", "London"],
         "correct": 3
       },
       {
-        "question": "Rodna kuća Hansa Christiana Andersena nalazi se u:",
-        "options": ["Odenseu", "Oslu", "Stockholmu", "Helsinkiju"],
+        "question": "Kako se zove središnja poslovna zona Londona?",
+        "options": ["London City", "Westminster", "Soho", "Camden"],
         "correct": 0
+      },
+      {
+        "question": "Po čemu je poznat Moher u irskoj turističkoj regiji Shannon?",
+        "options": ["Po ledenjacima", "Po klifovima", "Po termalnim izvorima", "Po vulkanima"],
+        "correct": 1
+      },
+      {
+        "question": "Koji je europski grad poznat po kanalima i položaju ispod razine mora?",
+        "options": ["Bruges", "Hamburg", "Amsterdam", "Kopenhagen"],
+        "correct": 2
+      },
+      {
+        "question": "Rodna kuća Hansa Christiana Andersena nalazi se u:",
+        "options": ["Oslu", "Stockholmu", "Helsinkiju", "Odenseu"],
+        "correct": 3
       }
     ],
     "fillBlanks": [
@@ -650,7 +759,7 @@ const geographyHrM2 = {
 <tr><td>Atlantska obala</td><td><strong>Biarritz</strong> — <strong>kupališni</strong> turizam i surfanje; Bordeaux (vina)</td></tr>
 <tr><td>Središnja Francuska</td><td><strong>Vichy</strong> — <strong>termalni</strong> (lječilišni) turizam i mineralna voda; dvorci doline Loire</td></tr>
 <tr><td><strong>Burgundija</strong></td><td><strong>ruralni</strong> i vinski turizam</td></tr>
-<tr><td>Ostalo</td><td>Champagne (pjenušac), Normandija (Mont-Saint-Michel), Korzika; gastronomija — sirevi (brie, camembert), konjak (rakija iz Cognaca)</td></tr>
+<tr><td>Ostalo</td><td><strong>Champagne</strong> (pokrajina istočno od Pariza — vinske ceste i pjenušac), Normandija (Mont-Saint-Michel), Korzika; gastronomija — sirevi (brie, camembert), konjak (rakija iz Cognaca)</td></tr>
 </table>
 <p><strong>Eurotunel ispod La Manchea</strong> (1994.) povezuje Francusku s <strong>Ujedinjenim Kraljevstvom</strong> (Calais – Folkestone).</p>
 
@@ -687,6 +796,16 @@ const geographyHrM2 = {
     "color": "#14b8a6",
     "flashcards": [
       {
+        "question": "Po čemu je poznata Ženeva?",
+        "answer": "Drugi po veličini grad Švicarske (francuski govorni dio), sjedište brojnih međunarodnih organizacija; na mjestu gdje Rona istječe iz Ženevskog jezera.",
+        "explanation": "Europsko sjedište UN-a, Crveni križ."
+      },
+      {
+        "question": "Što je ARBORETUM?",
+        "answer": "Nasad raznovrsnog domaćeg i stranog drveća i grmlja za znanstvene, uzgojne i dekorativne svrhe.",
+        "explanation": "Trsteno, Kecskemét, Volčji Potok, Opeka."
+      },
+      {
         "question": "Koja rijeka ima najveći potencijal za unutarnju plovidbu u Europi?",
         "answer": "Dunav — povezuje četiri glavna grada (Beč, Bratislavu, Budimpeštu, Beograd); plovni put za kružna putovanja do Crnog mora.",
         "explanation": "Protječe kroz najviše država na svijetu (10)."
@@ -718,7 +837,7 @@ const geographyHrM2 = {
       },
       {
         "question": "Koji su najveći ledenjaci Alpa i Austrije?",
-        "answer": "Aletsch (Švicarska) — najveći alpski ledenjak; Pasterze — najveći ledenjak austrijskih Alpa.",
+        "answer": "Aletsch (Švicarska) — najveći alpski ledenjak; Pasterze — najveći ledenjak austrijskih (i Istočnih) Alpa.",
         "explanation": "Pasterze je podno Grossglocknera."
       },
       {
@@ -759,79 +878,89 @@ const geographyHrM2 = {
     ],
     "quiz": [
       {
-        "question": "Koja rijeka srednje Europe povezuje više glavnih gradova i plovni je put za kružna putovanja?",
-        "options": ["Rajna", "Dunav", "Laba", "Odra"],
+        "question": "Koji je švicarski grad sjedište brojnih međunarodnih organizacija, na mjestu gdje Rona istječe iz jezera?",
+        "options": ["Ženeva", "Zürich", "Bern", "Basel"],
+        "correct": 0
+      },
+      {
+        "question": "Nasad raznovrsnog domaćeg i stranog drveća za znanstvene i dekorativne svrhe zove se:",
+        "options": ["herbarij", "arboretum", "rasadnik", "park-šuma"],
         "correct": 1
+      },
+      {
+        "question": "Koja rijeka srednje Europe povezuje više glavnih gradova i plovni je put za kružna putovanja?",
+        "options": ["Rajna", "Laba", "Dunav", "Odra"],
+        "correct": 2
       },
       {
         "question": "Koja rijeka u Europi ima najveći potencijal za unutarnju plovidbu?",
-        "options": ["Seine", "Temza", "Dunav", "Pad"],
-        "correct": 2
+        "options": ["Seine", "Temza", "Pad", "Dunav"],
+        "correct": 3
       },
       {
         "question": "Koja rijeka istočne Europe završava svoj tok u Kaspijskom jezeru?",
-        "options": ["Dnjepar", "Don", "Ural", "Volga"],
-        "correct": 3
+        "options": ["Volga", "Dnjepar", "Don", "Ural"],
+        "correct": 0
       },
       {
         "question": "Na kojoj rijeci leži Berlin?",
-        "options": ["Spree", "Rajni", "Majni", "Labi"],
-        "correct": 0
+        "options": ["Rajni", "Spree", "Majni", "Labi"],
+        "correct": 1
       },
       {
         "question": "Koja je rijeka atrakcija Kölna?",
-        "options": ["Dunav", "Rajna", "Majna", "Mosel"],
-        "correct": 1
+        "options": ["Dunav", "Majna", "Rajna", "Mosel"],
+        "correct": 2
       },
       {
         "question": "Poznata atrakcija u Bavarskoj je:",
-        "options": ["Karneval u Veneciji", "Wieliczka", "Oktoberfest", "Brandenburška vrata"],
-        "correct": 2
+        "options": ["Karneval u Veneciji", "Wieliczka", "Brandenburška vrata", "Oktoberfest"],
+        "correct": 3
       },
       {
         "question": "Koje jezero leži na granici Švicarske, Njemačke i Austrije?",
-        "options": ["Ženevsko", "Garda", "Neuchâtelsko", "Bodensko"],
-        "correct": 3
+        "options": ["Bodensko", "Ženevsko", "Garda", "Neuchâtelsko"],
+        "correct": 0
       },
       {
         "question": "Koje jezero leži na granici Švicarske i Francuske?",
-        "options": ["Ženevsko", "Bodensko", "Como", "Luganosko"],
-        "correct": 0
+        "options": ["Bodensko", "Ženevsko", "Como", "Luganosko"],
+        "correct": 1
       },
       {
         "question": "Najveći ledenjak u austrijskim Alpama je:",
-        "options": ["Aletsch", "Pasterze", "Rhône", "Mer de Glace"],
-        "correct": 1
+        "options": ["Aletsch", "Rhône", "Pasterze", "Mer de Glace"],
+        "correct": 2
       },
       {
         "question": "Rudnik soli Wieliczka nalazi se u:",
-        "options": ["Češkoj", "Slovačkoj", "Poljskoj", "Austriji"],
-        "correct": 2
+        "options": ["Češkoj", "Slovačkoj", "Austriji", "Poljskoj"],
+        "correct": 3
       },
       {
         "question": "U kojem se gradu nalazi muzej Ermitaž?",
-        "options": ["Moskvi", "Kijevu", "Varšavi", "Sankt Peterburgu"],
-        "correct": 3
-      },
-      {
-        "question": "Koja je slavenska država prema broju stanovnika najveće potencijalno emitivno tržište?",
-        "options": ["Rusija", "Poljska", "Ukrajina", "Češka"],
+        "options": ["Sankt Peterburgu", "Moskvi", "Kijevu", "Varšavi"],
         "correct": 0
       },
       {
-        "question": "Crkva Vasilija Blaženog i Lenjinov mauzolej nalaze se u:",
-        "options": ["Sankt Peterburgu", "Moskvi", "Kijevu", "Minsku"],
+        "question": "Koja je slavenska država prema broju stanovnika najveće potencijalno emitivno tržište?",
+        "options": ["Poljska", "Rusija", "Ukrajina", "Češka"],
         "correct": 1
       },
       {
-        "question": "Koje je, uz Piran, središte talasoterapije u slovenskom Primorju?",
-        "options": ["Bled", "Rogaška Slatina", "Portorož", "Kranjska Gora"],
+        "question": "Crkva Vasilija Blaženog i Lenjinov mauzolej nalaze se u:",
+        "options": ["Sankt Peterburgu", "Kijevu", "Moskvi", "Minsku"],
         "correct": 2
       },
       {
-        "question": "Rona se ulijeva u:",
-        "options": ["Sjeverno more", "Crno more", "Atlantski ocean", "Sredozemno more"],
+        "question": "Koje je, uz Piran, središte talasoterapije u slovenskom Primorju?",
+        "options": ["Bled", "Rogaška Slatina", "Kranjska Gora", "Portorož"],
         "correct": 3
+      },
+      {
+        "question": "Rona se ulijeva u:",
+        "options": ["Sredozemno more", "Sjeverno more", "Crno more", "Atlantski ocean"],
+        "correct": 0
       }
     ],
     "fillBlanks": [
@@ -878,8 +1007,8 @@ const geographyHrM2 = {
 
 <h3>Alpske zemlje</h3>
 <ul>
-<li><strong>Austrija</strong> — Beč (dvorci, opera, kavane), Salzburg, Innsbruck, Bad Gastein (toplice); <strong>Pasterze</strong> — najveći ledenjak austrijskih Alpa (podno Grossglocknera).</li>
-<li><strong>Švicarska</strong> — <strong>Aletsch</strong>, najveći alpski ledenjak; Matterhorn i Zermatt, St. Moritz, Interlaken; <strong>Ženevsko jezero</strong> na granici Švicarske i Francuske (kroz njega teče <strong>Rona</strong>, koja izvire iz ledenjaka Rhône i ulijeva se u <strong>Sredozemno more</strong>); <strong>Bodensko jezero</strong> na granici <strong>Švicarske, Njemačke i Austrije</strong> (kroz njega teče Rajna).</li>
+<li><strong>Austrija</strong> — Beč (dvorci, opera, kavane), Salzburg, Innsbruck, Bad Gastein (toplice); <strong>Pasterze</strong> — najveći ledenjak austrijskih i Istočnih Alpa (podno Grossglocknera).</li>
+<li><strong>Švicarska</strong> — <strong>Aletsch</strong>, najveći alpski ledenjak; Matterhorn i Zermatt, St. Moritz, Interlaken; <strong>Ženeva</strong> — drugi po veličini grad, u francuskom (romanskom) dijelu zemlje, sjedište brojnih međunarodnih organizacija (europsko sjedište UN-a, Crveni križ), na mjestu gdje Rona istječe iz Ženevskog jezera; <strong>Ženevsko jezero</strong> na granici Švicarske i Francuske (kroz njega teče <strong>Rona</strong>, koja izvire iz ledenjaka Rhône i ulijeva se u <strong>Sredozemno more</strong>); <strong>Bodensko jezero</strong> na granici <strong>Švicarske, Njemačke i Austrije</strong> (kroz njega teče Rajna).</li>
 </ul>
 
 <h3>Srednjoeuropske zemlje</h3>
@@ -890,7 +1019,7 @@ const geographyHrM2 = {
 <tr><td>Poljska</td><td>Krakov, rudnik soli <strong>Wieliczka</strong> (UNESCO), Mazurska jezera</td></tr>
 <tr><td>Slovenija</td><td>Bled, Postojnska jama, Ljubljana; <strong>Piran</strong>, <strong>Portorož</strong> i <strong>Strunjan</strong> (talasoterapija i lječilišta u slovenskom Primorju); Arboretum Volčji Potok</td></tr>
 </table>
-<p><strong>Tri arboretuma iz ispitnih pitanja:</strong> Trsteno (kod Dubrovnika), Kecskemét (Mađarska), Volčji Potok (Slovenija).</p>
+<p><strong>Arboretum</strong> je nasad raznovrsnog domaćeg i stranog drveća i grmlja koji služi za znanstvene, uzgojne i dekorativne svrhe. <strong>Tri arboretuma iz ispitnih pitanja:</strong> Trsteno (kod Dubrovnika), Kecskemét (Mađarska), Volčji Potok (Slovenija).</p>
 
 <h3>Istočna Europa — Rusija</h3>
 <ul>
@@ -911,7 +1040,7 @@ const geographyHrM2 = {
 <tr><td>Spree</td><td>Berlin</td><td>Havel → Laba</td></tr>
 <tr><td>Volga</td><td>ruski gradovi, kružna putovanja</td><td>Kaspijsko jezero</td></tr>
 </table>
-<div class="warning-box"><strong>Ispravci ključeva iz prikupljenih pitanja:</strong> na pitanje o rijeci srednje Europe koja povezuje više <strong>glavnih gradova</strong> jedan ključ navodi Rajnu — točno je <strong>Dunav</strong> (Rajna ne povezuje više glavnih gradova država — od glavnih gradova dotiče samo Vaduz; Dunav povezuje četiri). Rona ne „istječe iz” Ženevskog jezera — izvire iz ledenjaka Rhône u Alpama i protječe kroz jezero.</div>
+<div class="warning-box"><strong>Ispravci ključeva iz prikupljenih pitanja:</strong> na pitanje o rijeci srednje Europe koja povezuje više <strong>glavnih gradova</strong> jedan ključ navodi Rajnu — točno je <strong>Dunav</strong> (Rajna ne povezuje više glavnih gradova država — od glavnih gradova dotiče samo Vaduz; Dunav povezuje četiri). Rona izvire iz ledenjaka Rhône u švicarskim Alpama, utječe u Ženevsko jezero i <strong>istječe iz njega kod Ženeve</strong>, a zatim kroz Francusku teče do Sredozemnog mora — ključ „istječe iz Ženevskog jezera” odnosi se na izlaz iz jezera.</div>
 `
     }
   },
@@ -921,6 +1050,36 @@ const geographyHrM2 = {
     "icon": "fa-torii-gate",
     "color": "#ef4444",
     "flashcards": [
+      {
+        "question": "Koji je grad u Kini poznat po snježnim atrakcijama?",
+        "answer": "Yabuli (pokrajina Heilongjiang) — najpoznatije kinesko skijalište.",
+        "explanation": "U Japanu je snježno odredište Sapporo."
+      },
+      {
+        "question": "Koje otočje tvori najjužniju japansku turističku regiju?",
+        "answer": "Otočje Ryukyu (Okinawa) — suptropske plaže i koraljni grebeni.",
+        "explanation": "Japan: Honshu, Hokkaido, Kyushu, Shikoku, Ryukyu."
+      },
+      {
+        "question": "Koje je najpoznatije kulturno-povijesno mjesto u Indiji?",
+        "answer": "Varanasi — najsvetiji hinduistički grad na Gangesu.",
+        "explanation": "Najpoznatiji spomenik je Taj Mahal u Agri."
+      },
+      {
+        "question": "Gdje je NP Sundarbans?",
+        "answer": "Na zajedničkoj delti Gangesa i Brahmaputre (Indija i Bangladeš) — najveća mangrova šuma, bengalski tigar.",
+        "explanation": "UNESCO svjetska baština."
+      },
+      {
+        "question": "Koji su problemi daljnjeg turističkog razvoja Indije?",
+        "answer": "Nedovoljno razvijena infrastruktura (voda, struja, ceste), negativan publicitet u inozemstvu i veliki ekološki problemi milijunskih gradova.",
+        "explanation": "Uz golemu baštinu i prirodu."
+      },
+      {
+        "question": "Koje otočne skupine pripadaju Indiji?",
+        "answer": "Andamani, Nikobari i Lakadivi.",
+        "explanation": "Maldivi su samostalna država."
+      },
       {
         "question": "Koji je grad hodočasničko središte triju monoteističkih religija?",
         "answer": "Jeruzalem — judaizam (Zid plača), kršćanstvo (crkva Svetoga groba) i islam (Kupola na stijeni, džamija Al-Aksa).",
@@ -1014,97 +1173,127 @@ const geographyHrM2 = {
     ],
     "quiz": [
       {
-        "question": "Koji je grad hodočasničko središte triju globalno najpoznatijih monoteističkih religija?",
-        "options": ["Jeruzalem", "Meka", "Rim", "Istanbul"],
+        "question": "Koji je grad u Kini poznat po snježnim atrakcijama?",
+        "options": ["Guilin", "Yabuli", "Suzhou", "Hangzhou"],
+        "correct": 1
+      },
+      {
+        "question": "Kako se zove otočje koje tvori najjužniju japansku turističku regiju?",
+        "options": ["Kurili", "Hokkaido", "Ryukyu", "Shikoku"],
+        "correct": 2
+      },
+      {
+        "question": "Na delti koje rijeke, uz Ganges, nalazi se NP Sundarbans?",
+        "options": ["Inda", "Mekonga", "Irrawaddyja", "Brahmaputre"],
+        "correct": 3
+      },
+      {
+        "question": "Koje otočne skupine pripadaju Indiji?",
+        "options": ["Andamani, Nikobari i Lakadivi", "Maldivi i Sejšeli", "Molučki i Sundski otoci", "Ryukyu i Kurili"],
         "correct": 0
+      },
+      {
+        "question": "Što NIJE navedeno kao problem turističkog razvoja Indije u 21. st.?",
+        "options": ["Nedovoljna infrastruktura", "Nedostatak kulturne baštine", "Negativan publicitet u inozemstvu", "Ekološki problemi velikih gradova"],
+        "correct": 1
+      },
+      {
+        "question": "Koji je grad hodočasničko središte triju globalno najpoznatijih monoteističkih religija?",
+        "options": ["Meka", "Rim", "Jeruzalem", "Istanbul"],
+        "correct": 2
       },
       {
         "question": "Koji je grad najveće budističko hodočasničko središte na Tibetu?",
-        "options": ["Kathmandu", "Lhasa", "Varanasi", "Qufu"],
-        "correct": 1
+        "options": ["Kathmandu", "Varanasi", "Qufu", "Lhasa"],
+        "correct": 3
       },
       {
         "question": "U kojoj se državi nalazi vojska od terakote s preko 8000 vojnika?",
-        "options": ["Japanu", "Indiji", "Kini", "Mongoliji"],
-        "correct": 2
+        "options": ["Kini", "Japanu", "Indiji", "Mongoliji"],
+        "correct": 0
       },
       {
         "question": "Koji je grad u Kini poznat po kipovima vojnika od terakote?",
-        "options": ["Šangaj", "Qufu", "Lhasa", "Xi’an"],
-        "correct": 3
+        "options": ["Šangaj", "Xi’an", "Qufu", "Lhasa"],
+        "correct": 1
       },
       {
         "question": "Gdje se nalazi Konfucijev hram u Kini?",
-        "options": ["U Qufuu", "U Pekingu", "U Lhasi", "U Guilinu"],
-        "correct": 0
+        "options": ["U Pekingu", "U Lhasi", "U Qufuu", "U Guilinu"],
+        "correct": 2
       },
       {
         "question": "U kojem se gradu nalazi Taj Mahal?",
-        "options": ["Delhiju", "Agri", "Varanasiju", "Mumbaiju"],
-        "correct": 1
+        "options": ["Delhiju", "Varanasiju", "Mumbaiju", "Agri"],
+        "correct": 3
       },
       {
         "question": "U kojoj se državi nalazi Varanasi?",
-        "options": ["Nepalu", "Šri Lanki", "Indiji", "Bangladešu"],
-        "correct": 2
+        "options": ["Indiji", "Nepalu", "Šri Lanki", "Bangladešu"],
+        "correct": 0
       },
       {
         "question": "Kojoj državi pripada Petra?",
-        "options": ["Izraelu", "Egiptu", "Libanonu", "Jordanu"],
-        "correct": 3
+        "options": ["Izraelu", "Jordanu", "Egiptu", "Libanonu"],
+        "correct": 1
       },
       {
         "question": "Koji je narod ostavio bogatu baštinu na području Irana?",
-        "options": ["Perzijanci", "Feničani", "Asteci", "Kmeri"],
-        "correct": 0
+        "options": ["Feničani", "Asteci", "Perzijanci", "Kmeri"],
+        "correct": 2
       },
       {
         "question": "Koji se grad na dva kontinenta, u zoni UTC+3, koristi kao polazište kružnih putovanja?",
-        "options": ["Kairo", "Istanbul", "Atena", "Dubai"],
-        "correct": 1
+        "options": ["Kairo", "Atena", "Dubai", "Istanbul"],
+        "correct": 3
       },
       {
         "question": "Koji se višemilijunski grad-država u zoni UTC+8 koristi kao uporište za putovanja u daleke destinacije?",
-        "options": ["Hong Kong", "Šangaj", "Singapur", "Bangkok"],
-        "correct": 2
+        "options": ["Singapur", "Hong Kong", "Šangaj", "Bangkok"],
+        "correct": 0
       },
       {
         "question": "Koji grad u zoni UTC+8, nekad britanski posjed, danas posebna upravna regija Kine, slovi kao shopping destinacija?",
-        "options": ["Šangaj", "Peking", "Macao", "Hong Kong"],
-        "correct": 3
+        "options": ["Šangaj", "Hong Kong", "Peking", "Macao"],
+        "correct": 1
       },
       {
         "question": "Budistički hram-grad Angkor Wat nalazi se u:",
-        "options": ["Kambodži", "Tajlandu", "Vijetnamu", "Laosu"],
-        "correct": 0
-      },
-      {
-        "question": "Kako se naziva najvažnija turistička regija Japana?",
-        "options": ["Hokkaido", "Honshu", "Kyushu", "Shikoku"],
-        "correct": 1
-      },
-      {
-        "question": "Koje je glavno hodočasničko (šintoističko) središte Japana?",
-        "options": ["Sapporo", "Osaka", "Ise", "Hiroshima"],
+        "options": ["Tajlandu", "Vijetnamu", "Kambodži", "Laosu"],
         "correct": 2
       },
       {
-        "question": "Koje je snježno odredište u Japanu?",
-        "options": ["Kyoto", "Nara", "Okinawa", "Sapporo"],
+        "question": "Kako se naziva najvažnija turistička regija Japana?",
+        "options": ["Hokkaido", "Kyushu", "Shikoku", "Honshu"],
         "correct": 3
       },
       {
-        "question": "Po „vilinskim dimnjacima” i letovima balonom poznata je:",
-        "options": ["Kapadokija", "Petra", "Pamukkale", "Efez"],
+        "question": "Koje je glavno hodočasničko (šintoističko) središte Japana?",
+        "options": ["Ise", "Sapporo", "Osaka", "Hiroshima"],
         "correct": 0
       },
       {
-        "question": "U kojoj su državi Meka i Medina?",
-        "options": ["Iranu", "Saudijskoj Arabiji", "Maroku", "Jordanu"],
+        "question": "Koje je snježno odredište u Japanu?",
+        "options": ["Kyoto", "Sapporo", "Nara", "Okinawa"],
         "correct": 1
+      },
+      {
+        "question": "Po „vilinskim dimnjacima” i letovima balonom poznata je:",
+        "options": ["Petra", "Pamukkale", "Kapadokija", "Efez"],
+        "correct": 2
+      },
+      {
+        "question": "U kojoj su državi Meka i Medina?",
+        "options": ["Iranu", "Maroku", "Jordanu", "Saudijskoj Arabiji"],
+        "correct": 3
       }
     ],
     "fillBlanks": [
+      {
+        "sentence": "NP Sundarbans nalazi se na delti Gangesa i _______.",
+        "answer": "Brahmaputre",
+        "hint": "Rijeka (genitiv)."
+      },
       {
         "sentence": "Taj Mahal nalazi se u indijskom gradu _______.",
         "answer": "Agri",
@@ -1179,6 +1368,12 @@ const geographyHrM2 = {
 </table>
 <div class="tip-box"><strong>Gradovi u zoni UTC+8 (česta pitanja):</strong> <strong>Singapur</strong> = grad-država, uporište za daleke destinacije · <strong>Hong Kong</strong> = bivši britanski posjed (do 1997.), shopping, kruzeri · <strong>Šangaj</strong> = najveći kineski grad, poslovno središte. Ključ razlikovanja: „grad-država” je samo Singapur.</div>
 <div class="warning-box"><strong>Ispravci ključeva iz prikupljenih pitanja:</strong> Medina je u Saudijskoj Arabiji, a ne u Maroku. Ključevi za gradove UTC+8 međusobno se razlikuju (Singapur / Hong Kong / Šangaj) — odlučujući su opisi „grad-država” (Singapur) i „nekad britanski posjed, danas shopping destinacija” (Hong Kong). Za Damask vrijedi „jedan od najstarijih stalno naseljenih gradova”, a ne „najstariji grad na svijetu”.</div>
+<h3>Dopune iz ispitnih pitanja</h3>
+<ul>
+<li><strong>Kina:</strong> <strong>Yabuli</strong> (pokrajina Heilongjiang) — grad poznat po snježnim atrakcijama, najpoznatije kinesko skijalište.</li>
+<li><strong>Japan:</strong> turističke regije Honshu, Hokkaido, Kyushu, Shikoku i <strong>Ryukyu</strong> — otočje Ryukyu (Okinawa) tvori <strong>najjužniju japansku turističku regiju</strong> (suptropske plaže, koraljni grebeni).</li>
+<li><strong>Indija:</strong> <strong>Varanasi</strong> je najpoznatije kulturno-povijesno (sveto) mjesto; <strong>NP Sundarbans</strong> leži na zajedničkoj delti <strong>Gangesa i Brahmaputre</strong> (mangrove, bengalski tigar); Indiji pripadaju otočne skupine <strong>Andamani, Nikobari i Lakadivi</strong>. Problemi daljnjeg razvoja turizma: <strong>nedovoljno razvijena infrastruktura</strong> (voda, struja, ceste), <strong>negativan publicitet u inozemstvu</strong> i <strong>veliki ekološki problemi milijunskih gradova</strong>.</li>
+</ul>
 `
     }
   },
@@ -1188,6 +1383,16 @@ const geographyHrM2 = {
     "icon": "fa-earth-africa",
     "color": "#eab308",
     "flashcards": [
+      {
+        "question": "Koja su velika jezera istočne Afrike?",
+        "answer": "Viktorijino, Tanganjika, Njasa (Malavi), Turkana, Albertovo, Kivu i Edwardovo jezero.",
+        "explanation": "Jezera Istočnoafričke rasjedne zone."
+      },
+      {
+        "question": "Po čemu je poznat NP Addo Elephant?",
+        "answer": "Nacionalni park u JAR-u (kod Port Elizabetha) poznat po slonovima; ispitni ključ uz njega veže i plažu Boulders.",
+        "explanation": "Plaža Boulders (pingvini) zapravo je kod Cape Towna."
+      },
       {
         "question": "Koja je država na dva kontinenta, islamska, s atrakcijama starog vijeka i većinom pustinjom?",
         "answer": "Egipat — Afrika i poluotok Sinaj (Azija); piramide, hramovi, Nil; više od 90 % površine je pustinja.",
@@ -1240,6 +1445,16 @@ const geographyHrM2 = {
       }
     ],
     "quiz": [
+      {
+        "question": "Koje se od navedenih jezera NE nalazi u istočnoj Africi?",
+        "options": ["Čadsko jezero", "Viktorijino jezero", "Tanganjika", "Turkana"],
+        "correct": 0
+      },
+      {
+        "question": "Koja otočna država pripada Africi (južno od Sahare)?",
+        "options": ["Maldivi", "Sejšeli", "Šri Lanka", "Fidži"],
+        "correct": 1
+      },
       {
         "question": "Koju državu možemo povezati s obilježjima: dva kontinenta, islamska država, atrakcije staroga vijeka, većinom pustinja?",
         "options": ["Maroko", "Tunis", "Egipat", "Libija"],
@@ -1332,6 +1547,12 @@ const geographyHrM2 = {
 <tr><td><strong>Južnoafrička Republika</strong></td><td>Krugerov nacionalni park, Cape Town i Stolna planina, Rt dobre nade</td></tr>
 </table>
 <div class="warning-box"><strong>Ispravak ključa iz prikupljenih pitanja:</strong> na pitanje „država na dva kontinenta, islamska, atrakcije staroga vijeka, <strong>većinu površine čine pustinje</strong>” jedan ključ navodi Tursku — točno je <strong>Egipat</strong>: Turska jest na dva kontinenta, ali nije pretežno pustinjska. Za narod na jugu Mediterana ključ nudi „Feničani ili Egipćani” — pitanje se odnosi na Feničane (Kartaga u Tunisu).</div>
+<h3>Dopune iz ispitnih pitanja</h3>
+<ul>
+<li><strong>Jezera istočne Afrike</strong> (Istočnoafrička rasjedna zona): <strong>Viktorijino, Tanganjika, Njasa (Malavi), Turkana, Albertovo, Kivu i Edwardovo</strong>. Čadsko jezero je u središnjoj, a ne istočnoj Africi.</li>
+<li><strong>Afrika južno od Sahare</strong> (regija kolegija): npr. <strong>Namibija</strong>, <strong>Sejšeli</strong>, Kenija, Tanzanija, JAR — niska gustoća naseljenosti, bogata prirodna i kulturna baština, vrlo nestabilna turistička kretanja.</li>
+<li><strong>JAR — NP Addo Elephant</strong> (kod Port Elizabetha / Gqeberhe): park slonova. Ispitni ključ na pitanje „kraj kojeg se NP u JAR-u nalazi atraktivna plaža Boulders” navodi <strong>Addo Elephant</strong>; plaža Boulders s kolonijom pingvina zapravo pripada NP Table Mountain (Stolna planina) kod Cape Towna — ako je Addo jedini ponuđeni park JAR-a, odgovor je Addo.</li>
+</ul>
 `
     }
   },
@@ -1476,6 +1697,21 @@ const geographyHrM2 = {
     "color": "#a855f7",
     "flashcards": [
       {
+        "question": "Koja regija SAD-a ostvaruje najveći udio prihoda od međunarodnih dolazaka?",
+        "answer": "Središnji Atlantik (New York, Washington).",
+        "explanation": "Prema ispitnom ključu."
+      },
+      {
+        "question": "U kojoj je turističkoj regiji SAD-a najstariji nacionalni park?",
+        "answer": "U Planinskom zapadu — Yellowstone.",
+        "explanation": "Regije: Nova Engleska, Središnji Atlantik, Florida, Srednji zapad, Planinski zapad, Pacifik, Aljaska, Havaji."
+      },
+      {
+        "question": "Koje je planinsko odredište Brazila?",
+        "answer": "Campos do Jordão (savezna država São Paulo), „brazilska Švicarska”.",
+        "explanation": "Brazil: Rio, Brasília, Iguaçu, Amazonija."
+      },
+      {
         "question": "Koji je najstariji nacionalni park na svijetu?",
         "answer": "Yellowstone u SAD-u (1872.) — gejziri (Old Faithful), termalni izvori, divljina.",
         "explanation": "SAD je začetnik ideje nacionalnih parkova."
@@ -1538,59 +1774,74 @@ const geographyHrM2 = {
     ],
     "quiz": [
       {
-        "question": "Kako se naziva najstariji nacionalni park na svijetu?",
-        "options": ["Grand Canyon", "Yosemite", "Yellowstone", "Plitvička jezera"],
+        "question": "Koja regija SAD-a ostvaruje najveći udio u prihodu od međunarodnih dolazaka?",
+        "options": ["Srednji zapad", "Aljaska", "Središnji Atlantik", "Nova Engleska"],
         "correct": 2
+      },
+      {
+        "question": "U kojoj se turističkoj regiji SAD-a nalazi najstariji nacionalni park?",
+        "options": ["Pacifik", "Florida", "Nova Engleska", "Planinski zapad"],
+        "correct": 3
+      },
+      {
+        "question": "Koje je od navedenih planinsko turističko odredište Brazila?",
+        "options": ["Campos do Jordão", "Copacabana", "Salvador", "Manaus"],
+        "correct": 0
+      },
+      {
+        "question": "Kako se naziva najstariji nacionalni park na svijetu?",
+        "options": ["Grand Canyon", "Yellowstone", "Yosemite", "Plitvička jezera"],
+        "correct": 1
       },
       {
         "question": "Iz koje države dolazi najviše turista u SAD?",
-        "options": ["Iz Meksika", "Iz Velike Britanije", "Iz Japana", "Iz Kanade"],
-        "correct": 3
+        "options": ["Iz Meksika", "Iz Velike Britanije", "Iz Kanade", "Iz Japana"],
+        "correct": 2
       },
       {
         "question": "Kako se naziva narod koji je u južnom dijelu Meksičke visoravni ostavio bogatu baštinu?",
-        "options": ["Asteci", "Maje", "Inke", "Olmeci"],
-        "correct": 0
+        "options": ["Maje", "Inke", "Olmeci", "Asteci"],
+        "correct": 3
       },
       {
         "question": "Kako se naziva narod koji je na poluotoku Yucatánu ostavio bogatu baštinu?",
-        "options": ["Asteci", "Maje", "Inke", "Tolteci"],
-        "correct": 1
+        "options": ["Maje", "Asteci", "Inke", "Tolteci"],
+        "correct": 0
       },
       {
         "question": "Koju državu možemo povezati s obilježjima: otočna država, najveći otok Kariba, cigare, rum, oldtimeri?",
-        "options": ["Jamajku", "Dominikansku Republiku", "Kubu", "Portoriko"],
-        "correct": 2
-      },
-      {
-        "question": "Koju državu možemo povezati s obilježjima: velika, na Atlantiku, službeni jezik portugalski, svjetski poznat turistički događaj?",
-        "options": ["Argentinu", "Portugal", "Meksiko", "Brazil"],
-        "correct": 3
-      },
-      {
-        "question": "Glavni grad Brazila je:",
-        "options": ["Brasília", "Rio de Janeiro", "São Paulo", "Salvador"],
-        "correct": 0
-      },
-      {
-        "question": "Vodopad koji dijele Brazil i Argentina je:",
-        "options": ["Angel", "Iguaçu", "Niagara", "Viktorijin"],
+        "options": ["Jamajku", "Kubu", "Dominikansku Republiku", "Portoriko"],
         "correct": 1
       },
       {
-        "question": "Kanjon rijeke Colorado u Arizoni je:",
-        "options": ["Yosemite", "Monument Valley", "Grand Canyon", "Death Valley"],
+        "question": "Koju državu možemo povezati s obilježjima: velika, na Atlantiku, službeni jezik portugalski, svjetski poznat turistički događaj?",
+        "options": ["Argentinu", "Portugal", "Brazil", "Meksiko"],
         "correct": 2
       },
       {
-        "question": "Muzej Boba Marleya nalazi se u:",
-        "options": ["Havani", "San Joséu", "Port-au-Princeu", "Kingstonu"],
+        "question": "Glavni grad Brazila je:",
+        "options": ["Rio de Janeiro", "São Paulo", "Salvador", "Brasília"],
         "correct": 3
       },
       {
-        "question": "Hollywood je dio kojeg velikog turističkog grada?",
-        "options": ["Los Angelesa", "San Francisca", "Las Vegasa", "San Diega"],
+        "question": "Vodopad koji dijele Brazil i Argentina je:",
+        "options": ["Iguaçu", "Angel", "Niagara", "Viktorijin"],
         "correct": 0
+      },
+      {
+        "question": "Kanjon rijeke Colorado u Arizoni je:",
+        "options": ["Yosemite", "Grand Canyon", "Monument Valley", "Death Valley"],
+        "correct": 1
+      },
+      {
+        "question": "Muzej Boba Marleya nalazi se u:",
+        "options": ["Havani", "San Joséu", "Kingstonu", "Port-au-Princeu"],
+        "correct": 2
+      },
+      {
+        "question": "Hollywood je dio kojeg velikog turističkog grada?",
+        "options": ["San Francisca", "Las Vegasa", "San Diega", "Los Angelesa"],
+        "correct": 3
       }
     ],
     "fillBlanks": [
@@ -1629,7 +1880,7 @@ const geographyHrM2 = {
 <li><strong>Yellowstone</strong> (1872.) — <strong>najstariji nacionalni park na svijetu</strong>: gejziri (Old Faithful), termalni izvori, bizoni.</li>
 <li><strong>Grand Canyon</strong> — kanjon rijeke Colorado (Arizona).</li>
 <li><strong>New York</strong> — Kip slobode, Times Square, Manhattan, <strong>sjedište UN-a</strong>. <strong>Los Angeles</strong> — Hollywood, plaže. Las Vegas (kockarnice), Florida (Orlando, Miami), San Francisco (Golden Gate), Niagarini slapovi (granica s Kanadom).</li>
-<li>Turističke regije: Nova Engleska, srednji Atlantik, Florida, Srednji zapad, planinski Zapad, Pacifik, Aljaska, Havaji. Vrste turizma: gradski, zabavni (tematski parkovi), kockarski, event, kulturni, ekoturizam.</li>
+<li>Turističke regije: Nova Engleska, <strong>Središnji Atlantik</strong> (New York, Washington — <strong>najveći udio prihoda od međunarodnih dolazaka</strong>), Florida, Srednji zapad, <strong>Planinski zapad</strong> (Yellowstone, Grand Canyon, Las Vegas), Pacifik, Aljaska, Havaji. Vrste turizma: gradski, zabavni (tematski parkovi), kockarski, event, kulturni, ekoturizam.</li>
 </ul>
 
 <h3>Meksiko</h3>
@@ -1640,6 +1891,7 @@ const geographyHrM2 = {
 </ul>
 
 <h3>Karibi i Srednja Amerika</h3>
+<p>Latinska Amerika obuhvaća Meksiko, Srednju Ameriku, <strong>Karipsko-bahamsko otočje</strong> (npr. Bahami, Kuba, Jamajka) i Južnu Ameriku.</p>
 <table>
 <tr><th>Država</th><th>Atrakcije</th></tr>
 <tr><td><strong>Kuba</strong></td><td>otočna država, <strong>najveći otok Kariba</strong>; <strong>cigare, rum, oldtimeri</strong>; Havana</td></tr>
@@ -1649,7 +1901,7 @@ const geographyHrM2 = {
 
 <h3>Južna Amerika</h3>
 <ul>
-<li><strong>Brazil</strong> — velika država na Atlantiku, <strong>službeni jezik portugalski</strong>; svjetski poznat <strong>karneval u Rio de Janeiru</strong>; Rio: Kip Krista Iskupitelja na Corcovadu, Copacabana i Ipanema, stadion Maracanã. <strong>Glavni grad: Brasília</strong> (planski građena 1960., UNESCO). Amazonija; Salvador.</li>
+<li><strong>Brazil</strong> — velika država na Atlantiku, <strong>službeni jezik portugalski</strong>; svjetski poznat <strong>karneval u Rio de Janeiru</strong>; Rio: Kip Krista Iskupitelja na Corcovadu, Copacabana i Ipanema, stadion Maracanã. <strong>Glavni grad: Brasília</strong> (planski građena 1960., UNESCO). Amazonija; Salvador; <strong>Campos do Jordão</strong> — planinsko odredište („brazilska Švicarska”).</li>
 <li><strong>Slapovi Iguaçu (Iguazú)</strong> — na granici <strong>Brazila i Argentine</strong>.</li>
 <li><strong>Čile</strong> — pustinja Atacama; Uskršnji otok (moai).</li>
 <li>Venezuela — slap Angel (najviši na svijetu).</li>
@@ -1707,43 +1959,43 @@ const geographyHrM2 = {
     "quiz": [
       {
         "question": "U kojem je gradu sjedište UNESCO-a?",
-        "options": ["New Yorku", "Parizu", "Ženevi", "Madridu"],
-        "correct": 1
+        "options": ["Parizu", "New Yorku", "Ženevi", "Madridu"],
+        "correct": 0
       },
       {
         "question": "U kojem je gradu sjedište UN-a?",
-        "options": ["Washingtonu", "Beču", "New Yorku", "Bruxellesu"],
-        "correct": 2
-      },
-      {
-        "question": "Koji je grad svet trima monoteističkim religijama?",
-        "options": ["Meka", "Istanbul", "Damask", "Jeruzalem"],
-        "correct": 3
-      },
-      {
-        "question": "Koji se grad prepoznaje po Koloseumu?",
-        "options": ["Rim", "Atena", "Verona", "Pompeji"],
-        "correct": 0
-      },
-      {
-        "question": "Koji se grad prepoznaje po Operi u zaljevu i mostu Harbour Bridge?",
-        "options": ["Melbourne", "Sydney", "Auckland", "San Francisco"],
+        "options": ["Washingtonu", "New Yorku", "Beču", "Bruxellesu"],
         "correct": 1
       },
       {
-        "question": "Koji se grad prepoznaje po Brandenburškim vratima?",
-        "options": ["München", "Beč", "Berlin", "Prag"],
+        "question": "Koji je grad svet trima monoteističkim religijama?",
+        "options": ["Meka", "Istanbul", "Jeruzalem", "Damask"],
         "correct": 2
       },
       {
-        "question": "Koji se grad prepoznaje po Kremlju i crkvi Vasilija Blaženog?",
-        "options": ["Kijev", "Sankt Peterburg", "Varšava", "Moskva"],
+        "question": "Koji se grad prepoznaje po Koloseumu?",
+        "options": ["Atena", "Verona", "Pompeji", "Rim"],
         "correct": 3
       },
       {
-        "question": "Šintoističko svetište Ise nalazi se u:",
-        "options": ["Japanu", "Kini", "Koreji", "Tajlandu"],
+        "question": "Koji se grad prepoznaje po Operi u zaljevu i mostu Harbour Bridge?",
+        "options": ["Sydney", "Melbourne", "Auckland", "San Francisco"],
         "correct": 0
+      },
+      {
+        "question": "Koji se grad prepoznaje po Brandenburškim vratima?",
+        "options": ["München", "Berlin", "Beč", "Prag"],
+        "correct": 1
+      },
+      {
+        "question": "Koji se grad prepoznaje po Kremlju i crkvi Vasilija Blaženog?",
+        "options": ["Kijev", "Sankt Peterburg", "Moskva", "Varšava"],
+        "correct": 2
+      },
+      {
+        "question": "Šintoističko svetište Ise nalazi se u:",
+        "options": ["Kini", "Koreji", "Tajlandu", "Japanu"],
+        "correct": 3
       }
     ],
     "fillBlanks": [

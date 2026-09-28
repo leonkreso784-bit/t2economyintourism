@@ -73,83 +73,83 @@ const geographyHrFinalExamPractice = {
   "quiz": [
     {
       "question": "Koliki se udio međunarodnih turista kreće unutar granica vlastitih turističkih regija (UNWTO 2019.)?",
-      "options": ["Oko 50 %", "Oko 80 %", "Oko 20 %", "Oko 95 %"],
-      "correct": 1
+      "options": ["Oko 80 %", "Oko 50 %", "Oko 20 %", "Oko 95 %"],
+      "correct": 0
     },
     {
       "question": "Koji od navedenih čimbenika ponude pripada skupini receptivnih?",
-      "options": ["Klima", "Manifestacije", "Komunalna infrastruktura", "Zračni promet"],
-      "correct": 2
+      "options": ["Klima", "Komunalna infrastruktura", "Manifestacije", "Zračni promet"],
+      "correct": 1
     },
     {
       "question": "Gdje se nalazi zaštićeno područje Veliki koraljni greben?",
-      "options": ["U Indoneziji", "Na Maldivima", "U Meksiku", "U Australiji"],
-      "correct": 3
+      "options": ["U Indoneziji", "Na Maldivima", "U Australiji", "U Meksiku"],
+      "correct": 2
     },
     {
       "question": "Koja od rijeka ima najveći potencijal za rafting?",
-      "options": ["Cetina", "Drava", "Sava", "Dunav"],
-      "correct": 0
+      "options": ["Drava", "Sava", "Dunav", "Cetina"],
+      "correct": 3
     },
     {
       "question": "Koji je grad u hrvatskom Podunavlju poznat po enološkim specifičnostima?",
-      "options": ["Vinkovci", "Erdut", "Đakovo", "Požega"],
-      "correct": 1
+      "options": ["Erdut", "Vinkovci", "Đakovo", "Požega"],
+      "correct": 0
     },
     {
       "question": "Turisti iz koje države najviše troše na međunarodnim putovanjima?",
-      "options": ["SAD", "Njemačka", "Kina", "Japan"],
-      "correct": 2
+      "options": ["SAD", "Kina", "Njemačka", "Japan"],
+      "correct": 1
     },
     {
       "question": "U kojoj se državi nalazi Dolina kraljeva?",
-      "options": ["Jordanu", "Iraku", "Grčkoj", "Egiptu"],
-      "correct": 3
+      "options": ["Jordanu", "Iraku", "Egiptu", "Grčkoj"],
+      "correct": 2
     },
     {
       "question": "Koji grad ima najkvalitetnije i najljepše plaže u Hrvatskoj?",
-      "options": ["Makarska", "Poreč", "Crikvenica", "Zadar"],
-      "correct": 0
+      "options": ["Poreč", "Crikvenica", "Zadar", "Makarska"],
+      "correct": 3
     },
     {
       "question": "Koje je područje južne Dalmacije poznato po vinima Dingač i Postup?",
-      "options": ["Korčula", "Pelješac", "Konavle", "Mljet"],
-      "correct": 1
+      "options": ["Pelješac", "Korčula", "Konavle", "Mljet"],
+      "correct": 0
     },
     {
       "question": "Koji je grad u Kini poznat po oko 8000 kipova vojnika od terakote?",
-      "options": ["Peking", "Šangaj", "Xi’an", "Nanjing"],
-      "correct": 2
-    },
-    {
-      "question": "Koji je europski grad poznat po položaju ispod razine mora i kanalima?",
-      "options": ["Venecija", "Hamburg", "Bruges", "Amsterdam"],
-      "correct": 3
-    },
-    {
-      "question": "Najistočnija točka Hrvatske je kod:",
-      "options": ["Iloka", "Vukovara", "Osijeka", "Batine"],
-      "correct": 0
-    },
-    {
-      "question": "Koje zaštićeno područje Primorske Hrvatske ima najveći broj posjetitelja?",
-      "options": ["NP Kornati", "NP Krka", "PP Telašćica", "NP Brijuni"],
+      "options": ["Peking", "Xi’an", "Šangaj", "Nanjing"],
       "correct": 1
     },
     {
-      "question": "Jezero Como dio je turističke ponude:",
-      "options": ["Švicarske", "Austrije", "Italije", "Francuske"],
+      "question": "Koji je europski grad poznat po položaju ispod razine mora i kanalima?",
+      "options": ["Venecija", "Hamburg", "Amsterdam", "Bruges"],
       "correct": 2
     },
     {
-      "question": "Kojim prijevoznim sredstvom inozemni turisti najviše dolaze u Hrvatsku?",
-      "options": ["Zrakoplovom", "Vlakom", "Brodom", "Osobnim automobilom"],
+      "question": "Najistočnija točka Hrvatske je kod:",
+      "options": ["Vukovara", "Osijeka", "Batine", "Iloka"],
       "correct": 3
     },
     {
-      "question": "Najstariji nacionalni park na svijetu je:",
-      "options": ["Yellowstone", "Plitvička jezera", "Kruger", "Banff"],
+      "question": "Koje zaštićeno područje Primorske Hrvatske ima najveći broj posjetitelja?",
+      "options": ["NP Krka", "NP Kornati", "PP Telašćica", "NP Brijuni"],
       "correct": 0
+    },
+    {
+      "question": "Jezero Como dio je turističke ponude:",
+      "options": ["Švicarske", "Italije", "Austrije", "Francuske"],
+      "correct": 1
+    },
+    {
+      "question": "Kojim prijevoznim sredstvom inozemni turisti najviše dolaze u Hrvatsku?",
+      "options": ["Zrakoplovom", "Vlakom", "Osobnim automobilom", "Brodom"],
+      "correct": 2
+    },
+    {
+      "question": "Najstariji nacionalni park na svijetu je:",
+      "options": ["Plitvička jezera", "Kruger", "Banff", "Yellowstone"],
+      "correct": 3
     }
   ],
   "fillBlanks": [
@@ -199,7 +199,7 @@ const geographyHrFinalExamPractice = {
 <tr><td>Dva kontinenta + islam + pustinja</td><td>Egipat</td><td>Turska nije pretežno pustinja</td></tr>
 <tr><td>UTC+8 grad-država</td><td>Singapur</td><td>Hong Kong = bivši britanski posjed, dio Kine</td></tr>
 <tr><td>Kreta</td><td>minojska kultura</td><td>mikenska = Mikena (Peloponez)</td></tr>
-<tr><td>Rodos</td><td>najveći otok Dodekaneza</td><td>nije najistočniji</td></tr>
+<tr><td>Rodos</td><td>najveći i najistočniji veći otok Dodekaneza</td><td>sasvim najistočniji je malen Kastelorizo</td></tr>
 <tr><td>Medina</td><td>Saudijska Arabija</td><td>ne Maroko</td></tr>
 <tr><td>Pelješac</td><td>poluotok</td><td>ne otočje</td></tr>
 <tr><td>Parkovi prirode RH</td><td>12 (s Dinarom od 2021.)</td><td>skripta: 11</td></tr>
@@ -222,7 +222,7 @@ const geographyHrFinalExamPractice = {
 <li><strong>London</strong> (UTC±0) · <strong>Pariz</strong> (UTC+1, UNESCO) · <strong>Istanbul</strong> (UTC+3) · <strong>Singapur</strong> / <strong>Hong Kong</strong> (UTC+8).</li>
 </ul>
 
-<div class="warning-box"><strong>Studentske bilješke i ključevi s greškama — što vrijedi:</strong> broj turista u svijetu 2019. je oko 1,5 milijardi (ne 740 mil.) · globalno prevladava zračni promet · „država na dva kontinenta, većinom pustinja” je Egipat · rijeka kroz više glavnih gradova srednje Europe je Dunav · Kreta = minojska kultura · Rodos je najveći (ne najistočniji) otok Dodekaneza · Medina je u Saudijskoj Arabiji · muzej broda Vasa je u Stockholmu (Vaasa je finski grad) · konjak je rakija, ne sir · Pelješac je poluotok · Hrvatska ima 12 parkova prirode (Dinara od 2021.) · Lastovsko otočje je PP od 2006. · Angel je visok oko 979 m · Grand Tour je putovanje iz 17. i 18. st.</div>
+<div class="warning-box"><strong>Studentske bilješke i ključevi s greškama — što vrijedi:</strong> broj turista u svijetu 2019. je oko 1,5 milijardi (ne 740 mil.) · globalno prevladava zračni promet · „država na dva kontinenta, većinom pustinja” je Egipat · rijeka kroz više glavnih gradova srednje Europe je Dunav · Kreta = minojska kultura · Rodos je najveći i najistočniji veći otok Dodekaneza · Medina je u Saudijskoj Arabiji · muzej broda Vasa je u Stockholmu (Vaasa je finski grad) · konjak je rakija, ne sir · Pelješac je poluotok · Hrvatska ima 12 parkova prirode (Dinara od 2021.) · Lastovsko otočje je PP od 2006. · Angel je visok oko 979 m · Grand Tour je putovanje iz 17. i 18. st.</div>
 `
   }
 };
