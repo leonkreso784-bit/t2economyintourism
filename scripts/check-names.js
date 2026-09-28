@@ -20,7 +20,7 @@
  * ── FORMAT POPISA ──────────────────────────────────────────────────────────────
  * Jedna stavka po retku; `#` = komentar. Stavka je DOSLOVAN niz, poklapa se samo kao
  * cijela riječ (Unicode granice — `\b` u JS-u ne zna za č/ć/š/ž). Zvjezdica na kraju
- * (`Saš*`) = prefiks, za padeže i posvojne oblike. Ime koje je i dio dopuštenog citata
+ * (`Prezim*`) = prefiks, za padeže i posvojne oblike. Ime koje je i dio dopuštenog citata
  * (npr. prezime autora objavljenog članka) upiši S KONTEKSTOM („prof. Prezime", „(Prezime)").
  *
  * Mjerač ispisuje koliko je imena i datoteka dotaknuo — pouka iz redizajna: mjerač koji to
