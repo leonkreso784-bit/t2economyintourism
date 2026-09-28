@@ -928,6 +928,39 @@ const SOKRAT_CATALOG = {
         },
         dataFormat: 'json' // dual-read; study iz data/json/food-nutrition-hr/*.json
       }
+    },
+    {
+      id: 'geography-hr',
+      programId: 'hospitality-management-hr',
+      year: 2, semester: 2,
+      name: 'Turistička geografija',
+      shortName: 'GEO',
+      icon: 'fa-earth-europe',
+      color: '#14b8a6',
+      iconGradient: ['#14b8a6', '#2dd4bf'],
+      description: 'Turistička geografija: turistički resursi i čimbenici ponude i potražnje, promet i okoliš, Hrvatska (položaj, prirodni resursi, nacionalni parkovi, parkovi prirode, UNESCO, turističke regije) te turistička geografija svijeta po kontinentima, uz slijepu kartu Hrvatske',
+      storageKey: 'geography-hr-progress',
+      features: { blindMap: true },               // slijepa karta Hrvatske (js/blind-map.js; imena mjesta su već hrvatska)
+      // AUTORSKI iz HR studentske skripte i ispitnih pitanja (Drive) — NE prijevod EN geography.
+      lessons: [
+        { id: 'first-midterm', name: '1. kolokvij', description: 'Uvod u turističku geografiju (pojmovi, čimbenici ponude i potražnje, prirodni i antropogeni resursi, promet, okoliš) i Hrvatska: položaj, reljef, klima i vode, nacionalni parkovi, parkovi prirode i UNESCO baština, Istra, Kvarner, Dalmacija, Planinska i Panonska Hrvatska' },
+        { id: 'second-midterm', name: '2. kolokvij', description: 'Turistička geografija svijeta: UNWTO regije i rang-liste, južna Europa (Španjolska, Italija, Grčka), zapadna, sjeverna, srednja i istočna Europa, Azija i Bliski istok, Afrika, Australija i Oceanija, Amerika te svjetska svetišta, muzeji i gradovi' },
+        { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus ispitna pitanja kroz sve teme' }
+      ],
+      content: {
+        // data/geography-hr/final.js MORA se učitati zadnji (Object.assign geographyHrM1 + geographyHrM2 + examPractice)
+        scripts: [
+          'data/geography-hr/midterm-1.js',
+          'data/geography-hr/midterm-2.js',
+          'data/geography-hr/final.js'
+        ],
+        resolve: {
+          'first-midterm': 'geographyHrM1',
+          'second-midterm': 'geographyHrM2',
+          'final': 'geographyHrFinal'
+        },
+        dataFormat: 'json' // dual-read; study iz data/json/geography-hr/*.json
+      }
     }
   ]
 };
