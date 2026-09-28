@@ -73,3 +73,6 @@ _screenshots/
 # Brana, ne urednost: bio je samo `untracked`, pa ga je `git add -A` uredno pokupio u staging.
 mcp-admin/
 .playwright-mcp/
+
+# Popis imena za check:names — izvan gita po odluci (skripta objašnjava zašto)
+.imena-zabrana.txt

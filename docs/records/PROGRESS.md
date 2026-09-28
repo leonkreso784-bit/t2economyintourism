@@ -9,12 +9,15 @@ testirano, što slijedi.
 
 **Popis ciljanim grepom** (titule/uloge + prezimena iz zaglavlja izvora + `-ić` prezimena + uobičajena imena), bez agenta.
 Razvrstano A (student vidi) / B (komentar) / C (docs) / D (memorija, lokalni agenti) i pokazano Leonu prije izmjena.
-**Odluke (anketa):** suradnik → uloga svugdje · Dwyer = FMTU predavač → van · Chicago članak Bogdan/Bareša/Hađina **ostaje**
-(citat objavljenog djela) · memorija: samo platformski (Alisa, Antea; Sergej iz DECISIONS), ostali projekti netaknuti.
+**Odluke (anketa):** suradnik → uloga svugdje · gostujući predavač na FMTU = nastavnik → van · Chicago članak Bogdan/Bareša/Hađina **ostaje**
+(citat objavljenog djela) · memorija: samo platformske osobe (kolegice-izvori, prijatelj u DECISIONS), ostali projekti netaknuti.
 **Izvedeno dvjema skriptama s brojačem** (svaka zamjena mora pogoditi točno jednom, inače ništa nije zapisano): 33 zamjene u
 `data/**` (22 datoteke) → `export:json` (samo `te2` JSON promijenjen — ostalo su komentari) · 14 točnih + 202 zamjene
 suradnika u `docs/**`, memoriji i `content-review` agentu. validate:content 0 grešaka · validate:schema 0 neispravnih · bump.
-**Čeka:** `te2` (EN) se čita iz baze → `diff:db te2` pa re-sync PROD = zaseban OK · brana protiv povratka imena (anketa) · deploy uz OK.
+**Brana (anketa → gitignored datoteka u repou):** `scripts/check-names.js` + `check-names-gate.test.js`; popis `.imena-zabrana.txt` (28 stavki)
+izvan gita. Prvi prolaz našao 5 imena u mojim vlastitim novim zapisima → ispravljeno → 0 nalaza / 592 datoteke.
+**`diff:db te2`:** M1 identičan · M2 4 razlike · završni 5 — točno i samo zamjene imena predavača.
+**Čeka:** re-sync `te2` u PROD bazu = zaseban OK · deploy uz OK · druga radna stabla trebaju kopiju popisa kad preuzmu branu.
 
 ## 2026-09-28 (OPUS, stablo `sokratstudy.hr1`, grana `feat/hr-1god`) — HR 1. godina: deploy provjeren, vježbe Matematike, Makroekonomija
 

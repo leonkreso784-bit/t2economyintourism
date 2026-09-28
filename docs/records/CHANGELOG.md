@@ -10,10 +10,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 Odluke ankete 28./29.09.: svi FMTU nastavnici (uklj. autore FMTU udžbenika) i sve privatne osobe osim Leona → **uloga, ne rupa**.
 Objavljena djela autora izvan FMTU-a (Blanchard, Pindyck, Babić, Žager i sur., Chicago primjeri) ostaju. Git povijest netaknuta.
 - **Student vidi:** katalog (Traffic EN/HR, Math EN, Academic Writing EN) — zagrade s imenima nastavnika maknute ·
-  `te2` (5×, M2 + završni) „Dwyer" → „the lectures". ⚠️ `te2` je EN = čita se **iz baze** → na produkciji tek nakon
+  `te2` (5×, M2 + završni) ime predavača → „the lectures". ⚠️ `te2` je EN = čita se **iz baze** → na produkciji tek nakon
   `diff:db` + re-synca (zaseban Leonov OK).
 - **Komentari:** 24 zamjene u 21 datoteci `data/**` (izvori predavanja → „nositelj kolegija" / „course lecturer").
 - **Docs:** content-suradnik je sad uloga (202 pojavnice, puno ime i GitHub račun maknuti), nastavnici u CHANGELOG/PROGRESS/README/TRAFFIC_PLAN.
+- **Brana `check:names`** (u preflightu): popis imena je IZVAN gita (`.imena-zabrana.txt`, gitignored); nema ga lokalno =
+  pad, prazan = pad, CI = „nije mjereno". Obrnuta provjera: `tests/unit/check-names-gate.test.js` (10/10) + na stablu
+  (nema popisa → 1, prazan → 1, podmetnuto postojeće ime → nalaz s retkom). Prvo pokretanje uhvatilo je 5 imena u MOJIM zapisima.
 - Mjera: svaka zamjena ispisuje broj pogodaka i pada na ≠ 1 (33/33 data, 14/14 docs); završni grep = 0 ostataka osim svjesnih.
 
 ## 2026-09-28 (OPUS) — 🚀 **MAKROEKONOMIJA + VJEŽBE MATEMATIKE NA PRODUKCIJI** — `main` = `ca6a51f`, token `20260928040705`
