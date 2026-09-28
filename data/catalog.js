@@ -1042,9 +1042,8 @@ const SOKRAT_CATALOG = {
       iconGradient: ['#059669', '#10b981'],
       description: 'Računovodstvo: pojam i struktura računovodstva, zakon i standardi, isprave i poslovne knjige, bilanca, imovina, obveze i kapital, konta i knjiženja, bilančne promjene, kontni plan, troškovi, prihodi i rashodi, PDV, račun dobiti i gubitka i novčani tok, amortizacija, zalihe, kalkulacije, kapital i plaće te zaključivanje knjiga',
       storageKey: 'accounting-hr-progress',
-      features: { blindMap: false },
+      features: { blindMap: false, exercises: true },
       // AUTORSKI iz HR studentskih skripti i ispitnih pitanja (Drive) — NE prijevod EN accounting. KaTeX (ADR-009).
-      // Vježbe (knjiženja, bilanca, kalkulacije) slijede kao zaseban korak (exercise-review).
       lessons: [
         { id: 'first-midterm', name: '1. kolokvij', description: 'Pojam i struktura računovodstva, Zakon o računovodstvu, standardi i načela, isprave i poslovne knjige, bilanca, imovina, obveze i kapital, konta i pravila knjiženja, bilančne promjene i kontni plan' },
         { id: 'second-midterm', name: '2. kolokvij', description: 'Troškovi, rashodi, prihodi i učinci, konta uspjeha i knjiženja s kontnim planom, vrste troškova, PDV, račun dobiti i gubitka i novčani tok, dugotrajna imovina i amortizacija, zalihe i sitni inventar, kalkulacije, kapital, obveze i plaće te popis i zaključivanje knjiga' },
@@ -1055,14 +1054,17 @@ const SOKRAT_CATALOG = {
         scripts: [
           'data/accounting-hr/midterm-1.js',
           'data/accounting-hr/midterm-2.js',
-          'data/accounting-hr/final.js'
+          'data/accounting-hr/final.js',
+          'data/accounting-hr/exercises.js'
         ],
         resolve: {
           'first-midterm': 'accountingHrM1',
           'second-midterm': 'accountingHrM2',
           'final': 'accountingHrFinal'
         },
-        dataFormat: 'json' // dual-read; study iz data/json/accounting-hr/*.json
+        dataFormat: 'json', // dual-read; study iz data/json/accounting-hr/*.json; vježbe UVIJEK iz .js
+        codeScripts: ['data/accounting-hr/exercises.js'], // KÔD (generate()) → uvijek iz datoteke, nikad iz baze (BUG-012)
+        exercises: 'accountingHrExercises'   // window var s interaktivnim vježbama (features.exercises)
       }
     }
   ]
