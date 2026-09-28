@@ -684,7 +684,7 @@ const SOKRAT_CATALOG = {
       iconGradient: ['#f59e0b', '#fbbf24'],
       description: 'Temeljni pojmovi, BDP i nacionalno računovodstvo, AD–AS model, potrošnja, štednja i investicije, fiskalna i monetarna politika, IS-LM, otvoreno gospodarstvo i platna bilanca, tržište rada (KaTeX formule i riješeni zadaci s vježbi i priprema za kolokvij)',
       storageKey: 'macroeconomics-hr-progress',
-      features: { blindMap: false },
+      features: { blindMap: false, exercises: true },
       // AUTORSKI iz HR materijala (Merlin 2025/26: predavanja, vježbe, pripreme za kolokvije) — NE prijevod EN macroeconomics. KaTeX (ADR-009).
       lessons: [
         { id: 'first-midterm', name: '1. kolokvij', description: 'Predavanja 1–5: temeljni pojmovi makroekonomije, nacionalno računovodstvo, makroekonomski model i AD–AS, potrošnja, štednja i investicije, uvod u fiskalnu politiku' },
@@ -696,14 +696,17 @@ const SOKRAT_CATALOG = {
         scripts: [
           'data/macroeconomics-hr/midterm-1.js',
           'data/macroeconomics-hr/midterm-2.js',
-          'data/macroeconomics-hr/final.js'
+          'data/macroeconomics-hr/final.js',
+          'data/macroeconomics-hr/exercises.js'
         ],
         resolve: {
           'first-midterm': 'macroeconomicsHrM1',
           'second-midterm': 'macroeconomicsHrM2',
           'final': 'macroeconomicsHrFinal'
         },
-        dataFormat: 'json' // dual-read; study iz data/json/macroeconomics-hr/*.json
+        dataFormat: 'json', // dual-read; study iz data/json/macroeconomics-hr/*.json; vježbe UVIJEK iz .js
+        codeScripts: ['data/macroeconomics-hr/exercises.js'], // KÔD (generate()) → uvijek iz datoteke, nikad iz baze (BUG-012)
+        exercises: 'macroeconomicsHrExercises'   // window var s interaktivnim vježbama (features.exercises)
       }
     },
     {
