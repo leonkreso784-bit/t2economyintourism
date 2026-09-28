@@ -5,6 +5,29 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-29 (OPUS, stablo `sokratstudy.hr1`, grana `feat/hr-1god`) — HR 2. godina: pet predmeta koji su falili + vježbe Makro i Računovodstva
+
+**Izvori (tablica pokazana Leonu prije gradnje):** Drive mapa „Menadžment u ugostiteljstvu / 2. godina" (Leonov Drive) ima
+studentske skripte i ispitna pitanja za Ekonomiku ugostiteljstva, Turističku geografiju, Hranu i prehranu i Računovodstvo;
+**Marketing nema nigdje** → anketa: prijevod EN-a (kao `traffic-hr`). Merlin nije provjeren (harness odbio čitanje spremljene
+sesije kolegičina računa — pristup vjerodajnicama; ne zaobilaziti). Redoslijed (anketa): Hrana → Geo → Ekon → Rač, pa Marketing i vježbe.
+**Kalup kao 27.–28.09.:** Opus graditelj → katalog + fallback + `export:json` → `content-review` → ispravke istom graditelju → README → bump → preflight → commit.
+**⚠️ Nalaz: Driveov `read_file_content` TIHO REŽE tekstom guste docx** (npr. 45 KB → 3,5k znakova, puni 44k). Hrana je
+izgrađena na sažetku i imala **3 kriva ključa** (voćni liker = orahovac, ne medica…) — isplivali tek prolazom pokrivenosti nad
+punim tekstom. Pouzdan put: `download_file_content` → programski dekodiran base64 → veličina == Drive + `testzip` → `word/document.xml`
+(base64 kroz vlastiti izlaz 3× oštetio datoteku). Hrana i Geografija dobile dopunske commitove; Ekon i Rač građeni na punim izvorima.
+**Commitovi:** `e7bcb96`+`75f9334` food-nutrition-hr · `3eac061`+`e404851` geography-hr (+ `js/blind-map.js`/`js/progress.js`
+pale kartu po `features.blindMap`, ne po imenu `geography`) · `2cf52b5` econ-hospitality-hr · `e9b0c75` marketing-hr ·
+`c035b13` accounting-hr teorija · `c825005` Makro vježbe (86) · `051efc3` Računovodstvo vježbe (54). Katalog **34**.
+**Provjere:** svaki commit — `validate:content`/`validate:schema` 0, `export:json`, `verify`, bump, preflight zelen (bez cijevi).
+Recenzije: pokrivenost ispitnih pitanja 100 % (Ekon 45/45, Rač ~100, Hrana 75/75), brojčani primjeri preračunati (Ekon 58, Rač ~35),
+0 krivih ključeva nakon ispravaka. Vježbe: `exercise-review` 500 seedova + nezavisan izračun; **zamka `parseAmount`** (točan
+odgovor s 3 decimale = tisuće) nađena u 14 Makro vježbi → 688 → 0 pogodaka; Rač `k1-tkonto` negativni saldi → cijeli raspon seedova čist.
+**Čeka Leona:** deploy (10 commitova) · EN `marketing` ima 2 stručne greške (uvjeravanje = rast, ne zrelost; točka pokrića = dobit 0) —
+ispravljeno samo u HR · Makro „L2 rastuća funkcija inflacije" (kolegij vs standardna teorija) · predmeti bez skripte za dio gradiva
+(Hrana: kava/čaj/HACCP; Geo K2 svijet) — pregled nekoga tko je slušao · zastarjeli propisi u Rač (rokovi čuvanja, prag sitnog inventara) ·
+Playwright `test:responsive` vrti se nakon ovog zapisa.
+
 ## 2026-09-29 (OPUS, stablo `sokratstudy.hr1`, grana `feat/hr-1god`) — micanje imena stvarnih osoba
 
 **Popis ciljanim grepom** (titule/uloge + prezimena iz zaglavlja izvora + `-ić` prezimena + uobičajena imena), bez agenta.

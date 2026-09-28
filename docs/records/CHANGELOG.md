@@ -5,6 +5,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+### 2026-09-29 — HR 2. godina: pet predmeta + vježbe (grana `feat/hr-1god`, NIJE na produkciji)
+- **Dodano (katalog 29 → 34):** Hrana i prehrana (`food-nutrition-hr`), Turistička geografija (`geography-hr`, sa slijepom
+  kartom), Ekonomika ugostiteljstva (`econ-hospitality-hr`), Marketing (`marketing-hr`, prijevod EN-a — HR izvora nema),
+  Računovodstvo (`accounting-hr`, teorija + 54 vježbe). Vježbe Makroekonomije (86).
+- **Promijenjeno:** slijepa karta se pali po zastavici `features.blindMap` iz kataloga (`js/blind-map.js`, `js/progress.js`),
+  ne po imenu `geography` — bez toga je `geography-hr` pokazivao gumb, a karta se nije crtala.
+
 ## 2026-09-29 (OPUS) — 🚀 **IMENA MAKNUTA + BRANA `check:names` NA PRODUKCIJI** — `main` = `268aa74`, token `20260928165846`
 
 Pushao Leon (harness je meni odbio push na produkciju). **Provjereno nakon deploya:** Vercel produkcija READY na `268aa74` ·
