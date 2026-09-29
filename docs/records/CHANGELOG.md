@@ -5,6 +5,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-29 (OPUS) — 🔧 **H1: brisanje računa uz objavljen materijal** (BUG-052) — grana `fix/h1-brisanje-racuna`, STAGING
+
+`node_content_versions.edited_by` dobiva `on delete set null` (`supabase/h1-edited-by-set-null.sql`, primijenjeno na
+staging; `f1-nodes.sql` ispravljen za nove instalacije). `delete-account-check` T5 sad objavi materijal prije brisanja:
+staro stanje 4 pada, novo 22/22. **PROD čeka SQL uz Leonov OK** (pogođen samo administrator, nitko nije poluobrisan).
+Bez izmjene `js/`/`css/` → bez bumpa.
+
 ## 2026-09-29 (OPUS) — 🚀 **HR 2. GODINA: PET PREDMETA + VJEŽBE MAKRO I RAČUNOVODSTVA NA PRODUKCIJI** — `main` = `e54bdf3`, token `20260928224620`
 
 Leonov OK 29.09.; pushao Leon (fast-forward `268aa74..e54bdf3`). **Provjereno nakon deploya:** Vercel produkcija READY na

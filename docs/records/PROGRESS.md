@@ -5,6 +5,13 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-29 (OPUS, `sokratstudy.h1`) — H1: brisanje računa uz objavljen materijal (BUG-052)
+
+Iz F6 sigurnosne analize (N10), Leon: *zasebno, odmah*. Novo stablo od `main`-a. T5 proširen objavom → na stagingu
+**crven iz pravog razloga** (409, slike obrisane, račun živ) → SQL `on delete set null` na staging → **22/22**.
+Staging bez zaostalih test-korisnika. PROD (SELECT uz OK): isti FK, pogođen samo administrator. Sljedeće: SQL na
+PROD uz Leonov izričit OK, pa merge grane u `main` (samo `supabase/`, `scripts/`, `docs/` — bez bumpa).
+
 ## 2026-09-29 (OPUS, stablo `sokratstudy.hr1`, grana `feat/hr-1god`) — HR 2. godina: pet predmeta koji su falili + vježbe Makro i Računovodstva
 
 **Izvori (tablica pokazana Leonu prije gradnje):** Drive mapa „Menadžment u ugostiteljstvu / 2. godina" (Leonov Drive) ima
