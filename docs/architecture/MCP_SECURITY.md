@@ -37,8 +37,10 @@
 | I4 | objava = **samo obična sesija**, poslije pregleda | baza: Prihvati nije dan `mcp_klijent` | ⏳ plan ②/4 |
 | I5 | sadržaj koji napiše AI **ne izvršava kod** u pregledniku, ni kad sanitizator nije učitan | renderer + CSP | ❌ otvoreno — N1, N2 → plan ②/0c–e |
 | I6 | pravila sadržaja provodi **baza** na svakom putu upisa, ne samo poslužitelj | validator u bazi | ❌ otvoreno — N4, N5 → plan ②/0a–b |
-| I7 | ponovljen zahtjev ne duplicira; paralelna izmjena se ne prepisuje | ključ ponavljanja · polazna verzija | ⏳ plan ②/2, ②/4 · S-B mjeri |
-| I8 | opoziv veze zaustavlja AI | Auth (`revokeGrant`) | ⚠️ obnova odmah, propusnica do 3600 s — korisniku rečeno; trenutni opoziv = odluka |
+| I7 | ponovljen zahtjev ne duplicira; paralelna izmjena se ne prepisuje | ključ ponavljanja · polazna verzija | ❌ izmjereno S-B — N7, N8 → plan ②/1b |
+| I8 | opoziv veze zaustavlja AI | Auth (`revokeGrant`) | ⚠️ izmjereno S-B: obnova odbijena odmah (400), a postojeća propusnica **i dalje piše u nacrt** (200) do isteka, najviše 3600 s — korisniku rečeno; trenutni opoziv = odluka |
+| I9 | administratorov konektor nema ni jedno pravo više od običnog | hook: svaki token s `client_id` = `mcp_klijent`, neovisno o ulozi korisnika | ✅ izmjereno S-B (11 tvrdnji, s kontrolom) |
+| I10 | tok prijave: PKCE obavezan, redirect točan, kod jednokratan i vezan na klijent, potpis tokena provjeren | Supabase Auth + PostgREST | ✅ izmjereno S-B (9 tvrdnji) |
 
 ## 4 · Nalazi
 
@@ -86,8 +88,10 @@ s kontrolom · prioritet je za **puštanje korisnicima**, ne za današnji stagin
   `node_content_versions` (rast povijesti → S-C).
 - `schema/subject-content.schema.json` postoji (zabranjuje nepoznata polja, provjerava boje), ali se vrti **samo u
   CI-ju nad datotekama kataloga** i dopušta `legacy-html`. `js/card-limits.js` postoji samo u pregledniku.
-- ⚠️ Stvarna definicija u bazi još nije uspoređena s datotekom → S-B.
-- **Popravak:** plan ②/0a–b.
+- **S-B:** stvarna definicija na stagingu (`pg_get_functiondef`) je **istovjetna** datoteci; EXECUTE ima `authenticated`,
+  **nema** `mcp_klijent` (AI-token admina → 403, izmjereno).
+- **Popravak:** plan ②/0a–b. `pg_jsonschema` 0.3.3 je **dostupan** na stagingu (nije instaliran); produkcija nije
+  provjeravana — provjerava se prije ②/0a.
 
 ### N5 · nacrt: pravila samo u poslužitelju — 🟠 SREDNJI
 
@@ -95,7 +99,30 @@ s kontrolom · prioritet je za **puštanje korisnicima**, ne za današnji stagin
   žive u poslužitelju, ali **isti token RPC zove i izravno** (P4) — tada brane ne vrijede. Vlasništvo i kvota i dalje drže.
 - ADR-038 to već predviđa („ponavljaju se pri Prihvati"); nalaz je da **sigurnosna** pravila (zabrana HTML-a i
   opasnih adresa) moraju biti u bazi već pri upisu nacrta, jer korisnik nacrt **gleda** prije Prihvati.
+- **Potvrđeno na stagingu (S-B), pravim AI-tokenom:** `mcp_upisi_nacrt` prima **svih 8** zlonamjernih oblika — `legacy-html`
+  s `iframe srcdoc`, `learn.content` sa slojem preko ekrana, `java<TAB>script:` poveznicu, vanjsku sliku, nepoznat tip
+  bloka i polje, karticu od 5 000 znakova, 6 000 kartica (~0,9 MB; upis 1,5 s) i gniježđenje dubine 3 000 (upis 2 s).
+  Naziv nacrta s HTML-om sprema se doslovno (ispravno — escape je posao prikaza u ②/4, brana tamo).
 - **Popravak:** plan ②/0a.
+
+### N7 · usporedni upisi istog nacrta: tihi gubitak — 🟠 SREDNJI
+
+- `mcp_upisi_nacrt` zamjenjuje cijeli payload bez polazne verzije. **Izmjereno (S-B):** dva usporedna upisa istog
+  nacrta → oba HTTP 200, preživio samo drugi; nijedna strana ne dozna da je prva izgubljena.
+- **Uvjet:** AI (ili dva AI-ja istog korisnika, npr. Claude i ChatGPT) pišu isti nacrt usporedo, ili se ponovi upis iz
+  starijeg stanja. **Posljedica:** gubitak dijela nacrta, ne tuđih podataka.
+- **Popravak:** plan ②/1b — `mcp_upisi_nacrt` prima polaznu vremensku oznaku / verziju i odbija ako se promijenila.
+
+### N8 · ponovljen početak stvara duplikat — 🟡 NIZAK/SREDNJI
+
+- **Izmjereno (S-B):** `mcp_zapocni_nacrt` dvaput s istim nazivom → dva nacrta (dva id-a). Ponovljena predaja je ispravno
+  odbijena. Kvota ograničava štetu na 3 u izradi.
+- **Popravak:** plan ②/1b — ključ ponavljanja (klijent ga šalje, baza ga pamti po vlasniku) na svakom pozivu koji stvara.
+
+### N9 · odbijanja kvote i stanja dolaze kao HTTP 500 — 🟢 NIZAK
+
+- Kvota (`53400`) i „već predan" (`55000`) izlaze iz PostgREST-a kao **500**. Nije propust, ali AI ne može razlikovati
+  „pokušaj kasnije" od kvara → plan ②/2: alat prevodi kod u jasnu poruku.
 
 ### N6 · `mcp-admin` (lokalni pokus) — 🟢 NIZAK
 
@@ -111,23 +138,42 @@ s kontrolom · prioritet je za **puštanje korisnicima**, ne za današnji stagin
 
 | područje | što se mjeri | cigla |
 |---|---|---|
-| 1 ovlasti | admin konektor ne dobiva ništa više · opozvan/istekao/tuđi/krivotvoren token · `publish_node`, brisanje materijala, profil, `delete-account` izravno AI-tokenom | S-B |
-| 2 nacrt/objava | paralelni `mcp_upisi_nacrt` (zadnji pobjeđuje?) · ponovljen `zapocni` nakon prekida (duplikat?) · kvota pod usporedbom | S-B |
-| 5 injection | što model **može** kad posluša izvor: doseg alata = vlastiti nacrt; nema HTTP-a, SQL-a, datoteka ni izvršavanja | S-B + ⑤ |
+| 1 ovlasti | **istekao** token (traži čekanje 1 h; potpis i `alg` su izmjereni) | ⑤ |
+| 5 injection | ponašanje pravog modela sa zlonamjernim izvorom — **granica je izmjerena** (§5a), model nije | ⑤ |
 | 6 limiti | učestalost, veličina odgovora, paralelni poslovi, timeouti, rast verzija, gašenje konektora | S-C |
 | 7 privatnost | pokriće `scripts/backup-db.js` (nacrti, identitet, verzije, Storage) · brisanje nacrta i veza s računom · tokeni i gradivo u logovima/analitici · lokalni cache pri promjeni korisnika | S-C |
+
+### 5a · Prompt injection — što zaveden model MOŽE (izmjereno i pročitano, S-B)
+
+Pretpostavka: model posluša svaku uputu iz izvora. Doseg mu je ono što token i alati dopuštaju, ne ono što mu kažemo:
+
+| pokušaj | ishod | zašto |
+|---|---|---|
+| mijenjati materijal izvan nacrta · objaviti · obrisati | **ne može** | `publish_node`, 7 RPC-ova čvorova, `node_content` → 403 za `mcp_klijent` (i za admina) |
+| čitati tuđe ili katalog | **ne može** | GRANT + RLS; `subject_content`, `profiles`, `content_versions` → 403 |
+| obrisati račun, poslati mail, promijeniti lozinku/e-mail | **ne može** | `token-guard` (403) · postavke Auth API-ja (`mcp:brava`) |
+| proizvoljan HTTP, SQL, datoteke, izvršavanje kôda **kroz naš poslužitelj** | **ne može** | poslužitelj nema takav alat: jedini alat čita `nodes` pod korisnikovim tokenom; nema `fetch` prema van, SQL-a iz argumenata ni pristupa disku |
+| upisati zlonamjeran sadržaj u **vlastiti nacrt** | **može danas** | N5 → zatvara ②/0a; do tada štiti samo to što Prihvati i pregled ne postoje |
+| odnijeti korisnikov materijal kroz **drugi** alat u istom chatu (npr. pretraživanje weba) | izvan našeg dosega | mi vraćamo najmanje moguće (imena i id-evi) i nikad tuđe; ostalo je granica klijenta |
+| „zatrovati" vlastiti nacrt uputama za sljedeći razgovor | može, ograničeno | šteta ostaje u nacrtu koji korisnik pregleda; alati ②/2 vraćaju sadržaj nacrta kao **podatak**, uz napomenu u opisu alata |
+
+**Pravilo za ②/2:** nijedan alat ne dobiva slobodan URL, SQL ni putanju; argumenti su tipizirani i provjereni u
+poslužitelju **i** u bazi; nijedan alat ne vraća ništa što korisnik nije sam napisao.
 
 ## 6 · Matrica testova (obavezne dimenzije)
 
 | dimenzija | danas izmjereno | nedostaje |
 |---|---|---|
-| dva različita korisnika | `mcp:nacrt` ② (tuđi nacrt × 4, isti odgovor kao nepostojeći) | Prihvati tuđeg nacrta (②/4) |
-| administratorov konektor | `mcp:brava` (admin-vrata `send-notification`, `is_admin()`) | pun prolaz s test-admin računom kroz sve RPC-ove (S-B) |
-| izravni pozivi mimo MCP-a | `mcp:brava` (PostgREST, Storage, Edge Functions, Auth API) | nacrt s zabranjenim sadržajem izravnim RPC-om → Prihvati odbija (③/6) |
-| opozvan / pogrešan token | ①/5 (obnova odbijena odmah, propusnica 3600 s) · `bad_jwt` 403 | istekao, krivotvoren potpis, token drugog projekta (S-B) |
-| paralelne izmjene | kvota pod bravom (mutacija M2) | usporedni upisi istog nacrta; Prihvati uz izmjenu materijala (S-B, ②/4) |
-| ponovljeni zahtjevi | — | ključ ponavljanja u alatima (②/2); dvostruki Prihvati (②/4) |
-| zlonamjeran sadržaj | N1, N2 lokalno | kroz pravi tok nacrt → pregled (S-B), pravi AI sa zlonamjernim PDF-om (⑤) |
+| dva različita korisnika | `mcp:nacrt` ② (tuđi nacrt × 4, isti odgovor kao nepostojeći) · S-B: kod izdan klijentu X ne vrijedi za Y | Prihvati tuđeg nacrta (②/4) |
+| administratorov konektor | `mcp:brava` · **S-B: 11 tvrdnji** (uloga, 5 RPC-ova, 5 tablica, kontrola običnom admin sesijom) | — |
+| izravni pozivi mimo MCP-a | `mcp:brava` (PostgREST, Storage, Edge Functions, Auth API) · S-B: obična sesija ne ulazi u `mcp_*` | nacrt s zabranjenim sadržajem izravnim RPC-om → Prihvati odbija (③/6) |
+| opozvan / pogrešan token | ①/5 · **S-B:** izmijenjen teret (401) · `alg=none` (401) · anon ključ (401) · opoziv: obnova 400, propusnica i dalje piše · PKCE, redirect, jednokratni kod | istekao (⑤) |
+| paralelne izmjene | **S-B:** 8 usporednih početaka → točno 3 (kvota drži) · usporedni upisi → **N7** | polazna verzija (②/1b); Prihvati uz izmjenu materijala (②/4) |
+| ponovljeni zahtjevi | **S-B:** ponovljena predaja odbijena · ponovljen početak → **N8** | ključ ponavljanja (②/1b); dvostruki Prihvati (②/4) |
+| zlonamjeran sadržaj | N1, N2 lokalno · **S-B: 8 oblika primljeno u nacrt (N5)** | validator (②/0a); pregled (②/4); pravi AI sa zlonamjernim PDF-om (⑤) |
+
+Mjerne skripte dionica A i B nisu u repozitoriju (scratchpad sesije); u ②/0 i ②/1b postaju brane u
+`scripts/mcp-nacrt-check.js` i unitima, uz mutacije.
 
 ## 7 · Uvjeti puštanja korisnicima (ulaz u fazu ⑥)
 
@@ -137,6 +183,7 @@ Svaki redak mora biti **zelen i izmjeren**, ne pretpostavljen:
 2. **N2 zatvoren** s regresijskim pokusom u pregledniku; **N1 zatvoren** unitom.
 3. Validator u bazi (②/0a) na **sva tri** puta upisa; MCP profil bez `legacy-html`, `learn.content` i vanjskih slika.
 4. Prihvati: samo obična sesija · polazna verzija · idempotentan · nacrt ubačen mimo poslužitelja ne prolazi.
+   Upis nacrta: polazna verzija i ključ ponavljanja (N7, N8 zatvoreni).
 5. Limiti iz S-C postavljeni i izmjereni; postoji način da se jedan konektor ugasi.
 6. Backup i brisanje računa pokrivaju nacrte i veze (S-C).
 7. Pravi AI (Claude + ChatGPT) na ne-admin računu prošao cjevovod i scenarij zlonamjernog PDF-a (⑤).

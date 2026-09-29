@@ -15,6 +15,16 @@ testirano, što slijedi.
 **Leon (anketa):** F6 izlazi u `plan/MCP.md` kao jedini aktivni plan, `RASPORED.md` ⏸️ · MD pa dionice B i C ·
 četiri nova dokumenta (product · architecture · security · workflow). Povijest ①/S1/S2 → `archive/MCP_KONEKTOR.md`
 (doslovno, bez tablica ② i ③ koje nastavljaju u planu). Nova cigla **②/0 sigurnosni temelj** prije alata. `check:docs` ✅.
+Commit `1c61879` napravio Leon (meni klasifikator odbio commit+push s oznakom `[Data Exfiltration]`).
+
+**Dionica B (područja 1 · 2 · 5, STAGING, jednokratni korisnici + test-admin, poslije 0 preostalih):** 43 tvrdnje.
+**Drži:** admin konektor nema ništa više (uloga `mcp_klijent`, 5 RPC-ova i 5 tablica → 403, kontrola admin sesijom 200) ·
+izmijenjen teret / `alg=none` / anon ključ → 401 · opoziv: obnova 400 · PKCE obavezan, neregistriran redirect odbijen,
+krivi verifier/redirect/klijent odbijeni, kod jednokratan · 8 usporednih početaka → točno 3. **Ne drži:** N7 usporedni
+upis tiho gubi jedan · N8 ponovljen početak = duplikat · N5 uživo (8 zlonamjernih oblika primljeno) · N9 odbijanja kao 500.
+Opozvana propusnica i dalje piše do isteka (poznato, I8). `publish_node` u bazi = datoteka; `pg_jsonschema` 0.3.3 dostupan.
+⚠️ Dvije tvrdnje prve vrtnje bile su krivo postavljene (nepostojeći stupac → 400 nije presuda; kod nikad izdan jer je
+veza već postojala) — ponovljene ispravno, obje drže. Nova cigla **②/1b** (polazna verzija + ključ ponavljanja).
 
 ## 2026-09-29 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — `main` uliven u F6 (F6 NE ide na `main`)
 

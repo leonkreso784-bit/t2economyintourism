@@ -36,7 +36,7 @@
 | **S1 · S2** (CI mjeri žicu · `test:unit` se nabraja sam) | ✅ |
 | **②/1 nacrt** | ✅ STAGING — `node_drafts` + pet `mcp_*` RPC-ova; `mcp:nacrt` 34/0, `mcp:brava` 46/0, mutacije 4/4 |
 | **②/1a test-računi** | ✅ `npm run staging:racuni` |
-| **Sigurnosna analiza** | A ✅ (renderer · validacija · `mcp-admin`) · **B i C na redu** |
+| **Sigurnosna analiza** | A ✅ (renderer · validacija · `mcp-admin`) · B ✅ (ovlasti · nacrt · injection) · **C na redu** |
 
 ## 2 · Redoslijed
 
@@ -45,7 +45,7 @@
 | cigla | posao | uvjet završetka |
 |---|---|---|
 | **S-A** ✅ | područja 3 · 4 · 8 (čitanje koda, lokalni pokusi) | nalazi upisani u MCP_SECURITY §4 |
-| **S-B** | područja 1 · 2 · 5 na STAGINGU: dva korisnika · admin konektor · izravni pozivi mimo MCP-a · opozvan/pogrešan token · paralelne izmjene · ponovljeni zahtjevi · zlonamjeran sadržaj; stvarna definicija `publish_node` u bazi; dostupnost `pg_jsonschema` | svaka stavka matrice MCP_SECURITY §6 za ta područja ima ishod (izmjereno / netočna pretpostavka / odgođeno s razlogom) |
+| **S-B** ✅ | područja 1 · 2 · 5 na STAGINGU (43 tvrdnje, jednokratni korisnici, staging poslije čist): admin konektor, token, opoziv, OAuth tok **drže**; nalazi **N7** (tihi gubitak pri usporednom upisu) · **N8** (duplikat pri ponovljenom početku) · **N9** (odbijanja kao 500) · N5 potvrđen uživo (8 oblika). `publish_node` u bazi = datoteka; `pg_jsonschema` 0.3.3 dostupan na stagingu | ✅ matrica MCP_SECURITY §6 ima ishod za sva tri područja; ostatak imenovan (istekao token → ⑤) |
 | **S-C** | područja 6 · 7 (limiti, troškovi, backup, brisanje, logovi) + završni izvještaj objavljen kao dokument | izvještaj objavljen; ovaj plan dopunjen uvjetima iz B i C |
 
 ### ②/0 Sigurnosni temelj (NOVO — prije ijednog alata koji piše)
@@ -57,6 +57,7 @@
 | **②/0c** `safeUrl` | kontrolni znakovi i razmaci se uklanjaju prije provjere sheme (ili odluka preko URL parsera s popisom dopuštenih shema) | 7 oblika iz nalaza N1 danas prolazi → unit ih odbija |
 | **②/0d** prikaz bez sanitizatora | kad DOMPurify nije učitan, `legacy-html` i `learn.content` se prikazuju kao **tekst**, nikad kao HTML; isto u krajnjem fallbacku `js/learn.js` | pokus N2 (srcdoc + skripta s dopuštenog CDN-a čita sesiju uz produkcijski CSP) → poslije ne izvrši ništa, s kontrolom |
 | **②/0e** CSP | `script-src` sužen s cijelih CDN hostova na točne putanje s verzijom (ili vlastito posluživanje) | isti pokus N2 s oslabljenim ②/0d → CSP ga i dalje blokira |
+| **②/1b** usporedno i ponovljeno | `mcp_upisi_nacrt` prima polaznu oznaku (`updated_at` ili brojač) i odbija ako se promijenila · pozivi koji stvaraju primaju **ključ ponavljanja** (isti ključ = isti nacrt) · alat prevodi kodove odbijanja u jasne poruke (N9) | S-B pokus: dva usporedna upisa → danas oba 200 i jedan tiho izgubljen → poslije drugi dobiva sukob · dva ista početka → danas dva nacrta → poslije jedan |
 
 ### ② Cjevovod u nacrt
 
