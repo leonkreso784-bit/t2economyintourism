@@ -17,7 +17,21 @@ rješavanje po bloku.
 ⚠️ **Rupa nađena spajanjem:** kuka je `GIT_*` brisala samo u podljusci oko preflighta, a F6 authed suite je GIT_DIR
 i dalje nasljeđivao. Sad se briše za cijelu `main` granu; `git-okolina` ② podmeće i `node` i sudi SVAKI poziv
 (obrnuto: stara kuka → „NIJEDAN korak ne vidi GIT_DIR" crveno). Preflight EXIT 0, `test:unit` 60/60.
-Sljedeće: **②/1** — izmjeriti staging i predložiti oblik `node_drafts` + test-računi (2 obična · prazan · Google).
+### ②/1 nacrt — na STAGINGU (`6efc81a` ulaz · `6ab08c3` zeleno)
+
+Mjera prije koda: staging ima 4 računa, gradivo samo admin; **nijedan Google račun**; `pg_cron` dostupan ali
+neinstaliran; katalog lekcija medijan 91 KB / najveća 526 KB; **`publish_node` bez granice veličine** (nalaz za ②/4).
+Leon (anketa): kvota 3/10/1 MB · 7 dana · policu bira korisnik · test-računi skriptom.
+Isporučeno: `supabase/f6-nacrt.sql` (primijenjen na staging) · `scripts/mcp-nacrt-check.js` (`npm run mcp:nacrt`) ·
+pomoćnici OAuth toka izdvojeni u `scripts/lib/staging-oauth.js` (obje brane, jedna kopija — `mcp:brava` poslije
+izdvajanja uživo 46/0). Na starom stanju `mcp:nacrt` 23 palo; poslije 34/0.
+⚠️ **Brana je dvaput uhvatila SEBE:** `jsonb` preslaguje ključeve (usporedba sad kanonska) · inventar imenuje funkciju
+punim potpisom `public.f(args)`, a `OTVORENO.funkcije` golim imenom — dok je popis bio prazan, `ime in OTVORENO.funkcije`
+nije mogao pogoditi nikad. Nova tvrdnja „mrtav redak" za funkcije našla je to istog časa.
+⚠️ **Mutacija nad živom staging funkcijom odbijena je klasifikatorom** (`[Security Weaken]`) nakon što je M1 već bio
+primijenjen → vraćen odmah, izmjereno (`owner_id = auth.uid()` na mjestu, pomoćnik nije izvršiv) i obje brane zelene.
+Mutacijski dokaz ostaje otvoren — Leonova odluka kako.
+Sljedeće: **②/1a** skripta za imenovane test-račune (test-a, test-b s gradivom, test-prazan; Google = Leonov dashboard).
 
 ---
 
