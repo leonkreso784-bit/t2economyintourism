@@ -41,6 +41,9 @@
 | I8 | opoziv veze zaustavlja AI | Auth (`revokeGrant`) | ⚠️ izmjereno S-B: obnova odbijena odmah (400), a postojeća propusnica **i dalje piše u nacrt** (200) do isteka, najviše 3600 s — korisniku rečeno; trenutni opoziv = odluka |
 | I9 | administratorov konektor nema ni jedno pravo više od običnog | hook: svaki token s `client_id` = `mcp_klijent`, neovisno o ulozi korisnika | ✅ izmjereno S-B (11 tvrdnji, s kontrolom) |
 | I10 | tok prijave: PKCE obavezan, redirect točan, kod jednokratan i vezan na klijent, potpis tokena provjeren | Supabase Auth + PostgREST | ✅ izmjereno S-B (9 tvrdnji) |
+| I11 | brisanje računa briše **sve** korisnikovo: gradivo, verzije, nacrte, OAuth veze, sesije, slike — i nikad ne ostavi poluobrisan račun | kaskade FK-ova + `delete-account` | ❌ **N10**: puca za svakoga tko je objavio materijal. Kad prođe, izmjereno čisto (S-C) |
+| I12 | jedan korisnik ili konektor ne može potrošiti bazu, funkciju ni tuđe vrijeme | granice u bazi (učestalost, veličina, broj) | ❌ izmjereno S-C — N11, N12, N13 → plan ④ |
+| I13 | ono što AI ne vidi (odgovor skraćen) AI **zna** da ne vidi | alat vraća oznaku skraćenosti | ❌ **N12** |
 
 ## 4 · Nalazi
 
@@ -134,14 +137,105 @@ s kontrolom · prioritet je za **puštanje korisnicima**, ne za današnji stagin
 - **Ništa se ne prenosi** (F6 poslužitelj koristi službeni SDK; admin doseg je protiv ADR-030/031). Odluka: obrisati ili
   arhivirati.
 
+### Dionica C (limiti · backup · brisanje · logovi) — mjereno 29.09. na STAGINGU
+
+Jednokratni korisnik, poslije obrisan i provjereno nula redaka u svim tablicama. Skripta: scratchpad `dionica-c.js`.
+
+### N10 · brisanje računa puca za svakoga tko je objavio materijal — ⛔ VISOK (produkcija, latentan, izvan MCP-a)
+
+- **Gdje:** `supabase/f1-nodes.sql` redak 157: `node_content_versions.edited_by references auth.users(id)` **bez**
+  `on delete`. Okidač `snapshot_node_content` upisuje `edited_by = auth.uid()` pri svakoj objavi.
+- **Izmjereno:** korisnik s objavljenim materijalom → `delete-account` vraća **409** `Database error deleting user`;
+  log baze: `violates foreign key constraint "node_content_versions_edited_by_fkey"`. Slike su u tom trenutku **već
+  obrisane** (`removedImages: 2`) → račun je **poluobrisan**: podaci, prijava i AI-token rade dalje, slike nema.
+  Kontrola: kad se čvorovi uklone, isto brisanje prođe (200, korisnik 404) → FK je jedina prepreka.
+- **Zašto ga brana nije uhvatila:** `delete-account-check` T5 stvara čvor, ali **nikad ne objavi**, pa `edited_by`
+  nikad nije popunjen — prolazi na praznom slučaju.
+- **Produkcija (pročitano 29.09., samo SELECT, uz Leonov OK):** isti FK bez `on delete`. Pogođen je **1 korisnik od 8 —
+  administrator**, koji se ionako ne može sam obrisati. Nijedan obični korisnik još nije objavio materijal, pa nitko nije
+  mogao ostati poluobrisan; u logovima (24 h) nema pokušaja. Kvar je **latentan**: prvi korisnik koji objavi pa obriše
+  račun ga pogodi.
+- **Popravak (Leon, anketa 29.09.: zasebno, odmah, izvan F6):** `on delete set null` (isti obrazac kao
+  `content_versions.edited_by`) + T5 objavi materijal prije brisanja (danas crveno, poslije zeleno).
+
+### N11 · nema granice učestalosti; DCR raste bez čišćenja — 🟠 SREDNJI
+
+- **Izmjereno:** 60 uzastopnih upisa nacrta (p50 52 ms, ~16/s) · 60 **usporednih** (svih 60 × 200, p50 554 ms) ·
+  30 usporednih MCP poziva s odgovorom od 267 KB (svih 30 × 200, p50 3,8 s). Nijedan 429 ni na jednom sloju.
+- Svaki upis nacrta prepisuje **cijeli** payload (do 1 MB): 60 upisa u minuti = do 60 MB zapisa u minuti po korisniku.
+- DCR je otvoren (tako i mora biti za Claude/ChatGPT) i klijenti se nikad ne brišu: **141** na stagingu, 6 od njih
+  pravi „Claude", ostalo testovi. Ime klijenta je tuđi tekst (P3, već u §2).
+- Jedan konektor se danas može ugasiti samo brisanjem OAuth klijenta u dashboardu (za **sve** korisnike) ili
+  korisnikovim opozivom; postojeća propusnica i tada piše do 3600 s (I8).
+- **Popravak:** plan ④/1 (granica u bazi, po korisniku i po klijentu) · ④/4 (popis blokiranih klijenata) · ④/5 čišćenje.
+
+### N12 · alat tiho reže na 1 000 stavki; broj čvorova neograničen — 🟠 SREDNJI
+
+- **Izmjereno:** 1 200 polica → PostgREST vraća **1 000** (`Content-Range 0-999/1200`, `db-max-rows`), a
+  `procitaj_materijale` AI-ju kaže 1 000, **bez znaka** da postoji još. Odgovor 267 KB, 0,7 s.
+- `create_node` nema kvotu; `test-admin` na stagingu ima 7 376 čvorova (46 živih).
+- **Posljedica:** AI korisniku tvrdi da materijal ne postoji (upravo ono što `slozStablo` pokušava spriječiti za
+  siročad) i pri ②/2 može stvoriti duplikat.
+- **Popravak:** plan ④/2 — izričit raspon, najviše 500 stavki po odgovoru uz `skraceno: true`, kvota 2 000 čvorova.
+
+### N13 · povijest raste bez granice; obrisano se nikad ne briše — 🟠 SREDNJI
+
+- **Izmjereno:** objava od **5 MB prolazi** (200, 10,4 s) · pet objava po ~1 MB → pet trajnih kopija, ~1 MB svaka
+  na disku (gradivo se slabo stišće) · verzija čuva **staro** stanje, pa `{}` + 5 × 1 MB = 4,9 MB za jedan materijal.
+- „Obriši materijal" je meko brisanje (`deleted_at`); sadržaj i sve verzije ostaju dok se račun ne obriše.
+  `test-admin`: 7 330 meko obrisanih čvorova, 2 729 verzija. Korisnik koji obriše materijal misli da ga više nema.
+- **Popravak:** ②/0b (1 MB na objavi) · ④/5 `pg_cron`: trajno brisanje meko obrisanog nakon 30 dana. Zadržavanje
+  verzija **ostaje bez roka** (Leon, anketa 29.09.: nije odabrano) — granica je veličina objave.
+
+### N14 · backup ne pokriva osobno gradivo; nešifriran i bez roka — 🟠 SREDNJI
+
+- **Gdje:** `scripts/backup-db.js` redak 37: `profiles`, `progress`, `content_versions`, `subject_content`.
+  **Nema** `nodes`, `node_content`, `node_content_versions`, `profile_identity`, `node_drafts`, `mail_log`,
+  `reserved_handles` — dakle ni jednog retka UGC-a, iako je UGC glavni proizvod (ADR-029).
+- Ručno pokretanje, dvije snimke (zadnja 01.09.), gzip JSON **bez šifriranja** na Leonovom disku, **bez roka**:
+  profili i napredak obrisanih korisnika ostaju u snimkama zauvijek.
+- Storage (slike) ne pokriva **ni** Supabase backup (dokumentacija: backup baze ne sadrži objekte Storagea);
+  Supabase Pro drži dnevne snimke baze 7 dana.
+- **Popravak (Leon, anketa 29.09.):** dodati `nodes`, `node_content`, `node_content_versions`, `profile_identity`
+  (nacrti NE — privremeni su) · šifrirati (AES-GCM, ključ u `.env`) · rok 8 tjedana — plan ④/6.
+
+### N15 · nespremljene izmjene materijala ostaju u pregledniku nakon odjave — 🟡 NIZAK
+
+- **Pročitano s retkom:** `js/draft-store.js` redak 25/51 sprema radnu verziju pod `sokrat-draft:<ključ>`
+  (osobni materijal: `node:<uuid>`, `js/admin.js` redak 408). `signOut` (`js/auth.js` redak 923) ih ne briše, a
+  zamjena korisnika (`js/cloud-sync.js` `preuzmiUredjaj`) briše samo ključeve napretka (`watchedKeys`), ne te.
+  Brisanje računa ih briše (`purgeLocalAccountData`, dopušteni popis).
+- **Posljedica:** na zajedničkom računalu sljedeća osoba ne vidi tuđi materijal u sučelju (RLS), ali ga može
+  pročitati iz alata preglednika. Nije izmjereno u pregledniku.
+- **Ostalo lokalno drži:** polica za izvanmrežni rad sprema samo javni katalog · SW ne dira Supabase ni tuđe domene ·
+  potpisi slika su samo u memoriji i brišu se pri promjeni čvora.
+- **Popravak:** plan ④/7 — odjava briše `sokrat-draft:node:*` (uz upozorenje ako ima nespremljenog).
+
+### N16 · `mcp_klijent` bez vlastitog `statement_timeout` — 🟢 NIZAK
+
+- **Pročitano (staging, `pg_roles`):** `anon` 3 s, `authenticated` 8 s, `authenticator` 8 s, **`mcp_klijent` ništa**.
+  PostgREST pri promjeni uloge primjenjuje postavke uloge ako postoje; inače vrijedi 8 s iz prijave — **nije
+  izmjereno** (traži sporu funkciju, ne gradi se radi pokusa).
+- **Popravak:** plan ④/3 — izričito `statement_timeout = 5s` za `mcp_klijent` (kalup ostalih uloga).
+
+### Što je u dionici C izmjereno kao ispravno
+
+- Kad brisanje prođe: **nula** redaka u `nodes`, `node_drafts` (oba stanja), `profile_identity`, `profiles`,
+  `auth.oauth_consents`, `auth.sessions`, `auth.refresh_tokens`, Storageu (oba osobna bucketa). Nacrti i OAuth veze
+  se brišu s računom kaskadom — ništa ručno.
+- AI-token obrisanog korisnika (propusnica još živa): čita prazno, ne može stvoriti nacrt (23503).
+- Logovi (edge, funkcije, baza): **ni token ni tijelo zahtjeva** — samo tvrdnje iz JWT-a, prefiks potpisa, IP, grad
+  i adresa. `odobrenje.html` i `odjava.html` ne učitavaju ni GA ni Sentry. Sentry šalje s `sendDefaultPii: false`.
+- Edge Function: 256 MB, 2 s CPU po zahtjevu, 400 s zidnog sata (Pro) — alat s 1 000 stavki troši 0,7 s ukupno.
+
 ## 5 · Sumnje koje još čekaju mjerenje
 
 | područje | što se mjeri | cigla |
 |---|---|---|
 | 1 ovlasti | **istekao** token (traži čekanje 1 h; potpis i `alg` su izmjereni) | ⑤ |
 | 5 injection | ponašanje pravog modela sa zlonamjernim izvorom — **granica je izmjerena** (§5a), model nije | ⑤ |
-| 6 limiti | učestalost, veličina odgovora, paralelni poslovi, timeouti, rast verzija, gašenje konektora | S-C |
-| 7 privatnost | pokriće `scripts/backup-db.js` (nacrti, identitet, verzije, Storage) · brisanje nacrta i veza s računom · tokeni i gradivo u logovima/analitici · lokalni cache pri promjeni korisnika | S-C |
+| 6 limiti | stvarni učinak `statement_timeout` za `mcp_klijent` (N16) · učestalost na razini auth-a (DCR, obnova tokena) — ne mjeri se poplavom | ④/3 · ④/1 |
+| 7 privatnost | Sentry nema `beforeSend`: greška na stranici čija adresa još nosi fragment prijave (implicitni tok, `#access_token`) mogla bi ga poslati · N15 u pravom pregledniku · stanje N10 na produkciji | ④/7 · hitni popravak |
 
 ### 5a · Prompt injection — što zaveden model MOŽE (izmjereno i pročitano, S-B)
 
@@ -171,6 +265,8 @@ poslužitelju **i** u bazi; nijedan alat ne vraća ništa što korisnik nije sam
 | paralelne izmjene | **S-B:** 8 usporednih početaka → točno 3 (kvota drži) · usporedni upisi → **N7** | polazna verzija (②/1b); Prihvati uz izmjenu materijala (②/4) |
 | ponovljeni zahtjevi | **S-B:** ponovljena predaja odbijena · ponovljen početak → **N8** | ključ ponavljanja (②/1b); dvostruki Prihvati (②/4) |
 | zlonamjeran sadržaj | N1, N2 lokalno · **S-B: 8 oblika primljeno u nacrt (N5)** | validator (②/0a); pregled (②/4); pravi AI sa zlonamjernim PDF-om (⑤) |
+| opterećenje | **S-C:** 60 usporednih upisa, 30 usporednih MCP poziva, 1 200 čvorova, objava 5 MB — bez ijedne granice (N11–N13) | granice ④/1–④/3 s obrnutom provjerom (61. upis u minuti odbijen) |
+| brisanje računa | **S-C:** puca uz objavljen materijal (N10); kad prođe, nula redaka u 9 tablica + Storage | T5 s objavljenim materijalom i nacrtom od AI-ja (hitni popravak) |
 
 Mjerne skripte dionica A i B nisu u repozitoriju (scratchpad sesije); u ②/0 i ②/1b postaju brane u
 `scripts/mcp-nacrt-check.js` i unitima, uz mutacije.
@@ -184,7 +280,9 @@ Svaki redak mora biti **zelen i izmjeren**, ne pretpostavljen:
 3. Validator u bazi (②/0a) na **sva tri** puta upisa; MCP profil bez `legacy-html`, `learn.content` i vanjskih slika.
 4. Prihvati: samo obična sesija · polazna verzija · idempotentan · nacrt ubačen mimo poslužitelja ne prolazi.
    Upis nacrta: polazna verzija i ključ ponavljanja (N7, N8 zatvoreni).
-5. Limiti iz S-C postavljeni i izmjereni; postoji način da se jedan konektor ugasi.
-6. Backup i brisanje računa pokrivaju nacrte i veze (S-C).
+5. Limiti iz S-C postavljeni i izmjereni (④/1–④/3, svaki s obrnutom provjerom); postoji način da se jedan konektor
+   ugasi (④/4); `procitaj_materijale` nikad ne reže bez oznake (N12).
+6. **N10 zatvoren na produkciji** (brisanje računa s objavljenim materijalom prolazi, T5 to mjeri). Backup pokriva
+   osobno gradivo, šifriran je i ima rok 8 tjedana (④/6). Nacrti i OAuth veze nestaju s računom — izmjereno S-C.
 7. Pravi AI (Claude + ChatGPT) na ne-admin računu prošao cjevovod i scenarij zlonamjernog PDF-a (⑤).
 8. Postavke Auth-a na produkciji jednake stagingu (tri imenovana koraka iz ①).

@@ -5,6 +5,21 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-29 (OPUS, `sokratstudy.f6`) — sigurnosna analiza MCP-a, dionica C · završni izvještaj
+
+**Dionica C (područja 6 · 7, STAGING, jedan jednokratni korisnik, poslije nula redaka u svim tablicama + Storage):**
+nalazi N10–N16 u `architecture/MCP_SECURITY.md` §4. Najteži, i **izvan MCP-a**: **N10** — brisanje računa puca za
+svakoga tko je ikad objavio materijal (`node_content_versions.edited_by` bez `on delete`), a `delete-account` prije
+toga već obriše slike → poluobrisan račun. T5 to nikad nije vidio jer ne objavljuje. Ostalo: nema granice
+učestalosti (60 usporednih upisa, 30 usporednih MCP poziva — sve 200) · alat tiho reže na 1 000 stavki ·
+objava 5 MB prolazi, meko obrisano zauvijek · backup bez ijednog retka UGC-a, nešifriran, bez roka · lokalni nacrt
+nakon odjave · `mcp_klijent` bez `statement_timeout`. **Drži:** nacrti, OAuth pristanci, sesije i slike nestaju s
+računom kaskadom; token obrisanog korisnika ne vidi ništa; logovi ne nose ni token ni tijelo.
+**Odluke (anketa):** N10 zasebno i odmah od `main`-a (plan Ⓗ/H1) · limiti umjereni (60/min, 1 000/dan, 500 stavki,
+2 000 čvorova, 1 MB, 5 s) · `pg_cron` da · backup: gradivo + AES-GCM + rok 8 tjedana · verzije bez roka.
+Plan F6 dobio Ⓗ i razrađenu fazu ④ (④/1–④/7). Završni izvještaj A+B+C objavljen kao dokument.
+Produkcija nije dirana ni čitana. Pokus: scratchpad `dionica-c.js`.
+
 ## 2026-09-29 (OPUS, `sokratstudy.f6`) — sigurnosna analiza MCP-a, dionica A · F6 dobiva vlastiti plan
 
 **Dionica A (područja 3 · 4 · 8, samo kod i lokalni pokusi, staging netaknut):** nalazi N1–N6 u

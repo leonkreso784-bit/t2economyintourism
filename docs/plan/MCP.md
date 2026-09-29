@@ -36,7 +36,8 @@
 | **S1 · S2** (CI mjeri žicu · `test:unit` se nabraja sam) | ✅ |
 | **②/1 nacrt** | ✅ STAGING — `node_drafts` + pet `mcp_*` RPC-ova; `mcp:nacrt` 34/0, `mcp:brava` 46/0, mutacije 4/4 |
 | **②/1a test-računi** | ✅ `npm run staging:racuni` |
-| **Sigurnosna analiza** | A ✅ (renderer · validacija · `mcp-admin`) · B ✅ (ovlasti · nacrt · injection) · **C na redu** |
+| **Sigurnosna analiza** | A ✅ (renderer · validacija · `mcp-admin`) · B ✅ (ovlasti · nacrt · injection) · C ✅ (limiti · backup · brisanje · logovi) — nalazi N1–N16 u [MCP_SECURITY §4](../architecture/MCP_SECURITY.md) |
+| **⛔ hitno, izvan F6** | **N10:** brisanje računa puca za svakoga tko je objavio materijal (produkcija). Leon 29.09.: zasebna cigla od `main`-a, odmah — v. §2 Ⓗ |
 
 ## 2 · Redoslijed
 
@@ -46,7 +47,15 @@
 |---|---|---|
 | **S-A** ✅ | područja 3 · 4 · 8 (čitanje koda, lokalni pokusi) | nalazi upisani u MCP_SECURITY §4 |
 | **S-B** ✅ | područja 1 · 2 · 5 na STAGINGU (43 tvrdnje, jednokratni korisnici, staging poslije čist): admin konektor, token, opoziv, OAuth tok **drže**; nalazi **N7** (tihi gubitak pri usporednom upisu) · **N8** (duplikat pri ponovljenom početku) · **N9** (odbijanja kao 500) · N5 potvrđen uživo (8 oblika). `publish_node` u bazi = datoteka; `pg_jsonschema` 0.3.3 dostupan na stagingu | ✅ matrica MCP_SECURITY §6 ima ishod za sva tri područja; ostatak imenovan (istekao token → ⑤) |
-| **S-C** | područja 6 · 7 (limiti, troškovi, backup, brisanje, logovi) + završni izvještaj objavljen kao dokument | izvještaj objavljen; ovaj plan dopunjen uvjetima iz B i C |
+| **S-C** ✅ | područja 6 · 7 na STAGINGU (jednokratni korisnik, poslije nula redaka): nalazi **N10** (brisanje računa puca uz objavljen materijal) · **N11** (nema granice učestalosti; DCR bez čišćenja) · **N12** (alat tiho reže na 1 000) · **N13** (objava 5 MB prolazi; meko obrisano zauvijek) · **N14** (backup bez UGC-a, nešifriran, bez roka) · N15 (lokalni nacrt nakon odjave) · N16 (`mcp_klijent` bez timeouta). Drži: nacrti i OAuth veze nestaju s računom; logovi bez tokena i tijela | ✅ [završni izvještaj](https://claude.ai/artifact/AQYadWjTpQnVxeBcRyGjhs) objavljen (privatan); ovaj plan dopunjen (Ⓗ, ④) |
+
+### Ⓗ Hitni popravak izvan F6 (Leon, anketa 29.09.: *zasebno, odmah*)
+
+Vlastita grana od `main`-a, ne `feat/f6-mcp`; F6 ga samo citira. Produkcijski korak = Leonov izričit OK.
+
+| cigla | posao | crveno na starom kodu |
+|---|---|---|
+| **H1** brisanje računa | `node_content_versions.edited_by` → `on delete set null` (kalup `content_versions`); SQL u `supabase/` + staging, pa PROD u SQL Editoru · `delete-account-check` T5 **objavi** materijal (i ima nacrt od AI-ja) prije brisanja · prije: upit na PROD koliko je korisnika pogođeno | T5 s objavom danas 409 i poluobrisan račun → poslije 200 i nula redaka u svim tablicama |
 
 ### ②/0 Sigurnosni temelj (NOVO — prije ijednog alata koji piše)
 
@@ -82,11 +91,23 @@
 
 Rizik: prestrog prag ④ → AI zapne; zato ③/0 ide prvo.
 
-### ④ Limiti i opoziv (sadržaj određuje S-C)
+### ④ Limiti, čišćenje, backup (iz S-C; brojke = Leon, anketa 29.09.: *umjeren paket*)
 
-Učestalost po korisniku i konektoru · veličina zahtjeva i odgovora · paralelni poslovi · rast `node_content_versions` ·
-periodično čišćenje isteklih nacrta (`pg_cron`, Leon: odluka uz sigurnosnu analizu) · privremeno gašenje jednog
-konektora · trenutan opoziv (danas izdana propusnica živi do 3600 s). Cigle se upisuju poslije S-C.
+Mjerna osnova: pravi cjevovod za 30 lekcija (alati po lekciji) ≈ 92 upisa kroz nekoliko minuta; izmjereno ~16
+upisa/s uzastopno i 60 usporednih bez odbijanja (N11). Sve granice žive **u bazi** (isti token zove RPC i mimo
+poslužitelja, N5) i svaka ima obrnutu provjeru.
+
+| cigla | posao | crveno na starom kodu |
+|---|---|---|
+| **④/1** učestalost | brojač u bazi po korisniku **i** po `client_id`: **60 upisa/min, 1 000/dan**; prekoračenje = imenovan kod koji alat prevodi u „pokušaj za N s" (N9) | 61. upis u minuti danas 200 → poslije odbijen; 60. prolazi |
+| **④/2** paginacija i kvota | `procitaj_materijale`: izričit raspon, **najviše 500 stavki** + `skraceno: true` i ukupan broj · `create_node`: **najviše 2 000** živih čvorova po korisniku | 1 200 polica danas → AI vidi 1 000 bez znaka (N12) · 2 001. čvor danas prolazi |
+| **④/3** veličina i vrijeme | objava ≤ 1 MB (= ②/0b) · `mcp_klijent`: `statement_timeout = 5s` · odgovor alata ≤ 1 MB | objava 5 MB danas 200 (N13) · `pg_roles` bez postavke (N16) |
+| **④/4** gašenje jednog konektora + opoziv | tablica blokiranih `client_id`-eva: hook ne izdaje token, a `_nacrt_pozivatelj()` odbija **odmah** (i živu propusnicu) · ista provjera gleda postoji li još korisnikov pristanak → opoziv zaustavlja **upis** odmah, čitanje do isteka | blokiran klijent i opozvan pristanak danas pišu do 3600 s (I8) |
+| **④/5** `pg_cron` (Leon: da) | jedan noćni posao: istekli nacrti · meko obrisani čvorovi stariji od **30 dana** (s verzijama i slikama) · DCR klijenti bez ijednog pristanka stariji od 30 dana. Verzije **bez roka** (Leon) | nacrt star 8 dana i čvor obrisan prije 31 dan danas postoje → poslije posla nema ih; kontrola: 29 dana ostaje |
+| **④/6** backup (Leon: sva tri) | `backup-db.js` + `nodes`, `node_content`, `node_content_versions`, `profile_identity` (nacrti NE) · **AES-GCM** ključem iz `.env` · **rok 8 tjedana** (starije se briše) · `--verify` dešifrira i uspoređuje sha256 | snimka danas bez UGC-a i čitljiva bez ključa (N14) → poslije obrnuto; snimka od 9 tjedana nestaje |
+| **④/7** preglednik | odjava briše `sokrat-draft:node:*` (uz upozorenje ako ima nespremljenog) · Sentry `beforeSend` briše fragment i upit iz adrese | N15: ključ ostaje nakon odjave → poslije nema ga |
+
+Rizik: pogrešno postavljena granica ④/1 obori pravi cjevovod → ⑤ mora proći cijeli materijal ispod granice.
 
 ### ⑤ Pravi AI
 
@@ -103,8 +124,9 @@ staging/prod · `MCP_RESOURCE_URL` na kanonsku adresu. **Uvjet ulaska u ⑥:** s
 
 ## 3 · Otvoreno za Leonovu riječ
 
-- `pg_cron` za periodično čišćenje nacrta (nova infrastruktura i na PROD-u).
-- Trenutan opoziv AI-ja (provjera na svakom čitanju = vrući put) ili istina „do 60 minuta" kao danas.
+- ~~`pg_cron`~~ → **da** (anketa 29.09.), ④/5. ~~Limiti~~ → umjeren paket, ④/1–④/3. ~~Backup~~ → gradivo +
+  šifriranje + rok 8 tjedana, ④/6. Zadržavanje verzija: **bez roka** (nije odabrano).
+- Trenutan opoziv **čitanja** (provjera na svakom čitanju = vrući put) — upis se zaustavlja odmah kroz ④/4.
 - `pg_jsonschema` vs. ručni validator u plpgsql (ovisi o S-B).
 - `mcp-admin/` (lokalni pokus izvan repozitorija): obrisati ili arhivirati (nalaz N6).
 
