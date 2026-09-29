@@ -48,21 +48,17 @@
 //   - nema STAGING_* / SERVICE key u .env                -> exit 0 + SKIP
 //   - baza uspavana / funkcija nije deployana            -> exit 0 + SKIP
 
-try { require('dotenv').config(); } catch (e) { /* dotenv optional */ }
-
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+const {
+  PROD_REF, BASE, ANON, SERVICE, NULA,
+  http, svcHeaders, ref, odbijen, noviKorisnik, pometi, prijava, oauthToken, rpc
+} = require('./lib/staging-oauth');
 
-const PROD_REF = 'naxjubnedhrbhsuasayu';
-const BASE = (process.env.STAGING_SUPABASE_URL || '').replace(/\/+$/, '');
-const ANON = process.env.STAGING_SUPABASE_ANON;
-const SERVICE = process.env.STAGING_SUPABASE_SERVICE_KEY;
 const ADMIN_EMAIL = process.env.STAGING_TEST_ADMIN_EMAIL;
 const ADMIN_PASSWORD = process.env.STAGING_TEST_ADMIN_PASSWORD;
-const REDIRECT = 'https://claude.ai/api/mcp/auth_callback';
 const ULOGA = 'mcp_klijent';
-const NULA = '00000000-0000-0000-0000-000000000000';
 
 /**
  * Koliko provjera ova brana MORA izvesti (bez ove same). Čegrtaljka po kalupu `check:final`.
@@ -70,21 +66,8 @@ const NULA = '00000000-0000-0000-0000-000000000000';
  * brojač — ukupno bi palo s 41 na 38, a brana bi i dalje javila „✅ brava drži".
  * Podiže se SVJESNO, uz novu provjeru; spuštanje bez razloga znači da je nešto tiho otpalo.
  */
-const OCEKIVANO_PROVJERA = 41;
-
-/**
- * Svaki jednokratni korisnik kojeg brana stvori. Brise se u `finally`, jer PREKID (20 s abort na
- * hladnom startu Edge Functiona) inace ostavi racun `@sokrat-test.invalid` na stagingu — a to se
- * vec dogodilo. Brisanje na kraju sretnog puta nije dovoljno.
- */
-const SMECE = [];
-
-/** Obriše sve jednokratne korisnike koje je ova vrtnja stvorila. Tiho — higijena, ne tvrdnja. */
-async function pometi() {
-    for (const id of SMECE.splice(0)) {
-        await http('/auth/v1/admin/users/' + id, { method: 'DELETE', headers: svcHeaders() }).catch(() => {});
-    }
-}
+// 41 → 45 (②/1, 29.09.): mrtav redak otvorenih funkcija + tri pomoćnika nacrta u ZABRANJENI_RPC.
+const OCEKIVANO_PROVJERA = 45;
 
 /**
  * `PUT /auth/v1/user` — ŠTO POSTAVKA „traži trenutnu lozinku" ZATVARA, A ŠTO NE (①/2b, 21.09.).
@@ -183,7 +166,16 @@ const OTVORENO = {
   tablice: {
     nodes: { prava: ['select'], zasto: 'RLS `nodes_select_own` → samo vlastiti čvorovi (①/2)' }
   },
-  funkcije: {}   // nijedna — nijedan RPC nije otvoren tokenu korisnikovog AI-ja
+  // ②/1 (29.09.): jedini put upisa za AI — u NACRT, nikad u žive tablice (ADR-038 ①). Što te
+  // funkcije smiju i ne smiju (tuđi nacrt, kvota, veličina, predan = zamrznut) mjeri `mcp:nacrt`;
+  // ova brana tvrdi samo da je otvoreno TOČNO ovo.
+  funkcije: {
+    mcp_zapocni_nacrt: 'novi nacrt; vlasnik iz tokena, kvota 3 u izradi / 10 nepregledanih (②/1)',
+    mcp_upisi_nacrt: 'zamjena sadržaja vlastitog nacrta u izradi, najviše 1 MB (②/1)',
+    mcp_predaj_nacrt: 'zamrzne vlastiti nacrt za korisnikov pregled (②/1)',
+    mcp_procitaj_nacrt: 'čitanje vlastitog nacrta — AI nastavlja gdje je stao (②/1)',
+    mcp_moji_nacrti: 'popis vlastitih nacrta bez sadržaja (②/1)'
+  }
 };
 
 /**
@@ -222,7 +214,12 @@ const ZABRANJENI_RPC = {
   // drži je zatvorenom jedan `revoke` (f1-nodes.sql), pa ga ovdje netko mora i provjeriti.
   _node_own: { p_id: NULA },
   // Inventar iz ①/2c-1 je i sam funkcija u `public` — smije ga zvati isključivo `service_role`.
-  mcp_brava_inventar: {}
+  mcp_brava_inventar: {},
+  // Pomoćnici nacrta (②/1) — zovu ih samo `mcp_*` funkcije iznutra. `_nacrt_zivi` smije
+  // `authenticated` (zove ga RLS politika), ali NE `mcp_klijent`.
+  _nacrt_zivi: { p_status: 'predan', p_updated: '2026-01-01T00:00:00Z' },
+  _nacrt_pozivatelj: {},
+  _nacrt_moj: { p_id: NULA }
 };
 
 /** Funkcije koje NISU ruta: okidači (zovu se iz triggera) i interni pomoćnici (service_role). */
@@ -246,55 +243,11 @@ function record(name, pass, detail) {
 function note(text) { console.log('   ℹ️  ' + text); }
 function skip(why) { console.log('⏭️  SKIP — ' + why); process.exit(0); }
 
-async function http(put, opts) {
-  const ctrl = new AbortController();
-  const to = setTimeout(() => ctrl.abort(), 20000);
-  try { return await fetch(BASE + put, Object.assign({ signal: ctrl.signal }, opts)); }
-  finally { clearTimeout(to); }
-}
-
-const svcHeaders = () => ({ apikey: SERVICE, Authorization: 'Bearer ' + SERVICE, 'Content-Type': 'application/json' });
-const ref = () => (BASE.match(/https:\/\/([a-z0-9]+)\.supabase\.co/) || [])[1] || '';
-
-/** Odbijeno? 401/403, ili 404 koji PostgREST vraća kad ruta ulozi nije vidljiva. */
-function odbijen(status, tekst) {
-  return status === 401 || status === 403 || (status === 404 && /PGRST202/.test(tekst || ''));
-}
-
-async function createThrowaway() {
-  const email = `mcp-brava-${Date.now()}@sokrat-test.invalid`;
-  const password = 'Throwaway-' + crypto.randomBytes(6).toString('hex') + '!9';
-  const r = await http('/auth/v1/admin/users', {
-    method: 'POST', headers: svcHeaders(),
-    body: JSON.stringify({ email, password, email_confirm: true })
-  });
-  if (!r.ok) throw new Error(`createUser ${r.status}: ${(await r.text()).slice(0, 200)}`);
-  const id = (await r.json()).id;
-  SMECE.push(id);
-  return { id, email, password };
-}
-
-async function prijava(email, password) {
-  const r = await http('/auth/v1/token?grant_type=password', {
-    method: 'POST', headers: { apikey: ANON, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
-  });
-  if (!r.ok) throw new Error(`signIn ${r.status}: ${(await r.text()).slice(0, 200)}`);
-  return (await r.json()).access_token;
-}
+/** Jednokratni korisnik (prefiks ove brane). */
+const createThrowaway = () => noviKorisnik({ prefiks: 'mcp-brava' });
 
 /** Jednokratni korisnik BEZ lozinke — kakav nastane kad se netko prijavi Googleom (U1). */
-async function createThrowawayBezLozinke() {
-    const email = `mcp-brava-nopw-${Date.now()}@sokrat-test.invalid`;
-    const r = await http('/auth/v1/admin/users', {
-        method: 'POST', headers: svcHeaders(),
-        body: JSON.stringify({ email, email_confirm: true })
-    });
-    if (!r.ok) throw new Error(`createUser ${r.status}: ${(await r.text()).slice(0, 200)}`);
-    const id = (await r.json()).id;
-    SMECE.push(id);
-    return { id, email };
-}
+const createThrowawayBezLozinke = () => noviKorisnik({ prefiks: 'mcp-brava', bezLozinke: true });
 
 /**
  * Sesija iz RECOVERY linka — točno ono što dobije korisnik koji je ZABORAVIO lozinku.
@@ -332,63 +285,6 @@ async function putUser(token, tijelo) {
     return { status: r.status, kod: json.error_code || '', json, tekst: tekst.replace(/\s+/g, ' ').slice(0, 120) };
 }
 
-/** PRAVI OAuth token: svjež DCR klijent → authorize → GET detalja → consent → zamjena koda. */
-async function oauthToken(korisnikJwt) {
-  const reg = await http('/auth/v1/oauth/clients/register', {
-    method: 'POST', headers: { apikey: ANON, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      client_name: 'Sokrat brava (test)',
-      redirect_uris: [REDIRECT],
-      grant_types: ['authorization_code', 'refresh_token'],
-      response_types: ['code'],
-      token_endpoint_auth_method: 'none'
-    })
-  });
-  if (!reg.ok) throw new Error(`DCR ${reg.status}: ${(await reg.text()).slice(0, 200)}`);
-  const klijent = await reg.json();
-
-  const verifier = crypto.randomBytes(32).toString('base64url');
-  const u = new URL(BASE + '/auth/v1/oauth/authorize');
-  u.searchParams.set('client_id', klijent.client_id);
-  u.searchParams.set('response_type', 'code');
-  u.searchParams.set('redirect_uri', REDIRECT);
-  u.searchParams.set('code_challenge', crypto.createHash('sha256').update(verifier).digest('base64url'));
-  u.searchParams.set('code_challenge_method', 'S256');
-  const a = await fetch(u, { redirect: 'manual' });
-  const id = ((a.headers.get('location') || '').match(/authorization_id=([^&]+)/) || [])[1];
-  if (!id) throw new Error('authorize bez authorization_id (HTTP ' + a.status + ')');
-
-  const det = await http('/auth/v1/oauth/authorizations/' + id, {
-    headers: { apikey: ANON, Authorization: 'Bearer ' + korisnikJwt }
-  });
-  if (!det.ok) throw new Error(`detalji ${det.status}`);
-
-  const c = await http('/auth/v1/oauth/authorizations/' + id + '/consent', {
-    method: 'POST',
-    headers: { apikey: ANON, 'Content-Type': 'application/json', Authorization: 'Bearer ' + korisnikJwt },
-    body: JSON.stringify({ action: 'approve' })
-  });
-  if (!c.ok) throw new Error(`consent ${c.status}: ${(await c.text()).slice(0, 160)}`);
-  const code = (((await c.json()).redirect_url || '').match(/[?&]code=([^&]+)/) || [])[1];
-
-  const t = await http('/auth/v1/oauth/token', {
-    method: 'POST', headers: { apikey: ANON, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ grant_type: 'authorization_code', code, code_verifier: verifier, client_id: klijent.client_id, redirect_uri: REDIRECT })
-  });
-  if (!t.ok) throw new Error(`token ${t.status}: ${(await t.text()).slice(0, 200)}`);
-  const token = (await t.json()).access_token;
-  return { token, client_id: klijent.client_id, claims: JSON.parse(Buffer.from(token.split('.')[1], 'base64url').toString()) };
-}
-
-async function rpc(token, ime, tijelo) {
-  const r = await http('/rest/v1/rpc/' + ime, {
-    method: 'POST',
-    headers: { apikey: ANON, Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
-    body: JSON.stringify(tijelo)
-  });
-  return { status: r.status, tekst: (await r.text()).slice(0, 180) };
-}
-
 /** MCP alat preko HTTP-a, onako kako ga zove konektor (Streamable HTTP, bez stanja). */
 async function mcpAlat(token, alat) {
   const H = { apikey: ANON, Authorization: 'Bearer ' + token, 'Content-Type': 'application/json', Accept: 'application/json, text/event-stream' };
@@ -411,7 +307,7 @@ function provjeriInventar() {
     const tekst = fs.readFileSync(path.join(dir, f), 'utf8');
     for (const m of tekst.matchAll(/create\s+(?:or\s+replace\s+)?function\s+public\.([a-z0-9_]+)\s*\(/gi)) imena.add(m[1]);
   }
-  const poznato = new Set([...Object.keys(ZABRANJENI_RPC), ...OKIDACI, ...INTERNE]);
+  const poznato = new Set([...Object.keys(ZABRANJENI_RPC), ...Object.keys(OTVORENO.funkcije), ...OKIDACI, ...INTERNE]);
   // ⚠️ Ovdje je do 18.09. stajalo blanket izuzeće `/^mcp_/` (pisano za hook). Cigla ②/1 dodaje
   // upravo `mcp_*` RPC-ove, pa bi cijeli budući write-put prošao kroz ovu provjeru nezapaženo.
   // Izuzeće je zato suženo na TOČNO ime hooka — sve ostalo mora biti razvrstano.
@@ -494,8 +390,14 @@ function provjeriPrava(inv) {
   const viskoviF = funkcije
     .filter(([ime, o]) => o.execute && !(ime in OTVORENO.funkcije))
     .map(([ime, o]) => ime + (o.okidac ? ' (okidač)' : ''));
-  record(`nijedna funkcija u public nije izvršiva ulozi (${funkcije.length} pregledano)`,
-    viskoviF.length === 0, viskoviF.join(' | ') || 'nijedna');
+  record(`nijedna funkcija u public nije izvršiva ulozi osim popisa (${funkcije.length} pregledano)`,
+    viskoviF.length === 0, viskoviF.join(' | ') || 'izvršivo samo: ' + (Object.keys(OTVORENO.funkcije).join(', ') || 'nijedna'));
+
+  // Drugi smjer, kao za tablice: popis koji tvrdi dozvolu koje u bazi NEMA je mrtav — i uz njega
+  // bi brana ostala zelena zato što je popis zastario, a ne zato što je brava čvrsta (②/1).
+  const manjakF = Object.keys(OTVORENO.funkcije).filter((ime) => !((inv.funkcije || {})[ime] || {}).execute);
+  record('popis otvorenih funkcija odgovara bazi (nijedan mrtav redak)', manjakF.length === 0,
+    manjakF.join(', ') || 'sve s popisa stvarno izvršivo');
 }
 
 /**

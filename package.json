@@ -18,6 +18,7 @@
     "test:storage": "node scripts/storage-check.js",
     "test:delete-account": "node scripts/delete-account-check.js",
     "mcp:brava": "node scripts/mcp-brava-check.js",
+    "mcp:nacrt": "node scripts/mcp-nacrt-check.js",
     "test:mail": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/mail-check.js",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "stats": "node scripts/compute-stats.js",
