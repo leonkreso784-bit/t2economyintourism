@@ -5,7 +5,7 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 ---
 
 ## ADR-038 — MCP: nacrt u zasebnoj tablici · naša domena · DCR uz popis hostova · sigurnost u bazi, kvaliteta u poslužitelju
-**Datum:** 2026-09-17 · **Status:** ✅ ODLUČENO (Leon, anketa) · **Vezano:** [ADR-031](#adr-031) (cjevovod, nacrt, četiri brane), [ADR-030](#adr-030), [ADR-026](#adr-026) (MCP invarijante), [ADR-024](#adr-024) (osobni otok), ADR-027 · **Faza:** F6 u [RASPORED.md](../plan/RASPORED.md)
+**Datum:** 2026-09-17 · **Status:** ✅ ODLUČENO (Leon, anketa) · **Vezano:** [ADR-031](#adr-031) (cjevovod, nacrt, četiri brane), [ADR-030](#adr-030), [ADR-026](#adr-026) (MCP invarijante), [ADR-024](#adr-024) (osobni otok), ADR-027 · **Faza:** F6 u [plan/MCP.md](../plan/MCP.md)
 
 **Kontekst.** [ADR-031](#adr-031) je presudio **što** MCP radi, ali je dvije stvari uzeo kao riješene: da šav za nacrt
 postoji i da je pristup pitanje jedne prijave. Mjerenje 17.09. (RASPORED §F6 „Provjereno") oborilo je obje: nacrt

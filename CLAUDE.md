@@ -182,8 +182,8 @@ i dvaput vratio uvjerljiv krivi broj umjesto da padne.
 ### 🎯 FRONTEND REDIZAJN + MREŽA = ✅ **NA PRODUKCIJI (2026-09-01)**
 
 Oba speca u `docs/archive/`; isporučeno zna CHANGELOG. **Next.js odbijen (ADR-028)** · **🚚 SEOBA OTKAZANA**
-(Leon, 01.09.) → `BACKLOG.md` §SELF-HOST = arhiv, ne plan. Aktivni spec: **`docs/plan/RASPORED.md`** — sedam
-faza: F1 uređaj · F2 račun · F3 dvojezičnost · F4 CSS-dug · F5 vježbe/recepti · F6 MCP · F7 objava.
+(Leon, 01.09.) → `BACKLOG.md` §SELF-HOST = arhiv, ne plan. Aktivni spec: **`docs/plan/MCP.md`** (F6; sigurnost:
+`architecture/MCP_SECURITY.md`); `RASPORED.md` ⏸️ do kraja F6 (F1–F5 · F7 objava).
 
 **F1 ✅ · F2 gotov na granama (PROD čeka Leona) · F3/1 ✅ (ADR-037) · F3/2 ①–④ ✅ · **F6 MCP: cijeli ① na STAGINGU** (dalje ②, nacrt). KARTICE parkirane (Leon 08.09., `feat/tinder-kadar`; BUG-045/046 ondje → samo cherry-pick).**
 

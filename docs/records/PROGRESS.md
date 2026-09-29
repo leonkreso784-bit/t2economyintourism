@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-29 (OPUS, `sokratstudy.f6`) — sigurnosna analiza MCP-a, dionica A · F6 dobiva vlastiti plan
+
+**Dionica A (područja 3 · 4 · 8, samo kod i lokalni pokusi, staging netaknut):** nalazi N1–N6 u
+`architecture/MCP_SECURITY.md` §4. Najteži (N2): kad DOMPurify nije učitan, `legacy-html` ide sirov, a `iframe srcdoc`
++ skripta s dopuštenog CDN-a čita sesiju **uz produkcijski CSP** (Chromium + WebKit, s kontrolom; CDN glumljen lokalno).
+`java<TAB>script:` prolazi `safeUrl` (7 oblika), ali izvršavanje **nije** dokazano (`target=_blank` ne izvrši ni bez CSP-a).
+⚠️ Prva kontrola za poveznicu bila je lažno negativna: rezultat `javascript:` URL-a zamijeni dokument → `void(...)`.
+**Leon (anketa):** F6 izlazi u `plan/MCP.md` kao jedini aktivni plan, `RASPORED.md` ⏸️ · MD pa dionice B i C ·
+četiri nova dokumenta (product · architecture · security · workflow). Povijest ①/S1/S2 → `archive/MCP_KONEKTOR.md`
+(doslovno, bez tablica ② i ③ koje nastavljaju u planu). Nova cigla **②/0 sigurnosni temelj** prije alata. `check:docs` ✅.
+
 ## 2026-09-29 (OPUS, stablo `sokratstudy.f6`, `feat/f6-mcp`) — `main` uliven u F6 (F6 NE ide na `main`)
 
 Leon (anketa): F6 dobiva sve s produkcije (HR predmeti, `check:names`) da testovi na stagingu vide isti katalog;

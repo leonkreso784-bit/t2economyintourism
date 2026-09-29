@@ -53,6 +53,7 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 | Dokument | Svrha |
 |---|---|
 | [PRD.md](./product/PRD.md) | Product Requirements — što gradimo, za koga, opseg i ne-ciljevi |
+| [MCP.md](./product/MCP.md) | **„Spoji svoj AI"** — invarijante i kriteriji prihvaćanja MCP-a (nacrt, pregled, prihvat, veze) |
 | [UGC_SPEC.md](./product/UGC_SPEC.md) | **Osobni materijal** — definicija + kriteriji prihvaćanja, rječnik, ugovor boja |
 | [VISION.md](./product/VISION.md) | Dugoročna vizija (AI tutor, UGC, dijeljenje, natjecanje) + gating-odluke |
 | [MONETIZATION.md](./product/MONETIZATION.md) | Naplata, tržište, scenariji (planiranje) |
@@ -64,6 +65,8 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 | [ARCHITECTURE.md](./architecture/ARCHITECTURE.md) | Tehnička arhitektura, model podataka |
 | [BACKEND.md](./architecture/BACKEND.md) | Supabase: auth, sync, read-path, osobni UGC-otok, migracije |
 | [CATALOG_ARCHITECTURE.md](./architecture/CATALOG_ARCHITECTURE.md) | Identitet predmeta preko programa/fakulteta (placement ≠ sadržaj; ADR-022) |
+| [MCP.md](./architecture/MCP.md) | MCP konektor: OAuth, uloga `mcp_klijent`, nacrt, poslužitelj, adresa |
+| [MCP_SECURITY.md](./architecture/MCP_SECURITY.md) | MCP sigurnost: granice povjerenja, invarijante, nalazi, matrica testova, **uvjeti puštanja** |
 | [CONTENT_SCHEMA.md](./architecture/CONTENT_SCHEMA.md) | **Kanonski oblik sadržaja** (flashcard/quiz/fill/learn + KaTeX konvencija) |
 | [EXERCISES_ENGINE.md](./architecture/EXERCISES_ENGINE.md) | Sustav interaktivnih vježbi (7 tipova) — engine se NE dira za sadržaj |
 
@@ -71,7 +74,8 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 
 | Dokument | Svrha |
 |---|---|
-| [RASPORED.md](./plan/RASPORED.md) | 🟩 **tekući spec** — sve što čeka, razrezano na **sedam faza kroz sesije**: F1 uređaj (izgled + glatkoća) · F2 račun (R2+R3 + CSS profila) · F3 dvojezičnost · F4 čišćenje CSS-duga · F5 vježbe/recepti · F6 MCP · F7 objava. Nosi **redoslijed i izlazni uvjet**, ne mjerenja — ta ostaju u BACKLOG-u. |
+| [MCP.md](./plan/MCP.md) | 🟩 **tekući spec (F6)** — redoslijed cigli MCP-a sa sigurnosnim uvjetom završetka svake: sigurnosna analiza → ②/0 temelj → ② cjevovod → ③ brane → ④ limiti → ⑤ pravi AI → ⑥ produkcija |
+| [RASPORED.md](./plan/RASPORED.md) | ⏸️ **pauziran dok traje F6** — sedam faza kroz sesije (F1 uređaj · F2 račun · F3 dvojezičnost · F4 CSS-dug · F5 vježbe · F6 → `MCP.md` · F7 objava); nastavlja se s F7 |
 | [ROADMAP.md](./plan/ROADMAP.md) | Milestones + status (**povijesni zapis**, ne plan rada) |
 
 > Prethodne dvije faze ispunjene su i deployane, pa su im planovi istog dana otišli u arhivu
@@ -83,6 +87,7 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 
 | Dokument | Svrha |
 |---|---|
+| [MCP_TESTING.md](./workflow/MCP_TESTING.md) | Kako se testira MCP: staging računi, brane `mcp:*`, zamke suđenja, scenariji s pravim AI-jem |
 | [TESTING.md](./workflow/TESTING.md) | QA checklista + automatske provjere (verify, validatori, unit, Playwright, authed, CI) |
 | [CONTENT_GUIDE.md](./workflow/CONTENT_GUIDE.md) | Kako dodati predmet/lekciju (playbook) |
 | [CONTENT_INTAKE.md](./workflow/CONTENT_INTAKE.md) | Kako slagati profesorske materijale (PDF/JPG) za točnu ekstrakciju |
@@ -137,6 +142,7 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 | [CRUD_PLAN.md](./archive/CRUD_PLAN.md) | Admin CRUD javnog kataloga — ispunjen kroz EDITOR_PLAN |
 | [TEAM.md](./archive/TEAM.md) | Model rada s content-suradnikom (ADR-023) — ⚰️ **suradnja otkazana 2026-09-04**; gradivo koje je proizvela ostaje na produkciji |
 | [RACUN.md](./archive/RACUN.md) | Blok RAČUN — **R1 (dijalog + upitnik + Google) isporučen 2026-09-02**; R2/R3 preseljeni u `plan/RASPORED.md` F2. Referenca za obrazloženje zašto je R1 izveden odjednom |
+| [MCP_KONEKTOR.md](./archive/MCP_KONEKTOR.md) | F6 ① konektor + OAuth, S1, S2 — **ispunjeno na stagingu**; izdvojeno iz `plan/RASPORED.md` §F6 2026-09-29 (zapisi „RASPORED §F6" pokazuju ovamo) |
 | [HRV_PLAN.md](./archive/HRV_PLAN.md) | HRV program (klon-program + UI toggle, ADR-012) — cigle 1–5c ✅, ostatak pauziran |
 | [EXERCISES_DB_FIX_PLAN.md](./archive/EXERCISES_DB_FIX_PLAN.md) | BUG-012 fix plan (✅ 2026-06-27) |
 | [SONNET_REVIEW_2026-06.md](./archive/SONNET_REVIEW_2026-06.md) | Vanjski review — potrošen input |

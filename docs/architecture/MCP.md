@@ -1,0 +1,85 @@
+# MCP — kako je građeno
+
+> **Opisuje, ne definira** (ADR-027): istina je u kodu i branama navedenima uz svaki dio.
+> Redoslijed rada: [plan/MCP.md](../plan/MCP.md) · prijetnje i uvjeti: [MCP_SECURITY.md](./MCP_SECURITY.md) ·
+> odluke: ADR-030 · ADR-031 · [ADR-038](../records/DECISIONS.md#adr-038).
+>
+> **Stanje:** sve ispod živi na **STAGINGU** (`czljmvigkgiajzjxtndq`). Na produkciji MCP ne postoji
+> (`www.sokratstudy.com/mcp` → 404, tvrdi `check:functions`).
+
+## 1 · Slika
+
+```
+korisnikov AI (Claude.ai / ChatGPT)
+   │  token drži BROKER (Anthropic/OpenAI), ne model
+   ▼
+www.sokratstudy.com/mcp ── Vercel rewrite, imenovani hostovi, bez catch-alla
+   ▼
+Edge Function `mcp` (verify_jwt = false)
+   ├─ withOAuthProtectedResource → 401 + WWW-Authenticate + RFC 9728 metapodaci
+   └─ withSupabase({ auth: 'user' }) → klijent pod KORISNIKOVIM tokenom, nikad service_role
+   ▼
+PostgREST ── uloga `mcp_klijent` (hook je postavi tokenu s `client_id`)
+   ▼
+Postgres: GRANT-ovi (zabrana po defaultu) + RLS (samo vlastito) + SECURITY DEFINER RPC-ovi (vlasnik iz tokena)
+```
+
+## 2 · Prijava (OAuth 2.1)
+
+- **Poslužitelj autorizacije = Supabase Auth** (OAuth 2.1, beta). **DCR je uključen** — Claude registrira novi klijent
+  pri svakom spajanju. CIMD Supabase nema; `client_id` je UUID.
+- **Stranica za odobrenje** je naša: `odobrenje.html` + `js/odobrenje.js`. Pušta samo **poznate hostove
+  preusmjeravanja** (`claude.ai`, `chatgpt.com`), jer DCR sam hostove ne ograničava (samo shemu). Ime klijenta je
+  **tuđi tekst** (DCR je otvoren) i ide kroz escape. Prijava ide u drugi prozor da se `authorization_id` ne izgubi.
+  `approveAuthorization` se uvijek zove s `skipBrowserRedirect: true`; preusmjeravanje tek poslije provjere hosta.
+- **Token AI-ja = običan korisnički JWT + claim `client_id`**, `aud: authenticated`. `resource` (RFC 8707) se prihvaća,
+  ali token **nije vezan na naš poslužitelj** — zato sigurnost ne smije ovisiti o tome tko ga predaje.
+- **Trajanje:** propusnica 3600 s; prekid veze (`revokeGrant`) odmah ubija **obnovu**, ali već izdana propusnica vrijedi
+  do isteka. Kartica „Povezani AI-jevi" u profilu to kaže korisniku (`tests/ai-veze.authed.spec.js`).
+
+## 3 · Brava u bazi (`supabase/f6-mcp-brava.sql`)
+
+- Hook `mcp_access_token_hook`: token s nepraznim `client_id` dobiva ulogu **`mcp_klijent`** (`nologin`, `noinherit`).
+  Hook ne čita tablice i na neočekivan ulaz vraća događaj netaknut — **greška u hooku ruši SVAKU prijavu na projektu**.
+- `mcp_klijent` ima samo ono što mu je izričito dano. Danas: `USAGE` na `public`, `SELECT` na `nodes` (RLS = vlastiti),
+  `EXECUTE` na pet `mcp_*` RPC-ova nacrta. Sve ostalo — `publish_node`, 7 RPC-ova čvorova, profil, Storage, katalog —
+  zatvoreno.
+- `is_admin()` više nema PUBLIC EXECUTE (inače bi AI-token admina prošao admin-vrata `send-notification`).
+- **Popis otvorenog nabraja baza sama:** `supabase/f6-mcp-inventar.sql` (`mcp_brava_inventar()`), a
+  `npm run mcp:brava` pada na svemu što je otvoreno a nije na popisu, i na mrtvom retku popisa.
+
+## 4 · Ono što baza ne doseže
+
+- **Edge Functions:** gateway `verify_jwt` provjerava samo potpis, ne ulogu. Zato `delete-account` i `send-notification`
+  pitaju `supabase/functions/_shared/token-guard.ts` i AI-tokenu vraćaju 403. Svaka funkcija je ili pod stražom ili
+  imenovana s razlogom (`check:functions`).
+- **Auth API (`PUT /auth/v1/user`)** ide mimo Postgresa. Lozinku štiti postavka *Require current password*, e-mail
+  *Secure email change* (potvrda sa stare adrese). Metapodaci korisnika ostaju otvoreni i to je imenovano u
+  `scripts/mcp-brava-check.js`.
+
+## 5 · Nacrt (`supabase/f6-nacrt.sql`)
+
+- Tablica **`node_drafts`**: `owner_id` · `client_id` (koji je AI počeo) · `name` · `status` (`u_izradi` → `predan`) ·
+  `payload` (JSON objekt, ≤ 1 MB tekstualno) · vremena.
+- **Upis samo kroz RPC**, samo za `mcp_klijent`, vlasnik uvijek iz tokena: `mcp_zapocni_nacrt` · `mcp_upisi_nacrt`
+  (cijeli payload se zamjenjuje) · `mcp_predaj_nacrt` (zamrzne) · `mcp_procitaj_nacrt` · `mcp_moji_nacrti` (bez sadržaja).
+  Tuđi, istekao i nepostojeći nacrt daju **istu** grešku.
+- Obična sesija nacrte **samo čita** (RLS `node_drafts_select_own`); ne može pisati ni RPC-om ni izravno.
+- **Kvota** (pod savjetodavnom bravom po korisniku): 3 u izradi, 10 nepregledanih. **Istjecanje:** nacrt u izradi
+  netaknut 7 dana je nepostojeći za sve i briše se pri vlasnikovom sljedećem započinjanju; predan ostaje.
+- AI **ne bira policu** — bira je korisnik pri Prihvati.
+- **Prihvati još ne postoji** (plan ②/4). Do tada nijedan put ne vodi iz nacrta u živo gradivo.
+
+## 6 · Poslužitelj (`supabase/functions/mcp/`)
+
+- `index.ts` = omot (prijava + MCP prijenos, `@modelcontextprotocol/server@2.0.0`, `@supabase/server@1.7.0`, pinano točno).
+- `alati.ts` = čista jezgra bez Deno-uvoza, testira se u Nodeu (`tests/unit/mcp-alati.test.js`). Stupci se čitaju
+  izričito, nikad `*`.
+- **Danas jedan alat:** `procitaj_materijale` (police i materijali, samo imena i id-evi).
+- Adresa resursa: `MCP_RESOURCE_URL`, inače adresa funkcije; na produkciji postaje kanonska tek u fazi ⑥.
+
+## 7 · Adresa (`vercel.json`)
+
+`/mcp` i `/mcp/:put*` → Edge Function, po **imenovanim hostovima**: `www.sokratstudy.com` → produkcija, alias grane
+značajke → staging, nepoznat host → bez rewritea (404). Adresa se nakon objave ne mijenja — promjena znači da svaki
+korisnik ponovno dodaje konektor. Brana: `npm run check:mcp-rewrite` (izvodi pravila, ne čita ključeve).
