@@ -5,7 +5,15 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
-### 2026-09-29 — HR 2. godina: pet predmeta + vježbe (grana `feat/hr-1god`, NIJE na produkciji)
+## 2026-09-29 (OPUS) — 🚀 **HR 2. GODINA: PET PREDMETA + VJEŽBE MAKRO I RAČUNOVODSTVA NA PRODUKCIJI** — `main` = `e54bdf3`, token `20260928224620`
+
+Leonov OK 29.09.; pushao Leon (fast-forward `268aa74..e54bdf3`). **Provjereno nakon deploya:** Vercel produkcija READY na
+`e54bdf3` · živi `SW_VERSION` = repo · stranica kaže 34 predmeta, HR program 17 · u živom pregledniku svih 6 predmeta učitava
+lekciju (kategorije i kartice = commit) · `accountingHrExercises` 54, `macroeconomicsHrExercises` 86 · živi `js/blind-map.js`
+pali kartu po `features.blindMap`. Sadržaj: unos ispod. Novi predmeti su `dataFormat:'json'` → u PROD bazu (`migrate-content.js`)
+tek uz zaseban OK (`diff:db` prvo); do tada se čitaju iz `data/json/`.
+
+### 2026-09-29 — HR 2. godina: pet predmeta + vježbe (sadržaj isporuke gore)
 - **Dodano (katalog 29 → 34):** Hrana i prehrana (`food-nutrition-hr`), Turistička geografija (`geography-hr`, sa slijepom
   kartom), Ekonomika ugostiteljstva (`econ-hospitality-hr`), Marketing (`marketing-hr`, prijevod EN-a — HR izvora nema),
   Računovodstvo (`accounting-hr`, teorija + 54 vježbe). Vježbe Makroekonomije (86).
