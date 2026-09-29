@@ -1,0 +1,2382 @@
+{
+  "tourismBasics": {
+    "name": "Turizam: pojmovi, razvoj i oblici",
+    "icon": "fa-suitcase-rolling",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "Što je TURIZAM?",
+        "answer": "Skup odnosa i pojava koje nastaju putovanjem i boravkom ljudi izvan mjesta stalnog boravka (dulje od 24 sata), ako se time ne ostvaruje zarada.",
+        "explanation": "Motivi: odmor, rekreacija, sport, zdravlje, kultura, avantura."
+      },
+      {
+        "question": "Koje su četiri skupine definicija turizma?",
+        "answer": "Nominalističke (prema nazivu), gospodarske (turizam kao djelatnost), univerzalne (sve funkcije turizma) i statističke.",
+        "explanation": "Nijedna statistička definicija nije potpuna."
+      },
+      {
+        "question": "Što je TURISTIČKI RESURS?",
+        "answer": "Geografski resurs dovoljno atraktivan da privuče pažnju i posjet turista. Resurs općenito = svako dobro koje se može gospodarski valorizirati.",
+        "explanation": "Bogatstvo resursima = komparativna prednost."
+      },
+      {
+        "question": "Tko se smatra začetnikom modernog turizma?",
+        "answer": "Thomas Cook — 1841. organizirao je izlet za društvo antialkoholičara, a 1845. osnovao putničku agenciju.",
+        "explanation": "Sredina 19. st. = granica predturističkog i suvremenog doba."
+      },
+      {
+        "question": "Što obilježava PREDTURISTIČKO DOBA?",
+        "answer": "Razdoblje prije sredine 19. st.: putovanja iz vjerskih, trgovačkih i istraživačkih motiva (antička Grčka i Rim); srednji vijek je nepogodan za putovanja.",
+        "explanation": "Rim je izgradio dobar sustav cesta; s humanizmom i renesansom putovanja rastu."
+      },
+      {
+        "question": "Po čemu se turizam nakon 2. svjetskog rata razlikuje od ranijeg?",
+        "answer": "Postaje MASOVAN (nije više privilegija bogatih), a kretanja su sezonska (najviše ljeti) i vikendom; turist je zahtjevniji.",
+        "explanation": "Pokretač suvremenog turizma bila je industrijska revolucija."
+      },
+      {
+        "question": "Koje su NEEKONOMSKE funkcije turizma?",
+        "answer": "Neposredne: zdravstvena (najvažnija), zabavna, kulturna. Posredne: socijalna i politička.",
+        "explanation": "Politička funkcija razvija osjećaj povezanosti s drugim narodima."
+      },
+      {
+        "question": "Koje su EKONOMSKE funkcije turizma?",
+        "answer": "Multiplikativna, induktivna, akceleratorska, konverzijska, funkcija zapošljavanja, razvoj nerazvijenih područja i uravnoteženje platne bilance.",
+        "explanation": "Nerobni devizni priljev izravnava platnu bilancu."
+      },
+      {
+        "question": "Emitivno vs receptivno područje?",
+        "answer": "Emitivno = odakle turisti dolaze (tržište potražnje). Receptivno = kamo dolaze, gdje se turizam odvija (ponuda).",
+        "explanation": "Najvažnija emitivna područja prema skripti: zapadna Europa i SAD."
+      },
+      {
+        "question": "Boravišni vs ekskurzijski vs izletnički turizam?",
+        "answer": "Boravišni: dulji boravak (više od 3 dana). Ekskurzijski: kraća putovanja do 3 dana. Izletnički: od pola dana do 2 dana (vikend-turizam).",
+        "explanation": "Podjela prema trajanju boravka i udaljenosti."
+      },
+      {
+        "question": "Koje su etape putovanja i koja je ekonomski najisplativija?",
+        "answer": "Prethodna, glavna i povratna. Glavna etapa (od granice do destinacije) ekonomski je najiskoristivija, a povratna najmanje.",
+        "explanation": "Glavnu etapu Hrvatska nije dovoljno iskoristila."
+      },
+      {
+        "question": "Koja su četiri elementa kulturnih turističkih kretanja?",
+        "answer": "Informiranost, upoznavanje, kontaktiranje i doživljavanje (najkompleksniji element).",
+        "explanation": "Doživljavanje angažira sve čovjekove osjećaje i čula."
+      },
+      {
+        "question": "Što je REKREACIJA i što joj najviše škodi?",
+        "answer": "Obnavljanje snage organizma (lat. recreatio). Najnegativnije djeluju aerozagađenje, buka i zamor.",
+        "explanation": "Većina turista putuje zbog rekreacije, manji dio zbog kulture."
+      },
+      {
+        "question": "Kako se dijeli turizam prema turističkom prostoru?",
+        "answer": "Planinski, primorski, jezerski, gradski, seoski i toplički (zdravstveni).",
+        "explanation": "Ostale podjele: domaći/inozemni, individualni/obiteljski/grupni, po dobi."
+      },
+      {
+        "question": "Zašto je NATURIZAM komparativna prednost Hrvatske?",
+        "answer": "U većini mediteranskih zemalja bio je zabranjen ili ograničen, a Hrvatska ga razvija od prve polovine 20. st. (Rab, Koversada kod Vrsara).",
+        "explanation": "Gosti više kulture i platežne moći; traži izdvojene plaže."
+      },
+      {
+        "question": "Koliko je međunarodnih turista bilo u svijetu 2019. (UNWTO)?",
+        "answer": "Oko 1,5 milijardi međunarodnih turističkih dolazaka.",
+        "explanation": "Oko 740 milijuna od toga (≈ 50 %) otpada na Europu."
+      },
+      {
+        "question": "Koliki je udio Europe u svjetskom turizmu 2019. (UNWTO)?",
+        "answer": "Oko 50 % međunarodnih dolazaka i oko 40 % prihoda od međunarodnog turizma.",
+        "explanation": "Europa sama ima više dolazaka od svih ostalih regija zajedno."
+      },
+      {
+        "question": "Koje svjetske regije imaju manje od 10 % međunarodnih dolazaka?",
+        "answer": "Afrika i Bliski istok (svaka oko 5 %).",
+        "explanation": "Najviše: Europa, zatim Azija i Pacifik, pa Amerika."
+      },
+      {
+        "question": "Koliko međunarodnih turista putuje unutar vlastite svjetske regije?",
+        "answer": "Oko 80 % (UNWTO, 2019.); samo oko 20 % putuje u druge regije.",
+        "explanation": "Npr. Europljani uglavnom putuju po Europi."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Koliko je međunarodnih turističkih dolazaka zabilježeno u svijetu 2019. (UNWTO)?",
+        "options": [
+          "Oko 1,5 milijardi",
+          "Oko 740 milijuna",
+          "Oko 695 milijuna",
+          "Oko 3 milijarde"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koliki je udio Europe u međunarodnim turističkim dolascima 2019. (UNWTO)?",
+        "options": [
+          "Oko 20 %",
+          "Oko 50 %",
+          "Oko 30 %",
+          "Oko 75 %"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koliki je udio Europe u prihodima od međunarodnog turizma 2019. (UNWTO)?",
+        "options": [
+          "Oko 10 %",
+          "Oko 65 %",
+          "Oko 40 %",
+          "Oko 90 %"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koje dvije svjetske regije ostvaruju manje od 10 % međunarodnih dolazaka?",
+        "options": [
+          "Europa i Amerika",
+          "Azija i Pacifik",
+          "Južna Amerika i Karibi",
+          "Afrika i Bliski istok"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koji se udio međunarodnih turista kreće unutar vlastite velike svjetske regije?",
+        "options": [
+          "Oko 80 %",
+          "Oko 20 %",
+          "Oko 50 %",
+          "Oko 95 %"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koja je turistička regija 2019. imala više dolazaka od svih ostalih regija zajedno?",
+        "options": [
+          "Azija i Pacifik",
+          "Europa",
+          "Amerika",
+          "Bliski istok"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Tko se smatra začetnikom organiziranog modernog turizma?",
+        "options": [
+          "Marco Polo",
+          "Robert Koch",
+          "Thomas Cook",
+          "Paul Kupelwieser"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koja je od neekonomskih funkcija turizma najvažnija?",
+        "options": [
+          "Politička",
+          "Zabavna",
+          "Socijalna",
+          "Zdravstvena"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koja etapa putovanja je ekonomski najiskoristivija?",
+        "options": [
+          "Glavna etapa",
+          "Prethodna etapa",
+          "Povratna etapa",
+          "Sve su jednake"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Programom unaprijed planirano putovanje do 3 dana, motivirano kulturom, znanošću ili sportom, je:",
+        "options": [
+          "boravišni turizam",
+          "ekskurzijsko putovanje",
+          "izletničko kretanje",
+          "tranzitni turizam"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koji je element kulturnih turističkih kretanja najkompleksniji?",
+        "options": [
+          "Informiranost",
+          "Upoznavanje",
+          "Doživljavanje",
+          "Kontaktiranje"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Emitivno turističko područje je prostor:",
+        "options": [
+          "u kojem turisti borave",
+          "kroz koji turisti prolaze",
+          "zaštićen od masovnog turizma",
+          "odakle turisti dolaze"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koja NIJE skupina definicija turizma?",
+        "options": [
+          "Receptivne",
+          "Nominalističke",
+          "Univerzalne",
+          "Statističke"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Što od navedenog NAJVIŠE šteti rekreacijskoj vrijednosti prostora?",
+        "options": [
+          "Insolacija",
+          "Aerozagađenje",
+          "Povjetarac",
+          "Makija"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Začetnikom modernog organiziranog turizma smatra se Thomas _______.",
+        "answer": "Cook",
+        "hint": "Engleski organizator izleta, 1841."
+      },
+      {
+        "sentence": "Područje odakle turisti dolaze zove se _______ područje.",
+        "answer": "emitivno",
+        "hint": "Suprotno od receptivnog."
+      },
+      {
+        "sentence": "Prema UNWTO-u se oko _______ % međunarodnih turista kreće unutar vlastite svjetske regije.",
+        "answer": "80",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Na Europu je 2019. otpadalo oko _______ % međunarodnih turističkih dolazaka.",
+        "answer": "50",
+        "hint": "Broj — polovica."
+      },
+      {
+        "sentence": "Izletnička kretanja traju od pola dana do _______ dana.",
+        "answer": "2",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Najvažnija neekonomska funkcija turizma je _______ funkcija.",
+        "answer": "zdravstvena",
+        "hint": "Vezana uz zdravlje."
+      }
+    ],
+    "learn": {
+      "title": "Osnovni pojmovi, razvoj i oblici turizma",
+      "content": "\n<h3>Turizam i turistički resurs</h3>\n<p><strong>Turizam</strong> je skup odnosa i pojava koje nastaju putovanjem i boravkom ljudi izvan mjesta stalnog boravka — dulje od 24 sata, iz motiva odmora, rekreacije, sporta, zdravlja, kulture ili avanture — ako se time ne ostvaruje nikakva zarada.</p>\n<ul>\n<li><strong>Nominalističke</strong> definicije — objašnjavaju turizam prema nazivu.</li>\n<li><strong>Gospodarske</strong> — ističu turizam kao gospodarsku djelatnost.</li>\n<li><strong>Univerzalne</strong> — bit turizma ne izvode samo iz putovanja, nego uključuju sve njegove funkcije.</li>\n<li><strong>Statističke</strong> — mnogo ih je, a nijedna nije potpuna.</li>\n</ul>\n<p><strong>Resurs</strong> je svako dobro koje se može gospodarski valorizirati. <strong>Turistički resurs</strong> je geografski resurs dovoljno atraktivan da privuče pažnju i posjet turista. Bogatstvo resursima daje destinaciji komparativnu prednost.</p>\n<p><strong>Receptivno</strong> područje je mjesto dolaska turista, gdje se turizam odvija (tu je potrebna zaštita prostora zbog masovnosti). <strong>Emitivno</strong> područje je prostor odakle turisti dolaze; ondje djeluju inicijalni čimbenici potražnje. Prema skripti su najvažnija emitivna područja zapadna Europa i SAD.</p>\n\n<h3>Etape u razvoju turizma</h3>\n<table>\n<tr><th>Razdoblje</th><th>Obilježja</th></tr>\n<tr><td>Predturističko doba (do sredine 19. st.)</td><td>Antička Grčka: putovanja na Olimpijske igre, svetištima, trgovina. Rim: dobre ceste, putovanja radi rekreacije i zdravlja. Srednji vijek: loše prometnice, ratovi — nepogodno za putovanja; s humanizmom i renesansom putuje se više.</td></tr>\n<tr><td>Začetak modernog turizma</td><td><strong>Thomas Cook</strong> 1841. organizira izlet za društvo antialkoholičara, a 1845. osniva agenciju koja organizira desetke izleta.</td></tr>\n<tr><td>Doba suvremenog turizma</td><td>Pokreće ga industrijska revolucija (gradovi, urbanizacija, promet). Nakon 2. svjetskog rata turizam postaje <strong>masovan</strong> i dostupan svima; kretanja su najjača ljeti i vikendom, a turist sve zahtjevniji i spreman platiti više.</td></tr>\n</table>\n<div class=\"warning-box\"><strong>Ispravak skripte:</strong> skripta „razdoblje Grand Toura” veže uz godinu 1955. Grand Tour je zapravo obrazovno putovanje mladih europskih plemića po Europi u 17. i 18. stoljeću; za ispit je važna podjela na razdoblje prije i poslije 2. svjetskog rata.</div>\n\n<h3>Učinci (funkcije) turizma</h3>\n<table>\n<tr><th>Neekonomske (izvanprivredne)</th><th>Ekonomske (privredne)</th></tr>\n<tr><td><strong>Neposredne:</strong> zdravstvena (najvažnija), zabavna, kulturna.<br><strong>Posredne:</strong> socijalna (humanizacija odnosa), politička (povezanost s drugim narodima).</td><td>Multiplikativna, induktivna, akceleratorska, konverzijska, funkcija zapošljavanja (tercijarizacija), razvoj nerazvijenih područja, usklađivanje robno-novčanih odnosa, jačanje vanjskoprivrednih odnosa i platne bilance.</td></tr>\n</table>\n<p>Turizam nerobnim deviznim priljevom izravnava platnu bilancu, zapošljava trajno, a najviše sezonski, i usko je vezan uz sve grane gospodarstva. U međunarodnoj trgovinskoj razmjeni turizam zauzima treće mjesto.</p>\n\n<h3>Elementi turističkih kretanja</h3>\n<p><strong>Funkcionalni elementi — analiza putovanja:</strong></p>\n<ol>\n<li><strong>Prethodna etapa</strong> — od kuće do granice; ekonomski se teško iskorištava.</li>\n<li><strong>Glavna etapa</strong> — od granice do destinacije; <strong>ekonomski najiskoristivija</strong> (Hrvatska ju nije dovoljno iskoristila). Iskoristiva je ako nije jednosmjerna, nego razgranata.</li>\n<li><strong>Povratna etapa</strong> — ekonomski najmanje iskoristiva.</li>\n</ol>\n<p><strong>Boravak</strong> je vrijeme koje turist provede u destinaciji; uspjeh je produžiti ga. Na njega utječu vremenske prilike, atraktivnost resursa, kvaliteta usluge i sadržaj boravka. Najbolji pokazatelj je <strong>broj noćenja</strong>.</p>\n<p><strong>Rekreacija</strong> (lat. <em>recreatio</em> — obnavljanje snage) glavni je motiv većine turista; najnegativnije na nju djeluju <strong>aerozagađenje</strong>, <strong>buka</strong> (mjeri se u fonima; iznad 120 fona oštećuje sluh) i <strong>zamor</strong>.</p>\n<p><strong>Kulturni elementi</strong> — antropogeni sadržaji sve su važniji pri izboru destinacije. Četiri elementa na kojima se temelje kulturna kretanja:</p>\n<ol>\n<li><strong>Informiranost</strong> — osnovne informacije plasirane na tržište (prospekti, inovativni kanali).</li>\n<li><strong>Upoznavanje</strong> — aktivniji, detaljniji odnos prema resursu.</li>\n<li><strong>Kontaktiranje</strong> — „dodir” s ljudima, objektima i sadržajima; važni su turistički vodiči.</li>\n<li><strong>Doživljavanje</strong> — najkompleksniji element; angažira sve osjećaje i čula.</li>\n</ol>\n\n<h3>Vrste i oblici turističkih kretanja</h3>\n<table>\n<tr><th>Kriterij</th><th>Oblici</th></tr>\n<tr><td>Trajanje i udaljenost</td><td><strong>Boravišni</strong> (više od 3 dana, godišnji odmori) · <strong>ekskurzijski</strong> (do 3 dana, programom planirani) · <strong>izletnički</strong> (od pola dana do 2 dana, vikend-turizam)</td></tr>\n<tr><td>Turistički prostor</td><td>planinski, primorski, jezerski, gradski, seoski, toplički (zdravstveni)</td></tr>\n<tr><td>Nacionalna struktura</td><td>domaći, inozemni</td></tr>\n<tr><td>Prostor nastanka</td><td>emitivni, receptivni</td></tr>\n<tr><td>Dob</td><td>dječji, omladinski, turizam osoba zrele dobi</td></tr>\n<tr><td>Organizacija</td><td>individualni, obiteljski, grupni</td></tr>\n<tr><td>Ostalo</td><td>tranzitni, nautički, lovni, ribolovni, kongresni, ruralni, rafting, <strong>naturizam</strong></td></tr>\n</table>\n<p><strong>Nautički turizam</strong> je plovidba i boravak u vlastitom ili tuđem plovilu. <strong>Naturizam</strong> je komparativna prednost Hrvatske jer je u većini mediteranskih zemalja bio zabranjen; traži izdvojene plaže i posebne objekte, a privlači goste više kulture i platežne moći.</p>\n\n<h3>Svjetski turizam u brojkama (UNWTO, 2019.)</h3>\n<ul>\n<li>Oko <strong>1,5 milijardi</strong> međunarodnih turističkih dolazaka u svijetu.</li>\n<li><strong>Europa</strong>: oko <strong>50 %</strong> dolazaka (oko 740 milijuna) i oko <strong>40 %</strong> prihoda — sama ima više dolazaka od svih ostalih regija zajedno.</li>\n<li><strong>Afrika</strong> i <strong>Bliski istok</strong>: svaka manje od 10 % (oko 5 %) dolazaka.</li>\n<li>Oko <strong>80 %</strong> međunarodnih turista putuje <strong>unutar</strong> vlastite velike svjetske regije, oko 20 % izvan nje.</li>\n</ul>\n<div class=\"warning-box\"><strong>Pazi na brojke:</strong> jedan ključ s ispita kao broj međunarodnih turista u svijetu 2019. navodi „oko 740 milijuna” — to je broj dolazaka u <strong>Europu</strong>. Svijet je 2019. imao oko 1,5 milijardi dolazaka. Skripta navodi i stariji podatak od 695 milijuna turista — to je stanje s početka 2000-ih, ne 2019.</div>\n"
+    }
+  },
+  "tourismFactors": {
+    "name": "Čimbenici turizma: ponuda i potražnja",
+    "icon": "fa-scale-balanced",
+    "color": "#0ea5e9",
+    "flashcards": [
+      {
+        "question": "Koje su tri skupine čimbenika turističke PONUDE?",
+        "answer": "Atraktivni (primarna ponuda), komunikativni (promet) i receptivni (prihvatni) čimbenici.",
+        "explanation": "Djeluju u destinaciji, na receptivnom tržištu."
+      },
+      {
+        "question": "Koji su atraktivni PRIRODNI čimbenici ponude?",
+        "answer": "Geomorfološki, klimatski, hidrogeografski, biogeografski i pejsažni (pejzažni).",
+        "explanation": "Sve što je stvorila priroda."
+      },
+      {
+        "question": "Koji su atraktivni ANTROPOGENI (društveni) čimbenici ponude?",
+        "answer": "Kulturno-povijesni, etnosocijalni, umjetnički, manifestacijski i ambijentalni.",
+        "explanation": "Sve što je stvorio čovjek."
+      },
+      {
+        "question": "Koji su KOMUNIKATIVNI čimbenici ponude?",
+        "answer": "Promet i prometna mreža: cestovni, željeznički, zračni, morski, riječni i jezerski.",
+        "explanation": "Povezuju emitivno i receptivno područje."
+      },
+      {
+        "question": "Koji su RECEPTIVNI (prihvatni) čimbenici ponude?",
+        "answer": "Smještajni i prehrambeni (ugostiteljski) kapaciteti, komunalna infrastruktura, sportski objekti i objekti zabave.",
+        "explanation": "Omogućuju prihvat turista u mjestu boravka."
+      },
+      {
+        "question": "Primarna vs sekundarna turistička ponuda?",
+        "answer": "Primarna = atraktivni čimbenici (prirodni i antropogeni). Sekundarna = komunikativni (prometna mreža) i receptivni čimbenici.",
+        "explanation": "Bez primarne ponude nema razloga za dolazak."
+      },
+      {
+        "question": "Koje su tri skupine čimbenika turističke POTRAŽNJE?",
+        "answer": "Socioekonomski, tehnički i sociopsihološki.",
+        "explanation": "Djeluju u mjestu odakle turist dolazi (inicijalni čimbenici)."
+      },
+      {
+        "question": "Koji su SOCIOEKONOMSKI čimbenici potražnje?",
+        "answer": "Demografski, industrijalizacija, urbanizacija, financijska sredstva i slobodno vrijeme.",
+        "explanation": "Što su izraženiji, veća je mogućnost turističkih kretanja."
+      },
+      {
+        "question": "Koji je TEHNIČKI čimbenik potražnje?",
+        "answer": "Promet — prometna sredstva i prometna organizacija.",
+        "explanation": "Što je promet razvijeniji, veće su pretpostavke za turizam."
+      },
+      {
+        "question": "Koji su SOCIOPSIHOLOŠKI čimbenici potražnje?",
+        "answer": "Sport, zdravlje, politika, kultura, moda, navike, oponašanje, prestiž (ugled), vjera i ljubav.",
+        "explanation": "Motivi koji potiču pojedinca na putovanje."
+      },
+      {
+        "question": "Tko su POSREDNICI između ponude i potražnje?",
+        "answer": "Turističke agencije (informiranje i savjetovanje), turoperatori (organiziraju putovanja u svoje ime) i organizatori prijevoza.",
+        "explanation": "Turoperatori su „trgovci na veliko”."
+      },
+      {
+        "question": "Kako obrazovanje, industrijalizacija i urbanizacija utječu na potražnju?",
+        "answer": "Što je stanovništvo obrazovanije, industrijaliziranije i urbaniziranije, to više putuje.",
+        "explanation": "Zato su razvijene zemlje glavna emitivna tržišta."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Koji od navedenih čimbenika ponude pripada skupini RECEPTIVNIH?",
+        "options": [
+          "Pejzažni čimbenik",
+          "Zračni promet",
+          "Objekti za zabavu",
+          "Etnosocijalni čimbenik"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koji od navedenih čimbenika potražnje pripada skupini SOCIOEKONOMSKIH?",
+        "options": [
+          "Moda",
+          "Prometna sredstva",
+          "Vjera",
+          "Slobodno vrijeme"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koji od navedenih čimbenika ponude pripada skupini RECEPTIVNIH?",
+        "options": [
+          "Komunalna infrastruktura",
+          "Pejzažni čimbenik",
+          "Cestovni promet",
+          "Manifestacije"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koji od navedenih čimbenika ponude pripada skupini RECEPTIVNIH?",
+        "options": [
+          "Klimatski",
+          "Prehrambeni kapaciteti",
+          "Željeznički promet",
+          "Umjetnički"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koji od navedenih čimbenika pripada ATRAKTIVNIM PRIRODNIM čimbenicima ponude?",
+        "options": [
+          "Manifestacijski",
+          "Smještajni",
+          "Pejzažni",
+          "Zračni"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koji od navedenih čimbenika ponude pripada skupini KOMUNIKATIVNIH?",
+        "options": [
+          "Kulturno-povijesni",
+          "Sportski objekti",
+          "Hidrogeografski",
+          "Cestovni"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koji od navedenih čimbenika pripada ATRAKTIVNIM ANTROPOGENIM čimbenicima?",
+        "options": [
+          "Manifestacije",
+          "Biogeografski",
+          "Riječni promet",
+          "Smještajni kapaciteti"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koji se čimbenici ubrajaju u SOCIOPSIHOLOŠKE čimbenike potražnje?",
+        "options": [
+          "Urbanizacija i industrijalizacija",
+          "Ugled i moda",
+          "Promet i prometna organizacija",
+          "Financijska sredstva i slobodno vrijeme"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Što od navedenog ubrajamo u SEKUNDARNU turističku ponudu?",
+        "options": [
+          "Klimu",
+          "Pejzaž",
+          "Prometnu mrežu",
+          "Kulturno-povijesne spomenike"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koji od navedenih čimbenika spada u skupinu ANTROPOGENIH čimbenika ponude?",
+        "options": [
+          "Klimatski",
+          "Geomorfološki",
+          "Hidrogeografski",
+          "Umjetnički"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koji čimbenik NE pripada čimbenicima ponude?",
+        "options": [
+          "Socioekonomski",
+          "Atraktivni",
+          "Komunikativni",
+          "Receptivni"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koji od navedenih čimbenika ubrajamo u PRIRODNU turističku ponudu?",
+        "options": [
+          "Etnosocijalni",
+          "Pejzažni",
+          "Ambijentalni",
+          "Manifestacijski"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Turoperatori su posrednici koji:",
+        "options": [
+          "grade i vode hotelske kapacitete",
+          "upravljaju nacionalnim parkovima",
+          "organiziraju putovanja u svoje ime",
+          "propisuju i naplaćuju turističke takse"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Atraktivni čimbenici čine _______ turističku ponudu.",
+        "answer": "primarnu",
+        "hint": "Prvu, osnovnu (pridjev, akuzativ)."
+      },
+      {
+        "sentence": "Promet i prometna mreža pripadaju _______ čimbenicima ponude.",
+        "answer": "komunikativnim",
+        "hint": "Povezuju prostore."
+      },
+      {
+        "sentence": "Smještajni i prehrambeni kapaciteti pripadaju _______ čimbenicima ponude.",
+        "answer": "receptivnim",
+        "hint": "Prihvatnim."
+      },
+      {
+        "sentence": "Slobodno vrijeme je čimbenik turističke _______, a ne ponude.",
+        "answer": "potražnje",
+        "hint": "Suprotno od ponude (genitiv)."
+      },
+      {
+        "sentence": "Promet, prometna sredstva i prometna organizacija čine _______ čimbenik potražnje.",
+        "answer": "tehnički",
+        "hint": "Pridjev, muški rod."
+      }
+    ],
+    "learn": {
+      "title": "Čimbenici (faktori) turizma",
+      "content": "\n<p>Čimbenici turizma utječu na razvoj turizma, odnosno na nastanak motiva da čovjek putuje. Dijele se na <strong>čimbenike ponude</strong> (djeluju u destinaciji — receptivnom tržištu) i <strong>čimbenike potražnje</strong> (djeluju u mjestu odakle turist dolazi — to su inicijalni čimbenici).</p>\n\n<h3>A) Čimbenici ponude</h3>\n<table>\n<tr><th>Skupina</th><th>Sastav</th><th>Vrsta ponude</th></tr>\n<tr><td><strong>1. Atraktivni — prirodni</strong></td><td>geomorfološki (reljef), klimatski, hidrogeografski (mora, jezera, rijeke), biogeografski (flora i fauna), <strong>pejsažni</strong></td><td rowspan=\"2\">primarna</td></tr>\n<tr><td><strong>1. Atraktivni — antropogeni</strong></td><td>kulturno-povijesni (spomenici, muzeji), etnosocijalni (narodni običaji, npr. alka), <strong>umjetnički</strong>, <strong>manifestacijski</strong> (Oktoberfest, velesajam, festivali, utakmice), ambijentalni (npr. Gornji grad)</td></tr>\n<tr><td><strong>2. Komunikativni</strong></td><td>željeznički, <strong>cestovni</strong>, riječni, jezerski, morski, zračni promet — prometna mreža</td><td rowspan=\"2\">sekundarna</td></tr>\n<tr><td><strong>3. Receptivni (prihvatni)</strong></td><td>smještajni kapaciteti, <strong>prehrambeni</strong> kapaciteti, <strong>komunalna infrastruktura</strong>, sportski objekti, objekti zabave</td></tr>\n</table>\n<div class=\"tip-box\"><strong>Kako riješiti „koji čimbenik pripada skupini…”:</strong> pejzažni/klimatski → atraktivni prirodni · manifestacije/umjetnički → atraktivni antropogeni · cestovni/zračni/prometna mreža → komunikativni · prehrambeni, smještajni, komunalna infrastruktura → receptivni. Slobodno vrijeme nije čimbenik ponude — to je socioekonomski čimbenik potražnje.</div>\n\n<h3>B) Čimbenici potražnje</h3>\n<table>\n<tr><th>Skupina</th><th>Sastav</th></tr>\n<tr><td><strong>1. Socioekonomski</strong></td><td>demografski (struktura stanovništva), industrijalizacija, urbanizacija (udio gradskog stanovništva), financijska sredstva, <strong>slobodno vrijeme</strong></td></tr>\n<tr><td><strong>2. Tehnički</strong></td><td>promet, prometna sredstva i prometna organizacija</td></tr>\n<tr><td><strong>3. Sociopsihološki</strong></td><td>sport, zdravlje, politika, kultura, <strong>moda</strong>, navike, oponašanje, <strong>prestiž (ugled)</strong>, vjera, ljubav</td></tr>\n</table>\n<ul>\n<li>Što je stanovništvo <strong>obrazovanije</strong>, to više putuje.</li>\n<li>Što je veći stupanj <strong>industrijalizacije</strong> i <strong>urbanizacije</strong>, veća su turistička kretanja.</li>\n<li>Što je <strong>promet</strong> razvijeniji, veće su pretpostavke za razvoj turizma.</li>\n</ul>\n\n<h3>Posrednici između ponude i potražnje</h3>\n<ul>\n<li><strong>Turističke agencije</strong> — propagandno-informativna i savjetodavna zadaća.</li>\n<li><strong>Turoperatori</strong> — organiziraju putovanja u svoje ime („trgovci na veliko”).</li>\n<li><strong>Organizatori prijevoza</strong> — prometne organizacije.</li>\n</ul>\n"
+    }
+  },
+  "naturalResources": {
+    "name": "Prirodni turistički resursi",
+    "icon": "fa-mountain-sun",
+    "color": "#10b981",
+    "flashcards": [
+      {
+        "question": "Što je INSOLACIJA?",
+        "answer": "Dio sunčeve energije koji dolazi do Zemljine površine; izražava se i trajanjem sijanja sunca (sati godišnje).",
+        "explanation": "Prevelika insolacija uz veliku vlažnost zraka nije stimulativna."
+      },
+      {
+        "question": "Kako morske struje utječu na klimu?",
+        "answer": "Tople (Golfska, Kurošio) zagrijavaju zrak, a hladne (Labradorska, Ojašio) ga hlade — zato se obale Norveške ne lede, a kanadske na istoj širini lede.",
+        "explanation": "Tople struje pogoduju kupališnom turizmu."
+      },
+      {
+        "question": "Kako se dijele vjetrovi i koji su primjeri lokalnih?",
+        "answer": "Stalni (pasati), periodični (monsuni, etezije) i lokalni: bura, jugo, mistral (Provansa), fen (Alpe), široko, samum, pampero.",
+        "explanation": "Lokalni nastaju zbog osobina određenog područja."
+      },
+      {
+        "question": "Koja je klima turistički najprivlačnija?",
+        "answer": "Mediteranska (umjereno topla klima zapadnih primorja): Sredozemlje, središnji Čile, jugozapadna Australija, jugozapadna Afrika.",
+        "explanation": "Turizam pretežno ljeti, ali su privlačne i blage zime."
+      },
+      {
+        "question": "Zašto je ekvatorijalna klima nepovoljna za turizam?",
+        "answer": "Stalno visoke temperature, velika vlaga i obilne kiše, bez godišnjih doba. Povoljna je samo u višim planinama.",
+        "explanation": "Singapur: uglavnom poslovni i tranzitni turizam."
+      },
+      {
+        "question": "Što su GEOMORFOLOŠKI turistički resursi?",
+        "answer": "Sve reljefne raznolikosti Zemljine površine i podzemlja: planine, vulkani, klisure, kanjoni, špilje, polja u kršu i drugi krški oblici.",
+        "explanation": "Planine imaju najveće turističko značenje."
+      },
+      {
+        "question": "Koje su najposjećenije planine svijeta prema skripti?",
+        "answer": "Alpe, Karpati i Pireneji (Europa), Apalači i Stjenjak (SAD), Ande, Himalaja i Kavkaz te Kilimanjaro (Afrika).",
+        "explanation": "Vrhovi → alpinizam; padine → skijanje; podnožje → turistička naselja."
+      },
+      {
+        "question": "Koji su najposjećeniji aktivni vulkani?",
+        "answer": "Vezuv kod Napulja, Etna na Siciliji, Hekla na Islandu te japanski i havajski vulkani.",
+        "explanation": "Na svijetu je oko 624 aktivna vulkana."
+      },
+      {
+        "question": "Klisura vs kanjon — primjeri?",
+        "answer": "Klisura je sužena dolina (Đerdap i Wachau na Dunavu, Loreley na Rajni); kanjon je klisura uskog dna (Grand Canyon, Tara, Čikola).",
+        "explanation": "Privlače hidrografskim i klimatskim osobinama."
+      },
+      {
+        "question": "Koje su poznate špilje izvan Hrvatske?",
+        "answer": "Mamutska špilja (SAD), Hölloch (Švicarska) i Postojnska jama (Slovenija).",
+        "explanation": "Privlače oblicima (stalaktiti, stalagmiti) i sadržajima (crteži)."
+      },
+      {
+        "question": "Kakvo more i plaže žele turisti?",
+        "answer": "Čisto more toplije od 18 °C, niske valove, blago spuštenu obalu i lagane struje; najkvalitetnije su pješčane plaže.",
+        "explanation": "Hladne struje (Humboldtova, Kanarska) ograničavaju kupanje."
+      },
+      {
+        "question": "Koja su poznata jezera svijeta iz skripte?",
+        "answer": "Kaspijsko jezero, Mrtvo more, Bajkalsko (najdublje na svijetu), Balaton (Mađarska) i Mazurska jezera (Poljska).",
+        "explanation": "Najposjećenija su jezera blizu gusto naseljenih područja."
+      },
+      {
+        "question": "Depresija vs kriptodepresija?",
+        "answer": "Depresija: površina i dno jezera ispod razine mora (Mrtvo more). Kriptodepresija: površina iznad, a dno ispod razine mora (Vransko jezero na Cresu).",
+        "explanation": "Podjela jezera prema položaju dna."
+      },
+      {
+        "question": "Koji su najpoznatiji slapovi prema skripti?",
+        "answer": "Angel (oko 979 m, Venezuela — najviši na svijetu), Viktorijini slapovi (Zambezi), Niagara, a u Hrvatskoj Skradinski buk i Plitvice.",
+        "explanation": "Atrakcije na rijekama: slapovi, brzaci, kaskade, kanjoni."
+      },
+      {
+        "question": "Što su termalni izvori i FANGO?",
+        "answer": "Izvori tople vode (negdje iznad 38 °C) za liječenje reume, išijasa i drugih bolesti. Fango je ljekovito blato.",
+        "explanation": "Vichy, Karlovy Vary, Rogaška Slatina; u RH Varaždinske i Krapinske toplice."
+      },
+      {
+        "question": "Gdje ima gejzira i ledenjaka?",
+        "answer": "Gejziri: Island, Novi Zeland, SAD (Yellowstone), Tibet. Ledenjaci: Aletsch (Švicarska, najveći alpski) i Pasterze (Austrija).",
+        "explanation": "Gejziri su termalni vodoskoci u vulkanskim zonama."
+      },
+      {
+        "question": "Koja su tri elementa svakog PEJSAŽA?",
+        "answer": "Sastav tla i geomorfološki oblici, vegetacija i čovjek.",
+        "explanation": "Pejsaži: planinski, nizinski i primorski."
+      },
+      {
+        "question": "Strogi rezervat vs nacionalni park vs park prirode?",
+        "answer": "Strogi rezervat: neizmijenjena priroda, samo za znanost. NP: očuvani ekosustavi, zakonom zaštićeni. PP: djelomično kultiviran prostor s estetskim i rekreacijskim vrijednostima.",
+        "explanation": "Detalji za Hrvatsku: kategorija „Zaštićena područja i UNESCO”."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Kako se naziva dio sunčeve energije koji dolazi do Zemljine površine?",
+        "options": [
+          "Albedo",
+          "Radijacijska bilanca",
+          "Evaporacija",
+          "Insolacija"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Kako se nazivaju turistički resursi koji obuhvaćaju reljefne raznolikosti Zemlje?",
+        "options": [
+          "Geomorfološki",
+          "Hidrogeografski",
+          "Biogeografski",
+          "Pejsažni"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Fango je:",
+        "options": [
+          "vrsta termalnog izvora",
+          "ljekovito blato",
+          "lokalni vjetar",
+          "krški ponor"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Najveći alpski ledenjak je:",
+        "options": [
+          "Pasterze",
+          "Mer de Glace",
+          "Aletsch",
+          "Hintereis"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koja je klima turistički najprivlačnija?",
+        "options": [
+          "Ekvatorijalna",
+          "Tropsko-monsunska",
+          "Umjereno svježa",
+          "Mediteranska"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Mistral je lokalni vjetar u:",
+        "options": [
+          "Provansi",
+          "Alpama",
+          "arapskim pustinjama",
+          "pampama"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koja je morska struja topla?",
+        "options": [
+          "Labradorska",
+          "Golfska",
+          "Kanarska",
+          "Humboldtova"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Najdublje jezero na svijetu je:",
+        "options": [
+          "Kaspijsko jezero",
+          "Balaton",
+          "Bajkalsko jezero",
+          "Mrtvo more"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Najviši slap na svijetu je:",
+        "options": [
+          "Niagara",
+          "Viktorijini slapovi",
+          "Skradinski buk",
+          "Angel"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Postojnska jama nalazi se u:",
+        "options": [
+          "Sloveniji",
+          "Švicarskoj",
+          "Hrvatskoj",
+          "Austriji"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Klisura Loreley nalazi se na rijeci:",
+        "options": [
+          "Dunav",
+          "Rajna",
+          "Rona",
+          "Laba"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koja tri elementa tvore svaki pejsaž?",
+        "options": [
+          "More, klima, kopno i otoci",
+          "Planine, rijeke, gradovi, ceste",
+          "Tlo i reljef, vegetacija, čovjek",
+          "Flora, fauna, klima i vode"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Dio sunčeve energije koji dolazi do Zemljine površine zove se _______.",
+        "answer": "insolacija",
+        "hint": "Sunčanost."
+      },
+      {
+        "sentence": "Ljekovito blato koje se koristi u toplicama zove se _______.",
+        "answer": "fango",
+        "hint": "Talijanska riječ."
+      },
+      {
+        "sentence": "Najdublje jezero na svijetu je _______ jezero.",
+        "answer": "Bajkalsko",
+        "hint": "Sibir."
+      },
+      {
+        "sentence": "Jezero kojem je površina iznad, a dno ispod razine mora zove se _______.",
+        "answer": "kriptodepresija",
+        "hint": "Kripto + depresija."
+      },
+      {
+        "sentence": "Termalni vodoskoci u vulkanskim zonama zovu se _______.",
+        "answer": "gejziri",
+        "hint": "Island, Yellowstone."
+      },
+      {
+        "sentence": "Postojnska jama nalazi se u _______.",
+        "answer": "Sloveniji",
+        "hint": "Susjedna država (lokativ)."
+      }
+    ],
+    "learn": {
+      "title": "Prirodni (biotropni) turistički resursi",
+      "content": "\n<p>Prirodni turistički resursi dijele se na <strong>klimatske, geomorfološke, hidrogeografske, biogeografske i pejsažne</strong>. Za Hrvatsku su glavna komparativna prednost.</p>\n\n<h3>1. Klimatski resursi</h3>\n<p>Povoljna klima jedan je od najvažnijih čimbenika turističke privlačnosti. Poseban utjecaj imaju:</p>\n<ul>\n<li><strong>Sunce — insolacija</strong>: dio sunčeve energije koji dolazi do Zemlje. Toplije je između obratnica, hladnije prema polovima; prevelika insolacija uz visoku vlagu nije stimulativna.</li>\n<li><strong>Temperatura zraka</strong>: ovisi o rasporedu kopna i mora (kopno se brže grije i hladi) i o nadmorskoj visini.</li>\n<li><strong>Morske struje</strong>: tople (Golfska, Kurošio) zagrijavaju, hladne (Labradorska, Ojašio) hlade — obale Velike Britanije i Norveške ne lede se, a kanadske na istoj širini lede.</li>\n<li><strong>Vjetar</strong>: nastaje između ciklone (barometarski minimum) i anticiklone (maksimum). <em>Stalni</em>: pasati, zapadni, polarni. <em>Periodični</em>: monsuni (južna i jugoistočna Azija), etezije (istočni Mediteran). <em>Lokalni</em>: mistral (Provansa), sjeverac (panonska Hrvatska), bura (Jadran), široko (Tunis, Maroko, Sicilija), jugo (hrvatsko primorje), fen (Alpe), pampero (pampe), samum (arapske pustinje).</li>\n<li><strong>Oborine i vlaga</strong>: kratki pljuskovi uz duga sunčana razdoblja (mediteranska, suptropska klima) ne smetaju turizmu; dugotrajna oblačnost i kiša (zapadnoeuropska klima) ozbiljno ga ograničavaju.</li>\n</ul>\n<table>\n<tr><th>Klima</th><th>Obilježja i područja</th><th>Za turizam</th></tr>\n<tr><td>Ekvatorijalna</td><td>stalno visoke temperature, velika vlaga i kiše, nema godišnjih doba; Amazonija, Indonezija, Kongo, Singapur</td><td>nepovoljna (osim viših planina); Singapur — poslovni i tranzitni turizam</td></tr>\n<tr><td>Tropska</td><td>kišno i sušno razdoblje, pasati, tajfuni i uragani; Brazil, sjeverna Australija, Sudan, Pacifički otoci</td><td>zapadna primorja pogodna zimi (Acapulco); monsunski tip — suhe zime (Indija)</td></tr>\n<tr><td>Umjereno topla — <strong>mediteranska</strong></td><td>srednjaci iznad 6 °C, ugodne zime; Sredozemlje, središnji Čile, JZ Australija, JZ Afrika</td><td><strong>najprivlačnija</strong> u svijetu</td></tr>\n<tr><td>Umjereno topla — istočna primorja</td><td>topla, kišovitija ljeta; Florida, Urugvaj, južni Brazil, južna Kina</td><td>pogodna</td></tr>\n<tr><td>Umjerena (svježa)</td><td>4 godišnja doba, 1–5 mjeseci ispod 6 °C</td><td>nije konkurencija mediteranskoj</td></tr>\n<tr><td>Planinska</td><td>određena nadmorskom visinom</td><td>skijanje, planinarenje</td></tr>\n<tr><td>Hladna</td><td>više od 6 mjeseci ispod 6 °C; Skandinavija, Kanada, Sibir</td><td>kratka sezona — zimski sportovi, lov, ribolov</td></tr>\n<tr><td>Polarna</td><td>Grenland, Arktik, Antarktik</td><td>nepovoljna za masovni turizam</td></tr>\n<tr><td>Pustinjska</td><td>malo oborina; Sahara, Namib, Atacama, Kalahari</td><td>auto-reliji, oaze, pustinjske ture</td></tr>\n</table>\n\n<h3>2. Geomorfološki resursi</h3>\n<p>Sve reljefne raznolikosti površinskih i podzemnih oblika Zemlje: <em>udubljenja</em> (doline, kotline, polja u kršu, krateri, špilje) i <em>uzvišenja</em> (vulkani, morene, dine).</p>\n<ul>\n<li><strong>Planine</strong> — najveće turističko značenje. Vrhovi (alpinizam, doživljaj), padine (planinarenje, skijanje), podnožje (turistička naselja). Najposjećenije: Alpe, Karpati, Pireneji, Apalači, Stjenjak, Ande, Himalaja, Kavkaz, Kilimanjaro.</li>\n<li><strong>Vulkani</strong> — oko 624 aktivna; najposjećeniji Vezuv, Etna, Hekla, japanski i havajski; od ugaslih Fuji (Japan) i Mount Kenya.</li>\n<li><strong>Klisure</strong> — sužene doline: Đerdap (oko 100 km Dunava između Srbije i Rumunjske), Wachau (Dunav uzvodno od Beča), Loreley (Rajna između Bingena i Koblenza).</li>\n<li><strong>Kanjoni</strong> — klisure uskog dna: Grand Canyon (SAD), Morača, Piva i Tara (Crna Gora), Čikola (Hrvatska).</li>\n<li><strong>Špilje</strong> — Mamutska špilja (SAD), Hölloch (Švicarska), Postojnska jama (Slovenija).</li>\n<li><strong>Polja u kršu i krški oblici</strong> — europsko i afričko Sredozemlje, hrvatski mediteranski prostor.</li>\n</ul>\n\n<h3>3. Hidrogeografski resursi</h3>\n<ul>\n<li><strong>Mora</strong> pokrivaju oko 71 % Zemlje. Za kupanje pogodno more toplije od 18 °C. Hladne struje (Humboldtova, Labradorska, Kanarska, Kalifornijska) djeluju negativno, tople (Golfska, Kurošio, Brazilska, Mozambička, Istočnoaustralska) pozitivno.</li>\n<li><strong>Plaže (žali)</strong> — čiste, prostrane, blizu smještaja; najkvalitetnije pješčane, zatim šljunkovite i kamenite.</li>\n<li><strong>Jezera</strong> — Mrtvo more, Kaspijsko, <strong>Bajkalsko (najdublje na svijetu)</strong>, Balaton, Mazurska jezera. Podjela: po stanju vode (stalna, periodična, povremena), po postanku (tektonska, vulkanska, ledenjačka, riječna, umjetna), po dnu (depresije i kriptodepresije).</li>\n<li><strong>Rijeke</strong> — kupanje, ribolov, veslanje, rafting; atrakcije su slapovi: <strong>Angel</strong> (Venezuela, najviši na svijetu), Viktorijini slapovi (Zambezi), Niagara, Skradinski buk, Plitvice.</li>\n<li><strong>Termalni izvori</strong> — hidroterapija i <strong>fango</strong> (ljekovito blato): Vichy, Wiesbaden, Karlovy Vary, Bad Gastein, Rogaška Slatina, Varaždinske, Krapinske, Lipičke i Stubičke toplice.</li>\n<li><strong>Gejziri</strong> — Island, Novi Zeland, SAD, Tibet.</li>\n<li><strong>Ledenjaci</strong> — Aletsch u Švicarskoj (najveći alpski), Pasterze u Austriji.</li>\n</ul>\n<div class=\"warning-box\"><strong>Ispravci skripte:</strong> Angel je visok oko 979 m (skripta: 1050 m) i nalazi se na pritoci rijeke Caroní u Venezueli. Špilja „Holoch” je Hölloch.</div>\n\n<h3>4. Biogeografski resursi</h3>\n<p>Flora (prirodne i kulturne biljke) i fauna (lov, ribolov, fotosafari, gastronomija). Šest vegetacijskih oblasti: <strong>holarktička</strong> (Europa, Angloamerika — sekvoje, Japan — trešnjin cvijet), <strong>paleotropska</strong> (Malezija, Havaji — palme, bambus), <strong>neotropska</strong> (Latinska Amerika — kaktusi), <strong>australska</strong> (eukaliptus), <strong>kapska</strong> i <strong>antarktička</strong>.</p>\n\n<h3>5. Pejsažni resursi i zaštićena priroda</h3>\n<p>Svaki pejsaž tvore tri elementa: <strong>sastav tla i reljef, vegetacija i čovjek</strong>. Pejsaži su planinski (alpski, himalajski), nizinski (panonski, nizozemski) i primorski (dalmatinski, andaluzijski).</p>\n<ul>\n<li><strong>Strogi rezervati</strong> — neizmijenjena priroda, samo znanstvena istraživanja (Galápagos; u RH Bijele i Samarske stijene, Hajdučki i Rožanski kukovi).</li>\n<li><strong>Nacionalni parkovi</strong> — zakonom zaštićeni očuvani ekosustavi (Yellowstone, Engadin, Plitvička jezera, Krka…).</li>\n<li><strong>Parkovi prirode</strong> — prirodno ili djelomično kultivirano područje estetskih, ekoloških, obrazovnih i rekreacijskih vrijednosti (Kopački rit, Medvednica, Biokovo…).</li>\n</ul>\n"
+    }
+  },
+  "anthropogenicResources": {
+    "name": "Antropogeni resursi, promet i okoliš",
+    "icon": "fa-landmark",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "Koji su ANTROPOGENI turistički resursi?",
+        "answer": "Kulturno-povijesni, etnosocijalni, umjetnički, manifestacijski i ambijentalni resursi.",
+        "explanation": "Resursi koje je stvorio čovjek."
+      },
+      {
+        "question": "Što su ETNOSOCIJALNI resursi?",
+        "answer": "Narodne igre, pjesme, običaji, nošnje, rukotvorine, gastronomija i mentalitet (gostoljubivost). Primjeri: linđo, moreška, ojkanje.",
+        "explanation": "Temeljni privlačni faktor npr. u Španjolskoj, Grčkoj, Meksiku, Peruu."
+      },
+      {
+        "question": "Što su AMBIJENTALNI resursi?",
+        "answer": "Prostorne cjeline koje je stvorio čovjek, a privlačne su izgledom i funkcijom: trgovi, bulevari, luke, hidroelektrane (npr. Stradun, Gornji grad).",
+        "explanation": "Spona prirodnih i društvenih resursa."
+      },
+      {
+        "question": "Koji su primjeri MANIFESTACIJSKIH resursa?",
+        "answer": "Filmski festivali, Vinkovačke jeseni, Đakovački vezovi, Smotra folklora u Zagrebu, Oktoberfest, sportski i kongresni skupovi.",
+        "explanation": "Kulturne, folklorne, viteške, sportske i poslovne manifestacije."
+      },
+      {
+        "question": "Koje su faze analize turističkih resursa?",
+        "answer": "Inventarizacija, sistematizacija, turistička valorizacija, utvrđivanje opteretnog kapaciteta, izdvajanje dominantnih atrakcija i analiza zaštićenih prostora.",
+        "explanation": "Cilj: utvrditi ima li prostor osnove za turizam."
+      },
+      {
+        "question": "Turistička regija — homogena vs heterogena?",
+        "answer": "Homogena: turizam je dominantna djelatnost. Heterogena: turizam ravnopravno s drugim djelatnostima stvara dohodak.",
+        "explanation": "Regija = funkcionalna i gospodarska cjelina izdvojiva iz okoline."
+      },
+      {
+        "question": "Turističko mjesto vs turistički centar vs destinacija?",
+        "answer": "Mjesto = osnovna jedinica ponude. Centar = mjesto s dodatnim funkcijama (promet, zdravstvo, trgovina, uprava). Destinacija = nedefinirana jedinica (regija, mjesto, lokalitet).",
+        "explanation": "Lokalitet je osnovna prostorna jedinica unutar regije."
+      },
+      {
+        "question": "Kako se promet dijeli prema sredstvima i putovima?",
+        "answer": "Kopneni (cestovni, željeznički), vodeni (pomorski, riječni, jezerski) i zračni.",
+        "explanation": "Prema prostoru: međunarodni i unutarnji promet."
+      },
+      {
+        "question": "Kojim prijevoznim sredstvom inozemni turisti najviše dolaze u Hrvatsku?",
+        "answer": "Osobnim automobilom — oko 75 % inozemnih turista.",
+        "explanation": "Zato su blizina i cestovna povezanost s Europom ključne."
+      },
+      {
+        "question": "Kojim prometom međunarodni turisti globalno najviše putuju?",
+        "answer": "Zračnim prometom — on ima najveći udio u suvremenim međunarodnim kretanjima (UNWTO, 2019.).",
+        "explanation": "Cestovni promet je drugi po udjelu."
+      },
+      {
+        "question": "Prednosti i nedostaci zračnog i vodenog prometa?",
+        "answer": "Zračni (najmlađi): brz, udoban, siguran, ali skup. Vodeni (najstariji): jeftin, siguran i udoban, ali spor.",
+        "explanation": "Željeznica je ograničena prugom; cesta omogućuje masovnost."
+      },
+      {
+        "question": "Koje su povijesne ceste povezale Karlovac s morem?",
+        "answer": "Karolina (1728., Karlovac–Bakar–Rijeka), Jozefina (1770-ih, Karlovac–Senj), Lujzijana (1809., Karlovac–Rijeka) i Terezijana (Karlovac–Karlobag).",
+        "explanation": "Prva željeznica u RH: 1862. (Zagreb–Beč pravac)."
+      },
+      {
+        "question": "Što je ODRŽIVI RAZVOJ?",
+        "answer": "Razvoj koji zadovoljava potrebe sadašnjih generacija bez ugrožavanja mogućnosti budućih generacija da zadovolje svoje.",
+        "explanation": "Koncepciju je oblikovala Svjetska komisija za okoliš i razvoj (WCED)."
+      },
+      {
+        "question": "Koje su ključne međunarodne konferencije o okolišu?",
+        "answer": "Stockholm 1972. (prva globalna deklaracija) i Rio de Janeiro 1992. (Agenda 21 — program za 21. st.).",
+        "explanation": "Hrvatski Sabor 1992. donosi Deklaraciju o zaštiti okoliša."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Kojim prijevoznim sredstvom međunarodni turisti najviše putuju u Hrvatsku (zadnje desetljeće)?",
+        "options": [
+          "Zrakoplovom (niskotarifnim)",
+          "Organiziranim autobusom",
+          "Brodom i trajektom",
+          "Osobnim automobilom"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koji dio prometnog sustava ima najveći udio u međunarodnim turističkim kretanjima u svijetu?",
+        "options": [
+          "Zračni promet",
+          "Željeznički promet",
+          "Riječni promet",
+          "Pomorski promet"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koja je grana prometa najmlađa?",
+        "options": [
+          "Cestovni",
+          "Zračni",
+          "Željeznički",
+          "Pomorski"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Turistička regija u kojoj je turizam dominantna djelatnost je:",
+        "options": [
+          "heterogena",
+          "subregija",
+          "homogena",
+          "zona"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Prva faza analize turističkih resursa je:",
+        "options": [
+          "valorizacija",
+          "sistematizacija",
+          "zaštita",
+          "inventarizacija"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Agenda 21 usvojena je na konferenciji UN-a:",
+        "options": [
+          "u Riju 1992.",
+          "u Stockholmu 1972.",
+          "u Helsinkiju 1997.",
+          "u Parizu 1986."
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Stradun i zagrebački Gornji grad primjeri su kojih resursa?",
+        "options": [
+          "Etnosocijalnih",
+          "Ambijentalnih",
+          "Manifestacijskih",
+          "Pejsažnih"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koja cesta povezuje Karlovac i Senj?",
+        "options": [
+          "Karolina",
+          "Lujzijana",
+          "Jozefina",
+          "Terezijana"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Turistički centar se od turističkog mjesta razlikuje po tome što:",
+        "options": [
+          "nema vlastitih smještajnih kapaciteta",
+          "se uvijek nalazi na morskoj obali",
+          "prostorno je manji od turističkog lokaliteta",
+          "ima dodatne funkcije (promet, zdravstvo, uprava)"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Đakovački vezovi i Vinkovačke jeseni primjeri su kojih resursa?",
+        "options": [
+          "Manifestacijskih",
+          "Ambijentalnih",
+          "Umjetničkih",
+          "Kulturno-povijesnih"
+        ],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Oko _______ % inozemnih turista dolazi u Hrvatsku osobnim automobilom.",
+        "answer": "75",
+        "hint": "Tri četvrtine."
+      },
+      {
+        "sentence": "Program za 21. stoljeće usvojen u Riju 1992. zove se Agenda _______.",
+        "answer": "21",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Prva velika konferencija UN-a o okolišu održana je 1972. u _______.",
+        "answer": "Stockholmu",
+        "hint": "Glavni grad Švedske (lokativ)."
+      },
+      {
+        "sentence": "Turistička regija u kojoj je turizam dominantna djelatnost je _______ regija.",
+        "answer": "homogena",
+        "hint": "Suprotno od heterogene."
+      },
+      {
+        "sentence": "Cesta Karolina povezala je 1728. Karlovac s _______.",
+        "answer": "Bakrom",
+        "hint": "Grad u Kvarneru (instrumental)."
+      }
+    ],
+    "learn": {
+      "title": "Antropogeni resursi, analiza preduvjeta, promet i okoliš",
+      "content": "\n<h3>Antropogeni (društveni) turistički resursi</h3>\n<table>\n<tr><th>Resurs</th><th>Sadržaj</th></tr>\n<tr><td><strong>Kulturno-povijesni</strong></td><td>ostaci prošlih civilizacija, spomenici, urbanističke cjeline, crkve, samostani, džamije — sve obrazovaniji turisti žele zadovoljiti i kulturne potrebe</td></tr>\n<tr><td><strong>Etnosocijalni</strong></td><td>narodne igre, pjesme, običaji, graditeljstvo, nošnje, rukotvorine, gastronomija, mentalitet (gostoljubivost); u RH npr. dubrovački linđo, korčulanska moreška, ličko ojkanje</td></tr>\n<tr><td><strong>Umjetnički</strong></td><td>muzeji, galerije, zbirke, knjižnice; ustanove koje organiziraju priredbe (opera, balet, drama)</td></tr>\n<tr><td><strong>Manifestacijski</strong></td><td>kulturne, folklorne, viteške, sportske, zabavne i kongresne manifestacije (filmski festivali, Vinkovačke jeseni, Đakovački vezovi, Smotra folklora u Zagrebu)</td></tr>\n<tr><td><strong>Ambijentalni</strong></td><td>cjeline koje je stvorio čovjek, privlačne izgledom i funkcijom: trgovi, bulevari, luke, hidroelektrane (Stradun, Gornji grad)</td></tr>\n</table>\n<p>U Hrvatskoj su kulturna dobra <strong>nepokretna</strong> (spomeničke cjeline, arheološka nalazišta, sakralni i profani objekti), <strong>pokretna</strong> (arheološki nalazi, namještaj, oružje) i <strong>nematerijalna</strong> (jezik, folklor, običaji).</p>\n\n<h3>Analiza preduvjeta turističkog razvoja</h3>\n<ol>\n<li><strong>Inventarizacija</strong> — evidentiranje svih prirodnih i antropogenih sadržaja.</li>\n<li><strong>Sistematizacija</strong> — utvrđivanje pogodnosti resursa.</li>\n<li><strong>Turistička valorizacija</strong> — ocjena prema obujmu prometa (broju posjetitelja).</li>\n<li><strong>Opteretni kapacitet i zaštita</strong> — sprječavanje zasićenja (saturacije).</li>\n<li><strong>Izdvajanje dominantnih atrakcija</strong> — što daje prepoznatljivost prostoru.</li>\n<li><strong>Analiza korištenja zaštićenih prostora.</strong></li>\n</ol>\n<p>Uz to se analiziraju <strong>geografski, tržišni i prometni položaj</strong> (odnos resursa prema izvorima potražnje i prometnim pravcima), demografski i ekonomski preduvjeti te dosadašnji razvoj (smještaj, ugostiteljstvo, broj noćenja).</p>\n\n<h3>Prostorne jedinice turizma</h3>\n<table>\n<tr><th>Pojam</th><th>Značenje</th></tr>\n<tr><td>Turistička regija</td><td>veća prostorna jedinica, funkcionalna i gospodarska cjelina; <strong>homogena</strong> (turizam dominira) ili <strong>heterogena</strong> (turizam ravnopravan s drugim djelatnostima)</td></tr>\n<tr><td>Turistička makroregija</td><td>više povezanih regija — npr. Istra, Kvarner, otoci i Velebitsko primorje čine Sjeverno hrvatsko primorje</td></tr>\n<tr><td>Turistički lokalitet</td><td>osnovna prostorna jedinica unutar regije</td></tr>\n<tr><td>Turističko mjesto</td><td>osnovna jedinica turističke ponude, više lokaliteta</td></tr>\n<tr><td>Turistički centar</td><td>turističko mjesto s dodatnim funkcijama (prometne, zdravstvene, trgovačke, upravne)</td></tr>\n<tr><td>Turistička destinacija</td><td>nedefinirana jedinica — može biti regija, mjesto ili lokalitet</td></tr>\n<tr><td>Zona / subregija</td><td>dio regije homogen po funkcijama / skup homogenih zona</td></tr>\n</table>\n\n<h3>Promet i turizam</h3>\n<ul>\n<li>Prema prostoru: <strong>međunarodni</strong> (međudržavni, pogranični, tranzitni) i <strong>unutarnji</strong> (gradski, međugradski, prigradski).</li>\n<li>Prema sredstvima: <strong>kopneni</strong> (cestovni, željeznički), <strong>vodeni</strong> (pomorski, riječni, jezerski), <strong>zračni</strong>.</li>\n</ul>\n<table>\n<tr><th>Grana</th><th>Obilježja</th></tr>\n<tr><td>Željeznički</td><td>starija vrsta, ograničeno kretanje (pruga, planine); u RH prva pruga 1862.; slabo razvijen</td></tr>\n<tr><td>Cestovni</td><td>omogućio masovnost; nedostaci: gužve, trajanje, nesreće. <strong>Oko 75 % inozemnih turista dolazi u Hrvatsku automobilom.</strong></td></tr>\n<tr><td>Vodeni</td><td>najstarija grana — jeftin, spor, siguran, udoban; rijeke Rajna, Dunav, Volga, Rona, Nil, Mississippi, Jangce; jezera Balaton, alpska i Velika jezera</td></tr>\n<tr><td>Zračni</td><td>najmlađa grana — brz, udoban, siguran, ali skup; relacije kratke, srednje i duge. <strong>Najveći udio u suvremenim međunarodnim turističkim kretanjima u svijetu.</strong></td></tr>\n</table>\n<p><strong>Povijesne ceste prema moru:</strong> Karolina (1728., Karlovac–Bakar–Rijeka), Terezijana (Karlovac–Baške Oštarije–Karlobag), Jozefina (1770-ih, Karlovac–Ogulin–Brinje–Senj), Lujzijana (1809., Karlovac–Delnice–Rijeka).</p>\n<div class=\"warning-box\"><strong>Dva različita pitanja o prometu:</strong> u <strong>Hrvatsku</strong> inozemni turisti najviše dolaze <strong>osobnim automobilom</strong> (oko 75 %), a <strong>globalno</strong> međunarodni turisti najviše putuju <strong>zračnim prometom</strong>. Jedan ključ s ispita za globalno pitanje navodi automobil — to vrijedi za Hrvatsku, ne za svijet.</div>\n\n<h3>Turizam i okoliš</h3>\n<ul>\n<li>Uzroci krize okoliša: demografska ekspanzija, nekontrolirana urbanizacija, kemikalije u poljoprivredi, industrija, promet, ratna razaranja.</li>\n<li><strong>Stockholm 1972.</strong> — prva konferencija UN-a o čovjekovu okolišu (113 zemalja, deklaracija s 26 načela).</li>\n<li><strong>Održivi razvoj</strong> (WCED, sredina 1980-ih) — zadovoljava potrebe sadašnjih generacija bez ugrožavanja budućih.</li>\n<li><strong>Rio de Janeiro 1992.</strong> — <strong>Agenda 21</strong>, program za 21. stoljeće.</li>\n<li>Hrvatska je u ekološkom smislu među najočuvanijim zemljama; Sabor je 1992. donio <strong>Deklaraciju o zaštiti okoliša</strong>.</li>\n</ul>\n"
+    }
+  },
+  "croatiaOverview": {
+    "name": "Hrvatska: položaj, resursi i razvoj turizma",
+    "icon": "fa-flag",
+    "color": "#ef4444",
+    "flashcards": [
+      {
+        "question": "Koje su krajnje točke Hrvatske?",
+        "answer": "Sjever: Žabnik (Sveti Martin na Muri). Jug: otočić Galijula (Palagruža); na kopnu rt Oštra (Prevlaka). Istok: Rađevac kod Iloka. Zapad: rt Savudrija.",
+        "explanation": "Ilok je najistočniji grad, Savudrija najzapadnija točka."
+      },
+      {
+        "question": "Kolika je površina Hrvatske?",
+        "answer": "Kopno oko 56 594 km² (65 %) i obalno more 31 067 km² (35 %) — ukupno oko 87 661 km².",
+        "explanation": "Obalno more = unutrašnje morske vode + teritorijalno more."
+      },
+      {
+        "question": "Koji je paneuropski koridor najvažniji za Hrvatsku?",
+        "answer": "Koridor X (Salzburg–Ljubljana–Zagreb–Beograd–Solun) — povezuje Hrvatsku s najvažnijim emitivnim tržištima.",
+        "explanation": "Koridori su definirani na konferenciji u Helsinkiju 1997."
+      },
+      {
+        "question": "Koji su ogranci koridora koji prolaze Hrvatskom?",
+        "answer": "X.a Zagreb–Maribor–Graz; V.b Budimpešta–Zagreb–Rijeka; V.c Budimpešta–Osijek–Sarajevo–Ploče.",
+        "explanation": "V.b je sporedni koridor koji spaja Panoniju s Rijekom."
+      },
+      {
+        "question": "Koliko Hrvatska ima otoka?",
+        "answer": "Ukupno 1 246 — 79 otoka, 525 otočića i 642 hridi i grebena (starija literatura: 1 185).",
+        "explanation": "Naseljenih otoka ima oko 50–66, ovisno o izvoru i godini."
+      },
+      {
+        "question": "Koji su hrvatski otoci vulkanskog, a koji lesnog podrijetla?",
+        "answer": "Vulkanski: Jabuka i Brusnik. Od lesa (prapora): Susak. Ostali su karbonatni (krški).",
+        "explanation": "Krški reljef je atrakcijska osnova hrvatskih otoka."
+      },
+      {
+        "question": "Koji je najviši vrh Hrvatske?",
+        "answer": "Dinara (1831 m). Najveća visinska razlika je na Biokovu: vrh Sv. Jure (1762 m) i podnožje uz more.",
+        "explanation": "U RH je 45 planina viših od 500 m."
+      },
+      {
+        "question": "Što je KRŠ i gdje je granica krša u Hrvatskoj?",
+        "answer": "Reljef nastao kemijskim otapanjem vapnenca. Granica južnog krškog i sjevernog nekrškog prostora je kod Karlovca.",
+        "explanation": "Krški reljef prevladava u Istri, PGŽ, Lici i na otocima."
+      },
+      {
+        "question": "Koja su najpoznatija POLJA U KRŠU?",
+        "answer": "Ličko, Gacko i Krbavsko polje (uz njih Imotsko, Sinjsko i Petrovo polje).",
+        "explanation": "Površinski krški oblici: škrape, vrtače, uvale, polja."
+      },
+      {
+        "question": "Koje su tri klimatske regije Hrvatske?",
+        "answer": "Sredozemna, planinsko-kotlinska i umjereno kontinentalna (panonska).",
+        "explanation": "Köppen: Csa, Cfa, Cfb, a iznad oko 1160 m Df."
+      },
+      {
+        "question": "Koji su dijelovi Hrvatske najsunčaniji?",
+        "answer": "Srednjodalmatinski i južni otoci: Vis, Lastovo, Biševo, Svetac, zapadni Hvar i Korčula. Hvar ima više od 2700 sunčanih sati.",
+        "explanation": "Hvar = „jadranska Madeira”; najmanju insolaciju na obali imaju Krk i Cres."
+      },
+      {
+        "question": "Zmorac vs kopnenjak?",
+        "answer": "Zmorac je danju strujanje s mora prema kopnu, a kopnenjak noću s kopna prema moru.",
+        "explanation": "Lokalni vjetrovi Sredozemne regije."
+      },
+      {
+        "question": "Koja su obilježja Jadranskog mora?",
+        "answer": "Toplo (ljeti 22–26 °C), visokog saliniteta (oko 38 ‰), mirno, velike prozirnosti; sezona kupanja traje oko 4 mjeseca.",
+        "explanation": "Najveća prozirnost kod Dubrovnika i između Lošinja i Unija."
+      },
+      {
+        "question": "Koja su najveća jezera u Hrvatskoj?",
+        "answer": "Najveće prirodno: Vransko jezero kod Biograda. Najveće umjetno: Peruća. Najdublje: Crveno jezero kod Imotskog.",
+        "explanation": "Vransko jezero na Cresu je kriptodepresija i izvor pitke vode."
+      },
+      {
+        "question": "Koja hrvatska rijeka ima najveći potencijal za unutarnju plovidbu?",
+        "answer": "Dunav. Plovan je i dio Drave — od ušća u Dunav do Osijeka.",
+        "explanation": "Panonske rijeke su osim Dunava slabo plovne."
+      },
+      {
+        "question": "Koja hrvatska rijeka ima najveći potencijal za rafting?",
+        "answer": "Cetina (kod Omiša); pogodne su i Kupa, Dobra i Mrežnica.",
+        "explanation": "Cetina: rafting i canyoning u kanjonu."
+      },
+      {
+        "question": "Kada je osnovano prvo turističko društvo u Hrvatskoj?",
+        "answer": "1868. na Hvaru (Higijeničko društvo).",
+        "explanation": "Početak organiziranog turizma u Hrvatskoj."
+      },
+      {
+        "question": "Kako se razvijao turizam u Hrvatskoj do danas?",
+        "answer": "Austro-Ugarska (Opatija, Brijuni); 1938. najbolja međuratna godina; nakon 2. sv. rata ekspanzija 1970-ih i 1980-ih; nagli pad u Domovinskom ratu.",
+        "explanation": "1910. Istra je imala oko tri puta više kapaciteta od Dalmacije."
+      },
+      {
+        "question": "Koje su tri turističke makroregije Hrvatske?",
+        "answer": "Primorska, Planinska i Panonsko-peripanonska turistička regija.",
+        "explanation": "Drugi stupanj: 8 turističkih regija."
+      },
+      {
+        "question": "Kolike su makroregije po površini i stanovništvu?",
+        "answer": "Primorska: 31,6 % površine, 30,6 % stanovnika. Planinska: 14 % i 3 %. Panonska: 54,4 % i 66,4 %.",
+        "explanation": "Primorska ostvaruje oko 75 % dolazaka i više od 90 % noćenja."
+      },
+      {
+        "question": "Kojih je 8 turističkih regija Hrvatske?",
+        "answer": "Istra, Kvarner, Sjeverna, Srednja i Južna Dalmacija (primorske); Gorska Hrvatska (planinska); Središnja i Istočna Hrvatska (panonske).",
+        "explanation": "Pet primorskih, jedna planinska, dvije panonske."
+      },
+      {
+        "question": "Iz kojih zemalja dolazi najviše turista u Hrvatsku?",
+        "answer": "Najvažnije emitivno tržište je Njemačka; slijede zemlje srednje Europe i susjedstva — Slovenija, Austrija, Italija, Poljska, Češka, Mađarska.",
+        "explanation": "Obala je „najbliža plaža” za srednju i istočnu Europu."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Koja je najzapadnija točka Hrvatske?",
+        "options": [
+          "Rt Kamenjak",
+          "Rt Savudrija",
+          "Rt Oštra",
+          "Umag"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koja je najsjevernija točka Hrvatske?",
+        "options": [
+          "Mursko Središće u Međimurju",
+          "Čakovec",
+          "Žabnik kod Svetog Martina na Muri",
+          "Kotoriba na Muri"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koji je najistočniji grad Hrvatske?",
+        "options": [
+          "Vukovar",
+          "Osijek",
+          "Vinkovci",
+          "Ilok"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Najjužnija točka Hrvatske je:",
+        "options": [
+          "otočić Galijula (Palagruža)",
+          "otok Lastovo",
+          "Cavtat u Konavlima",
+          "otok Mljet (Saplunara)"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koja je oznaka paneuropskog koridora najvažnijeg za povezivanje Hrvatske s emitivnim tržištima?",
+        "options": [
+          "Koridor V.b",
+          "Koridor X",
+          "Koridor V.c",
+          "Koridor VII"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Sporedni koridor Budimpešta–Zagreb–Rijeka ima oznaku:",
+        "options": [
+          "X.a",
+          "V.c",
+          "V.b",
+          "X"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koji reljef prevladava u Primorsko-goranskoj županiji i Istri?",
+        "options": [
+          "Lesni ravnjak",
+          "Aluvijalna nizina",
+          "Vulkanski reljef",
+          "Krški reljef"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koji reljef čini atrakcijsku osnovu hrvatskih otoka?",
+        "options": [
+          "Krški",
+          "Vulkanski",
+          "Glacijalni",
+          "Pješčani (dine)"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koji je od ponuđenih otoka najsunčaniji?",
+        "options": [
+          "Krk",
+          "Hvar",
+          "Cres",
+          "Rab"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koji su hrvatski otoci vulkanskog podrijetla?",
+        "options": [
+          "Susak i Unije",
+          "Vis i Biševo",
+          "Jabuka i Brusnik",
+          "Lastovo i Mljet"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koja rijeka u Hrvatskoj ima najveći potencijal za unutarnju plovidbu?",
+        "options": [
+          "Sava",
+          "Kupa",
+          "Drava",
+          "Dunav"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koja od rijeka ima najveći potencijal za rafting?",
+        "options": [
+          "Cetina",
+          "Drava",
+          "Sava",
+          "Mirna"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Najveće prirodno jezero u Hrvatskoj je:",
+        "options": [
+          "Peručko jezero",
+          "Vransko jezero kod Biograda",
+          "Vransko jezero na Cresu",
+          "Crveno jezero kod Imotskog"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Najviši vrh Hrvatske je:",
+        "options": [
+          "Sveti Jure (Biokovo)",
+          "Vaganski vrh (Velebit)",
+          "Dinara",
+          "Bjelolasica"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Prvo turističko društvo u Hrvatskoj osnovano je 1868. u:",
+        "options": [
+          "Opatiji",
+          "Dubrovniku",
+          "Crikvenici",
+          "Hvaru"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koja makroregija zauzima najveću površinu i ima najviše stanovnika?",
+        "options": [
+          "Panonsko-peripanonska",
+          "Primorska",
+          "Planinska",
+          "Sve su podjednake"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Strujanje zraka s mora prema kopnu tijekom dana zove se:",
+        "options": [
+          "kopnenjak",
+          "zmorac",
+          "bura",
+          "jugo"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Granica južnog krškog i sjevernog nekrškog prostora Hrvatske prolazi kod:",
+        "options": [
+          "Zagreba",
+          "Gospića",
+          "Karlovca",
+          "Siska"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Najviši vrh Hrvatske je _______ (1831 m).",
+        "answer": "Dinara",
+        "hint": "Planina na granici s BiH."
+      },
+      {
+        "sentence": "Za Hrvatsku je najvažniji paneuropski koridor s oznakom _______.",
+        "answer": "X",
+        "hint": "Rimski broj deset."
+      },
+      {
+        "sentence": "Najzapadnija točka Hrvatske je rt _______.",
+        "answer": "Savudrija",
+        "hint": "Istra, kod Umaga."
+      },
+      {
+        "sentence": "Prvo turističko društvo u Hrvatskoj osnovano je _______. na Hvaru.",
+        "answer": "1868",
+        "hint": "Godina."
+      },
+      {
+        "sentence": "Ličko, Gacko i Krbavsko polje primjeri su polja u _______.",
+        "answer": "kršu",
+        "hint": "Vapnenački reljef (lokativ)."
+      },
+      {
+        "sentence": "Vulkanskog su podrijetla hrvatski otoci Jabuka i _______.",
+        "answer": "Brusnik",
+        "hint": "Otočić kod Visa."
+      },
+      {
+        "sentence": "Rijeka Drava plovna je od ušća u Dunav do _______.",
+        "answer": "Osijeka",
+        "hint": "Najveći slavonski grad (genitiv)."
+      }
+    ],
+    "learn": {
+      "title": "Hrvatska — položaj, prirodni resursi i razvoj turizma",
+      "content": "\n<h3>Položaj i osnovni podaci</h3>\n<ul>\n<li>Hrvatska se nalazi u središnjem dijelu sjeverne polutke; zemlja je suradnje i prijelaza između srednje, jugoistočne i sredozemne Europe. Obala je „najbliža plaža” za srednjoeuropske, istočnoeuropske i podunavske zemlje.</li>\n<li>Neovisnost je proglašena 25. 6. 1991., a međunarodno priznanje stiglo je 15. 1. 1992.</li>\n<li><strong>Površina:</strong> kopno oko <strong>56 594 km²</strong> (65 %) + obalno more 31 067 km² (35 %) = oko 87 661 km². Skripta na jednom mjestu navodi 56 538 km² — za ispit vrijedi 56 594 km².</li>\n<li><strong>Stanovništvo:</strong> skripta navodi oko 4,4–4,6 milijuna (stariji podaci); prema popisu 2021. Hrvatska ima oko 3,87 milijuna stanovnika.</li>\n<li><strong>Upravna podjela:</strong> 20 županija i Grad Zagreb.</li>\n</ul>\n<table>\n<tr><th>Krajnja točka</th><th>Lokacija</th></tr>\n<tr><td>Sjever</td><td>Žabnik (Sveti Martin na Muri, Međimurje)</td></tr>\n<tr><td>Jug</td><td>otočić <strong>Galijula</strong> u skupini Palagruže (općina Komiža, viški arhipelag); na kopnu rt Oštra na Prevlaci</td></tr>\n<tr><td>Istok</td><td>Rađevac kod <strong>Iloka</strong> (Ilok = najistočniji grad)</td></tr>\n<tr><td>Zapad</td><td><strong>rt Savudrija</strong> (Istra)</td></tr>\n</table>\n\n<h3>Prometni položaj — paneuropski koridori (Helsinki, 1997.)</h3>\n<table>\n<tr><th>Koridor</th><th>Pravac</th></tr>\n<tr><td><strong>X</strong> (primarni za RH)</td><td>Salzburg – Ljubljana – Zagreb – Beograd – Solun; prikuplja turiste s najvažnijih emitivnih tržišta</td></tr>\n<tr><td>X.a</td><td>Zagreb – Maribor – Graz</td></tr>\n<tr><td>V.b (sporedni)</td><td>Budimpešta – Zagreb – Rijeka</td></tr>\n<tr><td>V.c</td><td>Budimpešta – Osijek – Sarajevo – Ploče</td></tr>\n</table>\n<p>Važni prometni objekti: autoceste A1–A12, tunel Učka, Krčki most (1980.), Pelješki most, Istarski ipsilon. Glavne međunarodne zračne luke: Zagreb, Split, Dubrovnik, Zadar, Rijeka, Pula i Osijek.</p>\n\n<h3>Geomorfološki resursi</h3>\n<ul>\n<li>Hrvatska je pretežno nizinski prostor — visine do 500 m zauzimaju oko 81,5 % teritorija; ima 45 planina viših od 500 m. Najviši vrh: <strong>Dinara (1831 m)</strong>. Najveća visinska razlika: Biokovo — vrh Sv. Jure (1762 m) iznad mora.</li>\n<li><strong>Obala</strong> — glavnina turističke aktivnosti. Duga je oko 5 800 km (kopno oko 1 800 km, otoci oko 4 000 km); koeficijent razvedenosti je među najvećima na Sredozemlju (u Europi iza Norveške). Fliš (pogodan za naseljavanje): Istra, Vinodol, Krk, Rab, Ravni kotari, Konavle.</li>\n<li><strong>Otoci</strong> — 1 246 (79 otoka, 525 otočića, 642 hridi i grebena). Najveći su Krk i Cres (gotovo jednake površine, oko 405 km²). <strong>Jabuka i Brusnik</strong> su vulkanskog podrijetla, <strong>Susak</strong> je od prapora (lesa), ostali su karbonatni.</li>\n<li><strong>Podmorje</strong> — ronjenje je dopušteno do 40 m dubine; Jadran ima dublji jugoistočni (do 1233 m) i plići sjeverozapadni dio.</li>\n<li><strong>Nizine</strong> — poloji (močvarni ekosustavi: Lonjsko polje, Kopački rit, Crna Mlaka), terasne nizine i lesne zaravni.</li>\n<li><strong>Krš</strong> — reljef nastao kemijskim otapanjem vapnenca; granica južnog krškog i sjevernog nekrškog prostora je kod <strong>Karlovca</strong>. Krški reljef prevladava u Istri, Primorsko-goranskoj županiji, Lici, planinskoj Hrvatskoj i na otocima.\n<ul>\n<li><em>Površinski oblici:</em> škrape (Bijele i Samarske stijene, Hajdučki i Rožanski kukovi, Tulove grede, Anića kuk), vrtače, <strong>polja u kršu</strong> — Ličko, Gacko, Krbavsko.</li>\n<li><em>Podzemni oblici:</em> špilje (nagib manji od 45°) i jame (veći): Modra i Medvjeđa špilja na Biševu, Manita peć (Paklenica), Cerovačke špilje (Gračac), Biserujka (Krk), Lokvarka (Lokve), Baredine (Poreč), Lukina jama (Sjeverni Velebit).</li>\n</ul></li>\n</ul>\n\n<h3>Klimatski resursi</h3>\n<table>\n<tr><th>Köppen</th><th>Područje</th></tr>\n<tr><td>Csa — mediteranska s vrućim ljetima</td><td>južni Lošinj, dalmatinski otoci, usko dalmatinsko priobalje</td></tr>\n<tr><td>Cfa — umjereno topla vlažna s vrućim ljetima</td><td>ostali otoci i obala do oko 500 m</td></tr>\n<tr><td>Cfb — umjereno topla vlažna s toplim ljetima</td><td>najveći dio gorskog i panonskog prostora</td></tr>\n<tr><td>Df — snježno-šumska</td><td>iznad oko 1160 m</td></tr>\n</table>\n<ul>\n<li><strong>Sredozemna regija</strong> — blage zime, ljeta nisu pretopla; srednja godišnja temperatura 14 °C na sjeveru do 18 °C na jugu, oborine najčešće zimi. <strong>Najsunčaniji</strong>: Vis, Lastovo, Biševo, Svetac, zapadne obale Hvara i Korčule; <strong>Hvar</strong> ima više od 2700 sunčanih sati („jadranska Madeira”). Sjeverni Jadran (Kvarner, Opatija u sjeni Učke) ima osjetno manje sunca — <strong>najmanju insolaciju na obali imaju Krk i Cres</strong> (ispitno pitanje: najveća Hvar, najmanja Krk/Cres); najviše oborina imaju Rijeka i okolica. <strong>Zmorac</strong> puše danju s mora na kopno, <strong>kopnenjak</strong> noću s kopna na more; bura i jugo glavni su vjetrovi Jadrana.</li>\n<li><strong>Planinsko-kotlinska regija</strong> — snijeg za zimski turizam; apsolutni minimum −35,2 °C (Zalesina, 1968.); oko 1700 sunčanih sati.</li>\n<li><strong>Umjereno kontinentalna regija</strong> — panonski prostor, česta magla.</li>\n</ul>\n\n<h3>Hidrografski resursi</h3>\n<ul>\n<li><strong>Jadransko more</strong> — toplo (zimi 9–12 °C, ljeti 22–26 °C), visokog saliniteta (oko 38 ‰; slanost je temeljno terapeutsko svojstvo), mirno, velike prozirnosti (najveća kod Dubrovnika i između Lošinja i Unija). Kupališna sezona traje oko 4 mjeseca. Onečišćenje: industrijski bazeni (Rijeka, Pula, Zadar, Kaštela), a glavni izvor onečišćenja je rijeka Po.</li>\n<li><strong>Prirodna jezera:</strong> Plitvička jezera, Modro i Crveno jezero (Imotski — Crveno je najdublje), Vransko jezero na Cresu (kriptodepresija, pitka voda za Cres i Lošinj), Baćinska jezera, <strong>Vransko jezero kod Biograda (najveće prirodno jezero)</strong>.</li>\n<li><strong>Umjetna jezera:</strong> <strong>Peruća (najveće)</strong>, Butoniga (Istra), Lokvarsko i Fužinsko (Bajer) u Gorskom kotaru, Kruščica (Lika), Dubravsko jezero na Dravi.</li>\n<li><strong>Rijeke:</strong> najveća gustoća tekućica je u Panoniji. <strong>Dunav</strong> ima najveći potencijal za unutarnju plovidbu; <strong>Drava je plovna od ušća u Dunav do Osijeka</strong>. Za rafting: <strong>Cetina</strong>, Kupa, Dobra, Mrežnica.</li>\n<li><strong>Toplice:</strong> Varaždinske, Krapinske, Stubičke, Tuheljske, Lipik, Daruvar, Topusko, Istarske toplice, Bizovac.</li>\n</ul>\n\n<h3>Biogeografski resursi</h3>\n<p>U primorju prevladavaju makija i borove šume, u Slavoniji hrastove šume (Spačvanska šuma). Arboretumi: <strong>Trsteno</strong> kod Dubrovnika (najstariji) i <strong>Opeka</strong> kod Varaždina.</p>\n\n<h3>Razvoj turizma u Hrvatskoj</h3>\n<table>\n<tr><th>Razdoblje</th><th>Obilježja</th></tr>\n<tr><td>Antika i renesansa</td><td>putovanja iz znatiželje, zdravlja i kulture; renesansni umjetnik Michelangelo nacrtao je Slavoluk Sergijevaca u Puli</td></tr>\n<tr><td>1868.</td><td>na Hvaru osnovano <strong>prvo turističko društvo</strong> (Higijeničko društvo)</td></tr>\n<tr><td>Austro-Ugarska</td><td>1910. Istra ima oko tri puta više kapaciteta i dolazaka od Dalmacije; najposjećenija mjesta: Opatija–Volosko, Pula–Brijuni, Zadar, Split, Dubrovnik; gosti iz Austrije, Njemačke, Rusije, Italije</td></tr>\n<tr><td>Između svjetskih ratova</td><td>širenje turizma; <strong>1938.</strong> najuspješnija godina razdoblja</td></tr>\n<tr><td>Nakon 2. svjetskog rata</td><td>obnova razorene infrastrukture; <strong>ekspanzija 1970-ih i 1980-ih</strong>; nagli pad početkom Domovinskog rata; zatim oporavak</td></tr>\n</table>\n<p><strong>Emitivna tržišta:</strong> Njemačka je dugoročno najvažnije tržište; slijede zemlje srednje Europe i susjedstva (Slovenija, Austrija, Italija, Poljska, Češka, Mađarska, Slovačka). Oko 75 % inozemnih turista dolazi osobnim automobilom.</p>\n\n<h3>Turistička regionalizacija Hrvatske</h3>\n<table>\n<tr><th>Makroregija (1. stupanj)</th><th>Površina / stanovništvo</th><th>Turističke regije (2. stupanj)</th></tr>\n<tr><td><strong>Primorska</strong></td><td>31,6 % / 30,6 %</td><td>Istra, Kvarner, Sjeverna Dalmacija, Srednja Dalmacija, Južna Dalmacija</td></tr>\n<tr><td><strong>Planinska</strong></td><td>14 % / 3 %</td><td>Gorska Hrvatska (Gorski kotar, Lika, Ogulinsko-plaščanska udolina)</td></tr>\n<tr><td><strong>Panonsko-peripanonska</strong></td><td>54,4 % / 66,4 %</td><td>Središnja Hrvatska, Istočna Hrvatska</td></tr>\n</table>\n<p>Primorska regija je najprivlačnije turističko područje — ostvaruje oko <strong>75 % dolazaka i više od 90 % noćenja</strong>. Proteže se od rta Savudrije do Prevlake; dijeli se na sjeverno hrvatsko primorje (Istra i Kvarner) i južno hrvatsko primorje (Dalmacija).</p>\n<div class=\"warning-box\"><strong>Ispravci i neusklađenosti skripte:</strong> skripta navodi Cres kao najveći otok — novija mjerenja daju Krku neznatno veću površinu, pa se oba navode kao najveći (oko 405 km²). Vrh Sv. Jure ima 1762 m (skripta na jednom mjestu piše 1764 m). Broj otoka 1 185 stariji je podatak; 1 246 je novija službena brojka.</div>\n"
+    }
+  },
+  "protectedAreas": {
+    "name": "Zaštićena područja i UNESCO baština Hrvatske",
+    "icon": "fa-tree",
+    "color": "#22c55e",
+    "flashcards": [
+      {
+        "question": "Koliko Hrvatska ima nacionalnih parkova i parkova prirode?",
+        "answer": "8 nacionalnih parkova i 12 parkova prirode (uz 2 stroga rezervata).",
+        "explanation": "Zakon o zaštiti prirode propisuje 9 kategorija prostorne zaštite."
+      },
+      {
+        "question": "Nabroji 8 nacionalnih parkova Hrvatske.",
+        "answer": "Plitvička jezera, Paklenica, Risnjak, Mljet, Kornati, Brijuni, Krka i Sjeverni Velebit.",
+        "explanation": "Poredano po godini proglašenja (1949. – 1999.)."
+      },
+      {
+        "question": "Koji je NP najstariji, a koji najmlađi?",
+        "answer": "Najstariji: Plitvička jezera (1949., iste godine i Paklenica). Najmlađi: Sjeverni Velebit (1999.).",
+        "explanation": "Plitvice su i najveći NP."
+      },
+      {
+        "question": "Koji su NP najveći, a koji najmanji?",
+        "answer": "Najveći: Plitvička jezera, zatim Kornati. Najmanji: Brijuni (oko 34 km²), zatim Mljet.",
+        "explanation": "Najposjećeniji: Plitvice, Krka, Kornati, Brijuni."
+      },
+      {
+        "question": "Koje zaštićeno područje Primorske Hrvatske ima najviše posjetitelja?",
+        "answer": "NP Krka.",
+        "explanation": "Plitvice su posjećenije, ali pripadaju Planinskoj Hrvatskoj."
+      },
+      {
+        "question": "Nabroji 12 parkova prirode Hrvatske.",
+        "answer": "Kopački rit, Medvednica, Velebit, Biokovo, Telašćica, Lonjsko polje, Žumberak–Samoborsko gorje, Papuk, Učka, Vransko jezero, Lastovsko otočje, Dinara.",
+        "explanation": "Kopački rit zaštićen je od 1967.; najmlađi je PP Dinara (2021.)."
+      },
+      {
+        "question": "Koja su dva stroga rezervata u Hrvatskoj?",
+        "answer": "Hajdučki i Rožanski kukovi (Sjeverni Velebit) te Bijele i Samarske stijene (Velika Kapela).",
+        "explanation": "Samo za znanstvena istraživanja."
+      },
+      {
+        "question": "Po čemu je poznat PP Kopački rit?",
+        "answer": "Močvara između Drave i Dunava s velikom biološkom raznolikošću (jelen, ptice močvarice); od 1993. na Ramsarskom popisu močvara.",
+        "explanation": "Zaštićen od 1967."
+      },
+      {
+        "question": "Po čemu je poznat PP Lonjsko polje?",
+        "answer": "Jedna od najvećih močvara Europe; Čigoč je europsko selo roda.",
+        "explanation": "U blizini je spomen-područje Jasenovac."
+      },
+      {
+        "question": "Po čemu su poznati PP Biokovo i PP Velebit?",
+        "answer": "Biokovo: vrh Sv. Jure (1762 m) iznad Makarske, endemi. Velebit: rezervat biosfere UNESCO-a (1978.), unutar njega NP Paklenica i Sjeverni Velebit.",
+        "explanation": "Velebit je najznačajnije endemsko čvorište flore i faune."
+      },
+      {
+        "question": "Po čemu je poznat PP Vransko jezero?",
+        "answer": "Najveće prirodno jezero u Hrvatskoj (kod Biograda), ornitološki rezervat.",
+        "explanation": "Proglašen 1999."
+      },
+      {
+        "question": "Po čemu je poznat PP Papuk?",
+        "answer": "Prvi hrvatski geopark u mreži UNESCO geoparkova (2007.); slavonsko gorje.",
+        "explanation": "Proglašen parkom prirode 1999."
+      },
+      {
+        "question": "Koliko je UNESCO lokaliteta materijalne baštine u Hrvatskoj?",
+        "answer": "Deset: 8 kulturnih, 1 prirodni (Plitvička jezera) i 1 prirodni dio zajedničkog dobra (bukove prašume).",
+        "explanation": "Prvi upisi 1979.: Split, Dubrovnik, Plitvice."
+      },
+      {
+        "question": "Koji su hrvatski UNESCO lokaliteti upisani 1979.?",
+        "answer": "Dioklecijanova palača u Splitu, stara gradska jezgra Dubrovnika i NP Plitvička jezera.",
+        "explanation": "Plitvice su jedini NP koji je UNESCO-ova svjetska baština sam za sebe."
+      },
+      {
+        "question": "Koji su UNESCO lokaliteti u Poreču, Trogiru i Šibeniku?",
+        "answer": "Eufrazijeva bazilika u Poreču (1997.), povijesna jezgra Trogira (1997.) i katedrala sv. Jakova u Šibeniku (2000.).",
+        "explanation": "Katedralu je gradio Juraj Dalmatinac."
+      },
+      {
+        "question": "Koji su najnoviji hrvatski UNESCO lokaliteti?",
+        "answer": "Starogradsko polje na Hvaru (2008.), stećci (2016.), venecijanski obrambeni sustav — Zadar i tvrđava sv. Nikole kod Šibenika (2017.), bukove prašume (2017.).",
+        "explanation": "Bukove prašume: Paklenica i Sjeverni Velebit."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Koliko Hrvatska ima nacionalnih parkova?",
+        "options": [
+          "6",
+          "11",
+          "12",
+          "8"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koji je najstariji nacionalni park u Hrvatskoj (1949.)?",
+        "options": [
+          "Plitvička jezera",
+          "Krka",
+          "Risnjak",
+          "Brijuni"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koji je nacionalni park proglašen posljednji (1999.)?",
+        "options": [
+          "Kornati",
+          "Sjeverni Velebit",
+          "Krka",
+          "Mljet"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koje zaštićeno područje Primorske Hrvatske ima najveći broj turističkih dolazaka?",
+        "options": [
+          "NP Kornati",
+          "NP Brijuni",
+          "NP Krka",
+          "NP Mljet"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koje od navedenih NIJE nacionalni park?",
+        "options": [
+          "Risnjak",
+          "Paklenica",
+          "Kornati",
+          "Biokovo"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koji park prirode obuhvaća poplavno područje Drave i Dunava u Baranji?",
+        "options": [
+          "Kopački rit",
+          "Medvednica",
+          "Učka",
+          "Telašćica"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Europsko selo roda Čigoč nalazi se u parku prirode:",
+        "options": [
+          "Kopački rit",
+          "Lonjsko polje",
+          "Papuk",
+          "Žumberak–Samoborsko gorje"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Prvi hrvatski UNESCO geopark je park prirode:",
+        "options": [
+          "Učka",
+          "Biokovo",
+          "Papuk",
+          "Dinara"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Eufrazijeva bazilika (UNESCO) nalazi se u:",
+        "options": [
+          "Puli",
+          "Rovinju",
+          "Zadru",
+          "Poreču"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Starogradsko polje (UNESCO) nalazi se na otoku:",
+        "options": [
+          "Hvaru",
+          "Braču",
+          "Korčuli",
+          "Visu"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Katedrala sv. Jakova, upisana na UNESCO-ov popis, nalazi se u:",
+        "options": [
+          "Trogiru",
+          "Šibeniku",
+          "Zadru",
+          "Splitu"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koji je jedini hrvatski nacionalni park samostalno upisan kao UNESCO svjetska baština?",
+        "options": [
+          "Krka",
+          "Kornati",
+          "Plitvička jezera",
+          "Brijuni"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Strogi rezervat Bijele i Samarske stijene nalazi se na:",
+        "options": [
+          "Velebitu",
+          "Biokovu",
+          "Učki",
+          "Velikoj Kapeli"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Najmanji hrvatski nacionalni park po površini je:",
+        "options": [
+          "Brijuni",
+          "Mljet",
+          "Risnjak",
+          "Paklenica"
+        ],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Hrvatska ima 8 nacionalnih parkova i _______ parkova prirode.",
+        "answer": "12",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "NP Plitvička jezera proglašen je _______. godine.",
+        "answer": "1949",
+        "hint": "Godina, nedugo nakon 2. svjetskog rata."
+      },
+      {
+        "sentence": "Europsko selo roda Čigoč nalazi se u Parku prirode _______ polje.",
+        "answer": "Lonjsko",
+        "hint": "Posavina."
+      },
+      {
+        "sentence": "Eufrazijeva bazilika nalazi se u _______.",
+        "answer": "Poreču",
+        "hint": "Istarski grad (lokativ)."
+      },
+      {
+        "sentence": "Starogradsko polje upisano na UNESCO-ov popis nalazi se na otoku _______.",
+        "answer": "Hvaru",
+        "hint": "Srednja Dalmacija (lokativ)."
+      },
+      {
+        "sentence": "Najmlađi nacionalni park Hrvatske je Sjeverni _______.",
+        "answer": "Velebit",
+        "hint": "Planina."
+      }
+    ],
+    "learn": {
+      "title": "Zaštićena priroda i UNESCO svjetska baština u Hrvatskoj",
+      "content": "\n<p>Zakon o zaštiti prirode propisuje <strong>9 kategorija</strong> prostorne zaštite: strogi rezervat, nacionalni park, posebni rezervat, park prirode, regionalni park, spomenik prirode, značajni krajobraz, park-šuma i spomenik parkovne arhitekture. Najvrjednije su <strong>2 stroga rezervata, 8 nacionalnih parkova i 12 parkova prirode</strong>; NP i PP zajedno pokrivaju oko 10 % Hrvatske. Godine 2017. nacionalne parkove i parkove prirode posjetilo je oko 4 milijuna ljudi, od toga oko 3 milijuna Plitvice i Krku.</p>\n\n<h3>Nacionalni parkovi (8)</h3>\n<table>\n<tr><th>NP</th><th>Godina</th><th>Obilježja</th></tr>\n<tr><td><strong>Plitvička jezera</strong></td><td>1949. (najstariji)</td><td>najveći i najposjećeniji NP; 16 jezera na sedrenim barijerama; <strong>UNESCO 1979.</strong>; Planinska Hrvatska (Lika)</td></tr>\n<tr><td><strong>Paklenica</strong></td><td>1949.</td><td>kanjoni Velike i Male Paklenice na južnom Velebitu; Anića kuk (penjanje), Manita peć; Vaganski vrh (1757 m) najviši vrh Velebita; ime od „paklina” (smola)</td></tr>\n<tr><td><strong>Risnjak</strong></td><td>1953.</td><td>Gorski kotar; najviše oborina u Hrvatskoj; Schlosserov dom</td></tr>\n<tr><td><strong>Mljet</strong></td><td>1960.</td><td>zapadni dio otoka; Malo i Veliko jezero, otočić Sv. Marija s benediktinskim samostanom iz 12. st.</td></tr>\n<tr><td><strong>Kornati</strong></td><td>1980.</td><td>najrazvedenija otočna skupina na Mediteranu (89 otoka, otočića i hridi u NP); drugi po veličini NP</td></tr>\n<tr><td><strong>Brijuni</strong></td><td>1983.</td><td>14 otoka i otočića kod Pule; <strong>najmanji</strong> NP (oko 34 km²); safari park, arheološki lokaliteti, golf</td></tr>\n<tr><td><strong>Krka</strong></td><td>1985.</td><td>slapovi Krke (Skradinski buk, Roški slap), otočić Visovac s franjevačkim samostanom; <strong>najposjećenije zaštićeno područje Primorske Hrvatske</strong></td></tr>\n<tr><td><strong>Sjeverni Velebit</strong></td><td>1999. (najmlađi)</td><td>Hajdučki i Rožanski kukovi, Lukina jama, Premužićeva staza, Velebitski botanički vrt</td></tr>\n</table>\n\n<h3>Parkovi prirode (12)</h3>\n<table>\n<tr><th>PP</th><th>Godina</th><th>Obilježja</th></tr>\n<tr><td><strong>Kopački rit</strong></td><td>zaštićen od 1967.</td><td>Baranja, poplavno područje Drave i Dunava; ptice, jelen; Ramsarski popis 1993.</td></tr>\n<tr><td>Medvednica</td><td>1981.</td><td>iznad Zagreba; Sljeme (skijanje), Medvedgrad s Oltarom domovine, špilja Veternica</td></tr>\n<tr><td>Velebit</td><td>1981.</td><td>UNESCO rezervat biosfere (1978.); obuhvaća NP Paklenica i Sjeverni Velebit; velebitska degenija; najveće endemsko čvorište</td></tr>\n<tr><td>Biokovo</td><td>1981.</td><td>iznad Makarske; vrh Sv. Jure (1762 m); drugo najveće endemsko čvorište (biokovsko zvonce)</td></tr>\n<tr><td>Telašćica</td><td>1988.</td><td>jugoistočni Dugi otok; slano jezero Mir, klifovi</td></tr>\n<tr><td>Lonjsko polje</td><td>1990.</td><td>jedna od najvećih močvara Europe; <strong>Čigoč — europsko selo roda</strong>; posavske kuće</td></tr>\n<tr><td>Žumberak – Samoborsko gorje</td><td>1999.</td><td>Sveta Gera (Trdinov vrh, 1178 m)</td></tr>\n<tr><td><strong>Papuk</strong></td><td>1999.</td><td>Slavonija; <strong>prvi hrvatski UNESCO geopark</strong> (2007.)</td></tr>\n<tr><td>Učka</td><td>1999.</td><td>masiv Učke i dio Ćićarije iznad Opatijske rivijere; Vojak (1401 m)</td></tr>\n<tr><td>Vransko jezero</td><td>1999.</td><td>najveće prirodno jezero RH (kod Biograda); ornitološki rezervat</td></tr>\n<tr><td>Lastovsko otočje</td><td>2006.</td><td>Lastovo i oko 45 otočića; najudaljenije naseljeno otočje</td></tr>\n<tr><td>Dinara</td><td>2021. (najmlađi)</td><td>najviši vrh Hrvatske (1831 m)</td></tr>\n</table>\n\n<h3>Ostale kategorije — primjeri</h3>\n<ul>\n<li><strong>Strogi rezervati (2):</strong> Hajdučki i Rožanski kukovi (Sjeverni Velebit); Bijele i Samarske stijene (Velika Kapela).</li>\n<li><strong>Posebni rezervati:</strong> Motovunska šuma, Vražji prolaz i Zeleni vir (Gorski kotar), otok Lokrum, Crna Mlaka, Limski zaljev (more).</li>\n<li><strong>Park-šume:</strong> Marjan (Split), Zlatni rt (Rovinj), Čikat (Mali Lošinj).</li>\n<li><strong>Značajni (zaštićeni) krajobrazi:</strong> kanjonske strane Limskog kanala, otok Susak, Zlatni rat na Braču.</li>\n<li><strong>Spomenici prirode:</strong> jama Baredine (Poreč), Vela draga (Učka), otoci Jabuka i Brusnik, Modro i Crveno jezero.</li>\n<li><strong>Spomenici parkovne arhitekture:</strong> park Angiolina i Sv. Jakov u Opatiji, Maksimir (Zagreb), arboretumi Opeka i Trsteno.</li>\n</ul>\n\n<h3>UNESCO — svjetska baština u Hrvatskoj (materijalna)</h3>\n<table>\n<tr><th>Lokalitet</th><th>Mjesto</th><th>Upis</th></tr>\n<tr><td>Dioklecijanova palača i povijesna jezgra</td><td>Split</td><td>1979.</td></tr>\n<tr><td>Stari grad Dubrovnik</td><td>Dubrovnik</td><td>1979.</td></tr>\n<tr><td>Nacionalni park Plitvička jezera (prirodna baština)</td><td>Lika</td><td>1979.</td></tr>\n<tr><td>Eufrazijeva bazilika (6. st.)</td><td>Poreč</td><td>1997.</td></tr>\n<tr><td>Povijesni grad Trogir</td><td>Trogir</td><td>1997.</td></tr>\n<tr><td>Katedrala sv. Jakova (Juraj Dalmatinac)</td><td>Šibenik</td><td>2000.</td></tr>\n<tr><td>Starogradsko polje</td><td>otok Hvar</td><td>2008.</td></tr>\n<tr><td>Stećci — srednjovjekovni nadgrobni spomenici</td><td>Cista Velika, Dubravka (Konavle) — zajedno s BiH, Srbijom i Crnom Gorom</td><td>2016.</td></tr>\n<tr><td>Venecijanski obrambeni sustav 16. i 17. st.</td><td>zidine Zadra i tvrđava sv. Nikole kod Šibenika</td><td>2017.</td></tr>\n<tr><td>Iskonske bukove šume Karpata i drugih regija Europe</td><td>NP Paklenica i Sjeverni Velebit</td><td>2017.</td></tr>\n</table>\n<p><strong>Nematerijalna baština</strong> (primjeri): Sinjska alka, čipkarstvo (Pag, Hvar, Lepoglava), licitarsko srce, dalmatinska klapa, ojkanje, festa sv. Vlaha, mediteranska prehrana.</p>\n<div class=\"warning-box\"><strong>Ispravci skripte:</strong> skripta navodi 11 parkova prirode — to je stanje prije 2021., kada je proglašen PP Dinara (danas 12). PP Lastovsko otočje proglašen je 2006. (skripta: 2005.). Park-šuma u Rovinju zove se Zlatni rt (Zlatni rat je plaža u Bolu). U jednom je dijelu skripte Hrvatska navedena s „5 nacionalnih parkova” — misli se samo na primorske; ukupno ih je 8.</div>\n"
+    }
+  },
+  "istriaKvarner": {
+    "name": "Istra i Kvarner",
+    "icon": "fa-water",
+    "color": "#06b6d4",
+    "flashcards": [
+      {
+        "question": "Koji hrvatski grad s milijunskim brojem noćenja ima UNESCO baštinu?",
+        "answer": "Poreč — više od 4,6 milijuna noćenja godišnje i Eufrazijeva bazilika (UNESCO 1997.).",
+        "explanation": "Najveća kupališna destinacija Istre."
+      },
+      {
+        "question": "Koji je udio Istre u hrvatskom turizmu?",
+        "answer": "U Istri boravi oko 20 % turista, koji ostvaruju oko trećinu svih noćenja u Hrvatskoj.",
+        "explanation": "Jedna od najvažnijih turističkih regija RH."
+      },
+      {
+        "question": "Bijela, Siva i Crvena Istra?",
+        "answer": "Bijela: sjever i istok (Ćićarija, Učka), vapnenac. Siva: središnja flišna Istra (Pazin, Buzet, Hum). Crvena: zapadna i južna obala s crvenicom.",
+        "explanation": "Crvena Istra je turistički najrazvijenija."
+      },
+      {
+        "question": "Gdje se nalazi Augustov hram?",
+        "answer": "U Puli, na antičkom forumu.",
+        "explanation": "Pula: Arena (1. st.), Slavoluk Sergijevaca, Herkulova i Dvojna vrata."
+      },
+      {
+        "question": "Po čemu je poznata pulska Arena?",
+        "answer": "Rimski amfiteatar iz 1. st. za gladijatorske igre (više od 20 000 gledatelja); danas festivali i koncerti.",
+        "explanation": "Jedan od najbolje očuvanih rimskih amfiteatara."
+      },
+      {
+        "question": "Koji je grad u unutrašnjosti Istre poznat po tartufima i filmskom festivalu?",
+        "answer": "Motovun — na brijegu (277 m) iznad doline Mirne; Motovunska šuma bogata je tartufima.",
+        "explanation": "Dobro očuvan srednjovjekovni obrambeni sustav."
+      },
+      {
+        "question": "Po čemu je poznat Poreč?",
+        "answer": "Eufrazijeva bazilika (6. st., UNESCO 1997.), antički raster ulica; najveća kupališna destinacija Istre (Plava i Zelena laguna).",
+        "explanation": "1845. tiskan prvi porečki turistički vodič."
+      },
+      {
+        "question": "Po čemu je poznat Rovinj?",
+        "answer": "„Istarski Saint-Tropez”: povijesna jezgra na nekadašnjem otočiću (spojen 1763.), crkva sv. Eufemije, zaštićeno priobalje.",
+        "explanation": "Morsko lječilište za djecu otvoreno 1888."
+      },
+      {
+        "question": "Po čemu su poznati Hum i Aleja glagoljaša?",
+        "answer": "Hum je „najmanji grad na svijetu” (oko 20 stanovnika); Aleja glagoljaša od Roča do Huma posvećena je glagoljici.",
+        "explanation": "Siva (središnja) Istra."
+      },
+      {
+        "question": "Što je Trka na prstenac?",
+        "answer": "Viteška igra u Barbanu, održava se od 1696. — starija je od Sinjske alke.",
+        "explanation": "Primjer etnosocijalnog i manifestacijskog resursa."
+      },
+      {
+        "question": "Po čemu su poznati Vrsar i Koversada?",
+        "answer": "Koversada je veliko naturističko naselje (10–12 tisuća gostiju); 1972. ondje je održan kongres Svjetske naturističke federacije.",
+        "explanation": "Naturizam — komparativna prednost Hrvatske."
+      },
+      {
+        "question": "Kako je nastao naziv KVARNER?",
+        "answer": "Od lat. Mare quarnerium — more na kojem se plovidbene rute razilaze u četiri smjera (Rijeka, Zadar, Senj, Venecija).",
+        "explanation": "U rimsko doba zvao se Sinus Flanaticus (po Plominu)."
+      },
+      {
+        "question": "Po čemu je poznata Opatija?",
+        "answer": "Kolijevka hrvatskog turizma: Vila Angiolina (1844.), hoteli Kvarner (1884.) i Imperial (1885.); zdravstveni i kongresni turizam.",
+        "explanation": "Nadimci: „zimski Beč” i „jadranska Nizza”."
+      },
+      {
+        "question": "Koji grad na Krku je poznat po enološkim karakteristikama?",
+        "answer": "Vrbnik — gradić na hridi na istočnoj obali Krka, poznat po vinu žlahtina.",
+        "explanation": "Nekada utvrđeno mjesto knezova Frankopana."
+      },
+      {
+        "question": "Po čemu je poznata Baška na Krku?",
+        "answer": "Šljunčana plaža duga oko 1800 m; u obližnjoj crkvi sv. Lucije (Jurandvor) pronađena je Bašćanska ploča (oko 1100.).",
+        "explanation": "Bašćanska ploča — važan glagoljski spomenik."
+      },
+      {
+        "question": "Koja je najveća i najstarija marina na Jadranu?",
+        "answer": "Marina u Puntu na Krku (1964.).",
+        "explanation": "Nasuprot Punta je otočić Košljun s franjevačkim samostanom."
+      },
+      {
+        "question": "Po čemu je poznat Mali Lošinj?",
+        "answer": "Klimatsko lječilište od 1892. (više od 2700 sunčanih sati), bolnica za alergijske bolesti; otok dupina.",
+        "explanation": "Lošinj je s Cresom spojen pokretnim mostom kod Osora."
+      },
+      {
+        "question": "Po čemu je poznat otok Rab?",
+        "answer": "Grad s četiri zvonika; Lopar s pješčanim plažama (Rajska plaža) i najstarijom naturističkom plažom.",
+        "explanation": "Šuma Dundo je posebni rezervat."
+      },
+      {
+        "question": "Po čemu je poznat Beli na Cresu?",
+        "answer": "Po centru za zaštitu bjeloglavih supova.",
+        "explanation": "Lubenice su izletište na litici iznad mora."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Koji grad s milijunskim brojem turističkih noćenja ima zaštićenu UNESCO baštinu?",
+        "options": [
+          "Umag",
+          "Poreč",
+          "Medulin",
+          "Crikvenica"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Gdje se nalazi Augustov hram?",
+        "options": [
+          "U Splitu",
+          "U Zadru",
+          "U Puli",
+          "U Poreču"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koji je grad u unutrašnjosti Istre poznat po tartufima i filmskom festivalu?",
+        "options": [
+          "Pazin",
+          "Buzet",
+          "Labin",
+          "Motovun"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koji grad na Krku je poznat po enološkim karakteristikama (žlahtina)?",
+        "options": [
+          "Vrbnik",
+          "Baška",
+          "Punat",
+          "Omišalj"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koji je grad poznat po Eufrazijevoj bazilici i antičkom rasteru ulica?",
+        "options": [
+          "Rovinj",
+          "Poreč",
+          "Umag",
+          "Novigrad"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Viteška igra Trka na prstenac održava se u:",
+        "options": [
+          "Pazinu",
+          "Humu",
+          "Barbanu",
+          "Sinju"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koje se istarsko mjesto naziva „najmanjim gradom na svijetu”?",
+        "options": [
+          "Roč",
+          "Grožnjan",
+          "Oprtalj",
+          "Hum"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koje su mjesto zvali „zimski Beč” i „jadranska Nizza”?",
+        "options": [
+          "Opatiju",
+          "Crikvenicu",
+          "Lovran",
+          "Mali Lošinj"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Najstarija i najveća marina na Jadranu nalazi se u:",
+        "options": [
+          "Puli",
+          "Puntu",
+          "Opatiji",
+          "Rabu"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Bašćanska ploča pronađena je na otoku:",
+        "options": [
+          "Cresu",
+          "Rabu",
+          "Krku",
+          "Lošinju"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koji je otok poznat po četiri zvonika svog grada i pješčanim plažama Lopara?",
+        "options": [
+          "Krk",
+          "Pag",
+          "Cres",
+          "Rab"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Rimski amfiteatar Arena nalazi se u:",
+        "options": [
+          "Puli",
+          "Solinu",
+          "Rijeci",
+          "Zadru"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koji je dio Istre turistički najrazvijeniji?",
+        "options": [
+          "Bijela Istra",
+          "Crvena Istra",
+          "Siva Istra",
+          "Središnja Istra"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Centar za zaštitu bjeloglavih supova nalazi se u:",
+        "options": [
+          "Baški na Krku",
+          "Osoru na Cresu",
+          "Belom na Cresu",
+          "Loparu na Rabu"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Augustov hram nalazi se u _______.",
+        "answer": "Puli",
+        "hint": "Najveći istarski grad (lokativ)."
+      },
+      {
+        "sentence": "Istarski gradić poznat po tartufima i filmskom festivalu je _______.",
+        "answer": "Motovun",
+        "hint": "Na brijegu iznad Mirne."
+      },
+      {
+        "sentence": "Gradić na Krku poznat po vinu žlahtina je _______.",
+        "answer": "Vrbnik",
+        "hint": "Na hridi, istočna obala Krka."
+      },
+      {
+        "sentence": "Prva turistička kuća u Opatiji bila je Vila _______.",
+        "answer": "Angiolina",
+        "hint": "Talijansko žensko ime."
+      },
+      {
+        "sentence": "Viteška igra Trka na prstenac održava se od 1696. u _______.",
+        "answer": "Barbanu",
+        "hint": "Mjesto u južnoj Istri (lokativ)."
+      }
+    ],
+    "learn": {
+      "title": "Sjeverno hrvatsko primorje: Istra i Kvarner",
+      "content": "\n<h3>Istra — opća obilježja</h3>\n<ul>\n<li>Površina oko 3 130 km²; u Istri boravi oko <strong>20 % turista</strong> koji ostvaruju oko <strong>trećinu noćenja</strong> Hrvatske.</li>\n<li>Zapadna obala je niska, razvedena i pitoma; istočna je visoka i strma, izložena buri.</li>\n<li>Turisti dolaze uglavnom automobilima iz smjera Trsta i Ljubljane te iz Zagreba kroz tunel Učka; <strong>Istarski ipsilon</strong> olakšava promet.</li>\n<li><strong>Bijela Istra</strong> — sjever i istok (Ćićarija, Učka), vapnenačka i slabo razvijena. <strong>Siva Istra</strong> — središnja flišna zona (Pazin, Buzet, Hum, Roč). <strong>Crvena Istra</strong> — zapadna i južna obala s crvenicom, turistički najrazvijenija.</li>\n<li>Vina: malvazija, teran, borgonja; tartufi iz Motovunske šume; ruralni i agroturizam u unutrašnjosti.</li>\n</ul>\n<table>\n<tr><th>Područje</th><th>Destinacije i atrakcije</th></tr>\n<tr><td><strong>Zapadnoistarsko primorje</strong> (Dragonja – Barbariga)</td><td><strong>Umag</strong> (ATP teniski turnir, blizina Italije i Ljubljane); <strong>Savudrija</strong> (najzapadnija točka, najstariji aktivni svjetionik iz 1818.); <strong>Novigrad</strong>; <strong>Poreč</strong> — Eufrazijeva bazilika (6. st., UNESCO 1997.), antički raster (dekuman i kardo), Plava i Zelena laguna, jama Baredine; <strong>više od 4,6 milijuna noćenja</strong> — grad s milijunskim prometom i UNESCO baštinom; <strong>Vrsar</strong> — naturističko naselje Koversada; <strong>Rovinj</strong> — „istarski Saint-Tropez”, jezgra na nekadašnjem otočiću, crkva sv. Eufemije, Crveni otok, zaštićeno priobalje; <strong>Bale</strong> — nalazište kostiju dinosaura (1992.)</td></tr>\n<tr><td><strong>Južnoistarsko primorje</strong></td><td><strong>Pula</strong> — Arena (1. st.), <strong>Augustov hram</strong>, Slavoluk Sergijevaca, Herkulova i Dvojna vrata, brodogradilište Uljanik; Verudela, Medulin, Fažana, rt Kamenjak (orhideje); Nezakcij (glavni grad Histra); <strong>Vodnjan</strong> (mumije u crkvi sv. Blaža); <strong>Barban</strong> (Trka na prstenac od 1696.); <strong>NP Brijuni</strong></td></tr>\n<tr><td><strong>Istočnoistarsko primorje</strong></td><td><strong>Rabac</strong> (kupališna destinacija), <strong>Labin</strong> (srednjovjekovna jezgra, rudarska zbirka), park skulptura Dubrova</td></tr>\n<tr><td><strong>Središnja Istra</strong></td><td><strong>Pazin</strong> (Pazinska jama, Kaštel s Etnografskim muzejom); <strong>Motovun</strong> (brijeg 277 m, filmski festival, tartufi, očuvane zidine); <strong>Istarske toplice</strong> (33–35 °C, reumatske bolesti); <strong>Buzet</strong> (grad tartufa); <strong>Roč</strong> i <strong>Hum</strong> (glagoljaštvo, Aleja glagoljaša; Hum — „najmanji grad na svijetu”); Grožnjan (grad umjetnika), Momjan, Oprtalj</td></tr>\n</table>\n<p><strong>NP Brijuni</strong> — 14 otoka i otočića; hrast crnika, lovor, jeleni i mufloni; Robert Koch je ondje suzbio malariju, a industrijalac Paul Kupelwieser pretvorio otoke u elitno ljetovalište europske aristokracije; poslije 2. svjetskog rata rezidencija predsjednika države; danas izletnički, kongresni i golf turizam te safari park.</p>\n\n<h3>Kvarner — opća obilježja</h3>\n<ul>\n<li>Kopneno-otočni prostor između Istre i Velebita; najveća otočna skupina Jadrana, najučestalija bura, dominacija krša, tradicija pomorstva i turizma.</li>\n<li>Ime: od <em>Mare quarnerium</em> — more gdje se rute razilaze u četiri smjera (Rijeka, Zadar, Senj, Venecija); u rimsko doba <em>Sinus Flanaticus</em> (po Flanoni — Plominu). Dijelovi akvatorija: Vela vrata, Srednja vrata (Kvarnerić), Mala vrata (Vinodolski zaljev) i Velebitski kanal.</li>\n<li>Većim dijelom Primorsko-goranska, manjim Ličko-senjska županija; obala oko 1 065 km (većinom otočna).</li>\n</ul>\n<table>\n<tr><th>Područje</th><th>Destinacije i atrakcije</th></tr>\n<tr><td><strong>Rijeka</strong></td><td>najveća pomorska luka, treći grad po veličini; antička Tarsatica; Trsat (svetište, stube, kaštel), katedrala sv. Vida, Riječki karneval; tranzitni, vjerski, kulturni turizam</td></tr>\n<tr><td><strong>Opatijsko (liburnijsko) primorje</strong></td><td><strong>Opatija</strong> — ime po benediktinskoj opatiji sv. Jakova; <strong>Vila Angiolina</strong> (1844.) prva turistička kuća; društvo Južnih željeznica gradi hotele <strong>Kvarner (1884.)</strong> i <strong>Imperial (1885.)</strong>; „zimski Beč”, „jadranska Nizza”; zdravstveni (talasoterapija), kongresni, nautički turizam; Lungomare; Ičići, Ika, Lovran, Medveja, Mošćenička Draga. Učka umanjuje insolaciju.</td></tr>\n<tr><td><strong>Crikveničko-vinodolsko primorje</strong></td><td><strong>Crikvenica</strong> (ušće Dubračine, pješčana plaža, zdravstveni turizam, hotel Therapia 1895.); <strong>Selce</strong>; <strong>Novi Vinodolski</strong> — Vinodolski zakonik (1288., glagoljica)</td></tr>\n<tr><td><strong>Velebitsko podgorje</strong></td><td><strong>Senj</strong> — tvrđava Nehaj, 45. paralela, cesta Jozefina; <strong>Jablanac</strong> i uvala Zavratnica; <strong>Karlobag</strong></td></tr>\n</table>\n<p><strong>Kvarnerski otoci:</strong></p>\n<ul>\n<li><strong>Krk</strong> — Krčki most (1980.) i zračna luka (Omišalj). Grad Krk (katedrala, zidine), <strong>Punat</strong> (najveća i najstarija marina na Jadranu, 1964.) i otočić <strong>Košljun</strong> (franjevački samostan), <strong>Baška</strong> (plaža oko 1,8 km; Bašćanska ploča iz oko 1100. pronađena u crkvi sv. Lucije u Jurandvoru), <strong>Malinska</strong>, <strong>Njivice</strong>, <strong>Omišalj</strong> (naftni terminal JANAF koči turizam), <strong>Vrbnik</strong> — na hridi iznad mora, grad Frankopana, poznat po vinu <strong>žlahtina</strong>.</li>\n<li><strong>Cres</strong> — dug oko 66 km; <strong>Vransko jezero</strong> (kriptodepresija, pitka voda za Cres i Lošinj); grad Cres (ovčarstvo, maslinarstvo, marina); <strong>Beli</strong> — centar za bjeloglave supove; <strong>Lubenice</strong> — izletište na litici; <strong>Osor</strong> — na spoju s Lošinjem.</li>\n<li><strong>Lošinj</strong> — više od 2700 sunčanih sati; <strong>Mali Lošinj</strong> klimatsko lječilište od 1892. (bolnica za alergijske bolesti), <strong>Veli Lošinj</strong>; park-šuma Čikat.</li>\n<li><strong>Susak</strong> — otok od prapora (lesa), vinogradi. <strong>Unije</strong> — tihe uvale, pučka arhitektura.</li>\n<li><strong>Rab</strong> — pitomiji zapadni dio zaštićen grebenom Kamenjaka; šume hrasta crnike (šuma Dundo — posebni rezervat); grad Rab s <strong>četiri zvonika</strong>, Knežev dvor; <strong>Lopar</strong> — pješčane plaže (Rajska plaža) i najstarija naturistička plaža; Kampor (memorijalno groblje logora); Supetarska Draga.</li>\n</ul>\n<div class=\"tip-box\"><strong>Kako prepoznati:</strong> <strong>Poreč</strong> — ranokršćanska bazilika s mozaicima, stari grad na poluotoku s ravnim antičkim ulicama. <strong>Rovinj</strong> — stari grad na brdašcu nad morem sa zvonikom sv. Eufemije. <strong>Pula</strong> — rimski amfiteatar. <strong>Rab</strong> — niz od četiri kamena zvonika nad starim gradom. <strong>Opatija</strong> — austrougarske vile i hoteli uz šetalište podno Učke.</div>\n"
+    }
+  },
+  "dalmatia": {
+    "name": "Dalmacija",
+    "icon": "fa-sun",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "Koje su tri turističke regije Dalmacije?",
+        "answer": "Sjeverna (Zadarska i Šibensko-kninska županija), Srednja (Splitsko-dalmatinska) i Južna Dalmacija (Dubrovačko-neretvanska).",
+        "explanation": "Ime po ilirskom plemenu Delmata."
+      },
+      {
+        "question": "Po čemu je poznat Zadar?",
+        "answer": "Antička Jadera: Forum, crkva sv. Donata (9. st.), katedrala sv. Stošije, gradske zidine (UNESCO 2017.), Morske orgulje i Pozdrav suncu.",
+        "explanation": "Peti grad po veličini; liker maraskino."
+      },
+      {
+        "question": "Po čemu je poznat Nin?",
+        "answer": "Sjedište hrvatskih narodnih vladara: krstionica kneza Višeslava, crkva sv. Križa, Grgur Ninski; jezgra na otočiću u laguni.",
+        "explanation": "Pješčane plaže i ljekovito blato."
+      },
+      {
+        "question": "Po čemu je poznat otok Pag?",
+        "answer": "Paška čipka, paški sir i janjetina, solana; Zrće kod Novalje — ljetni klupski turizam.",
+        "explanation": "Kamenjar i snažna bura."
+      },
+      {
+        "question": "Koji je grad poznat po uskim uličicama i katedrali pod zaštitom UNESCO-a?",
+        "answer": "Šibenik — katedrala sv. Jakova (Juraj Dalmatinac, UNESCO 2000.) i tvrđava sv. Nikole (UNESCO 2017.).",
+        "explanation": "Najstariji samorodni hrvatski grad na Jadranu (prvi spomen 1066.)."
+      },
+      {
+        "question": "Po čemu je poznat Primošten?",
+        "answer": "Stari dio na nekadašnjem otočiću (danas poluotok) s crkvom sv. Jurja na vrhu; vinogradi babića u suhozidu.",
+        "explanation": "Između Šibenika i Rogoznice."
+      },
+      {
+        "question": "Po čemu je poznat Trogir?",
+        "answer": "Srednjovjekovna jezgra na otočiću (UNESCO 1997.): katedrala sv. Lovre s Radovanovim portalom, kula Kamerlengo, palača Cipiko.",
+        "explanation": "„Grad na kopnu i dva otoka” (Čiovo)."
+      },
+      {
+        "question": "Po čemu je poznat Split?",
+        "answer": "Dioklecijanova palača (4. st., UNESCO 1979.) s Peristilom i katedralom sv. Dujma; park-šuma Marjan; najveća putnička luka.",
+        "explanation": "Solin (antička Salona) je pokraj Splita."
+      },
+      {
+        "question": "Koji grad ima najkvalitetnije i najljepše plaže u Hrvatskoj?",
+        "answer": "Makarska (Makarska rivijera) — šljunčane plaže podno Biokova.",
+        "explanation": "Rivijera: Brela, Baška Voda, Tučepi, Podgora, Gradac."
+      },
+      {
+        "question": "Po čemu je poznat Omiš?",
+        "answer": "Grad na ušću Cetine: rafting i canyoning, festival dalmatinskih klapa, tvrđava Fortica.",
+        "explanation": "Nekada gusarsko uporište."
+      },
+      {
+        "question": "Po čemu je poznat Sinj?",
+        "answer": "Sinjska alka (od 1715.), svetište Gospe Sinjske, blizina Cetine i Peručkog jezera.",
+        "explanation": "Sinjska alka je na UNESCO-ovu popisu nematerijalne baštine."
+      },
+      {
+        "question": "Po čemu su poznati Hvar i Brač?",
+        "answer": "Hvar: najsunčaniji otok, lavanda, Starogradsko polje (UNESCO). Brač: Zlatni rat u Bolu, brački kamen, Vidova gora (najviši vrh otoka).",
+        "explanation": "Hvar = „jadranska Madeira”."
+      },
+      {
+        "question": "Po čemu je poznat Vis?",
+        "answer": "„Jadranska Malta”; Komiža i ribarski brod falkuša; na Biševu Modra špilja.",
+        "explanation": "Vina plavac i vugava."
+      },
+      {
+        "question": "Po čemu je poznat Dubrovnik?",
+        "answer": "Gradske zidine (oko 2 km), Stradun, Knežev dvor, tvrđave Minčeta i Lovrijenac; UNESCO 1979.; glavna polazna luka kružnih putovanja.",
+        "explanation": "Veliki potres 1667."
+      },
+      {
+        "question": "Koja je hrvatska destinacija glavno polazište i odredište kružnih putovanja?",
+        "answer": "Dubrovnik.",
+        "explanation": "Velik pritisak kruzera na staru jezgru."
+      },
+      {
+        "question": "Koje je područje južne Dalmacije poznato po vinima?",
+        "answer": "Poluotok Pelješac — Dingač i Postup (plavac mali).",
+        "explanation": "Ston: zidine duge oko 5,5 km i solana; Mali Ston — kamenice."
+      },
+      {
+        "question": "Po čemu je poznata Korčula?",
+        "answer": "Grad Korčula (po predaji rodno mjesto Marka Pola), viteška igra moreška; Blato — Kumpanija; Vela Luka — lječilište Kalos.",
+        "explanation": "Drugi otok po broju stanovnika."
+      },
+      {
+        "question": "Po čemu je poznat arboretum Trsteno?",
+        "answer": "Najstariji hrvatski arboretum i park vrtne arhitekture (renesansa), kod Dubrovnika.",
+        "explanation": "Drugi poznati arboretum: Opeka kod Varaždina."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Koja je hrvatska destinacija polazište za kružna putovanja?",
+        "options": [
+          "Zadar",
+          "Šibenik",
+          "Makarska",
+          "Dubrovnik"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koji grad ima najkvalitetnije i najljepše plaže u Hrvatskoj?",
+        "options": [
+          "Makarska",
+          "Zadar",
+          "Trogir",
+          "Šibenik"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koji je grad poznat po uskim uličicama i katedrali pod zaštitom UNESCO-a?",
+        "options": [
+          "Zadar",
+          "Šibenik",
+          "Omiš",
+          "Makarska"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koja rijeka ima najveći potencijal za rafting?",
+        "options": [
+          "Krka",
+          "Neretva",
+          "Cetina",
+          "Zrmanja"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koje je područje južne Dalmacije poznato po enološkim specifičnostima (Dingač, Postup)?",
+        "options": [
+          "Konavle",
+          "Elafiti",
+          "Mljet",
+          "Pelješac"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koji grad je poznat po Morskim orguljama i crkvi sv. Donata?",
+        "options": [
+          "Zadar",
+          "Split",
+          "Šibenik",
+          "Nin"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Katedrala sv. Lovre s Radovanovim portalom nalazi se u:",
+        "options": [
+          "Splitu",
+          "Trogiru",
+          "Šibeniku",
+          "Korčuli"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Mjesto na nekadašnjem otočiću s crkvom sv. Jurja na vrhu i vinogradima babića je:",
+        "options": [
+          "Vodice",
+          "Rogoznica",
+          "Primošten",
+          "Pirovac"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Sinjska alka održava se od:",
+        "options": [
+          "1696.",
+          "1868.",
+          "1910.",
+          "1715."
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koji se otok naziva „jadranska Madeira”?",
+        "options": [
+          "Hvar",
+          "Vis",
+          "Brač",
+          "Korčula"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Modra špilja nalazi se na otočiću:",
+        "options": [
+          "Ravniku",
+          "Biševu",
+          "Lokrumu",
+          "Svecu"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koja je otočna skupina najrazvedenija na Mediteranu?",
+        "options": [
+          "Elafiti",
+          "Brijuni",
+          "Kornati",
+          "Lastovsko otočje"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Paška čipka i paški sir potječu s otoka:",
+        "options": [
+          "Raba",
+          "Ugljana",
+          "Dugog otoka",
+          "Paga"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Dioklecijanova palača nalazi se u:",
+        "options": [
+          "Splitu",
+          "Solinu",
+          "Trogiru",
+          "Zadru"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Najstariji arboretum u Hrvatskoj je:",
+        "options": [
+          "Opeka",
+          "Trsteno",
+          "Lisičine",
+          "Maksimir"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Hrvatska destinacija koja je glavno polazište kružnih putovanja je _______.",
+        "answer": "Dubrovnik",
+        "hint": "Južna Dalmacija."
+      },
+      {
+        "sentence": "Katedralu sv. Jakova u Šibeniku gradio je Juraj _______.",
+        "answer": "Dalmatinac",
+        "hint": "Nadimak po regiji."
+      },
+      {
+        "sentence": "Rafting i canyoning razvijeni su na rijeci _______ kod Omiša.",
+        "answer": "Cetini",
+        "hint": "Lokativ."
+      },
+      {
+        "sentence": "Dioklecijanova palača upisana je na UNESCO-ov popis _______. godine.",
+        "answer": "1979",
+        "hint": "Godina, zajedno s Dubrovnikom i Plitvicama."
+      },
+      {
+        "sentence": "Plaža Zlatni rat nalazi se u Bolu na otoku _______.",
+        "answer": "Braču",
+        "hint": "Lokativ."
+      },
+      {
+        "sentence": "Viteška igra u Sinju zove se Sinjska _______.",
+        "answer": "alka",
+        "hint": "Metalni prsten."
+      }
+    ],
+    "learn": {
+      "title": "Južno hrvatsko primorje: Sjeverna, Srednja i Južna Dalmacija",
+      "content": "\n<p>Dalmacija se prvi put spominje u 1. st. pr. Kr., a ime nosi po ilirskom plemenu Delmata. Dijeli se na tri turističke regije.</p>\n\n<h3>Sjeverna Dalmacija</h3>\n<p>Priobalje s otocima od južnog Velebita do rta Ploča kod Rogoznice, sa zaleđem (Ravni kotari, Bukovica). Zadarska i Šibensko-kninska županija; oko polovine turističkog prometa Dalmacije; <strong>3 nacionalna parka</strong> (Paklenica, Kornati, Krka) i <strong>2 parka prirode</strong> (Telašćica, Vransko jezero).</p>\n<table>\n<tr><th>Mjesto</th><th>Atrakcije</th></tr>\n<tr><td><strong>Zadar</strong> (Jadera)</td><td>Forum, <strong>crkva sv. Donata</strong> (9. st., rotonda), katedrala sv. Stošije, sv. Krševan, Kopnena vrata, venecijanske zidine (UNESCO 2017.), <strong>Morske orgulje</strong> i <strong>Pozdrav suncu</strong>; turističko naselje Borik; liker maraskino</td></tr>\n<tr><td><strong>Nin</strong></td><td>jezgra na otočiću u laguni; krstionica kneza Višeslava, crkva sv. Križa, Grgur Ninski; pješčane plaže i ljekovito blato</td></tr>\n<tr><td><strong>NP Paklenica</strong></td><td>kanjoni Velike i Male Paklenice, Anića kuk, Manita peć; ulaz iz Starigrada i Seline</td></tr>\n<tr><td><strong>Biogradska rivijera</strong></td><td>Biograd, Sv. Filip i Jakov, Pakoštane, <strong>Vransko jezero</strong>; Vrana — Maškovića han (1644.); marine za megajahte (Sukošan)</td></tr>\n<tr><td><strong>Otoci</strong></td><td><strong>Pag</strong> — paška čipka, paški sir, solana, Paški most, <strong>Zrće</strong> (Novalja); <strong>Ugljan</strong> (Preko, Kali — ribarstvo, Kukljica); <strong>Pašman</strong> (Tkon, Ždrelac); <strong>Dugi otok</strong> (Sali, Božava, <strong>PP Telašćica</strong>); <strong>Murter</strong> (vrata Kornata; Betina, Jezera, Tisno); <strong>Vir</strong> (bespravna gradnja)</td></tr>\n<tr><td><strong>NP Kornati</strong></td><td>najrazvedenija otočna skupina Mediterana (ukupno 140-ak otoka); ime od „chorrimare” (rasuti otoci); nizovi Sitski, Žutski, Kornatski, Piškerski; ogoljeli krajolici i klifovi</td></tr>\n<tr><td><strong>Šibenik</strong></td><td>prvi spomen 1066. — najstariji samorodni hrvatski grad na Jadranu (osnovali su ga Hrvati); uske kamene ulice; <strong>katedrala sv. Jakova</strong> (Juraj Dalmatinac, UNESCO 2000.); tvrđava sv. Nikole (UNESCO 2017.), tvrđave sv. Mihovila i Barone; Međunarodni dječji festival (od 1958.); Solaris</td></tr>\n<tr><td>Šibenska rivijera</td><td>Vodice, Pirovac, <strong>Primošten</strong> (nekadašnji otočić, danas poluotok — tombolo; crkva sv. Jurja; vinogradi babića u suhozidu), Rogoznica; Krapanj — najmanji i najniži naseljeni otok</td></tr>\n<tr><td><strong>NP Krka</strong></td><td>rijeka Krka (73 km, izvire kod Knina); <strong>Skradinski buk</strong> (17 sedrenih stepenica, obnovljene mlinice), Roški slap, otočić <strong>Visovac</strong> (franjevački samostan); endemi (mekousna pastrva); najposjećenije zaštićeno područje Primorske Hrvatske</td></tr>\n<tr><td>Zagora</td><td><strong>Drniš</strong> (kanjon Čikole; mauzolej obitelji Meštrović u Otavicama), <strong>Knin</strong> (tvrđava na brdu Spas, prijestolnica Petra Krešimira IV. i Zvonimira)</td></tr>\n</table>\n\n<h3>Srednja Dalmacija</h3>\n<p>Splitsko-dalmatinska županija, od rta Ploča do Baćinskih jezera; vodeća dalmatinska županija po kapacitetima, dolascima i noćenjima.</p>\n<table>\n<tr><th>Mjesto</th><th>Atrakcije</th></tr>\n<tr><td><strong>Split</strong></td><td>drugi grad po veličini; <strong>Dioklecijanova palača</strong> (4. st., UNESCO 1979.) — Peristil, Jupiterov hram, katedrala sv. Dujma (vrata Andrije Buvine); park-šuma <strong>Marjan</strong>; trajektna luka za otoke</td></tr>\n<tr><td><strong>Solin</strong></td><td>antička <strong>Salona</strong> — zidine, terme, forum, amfiteatar, bazilike</td></tr>\n<tr><td><strong>Kaštela</strong></td><td>sedam srednjovjekovnih naselja između Solina i Trogira; zračna luka Split</td></tr>\n<tr><td><strong>Trogir</strong></td><td>jezgra na otočiću (UNESCO 1997.); <strong>katedrala sv. Lovre s Radovanovim portalom</strong>, gradska loža, palača Cipiko, <strong>kula Kamerlengo</strong>; „grad na kopnu i dva otoka” (Čiovo); Seget, Okrug</td></tr>\n<tr><td><strong>Omiš</strong></td><td>ušće <strong>Cetine</strong> — rafting i canyoning; <strong>festival dalmatinskih klapa</strong>, tvrđava Fortica</td></tr>\n<tr><td><strong>Makarska rivijera</strong></td><td><strong>Makarska</strong> — šljunčane plaže, riva, poluotok sv. Petar, Malakološki muzej (školjke), <strong>najkvalitetnije i najljepše plaže u RH</strong>; Brela (plaže i borova šuma), Baška Voda, Tučepi, Podgora, Gradac („bosanska Opatija”); iznad je <strong>PP Biokovo</strong></td></tr>\n<tr><td>Zagora</td><td><strong>Sinj</strong> — <strong>Sinjska alka</strong> (od 1715.), Gospa Sinjska, Peruća, rafting na Cetini; <strong>Imotski</strong> — Modro i Crveno jezero</td></tr>\n<tr><td><strong>Otoci</strong></td><td><strong>Čiovo</strong>; <strong>Šolta</strong> (Nečujam, Stomorska); <strong>Brač</strong> — najviši otok (Vidova gora), <strong>Zlatni rat u Bolu</strong>, brački kamen, Supetar, Milna, zračna luka; <strong>Hvar</strong> — više od 2700 sunčanih sati, lavanda, grad Hvar (1868. prvo turističko društvo), <strong>Stari Grad</strong> (Pharos, Tvrdalj Petra Hektorovića, <strong>Starogradsko polje — UNESCO 2008.</strong>), Jelsa, Vrboska; <strong>Vis</strong> — „jadranska Malta”, <strong>Komiža</strong> (falkuša), Biševo s <strong>Modrom špiljom</strong>, Zelena špilja na Ravniku</td></tr>\n</table>\n\n<h3>Južna Dalmacija</h3>\n<p>Dubrovačko-neretvanska županija.</p>\n<table>\n<tr><th>Mjesto</th><th>Atrakcije</th></tr>\n<tr><td><strong>Dubrovnik</strong></td><td>podno Srđa; potres 1667.; <strong>zidine</strong> duge oko 2 km (kula Minčeta, tvrđave Lovrijenac, Revelin, sv. Ivan), vrata od Pila i Ploča, <strong>Stradun</strong>, Knežev dvor, palača Sponza, Onofrijeve česme, Orlandov stup, crkva sv. Vlaha (festa sv. Vlaha); <strong>UNESCO 1979.</strong>; Dubrovačke ljetne igre; otočić <strong>Lokrum</strong>; <strong>glavna polazna luka kružnih putovanja</strong></td></tr>\n<tr><td>Jugoistočno primorje</td><td><strong>Župa dubrovačka</strong> (Kupari, Srebreno, Mlini); <strong>Konavle</strong> — <strong>Cavtat</strong> (mauzolej obitelji Račić, galerija Vlahe Bukovca), zračna luka Čilipi</td></tr>\n<tr><td>Sjeverozapadno primorje</td><td>Rijeka dubrovačka (Ombla), Zaton, Orašac, <strong>Trsteno</strong> (najstariji arboretum), Slano; <strong>delta Neretve</strong> (mandarine, utrka lađa, Metković, antička Narona); Neum (koridor BiH)</td></tr>\n<tr><td><strong>Pelješac</strong></td><td>drugi najveći poluotok; <strong>vina Dingač i Postup</strong> (plavac mali); <strong>Ston</strong> — zidine i solana, Mali Ston — kamenice; <strong>Orebić</strong> (sv. Ilija, 961 m), Trpanj</td></tr>\n<tr><td><strong>Otoci</strong></td><td><strong>Elafiti</strong> („jelenski otoci”; Koločep, Lopud, Šipan); <strong>Mljet</strong> (NP, Malo i Veliko jezero, Sv. Marija); <strong>Korčula</strong> — grad Korčula (predaja o Marku Polu), <strong>moreška</strong>, Lumbarda (grk), Blato (Kumpanija), Vela Luka (lječilište Kalos); <strong>Lastovo</strong> — PP Lastovsko otočje</td></tr>\n</table>\n\n<div class=\"tip-box\"><strong>Kako prepoznati grad (ispitna pitanja s fotografijama):</strong>\n<ul>\n<li><strong>Dubrovnik</strong> — grad potpuno okružen masivnim zidinama s kulama na stijeni iznad mora, crveni krovovi, Stradun.</li>\n<li><strong>Split</strong> — rimska carska palača u srcu grada, Peristil i zvonik sv. Dujma, riva s palmama.</li>\n<li><strong>Trogir</strong> — gusta srednjovjekovna jezgra na malom otočiću, kula Kamerlengo na zapadnom rtu.</li>\n<li><strong>Šibenik</strong> — kamena katedrala s kupolom nad lukom, strme uske uličice, tvrđave iznad grada.</li>\n<li><strong>Zadar</strong> — okrugla predromanička crkva sv. Donata uz forum, Morske orgulje na rivi.</li>\n<li><strong>Primošten</strong> — stari gradić na poluotočiću s crkvom na vrhu, okružen morem.</li>\n<li><strong>Makarska</strong> — luka i šljunčane plaže ispod strmog golog Biokova.</li>\n</ul></div>\n<div class=\"warning-box\"><strong>Ispravci ključeva i skripte:</strong> Pelješac je <strong>poluotok</strong>, a ne otočje (ispitni ključ: „otočje”). Ime Dalmacije potječe od ilirskog plemena Delmata. Šibenik je najstariji samorodni hrvatski grad na Jadranu (skripta ga naziva „najmlađim”, misleći da je nastao poslije antičkih gradova).</div>\n"
+    }
+  },
+  "continentalCroatia": {
+    "name": "Planinska i Panonska Hrvatska",
+    "icon": "fa-wheat-awn",
+    "color": "#84cc16",
+    "flashcards": [
+      {
+        "question": "Koji su dijelovi Planinske turističke regije?",
+        "answer": "Gorski kotar, Lika i Ogulinsko-plaščanska (potkapelska) udolina.",
+        "explanation": "Zauzima 14 % površine, a ima samo 3 % stanovništva."
+      },
+      {
+        "question": "Koji je oblik reljefa glavna atrakcija Planinske Hrvatske?",
+        "answer": "Krški reljef — Plitvička jezera, Velebit, polja u kršu, špilje i jame.",
+        "explanation": "I otoci i primorje imaju krški reljef."
+      },
+      {
+        "question": "Koliki je udio Plitvica u prometu Planinske regije?",
+        "answer": "Plitvička jezera ostvaruju oko 3/4 turističkog prometa Planinske Hrvatske.",
+        "explanation": "Turizam počinje izgradnjom Carske kuće 1861."
+      },
+      {
+        "question": "Po čemu su poznate Fužine i Lokve?",
+        "answer": "Fužine: jezero Bajer, Lepeničko jezero, špilja Vrata. Lokve: Lokvarsko jezero, špilja Lokvarka, žablji kraci.",
+        "explanation": "Gorski kotar — ljetni i zimski turizam."
+      },
+      {
+        "question": "Po čemu je poznat Klek?",
+        "answer": "Vršna stijena iznad Ogulina (1182 m); s usponom na Klek povezan je osnutak hrvatskog planinarstva i alpinizma.",
+        "explanation": "Ogulin: Frankopanski kaštel, Đulin ponor."
+      },
+      {
+        "question": "Koje su atrakcije Like?",
+        "answer": "Gospić (Muzej Like), Smiljan (rodna kuća Nikole Tesle), Cerovačke špilje (Gračac), pećinski park Grabovača, vrelo Gacke.",
+        "explanation": "Kuterevo — utočište za mlade medvjede."
+      },
+      {
+        "question": "Koji su temeljni resursi Panonsko-peripanonske regije?",
+        "answer": "Termomineralne vode (toplice), parkovi prirode, gradovi i vinogorja.",
+        "explanation": "Najveća regija: oko 54 % površine i 66 % stanovnika."
+      },
+      {
+        "question": "Kraj kojeg je grada najvažnije nalazište neandertalaca?",
+        "answer": "Krapina — Hušnjakovo brdo; nalazište je 1899. otkrio Dragutin Gorjanović-Kramberger.",
+        "explanation": "Danas Muzej krapinskih neandertalaca."
+      },
+      {
+        "question": "Koje su najpoznatije toplice Hrvatskog zagorja?",
+        "answer": "Stubičke, Krapinske, Tuheljske i Varaždinske toplice.",
+        "explanation": "Zagorje: Marija Bistrica (hodočašća), Kumrovec, Trakošćan."
+      },
+      {
+        "question": "Koje je najveće hodočasničko središte kontinentalne Hrvatske?",
+        "answer": "Marija Bistrica (nacionalno svetište).",
+        "explanation": "U Dalmaciji je to Sinj (Gospa Sinjska)."
+      },
+      {
+        "question": "Po čemu je poznat Varaždin?",
+        "answer": "Barokni grad: Stari grad (utvrda), palače, HNK; Špancirfest; nekadašnji glavni grad Hrvatske (1767.–1776.).",
+        "explanation": "U blizini arboretum Opeka i Varaždinske toplice."
+      },
+      {
+        "question": "Koji je povijesni lokalitet kod Vukovara?",
+        "answer": "Vučedol — prapovijesna vučedolska kultura; simbol je vučedolska golubica.",
+        "explanation": "Vukovar: dvorac Eltz, vodotoranj."
+      },
+      {
+        "question": "Koji je grad na istoku Hrvatske poznat po enološkim specifičnostima?",
+        "answer": "Ilok — vinski podrumi (traminac), najistočniji grad Hrvatske na Dunavu.",
+        "explanation": "Vinogorja: Ilok, Erdut, Kutjevo, Baranja."
+      },
+      {
+        "question": "Koji je grad u hrvatskom Podunavlju s enološkim specifičnostima?",
+        "answer": "Erdut — vinogorje i vinarija na obronku iznad Dunava.",
+        "explanation": "Srednjovjekovna utvrda Erdut nad Dunavom."
+      },
+      {
+        "question": "Po čemu su poznati Đakovo i Kutjevo?",
+        "answer": "Đakovo: katedrala (Strossmayer), ergela lipicanaca, Đakovački vezovi. Kutjevo: vinski podrumi, graševina.",
+        "explanation": "Slavonija — kulen, fiš paprikaš."
+      },
+      {
+        "question": "Po čemu je poznat Slunj (Rastoke)?",
+        "answer": "Rastoke — naselje s mlinicama na slapovima Slunjčice na ušću u Koranu.",
+        "explanation": "Karlovačka regija: Kupa, Korana, Mrežnica, Dobra."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Kraj kojeg je grada najvažnije nalazište neandertalaca?",
+        "options": [
+          "Varaždina",
+          "Vukovara",
+          "Krapine",
+          "Karlovca"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koji je povijesni lokalitet kod Vukovara?",
+        "options": [
+          "Hušnjakovo",
+          "Nezakcij",
+          "Salona",
+          "Vučedol"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koji je grad na istoku Hrvatske poznat po enološkim specifičnostima?",
+        "options": [
+          "Ilok",
+          "Vinkovci",
+          "Slavonski Brod",
+          "Osijek"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koji je grad u hrvatskom Podunavlju poznat po enološkim specifičnostima?",
+        "options": [
+          "Našice",
+          "Erdut",
+          "Županja",
+          "Nova Gradiška"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koji je oblik reljefa atrakcija u Planinskoj Hrvatskoj?",
+        "options": [
+          "Lesni ravnjak",
+          "Pješčane dine",
+          "Krški reljef",
+          "Vulkanski krateri"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Najveće hodočasničko središte kontinentalne Hrvatske je:",
+        "options": [
+          "Ludbreg",
+          "Krasno",
+          "Trški vrh",
+          "Marija Bistrica"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Rodna kuća Nikole Tesle nalazi se u:",
+        "options": [
+          "Smiljanu",
+          "Gospiću",
+          "Otočcu",
+          "Perušiću"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Ergela lipicanaca i Vezovi vezani su uz:",
+        "options": [
+          "Požegu",
+          "Đakovo",
+          "Vinkovce",
+          "Našice"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "S usponom na koju je planinu povezan osnutak hrvatskog planinarstva?",
+        "options": [
+          "Risnjak",
+          "Snježnik",
+          "Klek",
+          "Učku"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Rastoke s mlinicama na slapovima nalaze se kod:",
+        "options": [
+          "Ozlja",
+          "Duge Rese",
+          "Ogulina",
+          "Slunja"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koji je temeljni turistički resurs Panonske Hrvatske?",
+        "options": [
+          "Termomineralne vode",
+          "Pješčane plaže",
+          "Visokoplaninski vrhovi",
+          "Otoci i poluotoci"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koliki udio turističkog prometa Planinske Hrvatske ostvaruju Plitvička jezera?",
+        "options": [
+          "Oko četvrtine",
+          "Oko tri četvrtine",
+          "Oko polovine",
+          "Gotovo cijeli"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Najvažnije nalazište neandertalaca u Hrvatskoj nalazi se kraj _______.",
+        "answer": "Krapine",
+        "hint": "Hrvatsko zagorje (genitiv)."
+      },
+      {
+        "sentence": "Prapovijesni lokalitet kod Vukovara zove se _______.",
+        "answer": "Vučedol",
+        "hint": "Simbol: golubica."
+      },
+      {
+        "sentence": "Najistočniji hrvatski grad, poznat po vinskim podrumima, je _______.",
+        "answer": "Ilok",
+        "hint": "Na Dunavu."
+      },
+      {
+        "sentence": "Nacionalno svetište u Hrvatskom zagorju je Marija _______.",
+        "answer": "Bistrica",
+        "hint": "Drugi dio imena mjesta."
+      },
+      {
+        "sentence": "Turizam na Plitvicama počinje izgradnjom Carske kuće _______. godine.",
+        "answer": "1861",
+        "hint": "Godina, sredina 19. st."
+      }
+    ],
+    "learn": {
+      "title": "Planinska Hrvatska, Središnja i Istočna Hrvatska",
+      "content": "\n<h3>Planinska turistička regija</h3>\n<p>Sjeverozapadni dio dinarskog prostora: <strong>Gorski kotar, Lika i Ogulinsko-plaščanska (potkapelska) udolina</strong>. Glavna atrakcija je <strong>krški reljef</strong>. Turizam počinje izgradnjom Carske kuće na Plitvicama 1861. i prugom Karlovac–Rijeka (1873.). <strong>Plitvička jezera ostvaruju oko 3/4 turističkog prometa regije.</strong> Autoceste Zagreb–Rijeka i Zagreb–Split (tunel Sv. Rok) približile su regiju.</p>\n<ul>\n<li><strong>Vode:</strong> Kupa, Dobra, Gacka, Lika; jezera Plitvička, Blaćansko, Švičko; umjetna Bajer, Lepeničko, Lokvarsko, Sabljaci. Risnjak prima najviše oborina u Hrvatskoj. Za rafting: Kupa i Dobra.</li>\n<li><strong>Najposjećenije planine:</strong> Risnjak, Snježnik, Bijele i Samarske stijene, Plješivica, Velebit.</li>\n</ul>\n<table>\n<tr><th>Područje</th><th>Atrakcije</th></tr>\n<tr><td><strong>Gorski kotar</strong></td><td>„Districtus montanus” (Marija Terezija); Bjelolasica (1534 m) — olimpijski centar; <strong>NP Risnjak</strong> (Crni Lug, Schlosserov dom); <strong>Fužine</strong> (Bajer, Lepeničko jezero, špilja Vrata — prilagođena osobama s invaliditetom); <strong>Lokve</strong> (Lokvarka, Lokvarsko jezero, žablji kraci); <strong>Delnice</strong> (skijalište Petehovac); <strong>Skrad</strong> (Zeleni vir, Vražji prolaz); <strong>Mrkopalj</strong> (Čelimbaša — kolijevka skijanja); Platak (skijalište iznad Rijeke); Čabar, Brod na Kupi, Vrbovsko (Kamačnik)</td></tr>\n<tr><td><strong>Lika</strong></td><td>krška zavala između Velebita, Kapele i Plješivice; <strong>Gospić</strong> (Muzej Like), <strong>Smiljan</strong> (rodna kuća Nikole Tesle), Veliki Žitnik (Ante Starčević); <strong>Gračac</strong> (Cerovačke špilje); Perušić (pećinski park Grabovača); Kosinj (Kosinjski most); vrelo Gacke u Sincu (mlinice); <strong>Otočac</strong>; <strong>Kuterevo</strong> (utočište za mlade medvjede); <strong>Krasno</strong> (marijansko svetište, uprava NP Sjeverni Velebit); <strong>NP Plitvička jezera</strong> i <strong>NP Sjeverni Velebit</strong> (Lukina jama, Premužićeva staza)</td></tr>\n<tr><td><strong>Potkapelska udolina</strong></td><td><strong>Klek</strong> (1182 m) — osnutak hrvatskog planinarstva i alpinizma; <strong>Ogulin</strong> — Frankopanski kaštel, <strong>Đulin ponor</strong> (Dobra), grad bajki; Josipdol (lovni turizam), Saborsko (ruralni turizam)</td></tr>\n</table>\n\n<h3>Panonsko-peripanonska turistička regija</h3>\n<p>Prostorno i demografski najveća regija (oko 54 % površine, 66 % stanovnika). Temeljni resursi su <strong>termomineralne vode</strong> i <strong>parkovi prirode</strong>, uz gradove, dvorce, vinogorja i gastronomiju. Dijeli se na <strong>Središnju</strong> i <strong>Istočnu Hrvatsku</strong> (razdjelnica: Psunj, Ravna gora, Lisina).</p>\n\n<h3>Središnja Hrvatska</h3>\n<table>\n<tr><th>Područje</th><th>Atrakcije</th></tr>\n<tr><td><strong>Zagreb</strong></td><td>urbani, poslovni i kongresni turizam: Gornji grad, katedrala, crkva sv. Marka, Mirogoj, Maksimir i zoološki vrt, Zagrebački velesajam, Advent; <strong>PP Medvednica</strong> (Sljeme); okolica: Samobor (ambijent, kremšnite), Zaprešić, Velika Gorica</td></tr>\n<tr><td><strong>Hrvatsko zagorje</strong></td><td>toplice (oko 85 % prometa): <strong>Stubičke</strong> (43–69 °C), <strong>Krapinske</strong>, <strong>Tuheljske</strong> (sumpor, peloid), <strong>Varaždinske</strong> (sumporovita voda 57 °C); <strong>Krapina</strong> — <strong>nalazište krapinskog pračovjeka (neandertalca) na Hušnjakovu</strong>, otkrio Dragutin Gorjanović-Kramberger 1899.; <strong>Marija Bistrica</strong> (najveće hodočasničko središte); Kumrovec (etno-selo), Trakošćan i brojni dvorci; Lepoglava (čipka)</td></tr>\n<tr><td><strong>Varaždin i Međimurje</strong></td><td><strong>Varaždin</strong> — barok, Stari grad, palače, HNK, Špancirfest; arboretum <strong>Opeka</strong>; Ludbreg (vjerski turizam); <strong>Međimurje</strong> — Čakovec, vinogradarstvo, Mursko Središće (najsjeverniji grad), Sveti Martin na Muri (toplice), Prelog (umjetna jezera na Dravi)</td></tr>\n<tr><td><strong>Podravina i Bjelovarski kraj</strong></td><td>Koprivnica (Podravka), <strong>Hlebine</strong> (naivna umjetnost), Đurđevački pijesci; Daruvarske toplice (fango), <strong>Lipik</strong> (termalna i mineralna voda, ergela), Pakrac</td></tr>\n<tr><td><strong>Sisačka regija i Banovina</strong></td><td>Sisak (tvrđava, antička Siscija), <strong>PP Lonjsko polje</strong> (Čigoč), Jasenovac (spomen-područje), Topusko (toplice), Petrinja</td></tr>\n<tr><td><strong>Karlovačka regija</strong></td><td>Karlovac — grad na četiri rijeke (Kupa, Korana, Mrežnica, Dobra), zvijezda-tvrđava, Dubovac; Ozalj (Zrinsko-frankopanski grad); <strong>Slunj — Rastoke</strong> (mlinice na slapovima Slunjčice); Rakovica</td></tr>\n</table>\n\n<h3>Istočna Hrvatska (Slavonija, Baranja, Srijem)</h3>\n<table>\n<tr><th>Područje</th><th>Atrakcije</th></tr>\n<tr><td><strong>Osijek</strong></td><td>središte regije; Tvrđa (barokna austrijska utvrda), konkatedrala sv. Petra i Pavla; Drava plovna od Osijeka do ušća; Bizovačke toplice (prema skripti najtoplija slana jodna voda u Europi)</td></tr>\n<tr><td><strong>Baranja</strong></td><td>između Drave, Dunava i Mađarske; <strong>PP Kopački rit</strong>; vino, fiš paprikaš; Tikveš (lovni kompleks), Batina</td></tr>\n<tr><td><strong>Slavonska Podravina i Požeška kotlina</strong></td><td><strong>PP Papuk</strong> (UNESCO geopark); Orahovica (Ružica grad), Našice (dvorci Pejačević); Slatina (arboretum Lisičine); <strong>Požega</strong> (Zlatne žice Slavonije), <strong>Kutjevo</strong> (vinski podrumi, graševina), Velika</td></tr>\n<tr><td><strong>Đakovački kraj</strong></td><td><strong>Đakovo</strong> — katedrala (biskup Strossmayer), <strong>ergela lipicanaca</strong> (Ivandvor), <strong>Đakovački vezovi</strong></td></tr>\n<tr><td><strong>Posavina i Srijem</strong></td><td>Slavonski Brod (tvrđava Brod), <strong>Vinkovci</strong> (Vinkovačke jeseni), Županja (Šokačko sijelo), Spačvanska šuma (hrast lužnjak)</td></tr>\n<tr><td><strong>Vukovarsko Podunavlje</strong></td><td><strong>Vukovar</strong> — dvorac Eltz, vodotoranj, franjevački samostan, rodna kuća Lavoslava Ružičke; <strong>Vučedol</strong> (vučedolska kultura, <strong>vučedolska golubica</strong>); <strong>Erdut</strong> — vinogorje i vinarija iznad Dunava, srednjovjekovna utvrda; <strong>Ilok</strong> — najistočniji grad, stari vinski podrumi (traminac), hrastove bačve; krajnja istočna točka Rađevac</td></tr>\n</table>\n<div class=\"tip-box\"><strong>Enološke destinacije (česta ispitna pitanja):</strong> Krk → <strong>Vrbnik</strong> (žlahtina) · južna Dalmacija → <strong>Pelješac</strong> (Dingač, Postup) · istok → <strong>Ilok</strong> (traminac) · Podunavlje → <strong>Erdut</strong> · Požeška kotlina → <strong>Kutjevo</strong> (graševina).</div>\n<div class=\"warning-box\"><strong>Napomena:</strong> skripta ne obrađuje Erdut, iako se na ispitu pojavio — dodan je prema ispitnim pitanjima. Tvrdnje skripte o pojedinim lokalnim hotelima i poduzećima (stanje iz 2000-ih) izostavljene su kao zastarjele.</div>\n"
+    }
+  }
+}

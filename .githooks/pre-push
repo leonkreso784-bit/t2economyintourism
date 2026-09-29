@@ -30,6 +30,14 @@ while read -r local_ref local_sha remote_ref remote_sha; do
   case "$remote_ref" in
     refs/heads/main)
       echo "[pre-push] Odredište = main (PRODUKCIJA) → pokrećem 'npm run preflight'…"
+      # GIT_* se BRIŠE prije SVIH koraka (2026-09-26): git kuki izvozi GIT_DIR, a preflight vrti testove
+      # koji pozivaju git u VLASTITIM privremenim mapama. S naslijeđenim GIT_DIR-om `git init` u takvoj
+      # mapi ponovno inicijalizira OVAJ repozitorij i postavi `core.bare = true` — glavno stablo prestane
+      # biti radno stablo, a push padne. Bez GIT_* se repozitorij nalazi iz cwd-a (korijen stabla iz kojeg
+      # se pusha) — isto kao kad se vrti ručno. Brana: tests/unit/git-okolina.test.js.
+      # ⚠️ Za CIJELU granu, ne samo preflight (2026-09-29, spajanje main → f6): brisanje u podljusci oko
+      # preflighta ostavljalo je GIT_DIR authed suiteu, koji je u kuku ušao iz druge grane.
+      unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE GIT_COMMON_DIR GIT_PREFIX GIT_OBJECT_DIRECTORY
       if ! npm run preflight; then
         echo ""
         echo "[pre-push] ❌ PREFLIGHT PAO — push na main ODBIJEN."

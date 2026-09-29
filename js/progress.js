@@ -166,8 +166,9 @@ function renderProgressPage() {
     document.getElementById('fillAccuracy').textContent = `${fillAcc}%`;
     document.getElementById('fillSolved').textContent = progress.fillSolved;
     
-    // Geography-specific: Blind Map progress
-    if (nav.subject === 'geography') {
+    // Blind Map progress — predmeti sa zastavicom `features.blindMap` (geography, geography-hr)
+    const bmSubject = (typeof SokratCatalog !== 'undefined') ? SokratCatalog.getSubject(nav.subject) : null;
+    if (bmSubject && bmSubject.features && bmSubject.features.blindMap) {
         const bmSection = document.getElementById('blindMapProgressSection');
         if (bmSection) {
             bmSection.style.display = 'block';

@@ -5,7 +5,7 @@
 ## 1. Vizija
 Sokrat Study je platforma na kojoj **svatko gradi vlastiti materijal i iz njega uči** —
 kartice, kvizove, dopune i skriptu — pa ga kasnije smije podijeliti i natjecati se.
-**To je proizvod.** Javni katalog (danas 24 predmeta s FMTU Opatija) je **jedan od izvora
+**To je proizvod.** Javni katalog (predmeti s FMTU Opatija; broj zna `npm run verify`) je **jedan od izvora
 gradiva**, dokaz da model radi i način da netko počne bez praznog ekrana — **ali nije ono
 što platforma jest** ([ADR-029](../records/DECISIONS.md)).
 
@@ -51,7 +51,7 @@ ne opseg. Korisnik je **bilo tko** — student bilo kojeg fakulteta, srednjoško
 | faza | opseg | status |
 |---|---|---|
 | **Temelj** | data-driven katalog, hijerarhijska navigacija, Supabase read-path (anon+RLS, ADR-011), CI/CD, offline, monitoring | ✅ |
-| **Javni katalog + autorstvo** | sadržaj 24 predmeta, Studio editor za administratore, atomična i verzionirana objava | ✅ |
+| **Javni katalog + autorstvo** | sadržaj svih predmeta kataloga, Studio editor za administratore, atomična i verzionirana objava | ✅ |
 | **Osobni materijal** | vlastito stablo polica, autorstvo kartica/kviza/dopuna/learna, učenje iz vlastitog materijala, napredak u istom profilu | ✅ — svih 5 kriterija iz [UGC_SPEC.md](./UGC_SPEC.md) |
 | **Frontend redizajn** | sučelje se preuređuje **tek kad funkcija besprijekorno radi** (Leonova presuda); vlastiti materijal dobiva **ravnopravno odredište** — stranicu i ulaz u navigaciji, a ne pododjeljak profila (ADR-029) | 🟦 |
 | **MCP — AI gradi gradivo** | korisnikov vlastiti AI stvara i mijenja **isključivo njegovo** gradivo; editor postaje alat za **doradu**, ne ishodište ([ADR-030](../records/DECISIONS.md)). **Gotovo kad korisnik iz svog AI-a napravi materijal i odmah iz njega uči, bez otvaranja editora.** ➕ [ADR-031](../records/DECISIONS.md) (2026-08-30) daje mu oblik: **cjevovod** `Learn → kartice → dopune/kviz`, sve u **nacrt**, doseg **samo vlastito gradivo**. ⚠️ Pristup je presuđen — konektor koji korisnik doda jednom (OAuth); seoba je OTKAZANA (2026-09-01) pa OAuth čeka samo **RAČUN blok** (`BACKLOG.md` §RAČUN) | ⬜ |

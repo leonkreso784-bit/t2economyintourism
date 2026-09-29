@@ -1,5 +1,5 @@
 // ===== MANAGEMENT — 2nd MIDTERM (K2) =====
-// Source: lecture decks TU8–TU11 (Prof. Vanja Vitezić PhD, FMTU Opatija, 1st year HM).
+// Source: lecture decks TU8–TU11 (course lecturer, FMTU Opatija, 1st year HM).
 // Textbook: Lussier, Management Fundamentals, 9th ed.
 // K2 covers the textbook's Part IV LEADING + Part V CONTROLLING — the last two management functions:
 //   1. Organizational Behavior (TU8)   2. Motivating for High Performance (TU9)

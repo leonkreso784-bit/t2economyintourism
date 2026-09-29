@@ -5,7 +5,7 @@
 //
 // Fokus = CITIRANJE (Chicago Manual of Style) — korisnikov izričit zahtjev („jako puno na testu").
 // Uz to par foundational setova (metode spoznaje, znanstvene metode, struktura rada, baze/pretraga).
-// Sve činjenice verificirane protiv predavanja (prof. Bogdan, Essentials of Academic Writing).
+// Sve činjenice verificirane protiv predavanja (nositelj kolegija, Essentials of Academic Writing).
 //
 // Tipovi: 'choice' (kind 'mc' = jedan točan indeks; 'tf' = bool) i 'classify' (account → cls).
 // chapter = približan tjedan predavanja (engine grupira u "Chapter N", filtrira po lesson-u).

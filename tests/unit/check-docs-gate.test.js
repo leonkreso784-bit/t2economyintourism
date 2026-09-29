@@ -22,6 +22,13 @@ const { spawnSync } = require('child_process');
 
 const IZVOR = path.join(__dirname, '..', '..', 'scripts', 'check-docs.js');
 
+// ⚠️ OKOLINA BEZ GIT_* (2026-09-26): pokrenut iz git KUKE (pre-push → preflight → test:unit), ovaj
+// proces nasljeđuje `GIT_DIR` repozitorija iz kojeg se pusha. Tada `git init` u lažnom stablu NE
+// stvara novi repozitorij nego ponovno inicijalizira PRAVI — i postavi mu `core.bare = true`
+// (izmjereno: glavno stablo je prestalo biti radno stablo, a push na main je pao). Zato se svaki
+// git ovdje vrti bez ijedne GIT_* varijable. Brana: `tests/unit/git-okolina.test.js`.
+const BEZ_GITA = Object.fromEntries(Object.entries(process.env).filter(([k]) => !k.startsWith('GIT_')));
+
 let passed = 0;
 let failed = 0;
 function tvrdi(uvjet, ime, detalj) {
@@ -46,13 +53,13 @@ function stablo({ gitignore, git }) {
     '# Testiranje\n\nSesija je u `' + GENERIRAN + '` (gitignored).\n'
     + 'Suita `' + OBRISAN + '` je preimenovana i više ne postoji.\n');
   if (gitignore) fs.writeFileSync(path.join(d, '.gitignore'), '/tests/.auth/\n');
-  if (git) spawnSync('git', ['init', '-q'], { cwd: d, encoding: 'utf8' });
+  if (git) spawnSync('git', ['init', '-q'], { cwd: d, encoding: 'utf8', env: BEZ_GITA });
   return d;
 }
 
 function vrti(d) {
   const r = spawnSync(process.execPath, [path.join(d, 'scripts', 'check-docs.js')],
-    { encoding: 'utf8', cwd: d });
+    { encoding: 'utf8', cwd: d, env: BEZ_GITA });
   return (r.stdout || '') + (r.stderr || '');
 }
 

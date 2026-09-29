@@ -1,7 +1,7 @@
 # TEAM.md — tim, uloge, workflow i zaštita sustava
 
 > ## ⚰️ SURADNJA OTKAZANA — 2026-09-04 (Leon)
-> **Leon:** *„Sašu možeš maknut, on je otkazan, nema ništa od njega — bio je lijen i nije ništa radio."*
+> **Leon:** *„suradnika možeš maknut, on je otkazan, nema ništa od njega — bio je lijen i nije ništa radio."*
 > Time je **cijeli ovaj dokument povijest**, a ne pravilo: repozitorij ima **jednog suradnika**, i
 > role-router u `CLAUDE.md` više ne grana po `git config user.name`.
 >
@@ -19,7 +19,7 @@
 >
 > ---
 >
-> **Izvorni status (do 2026-09-04):** ▶ AKTIVNO (2026-07-09; Saša se pridružio 2026-07-08). **Svrha:** jedan dom za „tko što radi,
+> **Izvorni status (do 2026-09-04):** ▶ AKTIVNO (2026-07-09; suradnik se pridružio 2026-07-08). **Svrha:** jedan dom za „tko što radi,
 > kako, i što NIKAD ne dira" — da drugi par ruku UBRZA projekt, a da pritom bude **fizički nemoguće srušiti sustav**
 > (granice + CI gateovi + PR review = trostruka brava; ne oslanjamo se na dobru volju nego na mehanizme).
 > **Vezano:** [EDITOR_PLAN.md](./EDITOR_PLAN.md) (platformska U-staza) · [HRV_PLAN.md](./HRV_PLAN.md) (prijevodi) ·
@@ -31,14 +31,14 @@
 | Tko | Uloga | Radi s | Ovlasti |
 |---|---|---|---|
 | **Leon Kreso** | vlasnik · product · platforma | svojim Claudeom | **JEDINI mergea u `main` i deploya**; admin GitHub/Supabase/Vercel/Anthropic |
-| **Saša Vudrag** | content-suradnik (HR program + FMTU širenje) | svojim Claudeom | grane + PR-ovi; **NIKAD push na `main`**; bez pristupa infri |
-| Claude (oba) | izvršitelj pod pravilima vlasnika sesije | — | Leonov Claude → CLAUDE.md; Sašin Claude → **§2 OVDJE (obavezno pročitati prije rada)** |
+| **Content-suradnik** | content-suradnik (HR program + FMTU širenje) | svojim Claudeom | grane + PR-ovi; **NIKAD push na `main`**; bez pristupa infri |
+| Claude (oba) | izvršitelj pod pravilima vlasnika sesije | — | Leonov Claude → CLAUDE.md; suradnikov Claude → **§2 OVDJE (obavezno pročitati prije rada)** |
 
 > **Osobni kontekst po stroju:** za vlastite bilješke/postavke svatko koristi **`CLAUDE.local.md`** (gitignored,
 > Claude Code ga auto-učitava SAMO na tom stroju) — NE nove repo-datoteke (odluka: jedan CLAUDE.md + router, bez
 > per-osoba fajlova u repou = bez duplih istina/drifta; ADR-023 t.1). Claudeova memorija je ionako per-stroj.
 
-Kontekst o Saši: student programskog inženjerstva (Algebra), ima iskustva s gitom i Claudeom.
+Kontekst o suradniku: student programskog inženjerstva (Algebra), ima iskustva s gitom i Claudeom.
 Njegovo područje: **sadržaj** — prijevod/izgradnja HR programa „Menadžment u Hotelijerstvu" (pune 2 godine kao EN),
 zatim drugi smjerovi FMTU (MUT/MOR, nakon ADR-022). Platformski kod NIJE u opsegu (može doći kasnije, uz zasebnu odluku).
 
@@ -72,7 +72,7 @@ može nešto slomiti. Sloboda unutar `data/<subj>-hr/` je potpuna — tamo si au
 ```
 grana content/<subject-id>-hr  →  rad (prijevod+verifikacija)  →  lokalni gateovi zeleni
 →  PR na main (ispunjena checklista §5)  →  CI ZELEN (automatski)  →  review: Leon (ili njegov Claude)
-→  Leon IZRIČITO approva PR (pregled + „slažem se, sve je točno")  →  Saša TADA SAM mergea  (= produkcijski deploy)
+→  Leon IZRIČITO approva PR (pregled + „slažem se, sve je točno")  →  suradnik TADA SAM mergea  (= produkcijski deploy)
    ⚠️ bez Leonovog approvala NEMA mergea; standard = savršeno  (promjena 2026-07-28; ranije je mergeao samo Leon)
 ```
 
@@ -80,13 +80,13 @@ grana content/<subject-id>-hr  →  rad (prijevod+verifikacija)  →  lokalni ga
 - **CI na PR-u** (već postoji, `.github/workflows/ci.yml`): validate:content · validate:schema · verify · test:unit ·
   typecheck · export:json --check · bump:check · build:css --check · RLS · Playwright. **Crveno = nema mergea, bez iznimke.**
 - **Branch protection na `main`** (Leon postavlja u GitHub Settings → Branches): require PR + require status checks;
-  Leon kao admin ima bypass za svoj direktni workflow. → Sašin **direktan** push na main ostaje **tehnički nemoguć**, ne samo zabranjen.
-  **🆕 (2026-07-28):** Saša SMIJE mergeati **approvani** PR (Leonov approval = 1 required approval u rulesetu) → merge-gumb je njegov TEK kad Leon odobri.
-- **Dnevnici (anti-konflikt pravilo):** Saša piše SAMO subjects-ploču + PR-opis (njegov radni log).
+  Leon kao admin ima bypass za svoj direktni workflow. → suradnikov **direktan** push na main ostaje **tehnički nemoguć**, ne samo zabranjen.
+  **🆕 (2026-07-28):** suradnik SMIJE mergeati **approvani** PR (Leonov approval = 1 required approval u rulesetu) → merge-gumb je njegov TEK kad Leon odobri.
+- **Dnevnici (anti-konflikt pravilo):** suradnik piše SAMO subjects-ploču + PR-opis (njegov radni log).
   PROGRESS/CHANGELOG unos dodaje Leon/Claude pri mergeu. Tako dva pisca nikad ne diraju iste retke.
-- **Supabase re-sync** HR sadržaja (read-path) NIJE Sašin posao — radi ga Leon/Claude nakon mergea (traži ključeve).
+- **Supabase re-sync** HR sadržaja (read-path) NIJE suradnikov posao — radi ga Leon/Claude nakon mergea (traži ključeve).
 
-## 4. Sašina staza (S-cigle; status vodi subjects-ploča)
+## 4. Suradnikova staza (S-cigle; status vodi subjects-ploča)
 
 | # | Cigla | Opis | Preduvjet |
 |---|---|---|---|
@@ -102,7 +102,7 @@ grana content/<subject-id>-hr  →  rad (prijevod+verifikacija)  →  lokalni ga
 
 1. ⬜ Prijevod alatom: `node scripts/translate-subject.js …` (konvencije: id `-hr`, storageKey, `…Hr…` varovi — [HRV_PLAN.md](./HRV_PLAN.md) §Konvencije)
 2. ⬜ **HR MATERIJALI = AUTORITET:** prijevod uspoređen protiv HR skripti/predavanja/ispitnih pitanja tog kolegija; terminologija hotelijerstva ispravljena (prijevod je BAZA, materijali su ISTINA — pouka te2!)
-3. ⬜ Ljudski pregled smisla (Saša, izvorni govornik) — alat čuva strukturu, čovjek čuva značenje
+3. ⬜ Ljudski pregled smisla (suradnik, izvorni govornik) — alat čuva strukturu, čovjek čuva značenje
 4. ⬜ catalog-unos dodan (`-hr` subject; `icon/color/year/semester` = identični EN-u)
 5. ⬜ `npm run validate:content <id>-hr` = 0 · `npm run verify` = 0
 6. ⬜ `npm run export:json <id>-hr` (ako subject ima `dataFormat:'json'`) · `npm run bump`
@@ -111,10 +111,10 @@ grana content/<subject-id>-hr  →  rad (prijevod+verifikacija)  →  lokalni ga
 
 ## 6. Pristupi, ključevi, troškovi (least-privilege)
 
-| Što | Saša dobiva? | Napomena |
+| Što | Suradnik dobiva? | Napomena |
 |---|---|---|
-| GitHub repo | ✅ collaborator Write (`chemp12`, 2026-07-10) | `main` ruleset `protect-main` čuva produkciju |
-| Anthropic API ključ | ✅ **VLASTITI** (Saša sam kreira; Leon refundira gotovinom) | ključ se NE dijeli (sigurnije); trošak ~$15–30 ukupno; njegov `.env` drži SAMO taj ključ |
+| GitHub repo | ✅ collaborator Write (`suradnikov-racun`, 2026-07-10) | `main` ruleset `protect-main` čuva produkciju |
+| Anthropic API ključ | ✅ **VLASTITI** (suradnik sam kreira; Leon refundira gotovinom) | ključ se NE dijeli (sigurnije); trošak ~$15–30 ukupno; njegov `.env` drži SAMO taj ključ |
 | Supabase (dashboard/ključevi) | ❌ | re-sync radi Leon/Claude |
 | `service_role` / TEST_ADMIN / Vercel | ❌ | nema potrebe = nema površine |
 | Materijali (skripte/PDF/Word) | ✅ preko Drive-a (izvan repo-a) | `_materials/` ostaje gitignored |
@@ -123,11 +123,11 @@ Trošak prijevoda: ~$0.7–1.5/predmet → cijeli HR batch ≈ **$15–30** ukup
 
 ## 7. Koordinacija s platformskom stazom (tko koga čeka: NITKO)
 
-- **Saša radi v1-format datoteke ODMAH** — ništa ne čeka. Kad U2 (ID-jevi stavki) sleti, migracijska skripta obuhvaća
+- **Suradnik radi v1-format datoteke ODMAH** — ništa ne čeka. Kad U2 (ID-jevi stavki) sleti, migracijska skripta obuhvaća
   i njegove predmete; alati (translate/generator) se bumpaju na v2 tada. Njegov rad se NE baca niti prerađuje.
 - **ADR-022 pull-forward (U2.5, odmah iza U2):** preduvjet za S7 (MUT/MOR — vezni predmeti se DIJELE, ne kopiraju).
   Tri tvrda uvjeta: nakon U1+U2 (nikad isprepleteno) · aditivno/dual-mode · puni gate + staging. Detalji: ADR-023 + EDITOR_PLAN.md §12.
-- **Naše obveze prema Saši:** ⬜ docx→tekst skripta (Word ispitna pitanja; ~pola dana) · ⬜ ADR-022 na vrijeme (prije kraja S3/S4) ·
+- **Naše obveze prema suradniku:** ⬜ docx→tekst skripta (Word ispitna pitanja; ~pola dana) · ⬜ ADR-022 na vrijeme (prije kraja S3/S4) ·
   review u ~24–48 h · šablona catalog-unosa u S2 · HR statusna ploča (postoji).
 - **Očekivani sudar i rješenje:** obojica bumpaju tokene → bump-konflikt u PR-u = trivijalan (rebase + ponovni `npm run bump`).
 
@@ -135,28 +135,28 @@ Trošak prijevoda: ~$0.7–1.5/predmet → cijeli HR batch ≈ **$15–30** ukup
 
 | Zapis | Piše | Kada |
 |---|---|---|
-| subjects-ploča (HR status) | **Saša** (privremeno: tekst retka u PR-opisu, upisuje Leon/Claude na f4 — §2/§9) | svaki PR |
-| PR-opis (radni log) | **Saša** | svaki PR |
+| subjects-ploča (HR status) | **Suradnik** (privremeno: tekst retka u PR-opisu, upisuje Leon/Claude na f4 — §2/§9) | svaki PR |
+| PR-opis (radni log) | **Suradnik** | svaki PR |
 | PROGRESS/CHANGELOG | **Leon/Claude** | pri mergeu |
 | TEAM.md / planovi / ADR-ovi | **Leon/Claude** | po potrebi |
-| CLAUDE.md | **Leon/Claude** | po potrebi (Saša nikad) |
+| CLAUDE.md | **Leon/Claude** | po potrebi (suradnik nikad) |
 
 ## 9. Slotovi (stanje 2026-07-10)
-- ✅ **Sašin GitHub:** `chemp12` — dodan kao **collaborator (Write)**; `main` zaštićen rulesetom **`protect-main`** (Active: require PR + 1 approval, restrict deletions, block force pushes; Leon = bypass admin). Status-checkovi se dodaju nakon prvog CI-runa (prava imena iz padajuće liste, ne ručno).
-- ✅ **S2 pilot-predmet:** **Management (HR)** — potvrđeno (Sašin prvi end-to-end predmet).
+- ✅ **Suradnikov GitHub:** `suradnikov-racun` — dodan kao **collaborator (Write)**; `main` zaštićen rulesetom **`protect-main`** (Active: require PR + 1 approval, restrict deletions, block force pushes; Leon = bypass admin). Status-checkovi se dodaju nakon prvog CI-runa (prava imena iz padajuće liste, ne ručno).
+- ✅ **S2 pilot-predmet:** **Management (HR)** — potvrđeno (suradnikov prvi end-to-end predmet).
 - ✅ **Review-ritam:** PR odgovor u **24–48 h**.
-- ✅ **API ključ:** Saša kreira **VLASTITI** na svom Anthropic računu (sigurnije — ne dijeli se). **Financiranje = B: Leon refundira gotovinom** (~$15–30 ukupno za HR batch; trošak sitan → bez tvrdog konzolnog capa, po dogovoru). Sašin `.env` drži SAMO taj ključ, nikad se ne commita.
-- ✅ **Vidljivost docs — RIJEŠENO 2026-07-13:** `foundation/f4` je deployan na `main` (`5d24a96..79f17c7`) → **svi `docs/**` + role-router su sad na main-u** i vidljivi u svježem klonu. Privremeno pravilo „redak u PR-OPISU" ukinuto (§2/§5.8 vraćeni na normalu). ✅ **Sašin PR #1: SAM se rebasean na novi main + §5.2 uz SVE HR materijale → 🟢 Ready (2026-07-14, `d9b8ee8`)** → ⚖️ **Leon odlučio OPCIJA B** (HR skripte = izvor istine) → Saša odradio doradu → ✅ **PR #1 OBJAVLJEN NA PROD 2026-07-15** (`7ed18d7`; W&K 5 funkcija/„kadrovi", +2 autorske kat, Drucker fact-fix; lead-review pri objavi: merge ne rebase, bump-konflikt riješen, 1 ćirilica popravljena). ✅ **PR #2 (rebalans kartica po modelu ≤200 znak, detalj→learn) OBJAVLJEN NA PROD 2026-07-17** (`08dd383`, grana `content/management-hr-rebalance`; Saša sam — svih 122 kartice management-hr skraćene, avg 359→127, kviz/fill netaknuti; lead-review: gate-ovi zeleni + ćirilica 0; HR ostaje file-served, nije u Supabase).
+- ✅ **API ključ:** suradnik kreira **VLASTITI** na svom Anthropic računu (sigurnije — ne dijeli se). **Financiranje = B: Leon refundira gotovinom** (~$15–30 ukupno za HR batch; trošak sitan → bez tvrdog konzolnog capa, po dogovoru). Suradnikov `.env` drži SAMO taj ključ, nikad se ne commita.
+- ✅ **Vidljivost docs — RIJEŠENO 2026-07-13:** `foundation/f4` je deployan na `main` (`5d24a96..79f17c7`) → **svi `docs/**` + role-router su sad na main-u** i vidljivi u svježem klonu. Privremeno pravilo „redak u PR-OPISU" ukinuto (§2/§5.8 vraćeni na normalu). ✅ **Suradnikov PR #1: SAM se rebasean na novi main + §5.2 uz SVE HR materijale → 🟢 Ready (2026-07-14, `d9b8ee8`)** → ⚖️ **Leon odlučio OPCIJA B** (HR skripte = izvor istine) → suradnik odradio doradu → ✅ **PR #1 OBJAVLJEN NA PROD 2026-07-15** (`7ed18d7`; W&K 5 funkcija/„kadrovi", +2 autorske kat, Drucker fact-fix; lead-review pri objavi: merge ne rebase, bump-konflikt riješen, 1 ćirilica popravljena). ✅ **PR #2 (rebalans kartica po modelu ≤200 znak, detalj→learn) OBJAVLJEN NA PROD 2026-07-17** (`08dd383`, grana `content/management-hr-rebalance`; suradnik sam — svih 122 kartice management-hr skraćene, avg 359→127, kviz/fill netaknuti; lead-review: gate-ovi zeleni + ćirilica 0; HR ostaje file-served, nije u Supabase).
 - ⚖️ **Terminološka odluka za PR #1 (Leon, 2026-07-14): opcija B — HR SKRIPTE = izvor istine, NE prijevod EN-a.** Razlog: HR program predaju **drugi profesori** — ispiti prate NJIHOVE skripte (W&K okvir: 5 funkcija uklj. „kadroviranje", termin „kadrovi"). Ovo potvrđuje §5 pravilo **„HR materijali = autoritet"** i vrijedi za SVE buduće `-hr` predmete: gdje se prijevod i skripta razilaze u okviru/terminologiji/gradivu — **skripta pobjeđuje**. PR #1 objavljen 2026-07-15 (dorada gotova).
-- 🎯 **NOVI ZADATAK (Leon, 2026-07-28) — aktivirani S4+S5 za 4 KVANTITATIVNA predmeta:** **Matematika · Statistika · Makroekonomija · Računovodstvo** → HR verzije. **Razlog/naglasak: VJEŽBE moraju biti na hrvatskom** (ta 4 su jedini predmeti s vježbama). Vježbe = **S5 pravilo**: prevode se SAMO string-polja (`prompt/title/choices/explain` + `meta.lang:'en'→'hr'`); `generate()/params/answer/type` **NEDIRLJIVI** (logika/matematika bit-identična), `test:unit` mora ostati zelen. Study sadržaj (kartice/kviz/fill/learn) = normalni HR tok. Jedan predmet = jedna grana `content/<id>-hr` = jedan PR. Redoslijed po Sašinim materijalima (prijedlog: makro → stat → math → računovodstvo). **Nijedan još nema HR verziju; sva 4 imaju EN + vježbe** (`data/<id>/exercises.js`). **Nakon ova 4 → sljedeći zadatak NIJE određen** — dogovara se s Leonom kad ova 4 padnu. ⚠️ Raniji zapis *„prelazi na izgradnju mature"* je **NADGLAŠEN**: matura je izbačena iz smjera proizvoda (Leon, 2026-08-02) — v. [plan/ROADMAP.md](../plan/ROADMAP.md).
-- ✅ **DEPLOY-PERMISIJA (Leon, 2026-07-28):** Saša SMIJE sam **mergeati vlastiti PR u `main` (= deploy)** — ali TEK nakon Leonovog **izričitog approvala** (pregled + „slažem se, sve je točno"). CI zeleni = preduvjet, ne zamjena za pregled. Standard = **savršeno**. Mehanizam: `protect-main` traži 1 approval → Leon approva, Saša mergea. (Detalji §2/§3.)
-- ✅ **STOP-NALOG JE ISPUNJEN (2026-08-15) — ali NE od Saše.** Obje grane su mergeane i **na produkciji su**
+- 🎯 **NOVI ZADATAK (Leon, 2026-07-28) — aktivirani S4+S5 za 4 KVANTITATIVNA predmeta:** **Matematika · Statistika · Makroekonomija · Računovodstvo** → HR verzije. **Razlog/naglasak: VJEŽBE moraju biti na hrvatskom** (ta 4 su jedini predmeti s vježbama). Vježbe = **S5 pravilo**: prevode se SAMO string-polja (`prompt/title/choices/explain` + `meta.lang:'en'→'hr'`); `generate()/params/answer/type` **NEDIRLJIVI** (logika/matematika bit-identična), `test:unit` mora ostati zelen. Study sadržaj (kartice/kviz/fill/learn) = normalni HR tok. Jedan predmet = jedna grana `content/<id>-hr` = jedan PR. Redoslijed po suradnikovim materijalima (prijedlog: makro → stat → math → računovodstvo). **Nijedan još nema HR verziju; sva 4 imaju EN + vježbe** (`data/<id>/exercises.js`). **Nakon ova 4 → sljedeći zadatak NIJE određen** — dogovara se s Leonom kad ova 4 padnu. ⚠️ Raniji zapis *„prelazi na izgradnju mature"* je **NADGLAŠEN**: matura je izbačena iz smjera proizvoda (Leon, 2026-08-02) — v. [plan/ROADMAP.md](../plan/ROADMAP.md).
+- ✅ **DEPLOY-PERMISIJA (Leon, 2026-07-28):** suradnik SMIJE sam **mergeati vlastiti PR u `main` (= deploy)** — ali TEK nakon Leonovog **izričitog approvala** (pregled + „slažem se, sve je točno"). CI zeleni = preduvjet, ne zamjena za pregled. Standard = **savršeno**. Mehanizam: `protect-main` traži 1 approval → Leon approva, suradnik mergea. (Detalji §2/§3.)
+- ✅ **STOP-NALOG JE ISPUNJEN (2026-08-15) — ali NE od suradnika.** Obje grane su mergeane i **na produkciji su**
   (`main` `9637f4a..58ecec5`, katalog **22 → 24 predmeta**, HR program 5 → 7). Odradili smo ih **mi**, jer su
   bile **88 commita iza** i nakon C1 rebase nosi modify/delete na obrisanom `styles.css`, a druga grana nužno
-  konfliktira s prvom na `data/catalog.js` — dakle platformski posao izvan Sašinog opsega (ADR-023).
+  konfliktira s prvom na `data/catalog.js` — dakle platformski posao izvan suradnikovog opsega (ADR-023).
   **Sadržaj je bio besprijekoran:** ćirilica 0, duple kat.-id 0, `quiz.correct` u rasponu, svaki `fill` ima
   `answer`, i **0 kartica preko SOFT praga 200** u obje grane — dakle stroži model od zatečenog kataloga,
-  gdje je 46,2 % preko. **Javiti Saši na Instagram da su objavljene.** Ostaje **na stanci** dok frontend
+  gdje je 46,2 % preko. **Javiti suradniku na Instagram da su objavljene.** Ostaje **na stanci** dok frontend
   redizajn nije gotov; **S4+S5 je pauziran, ne otkazan.** Zapis ispod ostaje kao povijest naloga.
 - 🛑 **STOP-NALOG + ZAVRŠNI ZADATAK (Leon, 2026-08-12) — OVO NADGLAŠAVA TEKUĆI ZADATAK GORE.**
   Leon: *„neka prilagodi sve kako treba i da onda merga ili deploya čim to napravi i neka mi napiše poruku na Instagramu čim je gotov s time. Također mu pojasni da ništa ne radi dok frontend nije gotov."*
@@ -177,10 +177,10 @@ Trošak prijevoda: ~$0.7–1.5/predmet → cijeli HR batch ≈ **$15–30** ukup
 
   `npm run preflight` je dobio nove brane (`check:tailwind`, `check:palette`, `check:contrast`). Sve moraju biti zelene; checklista §5 vrijedi nepromijenjena.
 
-  **② MERGE/DEPLOY: Leonov OK je dan UNAPRIJED, samo za te dvije grane.** Čim su CI i gateovi zeleni i §5 ispunjena — Saša mergea sam, bez čekanja na novi approval. **Iznimka od §3, vrijedi ISKLJUČIVO za `entrepreneurship-hr` i `ebusiness-hr`** — svaki budući PR opet traži Leonov izričit approval.
+  **② MERGE/DEPLOY: Leonov OK je dan UNAPRIJED, samo za te dvije grane.** Čim su CI i gateovi zeleni i §5 ispunjena — suradnik mergea sam, bez čekanja na novi approval. **Iznimka od §3, vrijedi ISKLJUČIVO za `entrepreneurship-hr` i `ebusiness-hr`** — svaki budući PR opet traži Leonov izričit approval.
 
   **③ JAVI LEONU NA INSTAGRAM** čim su obje objavljene.
 
   **④ ZATIM STANI — ništa novo dok frontend redizajn nije gotov.** Ne otvarati nove `content/*` grane, ne započinjati nove predmete. **Zadatak S4+S5 (macro · statistika · math · računovodstvo) je time PAUZIRAN**, nije otkazan. Razlog je mehanički, ne organizacijski: redizajn (cigle C2–C7, [archive/FRONTEND_REDIZAJN.md](../archive/FRONTEND_REDIZAJN.md)) prepisuje `index.html` i **cijeli CSS sloj** te bumpa cache-tokene na svakoj cigli — a svaki content-PR dira **te iste tokene** plus `data/catalog.js`. Paralelan rad znači da se svaki PR rebasea po nekoliko puta i svaki put nanovo prolazi puni gate. Sljedeći zadatak dogovara se s Leonom kad redizajn padne.
 
-- 📌 **BUDUĆE (nakon pune 2 god HR):** kad HR program bude **potpun (obje godine)**, **HR predmeti se dodaju u Supabase bazu** (sad su svi HR **file-served** → dual-read pada na `data/json/<id>-hr/`). Migracija HR→Supabase = **Leon/Claude** (traži `service_role`/ključeve, `scripts/migrate-content.js`), **NIJE Sašin posao** (§6). Do tada HR ostaje file-first (radi jednako studentu).
+- 📌 **BUDUĆE (nakon pune 2 god HR):** kad HR program bude **potpun (obje godine)**, **HR predmeti se dodaju u Supabase bazu** (sad su svi HR **file-served** → dual-read pada na `data/json/<id>-hr/`). Migracija HR→Supabase = **Leon/Claude** (traži `service_role`/ključeve, `scripts/migrate-content.js`), **NIJE suradnikov posao** (§6). Do tada HR ostaje file-first (radi jednako studentu).

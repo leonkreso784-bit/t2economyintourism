@@ -2201,7 +2201,7 @@ samo izvedba čeka.**
 
 **Izmjereno prije odluke** (5379 kartica u `data/json/`): pitanja **0** preko 200 znakova (max 134) → nisu
 problem · odgovori **2487 = 46,2 %** preko 200 · 928 preko 300 · **48 preko 500** (max 736; **25 jedinstvenih**,
-ostalo su kopije u `final`). Razliveno kroz **sve** predmete → **standard je platformski problem, ne Sašin.**
+ostalo su kopije u `final`). Razliveno kroz **sve** predmete → **standard je platformski problem, ne suradnikov.**
 **Posljedica: tvrdo ograničenje na 200 srušilo bi gotovo pola kataloga** → ne dolazi u obzir retroaktivno.
 
 **ODLUKA (Leon 2026-08-07): tvrdi strop = 500 znakova**, uz mekano vođenje na 200. U **dva koraka**, i

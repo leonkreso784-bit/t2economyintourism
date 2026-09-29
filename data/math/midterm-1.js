@@ -1,6 +1,6 @@
 // ===== MATHEMATICS — 1st MIDTERM (K1) =====
-// Source: lecture decks 1–5 (PhD Iva Mrša Haber & Ante Funtak, prof.; FMTU Opatija, 1st year HM).
-// Textbook: Mihalinčić, K. & Mrša Haber, I. "Mathematics" (FMTU script, 2017);
+// Source: lecture decks 1–5 (course lecturers; FMTU Opatija, 1st year HM).
+// Textbook: FMTU course script "Mathematics" (2017);
 //           Klaričić Bakula & Braić, "Introduction to Mathematics" (Split, 2011/12).
 // K1/K2 boundary AUTHORITATIVE from the syllabus: K1 = topics 1–5 (up to extrema).
 //   1. Field of Real Numbers ℝ        2. Basic Equations on ℝ

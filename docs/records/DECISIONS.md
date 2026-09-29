@@ -79,7 +79,7 @@ programa** — javna nabava i akademski ciklusi ne staju u tu rupu. Drugi: kupac
 razgovoru već postoji, i to su **male firme ljudi koje poznaje**.
 
 **Odluka (Leon):** *„najbolje bi bilo da prodam nekima od svojih kolega koji imaju firme nešto za jako
-male novce. npr. moj prijatelj Sergej ima firmu i da plati da ima svoj vlastiti odjeljak platforme gdje
+male novce. npr. moj prijatelj ima firmu i da plati da ima svoj vlastiti odjeljak platforme gdje
 mu novi zaposlenici uče o firmi i svemu što se treba raditi, i on prati njihov progress i vrijeme
 rješavanja. Trebamo nadodat exam module gdje se platforma locka na exam samo i ima timer."*
 
@@ -434,7 +434,7 @@ gradivo"* prije nego *„evo 22 predmeta s FMTU-a"*.
 - **Ne mijenja se ništa sigurnosno.** [ADR-024](#) (osobni graditelj = zaseban otok, owner-RLS, upis samo
   kroz `SECURITY DEFINER` RPC), ADR-025 (doseg) i ADR-018 (student uploada PODATKE, nikad KOD) stoje
   netaknuti. Ovo je odluka o **istaknutosti**, ne o popuštanju granice.
-- **Ne mijenja se prioritet sadržaja.** Sadržajna staza ostaje pauzirana (ADR-018); HR nosi Saša.
+- **Ne mijenja se prioritet sadržaja.** Sadržajna staza ostaje pauzirana (ADR-018); HR nosi suradnik.
 
 ### ➕ Dopuna 2026-08-14 — „prije" postaje „ravnopravno" (Leon, na maketi)
 
@@ -730,22 +730,22 @@ nije ovisila o suradniku nego o rasporedu. · **Dokument:** `docs/archive/TEAM.m
 > i `content-review` agent — mehanizmi koji su nadživjeli povod.
 
 **Izvorni status:** ✅ ODLUČENO (korisnik 2026-07-08/09)
-**Kontekst:** Saša Vudrag (student prog. inž., Algebra) pridružuje se kao content-suradnik: HR program do pune 2 godine
+**Kontekst:** content-suradnik (student prog. inž., Algebra) pridružuje se kao content-suradnik: HR program do pune 2 godine
 (prijevod + HR materijali), zatim MUT/MOR smjerovi. Prvi suradnik ikad → treba model koji ubrzava, a **ne može srušiti sustav**.
 **Odluka:**
-1. **Uloge:** Leon = vlasnik/platforma, JEDINI mergea u `main` (merge = deploy!); Saša = content na granama + PR;
-   oba rade sa svojim Claudeom (role-router u CLAUDE.md preko `git config user.name` → Sašin Claude čita TEAM.md §2).
-2. **Tvrde granice** (TEAM.md §2): Saša smije SAMO `data/<subj>-hr/` + export:json + catalog-unos + svoj redak statusne ploče +
+1. **Uloge:** Leon = vlasnik/platforma, JEDINI mergea u `main` (merge = deploy!); suradnik = content na granama + PR;
+   oba rade sa svojim Claudeom (role-router u CLAUDE.md preko `git config user.name` → suradnikov Claude čita TEAM.md §2).
+2. **Tvrde granice** (TEAM.md §2): Suradnik smije SAMO `data/<subj>-hr/` + export:json + catalog-unos + svoj redak statusne ploče +
    bump ISKLJUČIVO kroz `npm run bump`; sve ostalo (js/css/engine, EN predmeti, docs, infra) = zabranjeno. Preporuka: GitHub
    branch-protection na main (PR + CI obavezni) → kršenje tehnički nemoguće, ne samo zabranjeno.
 3. **Least-privilege pristupi:** vlastiti Anthropic ključ (Leon financira, budget-cap); BEZ Supabase/`service_role`/TEST_ADMIN/Vercel.
 4. **Kvaliteta:** „prijevod je BAZA, HR materijali su AUTORITET" (pouka te2) — obavezan korak u definition-of-done (TEAM.md §5);
-   dnevnik-pravila protiv drifta (Saša piše samo subjects-ploču + PR-opis; PROGRESS/CHANGELOG pri mergeu piše Leon/Claude).
+   dnevnik-pravila protiv drifta (suradnik piše samo subjects-ploču + PR-opis; PROGRESS/CHANGELOG pri mergeu piše Leon/Claude).
 5. **ADR-022 se POVLAČI NAPRIJED = cigla U2.5** (odmah iza U1+U2 u EDITOR_PLAN.md §12; umjesto „nakon F4"): preduvjet MUT/MOR (S7).
    Tri tvrda uvjeta: nakon U1+U2 (migracije uzastopno, NIKAD isprepleteno) · aditivna/dual-mode izvedba · puni gate + staging.
    Obrazloženje: identitet PRIJE write-puta je zdraviji redoslijed (draft/editor sjedaju na stabilan temelj); ne-povlačenje
-   ima veći rizik (Saša bi MUT/MOR gradio copy-pasteom = dupliciran sadržaj + rascjepkan napredak).
-**Posljedice:** sadržajna staza odmrznuta za Sašu (ADR-018 pauza bila kapacitetna — platforma-first za NAS ostaje);
+   ima veći rizik (suradnik bi MUT/MOR gradio copy-pasteom = dupliciran sadržaj + rascjepkan napredak).
+**Posljedice:** sadržajna staza odmrznuta za suradnika (ADR-018 pauza bila kapacitetna — platforma-first za NAS ostaje);
 dvije paralelne pruge (U-staza platforma · S-staza content) s jednom ovisnošću (S7←U2.5). CI gateovi (F1) postaju
 automatska obrana od suradničkih grešaka. Nadopunjuje ADR-012 (HR klon), ADR-018 (platform-first), ADR-022 (identitet).
 

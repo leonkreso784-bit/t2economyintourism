@@ -1,5 +1,5 @@
 // ===== MATHEMATICS — 2nd MIDTERM (K2) =====
-// Source: lecture decks 6, 8, 9, 11 (PhD Iva Mrša Haber; FMTU Opatija, 1st year HM).
+// Source: lecture decks 6, 8, 9, 11 (course lecturer; FMTU Opatija, 1st year HM).
 // K1/K2 boundary AUTHORITATIVE from the syllabus: K2 = topics 6–11 (after extrema).
 //   6.  The indefinite integral & elasticity of demand
 //   8.  Rents (annuities) — future & present value

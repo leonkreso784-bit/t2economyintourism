@@ -124,7 +124,9 @@ function renderBlindMapText() {
 }
 
 function initBlindMap() {
-    if (AppState.nav.subject !== 'geography') return;
+    // Zastavica iz kataloga, ne ime predmeta: kartu imaju i `geography` i `geography-hr`.
+    const bmSubject = (typeof SokratCatalog !== 'undefined') ? SokratCatalog.getSubject(AppState.nav.subject) : null;
+    if (!(bmSubject && bmSubject.features && bmSubject.features.blindMap)) return;
     document.getElementById('blindMapNavBtn')?.style.removeProperty('display');
     document.getElementById('blindMapMobileBtn')?.style.removeProperty('display');
     

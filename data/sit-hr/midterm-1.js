@@ -1,5 +1,5 @@
 // Specifični oblici turizma (HR) — M1 (1. kolokvij)
-// AUTORSKI IZ HRVATSKE SKRIPTE (prof. dr. sc. Daniela Gračan, FMTU Opatija) — NE prijevod EN SIT-a.
+// AUTORSKI IZ HRVATSKE SKRIPTE (nositelj kolegija, FMTU Opatija) — NE prijevod EN SIT-a.
 // HR SOT kolegij bitno se razlikuje od EN "Special Interest Tourism" (opcija B — HR skripta = izvor istine).
 // MODEL: kartice = kratke definicije (<200 znak), detalj u learn.
 // ⚠️ NE pokretati translate-subject.js nad ovim predmetom!

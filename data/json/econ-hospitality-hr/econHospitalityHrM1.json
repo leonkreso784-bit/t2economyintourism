@@ -1,0 +1,2352 @@
+{
+  "hospitalityBasics": {
+    "name": "Temeljna obilježja ugostiteljstva",
+    "icon": "fa-bell-concierge",
+    "color": "#0ea5e9",
+    "flashcards": [
+      {
+        "question": "Što znači „ugostiti”?",
+        "answer": "Primiti gosta, smjestiti ga i poslužiti hranom i pićem.",
+        "explanation": "Iz toga proizlaze tri osnovne usluge: smještaj, prehrana i piće."
+      },
+      {
+        "question": "Kako hrvatski propisi definiraju UGOSTITELJSTVO?",
+        "answer": "Uslužna gospodarska djelatnost koja se sastoji u pružanju usluga smještaja, prehrane i pića.",
+        "explanation": "Najčešće ispitno pitanje iz uvoda — definicija se traži doslovno."
+      },
+      {
+        "question": "Što obuhvaća UGOSTITELJSKA DJELATNOST?",
+        "answer": "Pripremanje hrane i usluge prehrane, pripremanje i posluživanje pića i napitaka, usluge smještaja te catering (hrana za konzumaciju na drugom mjestu)."
+      },
+      {
+        "question": "Zašto je ugostiteljstvo MJEŠOVITA proizvodno-uslužna djelatnost?",
+        "answer": "Proizvodi se po narudžbi, a proizvedeno se odmah prodaje i poslužuje gostu."
+      },
+      {
+        "question": "Što je „izvoz na licu mjesta”?",
+        "answer": "Potrošnja stranih turista u ugostiteljskim objektima u zemlji — poseban oblik izvoza roba i usluga bez prelaska granice.",
+        "explanation": "Naziva se i nevidljivim izvozom."
+      },
+      {
+        "question": "Koje su OSNOVNE ugostiteljske usluge?",
+        "answer": "Usluge smještaja, usluge prehrane i usluge pića (točenja pića).",
+        "explanation": "Zamka: prijam gostiju, prodaja robe ili pranje rublja NISU osnovne usluge."
+      },
+      {
+        "question": "Koje su DOPUNSKE ugostiteljske usluge?",
+        "answer": "Prijam i ispraćaj gostiju, prijenos stvari i prijevoz osoba, davanje obavijesti, čuvanje vrijednosti, čišćenje odjeće i obuće, prodaja robe, sport i animacija.",
+        "explanation": "Upravo dopunske usluge imaju trend stalnog povećanja sukladno potrebama turista."
+      },
+      {
+        "question": "Koje su SPOREDNE (pomoćne) ugostiteljske usluge?",
+        "answer": "Održavanje objekata i opreme, održavanje okoliša, pranje i peglanje rublja, priprema mesa i povrća, garažiranje i popravak automobila gostiju."
+      },
+      {
+        "question": "Koje su POSEBNOSTI ugostiteljske usluge?",
+        "answer": "Neopipljivost, heterogenost, istodobnost stvaranja i potrošnje te neodvojivost.",
+        "explanation": "Zamka: „opipljivost”, „homogenost” i „različito vrijeme stvaranja i potrošnje” nisu posebnosti."
+      },
+      {
+        "question": "NEOPIPLJIVOST usluge?",
+        "answer": "Usluga se ne može isprobati prije konzumacije; uspjeh ovisi o stručnoj izvedbi zaposlenih i emocionalnom doživljaju gosta."
+      },
+      {
+        "question": "HETEROGENOST usluge?",
+        "answer": "Svaka je usluga posebna — nastaje posebnim ponašanjem davatelja i zadovoljava jedinstvene zahtjeve gosta."
+      },
+      {
+        "question": "ISTODOBNOST stvaranja i potrošnje?",
+        "answer": "Usluga se ne može uskladištiti — postoji samo u trenutku kad se pruža i troši."
+      },
+      {
+        "question": "NEODVOJIVOST usluge?",
+        "answer": "Davatelj i korisnik moraju biti prisutni istodobno; usluga se pruža tamo gdje ju gost koristi."
+      },
+      {
+        "question": "Podjela ugostiteljstva prema vrsti usluga i tehnološkom procesu?",
+        "answer": "Hotelijerstvo (objekti za smještaj) i restoraterstvo (objekti za prehranu i piće)."
+      },
+      {
+        "question": "Podjela prema SEGMENTU KORISNIKA (ispitni ključ)?",
+        "answer": "Stalno i sezonsko poslovanje.",
+        "explanation": "Prema ključu kolegija; podjela prema vremenskom razdoblju djelatnosti je opće i turističko (vidi napomenu u Učenju)."
+      },
+      {
+        "question": "Podjela prema VREMENSKOM RAZDOBLJU obavljanja djelatnosti (ispitni ključ)?",
+        "answer": "Opće i turističko ugostiteljstvo."
+      },
+      {
+        "question": "Podjela prema DUŽINI BORAVKA gostiju?",
+        "answer": "Prolazno i pansionsko ugostiteljstvo."
+      },
+      {
+        "question": "Podjela prema MJESTU pružanja usluga?",
+        "answer": "Stacionirano i pokretno ugostiteljstvo."
+      },
+      {
+        "question": "Podjela prema komercijalnosti i prema vlasništvu?",
+        "answer": "Komercijalnost: komercijalno i nekomercijalno. Vlasništvo: državno, privatno i mješovito."
+      },
+      {
+        "question": "Koje su SKUPINE ugostiteljskih objekata?",
+        "answer": "Hoteli, kampovi, ostali objekti za smještaj, restorani, barovi, catering objekti i objekti jednostavnih usluga."
+      },
+      {
+        "question": "Kako se mjeri TURISTIČKI POTENCIJAL zemlje?",
+        "answer": "Omjerom broja kreveta (postelja) u hotelijerstvu i broja stanovnika."
+      },
+      {
+        "question": "Koliki udio noćenja ostvaruje hotelijerstvo u razvijenim zemljama?",
+        "answer": "Oko dvije trećine turističkih noćenja — hotelijerstvo je receptivna osnova turizma."
+      },
+      {
+        "question": "Kako sezonalnost utječe na poslovanje?",
+        "answer": "Sezonski karakter potražnje i poslovanja smanjuje iskorištenost kapaciteta i rezultira slabijim poslovnim rezultatom.",
+        "explanation": "Tvrdnja „sezona ne utječe na poslovanje hotela” je uljez."
+      },
+      {
+        "question": "Ugostiteljski objekti za hranu i piće u Grčkoj?",
+        "answer": "Kapeleje, termopolije, oinopolije i krčme.",
+        "explanation": "U Grčkoj je stranac štićenik Zeusa, u Rimu Jupitera."
+      },
+      {
+        "question": "Zašto država intervenira u ugostiteljstvu?",
+        "answer": "Sezonalnost, spor povrat investicija (4–5 % godišnje), velika vrijednost imovine, važnost zaposlenika, slaba mogućnost automatizacije i visoki ulazni troškovi."
+      },
+      {
+        "question": "Što je naglašeno kod proizvoda i usluga sastavljenih od parcijalnih proizvoda?",
+        "answer": "Heterogenost parcijalnih proizvoda i usluga — ugostiteljski proizvod čini niz raznovrsnih dijelova."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Koje su osnovne ugostiteljske usluge?",
+        "options": [
+          "Usluge smještaja, prehrane i pića",
+          "Usluge smještaja, prijam i ispraćaj gostiju, čišćenje odjeće i obuće",
+          "Prodaja roba i predmeta, pružanje usluga prehrane i točenja pića",
+          "Usluge smještaja, pranje i peglanje ugostiteljskog rublja, davanje obavijesti"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koji niz čine posebnosti ugostiteljske usluge?",
+        "options": [
+          "Neopipljivost, homogenost, istodobnost stvaranja i potrošnje te neodvojivost",
+          "Neopipljivost, heterogenost, istodobnost stvaranja i potrošnje, neodvojivost",
+          "Opipljivost, heterogenost, neodvojivost i nevidljivi izvoz na licu mjesta",
+          "Heterogenost, neodvojivost te različito vrijeme stvaranja i potrošnje usluge"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Kojoj skupini usluga pripada pranje i peglanje ugostiteljskog rublja?",
+        "options": [
+          "Osnovnim uslugama smještaja",
+          "Dopunskim uslugama za goste",
+          "Sporednim (pomoćnim) uslugama",
+          "Izvanpansionskim uslugama"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koje ugostiteljske usluge imaju trend stalnog povećanja sukladno potrebama turista?",
+        "options": [
+          "Osnovne usluge",
+          "Sporedne usluge",
+          "Usluge smještaja",
+          "Dopunske usluge"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Prema kriteriju vrste usluga i tehnološkog procesa ugostiteljstvo se dijeli na:",
+        "options": [
+          "Hotelijerstvo i restoraterstvo",
+          "Opće i turističko ugostiteljstvo",
+          "Prolazno i pansionsko",
+          "Stacionirano i pokretno"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Prema dužini boravka gostiju ugostiteljstvo se dijeli na:",
+        "options": [
+          "Stacionirano i pokretno",
+          "Prolazno i pansionsko",
+          "Komercijalno i nekomercijalno",
+          "Hotelijerstvo i restoraterstvo"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Prema mjestu pružanja usluga ugostiteljstvo se dijeli na:",
+        "options": [
+          "Prolazno i pansionsko",
+          "Državno, privatno i mješovito",
+          "Stacionirano i pokretno",
+          "Komercijalno i nekomercijalno"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Kako se prema ispitnom ključu dijeli ugostiteljstvo prema segmentu korisnika?",
+        "options": [
+          "Na prolazno i pansionsko",
+          "Na stacionirano i pokretno",
+          "Na komercijalno i nekomercijalno",
+          "Na stalno i sezonsko poslovanje"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Kojom se veličinom mjeri turistički potencijal zemlje pomoću kapaciteta hotelijerstva?",
+        "options": [
+          "Broj kreveta / broj stanovnika",
+          "Broj noćenja / broj dolazaka",
+          "Broj stanovnika / površina zemlje",
+          "Broj hotela / broj turističkih mjesta"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Što NIJE točno o sezonalnosti u ugostiteljstvu?",
+        "options": [
+          "Smanjuje godišnju iskorištenost kapaciteta",
+          "Sezona ne utječe na poslovanje hotela",
+          "Sezonski karakter poslovanja slabi poslovni rezultat",
+          "Potiče državu na poticajne mjere"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koji objekt NE pripada skupini „Hoteli”?",
+        "options": [
+          "Aparthotel",
+          "Turističko naselje",
+          "Kamp odmaralište",
+          "Hotel baština"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koji objekt pripada skupini „Barovi”?",
+        "options": [
+          "Pečenjarnica",
+          "Zalogajnica",
+          "Bistro",
+          "Konoba"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "U grčkoj civilizaciji objekti za hranu i piće bili su:",
+        "options": [
+          "Kapeleje, termopolije, oinopolije i krčme",
+          "Karavan-saraji i hanovi uz trgovačke putove",
+          "Taverne, tabernae i popine",
+          "Esnafska svratišta i poštanske postaje"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Što je „izvoz na licu mjesta”?",
+        "options": [
+          "Izvoz hrane i pića domaćih proizvođača na strana tržišta",
+          "Potrošnja stranih turista u domaćim ugostiteljskim objektima",
+          "Prodaja ugostiteljske opreme stranim kupcima",
+          "Otvaranje podružnica domaćih hotela u inozemstvu"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koliki godišnji povrat investicija u ugostiteljstvu navodi gradivo kao razlog državnih poticaja?",
+        "options": [
+          "Oko 15–20 %",
+          "Oko 25–30 %",
+          "Oko 4–5 %",
+          "Oko 50 %"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Prema vremenskom razdoblju obavljanja djelatnosti ugostiteljstvo se dijeli na:",
+        "options": [
+          "Hotelijerstvo i restoraterstvo",
+          "Prolazno i pansionsko",
+          "Državno, privatno i mješovito",
+          "Opće i turističko"
+        ],
+        "correct": 3
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Ugostiteljstvo je uslužna gospodarska djelatnost koja se sastoji u pružanju usluga smještaja, prehrane i _______.",
+        "answer": "pića",
+        "hint": "Treća osnovna usluga."
+      },
+      {
+        "sentence": "Usluga se ne može uskladištiti jer vrijedi istodobnost stvaranja i _______.",
+        "answer": "potrošnje",
+        "hint": "Posebnost usluge."
+      },
+      {
+        "sentence": "Prema dužini boravka gostiju ugostiteljstvo se dijeli na prolazno i _______.",
+        "answer": "pansionsko"
+      },
+      {
+        "sentence": "Prema mjestu pružanja usluga ugostiteljstvo se dijeli na stacionirano i _______.",
+        "answer": "pokretno"
+      },
+      {
+        "sentence": "Hotelijerstvo u razvijenim zemljama ostvaruje oko dvije _______ turističkih noćenja.",
+        "answer": "trećine",
+        "hint": "Razlomak."
+      },
+      {
+        "sentence": "Turistički potencijal zemlje računa se kao broj kreveta podijeljen s brojem _______.",
+        "answer": "stanovnika"
+      },
+      {
+        "sentence": "U Grčkoj je stranac bio štićenik boga Zeusa, a u Rimu boga _______.",
+        "answer": "Jupitera",
+        "hint": "Rimski vrhovni bog (genitiv)."
+      }
+    ],
+    "learn": {
+      "title": "Temeljna obilježja ugostiteljske djelatnosti",
+      "content": "<h3>Pojam ugostiteljstva</h3><p><strong>Ugostiti</strong> znači primiti gosta, smjestiti ga i poslužiti hranom i pićem. Prema hrvatskim propisima <strong>ugostiteljstvo je uslužna gospodarska djelatnost koja se sastoji u pružanju usluga smještaja, prehrane i pića</strong>.</p><p><strong>Ugostiteljska djelatnost</strong> obuhvaća: pripremanje hrane i pružanje usluga prehrane, pripremanje i posluživanje pića i napitaka, pružanje usluga smještaja te <strong>catering</strong> (pripremanje hrane za potrošnju na drugom mjestu).</p><h4>Karakter ugostiteljske djelatnosti</h4><ul><li><strong>Mješovita proizvodno-uslužna djelatnost</strong> — proizvodi se po narudžbi, a proizvedeno se odmah prodaje gostu.</li><li><strong>Izvoz „na licu mjesta”</strong> (nevidljivi izvoz) — kad strani turisti troše ugostiteljske usluge u zemlji, ostvaruje se poseban oblik izvoza roba i usluga bez prelaska granice.</li></ul><p>Ključ 2. kolokvija ugostiteljstvo opisuje i kao <strong>gospodarsku djelatnost koja se bavi pripremom i pružanjem usluga smještaja, hrane i pića</strong>; ugostiteljski objekti pružaju usluge hrane i pića, napitaka i slastica. Proizvodi i usluge sastavljeni su od raznovrsnih parcijalnih proizvoda i usluga, pa je naglašena <strong>heterogenost parcijalnih proizvoda</strong>.</p><p><strong>Usluga</strong> je aktivnost ili korist koju jedna strana pruža drugoj; pritom ne nastaje novi proizvod nego određena korist ili činidba.</p><h3>Vrste ugostiteljskih usluga</h3><table><tr><th>Skupina</th><th>Usluge</th></tr><tr><td><strong>Osnovne</strong></td><td>smještaj, prehrana, piće (točenje pića)</td></tr><tr><td><strong>Dopunske</strong></td><td>prijam i ispraćaj gostiju, prijenos stvari i prijevoz osoba, davanje obavijesti, primanje i otpremanje pošte, čuvanje vrijednosti, čišćenje odjeće i obuće, prodaja robe i predmeta, sportske, zabavne i animacijske usluge</td></tr><tr><td><strong>Sporedne (pomoćne)</strong></td><td>održavanje ugostiteljskih objekata i opreme, održavanje okoliša, pranje i peglanje ugostiteljskog rublja, priprema mesa, povrća i sl., garažiranje i popravak automobila gostiju; jedna grupa ključa navodi i pečenje kruha, peciva i kolača</td></tr></table><div class=\"tip-box\"><strong>Ispitni fokus:</strong> dopunske usluge imaju <strong>trend stalnog povećanja</strong> sukladno potrebama turista. Kod pitanja „osnovne usluge” jedini točan niz je smještaj + prehrana + piće — čim se u nizu pojavi prijam gostiju, prodaja robe ili pranje rublja, odgovor je netočan.</div><h3>Kompleksnost ugostiteljske djelatnosti</h3><p>Ugostiteljstvo spaja više vrsta poslova: <strong>proizvodne</strong> (priprema hrane i pića), <strong>organizacijske</strong> (radno vrijeme, zalihe, planiranje događaja, usklađivanje s propisima), <strong>zdravstvene</strong> (čišćenje, dezinfekcija, kontrola temperature), <strong>rekreativne</strong> (animacija, sport, izleti), <strong>trgovačke</strong> (pregovaranje o cijeni) i <strong>uslužne</strong> (usluživanje gostiju).</p><h3>Posebnosti ugostiteljskih usluga</h3><ul><li><strong>Neopipljivost</strong> — usluga se ne može isprobati prije konzumacije; uspješnost se temelji na stručnoj izvedbi zaposlenih i emocionalnom odgovoru gosta.</li><li><strong>Heterogenost</strong> — svaka je usluga posebna, nastaje posebnim ponašanjem davatelja i zadovoljava jedinstvene zahtjeve gosta.</li><li><strong>Istodobnost stvaranja i potrošnje</strong> — usluga se ne može skladištiti; postoji samo u vrijeme pružanja.</li><li><strong>Neodvojivost</strong> — davatelj i korisnik moraju biti prisutni; usluga se pruža tamo gdje ju gost želi koristiti.</li></ul><h3>Pojavni oblici i podjele ugostiteljstva</h3><table><tr><th>Kriterij</th><th>Podjela</th></tr><tr><td>Vrsta usluga i tehnološki proces</td><td>hotelijerstvo i restoraterstvo</td></tr><tr><td>Segment korisnika (ispitni ključ)</td><td>stalno i sezonsko poslovanje</td></tr><tr><td>Vremensko razdoblje obavljanja djelatnosti (ispitni ključ)</td><td>opće i turističko</td></tr><tr><td>Dužina boravka gostiju</td><td>prolazno i pansionsko</td></tr><tr><td>Mjesto pružanja usluga</td><td>stacionirano i pokretno</td></tr><tr><td>Komercijalnost poslovanja</td><td>komercijalno i nekomercijalno</td></tr><tr><td>Vlasništvo</td><td>državno, privatno i mješovito</td></tr></table><div class=\"warning-box\"><strong>Napomena o dvije podjele:</strong> ispitni ključ kolegija (i skripta s odgovorima) podjelu <em>prema segmentu korisnika</em> vezuje uz <strong>stalno i sezonsko</strong>, a podjelu <em>prema vremenskom razdoblju djelatnosti</em> uz <strong>opće i turističko</strong>. Jedan sažetak prezentacije navodi obrnuto (vrijeme → stalno/sezonsko, korisnici → opće/turističko), što je logički bliže nazivima. Za ispit vrijedi ključ kolegija.</div><h3>Skupine ugostiteljskih objekata</h3><ul><li><strong>Hoteli:</strong> hotel baština, hotel, aparthotel, turističko naselje, turistički apartmani, pansion (posebni standardi: business, meetings, congress, club, casino, spa, wellness, holiday resort).</li><li><strong>Kampovi:</strong> kamp, kamp naselje, kampiralište, kamp odmaralište.</li><li><strong>Ostali objekti za smještaj:</strong> soba za iznajmljivanje, apartman, studio apartman, kuća za odmor, prenoćište, odmaralište za djecu, hostel, planinarski dom, lovački dom, učenički dom.</li><li><strong>Restorani:</strong> restoran, gostionica, zdravljak, zalogajnica, pečenjarnica, pizzeria, bistro, slastičarnica, objekt brze prehrane.</li><li><strong>Barovi:</strong> kavana, noćni bar, noćni klub, disco klub, caffe bar, pivnica, buffet, krčma, konoba, klet.</li><li><strong>Catering objekti</strong> i <strong>objekti jednostavnih usluga</strong> (kiosk, brze usluge, nepokretno vozilo, šator, klupa, kolica).</li></ul><h3>Hotelijerstvo</h3><p>Hotelijerstvo je dio ugostiteljske mreže za prihvat turista i čini <strong>receptivnu osnovu turizma</strong>; u razvijenim zemljama ostvaruje oko <strong>2/3 turističkih noćenja</strong>. Hotel kupce uglavnom nalazi izvan mjesta poslovanja, pa mora stalno istraživati potražnju i prilagođavati ponudu. Duži boravak gosta znači bolje iskorištenje kapaciteta, a najveći je problem <strong>sezonalnost</strong>. Prodaja se odvija na globalnom tržištu — izravno ili preko turoperatora i turističkih agencija.</p><div class=\"formula-box\">\\[ \\text{turistički potencijal} = \\frac{\\text{broj kreveta}}{\\text{broj stanovnika}} \\]</div><div class=\"example-box\"><strong>Primjer:</strong> destinacija ima 12 000 kreveta i 30 000 stanovnika.<br>\\( \\frac{12\\,000}{30\\,000} = 0{,}4 \\) kreveta po stanovniku (40 kreveta na 100 stanovnika).</div><h3>Restoraterstvo</h3><p>Restoraterstvo pruža usluge prehrane i točenja pića (restorani s klasičnom poslugom, samoposluge, pokretni objekti, pripremnice). Dva osnovna oblika: <strong>restoran u sklopu smještajnog objekta</strong> (dopunjuje smještaj, sporedna djelatnost) i <strong>samostalni restoran</strong> (pod utjecajem tradicije kraja, najčešće obiteljski posao ili obrt, može poslovati i kao lanac).</p><h3>Povijesni razvoj</h3><ul><li><strong>Robovlasničko doba:</strong> prvi objekti prije nove ere — prenoćišta uz karavanske putove (karavan-saraji) i uz hramove za hodočasnike (Egipat, Babilon, Asirija).</li><li><strong>Grčka:</strong> stranac je štićenik boga Zeusa; objekti za hranu i piće: <strong>kapeleje, termopolije, oinopolije i krčme</strong>.</li><li><strong>Rim:</strong> putnik je štićenik boga Jupitera; brojni objekti i državna svratišta.</li><li><strong>Feudalno doba (5.–18. st.):</strong> putovanja nesigurna, djelatnost pod okriljem Crkve; od 15. st. oporavak, esnafi, razvoj poštanskog prometa.</li><li><strong>Od 19. st.:</strong> razvoj prometa i tehnologije, gradnja hotela, standardi i specijalizacija rada.</li></ul><h3>Ugostiteljstvo i turizam; Hrvatska</h3><p>Turisti trebaju smještaj, hranu i piće, pa je ugostiteljstvo <strong>materijalna osnova</strong> turističkog gospodarstva, njegov infrastrukturni preduvjet i receptivna osnova. U Hrvatskoj se razvijalo sporije nego u Europi; oko 1950. počinje decentralizacija, 1974.–1990. intenzivna izgradnja kapaciteta, a 1986.–1990. plan razvoja turizma radi deviznog prihoda.</p><h4>Zašto država intervenira i kako</h4><p><strong>Razlozi:</strong> sezonalnost, spor povrat investicija (<strong>4–5 % godišnje</strong>), velika vrijednost imovine, velika važnost zaposlenika, mala mogućnost mehanizacije i automatizacije, visoki ulazni troškovi.<br><strong>Poticajne mjere:</strong> kreditiranje i povoljni krediti, državne garancije, suradnja javnog i privatnog sektora, prostorni i urbanistički planovi, porezne olakšice, mjere za kvalitetnu radnu snagu.</p><div class=\"tip-box\"><strong>Sezonalnost:</strong> sezonski karakter potražnje i poslovanja rezultira <strong>slabijim poslovnim rezultatom</strong> (kapacitet je dio godine neiskorišten, a fiksni troškovi teku cijelu godinu). Tvrdnja „sezona ne utječe na poslovanje hotela” u pitanjima tipa „izbaci uljeza” je uljez.</div>"
+    }
+  },
+  "businessEconomics": {
+    "name": "Ekonomika poduzeća kao znanost",
+    "icon": "fa-book-open",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "Što je EKONOMIKA PODUZEĆA?",
+        "answer": "Znanstvena i nastavna disciplina koja se bavi gospodarskim problemima poduzeća i njihovim ponašanjem na domaćem i svjetskom tržištu."
+      },
+      {
+        "question": "Koja glavna pitanja rješava ekonomika poduzeća?",
+        "answer": "Što, koliko i kako proizvoditi, kako raspodijeliti rezultate te gdje i kada nabaviti i prodati."
+      },
+      {
+        "question": "Temeljni cilj ekonomske znanosti?",
+        "answer": "Proučiti kako racionalno koristiti ograničene resurse da bi se zadovoljile neograničene potrebe ljudi."
+      },
+      {
+        "question": "Makroekonomika vs mikroekonomika?",
+        "answer": "Makro proučava gospodarstvo kao cjelinu (rast, inflacija, nezaposlenost); mikro proučava potrošače, kućanstva, poduzeća, ponudu, potražnju i cijene.",
+        "explanation": "Ekonomika poduzeća je jedna od najvažnijih mikroekonomskih disciplina."
+      },
+      {
+        "question": "Kako se dijeli ekonomika poduzeća?",
+        "answer": "Na opću (problemi zajednički svim poduzećima) i posebne ekonomike (pojedine vrste poduzeća)."
+      },
+      {
+        "question": "Prema čemu se razvrstavaju POSEBNE ekonomike poduzeća?",
+        "answer": "Prema gospodarskim djelatnostima, prema vlasništvu, prema poslovnim funkcijama i prema kombinacijama tih kriterija.",
+        "explanation": "Ekonomika ugostiteljskih poduzeća je posebna ekonomika prema djelatnosti."
+      },
+      {
+        "question": "Koje su dvije skupine metoda ekonomike poduzeća?",
+        "answer": "Racionalističke (logičke) i tehničke (empirijske) metode."
+      },
+      {
+        "question": "Koje su LOGIČKE metode?",
+        "answer": "Analiza (pozitivna i normativna), sinteza, indukcija, dedukcija i komparacija."
+      },
+      {
+        "question": "Koje su TEHNIČKE metode?",
+        "answer": "Promatranje, ispitivanje (intervju, upitnik, anketa) i eksperiment."
+      },
+      {
+        "question": "Pozitivna vs normativna analiza?",
+        "answer": "Pozitivna utvrđuje kakva pojava stvarno jest; normativna kakva bi trebala biti."
+      },
+      {
+        "question": "Indukcija vs dedukcija?",
+        "answer": "Indukcija: od pojedinačnih činjenica prema općem zaključku. Dedukcija: od općeg zaključka prema pojedinačnim slučajevima."
+      },
+      {
+        "question": "Tko je autor djela „Ekonomske tablice”?",
+        "answer": "François Quesnay (fiziokrat, 18. st.)."
+      },
+      {
+        "question": "Tko je napisao „Kraj laissez-fairea”?",
+        "answer": "John Maynard Keynes (1926.).",
+        "explanation": "Keynes je autor i „Opće teorije zaposlenosti, kamata i novca” (1936.)."
+      },
+      {
+        "question": "Tko je utemeljio neoklasičnu teoriju firme?",
+        "answer": "Alfred Marshall — sinteza mikro i makroekonomike, uvodi granične troškove i najisplativiju razinu proizvodnje."
+      },
+      {
+        "question": "Tko je pokrenuo prvi časopis iz ekonomike poduzeća?",
+        "answer": "Eugen Schmalenbach.",
+        "explanation": "Njegovo je djelo i „Osnove kalkulacije i politike cijena”."
+      },
+      {
+        "question": "Hrvatski doprinos: Beno Kotruljević?",
+        "answer": "U djelu „O trgovini i o savršenom trgovcu” prvi opisuje sustav dvojnog knjigovodstva."
+      },
+      {
+        "question": "Što je Adam Smith opisao u „Bogatstvu naroda” (1776.)?",
+        "answer": "Mehanizam konkurencije i „nevidljivu ruku” — tržište se samo regulira, a osobni interes pridonosi općem dobru."
+      },
+      {
+        "question": "Zašto se ekonomika poduzeća osamostalila početkom 20. st.?",
+        "answer": "Marshallova sinteza, osnivanje prvih visokih poslovnih škola (Leipzig, Beč), prvi stručni časopis i razvoj znanstvene organizacije rada.",
+        "explanation": "Znanstvena organizacija rada: Taylor, Ford, Fayol."
+      },
+      {
+        "question": "Koja su dva područja ekonomike ugostiteljskih poduzeća?",
+        "answer": "Područje radnog procesa i područje funkcija poduzeća.",
+        "explanation": "To je i temeljna značajka ekonomike ugostiteljskih poduzeća."
+      },
+      {
+        "question": "Na što se raščlanjuje ekonomika RADNOG PROCESA?",
+        "answer": "Na ekonomiku rada, ekonomiku sredstava za rad i ekonomiku predmeta rada.",
+        "explanation": "Zamka: „ekonomika energenata” ili „ekonomika kontrole” nisu dijelovi."
+      },
+      {
+        "question": "S kojim je NEEKONOMSKIM disciplinama povezana?",
+        "answer": "Tehnologija, medicina rada, psihologija rada, sociologija rada te trgovačko i radno pravo."
+      },
+      {
+        "question": "Koje su POMOĆNE discipline ekonomike poduzeća?",
+        "answer": "Statistika, matematika, informatika i automatska obrada podataka."
+      },
+      {
+        "question": "Što radi ekonomika poduzeća kao NASTAVNA disciplina?",
+        "answer": "Saznaje, prihvaća i naučava znanstvena dostignuća i spoznaje na svom području."
+      },
+      {
+        "question": "Na što upućuje Keynesova „Opća teorija” (1936.)?",
+        "answer": "Na državu i potrebu njezinih investicija u poticanju potrošnje, a time i investicija i gospodarske aktivnosti."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Ekonomika poduzeća dijeli se na:",
+        "options": [
+          "Teorijsku i primijenjenu",
+          "Opću i posebnu",
+          "Makro i mikro",
+          "Državnu i privatnu"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koja metoda NE pripada logičkim metodama?",
+        "options": [
+          "Sinteza",
+          "Indukcija",
+          "Eksperiment",
+          "Komparacija"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Tehničke (empirijske) metode su:",
+        "options": [
+          "Sinteza, indukcija, dedukcija i komparacija",
+          "Analiza, sinteza i komparacija",
+          "Indukcija, promatranje i dedukcija",
+          "Promatranje, ispitivanje i eksperiment"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Zaključivanje od pojedinačnih činjenica prema općem zaključku je:",
+        "options": [
+          "Indukcija",
+          "Dedukcija",
+          "Sinteza",
+          "Normativna analiza"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Tko je utemeljio neoklasičnu teoriju firme?",
+        "options": [
+          "Adam Smith",
+          "Alfred Marshall",
+          "Karl Marx",
+          "François Quesnay"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Tko je pokrenuo prvi časopis iz ekonomike poduzeća?",
+        "options": [
+          "Frederick Taylor",
+          "Henri Fayol",
+          "Eugen Schmalenbach",
+          "John Maynard Keynes"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Djelo „Ekonomske tablice” napisao je:",
+        "options": [
+          "John Maynard Keynes",
+          "Eugen Schmalenbach",
+          "Alfred Marshall",
+          "François Quesnay"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koji je hrvatski autor prvi opisao sustav dvojnog knjigovodstva?",
+        "options": [
+          "Beno Kotruljević",
+          "Juraj Križanić",
+          "Faust Vrančić",
+          "Ruđer Josip Bošković"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Tko razlikuje uporabnu i prometnu vrijednost robe?",
+        "options": [
+          "Solon",
+          "Aristotel",
+          "Hamurabi",
+          "Platon iz Atene"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Ekonomika radnog procesa u ugostiteljskom poduzeću raščlanjuje se na ekonomiku:",
+        "options": [
+          "Rada, sredstava za rad i energenata",
+          "Planiranja, rada i kontrole",
+          "Rada, sredstava za rad i predmeta rada",
+          "Sredstava za rad, predmeta rada i kontrole"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Problemi lokacije objekta, izbora opreme i funkcionalnosti objekta pripadaju ekonomici:",
+        "options": [
+          "Rada",
+          "Predmeta rada",
+          "Poslovnih funkcija",
+          "Sredstava za rad"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koja disciplina NIJE neekonomska disciplina povezana s ekonomikom poduzeća?",
+        "options": [
+          "Računovodstvo",
+          "Medicina rada",
+          "Psihologija rada",
+          "Trgovačko pravo"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Znanstvenu organizaciju rada najviše vežemo uz:",
+        "options": [
+          "Smitha, Marxa i Marshalla",
+          "Taylora, Forda i Fayola",
+          "Quesnayja, Keynesa i Solona",
+          "Pegolottija, Medera i Kotruljevića"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koja je temeljna značajka ekonomike ugostiteljskih poduzeća?",
+        "options": [
+          "Proučava isključivo cijene i ponašanje potrošača na tržištu",
+          "Proučava gospodarstvo zemlje kao cjelinu i ekonomsku politiku",
+          "Proučava područje radnog procesa i područje funkcija poduzeća",
+          "Proučava samo računovodstvene izvještaje poduzeća"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koja tvrdnja o ekonomici ugostiteljskih poduzeća NIJE točna?",
+        "options": [
+          "Ekonomika rada identificira probleme raspoloživosti kadrova i radnih mjesta",
+          "Ekonomika predmeta rada identificira probleme opskrbe materijalom i sirovinama",
+          "Poslovna funkcija je zaokružena cjelina povezanih poslova kojima se ostvaruje dio zadatka poduzeća",
+          "Poslovne funkcije mogu se podijeliti na opće i posebne poslovne funkcije"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koji teoretičar u djelu „Opća teorija zaposlenosti, kamata i novca” (1936.) upućuje na državne investicije za poticanje potrošnje?",
+        "options": [
+          "John Maynard Keynes",
+          "Alfred Marshall",
+          "Adam Smith",
+          "François Quesnay"
+        ],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Ekonomika poduzeća dijeli se na opću i _______.",
+        "answer": "posebnu"
+      },
+      {
+        "sentence": "Zaključivanje od općeg prema pojedinačnom zove se _______.",
+        "answer": "dedukcija"
+      },
+      {
+        "sentence": "Neoklasičnu teoriju firme utemeljio je Alfred _______.",
+        "answer": "Marshall",
+        "hint": "Prezime."
+      },
+      {
+        "sentence": "Prvi časopis iz ekonomike poduzeća pokrenuo je Eugen _______.",
+        "answer": "Schmalenbach",
+        "hint": "Prezime."
+      },
+      {
+        "sentence": "Djelo „Bogatstvo naroda” objavljeno je _______. godine.",
+        "answer": "1776",
+        "hint": "Godina."
+      },
+      {
+        "sentence": "Ekonomika radnog procesa obuhvaća ekonomiku rada, sredstava za rad i _______ rada.",
+        "answer": "predmeta"
+      }
+    ],
+    "learn": {
+      "title": "Ekonomika ugostiteljskih poduzeća kao znanstvena i nastavna disciplina",
+      "content": "<h3>Ekonomska znanost</h3><p>Temeljni cilj ekonomske znanosti je proučiti kako <strong>racionalno koristiti ograničene resurse</strong> da bi se zadovoljile neograničene i promjenjive potrebe ljudi. Ekonomija proučava proizvodnju i raspodjelu dobara i usluga te odluke o tome što, koliko i kako proizvoditi.</p><table><tr><th>Makroekonomika</th><th>Mikroekonomika</th></tr><tr><td>gospodarstvo kao cjelina: rast, inflacija, nezaposlenost, ulaganja, ukupna proizvodnja i cijene</td><td>potrošači, kućanstva, poduzeća, ponuda, potražnja i cijene; odluke pojedinačnih subjekata (koliko proizvoditi, kako kombinirati resurse, kako odrediti cijenu)</td></tr></table><h3>Ekonomika poduzeća</h3><p><strong>Ekonomika poduzeća</strong> je znanstvena i nastavna disciplina koja se bavi gospodarskim problemima poduzeća i njihovim ponašanjem na domaćem i svjetskom tržištu; jedna je od najvažnijih <strong>mikroekonomskih</strong> disciplina. Bavi se odlukama o uspjehu poslovanja: <em>što, koliko i kako proizvoditi, kako raspodijeliti rezultate, gdje i kada nabaviti te gdje i kada prodati</em>.</p><ul><li><strong>Kao znanost</strong> proučava poslovanje poduzeća, čimbenike uspješnosti i zakonitosti koje poboljšavaju poslovanje.</li><li><strong>Kao nastavna disciplina</strong><em>saznaje, prihvaća i naučava znanstvena dostignuća i spoznaje na svom području</em>; prenosi provjerena znanja, prati nova dostignuća i obrazuje buduće ekonomiste i poduzetnike.</li><li><strong>Teorija</strong> proširuje znanja i dolazi do novih spoznaja; <strong>praksa</strong> otkriva probleme i provjerava teorijske pretpostavke — stalno su povezane.</li></ul><h4>Podjela</h4><p><strong>Opća ekonomika poduzeća</strong> — problemi zajednički svim poduzećima. <strong>Posebne ekonomike</strong> razvrstavaju se:</p><ul><li><strong>prema gospodarskim djelatnostima</strong> — industrijskih, trgovinskih, transportnih, <strong>ugostiteljskih</strong> poduzeća, banaka;</li><li><strong>prema vlasništvu</strong> — javnih i privatnih poduzeća;</li><li><strong>prema poslovnim funkcijama</strong> — ekonomika proizvodnje, nabave, prodaje, transporta;</li><li>prema <strong>kombinacijama</strong> navedenih kriterija.</li></ul><h3>Metode ekonomike poduzeća</h3><table><tr><th>Racionalističke (logičke)</th><th>Tehničke (empirijske)</th></tr><tr><td><strong>Analiza</strong> — pozitivna (kakva pojava jest) i normativna (kakva bi trebala biti)<br><strong>Sinteza</strong> — spajanje dijelova u cjelinu<br><strong>Indukcija</strong> — od pojedinačnog prema općem<br><strong>Dedukcija</strong> — od općeg prema pojedinačnom<br><strong>Komparacija</strong> — uspoređivanje pojava</td><td><strong>Promatranje</strong> — praćenje pojave<br><strong>Ispitivanje</strong> — intervju, upitnik, anketa<br><strong>Eksperiment</strong> — namjerno izazivanje pojave radi promatranja i mjerenja</td></tr></table><h3>Povijesni razvoj</h3><p>Dva razdoblja: (1) od začetaka do osamostaljivanja discipline i (2) od osamostaljivanja do danas.</p><h4>Začeci</h4><ul><li><strong>Hamurabi</strong> poznaje kamatu; <strong>Stari zavjet</strong> osuđuje lihvu; <strong>Solon</strong> provodi gospodarske reforme.</li><li><strong>Platon</strong> razvija prvu teoriju novca; <strong>Aristotel</strong> razlikuje <strong>uporabnu i prometnu vrijednost</strong> robe.</li><li><strong>F. Pegolotti i L. Meder</strong> — prve trgovinske i knjigovodstvene tehnike.</li><li>Hrvatski doprinosi: <strong>Beno Kotruljević</strong>, „O trgovini i o savršenom trgovcu” — prvi opis <strong>dvojnog knjigovodstva</strong>; <strong>Juraj Križanić</strong>, „Politika – Razgovori ob vladateljstvu” (17. st.).</li><li><strong>François Quesnay</strong> — „Ekonomske tablice” (fiziokrati).</li><li><strong>Adam Smith</strong>, „Bogatstvo naroda” (1776.) — mehanizam konkurencije (tržište određuje cijene ponudom i potražnjom) i <strong>nevidljiva ruka</strong>.</li><li><strong>Karl Marx</strong> — vrijednost robe određena je količinom uloženog rada; profit je razlika između vrijednosti koju radnik stvara i plaće koju prima.</li></ul><h4>Osamostaljivanje (početak 20. st.)</h4><ul><li><strong>Alfred Marshall</strong> — najvažniji predstavnik neoklasične teorije, <strong>utemeljitelj neoklasične teorije firme</strong>: prednost mikroekonomiji, uvodi <strong>granične troškove</strong>, proučava najisplativiju razinu proizvodnje.</li><li>Prve visoke poslovne škole — <strong>Leipzig i Beč</strong>.</li><li>Prvi stručni časopis („Časopis za istraživanja u ekonomici poduzeća”) pokrenuo je <strong>Eugen Schmalenbach</strong> (autor i djela „Osnove kalkulacije i politike cijena”).</li><li>Znanstvena organizacija rada — <strong>Taylor, Ford, Fayol</strong>.</li><li><strong>John Maynard Keynes</strong> — „Kraj laissez-fairea” (1926.) i „Opća teorija zaposlenosti, kamata i novca” (1936.), u kojoj jasno upućuje na državu i potrebu njezinih investicija u poticanju potrošnje, a time i investicija i gospodarske aktivnosti.</li><li>Ekonomika socijalističkih poduzeća (od 1918., Sovjetska Rusija): državno vlasništvo, prihodi u proračun, nema financijske samostalnosti → slabija motivacija i učinkovitost.</li></ul><h3>Ekonomika ugostiteljskih poduzeća</h3><p>Objekt proučavanja je <strong>ugostiteljsko poduzeće i njegovo poslovanje</strong>, a temeljna značajka proučavanje njegovih gospodarskih problema u dva područja:</p><table><tr><th>Područje</th><th>Sadržaj</th></tr><tr><td><strong>Ekonomika radnog procesa</strong></td><td><strong>ekonomika rada</strong> — kadrovi, radna mjesta, raspoloživost zaposlenika<br><strong>ekonomika sredstava za rad</strong> — lokacija, izbor vrste objekta, uređaji i oprema, funkcionalnost objekta<br><strong>ekonomika predmeta rada</strong> — opskrba materijalom i sirovinama</td></tr><tr><td><strong>Ekonomika poslovnih funkcija</strong></td><td><strong>osnovne</strong> funkcije: upravljanje i rukovođenje<br><strong>izvršne</strong> funkcije: razvoj, ljudski potencijali, marketing, nabava, pružanje ugostiteljskih usluga</td></tr></table><div class=\"warning-box\"><strong>Zamka:</strong> tvrdnja „poslovne funkcije mogu se podijeliti na <em>opće i posebne</em>” je <strong>netočna</strong> — dijele se na osnovne i izvršne (opća i posebna je podjela <em>ekonomike poduzeća</em> i <em>poslovne politike</em>).</div><p><strong>Predmet:</strong> ugostiteljstvo kao posebna grana gospodarstva (hrana, piće, smještaj). <strong>Zadaća:</strong> pružiti znanja za uspješno poslovanje, objasniti ekonomske pojave i omogućiti bolje odlučivanje. <strong>Cilj:</strong> razvijati istraživanja i obrazovati ekonomiste i rukovoditelje.</p><h4>Povezanost s drugim disciplinama</h4><ul><li><strong>Ekonomske makro</strong>: politička ekonomija, ekonomika gospodarstva, ekonomski sustav, ekonomska politika, teorija tržišta i cijena. <strong>Ekonomske mikro</strong>: poslovna politika, organizacija, računovodstvo, marketing, financijsko poslovanje, analiza poslovanja.</li><li><strong>Neekonomske</strong>: <strong>tehnologija</strong> (novi proizvodni i radni postupci), <strong>medicina rada</strong> (zdravlje zaposlenika, manje izostajanja), <strong>psihologija rada</strong> (profesionalna orijentacija, selekcija, motivacija), sociologija rada, <strong>trgovačko i radno pravo</strong> (prava i obveze poduzeća i zaposlenih).</li><li><strong>Pomoćne</strong>: statistika, matematika, informatika, automatska obrada podataka.</li></ul>"
+    }
+  },
+  "hospitalityEnterprise": {
+    "name": "Ugostiteljsko poduzeće i poduzetništvo",
+    "icon": "fa-building",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "Kako se definira suvremeno ugostiteljsko poduzeće?",
+        "answer": "Samostalni gospodarski, pravni, tehnički i društveni sustav koji sredstvima rada, predmetima rada i ljudskim potencijalima proizvodi usluge radi dobiti i ciljeva."
+      },
+      {
+        "question": "Kao koji sustav poduzeće istodobno djeluje?",
+        "answer": "Kao ekonomski, tehnološki, pravni i sociološki sustav.",
+        "explanation": "To su i aspekti s kojih se sagledava djelovanje ugostiteljskog poduzeća."
+      },
+      {
+        "question": "Koje su bitne SASTAVNICE poduzeća?",
+        "answer": "Objektivna (zgrade, strojevi, materijal, novac), subjektivna (ljudi, znanje, ideje) i ustrojbena (način povezivanja rada i sredstava)."
+      },
+      {
+        "question": "Tko je PODUZETNIK?",
+        "answer": "Osoba s poslovnim duhom, rukovodnim sposobnostima i znanjem, spremna preuzeti rizik, koja razvoj temelji na inovacijama i prepoznaje prilike."
+      },
+      {
+        "question": "Poduzetništvo vs menadžment?",
+        "answer": "Poduzetnik stvara promjene i traži nove prilike (inovacije); menadžer koordinira i upravlja postojećim poslovanjem."
+      },
+      {
+        "question": "Temeljni cilj poduzetništva?",
+        "answer": "Stvaranje novog tržišta — pokretanjem, organiziranjem i inoviranjem poslovanja."
+      },
+      {
+        "question": "Kako se dijele ugostiteljska poduzeća?",
+        "answer": "Prema predmetu poslovanja, veličini, vlasništvu i pravnom obliku."
+      },
+      {
+        "question": "Kriteriji veličine: mikro, malo, srednje poduzeće?",
+        "answer": "Mikro <10 zaposlenih (prihod do 2 mil. €), malo 10–50 (do 10 mil. €), srednje 50–250 (do 50 mil. €).",
+        "explanation": "Starija ispitna pitanja: „manje od 250 radnika” obuhvaća cijelo malo gospodarstvo."
+      },
+      {
+        "question": "Što je OPTIMALNA veličina poduzeća?",
+        "answer": "Najpovoljnija veličina s obzirom na potrebe tržišta i visinu pozitivnog poslovnog rezultata — najbolje iskorišten kapacitet uz maksimalnu dobit."
+      },
+      {
+        "question": "Koji su pravni oblici DRUŠTAVA OSOBA u RH?",
+        "answer": "Javno trgovačko društvo, komanditno društvo i gospodarsko interesno udruženje.",
+        "explanation": "Zamka: d.o.o. i d.d. su društva KAPITALA, ne osoba."
+      },
+      {
+        "question": "Koja su DRUŠTVA KAPITALA?",
+        "answer": "Društvo s ograničenom odgovornošću (d.o.o.) i dioničko društvo (d.d.).",
+        "explanation": "Članovi snose rizik do visine uloženog kapitala."
+      },
+      {
+        "question": "Odgovornost u JAVNOM TRGOVAČKOM DRUŠTVU?",
+        "answer": "Svi članovi odgovaraju za obveze društva neograničeno i solidarno — cijelom svojom imovinom."
+      },
+      {
+        "question": "Komplementar vs komanditor (KD)?",
+        "answer": "Komplementar odgovara neograničeno (cijelom imovinom); komanditor samo do visine uloga."
+      },
+      {
+        "question": "Kako dioničko društvo pribavlja kapital?",
+        "answer": "Izdavanjem (emisijom) i prodajom dionica; dioničari odgovaraju do visine uloženog kapitala."
+      },
+      {
+        "question": "Oblici udruživanja poduzeća prema čvrstoći i trajanju?",
+        "answer": "Slabije ili čvršće, uže ili šire, privremeno ili trajno, dobrovoljno ili obvezno povezivanje.",
+        "explanation": "Primjer obveznog povezivanja: gospodarske komore."
+      },
+      {
+        "question": "Motivi udruživanja ugostiteljskih poduzeća?",
+        "answer": "Smanjenje konkurencije, veći tržišni udio, veći kapacitet, racionalizacija, diverzifikacija i podjela poslovnih i financijskih rizika."
+      },
+      {
+        "question": "Što je SINERGIJSKI učinak?",
+        "answer": "Udružena poduzeća zajedno postižu više nego zbroj pojedinačnih — „2 + 2 = 5”."
+      },
+      {
+        "question": "Kooperacija vs koncentracija?",
+        "answer": "Kooperacija: blaže povezivanje, poduzeća zadržavaju samostalnost. Koncentracija: čvršće, gube gospodarsku i pravnu samostalnost.",
+        "explanation": "To su dvije razine udruživanja prema intenzitetu povezivanja."
+      },
+      {
+        "question": "Što je KONZORCIJ?",
+        "answer": "Povremeno (privremeno) povezivanje poduzeća radi zajedničkog ulaganja u veliki pothvat; prava i obveze uređuju se ugovorom."
+      },
+      {
+        "question": "Što je KARTEL?",
+        "answer": "Sporazum istovrsnih poduzeća-konkurenata radi ograničavanja ili isključivanja tržišnog natjecanja; zadržavaju pravnu samostalnost."
+      },
+      {
+        "question": "Što je KONCERN?",
+        "answer": "Više pravno samostalnih poduzeća pod jedinstvenom upravom u jednoj gospodarskoj jedinici; članice gube gospodarsku samostalnost.",
+        "explanation": "Horizontalni, vertikalni i dijagonalni koncerni."
+      },
+      {
+        "question": "Što je HOLDING?",
+        "answer": "Društvo koje trajno sudjeluje u vlasništvu drugih pravno samostalnih poduzeća i većinskim udjelom ih kontrolira.",
+        "explanation": "Usmjeren je na upravljanje kapitalom."
+      },
+      {
+        "question": "Što je TRUST?",
+        "answer": "Veliko jedinstveno poduzeće nastalo fuzijom više poduzeća koja gube gospodarsku i pravnu samostalnost; cilj ovladavanje tržištem ili podjela rizika."
+      },
+      {
+        "question": "Homogena vs heterogena koncentracija?",
+        "answer": "Homogena povezuje poduzeća iste djelatnosti; heterogena poduzeća različitih djelatnosti."
+      },
+      {
+        "question": "Kako ispitni ključ definira HOLDING?",
+        "answer": "Pravni subjekt koji trajno sudjeluje u vlasništvu drugih, pravno samostalnih poduzeća; usmjeren na upravljanje kapitalom te upravljačke, financijske i marketinške funkcije."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Pravne oblike društva osoba u RH čine:",
+        "options": [
+          "Javno trgovačko društvo, društvo s ograničenom odgovornošću, gospodarsko interesno udruženje",
+          "Dioničko društvo, društvo s ograničenom odgovornošću, gospodarsko interesno udruženje",
+          "Javno trgovačko društvo, komanditno društvo, gospodarsko interesno udruženje",
+          "Kooperativno trgovačko društvo, komanditno društvo, dioničko društvo"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "U kojem društvu svi članovi odgovaraju neograničeno i solidarno cijelom svojom imovinom?",
+        "options": [
+          "Dioničkom društvu",
+          "Društvu s ograničenom odgovornošću",
+          "Komanditnom društvu (svi članovi)",
+          "Javnom trgovačkom društvu"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Komanditor u komanditnom društvu odgovara:",
+        "options": [
+          "Do visine svog uloga",
+          "Neograničeno, cijelom imovinom",
+          "Solidarno s komplementarom za sve obveze",
+          "Samo za obveze nastale prije ulaska u društvo"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Blaži oblik udruživanja u kojem poduzeća zadržavaju samostalnost je:",
+        "options": [
+          "Koncentracija",
+          "Kooperacija",
+          "Trust",
+          "Koncern"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Oblici kooperacije su:",
+        "options": [
+          "Koncerni i holdinzi",
+          "Trustovi i konglomerati",
+          "Konzorciji i karteli",
+          "Holdinzi i trustovi"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Sporazum konkurenata radi ograničavanja tržišnog natjecanja je:",
+        "options": [
+          "Konzorcij",
+          "Holding",
+          "Trust",
+          "Kartel"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Privremeno povezivanje radi zajedničkog ulaganja u veliki gospodarski pothvat je:",
+        "options": [
+          "Konzorcij",
+          "Kartel",
+          "Koncern",
+          "Trust konglomerat"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Društvo koje drži većinske udjele (dionice) drugih poduzeća i tako ih kontrolira je:",
+        "options": [
+          "Kartel",
+          "Holding",
+          "Konzorcij",
+          "Gospodarsko interesno udruženje"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Kod koncentracije udružena poduzeća:",
+        "options": [
+          "Zadržavaju punu gospodarsku i pravnu samostalnost",
+          "Gube samo pravnu samostalnost",
+          "Gube gospodarsku i pravnu samostalnost",
+          "Povezuju se samo privremeno"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koji je primjer OBVEZNOG povezivanja poduzeća prema gradivu?",
+        "options": [
+          "Konzorciji za velike projekte",
+          "Karteli",
+          "Hotelski lanci i franšize",
+          "Gospodarske komore"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Mikro poduzeće prema gradivu ima:",
+        "options": [
+          "Manje od 10 zaposlenih",
+          "Od 10 do 50 zaposlenih",
+          "Od 50 do 250 zaposlenih",
+          "Manje od 500 zaposlenih"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Tko u poduzeću prvenstveno stvara promjene i traži nove prilike?",
+        "options": [
+          "Menadžer operativne razine",
+          "Poduzetnik",
+          "Revizor",
+          "Komanditor"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koja sastavnica poduzeća obuhvaća ljude, znanje i ideje?",
+        "options": [
+          "Objektivna",
+          "Ustrojbena",
+          "Subjektivna",
+          "Tehnološka sastavnica"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koji motiv NIJE motiv udruživanja poduzeća?",
+        "options": [
+          "Podjela poslovnih i financijskih rizika",
+          "Racionalizacija poslovanja",
+          "Diverzifikacija proizvodnje",
+          "Povećanje broja konkurenata na tržištu"
+        ],
+        "correct": 3
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Društva kapitala su društvo s ograničenom odgovornošću i _______ društvo.",
+        "answer": "dioničko"
+      },
+      {
+        "sentence": "U komanditnom društvu neograničeno odgovara _______.",
+        "answer": "komplementar"
+      },
+      {
+        "sentence": "Sinergija se simbolički prikazuje kao 2 + 2 = _______.",
+        "answer": "5",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Čvršći oblik povezivanja u kojem poduzeća gube gospodarsku i pravnu samostalnost zove se _______.",
+        "answer": "koncentracija"
+      },
+      {
+        "sentence": "Koncentracija poduzeća različitih djelatnosti je heterogena, a iste djelatnosti _______.",
+        "answer": "homogena"
+      },
+      {
+        "sentence": "Srednje poduzeće zapošljava od 50 do _______ radnika.",
+        "answer": "250",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Temeljni cilj poduzetništva je stvaranje novog _______.",
+        "answer": "tržišta"
+      }
+    ],
+    "learn": {
+      "title": "Ugostiteljsko poduzeće i poduzetništvo",
+      "content": "<h3>Ugostiteljsko poduzeće</h3><p>Ugostiteljsko poduzeće usmjereno je na zadovoljavanje potreba gostiju, što traži posebnu organizaciju rada, poseban radni proces i posebnu tehnologiju. <strong>Suvremeno ugostiteljsko poduzeće</strong> je samostalni gospodarski, pravni, tehnički i društveni sustav koji koristeći <strong>sredstva rada, predmete rada i ljudske potencijale</strong> proizvodi ugostiteljske proizvode i usluge radi ostvarivanja dobiti i postavljenih ciljeva.</p><h4>Poduzeće kao složeni sustav (aspekti sagledavanja)</h4><ul><li><strong>Ekonomski</strong> — obavlja proizvodnju ili pružanje usluga.</li><li><strong>Tehnološki</strong> — pretvara inpute u outpute primjenom tehnologije.</li><li><strong>Pravni</strong> — ima prava i obveze prema drugim subjektima.</li><li><strong>Sociološki</strong> — zajednica ljudi koji rade u poduzeću.</li></ul><h4>Sastavnice poduzeća</h4><p><strong>Objektivna</strong> (zgrade, strojevi, materijali, proizvodi, novac) · <strong>subjektivna</strong> (ljudi, znanje, ideje) · <strong>ustrojbena</strong> (način povezivanja rada i sredstava rada). Poduzeće je „živi organizam” u kojem ljudi obavljaju gospodarsku djelatnost.</p><h3>Poduzetnik i poduzetništvo</h3><p><strong>Poduzetnik</strong> ima poslovni duh, rukovodne sposobnosti i znanje, spreman je preuzeti rizik i razvoj temelji na inovacijama; prepoznaje prilike i vidi ono što drugi ne vide. Može biti <strong>vlasnik ili suvlasnik kapitala</strong> ili <strong>profesionalni menadžer</strong> koji radi za plaću, ali inovacijama pridonosi razvoju. Važne osobine: osobna motivacija, umne sposobnosti, razumijevanje ljudi, komunikacija, stručno znanje, donošenje odluka i realizacija ideja.</p><p><strong>Poduzetništvo</strong> je djelatnost pokretanja, organiziranja i inoviranja poslovanja s temeljnim ciljem <strong>stvaranja novog tržišta</strong>. Pet važnih aktivnosti: odnosi s državom i društvom, odnosi s tržištem robe i kapitala, organizacija, inovacija i odnosi s radnicima.</p><table><tr><th>Poduzetništvo</th><th>Menadžment</th></tr><tr><td>usmjereno na inovacije, pokreće promjene, traži nove prilike, stvara dobit</td><td>koordinira postojeće procese, koristi raspoložive resurse, upravlja svakodnevnim poslovanjem</td></tr></table><h3>Podjela ugostiteljskih poduzeća</h3><h4>Prema predmetu poslovanja</h4><p>(1) smještaj, prehrana, piće, napitci i slastice; (2) prehrana, piće, napitci i slastice; (3) priprema jela, slastica i napitaka za konzumaciju na drugom mjestu (catering).</p><h4>Prema veličini</h4><table><tr><th>Kategorija</th><th>Zaposleni</th><th>Prihod</th></tr><tr><td>Mikro</td><td>manje od 10</td><td>do 2 mil. €</td></tr><tr><td>Malo</td><td>10 do 50</td><td>do 10 mil. €</td></tr><tr><td>Srednje</td><td>50 do 250</td><td>do 50 mil. €</td></tr></table><p>Pragovi ovise o okviru: EU definicija malih i srednjih poduzeća uz broj zaposlenih traži i jedan financijski prag (prihod ili aktiva), a Zakon o računovodstvu ima vlastite pragove. Za ispit su važni rasponi zaposlenih.</p><div class=\"warning-box\"><strong>Starija ispitna pitanja</strong> navode da „mala poduzeća zapošljavaju manje od 250 radnika, a prihod nije veći od 216 milijuna kuna” — to je stari kunski kriterij za malo gospodarstvo u širem smislu (mikro + mala + srednja poduzeća). Drugi odgovor u istoj zbirci: mala poduzeća imaju <strong>manje od 50 zaposlenih</strong>, 10–54 mil. kn godišnjeg prihoda i 10–27 mil. kn ukupne aktive; ključ 2. kolokvija: <strong>od 10 do 50 zaposlenih</strong>. Prema današnjoj podjeli granica od 250 zaposlenih odvaja srednja od velikih poduzeća.</div><p><strong>Optimalna veličina</strong> je najpovoljnija veličina poduzeća s obzirom na potrebe tržišta i visinu pozitivnog poslovnog rezultata — kapacitet je najbolje iskorišten uz maksimalnu dobit. Poduzeće može biti ispod ili iznad optimalne veličine.</p><h4>Prema vlasništvu</h4><p><strong>Privatno</strong> (privatne osobe) · <strong>javno</strong> (država ili društvene organizacije) · <strong>mješovito</strong>.</p><h4>Prema pravnom obliku</h4><table><tr><th>Društva osoba</th><th>Društva kapitala</th></tr><tr><td><strong>Javno trgovačko društvo (JTD)</strong> — svi članovi odgovaraju neograničeno i solidarno cijelom imovinom<br><strong>Komanditno društvo (KD)</strong> — komplementari odgovaraju neograničeno, komanditori do visine uloga<br><strong>Gospodarsko interesno udruženje (GIU)</strong></td><td><strong>Društvo s ograničenom odgovornošću (d.o.o.)</strong> — društvo odgovara cijelom svojom imovinom, a članovi snose rizik do visine uloženog kapitala<br><strong>Dioničko društvo (d.d.)</strong> — kapital se prikuplja izdavanjem (emisijom) dionica; dioničari odgovaraju do visine uloga</td></tr></table><div class=\"warning-box\"><strong>Ispravak:</strong> jedan popis pitanja pod „pravni oblici društva osoba” navodi d.d. i d.o.o. — to su <strong>društva kapitala</strong>. Društva osoba su JTD, KD i GIU (Zakon o trgovačkim društvima).</div><h3>Udruživanje ugostiteljskih poduzeća</h3><p>Udruživanje je povezivanje radi zajedničkih interesa te gospodarskih i društvenih ciljeva. Oblici udruživanja:</p><ul><li><strong>slabije ili čvršće</strong> — zadržava li se ili gubi pravna i ekonomska samostalnost;</li><li><strong>uže ili šire</strong> — manji ili veći broj obuhvaćenih jedinica;</li><li><strong>privremeno ili trajno</strong> — vremensko razdoblje;</li><li><strong>dobrovoljno ili obvezno</strong> — u pravilu dobrovoljno, ali zakon može propisati obvezno udruživanje (npr. u <strong>gospodarske komore</strong>).</li></ul><div class=\"warning-box\"><strong>Proturječni ključevi:</strong> ključ 1. kolokvija i skripta gospodarske komore svrstavaju u <strong>obvezno</strong> povezivanje; jedan popis odgovora za 2. kolokvij piše „dobrovoljno”. Vrijedi obvezno — tako glasi i definicija iz skripte.</div><p><strong>Motivi:</strong> smanjenje konkurencije i povećanje tržišnog udjela; povećanje kapaciteta (niži troškovi); racionalizacija (jednom poduzeću treba manje radnika, menadžera i poslovnog prostora); diverzifikacija proizvodnje (više proizvoda radi manjeg rizika); podjela poslovnih i financijskih rizika. <strong>Sinergija</strong>: zajedno se postiže više nego pojedinačno („2 + 2 = 5”).</p><h4>Dvije razine: kooperacija i koncentracija</h4><table><tr><th>Kooperacija (blaža)</th><th>Koncentracija (čvršća)</th></tr><tr><td>poduzeća zadržavaju samostalnost i surađuju poslovno<br><strong>Konzorcij</strong> — povremeno povezivanje radi zajedničkog ulaganja u veliki pothvat (udruženi kapital, radna snaga, tehnologija); prava i obveze uređuje ugovor<br><strong>Kartel</strong> — sporazum istovrsnih poduzeća-konkurenata radi ograničavanja ili isključivanja tržišnog natjecanja; članovi zadržavaju pravnu samostalnost, a u području sporazuma gube gospodarsku</td><td>poduzeća gube gospodarsku i pravnu samostalnost; cilj: niži troškovi, manji rizik, veći tržišni udio<br><strong>Homogena</strong> (ista djelatnost) i <strong>heterogena</strong> (različite djelatnosti)<br><strong>Koncern</strong> — više pravno samostalnih poduzeća pod jedinstvenom upravom; horizontalni (ista grana), vertikalni (grane koje se nadovezuju), dijagonalni (raspodjela rizika)<br><strong>Holding</strong> — pravni subjekt koji trajno sudjeluje u vlasništvu drugih, pravno samostalnih poduzeća i većinskim udjelom dionica ih kontrolira; usmjeren je prvenstveno na upravljanje kapitalom, a zatim na upravljačke, financijske i marketinške funkcije za potrebe članova; <strong>konglomerat</strong> = holding + podređena poduzeća različitih djelatnosti<br><strong>Trust</strong> — fuzija više poduzeća u jedno veliko; cilj ovladavanje tržištem (istovrsna poduzeća) ili podjela rizika (različite grane)</td></tr></table><div class=\"warning-box\"><strong>Napomene uz izvore:</strong> (1) skripta kaže da kartel „u potpunosti gubi gospodarsku samostalnost” — točnije je da članovi gube gospodarsku samostalnost <em>u području sporazuma</em>, jer je kartel oblik kooperacije. Kartelni sporazumi danas su u pravilu zabranjeni propisima o zaštiti tržišnog natjecanja. (2) U nekim prijepisima ključa holding „trajno <em>djeluje</em> u vlasništvu drugih” — puni ključ glasi „trajno <strong>sudjeluje</strong> u vlasništvu drugih, pravno samostalnih poduzeća”, dakle holding je vlasnik udjela, a ne u tuđem vlasništvu.</div>"
+    }
+  },
+  "policyPlanningControl": {
+    "name": "Načela, poslovna politika, planiranje i kontrola",
+    "icon": "fa-clipboard-list",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "Koja su TEMELJNA načela poslovanja?",
+        "answer": "Načelo poslovnosti, načelo ekonomske efikasnosti i načelo održavanja kontinuiteta poslovanja."
+      },
+      {
+        "question": "Koja načela obuhvaća EKONOMSKA EFIKASNOST?",
+        "answer": "Načelo proizvodnosti rada, načelo ekonomičnosti i načelo rentabilnosti.",
+        "explanation": "Zamka: likvidnost, solventnost i konkurentnost nisu među njima."
+      },
+      {
+        "question": "Djelotvornost i svrsishodnost?",
+        "answer": "Djelotvornost: posao na vrijeme, u ugovorenoj količini i kvaliteti. Svrsishodnost: troše se samo sredstva potrebna i opravdana za koristan rezultat."
+      },
+      {
+        "question": "Na što se svodi RACIONALNOST?",
+        "answer": "Na izdašnost i štedljivost."
+      },
+      {
+        "question": "Izdašnost vs štedljivost?",
+        "answer": "Izdašnost: koliko je učinaka ostvareno po jedinici uloženih elemenata. Štedljivost: koliko je elemenata utrošeno za jednu jedinicu učinka."
+      },
+      {
+        "question": "Gospodarski preduvjeti (uvjeti) poslovanja?",
+        "answer": "Vanjski i unutarnji preduvjeti — najvažniji preduvjeti osnivanja i uspješnog rada poduzeća."
+      },
+      {
+        "question": "Kriteriji podjele POSLOVNE POLITIKE?",
+        "answer": "Po razdoblju: dugoročna, srednjoročna i kratkoročna. Po sadržaju: opća i posebna."
+      },
+      {
+        "question": "Unutarnji čimbenici formiranja poslovne politike?",
+        "answer": "Lokacija, organizacijska struktura i organizacijski resursi (fizički, ljudski, informacijski i financijski)."
+      },
+      {
+        "question": "Koja posebna politika utvrđuje ciljeve i zadatke funkcije proizvodnje?",
+        "answer": "Proizvodna politika — odnosi se na osnovnu djelatnost poduzeća."
+      },
+      {
+        "question": "Tri razine planiranja?",
+        "answer": "Strateško (dugoročno), taktičko (srednjoročno) i operativno (kratkoročno) planiranje."
+      },
+      {
+        "question": "Za koje razdoblje se donose TAKTIČKI planovi?",
+        "answer": "Od 1 do 5 godina.",
+        "explanation": "Strateški: dulje od 5 godina; operativni: do godine dana."
+      },
+      {
+        "question": "Kako se dijele planovi?",
+        "answer": "S obzirom na vremensko razdoblje i s obzirom na sadržaj."
+      },
+      {
+        "question": "Najznačajniji strateški plan ugostiteljskog poduzeća?",
+        "answer": "Marketinški plan."
+      },
+      {
+        "question": "Što sadrži FINANCIJSKI plan?",
+        "answer": "Troškove i prihode, financijski rezultat i raspodjelu rezultata."
+      },
+      {
+        "question": "Što obuhvaća praćenje poslovanja?",
+        "answer": "Kontrolu, praćenje izvršenja planova, analizu i reviziju."
+      },
+      {
+        "question": "Vrste kontrole po INTENZITETU?",
+        "answer": "Permanentna, periodična i sporadična."
+      },
+      {
+        "question": "Vrste kontrole prema PREDMETU?",
+        "answer": "Kontrola radnog procesa, komercijalnog, materijalnog i financijskog poslovanja te općih i ostalih poslova."
+      },
+      {
+        "question": "Kontrola prema tome tko je provodi?",
+        "answer": "Eksterna, interna i samokontrola."
+      },
+      {
+        "question": "Dvije osnovne vrste REVIZIJE?",
+        "answer": "Državna (javna) i komercijalna revizija."
+      },
+      {
+        "question": "Što je poslovna funkcija?",
+        "answer": "Zaokružena cjelina povezanih i usklađenih poslova kojima se ostvaruje dio ukupnog zadatka poduzeća."
+      },
+      {
+        "question": "Čemu teži poduzeće primjenjujući izdašnost i štedljivost?",
+        "answer": "Većoj izdašnosti kad raste potražnja i moguća je veća iskorištenost kapaciteta i prodaja usluga.",
+        "explanation": "Kad potražnja pada, težište prelazi na štedljivost."
+      },
+      {
+        "question": "Vanjski i unutarnji preduvjeti poslovanja — primjeri?",
+        "answer": "Vanjski: potrebe turističkog tržišta, dostupnost resursa. Unutarnji: predmet poslovanja, kapital, kadrovi, sredstva i predmeti rada, veličina, lokacija."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Ekonomska efikasnost kao širi pojam obuhvaća načela:",
+        "options": [
+          "Elastičnosti rada, ekonomičnosti i rentabilnosti",
+          "Proizvodnosti rada, konkurentnosti i solventnosti",
+          "Proizvodnosti rada, ekonomičnosti i likvidnosti",
+          "Proizvodnosti rada, ekonomičnosti i rentabilnosti"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Temeljna načela poslovanja su načela:",
+        "options": [
+          "Poslovnosti, ekonomske efikasnosti i održavanja kontinuiteta",
+          "Proizvodnosti rada, likvidnosti i solventnosti poduzeća",
+          "Izdašnosti, štedljivosti i svrsishodnosti",
+          "Opreznosti, realizacije, uzročnosti i kontinuiteta obračuna"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Racionalnost se svodi na:",
+        "options": [
+          "Likvidnost i solventnost",
+          "Izdašnost i štedljivost",
+          "Djelotvornost i konkurentnost",
+          "Proizvodnost i rentabilnost"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Unutarnji čimbenici formiranja poslovne politike su:",
+        "options": [
+          "Konkurencija, tržište i zakonodavstvo",
+          "Turistička politika, porezi i tečaj valute",
+          "Lokacija, organizacijska struktura i resursi",
+          "Sezonalnost, klima i prometna povezanost"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Po sadržaju poslovna politika dijeli se na:",
+        "options": [
+          "Dugoročnu i kratkoročnu",
+          "Stratešku i operativnu",
+          "Internu i eksternu",
+          "Opću i posebnu"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Taktički planovi donose se za razdoblje:",
+        "options": [
+          "Od 1 do 5 godina",
+          "Do godine dana",
+          "Duže od 10 godina",
+          "Do jednog mjeseca"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Najznačajniji strateški plan ugostiteljskog poduzeća je:",
+        "options": [
+          "Plan nabave",
+          "Marketinški plan",
+          "Plan troškova kadrova",
+          "Operativni plan smjena"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Tri razine planiranja u ugostiteljskom poduzeću su:",
+        "options": [
+          "Opće, posebno i pojedinačno",
+          "Godišnje, mjesečno i dnevno",
+          "Strateško, taktičko i operativno",
+          "Plansko, obračunsko i revizijsko"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Financijski plan poduzeća obuhvaća:",
+        "options": [
+          "Samo plan investicija i dugoročnih kredita",
+          "Plan smještajnih kapaciteta i prodajnih cijena po sezoni",
+          "Plan kadrova i sistematizaciju radnih mjesta u odjelima",
+          "Troškove i prihode, financijski rezultat i raspodjelu rezultata"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Vrste kontrole po intenzitetu su:",
+        "options": [
+          "Permanentna, periodična i sporadična",
+          "Eksterna, interna i samokontrola",
+          "Državna i komercijalna",
+          "Materijalna, financijska i komercijalna"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Kontrola s obzirom na to tko je provodi je eksterna, interna i:",
+        "options": [
+          "Sporadična kontrola",
+          "Samokontrola",
+          "Revizija",
+          "Periodična kontrola"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Dvije osnovne vrste revizije su:",
+        "options": [
+          "Interna revizija i samorevizija",
+          "Planska i obračunska revizija",
+          "Državna (javna) i komercijalna",
+          "Permanentna i sporadična"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Praćenje poslovanja NE obuhvaća:",
+        "options": [
+          "Kontrolu",
+          "Analizu poslovanja",
+          "Reviziju",
+          "Emisiju dionica"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Koja posebna politika utvrđuje ciljeve i zadatke funkcije proizvodnje?",
+        "options": [
+          "Proizvodna politika",
+          "Kadrovska politika",
+          "Financijska politika",
+          "Nabavna politika"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Primjenjujući načela izdašnosti i štedljivosti, poduzeće pri rastu potražnje i mogućoj većoj iskorištenosti kapaciteta teži:",
+        "options": [
+          "Većoj štedljivosti",
+          "Većoj izdašnosti",
+          "Manjoj izdašnosti",
+          "Smanjenju kapaciteta"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Ekonomska efikasnost obuhvaća načela proizvodnosti rada, ekonomičnosti i _______.",
+        "answer": "rentabilnosti"
+      },
+      {
+        "sentence": "Racionalnost se svodi na izdašnost i _______.",
+        "answer": "štedljivost"
+      },
+      {
+        "sentence": "Najznačajniji strateški plan ugostiteljskog poduzeća je _______ plan.",
+        "answer": "marketinški"
+      },
+      {
+        "sentence": "Kontrola s obzirom na provoditelja može biti eksterna, interna i _______.",
+        "answer": "samokontrola"
+      },
+      {
+        "sentence": "Vrste kontrole po intenzitetu su permanentna, periodična i _______.",
+        "answer": "sporadična"
+      },
+      {
+        "sentence": "Taktički planovi donose se za razdoblje od 1 do _______ godina.",
+        "answer": "5",
+        "hint": "Broj."
+      }
+    ],
+    "learn": {
+      "title": "Načela poslovanja, poslovna politika, planiranje i kontrola",
+      "content": "<h3>Načela poslovanja</h3><p>Temeljna načela poslovanja ugostiteljskog poduzeća su: <strong>načelo poslovnosti</strong> (poslovanje po tržišnim uvjetima, propisima i dobrim poslovnim običajima radi ostvarenja dobiti), <strong>načelo ekonomske efikasnosti</strong> i <strong>načelo održavanja kontinuiteta poslovanja</strong>.</p><h4>Ekonomska efikasnost</h4><ul><li><strong>Djelotvornost</strong> — izvršavanje poslova na vrijeme, u ugovorenoj količini i kvaliteti; izraz racionalnosti poslovanja.</li><li><strong>Svrsishodnost</strong> — ulažu se i troše samo ona sredstva, i u onoj količini, koja su potrebna i opravdana za ostvarenje korisnih rezultata.</li><li><strong>Racionalnost</strong> se svodi na <strong>izdašnost</strong> (što više učinaka po jedinici ulaganja) i <strong>štedljivost</strong> (što manje ulaganja po jedinici učinka). Poduzeće teži <strong>većoj izdašnosti</strong> kad raste potražnja i moguća je veća iskorištenost kapaciteta i prodaja; kad potražnja pada, težište je na štedljivosti.</li></ul><p>Ekonomska efikasnost kao širi pojam ostvaruje se kroz tri načela: <strong>proizvodnosti rada, ekonomičnosti i rentabilnosti</strong> (mjerila se detaljno obrađuju u 2. kolokviju).</p><div class=\"warning-box\"><strong>Zamke u ponuđenim odgovorima:</strong> „elastičnost rada”, „konkurentnost”, „solventnost” i „likvidnost” nisu načela ekonomske efikasnosti.</div><h3>Gospodarski preduvjeti poslovanja</h3><p>Najvažniji gospodarski preduvjeti osnivanja i uspješnog rada poduzeća su <strong>vanjski</strong> (potrebe turističkog tržišta, dostupnost potrebnih resursa) i <strong>unutarnji</strong> (predmet poslovanja, potreban kapital, raspoloživi kadrovi, sredstva za rad, predmeti rada, veličina i lokacija poduzeća).</p><h3>Poslovna politika</h3><p>Poslovna politika utvrđuje ciljeve poduzeća i načine njihova ostvarenja. Kriteriji podjele:</p><ul><li><strong>po razdoblju:</strong> dugoročna, srednjoročna i kratkoročna;</li><li><strong>po sadržaju:</strong> opća (za cijelo poduzeće) i posebna (za pojedina područja).</li></ul><p><strong>Posebne poslovne politike</strong> (prema stručnoj literaturi): proizvodna (uslužna) — <em>utvrđuje ciljeve i zadatke funkcije proizvodnje, tj. osnovne djelatnosti</em>, prodajna (marketinška), politika cijena, nabavna, kadrovska, financijska, investicijska i razvojna politika.</p><p><strong>Unutarnji čimbenici</strong> formiranja poslovne politike: <strong>lokacija, organizacijska struktura i organizacijski resursi</strong> (fizički, ljudski, informacijski, financijski).</p><h3>Planiranje</h3><table><tr><th>Razina</th><th>Razdoblje</th><th>Sadržaj</th></tr><tr><td><strong>Strateško</strong></td><td>dugoročno (dulje od 5 godina)</td><td>misija, dugoročni ciljevi, smjer razvoja</td></tr><tr><td><strong>Taktičko</strong></td><td>srednjoročno (<strong>1–5 godina</strong>)</td><td>razrada strategije po područjima</td></tr><tr><td><strong>Operativno</strong></td><td>kratkoročno (do godine dana)</td><td>konkretne aktivnosti, zadaci, rokovi</td></tr></table><p>Planovi se dijele <strong>s obzirom na vremensko razdoblje</strong> i <strong>s obzirom na sadržaj</strong>. <strong>Najznačajniji strateški plan</strong> ugostiteljskog poduzeća je <strong>marketinški plan</strong>; njegov uobičajeni sadržaj je analiza stanja (tržište, konkurencija, snage i slabosti), ciljevi, strategija i marketinški miks, akcijski program, proračun i kontrola.</p><p>Ostali važni pojedinačni planovi: plan prodaje (prihoda), <strong>plan troškova</strong> (materijala, kadrova, ostalih direktnih troškova), plan nabave, plan kadrova, plan investicija i <strong>financijski plan</strong>, koji obuhvaća <strong>troškove i prihode, financijski rezultat i raspodjelu rezultata</strong>.</p><h3>Praćenje poslovanja i kontrola</h3><p>Praćenje poslovanja obuhvaća <strong>kontrolu poslovanja, praćenje izvršavanja planova, analizu poslovanja i ekonomski nadzor — reviziju</strong>.</p><table><tr><th>Kriterij</th><th>Vrste kontrole</th></tr><tr><td>Intenzitet</td><td>permanentna, periodična, sporadična</td></tr><tr><td>Predmet kontroliranja</td><td>radnog procesa, komercijalnog, materijalnog i financijskog poslovanja, općih i ostalih poslova</td></tr><tr><td>Tko je provodi</td><td>eksterna, interna, samokontrola</td></tr></table><p><strong>Revizija</strong> je neovisno ispitivanje poslovanja i financijskih izvještaja; dvije osnovne vrste su <strong>državna (javna)</strong> i <strong>komercijalna</strong> revizija.</p><h3>Poslovne funkcije</h3><p><strong>Poslovna funkcija</strong> je zaokružena cjelina — dio ukupnog poslovnog procesa sastavljen od niza povezanih i usklađenih poslova kojima se ostvaruje dio ukupnog zadatka poduzeća. <strong>Osnovne</strong> funkcije: upravljanje i rukovođenje. <strong>Izvršne</strong>: razvoj, ljudski potencijali, marketing, nabava, pružanje ugostiteljskih usluga i dr.</p>"
+    }
+  },
+  "assets": {
+    "name": "Sredstva ugostiteljskog poduzeća",
+    "icon": "fa-coins",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "Podjela sredstava prema POJAVNOM obliku?",
+        "answer": "Sredstva u obliku novca (i vrijednosnih papira), u obliku stvari i u obliku prava."
+      },
+      {
+        "question": "Podjela imovine s obzirom na uključivanje u poslovni proces?",
+        "answer": "Dugotrajna imovina (stalna sredstva) i kratkotrajna imovina (obrtna, tekuća sredstva)."
+      },
+      {
+        "question": "Stalna vs obrtna sredstva?",
+        "answer": "Stalna traju dulje od godine, ne mijenjaju oblik i postupno prenose vrijednost. Obrtna se troše jednokratno, unutar godine, i prenose vrijednost odjednom."
+      },
+      {
+        "question": "Pojavni oblici DUGOTRAJNE imovine?",
+        "answer": "Nematerijalna, materijalna i financijska imovina te dugoročna potraživanja."
+      },
+      {
+        "question": "Primjeri NEMATERIJALNE imovine?",
+        "answer": "Osnivački izdaci, ulaganja u investicije u tijeku, izdaci za istraživanje turističkog tržišta, koncesije, zaštitni znak, goodwill."
+      },
+      {
+        "question": "Primjeri MATERIJALNE imovine?",
+        "answer": "Zemljišta, građevinski objekti (hoteli, restorani, praonice, garaže), oprema i postrojenja, inventar i transportna sredstva."
+      },
+      {
+        "question": "Što su dugoročna potraživanja?",
+        "answer": "Potraživanja s rokom dospijeća duljim od godine dana, npr. od povezanih poduzeća ili od prodaje uz odgodu plaćanja."
+      },
+      {
+        "question": "Pojavni oblici KRATKOTRAJNE imovine?",
+        "answer": "Zalihe, potraživanja (do godine dana), kratkotrajna financijska imovina te novac u banci i blagajni."
+      },
+      {
+        "question": "Što čini ZALIHE?",
+        "answer": "Sirovine i materijali za hranu i piće, namirnice, pića, nedovršene usluge, poluproizvodi i gotovi proizvodi te gorivo, ambalaža i sredstva za čišćenje."
+      },
+      {
+        "question": "Zašto su potraživanja mala u restoranu, a velika u hotelu?",
+        "answer": "Restoran naplaćuje odmah; hotel koji radi preko agencija ima odgođenu naplatu."
+      },
+      {
+        "question": "Načelo „dobrog gospodara”?",
+        "answer": "Racionalna uporaba sredstava (prihodi > troškovi), pravilno skladištenje, održavanje (tekuće i investicijsko) i osiguranje od rizika."
+      },
+      {
+        "question": "Koristi dobre EVIDENCIJE ZALIHA?",
+        "answer": "Dostupnost materijala, minimalni troškovi skladištenja, manje kvarenja i krađe te stalno praćenje stanja."
+      },
+      {
+        "question": "Formula KOEFICIJENTA OBRTAJA?",
+        "answer": "\\(k = \\frac{\\text{promet}}{\\text{prosječno stanje}}\\) ili \\(k = \\frac{360}{\\text{vrijeme obrtanja}}\\)",
+        "explanation": "Veći koeficijent = brži obrtaj = učinkovitije korištenje sredstava."
+      },
+      {
+        "question": "Formula BROJA DANA vezivanja sredstava?",
+        "answer": "\\(d = \\frac{360\\ (365)}{k}\\) — kraće trajanje obrta je povoljnije."
+      },
+      {
+        "question": "Što je LIKVIDNOST?",
+        "answer": "Svojstvo imovine da se u svakom trenutku može pretvoriti u gotovinu radi podmirenja obveza.",
+        "explanation": "Koeficijent likvidnosti = kratkotrajna sredstva / kratkoročne obveze, mora biti \\(> 1\\)."
+      },
+      {
+        "question": "Što je SOLVENTNOST?",
+        "answer": "Sposobnost poduzeća da u svakom trenutku novčanim sredstvima podmiri dospjele novčane obveze (platežna sposobnost).",
+        "explanation": "Solventnost = raspoloživa novčana sredstva / dospjele obveze."
+      },
+      {
+        "question": "Posljedice INSOLVENTNOSTI?",
+        "answer": "Prekid isporuka, zatezne kamate, sudski sporovi i ovrhe, blokada računa, pljenidba sredstava i ograničenje poslovanja."
+      },
+      {
+        "question": "Što utječe na potrebnu veličinu kratkotrajne imovine?",
+        "answer": "Planirana količina usluga, trajanje poslovnog procesa, uvjeti nabave, prodaje i naplate te obveze prema zaposlenicima."
+      },
+      {
+        "question": "Formula ukupno potrebnih obrtnih sredstava?",
+        "answer": "Zbroj pojedinačnih potreba (zalihe, potraživanja, novac) umanjen za zbroj kratkotrajnih obveza."
+      },
+      {
+        "question": "Je li pojam obrtnih sredstava širi od predmeta rada?",
+        "answer": "Da — osim namirnica i pića obuhvaća i novac, sitni inventar i prava."
+      },
+      {
+        "question": "Što je NETO UNOVČIVA vrijednost imovine?",
+        "answer": "Procjena vrijednosti imovine sa stajališta tržišne vrijednosti, temeljem dva koncepta: tržišne i likvidacijske vrijednosti."
+      },
+      {
+        "question": "Koja se novčana sredstva smatraju raspoloživima za solventnost?",
+        "answer": "Novac u blagajni i na žiro računu, strane valute te dospjeli vrijednosni papiri koji se mogu odmah unovčiti."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "S obzirom na uključivanje u poslovni proces imovina se dijeli na:",
+        "options": [
+          "Dugotrajnu i kratkotrajnu",
+          "Materijalnu i nematerijalnu",
+          "Vlastitu i tuđu",
+          "Novčanu i nenovčanu"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Prema pojavnom obliku sredstva mogu biti u obliku:",
+        "options": [
+          "Zaliha, potraživanja i kredita",
+          "Novca, stvari i prava",
+          "Zemljišta, zgrada i opreme",
+          "Kapitala, obveza i rezervi"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Što NE pripada kratkotrajnoj imovini?",
+        "options": [
+          "Zalihe namirnica",
+          "Potraživanja od kupaca",
+          "Goodwill",
+          "Novac u blagajni"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koncesije i goodwill pripadaju:",
+        "options": [
+          "Materijalnoj dugotrajnoj imovini",
+          "Kratkotrajnoj financijskoj imovini",
+          "Zalihama",
+          "Nematerijalnoj dugotrajnoj imovini"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Promet zaliha iznosi 720 000 €, a prosječno stanje 60 000 €. Koeficijent obrtaja je:",
+        "options": [
+          "12",
+          "30",
+          "0,083",
+          "8,33"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koeficijent obrtaja iznosi 12. Koliko dana su sredstva vezana (godina od 360 dana)?",
+        "options": [
+          "12 dana",
+          "30 dana",
+          "43 dana",
+          "4 320 dana"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Veći koeficijent obrtaja znači:",
+        "options": [
+          "Dulje vezivanje sredstava u zalihama",
+          "Manju likvidnost poduzeća",
+          "Brži obrtaj i učinkovitije korištenje sredstava",
+          "Veće potrebe za obrtnim sredstvima u poslovanju"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Likvidnost je:",
+        "options": [
+          "Sposobnost ostvarivanja dobiti na uloženi kapital",
+          "Odnos učinaka i utrošenih elemenata rada",
+          "Vrijednosni izraz trošenja stalnih sredstava u poslovanju",
+          "Svojstvo imovine da se u svakom trenutku pretvori u gotovinu"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Solventnost je:",
+        "options": [
+          "Sposobnost podmirenja dospjelih novčanih obveza",
+          "Odnos dobiti i uloženog kapitala",
+          "Brzina obrtaja kratkotrajne imovine u godini",
+          "Stupanj iskorištenosti smještajnog kapaciteta"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Kratkotrajna imovina 150 000 €, kratkoročne obveze 100 000 €. Koeficijent likvidnosti je:",
+        "options": [
+          "0,67",
+          "1,5",
+          "50 000",
+          "2,5"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koeficijent likvidnosti mora biti:",
+        "options": [
+          "Manji od 1",
+          "Jednak 0",
+          "Veći od 1",
+          "Veći od 10"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Zašto hotel koji posluje preko turističkih agencija ima veća potraživanja od restorana?",
+        "options": [
+          "Zbog većih zaliha namirnica",
+          "Zbog gotovinske naplate usluga",
+          "Zbog manjeg broja gostiju u sezoni",
+          "Zbog odgođenog plaćanja agencija"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Posljedica insolventnosti NIJE:",
+        "options": [
+          "Rast koeficijenta obrtaja",
+          "Blokada računa",
+          "Zatezne kamate i ovrhe",
+          "Prekid isporuka sirovina i energenata"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Ukupno potrebna obrtna sredstva jednaka su:",
+        "options": [
+          "Zbroju dugotrajne i kratkotrajne imovine poduzeća",
+          "Zbroju pojedinačnih potreba umanjenom za kratkotrajne obveze",
+          "Prometu podijeljenom s 360 dana",
+          "Kapitalu umanjenom za sve obveze poduzeća"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koja tvrdnja o likvidnosti i solventnosti NIJE točna?",
+        "options": [
+          "Solventnost je sposobnost poduzeća da u svakom trenutku podmiri dospjele novčane obveze",
+          "Likvidnost se mjeri pokazateljem koji stavlja u odnos sredstva i kratkoročne obveze",
+          "Solventnost je svojstvo imovine da se pretvara iz jednog pojavnog oblika u drugi redoslijedom poslovnog procesa",
+          "Solventnost se mjeri odnosom raspoloživih novčanih sredstava i dospjelih obveza"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Svojstvo imovine da se u svakom trenutku pretvori u gotovinu dostatnu za namirenje preuzetih obveza je:",
+        "options": [
+          "Solventnost",
+          "Amortizacija",
+          "Investicijsko održavanje",
+          "Likvidnost"
+        ],
+        "correct": 3
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Koeficijent obrtaja računa se kao promet podijeljen s prosječnim _______.",
+        "answer": "stanjem"
+      },
+      {
+        "sentence": "Ako je koeficijent obrtaja 12, sredstva su vezana 360 / 12 = _______ dana.",
+        "answer": "30",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Koeficijent likvidnosti mora biti veći od _______.",
+        "answer": "1",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Sposobnost podmirenja dospjelih novčanih obveza zove se _______.",
+        "answer": "solventnost"
+      },
+      {
+        "sentence": "Stalna sredstva čine dugotrajnu imovinu, a obrtna sredstva _______ imovinu.",
+        "answer": "kratkotrajnu"
+      },
+      {
+        "sentence": "Potraživanja s rokom duljim od godine dana su _______ potraživanja.",
+        "answer": "dugoročna"
+      }
+    ],
+    "learn": {
+      "title": "Sredstva reprodukcije u ugostiteljskom poduzeću",
+      "content": "<h3>Podjela sredstava</h3><p><strong>Prema pojavnom obliku:</strong> sredstva u obliku <strong>novca</strong> (i vrijednosnih papira), u obliku <strong>stvari</strong> i u obliku <strong>prava</strong>.</p><p><strong>S obzirom na uključivanje u poslovni proces:</strong></p><table><tr><th>Dugotrajna imovina (stalna sredstva)</th><th>Kratkotrajna imovina (obrtna, tekuća sredstva)</th></tr><tr><td>koristi se dulje od godine dana, u nepromijenjenom obliku; postupno se troši i postupno prenosi vrijednost na usluge; nabavlja se za vlastito poslovanje, ne radi preprodaje</td><td>troši se jednokratnom uporabom, unutar godine dana; mijenja pojavni oblik i vrijednost odjednom prenosi na proizvode i usluge; nadoknađuje se iz ostvarenog prihoda</td></tr></table><p>Tijekom poslovanja dolazi do <strong>prelijevanja</strong> obrtnih sredstava u stalna i obrnuto. Zadatak menadžmenta je održati optimalnu strukturu sredstava i nesmetano kruženje; kontinuitet traži stalno obnavljanje i povećavanje sredstava.</p><h4>Načelo „dobrog gospodara”</h4><ul><li>racionalno koristiti sredstva — prihodi moraju biti veći od troškova;</li><li>pravilno skladištiti namirnice, sirovine i ostalu imovinu;</li><li>održavati sredstva (tekuće i investicijsko održavanje);</li><li>osigurati sredstva od rizika (požar, krađa, lom, poplava, oštećenja).</li></ul><h3>Dugotrajna imovina</h3><ul><li><strong>Nematerijalna</strong> — vrijednosti stečene ulaganjem radi budućih prihoda: osnivački izdaci, ulaganja u investicije u tijeku, izdaci za istraživanje turističkog tržišta, koncesije, zaštitni znak, <strong>goodwill</strong>.</li><li><strong>Materijalna</strong> — zemljišta; građevinski objekti za smještaj (hoteli, moteli, pansioni, hosteli, turistička naselja), za prehranu i piće (restorani, slastičarnice, gostionice, caffe barovi, pivnice), za sport i wellness te pomoćni objekti (praonice, hladnjače, garaže); oprema i postrojenja; inventar (namještaj, alati); transportna sredstva.</li><li><strong>Financijska imovina</strong> — dugoročna ulaganja.</li><li><strong>Dugoročna potraživanja</strong> — rok dulji od godine dana (od povezanih poduzeća, prodaja uz odgodu plaćanja, potraživanja u sporu).</li></ul><h3>Kratkotrajna imovina</h3><table><tr><th>Oblik</th><th>Sadržaj</th></tr><tr><td><strong>Zalihe</strong></td><td>sirovine i materijali za hranu i piće, namirnice, pića, nedovršene usluge, poluproizvodi, gotovi proizvodi; gorivo, ambalaža, sredstva za čišćenje, uredski i promotivni materijal</td></tr><tr><td><strong>Potraživanja</strong> (do godine dana)</td><td>od kupaca, turističkih agencija, po plaćenim akontacijama, od zaposlenih, od države, po financijskim ulaganjima</td></tr><tr><td><strong>Kratkotrajna financijska imovina</strong></td><td>zajmovi, depoziti, kaucije, udjeli u povezanim poduzećima, vrijednosni papiri (dospijeće do godine dana)</td></tr><tr><td><strong>Novac u banci i blagajni</strong></td><td>žiro račun, drugi računi, domaća i strana valuta</td></tr></table><p>U ugostiteljstvu najveći dio kratkotrajne imovine čine namirnice, pića i ostale zalihe. <strong>Restoran</strong> ima mala potraživanja jer naplaćuje odmah; <strong>hotel</strong> koji radi preko agencija ima velika potraživanja zbog odgođenog plaćanja. Pojam obrtnih sredstava <strong>širi je od pojma predmeta rada</strong> — uključuje i novac, sitni inventar i prava.</p><p><strong>Evidencija zaliha</strong> osigurava dostupnost materijala, minimalne troškove skladištenja, manje kvarenja i krađa te stalno praćenje stanja.</p><p>Na potrebnu veličinu kratkotrajne imovine utječu: planirana količina usluga, trajanje poslovnog procesa, uvjeti nabave i plaćanja, uvjeti prodaje, način naplate potraživanja i obveze prema zaposlenicima.</p><h3>Pokazatelji obrtaja</h3><div class=\"formula-box\">\\[ k = \\frac{\\text{promet}}{\\text{prosječno stanje}} \\qquad k = \\frac{360}{\\text{vrijeme obrtanja}} \\qquad d = \\frac{360\\ (\\text{ili } 365)}{k} \\]</div><p>Koeficijent obrtaja \\(k\\) pokazuje koliko se puta sredstva obrnu u razdoblju — <strong>veći je povoljniji</strong>. Broj dana vezivanja \\(d\\) je vrijeme jednog punog kružnog toka — <strong>kraći je povoljniji</strong>.</p><div class=\"example-box\"><strong>Riješeni primjer — obrtaj zaliha:</strong> godišnji utrošak (promet) zaliha 720 000 €, prosječno stanje zaliha 60 000 €.<br>\\( k = \\frac{720\\,000}{60\\,000} = 12 \\) obrtaja godišnje<br>\\( d = \\frac{360}{12} = 30 \\) dana — zalihe se prosječno obnove svakih mjesec dana.<br>Ako se obrtaj ubrza na \\(k = 18\\), \\(d = 360/18 = 20\\) dana, a za isti promet dovoljno je prosječno stanje \\(720\\,000 / 18 = 40\\,000\\) € — oslobađa se 20 000 € obrtnih sredstava.</div><h4>Ukupno potrebna obrtna sredstva</h4><div class=\"formula-box\">\\[ \\text{potrebna obrtna sredstva} = \\sum \\text{pojedinačnih potreba} - \\sum \\text{kratkotrajnih obveza} \\]</div><div class=\"example-box\"><strong>Primjer:</strong> zalihe 40 000 € + potraživanja 25 000 € + novac 15 000 € = 80 000 €; kratkotrajne obveze prema dobavljačima 30 000 €.<br>Potrebno je \\(80\\,000 - 30\\,000 = 50\\,000\\) € obrtnih sredstava iz vlastitih ili dugoročnih izvora.</div><h3>Likvidnost i solventnost</h3><p><strong>Likvidnost</strong> je svojstvo imovine da se u svakom trenutku može pretvoriti u gotovinu <strong>dostatnu za namirenje preuzetih obveza</strong>. Ovisi o protoku obrtnih sredstava, rokovima dospijeća obveza i usklađenosti izvora financiranja.</p><p><strong>Solventnost</strong> je sposobnost poduzeća da u svakom trenutku novčanim sredstvima podmiri <strong>dospjele</strong> novčane obveze — platežna sposobnost. Za podmirenje služe novac u blagajni i na žiro računu, strane valute i dospjeli vrijednosni papiri. Od ugostiteljskog poduzeća očekuje se da bude solventno <strong>svaki dan</strong>.</p><div class=\"formula-box\">\\[ \\text{koef. likvidnosti} = \\frac{\\text{kratkotrajna sredstva}}{\\text{kratkoročne obveze}} > 1 \\qquad \\text{solventnost} = \\frac{\\text{raspoloživa novčana sredstva}}{\\text{dospjele obveze}} \\ge 1 \\]</div><div class=\"example-box\"><strong>Riješeni primjer:</strong> kratkotrajna imovina 150 000 €, kratkoročne obveze 100 000 €; na današnji dan raspoloživo je 80 000 € novca, a dospijeva 64 000 € obveza.<br>Likvidnost: \\( \\frac{150\\,000}{100\\,000} = 1{,}5 > 1 \\) — poduzeće je likvidno.<br>Solventnost: \\( \\frac{80\\,000}{64\\,000} = 1{,}25 \\ge 1 \\) — danas je solventno.<br>Da dospijeva 100 000 €, omjer bi bio \\(0{,}8\\) — poduzeće bi bilo nesolventno iako je likvidno (imovina postoji, ali nije u novcu).</div><div class=\"warning-box\"><strong>Zamka:</strong> „solventnost je svojstvo imovine da se pretvara iz jednog pojavnog oblika u drugi redoslijedom poslovnog procesa” je <strong>netočna</strong> tvrdnja — to opisuje kruženje (obrtaj) i pretvorivost imovine, a solventnost je sposobnost plaćanja dospjelih obveza.</div><p><strong>Neto unovčiva vrijednost</strong> imovine procjenjuje se sa stajališta tržišne vrijednosti, temeljem dva koncepta: <strong>tržišne i likvidacijske vrijednosti</strong>.</p><h4>Posljedice insolventnosti</h4><p>Prekid isporuka sirovina, materijala, energenata i usluga; vjerovnici traže zatezne kamate, pokreću sudske sporove i ovrhe; moguća blokada računa, pljenidba sredstava i ograničenje poslovanja.</p><div class=\"tip-box\"><strong>Ispitni fokus:</strong> likvidnost = pretvorivost imovine u novac (omjer sredstava i kratkoročnih obveza, &gt; 1); solventnost = plaćanje dospjelih obveza na vrijeme. U pitanjima „izbaci uljeza” o amortizaciji uljez je upravo definicija likvidnosti.</div>"
+    }
+  },
+  "depreciation": {
+    "name": "Amortizacija i održavanje",
+    "icon": "fa-hourglass-half",
+    "color": "#f97316",
+    "flashcards": [
+      {
+        "question": "Što je AMORTIZACIJA?",
+        "answer": "Vrijednosni izraz trošenja stalnih sredstava — ukupnost tehničkog i ekonomskog trošenja dugotrajne imovine u poslovnom procesu.",
+        "explanation": "Amortizacija se ugrađuje u cijenu ugostiteljskih usluga."
+      },
+      {
+        "question": "Uzroci smanjenja vrijednosti imovine?",
+        "answer": "Fizičko trošenje (korištenje, kvarovi, lom, neodržavanje, vrijeme) i ekonomsko zastarijevanje (tržište, nove tehnologije, potrebe gostiju)."
+      },
+      {
+        "question": "Koja sredstva podliježu amortizaciji?",
+        "answer": "Ona koja se koriste dulje od jednog obračunskog razdoblja, imaju ograničen vijek trajanja i služe proizvodnji, prodaji ili pružanju usluga."
+      },
+      {
+        "question": "Što NE podliježe amortizaciji?",
+        "answer": "Zemljište, umjetnička djela, arhivska građa, financijska imovina, osnivački izdaci, istraživanja i sredstva u pripremi.",
+        "explanation": "Najčešće ispitno: financijska imovina."
+      },
+      {
+        "question": "Što je REVALORIZACIJA?",
+        "answer": "Usklađivanje knjigovodstvene vrijednosti imovine s tržišnom, da amortizacija bude realna i dostatna za zamjenu sredstva."
+      },
+      {
+        "question": "Porezni vijek uporabe: građevine, automobili, oprema, računala?",
+        "answer": "Građevinski objekti 20 god., osobni automobili 5, oprema, vozila i nematerijalna imovina 4, računala 2, ostalo 10 godina."
+      },
+      {
+        "question": "Dva SUSTAVA obračuna amortizacije?",
+        "answer": "Sustav vremenske amortizacije i sustav funkcionalne amortizacije."
+      },
+      {
+        "question": "Metode vremenske amortizacije?",
+        "answer": "Linearna, progresivna i degresivna metoda."
+      },
+      {
+        "question": "LINEARNA metoda?",
+        "answer": "Sredstvo se troši ravnomjerno, pa se svake godine otpisuje jednak iznos: \\(A = N / t\\), stopa \\(a\\% = 100 / t\\)."
+      },
+      {
+        "question": "PROGRESIVNA metoda?",
+        "answer": "Metoda rastućeg iznosa: amortizacija je niža na početku vijeka uporabe, a zatim raste."
+      },
+      {
+        "question": "DEGRESIVNA metoda?",
+        "answer": "Metoda opadajućeg salda: u prvim godinama otpisuje se više, kasnije manje."
+      },
+      {
+        "question": "FUNKCIONALNA amortizacija?",
+        "answer": "Iznos ovisi o stvarnom korištenju (učinak, radni sati, kilometri), a ne o protoku vremena."
+      },
+      {
+        "question": "Koja se metoda amortizacije prema ispitnom ključu koristi u hotelijerstvu?",
+        "answer": "Kombinirana metoda (vremenska i funkcionalna zajedno)."
+      },
+      {
+        "question": "Čimbenici za određivanje vijeka uporabe?",
+        "answer": "Očekivana upotreba, očekivano fizičko trošenje, tehničko i ekonomsko starenje i zakonska ograničenja."
+      },
+      {
+        "question": "Dvije vrste održavanja stalnih sredstava?",
+        "answer": "Tekuće održavanje i investicijsko održavanje."
+      },
+      {
+        "question": "TEKUĆE održavanje?",
+        "answer": "Dnevno (otklanjanje manjih kvarova i oštećenja) i povremeno (pregled i zamjena dotrajalih dijelova uređaja)."
+      },
+      {
+        "question": "INVESTICIJSKO održavanje?",
+        "answer": "Radovi koji održavaju spremnost i produljuju trajanje stalne imovine: ličenje, instalacije, kotlovnice, centralno grijanje, dizala."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Amortizaciji NE podliježe:",
+        "options": [
+          "Materijalna imovina",
+          "Financijska imovina",
+          "Računalni programi",
+          "Nematerijalna imovina"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koji su sustavi obračuna amortizacije?",
+        "options": [
+          "Linearna i progresivna amortizacija",
+          "Planska i obračunska amortizacija",
+          "Vremenska i funkcionalna amortizacija",
+          "Tekuća i investicijska amortizacija"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Metode za utvrđivanje godišnjeg iznosa vremenske amortizacije su:",
+        "options": [
+          "Divizijska, adicijska i kombinirana",
+          "Statička, dinamička i tržišna",
+          "Tekuća, povremena i investicijska",
+          "Linearna, progresivna i degresivna"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Kod koje se metode u prvim godinama otpisuje više nego kasnije?",
+        "options": [
+          "Degresivne",
+          "Linearne",
+          "Progresivne",
+          "Funkcionalne pri jednakom korištenju"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Oprema nabavne vrijednosti 48 000 € ima vijek uporabe 4 godine. Godišnja linearna amortizacija je:",
+        "options": [
+          "4 000 €",
+          "12 000 €",
+          "19 200 €",
+          "48 000 €"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Linearna stopa amortizacije za građevinski objekt s vijekom 20 godina iznosi:",
+        "options": [
+          "20 %",
+          "2 %",
+          "5 %",
+          "10 %"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koji je porezni vijek uporabe računala i računalne opreme?",
+        "options": [
+          "4 godine",
+          "5 godina",
+          "10 godina",
+          "2 godine"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Revalorizacija je:",
+        "options": [
+          "Usklađivanje knjigovodstvene vrijednosti imovine s tržišnom",
+          "Otpis potpuno amortizirane imovine iz evidencije",
+          "Prodaja dotrajale opreme",
+          "Obračun amortizacije prema stvarnim radnim satima stroja"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koja se metoda amortizacije prema ispitnom ključu koristi u hotelijerstvu?",
+        "options": [
+          "Isključivo progresivna",
+          "Kombinirana",
+          "Isključivo funkcionalna",
+          "Metoda najniže cijene"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Dvije vrste održavanja stalnih sredstava su:",
+        "options": [
+          "Dnevno i godišnje",
+          "Preventivno i korektivno",
+          "Tekuće i investicijsko",
+          "Planirano i neplanirano"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Zamjena centralnog grijanja ili dizala spada u:",
+        "options": [
+          "Dnevno tekuće održavanje",
+          "Povremeno tekuće održavanje",
+          "Revalorizaciju",
+          "Investicijsko održavanje"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Funkcionalna amortizacija ovisi o:",
+        "options": [
+          "Stvarnom korištenju sredstva",
+          "Protoku vremena od nabave",
+          "Tržišnoj cijeni sredstva",
+          "Visini ostvarene dobiti"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Vozilo od 30 000 € predviđeno za 150 000 km prijeđe u godini 40 000 km. Funkcionalna amortizacija te godine je:",
+        "options": [
+          "6 000 €",
+          "8 000 €",
+          "7 500 €",
+          "12 000 €"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koja tvrdnja o amortizaciji NIJE točna?",
+        "options": [
+          "Amortizacija je vrijednosni izraz trošenja stalnih sredstava",
+          "Godišnji iznos utvrđuje se linearnom, progresivnom ili degresivnom metodom",
+          "Amortizacija je trošenje elemenata stalne i tekuće imovine u poslovnom procesu",
+          "Postoje sustav vremenske i sustav funkcionalne amortizacije"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Vrijednosni izraz trošenja stalnih sredstava zove se _______.",
+        "answer": "amortizacija"
+      },
+      {
+        "sentence": "Linearna stopa amortizacije za sredstvo s vijekom 4 godine iznosi _______ %.",
+        "answer": "25",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Sustav amortizacije koji ovisi o stvarnom korištenju sredstva je _______ amortizacija.",
+        "answer": "funkcionalna"
+      },
+      {
+        "sentence": "Porezni vijek uporabe građevinskih objekata je _______ godina.",
+        "answer": "20",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Usklađivanje knjigovodstvene vrijednosti imovine s tržišnom zove se _______.",
+        "answer": "revalorizacija"
+      },
+      {
+        "sentence": "Ličenje, instalacije i dizala spadaju u _______ održavanje.",
+        "answer": "investicijsko"
+      }
+    ],
+    "learn": {
+      "title": "Amortizacija i održavanje stalnih sredstava",
+      "content": "<h3>Pojam amortizacije</h3><p>Dugotrajna materijalna imovina tijekom vremena gubi vrijednost zbog korištenja i djelovanja prirodnih sila. <strong>Amortizacija</strong> je <strong>vrijednosni izraz trošenja stalnih sredstava</strong> — ukupnost tehničkog i ekonomskog trošenja elemenata stalne imovine u poslovnom procesu. Zamka: definicija koja govori o trošenju „stalne <em>i tekuće</em> imovine” je <strong>netočna</strong> — amortizira se samo stalna imovina. Njezina se vrijednost ugrađuje u cijenu ugostiteljskih usluga i iz prihoda se prikupljaju sredstva za zamjenu.</p><ul><li><strong>Fizičko trošenje</strong> — korištenje, kvarovi, lom, neodržavanje, vremenski utjecaji.</li><li><strong>Ekonomsko zastarijevanje</strong> — promjene na tržištu, nove tehnologije, promjene potreba gostiju.</li></ul><h4>Što podliježe, a što ne podliježe amortizaciji</h4><p><strong>Podliježu</strong> sredstva koja se koriste dulje od jednog obračunskog razdoblja, imaju ograničen vijek trajanja i služe proizvodnji, prodaji ili pružanju usluga.<br><strong>Ne podliježu:</strong> zemljište, umjetnička djela, arhivska građa, <strong>financijska imovina</strong>, osnivački izdaci, istraživanja, sredstva u pripremi.</p><h4>Vijek uporabe (porezni propisi)</h4><table><tr><th>Imovina</th><th>Vijek</th><th>Godišnja stopa</th></tr><tr><td>Građevinski objekti</td><td>20 godina</td><td>5 %</td></tr><tr><td>Osobni automobili</td><td>5 godina</td><td>20 %</td></tr><tr><td>Oprema, vozila, strojevi, nematerijalna imovina</td><td>4 godine</td><td>25 %</td></tr><tr><td>Računala i računalna oprema</td><td>2 godine</td><td>50 %</td></tr><tr><td>Ostala imovina</td><td>10 godina</td><td>10 %</td></tr></table><p>Pri određivanju vijeka uzimaju se u obzir očekivana upotreba, očekivano fizičko trošenje, tehničko i ekonomsko starenje te zakonska ograničenja.</p><h3>Revalorizacija</h3><p>Sredstva traju više godina, pa se i amortizacija za njihovu zamjenu skuplja godinama. Ako se u tom razdoblju promijene cijene, prikupljena amortizacija neće odgovarati cijeni sredstva u trenutku zamjene. <strong>Revalorizacija</strong> usklađuje knjigovodstvenu vrijednost s tržišnom kako bi osnovica i iznos amortizacije bili realni.</p><div class=\"example-box\"><strong>Primjer:</strong> stroj nabavne vrijednosti 100 000 €, vijek 10 godina, nakon 6 godina otpisano je 60 000 € (sadašnja vrijednost 40 000 €). Cijene takvih strojeva porasle su 20 % (indeks 1,2).<br>Revalorizirana nabavna vrijednost \\(= 100\\,000 \\cdot 1{,}2 = 120\\,000\\) €, revalorizirani ispravak \\(= 60\\,000 \\cdot 1{,}2 = 72\\,000\\) €, sadašnja vrijednost \\(= 48\\,000\\) €.<br>Preostale 4 godine amortizacija iznosi \\(48\\,000 / 4 = 12\\,000\\) € godišnje umjesto 10 000 €.</div><h3>Sustavi i metode obračuna</h3><p>Dva <strong>sustava</strong>: <strong>vremenska</strong> amortizacija (iznos ovisi o protoku vremena) i <strong>funkcionalna</strong> amortizacija (iznos ovisi o stvarnom korištenju — učinak, radni sati, kilometri). Metode vremenske amortizacije: <strong>linearna, progresivna i degresivna</strong>. Prema ispitnom ključu u hotelijerstvu se koristi <strong>kombinirana</strong> metoda.</p><h4>Linearna (pravocrtna) metoda</h4><p>Sredstvo se troši ravnomjerno kroz cijeli vijek, pa se u svakom razdoblju troškovi terete jednakim iznosom.</p><div class=\"formula-box\">\\[ a\\% = \\frac{100}{t} \\qquad A = \\frac{N}{t} = \\frac{N \\cdot a\\%}{100} \\]</div><p>\\(N\\) = nabavna vrijednost, \\(t\\) = vijek uporabe u godinama, \\(a\\%\\) = godišnja stopa, \\(A\\) = godišnji iznos amortizacije. U ispitnim bilješkama javlja se i zapis \\(A = N / G_{min}\\) — ista formula, gdje je \\(G_{min}\\) najkraći porezno dopušteni vijek uporabe (daje najveću priznatu godišnju amortizaciju).</p><div class=\"example-box\"><strong>Riješeni primjer — linearna:</strong> kuhinjska oprema \\(N = 48\\,000\\) €, \\(t = 4\\) godine.<br>\\( a\\% = \\frac{100}{4} = 25\\,\\% \\qquad A = \\frac{48\\,000}{4} = 12\\,000 \\) € godišnje <table><tr><th>Godina</th><th>Amortizacija</th><th>Ispravak vrijednosti</th><th>Sadašnja vrijednost</th></tr><tr><td>1.</td><td>12 000</td><td>12 000</td><td>36 000</td></tr><tr><td>2.</td><td>12 000</td><td>24 000</td><td>24 000</td></tr><tr><td>3.</td><td>12 000</td><td>36 000</td><td>12 000</td></tr><tr><td>4.</td><td>12 000</td><td>48 000</td><td>0</td></tr></table> Hotelska zgrada od 2 000 000 € (20 godina): \\(a\\% = 5\\,\\%\\), \\(A = 100\\,000\\) € godišnje.</div><h4>Degresivna i progresivna metoda</h4><p><strong>Degresivna</strong> metoda — u prvim godinama veći otpis, kasnije manji; odgovara opremi koja brzo zastarijeva. Dvije su uobičajene izvedbe: <strong>metoda opadajućeg salda</strong> (stalna stopa primjenjuje se na preostalu, sve manju vrijednost) i <strong>metoda zbroja godina</strong> (otpisuje se razlomak nabavne vrijednosti koji se iz godine u godinu smanjuje). <strong>Progresivna</strong> (metoda rastućeg iznosa) — niži otpis na početku vijeka, zatim raste; odgovara sredstvima koja se postupno uhodavaju.</p><div class=\"example-box\"><strong>Primjer — metoda opadajućeg salda:</strong> \\(N = 40\\,000\\) €, stopa 50 % na preostalu vrijednost: 20 000, 10 000, 5 000 €, a ostatak od 5 000 € otpisuje se u 4. godini.<br><strong>Primjer — metoda zbroja godina (druga degresivna metoda):</strong> \\(N = 40\\,000\\) €, \\(t = 4\\); zbroj godina \\(1+2+3+4 = 10\\).<br>Degresivno: \\(\\tfrac{4}{10}, \\tfrac{3}{10}, \\tfrac{2}{10}, \\tfrac{1}{10}\\) od \\(N\\) → 16 000, 12 000, 8 000, 4 000 €.<br>Progresivno: obrnutim redom → 4 000, 8 000, 12 000, 16 000 €.<br>Linearno bi bilo 10 000 € svake godine. Ukupno je u sva tri slučaja otpisano 40 000 € — razlikuje se samo raspored po godinama.</div><h4>Funkcionalna amortizacija</h4><div class=\"example-box\"><strong>Primjer:</strong> dostavno vozilo 30 000 €, predviđeni kapacitet 150 000 km → \\(30\\,000 / 150\\,000 = 0{,}20\\) € po km. U godini s 40 000 km amortizacija je \\(40\\,000 \\cdot 0{,}20 = 8\\,000\\) €.</div><h3>Održavanje stalnih sredstava</h3><table><tr><th>Tekuće održavanje</th><th>Investicijsko održavanje</th></tr><tr><td><strong>dnevno</strong> — otklanjanje manjih kvarova i oštećenja, čišćenje, prevencija<br><strong>povremeno</strong> — pregled i zamjena dotrajalih dijelova uređaja</td><td>radovi koji održavaju spremnost i produljuju trajanje imovine: krov, fasada, ličenje, elektro, sanitarne, plinske i ogrjevne instalacije, kotlovnice, centralno grijanje, dizala</td></tr></table><div class=\"tip-box\"><strong>Veza s troškovima:</strong> amortizacija i <em>ukalkulirano investicijsko održavanje</em> su apsolutno fiksni troškovi, a <em>tekuće održavanje</em> relativno fiksni trošak (vidi Teoriju troškova).</div>"
+    }
+  },
+  "costTheory": {
+    "name": "Teorija troškova",
+    "icon": "fa-calculator",
+    "color": "#ef4444",
+    "flashcards": [
+      {
+        "question": "Što proučava TEORIJA TROŠKOVA?",
+        "answer": "Nastanak, obilježja i ponašanje troškova te njihov odnos s cijenama, prihodima i poslovnim rezultatom."
+      },
+      {
+        "question": "Definicija TROŠKOVA?",
+        "answer": "Vrijednosno izraženi utrošci elemenata radnog procesa i usluga te porezi i doprinosi neovisni o rezultatu, nastali ostvarivanjem poslovnog učinka."
+      },
+      {
+        "question": "Što su UTROŠCI?",
+        "answer": "Fizičko ulaganje (trošenje) materijalnih vrijednosti i dobara u stvaranju učinaka, npr. kilogrami mesa za jelo."
+      },
+      {
+        "question": "Što su IZDACI?",
+        "answer": "Svaka isplata novca bez obzira na karakter i namjenu; mogu, ali ne moraju imati karakter troška.",
+        "explanation": "Izdaci mogu biti gotovinski i obračunski."
+      },
+      {
+        "question": "Jesu li rashodi uži ili širi pojam od troškova?",
+        "answer": "Širi — rashod obuhvaća i troškove i smanjenja koristi koja nisu nastala radi stvaranja učinaka.",
+        "explanation": "Svaki trošak jest rashod, ali svaki rashod nije trošak."
+      },
+      {
+        "question": "Primjer IZDATKA BEZ TROŠKA i TROŠKA BEZ IZDATKA?",
+        "answer": "Kupnja zemljišta: izdatak, a zemljište se ne amortizira. Stroj dobiven na dar: nema izdatka, ali amortizacija je trošak."
+      },
+      {
+        "question": "Što su NEDOSPJELI troškovi?",
+        "answer": "Troškovi od kojih se očekuje buduća korist — uključeni su u vrijednost imovine, a rashod postaju kad imovina prestane biti imovina."
+      },
+      {
+        "question": "Troškovi PO PRIRODI?",
+        "answer": "Troškovi sredstava za rad, predmeta rada, rada i usluga te porezi i doprinosi neovisni o poslovnom rezultatu.",
+        "explanation": "Npr. materijal, usluge, amortizacija, bruto plaće."
+      },
+      {
+        "question": "Što su MJESTA troškova?",
+        "answer": "Organizacijske jedinice u kojima troškovi nastaju: recepcija, odjel hrane i pića, domaćinstvo, održavanje."
+      },
+      {
+        "question": "Što su NOSITELJI troškova?",
+        "answer": "Učinci zbog kojih troškovi nastaju: interni (djelomične usluge unutar poduzeća) i eksterni (usluge i proizvodi za prodaju gostima)."
+      },
+      {
+        "question": "DIREKTNI troškovi?",
+        "answer": "Neposredno se pripisuju nositelju — mogu se utvrditi za svaku jedinicu usluge (normativi), npr. namirnice i pića."
+      },
+      {
+        "question": "INDIREKTNI troškovi?",
+        "answer": "Zajednički svim nositeljima (režija, uprava, prodaja); na nositelje se prenose ključem ili obračunskim listama."
+      },
+      {
+        "question": "Aktivna vs pasivna mjesta troškova?",
+        "answer": "Aktivna svojim prihodima pokrivaju troškove; pasivna imaju prihode manje od troškova ili ih nemaju (npr. odjel promocije)."
+      },
+      {
+        "question": "Troškovi po reagiranju na stupanj zaposlenosti?",
+        "answer": "Varijabilni i fiksni troškovi."
+      },
+      {
+        "question": "VARIJABILNI troškovi?",
+        "answer": "U ukupnom iznosu rastu i padaju sa stupnjem korištenja kapaciteta, a po jedinici ostaju približno isti. Svi direktni troškovi su varijabilni."
+      },
+      {
+        "question": "FIKSNI troškovi?",
+        "answer": "U ukupnom iznosu ostaju isti u određenom razdoblju bez obzira na broj gostiju; po jedinici padaju kad raste količina.",
+        "explanation": "Zovu se i troškovi razdoblja ili troškovi instaliranog kapaciteta."
+      },
+      {
+        "question": "APSOLUTNO fiksni troškovi?",
+        "answer": "Plaće stalno zaposlenih, amortizacija, kamate na kredite, premije osiguranja i ukalkulirano investicijsko održavanje.",
+        "explanation": "Ravnomjerno se raspoređuju na sve mjesece u godini."
+      },
+      {
+        "question": "RELATIVNO fiksni troškovi?",
+        "answer": "Plaće sezonskih radnika, tekuće održavanje, društvene obveze, doprinosi komorama i udruženjima, otpis sitnog inventara, promocija.",
+        "explanation": "Mješoviti troškovi: imaju fiksnu i varijabilnu komponentu."
+      },
+      {
+        "question": "Relativno stalni troškovi — kad rastu?",
+        "answer": "Kad se povećava pripravnost poduzeća u okviru postojećeg kapaciteta i kad se kapaciteti proširuju (skokovito)."
+      },
+      {
+        "question": "Tri ZONE troškova?",
+        "answer": "Zona degresivnosti, zona proporcionalnosti (najniži prosječni trošak) i zona progresivnosti."
+      },
+      {
+        "question": "Što je REMANENCIJA troškova?",
+        "answer": "Otpornost (inverzibilnost) troškova pri smanjivanju iskorištenosti kapaciteta: troškovi se ne smanjuju razmjerno, nego zaostaju."
+      },
+      {
+        "question": "Što je REAGIBILNOST troškova?",
+        "answer": "Osjetljivost troškova na promjene iskorištenosti kapaciteta: \\(h = \\frac{\\Delta T\\%}{\\Delta Q\\%}\\)."
+      },
+      {
+        "question": "Tumačenje koeficijenta reagibilnosti h?",
+        "answer": "h = 0 samo fiksni · h = 1 proporcionalni · h > 1 progresivni · 0 < h < 1 degresivni troškovi."
+      },
+      {
+        "question": "Kontrolabilni vs nekontrolabilni troškovi?",
+        "answer": "Kontrolabilni se nedvojbeno mogu dodijeliti segmentu (centru odgovornosti) i on njima upravlja; za nekontrolabilne nema opravdanja obuhvatiti ih na toj razini."
+      },
+      {
+        "question": "Što su OPORTUNITETNI troškovi?",
+        "answer": "Vrijednost najbolje propuštene alternative — korist koja se gubi odabirom jedne mogućnosti umjesto druge.",
+        "explanation": "Uz osnovne troškove to je podjela po mogućnosti dodjeljivanja."
+      },
+      {
+        "question": "Što su RELEVANTNI troškovi?",
+        "answer": "Budući troškovi do kojih se dolazi procjenom i koji se razlikuju između alternativa u odlučivanju."
+      },
+      {
+        "question": "Formula PROSJEČNOG troška?",
+        "answer": "\\(t = \\frac{T}{Q}\\) — ukupni troškovi podijeljeni s količinom učinaka."
+      },
+      {
+        "question": "Koji troškovi ostaju isti unutar određenog stupnja zaposlenosti, pa skoče stupnjevito?",
+        "answer": "Relativno fiksni troškovi (ključ grupe C).",
+        "explanation": "Jedna grupa ključa navodi „progresivni varijabilni troškovi” — vidi napomenu u Učenju."
+      },
+      {
+        "question": "Koji se troškovi javljaju kod izbora kanala prodaje ili ciljnih segmenata?",
+        "answer": "Oportunitetni troškovi — i troškovi otklanjanja „uskih grla” u uvjetima ograničenih kapaciteta."
+      },
+      {
+        "question": "Što su KONTROLABILNI troškovi segmenta?",
+        "answer": "Svi varijabilni troškovi i onaj dio fiksnih troškova koji se nedvojbeno može dodijeliti određenom segmentu."
+      },
+      {
+        "question": "Kako se mogu podijeliti IZDACI?",
+        "answer": "Na gotovinske i obračunske izdatke."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Troškovi po reagiranju na stupanj zaposlenosti dijele se na:",
+        "options": [
+          "Direktne i indirektne",
+          "Kontrolabilne i nekontrolabilne",
+          "Varijabilne i fiksne",
+          "Interne i eksterne"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Troškovi po nositeljima (mjestu nastanka) dijele se na:",
+        "options": [
+          "Fiksne i varijabilne",
+          "Apsolutne i relativne",
+          "Osnovne i oportunitetne",
+          "Direktne i indirektne"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Što je od navedenog APSOLUTNO fiksni trošak?",
+        "options": [
+          "Kamate na kredite",
+          "Plaće sezonskih radnika",
+          "Otpis sitnog inventara",
+          "Namirnice za pripremu jela"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Otpis sitnog inventara ubraja se u:",
+        "options": [
+          "Apsolutno fiksne troškove",
+          "Relativno fiksne troškove",
+          "Direktne varijabilne troškove",
+          "Oportunitetne troškove"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Troškovi koji imaju karakteristike i varijabilnih i fiksnih troškova su:",
+        "options": [
+          "Apsolutno fiksni troškovi",
+          "Direktni troškovi",
+          "Relativno fiksni troškovi",
+          "Nedospjeli troškovi"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Rashodi su u odnosu na troškove:",
+        "options": [
+          "Uži pojam",
+          "Isti pojam",
+          "Nepovezan pojam",
+          "Širi pojam"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Kupnja zemljišta primjer je:",
+        "options": [
+          "Izdatka bez troška",
+          "Troška bez izdatka",
+          "Troška prije izdatka",
+          "Utroška bez izdatka"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Fizičko ulaganje materijalnih vrijednosti u stvaranje učinaka zove se:",
+        "options": [
+          "Izdatak",
+          "Utrošak",
+          "Rashod",
+          "Prihod"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "U kojoj je zoni prosječni trošak najniži?",
+        "options": [
+          "U zoni degresivnosti",
+          "U zoni progresivnosti",
+          "U zoni proporcionalnosti",
+          "Pri nultoj iskorištenosti kapaciteta"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Remanencija troškova odnosi se na troškove koji:",
+        "options": [
+          "Rastu brže od količine učinaka",
+          "Nastaju isključivo pri proširenju kapaciteta hotela",
+          "Nemaju nikakve veze s iskorištenošću kapaciteta",
+          "Pri smanjivanju iskorištenosti kapaciteta ne padaju razmjerno"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Troškovi porastu 10 %, a količina učinaka 20 %. Koeficijent reagibilnosti i vrsta troškova su:",
+        "options": [
+          "h = 0,5 — degresivni troškovi",
+          "h = 2 — progresivni troškovi",
+          "h = 0,5 — progresivni troškovi",
+          "h = 2 — degresivni troškovi"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koeficijent reagibilnosti h = 1 znači:",
+        "options": [
+          "Samo fiksne troškove",
+          "Proporcionalne troškove",
+          "Progresivne troškove",
+          "Degresivne troškove u zoni"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Troškovi po mogućnosti dodjeljivanja centrima odgovornosti su:",
+        "options": [
+          "Fiksni i varijabilni",
+          "Direktni i indirektni",
+          "Kontrolabilni i nekontrolabilni",
+          "Poslovni i financijski rashodi"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Fiksni troškovi iznose 30 000 €, varijabilni trošak 20 € po noćenju. Prosječni trošak pri 2 000 noćenja je:",
+        "options": [
+          "15 €",
+          "20 €",
+          "50 €",
+          "35 €"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Odjel promocije koji nema vlastitih prihoda primjer je:",
+        "options": [
+          "Pasivnog mjesta troškova",
+          "Aktivnog mjesta troškova",
+          "Eksternog nositelja troškova",
+          "Direktnog troška"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Nositelji troškova mogu biti:",
+        "options": [
+          "Aktivni i pasivni",
+          "Interni i eksterni",
+          "Stalni i sezonski",
+          "Planski i obračunski"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "U relativno fiksne troškove spadaju:",
+        "options": [
+          "Doprinosi udruženjima i amortizacija",
+          "Kamate na kredite i troškovi energenata",
+          "Otpis sitnog inventara i promocija",
+          "Plaće sezonskih radnika i premije osiguranja"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Troškovi povezani s otklanjanjem „uskih grla” u uvjetima ograničenih kapaciteta nazivaju se:",
+        "options": [
+          "Remanentni troškovi",
+          "Nedospjeli troškovi",
+          "Apsolutno fiksni troškovi",
+          "Oportunitetni troškovi"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Izdaci mogu biti:",
+        "options": [
+          "Gotovinski i obračunski",
+          "Direktni i indirektni",
+          "Fiksni i varijabilni",
+          "Kontrolabilni i nekontrolabilni"
+        ],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Rashodi su _______ pojam od troškova.",
+        "answer": "širi",
+        "hint": "Uži ili širi?"
+      },
+      {
+        "sentence": "Fizičko trošenje materijalnih vrijednosti u stvaranju učinaka zove se _______.",
+        "answer": "utrošak"
+      },
+      {
+        "sentence": "Svaka isplata novca bez obzira na namjenu je _______.",
+        "answer": "izdatak"
+      },
+      {
+        "sentence": "Prosječni trošak je najniži u zoni _______.",
+        "answer": "proporcionalnosti"
+      },
+      {
+        "sentence": "Pojava da troškovi pri smanjenju iskorištenosti kapaciteta ne padaju razmjerno zove se _______.",
+        "answer": "remanencija"
+      },
+      {
+        "sentence": "Plaće sezonskih radnika su relativno _______ troškovi.",
+        "answer": "fiksni"
+      },
+      {
+        "sentence": "Ako troškovi porastu 30 %, a količina 20 %, koeficijent reagibilnosti je veći od 1 pa su troškovi _______.",
+        "answer": "progresivni"
+      }
+    ],
+    "learn": {
+      "title": "Teorija troškova u ugostiteljstvu",
+      "content": "<h3>Zašto teorija troškova</h3><p>Teorija troškova proučava <strong>nastanak, obilježja i ponašanje troškova</strong> te njihov odnos s cijenama, prihodima i poslovnim rezultatom — omogućuje pravilno usmjeravanje poslovanja.</p><h3>Trošak, utrošak, izdatak, rashod</h3><p><strong>Izdaci</strong> mogu biti <strong>gotovinski i obračunski</strong>.</p><table><tr><th>Pojam</th><th>Značenje</th><th>Primjer</th></tr><tr><td><strong>Utrošak</strong></td><td>fizičko ulaganje materijalnih vrijednosti i dobara u stvaranje učinaka — utrošene ili pretpostavljeno utrošene količine stalne i tekuće imovine, usluga i rada</td><td>2 kg mesa za gulaš</td></tr><tr><td><strong>Trošak</strong></td><td>vrijednosno izraženi utrošci elemenata radnog procesa i usluga te porezi i doprinosi neovisni o rezultatu, nastali i uzrokovani ostvarivanjem poslovnog učinka</td><td>2 kg · 9 €/kg = 18 € troška mesa</td></tr><tr><td><strong>Izdatak</strong></td><td>svaka isplata novca bez obzira na karakter i namjenu (gotovinski i obračunski izdaci)</td><td>plaćanje računa dobavljaču</td></tr><tr><td><strong>Rashod</strong></td><td>širi pojam od troška — troškovi koji se nadoknađuju iz ukupnog prihoda i smanjenja koristi nevezana uz učinke</td><td>kamate, otpis potraživanja</td></tr></table><h4>Odnos troška i izdatka</h4><ul><li><strong>Trošak prije izdatka</strong> — struja se troši, račun stiže kasnije.</li><li><strong>Istodobno</strong> — usluga se plati u trenutku pružanja.</li><li><strong>Izdatak prije troška</strong> — namirnice kupljene danas postaju trošak kad se potroše.</li><li><strong>Izdatak bez troška</strong> — kupnja zemljišta (ne amortizira se). <strong>Trošak bez izdatka</strong> — stroj dobiven na dar (amortizacija je trošak, izdatka nema).</li></ul><p><strong>Druge definicije troška iz ključeva:</strong> „vrijednosno izraženi utrošci resursa (elemenata radnog procesa) nastali s ciljem poslovanja, radi preoblikovanja u koristan, interno ili tržišno prihvatljiv učinak” i „vrijednosno izražen iznos utrošene imovine, izvršenih usluga ili posljedica nastanka obveza za primljena dobra ili usluge”. Sve tri govore isto: trošak je <em>vrijednosno</em> izražen utrošak nastao radi učinka.</p><p><strong>Nedospjeli troškovi</strong> su troškovi od kojih se očekuju buduće koristi — uključeni su u trošak nabave ili proizvodnje imovine. Postaju <strong>dospjeli troškovi, odnosno rashodi</strong>, u razdoblju kad imovina prestane biti imovina, jer se tada nadoknađuju iz prihoda.</p><h3>Podjele troškova</h3><table><tr><th>Kriterij</th><th>Vrste</th></tr><tr><td>Priroda (pojavni oblik)</td><td>troškovi sredstava za rad (amortizacija), predmeta rada (materijal), rada (bruto plaće), usluga te porezi i doprinosi neovisni o rezultatu (drugi odgovor u ključu: troškovi amortizacije, rada, materijala, energije, usluga održavanja i sl.)</td></tr><tr><td>Mjesto nastanka</td><td>mjesta troškova: prijamni odjel, odjel hrane i pića, domaćinstvo, održavanje; aktivna i pasivna mjesta</td></tr><tr><td>Nositelji</td><td><strong>interni</strong> (djelomične usluge koje se prenose do konačnog nositelja, npr. rad kuhinje) i <strong>eksterni</strong> (usluge i proizvodi za prodaju gostima)</td></tr><tr><td>Način pripisivanja nositeljima</td><td><strong>direktni</strong> i <strong>indirektni</strong></td></tr><tr><td>Reagiranje na stupanj zaposlenosti</td><td><strong>varijabilni</strong> i <strong>fiksni</strong></td></tr><tr><td>Mogućnost dodjeljivanja centrima odgovornosti</td><td><strong>kontrolabilni i nekontrolabilni</strong>; <strong>osnovni i oportunitetni</strong></td></tr><tr><td>Odnos prema učincima</td><td>troškovi proizvoda i <strong>troškovi razdoblja</strong> (marketing, prodaja, administracija)</td></tr><tr><td>Način predviđanja</td><td>stvarni (povijesni) i planirani; <strong>relevantni</strong> = budući troškovi dobiveni procjenom</td></tr></table><p><strong>Troškovi bruto plaća</strong> obuhvaćaju bruto plaće i naknade plaća.</p><h4>Direktni i indirektni troškovi</h4><p><strong>Direktni</strong> se neposredno pribrajaju nositelju; mogu se utvrditi za svaku jedinicu usluge na temelju standarda i normativa (namirnice, pića) i od početka terete svoje nositelje. <strong>Indirektni</strong> su zajednički svim nositeljima (pogonska režija, opći troškovi uprave i prodaje) i prenose se <strong>ključem</strong> ili obračunskim listama.</p><h4>Kontrolabilni, oportunitetni i relevantni troškovi</h4><p><strong>Kontrolabilni</strong> troškovi su <strong>svi varijabilni troškovi i dio fiksnih</strong> koji se nedvojbeno mogu dodijeliti određenom segmentu (npr. utrošak namirnica u kuhinji); <strong>nekontrolabilni</strong> su oni za koje ne postoji opravdanje da ih se obuhvati na toj hijerarhijskoj razini (npr. amortizacija zgrade za voditelja restorana). <strong>Oportunitetni trošak</strong> je vrijednost najbolje propuštene alternative — najčešće se javlja kod <strong>izbora kanala prodaje ili ciljnih tržišnih segmenata</strong>, a ključ tako naziva i troškove otklanjanja <strong>„uskih grla”</strong> u uvjetima ograničenih kapaciteta (npr. dvorana iznajmljena za 2 000 € nije mogla istodobno ugostiti vjenčanje od 3 500 €). <strong>Relevantni</strong> troškovi su budući troškovi dobiveni procjenom koji se razlikuju među alternativama.</p><h3>Varijabilni i fiksni troškovi</h3><p><strong>Varijabilni</strong> troškovi u ukupnom iznosu rastu i padaju sa stupnjem korištenja kapaciteta; po jedinici ostaju približno isti. Svi direktni troškovi imaju karakter varijabilnih. Mogu se kretati <strong>proporcionalno</strong> (većina), <strong>degresivno</strong> (rastu sporije od prometa — npr. pomoćni materijal u kuhinji) ili <strong>progresivno</strong> (rastu brže — npr. prekovremeni rad).</p><p><strong>Fiksni</strong> troškovi u ukupnom iznosu ostaju isti u definiranom razdoblju; kad raste korištenje kapaciteta, prevaljuju se na veći broj učinaka pa trošak po jedinici pada. Zovu se i <strong>troškovi razdoblja</strong> ili <strong>troškovi instaliranog kapaciteta</strong>.</p><table><tr><th>Apsolutno fiksni</th><th>Relativno fiksni (mješoviti)</th></tr><tr><td>plaće stalno zaposlenih, amortizacija, kamate na kredite, premije osiguranja, ukalkulirano investicijsko održavanje<br><em>ravnomjerno se raspoređuju na sve mjesece u godini</em></td><td>plaće sezonskih radnika, tekuće održavanje, razne društvene obveze, doprinosi komorama i udruženjima, otpis sitnog inventara, promocija (prezentacija dodaje energiju, vodu i gorivo)<br><em>raspoređuju se razmjerno korištenju kapaciteta</em></td></tr></table><p>Relativno fiksni troškovi <strong>ostaju nepromijenjeni unutar određenog stupnja zaposlenosti, a zatim bilježe pomak — stupnjevito</strong>. <em>Napomena:</em> jedna grupa ispitnog ključa na isto pitanje navodi „progresivni varijabilni troškovi”, druga „relativno fiksni troškovi”; stupnjevito ponašanje odgovara relativno fiksnim troškovima.</p><p><strong>Relativno stalni troškovi</strong> su dopunski stalni troškovi koji rastu kad se povećava pripravnost poduzeća u okviru postojećeg kapaciteta i kad se kapaciteti proširuju — rastu skokovito.</p><div class=\"example-box\"><strong>Riješeni primjer — prosječni trošak:</strong> hotel ima fiksne troškove \\(F = 30\\,000\\) € mjesečno i varijabilni trošak \\(v = 20\\) € po noćenju. \\(T = F + v \\cdot Q\\), \\(t = T / Q\\). <table><tr><th>Noćenja Q</th><th>Ukupni trošak T</th><th>Prosječni trošak t</th><th>Fiksni po noćenju</th></tr><tr><td>1 000</td><td>50 000</td><td>50,00</td><td>30,00</td></tr><tr><td>1 500</td><td>60 000</td><td>40,00</td><td>20,00</td></tr><tr><td>2 000</td><td>70 000</td><td>35,00</td><td>15,00</td></tr></table> S rastom iskorištenosti fiksni se troškovi „razvlače” na više noćenja, pa prosječni trošak pada — zato sezonalnost toliko šteti.</div><h3>Zone troškova</h3><ol><li><strong>Zona degresivnosti</strong> — nedovoljna iskorištenost kapaciteta; troškovi rastu sporije od iskorištenosti, prosječni trošak pada.</li><li><strong>Zona proporcionalnosti</strong> — <strong>prosječni trošak je najniži</strong>; prije i poslije nje prosječni troškovi su viši. Najpovoljnija zona.</li><li><strong>Zona progresivnosti</strong> — visoka iskorištenost; prosječni trošak raste (prekovremeni rad, preopterećenje opreme).</li></ol><p><strong>Remanencija troškova</strong> je otpornost (inverzibilnost) troškova koja se pojavljuje kod smanjivanja iskorištenosti kapaciteta: troškovi se smanjuju, ali ne istom brzinom kojom su rasli, nego zaostaju (npr. zaposlenici se ne otpuštaju odmah). Ključ je sažima kao „troškovi koji nastaju pri smanjivanju iskorištenosti kapaciteta”.</p><h3>Reagibilnost troškova</h3><p>Reagibilnost pokazuje koliko su troškovi osjetljivi na promjene iskorištenosti kapaciteta.</p><div class=\"formula-box\">\\[ h = \\frac{\\Delta T\\%}{\\Delta Q\\%} \\]</div><table><tr><th>h</th><th>Značenje</th></tr><tr><td>\\(h = 0\\)</td><td>troškovi se ne mijenjaju — samo fiksni troškovi</td></tr><tr><td>\\(h = 1\\)</td><td>proporcionalni troškovi</td></tr><tr><td>\\(h &gt; 1\\)</td><td>progresivni troškovi</td></tr><tr><td>\\(0 &lt; h &lt; 1\\)</td><td>degresivni troškovi</td></tr></table><div class=\"example-box\"><strong>Riješeni primjer:</strong> broj obroka poraste s 1 000 na 1 200 (\\(\\Delta Q\\% = 20\\,\\%\\)), a troškovi s 50 000 € na 55 000 € (\\(\\Delta T\\% = 10\\,\\%\\)).<br>\\( h = \\frac{10}{20} = 0{,}5 \\) → degresivni troškovi (u ukupnim troškovima ima i fiksnih).<br>Ako bi troškovi narasli na 62 000 € (\\(+24\\,\\%\\)): \\(h = 24/20 = 1{,}2\\) → progresivni troškovi (zona progresivnosti).</div>"
+    }
+  },
+  "costPlanning": {
+    "name": "Planiranje i analiza troškova, točka pokrića",
+    "icon": "fa-chart-line",
+    "color": "#ec4899",
+    "flashcards": [
+      {
+        "question": "Na čemu se temelji planiranje troškova?",
+        "answer": "Na planiranoj količini proizvoda i usluga, planu prihoda, rezervacijama, narudžbama i prognozama prodaje."
+      },
+      {
+        "question": "Što obuhvaća UKUPAN PLAN TROŠKOVA?",
+        "answer": "Plan troškova materijala, plan troškova kadrova i plan ostalih direktnih troškova."
+      },
+      {
+        "question": "Plan troškova materijala — udjeli u prihodu?",
+        "answer": "Hrana 35 %, piće 22 %, ostale usluge 50 % planiranog prihoda tih usluga.",
+        "explanation": "Postoci proizlaze iz vlastitih kalkulacija i služe kao cilj."
+      },
+      {
+        "question": "Što obuhvaća plan troškova KADROVA?",
+        "answer": "Za svaki odjel: bruto plaće i naknade, osiguranje, prijevoz, prehranu i druge troškove zaposlenih."
+      },
+      {
+        "question": "Primjeri OSTALIH DIREKTNIH troškova?",
+        "answer": "Pranje rublja, provizije agencijama, cvijeće i dekoracije, sredstva za čišćenje, TV pretplata, telefon, glazba, tekuće održavanje."
+      },
+      {
+        "question": "Svrha ANALIZE troškova?",
+        "answer": "Utvrditi odstupanja ostvarenja od plana, pronaći njihove uzroke i omogućiti uklanjanje problema."
+      },
+      {
+        "question": "Zašto je analiza troškova u ugostiteljstvu teška?",
+        "answer": "Velik dio troškova je indirektan, ključevi ne prikazuju uvijek stvarno stanje, a cijene se često mijenjaju."
+      },
+      {
+        "question": "Čimbenici SNIŽAVANJA troškova?",
+        "answer": "Količinski, vrijednosni, stimulativni čimbenici i supstitucija (jeftiniji materijal uz istu kvalitetu)."
+      },
+      {
+        "question": "Što je TOČKA POKRIĆA?",
+        "answer": "Razina poslovanja na kojoj su ukupni prihodi jednaki ukupnim troškovima — nema ni dobiti ni gubitka (granica rentabilnosti)."
+      },
+      {
+        "question": "U čemu se izražava točka pokrića?",
+        "answer": "U količini učinaka i u visini prihoda."
+      },
+      {
+        "question": "Formula točke pokrića u količini?",
+        "answer": "\\(Q_k = \\frac{F}{c - v}\\) — fiksni troškovi podijeljeni jediničnim doprinosom pokriću."
+      },
+      {
+        "question": "Formula dobitka?",
+        "answer": "\\(B = c \\cdot Q - (F + v \\cdot Q)\\): ukupni prihod minus ukupni troškovi. Ispitni zapis: C = T + B, gdje je C ukupni prihod.",
+        "explanation": "c = cijena po jedinici, F = fiksni troškovi, v = varijabilni trošak po jedinici."
+      },
+      {
+        "question": "Zona optimalnosti vs zona proporcionalnosti?",
+        "answer": "U zoni proporcionalnosti najniži je prosječni trošak; u zoni optimalnosti najveći je prosječni poslovni rezultat (uz nepromijenjene cijene).",
+        "explanation": "To ne znači i najveći ukupni rezultat."
+      },
+      {
+        "question": "Donosi li najveći prosječni dobitak i najveći ukupni dobitak?",
+        "answer": "Ne nužno — manji prosječni dobitak uz veću količinu učinaka često daje veći ukupni dobitak."
+      },
+      {
+        "question": "Što je FUNKCIONALNA ANALIZA VRIJEDNOSTI?",
+        "answer": "Metoda otkrivanja i uklanjanja nepotrebnih troškova analizom funkcija usluge, uz zadržavanje iste kvalitete."
+      },
+      {
+        "question": "Koji troškovi najviše utječu na rezultat u kratkom roku?",
+        "answer": "Varijabilni troškovi, jer se mijenjaju s iskorištenošću kapaciteta; fiksni su do određene granice isti."
+      },
+      {
+        "question": "Kojom se metodom procjenjuju troškovi između i izvan poznatih točaka?",
+        "answer": "Interpolacijom i ekstrapolacijom — linearno-matematičkom metodom."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Ukupan plan troškova ugostiteljskog poduzeća obuhvaća:",
+        "options": [
+          "Plan prihoda, rashoda, investicija i kredita",
+          "Plan amortizacije, kamata, poreza i doprinosa",
+          "Plan nabave, prodaje i marketinških aktivnosti",
+          "Plan troškova materijala, kadrova i ostalih direktnih troškova"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "U planu troškova materijala udio troška materijala u prihodu od hrane iznosi:",
+        "options": [
+          "35 %",
+          "22 %",
+          "50 %",
+          "15 %"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Planirani prihod od pića je 80 000 €. Planirani trošak materijala pića (22 %) iznosi:",
+        "options": [
+          "28 000 €",
+          "17 600 €",
+          "40 000 €",
+          "22 000 €"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Provizije turističkim agencijama i pranje rublja ubrajaju se u:",
+        "options": [
+          "Troškove kadrova",
+          "Troškove materijala hrane",
+          "Ostale direktne troškove",
+          "Apsolutno fiksne troškove"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Točka pokrića troškova može se izraziti u:",
+        "options": [
+          "Broju zaposlenih i broju kreveta",
+          "Postotku dobiti i stopi poreza",
+          "Danima vezivanja obrtnih sredstava",
+          "Količini učinaka i visini prihoda"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Fiksni troškovi 60 000 €, cijena noćenja 80 €, varijabilni trošak 30 € po noćenju. Točka pokrića je:",
+        "options": [
+          "1 200 noćenja",
+          "750 noćenja",
+          "2 000 noćenja",
+          "545 noćenja"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Ako je prodaja manja od točke pokrića, poduzeće:",
+        "options": [
+          "Ostvaruje dobit",
+          "Posluje s gubitkom",
+          "Posluje na granici rentabilnosti",
+          "Posluje u zoni optimalnosti"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "U zoni optimalnosti troškova najveći je:",
+        "options": [
+          "Ukupni trošak poslovanja",
+          "Prosječni trošak po jedinici učinka",
+          "Prosječni poslovni rezultat (uz nepromijenjene cijene)",
+          "Broj zaposlenih u sezoni"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Zamjena materijala jeftinijim uz zadržavanje iste kvalitete je:",
+        "options": [
+          "Remanencija",
+          "Revalorizacija",
+          "Diverzifikacija",
+          "Supstitucija"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Premije za uštede i bolji uvjeti rada su:",
+        "options": [
+          "Stimulativni čimbenici snižavanja troškova",
+          "Količinski čimbenici snižavanja troškova",
+          "Vrijednosni čimbenici snižavanja troškova",
+          "Vanjski čimbenici"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Funkcionalna analiza vrijednosti koristi se za:",
+        "options": [
+          "Obračun amortizacije",
+          "Otkrivanje i uklanjanje nepotrebnih troškova uz istu kvalitetu",
+          "Procjenu tržišne vrijednosti poduzeća pri prodaji",
+          "Određivanje stope poreza na dobit poduzeća"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Metoda interpolacije troškova je:",
+        "options": [
+          "Progresivna",
+          "Degresivna",
+          "Linearna",
+          "Eksponencijalna"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Što NIJE razlog otežane analize troškova u ugostiteljstvu?",
+        "options": [
+          "Velik udio indirektnih troškova",
+          "Obračunski ključevi ne prikazuju uvijek stvarno stanje",
+          "Česte promjene cijena",
+          "Svi troškovi su direktni"
+        ],
+        "correct": 3
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "U planu troškova materijala udio materijala u prihodu od pića iznosi _______ %.",
+        "answer": "22",
+        "hint": "Broj."
+      },
+      {
+        "sentence": "Točka pokrića je razina na kojoj su prihodi jednaki _______.",
+        "answer": "troškovima"
+      },
+      {
+        "sentence": "Uz F = 60 000 €, c = 80 € i v = 30 €, točka pokrića iznosi _______ noćenja.",
+        "answer": "1200",
+        "hint": "Broj bez razmaka."
+      },
+      {
+        "sentence": "Plan troškova kadrova izrađuje se posebno za svaki _______.",
+        "answer": "odjel"
+      },
+      {
+        "sentence": "Zamjena materijala jeftinijim ili izdašnijim uz istu kvalitetu zove se _______.",
+        "answer": "supstitucija"
+      },
+      {
+        "sentence": "Prodaja jednaka točki pokrića predstavlja granicu _______.",
+        "answer": "rentabilnosti"
+      }
+    ],
+    "learn": {
+      "title": "Planiranje i analiza troškova, točka pokrića",
+      "content": "<h3>Troškovi proizvoda i troškovi razdoblja</h3><p>Nositelji troškova su proizvodi i usluge. Uz troškove proizvoda postoje i <strong>troškovi razdoblja</strong> (marketing, prodaja, administracija) koji se ne mogu neposredno povezati s pojedinim proizvodom — stvaraju uvjete za poslovanje.</p><h3>Planiranje troškova</h3><p>Planiranje troškova dio je ukupnog planiranja poslovanja i temelji se na planiranoj količini proizvoda i usluga, planu prihoda, rezervacijama, narudžbama i prognozama prodaje. <strong>Ukupan plan troškova</strong> obuhvaća:</p><ol><li><strong>Plan troškova materijala</strong> — posebno za hranu, piće i ostale usluge namijenjene gostima; polazi od relativnog udjela materijala u planiranom prihodu: <strong>35 % hrana, 22 % piće, 50 % ostale usluge</strong> (postoci iz vlastitih kalkulacija, služe kao cilj).</li><li><strong>Plan troškova kadrova</strong> — za svaki odjel: bruto plaće i naknade, osiguranje, prijevoz, prehrana i drugi troškovi zaposlenih; temelji se na planiranoj produktivnosti i broju radnih sati.</li><li><strong>Plan ostalih direktnih troškova</strong> — pranje rublja, provizije turističkim agencijama, cvijeće i dekoracije, sredstva i usluge čišćenja, tiskanice, otpisano rublje, TV pretplata, glazba i zabava, telefon, tekuće održavanje.</li></ol><div class=\"example-box\"><strong>Riješeni primjer — plan troškova materijala:</strong><table><tr><th>Usluga</th><th>Planirani prihod</th><th>Udio</th><th>Trošak materijala</th></tr><tr><td>Hrana</td><td>200 000 €</td><td>35 %</td><td>70 000 €</td></tr><tr><td>Piće</td><td>80 000 €</td><td>22 %</td><td>17 600 €</td></tr><tr><td>Ostale usluge</td><td>20 000 €</td><td>50 %</td><td>10 000 €</td></tr><tr><td><strong>Ukupno</strong></td><td>300 000 €</td><td></td><td><strong>97 600 €</strong></td></tr></table> Materijal čini \\(97\\,600 / 300\\,000 \\approx 32{,}5\\,\\%\\) ukupnog prihoda tih usluga.</div><p>Za procjenu troškova pri razinama poslovanja za koje nema podataka koriste se <strong>interpolacija</strong> (između poznatih točaka) i <strong>ekstrapolacija</strong> (izvan njih) — <strong>linearno-matematička</strong> metoda.</p><h3>Analiza troškova</h3><p>Analiza troškova — jedan od osnovnih zadataka ekonomike poduzeća — utvrđuje <strong>odstupanja između plana i ostvarenja</strong>, njihove uzroke i načine uklanjanja. Troškovi se analiziraju po vrstama, funkcijama, mjestima i nositeljima. U ugostiteljstvu je posebno važno pratiti kretanje troškova prema stupnju zaposlenosti, kretanje fiksnih i varijabilnih troškova, <strong>granične troškove</strong> (trošak dodatne jedinice učinka) i odnos troškova i prihoda. Najčešće se analiziraju troškovi materijala, rada, prodaje, nabave i stalne imovine.</p><p><strong>Problemi:</strong> velik dio troškova je indirektan i teško se raspoređuje; obračunski ključevi ne prikazuju uvijek stvarno stanje; česte promjene cijena odstupaju od planskih.</p><h4>Snižavanje troškova</h4><ul><li><strong>Količinski čimbenici</strong> — bolje korištenje materijala, veća iskorištenost kapaciteta.</li><li><strong>Vrijednosni čimbenici</strong> — povoljnija nabava, niži troškovi prijevoza.</li><li><strong>Stimulativni čimbenici</strong> — premije za uštede, bolji uvjeti rada, normativi.</li><li><strong>Supstitucija</strong> — zamjena materijala jeftinijim ili izdašnijim uz zadržavanje iste kvalitete.</li></ul><h3>Troškovi, prihodi i iskorištenost kapaciteta</h3><p>Temelj opstanka poduzeća je <strong>dobit</strong>, pa menadžment prati odnos troškova, prihoda i iskorištenosti kapaciteta. U kratkom roku na rezultat najviše utječu <strong>varijabilni troškovi</strong>; fiksni ostaju isti do određene granice iskorištenosti.</p><h4>Točka pokrića troškova</h4><p>Točka pokrića je granica između gubitka i dobiti — razina na kojoj su prihodi jednaki troškovima (<strong>granica rentabilnosti</strong>). Izražava se u <strong>količini učinaka</strong> i u <strong>visini prihoda</strong>.</p><div class=\"formula-box\">\\[ c \\cdot Q = F + v \\cdot Q \\;\\Rightarrow\\; Q_k = \\frac{F}{c - v} \\qquad P_k = Q_k \\cdot c \\qquad B = c \\cdot Q - (F + v \\cdot Q) \\]</div><p>\\(F\\) = fiksni troškovi, \\(c\\) = prodajna cijena po jedinici, \\(v\\) = varijabilni trošak po jedinici, \\(c - v\\) = doprinos pokriću po jedinici, \\(B\\) = dobitak. Ispitni zapis istog odnosa: \\(C = T + B\\), gdje je \\(C\\) ukupni prihod i \\(T\\) ukupni troškovi, odnosno \\(B = C_q - (F_a + v_p Q)\\).</p><div class=\"example-box\"><strong>Riješeni primjer — točka pokrića:</strong> fiksni troškovi hotela u sezoni \\(F = 60\\,000\\) €, cijena noćenja \\(c = 80\\) €, varijabilni trošak \\(v = 30\\) € po noćenju.<br>Doprinos pokriću: \\(80 - 30 = 50\\) € po noćenju.<br>\\( Q_k = \\frac{60\\,000}{50} = 1\\,200 \\) noćenja · \\( P_k = 1\\,200 \\cdot 80 = 96\\,000 \\) €.<br>Pri 2 000 noćenja: \\( B = 2\\,000 \\cdot 80 - (60\\,000 + 30 \\cdot 2\\,000) = 160\\,000 - 120\\,000 = 40\\,000 \\) € dobiti.<br>Pri 1 000 noćenja: \\( B = 80\\,000 - 90\\,000 = -10\\,000 \\) € (gubitak).</div><table><tr><th>Prodaja u odnosu na točku pokrića</th><th>Rezultat</th></tr><tr><td>manja</td><td>gubitak</td></tr><tr><td>jednaka</td><td>ni dobiti ni gubitka — granica rentabilnosti</td></tr><tr><td>veća</td><td>dobit</td></tr></table><h4>Zona optimalnosti</h4><p>Prosječni trošak najniži je u <strong>zoni proporcionalnosti</strong>, a u <strong>zoni optimalnosti</strong> najveći je <strong>prosječni</strong> poslovni rezultat (ako se cijene ne mijenjaju). To ne znači da je tu i najveći ukupni rezultat: manji prosječni dobitak uz veću količinu učinaka može dati, i često daje, veći ukupni dobitak. Kod sezonskih poduzeća maksimalna dobit nije uvijek ostvariva; iskorištenost se povećava intenzivnijim korištenjem kapaciteta u sezoni i <strong>produljenjem sezone</strong>.</p><h3>Funkcionalna analiza vrijednosti</h3><p>Služi za otkrivanje i uklanjanje <strong>nepotrebnih troškova</strong> uz zadržavanje iste kvalitete. Analiziraju se funkcije proizvoda i usluga te odnos funkcija i troškova: koje funkcije usluga ima, koje bi trebala imati prema željama turista i koje imaju konkurentske usluge. Više funkcija znači veće zadovoljstvo, ali i veće troškove i cijenu — traži se optimalan odnos. Posebno se promatraju troškovi povezani s uslugom (varijabilni) i troškovi pripravnosti kapaciteta (fiksni).</p>"
+    }
+  }
+}

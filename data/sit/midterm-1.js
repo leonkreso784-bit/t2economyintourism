@@ -1,5 +1,5 @@
 // ===== SPECIAL INTEREST TOURISM — 1st MIDTERM (K1) =====
-// Source: lecture slides 1–6 (Prof. B. Pavlakovič Farrell / J. Dorčić, FMTU, 1st year HM).
+// Source: lecture slides 1–6 (course lecturers, FMTU, 1st year HM).
 // K1 boundary from the syllabus schedule: everything taught BEFORE the 1st midterm exam —
 // Introduction to tourism, Destination management, From mass/over-tourism to SIT,
 // Business tourism, Cultural tourism, Industrial tourism.
