@@ -37,7 +37,7 @@
 | **②/1 nacrt** | ✅ STAGING — `node_drafts` + pet `mcp_*` RPC-ova; `mcp:nacrt` 34/0, `mcp:brava` 46/0, mutacije 4/4 |
 | **②/1a test-računi** | ✅ `npm run staging:racuni` |
 | **Sigurnosna analiza** | A ✅ (renderer · validacija · `mcp-admin`) · B ✅ (ovlasti · nacrt · injection) · C ✅ (limiti · backup · brisanje · logovi) — nalazi N1–N16 u [MCP_SECURITY §4](../architecture/MCP_SECURITY.md) |
-| **⛔ hitno, izvan F6** | **N10:** brisanje računa puca za svakoga tko je objavio materijal (produkcija). Leon 29.09.: zasebna cigla od `main`-a, odmah — v. §2 Ⓗ |
+| **Ⓗ H1** ✅ | **N10** zatvoren 30.09.: SQL na PROD-u (provjeren), `main` = `42a13b3`, T5 objavljuje materijal (BUG-052) |
 
 ## 2 · Redoslijed
 
@@ -55,7 +55,7 @@ Vlastita grana od `main`-a, ne `feat/f6-mcp`; F6 ga samo citira. Produkcijski ko
 
 | cigla | posao | crveno na starom kodu |
 |---|---|---|
-| **H1** brisanje računa | `node_content_versions.edited_by` → `on delete set null` (kalup `content_versions`); SQL u `supabase/` + staging, pa PROD u SQL Editoru · `delete-account-check` T5 **objavi** materijal (i ima nacrt od AI-ja) prije brisanja · prije: upit na PROD koliko je korisnika pogođeno | T5 s objavom danas 409 i poluobrisan račun → poslije 200 i nula redaka u svim tablicama |
+| **H1** ✅ brisanje računa | `node_content_versions.edited_by` → `on delete set null` (kalup `content_versions`); SQL u `supabase/` + staging, pa PROD u SQL Editoru · `delete-account-check` T5 **objavi** materijal (i ima nacrt od AI-ja) prije brisanja · prije: upit na PROD koliko je korisnika pogođeno | T5 s objavom danas 409 i poluobrisan račun → poslije 200 i nula redaka u svim tablicama |
 
 ### ②/0 Sigurnosni temelj (NOVO — prije ijednog alata koji piše)
 

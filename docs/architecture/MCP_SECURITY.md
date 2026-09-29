@@ -41,7 +41,7 @@
 | I8 | opoziv veze zaustavlja AI | Auth (`revokeGrant`) | ⚠️ izmjereno S-B: obnova odbijena odmah (400), a postojeća propusnica **i dalje piše u nacrt** (200) do isteka, najviše 3600 s — korisniku rečeno; trenutni opoziv = odluka |
 | I9 | administratorov konektor nema ni jedno pravo više od običnog | hook: svaki token s `client_id` = `mcp_klijent`, neovisno o ulozi korisnika | ✅ izmjereno S-B (11 tvrdnji, s kontrolom) |
 | I10 | tok prijave: PKCE obavezan, redirect točan, kod jednokratan i vezan na klijent, potpis tokena provjeren | Supabase Auth + PostgREST | ✅ izmjereno S-B (9 tvrdnji) |
-| I11 | brisanje računa briše **sve** korisnikovo: gradivo, verzije, nacrte, OAuth veze, sesije, slike — i nikad ne ostavi poluobrisan račun | kaskade FK-ova + `delete-account` | ❌ **N10**: puca za svakoga tko je objavio materijal. Kad prođe, izmjereno čisto (S-C) |
+| I11 | brisanje računa briše **sve** korisnikovo: gradivo, verzije, nacrte, OAuth veze, sesije, slike — i nikad ne ostavi poluobrisan račun | kaskade FK-ova + `delete-account` | ✅ N10 zatvoren (H1: `on delete set null` na PROD-u + T5 s objavom, 22/22); brisanje izmjereno čisto (S-C) |
 | I12 | jedan korisnik ili konektor ne može potrošiti bazu, funkciju ni tuđe vrijeme | granice u bazi (učestalost, veličina, broj) | ❌ izmjereno S-C — N11, N12, N13 → plan ④ |
 | I13 | ono što AI ne vidi (odgovor skraćen) AI **zna** da ne vidi | alat vraća oznaku skraćenosti | ❌ **N12** |
 
@@ -141,7 +141,7 @@ s kontrolom · prioritet je za **puštanje korisnicima**, ne za današnji stagin
 
 Jednokratni korisnik, poslije obrisan i provjereno nula redaka u svim tablicama. Skripta: scratchpad `dionica-c.js`.
 
-### N10 · brisanje računa puca za svakoga tko je objavio materijal — ⛔ VISOK (produkcija, latentan, izvan MCP-a)
+### N10 · brisanje računa puca za svakoga tko je objavio materijal — ✅ ZATVOREN 30.09. (H1, BUG-052)
 
 - **Gdje:** `supabase/f1-nodes.sql` redak 157: `node_content_versions.edited_by references auth.users(id)` **bez**
   `on delete`. Okidač `snapshot_node_content` upisuje `edited_by = auth.uid()` pri svakoj objavi.
