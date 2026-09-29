@@ -30,7 +30,9 @@ punim potpisom `public.f(args)`, a `OTVORENO.funkcije` golim imenom — dok je p
 nije mogao pogoditi nikad. Nova tvrdnja „mrtav redak" za funkcije našla je to istog časa.
 ⚠️ **Mutacija nad živom staging funkcijom odbijena je klasifikatorom** (`[Security Weaken]`) nakon što je M1 već bio
 primijenjen → vraćen odmah, izmjereno (`owner_id = auth.uid()` na mjestu, pomoćnik nije izvršiv) i obje brane zelene.
-Mutacijski dokaz ostaje otvoren — Leonova odluka kako.
+**Zatvoreno istog dana:** Leon je dodao dozvolu za `npm run mcp:nacrt` → 4 mutacije na stagingu, sve crvene na
+svom mjestu (M1 vlasnik → ② 9 padova · M2 kvota → obje · M3 70 dana → ⑥ 4 · M4 `node_content` → ⑦), svaka vraćena i
+izmjerena; na kraju obje brane zelene (34/0 · 46/0).
 **②/1a ✅** `scripts/staging-test-racuni.js` (`npm run staging:racuni`): `test-a@sokrat.local` (polica + 2 materijala) ·
 `test-b@sokrat.local` (polica + 1) · `test-prazan@sokrat.local` (nula). Idempotentno (drugi prolaz: sve „postojao", ništa
 dodano); lozinke izmišljene i dopisane SAMO u `.env`, nikad ispisane; svaki račun dokazan PRIJAVOM. Google: Leon uključuje
