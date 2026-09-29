@@ -19,7 +19,7 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ### BUG-052 — Brisanje računa puca za svakoga tko je objavio materijal, a slike se obrišu prije toga
 
-- Status: 🟡 **u radu** — popravak na STAGINGU i u brani (`fix/h1-brisanje-racuna`), PROD čeka SQL uz Leonov OK ·
+- Status: ✅ **riješen na PROD-u 29.09.** (SQL uz Leonov OK, provjereno `pg_get_constraintdef`: ON DELETE SET NULL); grana s branom čeka merge ·
   Težina: **visok** (GDPR čl. 17), ali **latentan**: na produkciji 29.09. pogođen samo administrator (1 od 8), koji se
   ionako ne može sam obrisati · Našao: **F6 sigurnosna analiza, dionica C** (nalaz N10), mjerenje, ne prijava.
 - **Reprodukcija:** korisnik objavi materijal → Profil → Obriši račun → 409 `Database error deleting user`. Slike su

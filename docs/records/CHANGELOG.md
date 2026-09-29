@@ -9,7 +9,7 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 `node_content_versions.edited_by` dobiva `on delete set null` (`supabase/h1-edited-by-set-null.sql`, primijenjeno na
 staging; `f1-nodes.sql` ispravljen za nove instalacije). `delete-account-check` T5 sad objavi materijal prije brisanja:
-staro stanje 4 pada, novo 22/22. **PROD čeka SQL uz Leonov OK** (pogođen samo administrator, nitko nije poluobrisan).
+staro stanje 4 pada, novo 22/22. **PROD: SQL primijenjen 29.09. uz Leonov OK, provjereno** (ON DELETE SET NULL; 11 redaka povijesti i 8 računa netaknuto).
 Bez izmjene `js/`/`css/` → bez bumpa.
 
 ## 2026-09-29 (OPUS) — 🚀 **HR 2. GODINA: PET PREDMETA + VJEŽBE MAKRO I RAČUNOVODSTVA NA PRODUKCIJI** — `main` = `e54bdf3`, token `20260928224620`

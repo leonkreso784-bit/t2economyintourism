@@ -9,8 +9,7 @@ testirano, što slijedi.
 
 Iz F6 sigurnosne analize (N10), Leon: *zasebno, odmah*. Novo stablo od `main`-a. T5 proširen objavom → na stagingu
 **crven iz pravog razloga** (409, slike obrisane, račun živ) → SQL `on delete set null` na staging → **22/22**.
-Staging bez zaostalih test-korisnika. PROD (SELECT uz OK): isti FK, pogođen samo administrator. Sljedeće: SQL na
-PROD uz Leonov izričit OK, pa merge grane u `main` (samo `supabase/`, `scripts/`, `docs/` — bez bumpa).
+Staging bez zaostalih test-korisnika. PROD (SELECT uz OK): isti FK, pogođen samo administrator. **PROD: SQL primijenjen uz Leonov OK i provjeren** (ON DELETE SET NULL). Sljedeće: merge grane u `main` (samo `supabase/`, `scripts/`, `docs/` — bez bumpa).
 
 ## 2026-09-29 (OPUS, stablo `sokratstudy.hr1`, grana `feat/hr-1god`) — HR 2. godina: pet predmeta koji su falili + vježbe Makro i Računovodstva
 
