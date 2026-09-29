@@ -31,7 +31,10 @@ nije mogao pogoditi nikad. Nova tvrdnja „mrtav redak" za funkcije našla je to
 ⚠️ **Mutacija nad živom staging funkcijom odbijena je klasifikatorom** (`[Security Weaken]`) nakon što je M1 već bio
 primijenjen → vraćen odmah, izmjereno (`owner_id = auth.uid()` na mjestu, pomoćnik nije izvršiv) i obje brane zelene.
 Mutacijski dokaz ostaje otvoren — Leonova odluka kako.
-Sljedeće: **②/1a** skripta za imenovane test-račune (test-a, test-b s gradivom, test-prazan; Google = Leonov dashboard).
+**②/1a ✅** `scripts/staging-test-racuni.js` (`npm run staging:racuni`): `test-a@sokrat.local` (polica + 2 materijala) ·
+`test-b@sokrat.local` (polica + 1) · `test-prazan@sokrat.local` (nula). Idempotentno (drugi prolaz: sve „postojao", ništa
+dodano); lozinke izmišljene i dopisane SAMO u `.env`, nikad ispisane; svaki račun dokazan PRIJAVOM. Google: Leon uključuje
+provider u staging dashboardu. Sljedeće: **②/2 alati** (ili Leonov sigurnosni prompt, najavljen za iduću sesiju).
 
 ---
 
