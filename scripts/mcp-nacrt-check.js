@@ -51,6 +51,11 @@ function odbijenKao(ime, r, kod) {
   record(ime, greska(r) === kod, opis(r) + (greska(r) === kod ? '' : ' ← očekivano ' + kod));
 }
 
+/** Isti sadržaj bez obzira na redoslijed ključeva — `jsonb` ih sprema sortirane po svom (izmjereno 29.09.). */
+const kanon = (v) => Array.isArray(v) ? v.map(kanon) : (v && typeof v === 'object'
+  ? Object.keys(v).sort().reduce((o, k) => (o[k] = kanon(v[k]), o), {}) : v);
+const isto = (a, b) => JSON.stringify(kanon(a)) === JSON.stringify(kanon(b));
+
 const tijeloZa = (oznaka) => ({ lekcije: [{ naslov: 'Lekcija ' + oznaka, boja: 'indigo', learn: 'Tekst ' + oznaka }] });
 
 /** Otisak vlasnikovog ŽIVOG gradiva (service ključ, zaobilazi RLS) — za tvrdnju ⑦. */
@@ -119,7 +124,7 @@ const rest = (token, put, opts = {}) => http('/rest/v1/' + put, Object.assign({}
   const u = await rpc(aA, 'mcp_upisi_nacrt', { p_id: idA, p_payload: sadrzaj });
   const p = await rpc(aA, 'mcp_procitaj_nacrt', { p_id: idA });
   record('upis se PROČITA NATRAG (isti sadržaj, status u_izradi)',
-    u.status === 200 && p.json && JSON.stringify(p.json.payload) === JSON.stringify(sadrzaj) && p.json.status === 'u_izradi',
+    u.status === 200 && p.json && isto(p.json.payload, sadrzaj) && p.json.status === 'u_izradi',
     'upis ' + opis(u) + ' · čitanje ' + opis(p));
   const lista = await rpc(aA, 'mcp_moji_nacrti', {});
   record('popis vlastitih nacrta ga vidi (bez sadržaja)',
@@ -139,7 +144,7 @@ const rest = (token, put, opts = {}) => http('/rest/v1/' + put, Object.assign({}
   record('tuđi nacrt nije na strančevom popisu', Array.isArray(listaB.json) && listaB.json.length === 0, opis(listaB));
   const nakonB = await rpc(aA, 'mcp_procitaj_nacrt', { p_id: idA });
   record('A-ov nacrt je poslije strančevih pokušaja NETAKNUT',
-    nakonB.json && JSON.stringify(nakonB.json.payload) === JSON.stringify(sadrzaj) && nakonB.json.status === 'u_izradi',
+    nakonB.json && isto(nakonB.json.payload, sadrzaj) && nakonB.json.status === 'u_izradi',
     nakonB.json ? 'status ' + nakonB.json.status : opis(nakonB));
 
   console.log('\n— ③ obična sesija (bez AI-ja) —');

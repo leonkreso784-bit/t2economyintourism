@@ -386,16 +386,19 @@ function provjeriPrava(inv) {
   record('popis otvorenog odgovara bazi (nijedan mrtav redak)', manjak.length === 0,
     manjak.join(', ') || 'sve s popisa stvarno postoji');
 
+  // Inventar imenuje funkciju PUNIM potpisom (`public.mcp_upisi_nacrt(uuid,jsonb)`), popis golim imenom.
+  // Dok je popis bio prazan, razlika se nije mogla vidjeti — prvi otvoreni redak (②/1) ju je razotkrio.
+  const golo = (k) => k.replace(/^public\./, '').replace(/\(.*$/, '');
   const funkcije = Object.entries(inv.funkcije || {});
   const viskoviF = funkcije
-    .filter(([ime, o]) => o.execute && !(ime in OTVORENO.funkcije))
+    .filter(([ime, o]) => o.execute && !(golo(ime) in OTVORENO.funkcije))
     .map(([ime, o]) => ime + (o.okidac ? ' (okidač)' : ''));
   record(`nijedna funkcija u public nije izvršiva ulozi osim popisa (${funkcije.length} pregledano)`,
     viskoviF.length === 0, viskoviF.join(' | ') || 'izvršivo samo: ' + (Object.keys(OTVORENO.funkcije).join(', ') || 'nijedna'));
 
   // Drugi smjer, kao za tablice: popis koji tvrdi dozvolu koje u bazi NEMA je mrtav — i uz njega
   // bi brana ostala zelena zato što je popis zastario, a ne zato što je brava čvrsta (②/1).
-  const manjakF = Object.keys(OTVORENO.funkcije).filter((ime) => !((inv.funkcije || {})[ime] || {}).execute);
+  const manjakF = Object.keys(OTVORENO.funkcije).filter((ime) => !funkcije.some(([k, o]) => golo(k) === ime && o.execute));
   record('popis otvorenih funkcija odgovara bazi (nijedan mrtav redak)', manjakF.length === 0,
     manjakF.join(', ') || 'sve s popisa stvarno izvršivo');
 }
