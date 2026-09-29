@@ -170,10 +170,26 @@ async function main() {
       body: JSON.stringify({ user_id: user.id, key: 'm5a-check', value: { n: 1 } })
     });
     // Materijal (kaskada `nodes.owner_id` → node_content → versions).
-    await http('/rest/v1/rpc/create_node', {
+    const cn = await http('/rest/v1/rpc/create_node', {
       method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json' }, asUser),
       body: JSON.stringify({ p_parent: null, p_kind: 'study', p_name: 'M5a check' })
     });
+    const nodeId = cn.ok ? await cn.json() : null;
+    // H1 (2026-09-29): materijal se mora i OBJAVITI. Tek objava upiše redak u
+    // `node_content_versions` s `edited_by` = korisnik — a upravo taj stupac je bez `on delete`
+    // rušio `deleteUser` („Database error deleting user"), POSLIJE brisanja slika → poluobrisan
+    // račun. Do H1 je T5 stvarao samo prazan čvor i prolazio na slučaju koji ne dira taj stupac.
+    const verRes = nodeId ? await http(`/rest/v1/node_content?node_id=eq.${nodeId}&select=version`, { headers: asUser }) : null;
+    const baseVersion = verRes && verRes.ok ? ((await verRes.json())[0] || {}).version : null;
+    const pub = await http('/rest/v1/rpc/publish_node', {
+      method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json' }, asUser),
+      body: JSON.stringify({ p_node_id: nodeId, p_payload: { lekcija: { flashcards: [{ q: 'H1', a: 'provjera' }] } }, p_base_version: baseVersion })
+    });
+    const autorski = await http(`/rest/v1/node_content_versions?edited_by=eq.${user.id}&select=id`, { headers: svcHeaders() })
+      .then((r) => r.ok ? r.json() : null).catch(() => null);
+    // Bez ovoga bi T5 opet mogao zelenjeti na praznom slučaju (npr. kad se okidač promijeni).
+    record('priprema: materijal objavljen i povijest nosi autora', pub.ok && Array.isArray(autorski) && autorski.length > 0,
+      `publish ${pub.status}, verzija s autorom: ${autorski ? autorski.length : '?'}`);
     // Slika u VLASTITOM prefiksu — bez njenog brisanja `deleteUser` PUCA (Supabase odbija
     // obrisati vlasnika objekata u Storageu). Ovo je jezgra testa, ne kozmetika.
     const imgPath = `${user.id}/probe/one.png`;
@@ -211,6 +227,8 @@ async function main() {
 
     record('napredak je nestao (kaskada)', Array.isArray(prog) && prog.length === 0, `redaka: ${prog ? prog.length : '?'}`);
     record('materijali su nestali (kaskada)', Array.isArray(nodes) && nodes.length === 0, `redaka: ${nodes ? nodes.length : '?'}`);
+    const vers = await q(`/rest/v1/node_content_versions?edited_by=eq.${user.id}&select=id`);
+    record('povijest materijala je nestala (kaskada preko čvora)', Array.isArray(vers) && vers.length === 0, `redaka: ${vers ? vers.length : '?'}`);
     record('slike su nestale (Storage purge)', Array.isArray(objs) && objs.length === 0, `objekata: ${objs ? objs.length : '?'}`);
     const objsAv = await http(`/storage/v1/object/list/${PROFILE_BUCKET}`, {
       method: 'POST', headers: svcHeaders(), body: JSON.stringify({ prefix: user.id, limit: 100 })
@@ -218,7 +236,10 @@ async function main() {
     record('avatar je nestao (profile-images purge)', Array.isArray(objsAv) && objsAv.length === 0, `objekata: ${objsAv ? objsAv.length : '?'}`);
     leftovers = 'provjereno';
   } finally {
-    await adminDeleteUser(user.id);   // za slučaj da je test pao prije brisanja
+    // Za slučaj da je test pao prije brisanja. Čvorovi idu PRVI: dok postoji verzija s
+    // `edited_by`, stari FK ruši i admin-brisanje — bez ovoga bi crven T5 ostavio smeće na stagingu.
+    await http(`/rest/v1/nodes?owner_id=eq.${user.id}`, { method: 'DELETE', headers: svcHeaders() }).catch(() => {});
+    await adminDeleteUser(user.id);
   }
   void leftovers;
 

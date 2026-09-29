@@ -17,6 +17,24 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
+### BUG-052 — Brisanje računa puca za svakoga tko je objavio materijal, a slike se obrišu prije toga
+
+- Status: ✅ **riješen na PROD-u 29.09.** (SQL uz Leonov OK, provjereno `pg_get_constraintdef`: ON DELETE SET NULL); grana s branom čeka merge ·
+  Težina: **visok** (GDPR čl. 17), ali **latentan**: na produkciji 29.09. pogođen samo administrator (1 od 8), koji se
+  ionako ne može sam obrisati · Našao: **F6 sigurnosna analiza, dionica C** (nalaz N10), mjerenje, ne prijava.
+- **Reprodukcija:** korisnik objavi materijal → Profil → Obriši račun → 409 `Database error deleting user`. Slike su
+  obrisane, a račun, materijal, prijava i AI-token ostaju.
+- **Uzrok:** `node_content_versions.edited_by references auth.users(id)` bez `on delete` (`supabase/f1-nodes.sql`);
+  okidač `snapshot_node_content` ga puni pri svakoj objavi. `delete-account` briše slike PRIJE `deleteUser`, pa pad
+  ostavi pola.
+- **Zašto ga brana nije uhvatila:** `delete-account-check` T5 stvarao je materijal, ali ga **nikad nije objavio** —
+  `edited_by` je ostao prazan i test je prolazio na slučaju koji ne dira pokvareni stupac.
+- **Rješenje:** `supabase/h1-edited-by-set-null.sql` (`on delete set null`, kalup `content_versions`) + T5 objavi
+  materijal i u pripremi TVRDI da povijest nosi autora. Obrnuta provjera: novi T5 na starom stanju **4 pada**
+  (409, korisnik živ, materijal i povijest ostali) → poslije popravka **22/22**.
+- **Lekcija:** test brisanja mora napuniti **svaki** stupac koji pokazuje na korisnika, i u pripremi dokazati da ga je
+  napunio. Kaskada koju shema „obećava" nije dokaz — dokaz je brisanje korisnika koji je taj redak stvarno stvorio.
+
 ### BUG-039 — Ljestva širine kviza i dva pravila za male telefone su MRTVI: kasniji širi upit gasi raniji uži
 
 - Status: 🔴 **otvoren** — svjesno odgođen, jer ispravak je **odluka o izgledu**, a našao ga je

@@ -154,7 +154,7 @@ create table if not exists public.node_content_versions (
     node_id   uuid not null references public.nodes(id) on delete cascade,
     payload   jsonb not null,          -- STARO stanje prije upisa
     op        text not null default 'update',
-    edited_by uuid null references auth.users(id),
+    edited_by uuid null references auth.users(id) on delete set null,  -- H1: bez ovoga brisanje računa puca
     edited_at timestamptz not null default now()
 );
 create index if not exists node_content_versions_node_idx on public.node_content_versions (node_id, edited_at desc);

@@ -5,6 +5,12 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-29 (OPUS, `sokratstudy.h1`) — H1: brisanje računa uz objavljen materijal (BUG-052)
+
+Iz F6 sigurnosne analize (N10), Leon: *zasebno, odmah*. Novo stablo od `main`-a. T5 proširen objavom → na stagingu
+**crven iz pravog razloga** (409, slike obrisane, račun živ) → SQL `on delete set null` na staging → **22/22**.
+Staging bez zaostalih test-korisnika. PROD (SELECT uz OK): isti FK, pogođen samo administrator. **PROD: SQL primijenjen uz Leonov OK i provjeren** (ON DELETE SET NULL). Sljedeće: merge grane u `main` (samo `supabase/`, `scripts/`, `docs/` — bez bumpa).
+
 ## 2026-09-29 (OPUS, `sokratstudy.f6`) — sigurnosna analiza MCP-a, dionica C · završni izvještaj
 
 **Dionica C (područja 6 · 7, STAGING, jedan jednokratni korisnik, poslije nula redaka u svim tablicama + Storage):**
