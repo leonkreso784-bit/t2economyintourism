@@ -26,15 +26,22 @@
   // ── URL sanitizacija: dopusti relativne/anchor/protocol-relative + http(s)/mailto;
   //    za slike još data:image/(png|jpg|gif|webp). Sve s eksplicitnom drugom shemom
   //    (javascript:, data:text, vbscript:, file:, …) → ODBIJ (prazan string). ──
+  //
+  //    ⚠️ F6 ②/0c (MCP_SECURITY N1): shema se čita iz niza BEZ kontrolnih znakova i razmaka.
+  //    Preglednik ih pri parsiranju adrese izbacuje (vodeće/prateće C0 i razmak, TAB/LF/CR bilo
+  //    gdje), pa je `java<TAB>script:` za njega `javascript:` — a regex nad neočišćenim nizom
+  //    nije vidio nikakvu shemu i propustio ga kao „relativan". `probe` izbacuje NADSKUP onoga što
+  //    izbacuje preglednik, pa svaku shemu koju vidi preglednik vidi i provjera.
   function safeUrl(url, opts) {
     const u = String(url == null ? '' : url).trim();
     if (!u) return '';
-    const m = u.match(/^([a-zA-Z][a-zA-Z0-9+.-]*):/); // ima li eksplicitnu shemu?
+    const probe = u.replace(/[\u0000-\u0020\u007f]/g, '');
+    const m = probe.match(/^([a-zA-Z][a-zA-Z0-9+.-]*):/); // ima li eksplicitnu shemu?
     if (!m) return u;                                  // relativni / #anchor / //host → OK
     const scheme = m[1].toLowerCase();
     if (scheme === 'http' || scheme === 'https' || scheme === 'mailto') return u;
     // data:image (bez svg — SVG može nositi skripte) samo za <img>
-    if (opts && opts.image && /^data:image\/(png|jpe?g|gif|webp)[;,]/i.test(u)) return u;
+    if (opts && opts.image && /^data:image\/(png|jpe?g|gif|webp)[;,]/i.test(probe)) return u;
     return '';                                         // nepoznata/opasna shema
   }
 
