@@ -25,6 +25,7 @@ const {
   BASE, ANON, SERVICE, NULA,
   http, svcHeaders, ref, jeProdukcija, odbijen, noviKorisnik, pometi, prijava, oauthToken, rpc
 } = require('./lib/staging-oauth');
+const { valjanTocno, lekcija } = require('../tests/fixtures/ugc-sadrzaj');
 
 /** Čegrtaljka dosega (kalup `check:final`): manje = blok tiho otpao, više = osnovica nije podignuta. */
 const OCEKIVANO_PROVJERA = 33;
@@ -56,7 +57,8 @@ const kanon = (v) => Array.isArray(v) ? v.map(kanon) : (v && typeof v === 'objec
   ? Object.keys(v).sort().reduce((o, k) => (o[k] = kanon(v[k]), o), {}) : v);
 const isto = (a, b) => JSON.stringify(kanon(a)) === JSON.stringify(kanon(b));
 
-const tijeloZa = (oznaka) => ({ lekcije: [{ naslov: 'Lekcija ' + oznaka, boja: 'indigo', learn: 'Tekst ' + oznaka }] });
+// Valjan oblik gradiva (②/0a: baza provodi strogi profil — `tests/fixtures/ugc-sadrzaj.js`).
+const tijeloZa = (oznaka) => lekcija({ name: 'Lekcija ' + oznaka, learn: { blocks: [{ id: 'p1', type: 'paragraph', text: 'Tekst ' + oznaka }] } });
 
 /** Otisak vlasnikovog ŽIVOG gradiva (service ključ, zaobilazi RLS) — za tvrdnju ⑦. */
 async function otisakGradiva(uid) {
@@ -113,7 +115,7 @@ const rest = (token, put, opts = {}) => http('/rest/v1/' + put, Object.assign({}
   const polica = (await rpc(jA, 'create_node', { p_parent: null, p_kind: 'folder', p_name: 'Polica' })).json;
   const mat = (await rpc(jA, 'create_node', { p_parent: polica, p_kind: 'study', p_name: 'Materijal' })).json;
   const verzija = ((await (await rest(jA, 'node_content?node_id=eq.' + mat + '&select=version')).json())[0] || {}).version;
-  await rpc(jA, 'publish_node', { p_node_id: mat, p_payload: { m1: { naslov: 'Živo' } }, p_base_version: verzija });
+  await rpc(jA, 'publish_node', { p_node_id: mat, p_payload: lekcija({ name: 'Živo' }), p_base_version: verzija });
   const prije = await otisakGradiva(A.id);
 
   console.log('— ① vlastiti nacrt —');
@@ -169,9 +171,9 @@ const rest = (token, put, opts = {}) => http('/rest/v1/' + put, Object.assign({}
 
   console.log('\n— ④ oblik, veličina, predaja —');
   odbijenKao('sadržaj koji nije objekt odbijen', await rpc(aA, 'mcp_upisi_nacrt', { p_id: idA, p_payload: [1, 2] }), 'nacrt_los_oblik');
-  const golem = { lekcije: [{ learn: 'x'.repeat(1048576) }] };
+  const golem = valjanTocno(1048577);   // valjan oblik, jedan bajt preko — odbija VELIČINA, ne profil
   odbijenKao('sadržaj > 1 MB odbijen', await rpc(aA, 'mcp_upisi_nacrt', { p_id: idA, p_payload: golem }), 'nacrt_prevelik');
-  const tik = { l: 'x'.repeat(1048576 - 9) };   // omotač `{"l": ""}` = 9 bajtova → ukupno TOČNO 1 048 576 u `jsonb::text`
+  const tik = valjanTocno(1048576);   // valjan oblik, TOČNO 1 048 576 bajtova u `jsonb::text`
   const tikR = await rpc(aA, 'mcp_upisi_nacrt', { p_id: idA, p_payload: tik });
   record('sadržaj TOČNO 1 MB prolazi (granica nije pomaknuta)', tikR.status === 200, opis(tikR));
   await rpc(aA, 'mcp_upisi_nacrt', { p_id: idA, p_payload: sadrzaj });

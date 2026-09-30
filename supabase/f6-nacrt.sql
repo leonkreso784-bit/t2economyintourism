@@ -140,7 +140,8 @@ end;
 $$;
 
 -- Upis sadržaja: CIJELI payload se zamjenjuje (sastavlja ga MCP poslužitelj u ②/2 — ondje žive
--- pravila redoslijeda i kvalitete, ADR-038 ④). Baza drži samo oblik, veličinu i vlasništvo.
+-- pravila redoslijeda i kvalitete, ADR-038 ④). Baza drži oblik, veličinu, vlasništvo i strogi
+-- profil sadržaja (②/0a, `_provjeri_sadrzaj` iz f6-sadrzaj.sql).
 create or replace function public.mcp_upisi_nacrt(p_id uuid, p_payload jsonb)
 returns timestamptz
 language plpgsql
@@ -160,6 +161,9 @@ begin
   if octet_length(p_payload::text) > 1048576 then
     raise exception 'nacrt_prevelik: najviše 1 MB' using errcode = '54000';
   end if;
+  -- ②/0a: strogi profil (bez sirovog HTML-a, opasnih adresa i vanjskih slika; granice) provodi
+  -- BAZA, jer token isti RPC zove i mimo poslužitelja (N5). Veličina ide prva — jeftinija je.
+  perform public._provjeri_sadrzaj(p_payload);
   update public.node_drafts set payload = p_payload, updated_at = now()
    where id = d.id returning updated_at into v_kad;
   return v_kad;
