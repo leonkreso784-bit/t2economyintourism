@@ -1,7 +1,7 @@
 -- ===== SOKRAT STUDY — F6 ②/0a: STROGI PROFIL OSOBNOG SADRŽAJA, PROVODI GA BAZA =====
 --
 -- Jedna provjera (`_provjeri_sadrzaj`) za SVE putove kojima osobni sadržaj ulazi u bazu:
--- `mcp_upisi_nacrt` (AI, ②/0a — OŽIČEN) · `publish_node` (Studio, ②/0b — još NE) · Prihvati (②/4 — još ne postoji).
+-- `mcp_upisi_nacrt` (AI, ②/0a — OŽIČEN) · `publish_node` (Studio, ②/0b — OŽIČEN, na dnu datoteke) · Prihvati (②/4 — još ne postoji).
 -- Zašto baza: token AI-ja RPC zove i mimo MCP poslužitelja (MCP_SECURITY N5) — pravilo koje živi
 -- samo u poslužitelju ne vrijedi ondje gdje ga korisnik gleda (nacrt prije Prihvati).
 --
@@ -630,3 +630,37 @@ begin
 end;
 $$;
 revoke execute on function public._provjeri_sadrzaj(jsonb) from public, anon, authenticated;
+
+-- ─── ②/0b: `publish_node` — objava ide KROZ ISTI validator + granica 1 MB ───────────────────────
+-- Zamjenjuje definiciju iz `f1-nodes.sql` (§5). Prihvati (②/4) objavljuje ovim putem, a objava od
+-- 5 MB je prolazila (N13). Stare provjere oblika („ne-prazan objekt objekata") pokriva shema — i
+-- odbijale su valjan `schemaVersion` (cijeli broj na vrhu). Veličina ide prva: jeftinija je, a
+-- 5 MB kroz pg_jsonschema troši sekunde.
+create or replace function public.publish_node(p_node_id uuid, p_payload jsonb, p_base_version bigint)
+returns bigint language plpgsql security definer set search_path = public, pg_temp as $$
+declare n public.nodes; v_cur bigint; v_new bigint;
+begin
+    n := public._node_own(p_node_id);
+    if n.kind <> 'study' then
+        raise exception 'publish_not_study: gradivo se objavljuje samo na study-čvor';
+    end if;
+    if p_base_version is null then raise exception 'publish_bad_input: treba base_version'; end if;
+
+    if p_payload is not null and octet_length(p_payload::text) > 1048576 then
+        raise exception 'publish_prevelik: najviše 1 MB' using errcode = '54000';
+    end if;
+    perform public._provjeri_sadrzaj(p_payload);
+
+    select version into v_cur from public.node_content where node_id = p_node_id for update;
+    if not found then raise exception 'publish_missing_row: %', p_node_id; end if;
+    if v_cur is distinct from p_base_version then
+        raise exception 'publish_version_conflict: base %, u bazi %', p_base_version, v_cur;
+    end if;
+
+    update public.node_content set payload = p_payload where node_id = p_node_id
+     returning version into v_new;
+    return v_new;
+end;
+$$;
+revoke execute on function public.publish_node(uuid, jsonb, bigint) from public, anon;
+grant execute on function public.publish_node(uuid, jsonb, bigint) to authenticated;

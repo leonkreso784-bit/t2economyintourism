@@ -326,6 +326,9 @@ $$;
 
 -- =====================================================
 -- 5) `publish_node` — jedini put upisa GRADIVA (kalup = publish_document)
+-- ⚠️ ZAMIJENJENO 2026-09-30 (F6 ②/0b): živa definicija je u `f6-sadrzaj.sql` (strogi profil +
+--    1 MB). Ova ostaje kao povijest prvog izdanja; primjena ove datoteke NAKON f6-sadrzaj.sql bi
+--    vratila objavu bez validatora — zato f6-sadrzaj.sql ide poslije.
 -- =====================================================
 create or replace function public.publish_node(p_node_id uuid, p_payload jsonb, p_base_version bigint)
 returns bigint language plpgsql security definer set search_path = public, pg_temp as $$
