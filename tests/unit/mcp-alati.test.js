@@ -139,6 +139,37 @@ function lazniKlijent(redovi, greska) {
     assert.ok(!/subject_content|content_versions|is_admin|catalog/.test(kod(INDEX) + kod(ALATI)));
   });
 
+  // ── ②/1b (N9): imenovano odbijanje iz baze → poruka koju AI može iskoristiti ──
+  // PostgREST kvotu i „već predan" vraća kao HTTP 500 — AI tada ne razlikuje „pokušaj kasnije" od
+  // kvara. Popis imena se IZVODI iz SQL-a: svaki `raise exception '<ime>…` u nacrtu i validatoru
+  // mora imati prijevod, i nijedan prijevod ne smije biti mrtav.
+  const IZ_SQL = new Set();
+  for (const f of ['f6-nacrt.sql', 'f6-sadrzaj.sql']) {
+    // Iz validatora samo dio koji AI doseže (`_provjeri_sadrzaj`); `publish_node` (②/0b) je Studijev put.
+    const sql = fs.readFileSync(path.join(KORIJEN, 'supabase', f), 'utf8').split('-- ─── ②/0b')[0];
+    for (const m of sql.matchAll(/raise exception '([a-z_]+)/g)) IZ_SQL.add(m[1]);
+  }
+  await test('N9: svako ime odbijanja iz f6-nacrt.sql + f6-sadrzaj.sql ima prijevod, nijedan prijevod nije mrtav', () => {
+    assert.ok(IZ_SQL.size >= 10, 'iz SQL-a izvučeno premalo imena: ' + IZ_SQL.size);
+    assert.strictEqual(typeof A.prevediOdbijanje, 'function', 'nema prevediOdbijanje');
+    const poznato = Object.keys(A.ODBIJANJA || {});
+    assert.deepStrictEqual({ bezPrijevoda: [...IZ_SQL].filter((x) => !poznato.includes(x)).sort(),
+      mrtvo: poznato.filter((x) => !IZ_SQL.has(x)).sort() }, { bezPrijevoda: [], mrtvo: [] });
+  });
+  await test('N9: kvota = „korisnik", sukob = „pročitaj ponovno", sadržaj = „ispravi" uz razlog', () => {
+    const k = A.prevediOdbijanje({ message: 'nacrt_kvota_u_izradi: najviše 3 nacrta u izradi — predaj ili pričekaj' });
+    assert.strictEqual(k.kod, 'nacrt_kvota_u_izradi'); assert.strictEqual(k.vrsta, 'korisnik');
+    const s = A.prevediOdbijanje({ message: 'nacrt_sukob: nacrt je u međuvremenu promijenjen (verzija 3, poslano 2) — pročitaj ga ponovno' });
+    assert.strictEqual(s.vrsta, 'ponovno'); assert.ok(/read|again/i.test(s.poruka), s.poruka);
+    const v = A.prevediOdbijanje({ message: 'sadrzaj_neispravan: "x" is longer than 500 characters' });
+    assert.strictEqual(v.vrsta, 'ispravi'); assert.ok(v.poruka.includes('longer than 500'), 'razlog se ne smije izgubiti: ' + v.poruka);
+  });
+  await test('N9: nepoznata greška = „kvar", bez unutarnjih detalja (SQL, putanje) u poruci', () => {
+    const n = A.prevediOdbijanje({ message: 'relation "public.node_drafts" does not exist at /var/lib/x' });
+    assert.strictEqual(n.vrsta, 'kvar'); assert.ok(!/node_drafts|\/var/.test(n.poruka), n.poruka);
+    assert.strictEqual(A.prevediOdbijanje(null).vrsta, 'kvar');
+  });
+
   console.log('\n  ' + proslo + ' prošlo, ' + pao + ' palo\n');
   process.exit(pao ? 1 : 0);
 })();

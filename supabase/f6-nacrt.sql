@@ -36,6 +36,8 @@ create table if not exists public.node_drafts (
   created_at   timestamptz not null default now(),
   updated_at   timestamptz not null default now(),
   submitted_at timestamptz,
+  verzija      int not null default 1 check (verzija >= 1),     -- ②/1b: polazna oznaka upisa (N7)
+  kljuc        text check (kljuc ~ '^[A-Za-z0-9_.:-]{1,100}$'),  -- ②/1b: ključ ponavljanja početka (N8)
   -- Tekstualna duljina, ne `pg_column_size`: ova druga mjeri KOMPRIMIRANO, pa bi granica ovisila
   -- o tome koliko se sadržaj dade stisnuti — a ne o tome koliko je velik.
   constraint node_drafts_payload_1mb check (octet_length(payload::text) <= 1048576),
@@ -43,6 +45,12 @@ create table if not exists public.node_drafts (
 );
 
 create index if not exists node_drafts_owner_idx on public.node_drafts (owner_id, status);
+
+-- ②/1b (2026-09-30) na tablici koja već postoji (staging od ②/1). `create table if not exists` gore ih
+-- nosi za svježu bazu; ovo ih dodaje postojećoj. Isti ključ = isti nacrt, po vlasniku.
+alter table public.node_drafts add column if not exists verzija int not null default 1 check (verzija >= 1);
+alter table public.node_drafts add column if not exists kljuc text check (kljuc ~ '^[A-Za-z0-9_.:-]{1,100}$');
+create unique index if not exists node_drafts_kljuc_uq on public.node_drafts (owner_id, kljuc) where kljuc is not null;
 
 alter table public.node_drafts enable row level security;
 
@@ -107,7 +115,13 @@ revoke execute on function public._nacrt_moj(uuid) from public, anon, authentica
 
 -- Novi nacrt. Kvota se broji pod savjetodavnom bravom po korisniku, inače dva usporedna poziva
 -- oba vide „2 od 3" i oba prođu.
-create or replace function public.mcp_zapocni_nacrt(p_name text)
+--
+-- ②/1b (N8): `p_kljuc` = KLJUČ PONAVLJANJA koji šalje pozivatelj (MCP alat). Isti ključ vlasnika =
+-- ISTI nacrt, vraćen bez trošenja kvote — prekinut razgovor koji ponovi „započni" ne stvara duplikat.
+-- Obavezan: bez njega bi zaštita ovisila o tome hoće li ga pozivatelj poslati. Stari potpis bez
+-- ključa se BRIŠE (preopterećenje bi ostavilo stari put otvoren, a `mcp:brava` sudi po imenu).
+drop function if exists public.mcp_zapocni_nacrt(text);
+create or replace function public.mcp_zapocni_nacrt(p_name text, p_kljuc text)
 returns uuid
 language plpgsql
 security definer
@@ -117,10 +131,17 @@ declare v_client text; v_uid uuid; v_izrada int; v_ukupno int; v_id uuid;
 begin
   v_client := public._nacrt_pozivatelj();
   v_uid := auth.uid();
+  if p_kljuc is null or p_kljuc !~ '^[A-Za-z0-9_.:-]{1,100}$' then
+    raise exception 'nacrt_los_kljuc: ključ ponavljanja je obavezan (1–100 znakova A-Z a-z 0-9 _ . : -)' using errcode = '22023';
+  end if;
   perform pg_advisory_xact_lock(hashtextextended('node_drafts:' || v_uid::text, 0));
 
-  -- „Sam nestane": istekli vlasnikovi nacrti se ovdje fizički brišu (v. zaglavlje).
+  -- „Sam nestane": istekli vlasnikovi nacrti se ovdje fizički brišu (v. zaglavlje) — PRIJE traženja
+  -- ključa, pa istekao nacrt ne „oživi" ponovljenim ključem.
   delete from public.node_drafts where owner_id = v_uid and not public._nacrt_zivi(status, updated_at);
+
+  select id into v_id from public.node_drafts where owner_id = v_uid and kljuc = p_kljuc;
+  if found then return v_id; end if;
 
   select count(*) filter (where status = 'u_izradi'), count(*)
     into v_izrada, v_ukupno
@@ -132,8 +153,8 @@ begin
     raise exception 'nacrt_kvota_nepregledano: 10 nacrta čeka pregled — korisnik ih mora prihvatiti ili odbaciti' using errcode = '53400';
   end if;
 
-  insert into public.node_drafts (owner_id, client_id, name)
-  values (v_uid, v_client, btrim(p_name))
+  insert into public.node_drafts (owner_id, client_id, name, kljuc)
+  values (v_uid, v_client, btrim(p_name), p_kljuc)
   returning id into v_id;
   return v_id;
 end;
@@ -142,13 +163,19 @@ $$;
 -- Upis sadržaja: CIJELI payload se zamjenjuje (sastavlja ga MCP poslužitelj u ②/2 — ondje žive
 -- pravila redoslijeda i kvalitete, ADR-038 ④). Baza drži oblik, veličinu, vlasništvo i strogi
 -- profil sadržaja (②/0a, `_provjeri_sadrzaj` iz f6-sadrzaj.sql).
-create or replace function public.mcp_upisi_nacrt(p_id uuid, p_payload jsonb)
-returns timestamptz
+--
+-- ②/1b (N7): `p_verzija` = verzija nacrta od koje je pozivatelj krenuo. Ako se u međuvremenu
+-- promijenila → `nacrt_sukob` (nitko ne gubi upis tiho). JEDINA iznimka: isti upis ponovljen (isti
+-- sadržaj, a verzija je upravo za jedan veća) vraća postojeću verziju — odgovor se izgubio, upis nije.
+-- Stari potpis bez verzije se BRIŠE (inače bi ostao put mimo provjere).
+drop function if exists public.mcp_upisi_nacrt(uuid, jsonb);
+create or replace function public.mcp_upisi_nacrt(p_id uuid, p_payload jsonb, p_verzija int)
+returns int
 language plpgsql
 security definer
 set search_path = public, pg_temp
 as $$
-declare d public.node_drafts; v_kad timestamptz;
+declare d public.node_drafts; v_nova int;
 begin
   perform public._nacrt_pozivatelj();
   d := public._nacrt_moj(p_id);
@@ -164,9 +191,19 @@ begin
   -- ②/0a: strogi profil (bez sirovog HTML-a, opasnih adresa i vanjskih slika; granice) provodi
   -- BAZA, jer token isti RPC zove i mimo poslužitelja (N5). Veličina ide prva — jeftinija je.
   perform public._provjeri_sadrzaj(p_payload);
-  update public.node_drafts set payload = p_payload, updated_at = now()
-   where id = d.id returning updated_at into v_kad;
-  return v_kad;
+  if p_verzija is null then
+    raise exception 'nacrt_bez_verzije: pošalji verziju od koje kreneš (mcp_procitaj_nacrt)' using errcode = '22023';
+  end if;
+  if d.verzija <> p_verzija then
+    if d.verzija = p_verzija + 1 and d.payload = p_payload then
+      return d.verzija;                               -- isti upis ponovljen: već je tu
+    end if;
+    raise exception 'nacrt_sukob: nacrt je u međuvremenu promijenjen (verzija %, poslano %) — pročitaj ga ponovno', d.verzija, p_verzija
+      using errcode = 'PT409';   -- NE 40001: PostgREST 40001 (serialization) ponavlja SAM, u krug (izmjereno 30.09.: upis je visio)
+  end if;
+  update public.node_drafts set payload = p_payload, updated_at = now(), verzija = verzija + 1
+   where id = d.id returning verzija into v_nova;
+  return v_nova;
 end;
 $$;
 
@@ -205,13 +242,15 @@ begin
   perform public._nacrt_pozivatelj();
   d := public._nacrt_moj(p_id);
   return jsonb_build_object('id', d.id, 'name', d.name, 'status', d.status, 'payload', d.payload,
-                            'updated_at', d.updated_at, 'submitted_at', d.submitted_at);
+                            'verzija', d.verzija, 'updated_at', d.updated_at, 'submitted_at', d.submitted_at);
 end;
 $$;
 
 -- Popis vlastitih živih nacrta, BEZ sadržaja (AI nađe svoj nacrt i vidi kvotu).
+-- ②/1b: vraća i `verzija` (promjena povratnog tipa traži drop).
+drop function if exists public.mcp_moji_nacrti();
 create or replace function public.mcp_moji_nacrti()
-returns table (id uuid, name text, status text, updated_at timestamptz, velicina int)
+returns table (id uuid, name text, status text, updated_at timestamptz, velicina int, verzija int)
 language plpgsql
 security definer
 set search_path = public, pg_temp
@@ -219,7 +258,7 @@ as $$
 begin
   perform public._nacrt_pozivatelj();
   return query
-    select d.id, d.name, d.status, d.updated_at, octet_length(d.payload::text)
+    select d.id, d.name, d.status, d.updated_at, octet_length(d.payload::text), d.verzija
       from public.node_drafts d
      where d.owner_id = auth.uid() and public._nacrt_zivi(d.status, d.updated_at)
      order by d.updated_at desc;
@@ -233,7 +272,7 @@ do $$
 declare f text;
 begin
   foreach f in array array[
-    'mcp_zapocni_nacrt(text)', 'mcp_upisi_nacrt(uuid, jsonb)', 'mcp_predaj_nacrt(uuid)',
+    'mcp_zapocni_nacrt(text, text)', 'mcp_upisi_nacrt(uuid, jsonb, int)', 'mcp_predaj_nacrt(uuid)',
     'mcp_procitaj_nacrt(uuid)', 'mcp_moji_nacrti()'
   ] loop
     execute format('revoke execute on function public.%s from public, anon, authenticated', f);

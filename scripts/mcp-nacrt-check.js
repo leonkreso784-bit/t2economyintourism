@@ -28,7 +28,7 @@ const {
 const { valjanTocno, lekcija } = require('../tests/fixtures/ugc-sadrzaj');
 
 /** Čegrtaljka dosega (kalup `check:final`): manje = blok tiho otpao, više = osnovica nije podignuta. */
-const OCEKIVANO_PROVJERA = 33;
+const OCEKIVANO_PROVJERA = 47;   // +14 (②/1b, blok ⑧)
 
 let failed = 0;
 let touched = 0;
@@ -87,6 +87,15 @@ async function ostari(id, dana) {
   if (!r.ok) throw new Error('ostari ' + r.status + ': ' + (await r.text()).slice(0, 120));
 }
 
+// ②/1b: svaki početak nosi KLJUČ PONAVLJANJA (obavezan), svaki upis VERZIJU od koje kreće.
+// Pomoćnici drže stare blokove čitljivima; blok ⑧ ih zove izravno kad mjeri upravo te dvije stvari.
+let kljucBr = 0;
+const zapocni = (t, ime, kljuc) => rpc(t, 'mcp_zapocni_nacrt', { p_name: ime, p_kljuc: kljuc || ('k-' + Date.now() + '-' + (++kljucBr)) });
+async function verzijaOd(t, id) { const r = await rpc(t, 'mcp_procitaj_nacrt', { p_id: id }); return r.json && r.json.verzija; }
+async function upisi(t, id, payload, verzija) {
+  return rpc(t, 'mcp_upisi_nacrt', { p_id: id, p_payload: payload, p_verzija: verzija != null ? verzija : ((await verzijaOd(t, id)) || 1) });
+}
+
 const rest = (token, put, opts = {}) => http('/rest/v1/' + put, Object.assign({}, opts, {
   headers: Object.assign({ apikey: ANON, Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' }, opts.headers || {})
 }));
@@ -109,6 +118,11 @@ const rest = (token, put, opts = {}) => http('/rest/v1/' + put, Object.assign({}
   const aA = (await oauthToken(jA, 'Sokrat nacrt (test)')).token;
   const aB = (await oauthToken(jB, 'Sokrat nacrt (test)')).token;
   const aC = (await oauthToken(jC, 'Sokrat nacrt (test)')).token;
+  // D (blok ⑧, ②/1b) se stvara OVDJE, ne usred vrtnje: stvoren poslije bloka ⑥ je svaki put zapeo
+  // na 20 s isteku (izmjereno 30.09.), a izolirano isti koraci traju < 1 s.
+  const D = await noviKorisnik({ prefiks: 'mcp-nacrt' });
+  const jD = await prijava(D.email, D.password);
+  const aD = (await oauthToken(jD, 'Sokrat nacrt (test)')).token;
 
   // A ima pravo živo gradivo (polica + materijal sa sadržajem), napravljeno OBIČNOM sesijom —
   // da ⑦ mjeri nešto, a ne prazan skup.
@@ -119,11 +133,11 @@ const rest = (token, put, opts = {}) => http('/rest/v1/' + put, Object.assign({}
   const prije = await otisakGradiva(A.id);
 
   console.log('— ① vlastiti nacrt —');
-  const z = await rpc(aA, 'mcp_zapocni_nacrt', { p_name: 'Makroekonomija' });
+  const z = await zapocni(aA, 'Makroekonomija');
   const idA = typeof z.json === 'string' ? z.json : null;
   record('AI započne nacrt', !!idA, opis(z));
   const sadrzaj = tijeloZa('A');
-  const u = await rpc(aA, 'mcp_upisi_nacrt', { p_id: idA, p_payload: sadrzaj });
+  const u = await upisi(aA, idA, sadrzaj);
   const p = await rpc(aA, 'mcp_procitaj_nacrt', { p_id: idA });
   record('upis se PROČITA NATRAG (isti sadržaj, status u_izradi)',
     u.status === 200 && p.json && isto(p.json.payload, sadrzaj) && p.json.status === 'u_izradi',
@@ -136,7 +150,7 @@ const rest = (token, put, opts = {}) => http('/rest/v1/' + put, Object.assign({}
   console.log('\n— ② tuđi nacrt: drugi korisnikov AI —');
   const tudjeCit = await rpc(aB, 'mcp_procitaj_nacrt', { p_id: idA });
   odbijenKao('tuđi nacrt se NE ČITA', tudjeCit, 'nacrt_ne_postoji');
-  odbijenKao('tuđi nacrt se NE MIJENJA', await rpc(aB, 'mcp_upisi_nacrt', { p_id: idA, p_payload: tijeloZa('B') }), 'nacrt_ne_postoji');
+  odbijenKao('tuđi nacrt se NE MIJENJA', await upisi(aB, idA, tijeloZa('B')), 'nacrt_ne_postoji');
   odbijenKao('tuđi nacrt se NE PREDAJE', await rpc(aB, 'mcp_predaj_nacrt', { p_id: idA }), 'nacrt_ne_postoji');
   const nepostojeci = await rpc(aB, 'mcp_procitaj_nacrt', { p_id: NULA });
   record('tuđi i nepostojeći nacrt daju ISTI odgovor (postojanje se ne da pogoditi)',
@@ -155,7 +169,7 @@ const rest = (token, put, opts = {}) => http('/rest/v1/' + put, Object.assign({}
     Array.isArray(vidiA) && vidiA.length === 1 && vidiA[0].id === idA, JSON.stringify(vidiA).slice(0, 80));
   const vidiB = await (await rest(jB, 'node_drafts?select=id')).json();
   record('stranac u običnoj sesiji NE VIDI tuđi nacrt', Array.isArray(vidiB) && vidiB.length === 0, JSON.stringify(vidiB).slice(0, 80));
-  const rpcObicna = await rpc(jA, 'mcp_zapocni_nacrt', { p_name: 'Mimo AI-ja' });
+  const rpcObicna = await zapocni(jA, 'Mimo AI-ja');
   record('obična sesija NE ZOVE mcp_* (put u nacrt je samo AI-jev)', odbijen(rpcObicna.status, rpcObicna.tekst), opis(rpcObicna));
   const ins = await rest(jA, 'node_drafts', { method: 'POST', headers: { Prefer: 'return=minimal' },
     body: JSON.stringify({ owner_id: A.id, client_id: 'lazni', name: 'Izravno' }) });
@@ -170,27 +184,27 @@ const rest = (token, put, opts = {}) => http('/rest/v1/' + put, Object.assign({}
     aiTablica.status === 401 || aiTablica.status === 403, 'HTTP ' + aiTablica.status);
 
   console.log('\n— ④ oblik, veličina, predaja —');
-  odbijenKao('sadržaj koji nije objekt odbijen', await rpc(aA, 'mcp_upisi_nacrt', { p_id: idA, p_payload: [1, 2] }), 'nacrt_los_oblik');
+  odbijenKao('sadržaj koji nije objekt odbijen', await upisi(aA, idA, [1, 2]), 'nacrt_los_oblik');
   const golem = valjanTocno(1048577);   // valjan oblik, jedan bajt preko — odbija VELIČINA, ne profil
-  odbijenKao('sadržaj > 1 MB odbijen', await rpc(aA, 'mcp_upisi_nacrt', { p_id: idA, p_payload: golem }), 'nacrt_prevelik');
+  odbijenKao('sadržaj > 1 MB odbijen', await upisi(aA, idA, golem), 'nacrt_prevelik');
   const tik = valjanTocno(1048576);   // valjan oblik, TOČNO 1 048 576 bajtova u `jsonb::text`
-  const tikR = await rpc(aA, 'mcp_upisi_nacrt', { p_id: idA, p_payload: tik });
+  const tikR = await upisi(aA, idA, tik);
   record('sadržaj TOČNO 1 MB prolazi (granica nije pomaknuta)', tikR.status === 200, opis(tikR));
-  await rpc(aA, 'mcp_upisi_nacrt', { p_id: idA, p_payload: sadrzaj });
-  const prazan = (await rpc(aA, 'mcp_zapocni_nacrt', { p_name: 'Prazan' })).json;
+  await upisi(aA, idA, sadrzaj);
+  const prazan = (await zapocni(aA, 'Prazan')).json;
   odbijenKao('prazan nacrt se ne predaje', await rpc(aA, 'mcp_predaj_nacrt', { p_id: prazan }), 'nacrt_prazan');
   const pred = await rpc(aA, 'mcp_predaj_nacrt', { p_id: idA });
   const poPredaji = await rpc(aA, 'mcp_procitaj_nacrt', { p_id: idA });
   record('predaja: status predan + vrijeme predaje', pred.status === 200 && poPredaji.json && poPredaji.json.status === 'predan'
     && !!poPredaji.json.submitted_at, opis(pred));
-  odbijenKao('predan nacrt se više NE MIJENJA', await rpc(aA, 'mcp_upisi_nacrt', { p_id: idA, p_payload: tijeloZa('kasno') }), 'nacrt_predan');
+  odbijenKao('predan nacrt se više NE MIJENJA', await upisi(aA, idA, tijeloZa('kasno')), 'nacrt_predan');
   odbijenKao('predan nacrt se ne predaje drugi put', await rpc(aA, 'mcp_predaj_nacrt', { p_id: idA }), 'nacrt_predan');
 
   console.log('\n— ⑤ kvota (korisnik C) —');
   const izrada = [];
-  for (let i = 0; i < 3; i++) izrada.push((await rpc(aC, 'mcp_zapocni_nacrt', { p_name: 'C' + i })).json);
+  for (let i = 0; i < 3; i++) izrada.push((await zapocni(aC, 'C' + i)).json);
   record('tri nacrta u izradi nastanu', izrada.every((x) => typeof x === 'string'), izrada.length + ' id-eva');
-  odbijenKao('ČETVRTI nacrt u izradi odbijen', await rpc(aC, 'mcp_zapocni_nacrt', { p_name: 'C3' }), 'nacrt_kvota_u_izradi');
+  odbijenKao('ČETVRTI nacrt u izradi odbijen', await zapocni(aC, 'C3'), 'nacrt_kvota_u_izradi');
 
   console.log('\n— ⑥ „sam nestane" (korisnik C) —');
   await ostari(izrada[0], 8);
@@ -198,13 +212,13 @@ const rest = (token, put, opts = {}) => http('/rest/v1/' + put, Object.assign({}
   const vidiC = await (await rest(jC, 'node_drafts?select=id')).json();
   record('ni vlasnik ga u običnoj sesiji više ne vidi', Array.isArray(vidiC) && !vidiC.some((d) => d.id === izrada[0]),
     (Array.isArray(vidiC) ? vidiC.length : '?') + ' vidljivih');
-  const noviC = await rpc(aC, 'mcp_zapocni_nacrt', { p_name: 'C-poslije' });
+  const noviC = await zapocni(aC, 'C-poslije');
   record('istekao nacrt NE troši kvotu (novi prolazi uz 2 živa u izradi)', typeof noviC.json === 'string', opis(noviC));
   const uBazi = await nacrtiUBazi(C.id);
   record('istekao nacrt je FIZIČKI obrisan pri sljedećem započinjanju', !uBazi.some((d) => d.id === izrada[0]),
     uBazi.length + ' redaka u tablici');
   // Predan nacrt NE istječe: ostari ga i provjeri da je i dalje tu.
-  await rpc(aC, 'mcp_upisi_nacrt', { p_id: izrada[1], p_payload: tijeloZa('C1') });
+  await upisi(aC, izrada[1], tijeloZa('C1'));
   await rpc(aC, 'mcp_predaj_nacrt', { p_id: izrada[1] });
   await ostari(izrada[1], 30);
   const stari = await rpc(aC, 'mcp_procitaj_nacrt', { p_id: izrada[1] });
@@ -213,19 +227,69 @@ const rest = (token, put, opts = {}) => http('/rest/v1/' + put, Object.assign({}
 
   // Do 10 nepregledanih: sad su živa 3 (C1 predan, C2 i C-poslije u izradi). Predaj ih i dopuni.
   for (const id of [izrada[2], noviC.json]) {
-    await rpc(aC, 'mcp_upisi_nacrt', { p_id: id, p_payload: tijeloZa('C') });
+    await upisi(aC, id, tijeloZa('C'));
     await rpc(aC, 'mcp_predaj_nacrt', { p_id: id });
   }
   let dopuna = 0;
   while ((await rpc(aC, 'mcp_moji_nacrti', {})).json.length < 10 && dopuna < 12) {
-    const id = (await rpc(aC, 'mcp_zapocni_nacrt', { p_name: 'D' + dopuna })).json;
-    await rpc(aC, 'mcp_upisi_nacrt', { p_id: id, p_payload: tijeloZa('D') });
+    const id = (await zapocni(aC, 'D' + dopuna)).json;
+    await upisi(aC, id, tijeloZa('D'));
     await rpc(aC, 'mcp_predaj_nacrt', { p_id: id });
     dopuna++;
   }
   const deset = (await rpc(aC, 'mcp_moji_nacrti', {})).json;
   record('deset nepregledanih nacrta nastane', Array.isArray(deset) && deset.length === 10, (deset || []).length + ' živih');
-  odbijenKao('JEDANAESTI nacrt odbijen (10 čeka pregled)', await rpc(aC, 'mcp_zapocni_nacrt', { p_name: 'C11' }), 'nacrt_kvota_nepregledano');
+  odbijenKao('JEDANAESTI nacrt odbijen (10 čeka pregled)', await zapocni(aC, 'C11'), 'nacrt_kvota_nepregledano');
+
+  console.log('\n— ⑧ ②/1b: usporedno i ponovljeno (korisnik D) —');
+  // stari potpisi NE POSTOJE — preopterećenje bi ostavilo put bez verzije/ključa, a `mcp:brava` sudi po imenu
+  const stariUpis = await rpc(aD, 'mcp_upisi_nacrt', { p_id: NULA, p_payload: tijeloZa('x') });
+  record('stari potpis mcp_upisi_nacrt(id, payload) BEZ verzije ne postoji', stariUpis.status === 404 && /PGRST202/.test(stariUpis.tekst), opis(stariUpis));
+  const stariPocetak = await rpc(aD, 'mcp_zapocni_nacrt', { p_name: 'bez ključa' });
+  record('stari potpis mcp_zapocni_nacrt(name) BEZ ključa ne postoji', stariPocetak.status === 404 && /PGRST202/.test(stariPocetak.tekst), opis(stariPocetak));
+  odbijenKao('ključ krivog oblika odbijen', await zapocni(aD, 'x', 'ima razmak'), 'nacrt_los_kljuc');
+
+  // N8: isti ključ = isti nacrt
+  const k1 = await zapocni(aD, 'Isti', 'razgovor-1');
+  const k1b = await zapocni(aD, 'Isti opet', 'razgovor-1');
+  record('isti ključ dvaput → ISTI nacrt (N8)', typeof k1.json === 'string' && k1.json === k1b.json, opis(k1) + ' · ' + opis(k1b));
+  const popisD = (await rpc(aD, 'mcp_moji_nacrti', {})).json;
+  record('… i na popisu je JEDAN nacrt s verzijom 1', Array.isArray(popisD) && popisD.length === 1 && popisD[0].verzija === 1,
+    Array.isArray(popisD) ? popisD.length + ' nacrt(a)' : String(popisD));
+  const tudjiKljuc = await zapocni(aB, 'Tuđi', 'razgovor-1');
+  record('STRANAC s istim ključem dobiva SVOJ nacrt, ne D-ov', typeof tudjiKljuc.json === 'string' && tudjiKljuc.json !== k1.json, opis(tudjiKljuc));
+
+  // N7: dva usporedna upisa s ISTE polazne verzije → točno jedan prolazi, drugi dobiva sukob
+  const v0 = await verzijaOd(aD, k1.json);
+  const [p1, p2] = [tijeloZa('prvi'), tijeloZa('drugi')];
+  const [r1, r2] = await Promise.all([upisi(aD, k1.json, p1, v0), upisi(aD, k1.json, p2, v0)]);
+  const prosli = [r1, r2].filter((r) => r.status === 200);
+  const sukobi = [r1, r2].filter((r) => greska(r) === 'nacrt_sukob');
+  record('usporedni upisi s iste verzije → TOČNO jedan 200, drugi `nacrt_sukob` (N7)', prosli.length === 1 && sukobi.length === 1,
+    opis(r1) + ' · ' + opis(r2));
+  const pobjednik = r1.status === 200 ? p1 : p2;
+  const poN7 = (await rpc(aD, 'mcp_procitaj_nacrt', { p_id: k1.json })).json;
+  record('… u nacrtu je pobjednikov sadržaj i verzija +1', !!poN7 && isto(poN7.payload, pobjednik) && poN7.verzija === v0 + 1,
+    poN7 ? 'verzija ' + v0 + ' → ' + poN7.verzija : '—');
+  // izgubljen ODGOVOR, ne upis: isti upis ponovljen s iste polazne verzije vraća postojeću verziju
+  const ponovljen = await upisi(aD, k1.json, pobjednik, v0);
+  record('isti upis ponovljen (isti sadržaj, ista polazna) → 200, verzija se NE mijenja', ponovljen.status === 200 && ponovljen.json === v0 + 1
+    && (await verzijaOd(aD, k1.json)) === v0 + 1, opis(ponovljen) + ' · vraćeno ' + ponovljen.json);
+  odbijenKao('zastarjela verzija s DRUGIM sadržajem → sukob (ne prepisuje)', await upisi(aD, k1.json, tijeloZa('staro'), v0), 'nacrt_sukob');
+  const netaknut = (await rpc(aD, 'mcp_procitaj_nacrt', { p_id: k1.json })).json;
+  record('… nacrt poslije odbijenog upisa netaknut', !!netaknut && isto(netaknut.payload, pobjednik) && netaknut.verzija === v0 + 1,
+    netaknut ? 'verzija ' + netaknut.verzija : '—');
+
+  // ključ i kvota: ponovljen početak na punoj kvoti NE troši kvotu; nov ključ je odbijen
+  await zapocni(aD, 'D2', 'razgovor-2');
+  await zapocni(aD, 'D3', 'razgovor-3');
+  const naKvoti = await zapocni(aD, 'Isti', 'razgovor-1');
+  record('na punoj kvoti (3 u izradi) ponovljen ključ vraća postojeći nacrt, ne grešku kvote', naKvoti.json === k1.json, opis(naKvoti));
+  odbijenKao('… a NOV ključ na punoj kvoti je odbijen', await zapocni(aD, 'D4', 'razgovor-4'), 'nacrt_kvota_u_izradi');
+  // istekao nacrt ne oživi istim ključem
+  await ostari(k1.json, 8);
+  const poIsteku = await zapocni(aD, 'Isti', 'razgovor-1');
+  record('nacrt istekao pa isti ključ → NOVI nacrt (istekao ne oživi)', typeof poIsteku.json === 'string' && poIsteku.json !== k1.json, opis(poIsteku));
 
   console.log('\n— ⑦ živo gradivo —');
   const poslije = await otisakGradiva(A.id);

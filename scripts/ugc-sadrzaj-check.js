@@ -97,15 +97,18 @@ async function sviZivi() {
   const aA = (await oauthToken(jA, 'Sokrat sadrzaj (test)')).token;
 
   console.log('— ① nacrt: mcp_upisi_nacrt (pravi AI-token) —');
-  const nacrt = (await rpc(aA, 'mcp_zapocni_nacrt', { p_name: 'Validator' })).json;
+  const nacrt = (await rpc(aA, 'mcp_zapocni_nacrt', { p_name: 'Validator', p_kljuc: 'ugc-sadrzaj-' + Date.now() })).json;
+  let verzija = 1;   // ②/1b: upis nosi polaznu verziju; odbijen upis je ne mijenja
   if (typeof nacrt !== 'string') throw new Error('nacrt nije nastao');
   for (const p of pada) {
-    const r = await rpc(aA, 'mcp_upisi_nacrt', { p_id: nacrt, p_payload: p.payload });
+    const r = await rpc(aA, 'mcp_upisi_nacrt', { p_id: nacrt, p_payload: p.payload, p_verzija: verzija });
+    if (r.status === 200) verzija = r.json;   // krivo prošao: prati verziju, inače svaki sljedeći mjeri `nacrt_sukob`
     const ime = ocekivanoIme(p);
     record('nacrt ODBIJA: ' + p.ime, greska(r) === ime, opis(r) + (greska(r) === ime ? '' : ' ← očekivano ' + ime));
   }
   for (const p of prolazi) {
-    const u = await rpc(aA, 'mcp_upisi_nacrt', { p_id: nacrt, p_payload: p.payload });
+    const u = await rpc(aA, 'mcp_upisi_nacrt', { p_id: nacrt, p_payload: p.payload, p_verzija: verzija });
+    if (u.status === 200) verzija = u.json;
     const c = u.status === 200 ? await rpc(aA, 'mcp_procitaj_nacrt', { p_id: nacrt }) : null;
     record('nacrt PRIMA i čita natrag: ' + p.ime, !!(c && c.json && isto(c.json.payload, p.payload)), opis(u));
   }
