@@ -178,7 +178,7 @@ const UZORCI = {
   blockFormula:   { uzorak: { id: 'm', type: 'formula', tex: 'x' },                u: uLearn }
 };
 /** Niz dulji od granice, u obliku koji bi inače prošao (da pada DULJINA, ne oblik). */
-const PREDMETAK = { href: 'https://a.hr/', slika: 'node-img:' };
+const PREDMETAK = { href: 'https://a.hr/' };
 
 const refIme = (s) => (s && s.$ref ? s.$ref.split('/').pop() : '');
 const def = (s) => (refIme(s) ? SHEMA.definitions[refIme(s)] : s);
@@ -228,6 +228,23 @@ function generiraj() {
         pada.push({ ime: 'GEN ' + ime + '.' + polje + ': ' + (cilj.maxLength + 1) + ' znakova',
           payload: u(Object.assign({}, uzorak, { [polje]: pred + 'a'.repeat(cilj.maxLength + 1 - pred.length) })) });
       }
+      // F3: niz nizova (retci tablice) — ćelija TUĐEG tipa; bez `items.items` bi ćelija bila bilo što.
+      if (cilj.type === 'array' && cilj.items && def(cilj.items).type === 'array') {
+        pada.push({ ime: 'GEN ' + ime + '.' + polje + '[][]: ćelija tuđeg tipa', payload: s_([[{ a: 1 }]]) });
+      }
+      // F3: silazak u `items` — tekstualni element niza preko svoje granice (opcije kviza, odgovori).
+      if (cilj.type === 'array' && cilj.items && def(cilj.items).type === 'string' && def(cilj.items).maxLength) {
+        const n = def(cilj.items).maxLength + 1;
+        pada.push({ ime: 'GEN ' + ime + '.' + polje + '[]: element od ' + n + ' znakova', payload: s_(['a'.repeat(n)]) });
+      }
+      // F3: TUĐI JSON-tip. Granice (`pattern`, `maxLength`, `maxItems`) vrijede samo za svoj tip —
+      // bez `type` bi niz prošao umjesto teksta i sve granice bi tiho otpale.
+      const tudji = refIme(s) === 'inline' || cilj.oneOf ? [1, { a: 1 }]
+        : cilj.type === 'string' || cilj.enum || cilj.const !== undefined ? [['a'], { a: 'a' }, 1]
+          : cilj.type === 'array' ? ['a', { a: 1 }]
+            : cilj.type === 'object' ? ['a', ['a']]
+              : cilj.type === 'integer' ? ['1', 1.5] : cilj.type === 'number' ? ['1'] : cilj.type === 'boolean' ? ['true', 1] : [];
+      tudji.forEach((v) => pada.push({ ime: 'GEN ' + ime + '.' + polje + ': tuđi JSON-tip ' + JSON.stringify(v), payload: s_(v) }));
     }
   }
   return { prolazi, pada };

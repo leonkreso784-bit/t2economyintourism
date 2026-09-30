@@ -158,10 +158,16 @@ async function sviZivi() {
   const osnovica = JSON.parse(fs.readFileSync(OSNOVICA_PUT, 'utf8'));
   const imenovani = new Set(osnovica.node_ids);
   const zivi = (await sviZivi()).filter((x) => x.payload && Object.keys(x.payload).length);
-  const padaju = zivi.filter((x) => !provjeri(x.payload)).map((x) => x.node_id);
+  // Uz shemu i ono što zna SAMO baza (jedinstveni id-evi, ista pravila kao `_provjeri_sadrzaj`) —
+  // inače bi materijal s dva ista id-a prošao ④, a baza bi mu zaključala sljedeću objavu.
+  const dupliId = (p) => Object.values(p).some((c) => c && typeof c === 'object' && [c.flashcards, c.quiz, c.fillBlanks, c.learn && c.learn.blocks]
+    .some((niz) => Array.isArray(niz) && (() => { const ids = niz.map((e) => e && e.id).filter((x) => x != null); return new Set(ids).size !== ids.length; })()));
+  const padaju = zivi.filter((x) => !provjeri(x.payload) || dupliId(x.payload)).map((x) => x.node_id);
   const novi = padaju.filter((id) => !imenovani.has(id));
   const nestali = osnovica.node_ids.filter((id) => !padaju.includes(id));
-  record('ima živih materijala za mjeriti (nula = brana ne mjeri ništa)', zivi.length > 0, zivi.length + ' nepraznih');
+  // Broje se VALJANI: da su svi živi u osnovici, „ima živih" bi prošlo s nula izmjerenih (revizor 30.09.).
+  record('ima VALJANIH živih materijala za mjeriti (nula = brana ne mjeri ništa)', zivi.length - padaju.length > 0,
+    (zivi.length - padaju.length) + ' valjanih od ' + zivi.length + ' nepraznih');
   record('nijedan NOV materijal ne pada shemu (stroga objava ga ne bi pustila spremiti)', novi.length === 0,
     novi.length ? 'novi: ' + novi.join(', ') : padaju.length + ' pada, svi imenovani ostaci testova');
   record('osnovica nema mrtvih redaka (popravljen ili obrisan ostatak → makni ga s popisa)', nestali.length === 0,

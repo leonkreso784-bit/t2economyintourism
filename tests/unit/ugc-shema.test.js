@@ -66,6 +66,10 @@ function obidji(s, put, fn) {
     else if (k === 'oneOf' || k === 'anyOf') v.forEach((x, i) => obidji(x, put + '|' + i, fn));
   }
 }
+/** Uzorak bez neograničenog ponavljanja (`*`, `+`, `{n,}`) izvan klase znakova sam ograničava duljinu. */
+function ogranicenUzorak(p) {
+  return typeof p === 'string' && !/[*+]|\{\d+,\}/.test(p.replace(/\\./g, '').replace(/\[[^\]]*\]/g, ''));
+}
 test('struktura: svaki objekt zatvoren, svaki niz ima maxItems, svaki tekst ima granicu', function () {
   const nalazi = [];
   let obj = 0, niz = 0, tekst = 0;
@@ -74,19 +78,64 @@ test('struktura: svaki objekt zatvoren, svaki niz ima maxItems, svaki tekst ima 
     if (s.type === 'array') { niz++; if (typeof s.maxItems !== 'number') nalazi.push(put + ': niz bez maxItems'); }
     if (s.type === 'string') {
       tekst++;
-      const ogranicen = typeof s.maxLength === 'number' || s.enum || s.const !== undefined
-        || (typeof s.pattern === 'string' && /\{\d+(,\d+)?\}\$$/.test(s.pattern));
+      const ogranicen = typeof s.maxLength === 'number' || s.enum || s.const !== undefined || ogranicenUzorak(s.pattern);
       if (!ogranicen) nalazi.push(put + ': tekst bez maxLength/enum/const/ograničenog uzorka');
     }
   });
   assert.deepStrictEqual(nalazi, []);
   assert.ok(obj >= 15 && niz >= 10 && tekst >= 20, 'obiđeno premalo: ' + obj + ' objekata, ' + niz + ' nizova, ' + tekst + ' tekstova');
 });
+// brana-revizor 30.09. (F3): `pattern`/`maxLength` vrijede SAMO za tekst, `maxItems` samo za niz —
+// polje kojem netko obriše `type` prima niz ili objekt i sve granice tiho otpadaju (izmjereno:
+// `quiz.image: ["https://tracker…"]` prolazi). Zato: svako polje, definicija i `items` ima tip ili
+// ga nasljeđuje (`$ref`, `const`, `enum`, `oneOf`), a ključne riječi odgovaraju tipu.
+test('struktura: svako polje ima tip, a granice odgovaraju tipu (F3)', function () {
+  const nalazi = [];
+  let dotaknuto = 0;
+  function tip(s, put) {
+    if (!s || typeof s !== 'object') return;
+    dotaknuto++;
+    const ima = s.type || s.$ref || s.const !== undefined || s.enum || s.oneOf;
+    if (!ima) nalazi.push(put + ': bez type/$ref/const/enum/oneOf');
+    const t = s.type;
+    if ((s.pattern !== undefined || s.maxLength !== undefined) && t !== 'string') nalazi.push(put + ': pattern/maxLength bez type:string');
+    if ((s.maxItems !== undefined || s.items !== undefined) && t !== 'array') nalazi.push(put + ': maxItems/items bez type:array');
+    if ((s.minimum !== undefined || s.maximum !== undefined) && t !== 'number' && t !== 'integer') nalazi.push(put + ': min/max bez brojčanog tipa');
+    if ((s.properties || s.additionalProperties === false) && t !== 'object') nalazi.push(put + ': properties bez type:object');
+    for (const [k, v] of Object.entries(s.properties || {})) tip(v, put + '.' + k);
+    if (s.items) tip(s.items, put + '[items]');
+    (s.oneOf || []).forEach((x, i) => tip(x, put + '|' + i));
+  }
+  for (const [ime, d] of Object.entries(shema.definitions)) tip(d, ime);
+  tip(shema, '#');
+  assert.deepStrictEqual(nalazi, []);
+  assert.ok(dotaknuto >= 100, 'obiđeno premalo čvorova: ' + dotaknuto);
+});
 test('struktura: svaka objektna definicija ima uzorak za generirane primjere', function () {
   const bez = Object.entries(shema.definitions)
     .filter(([ime, d]) => d.type === 'object' && d.properties && !OTVORENI[ime] && !UZORCI[ime]).map(([ime]) => ime);
   assert.deepStrictEqual(bez, []);
   assert.ok(broj.gen >= 40, 'generirano premalo zlonamjernih: ' + broj.gen + ' (izmjereno 30.09.: 50)');
+});
+
+// ── OSNOVICA GENERIRANIH (brana-revizor 30.09., F3) ──
+// Generator se izvodi iz sheme, pa bi brisanje ograničenja obrisalo i njegov test (izmjereno: 23 od
+// 166 mutacija preživjelo je baš tako — `required`, min/max). Zato je POPIS generiranih zlonamjernih
+// primjera zakucan: slabija shema = kraći popis = pad. Jača shema = dulji popis = također pad, dok
+// se osnovica svjesno ne podigne (vidi se u diffu): `UGC_OSNOVICA_UPDATE=1 node tests/unit/ugc-shema.test.js`.
+const fs = require('fs');
+const OSNOVICA = path.join(ROOT, 'tests', 'fixtures', 'ugc-gen-osnovica.json');
+const genImena = pada.filter((p) => p.ime.startsWith('GEN ')).map((p) => p.ime).sort();
+if (process.env.UGC_OSNOVICA_UPDATE === '1') {
+  fs.writeFileSync(OSNOVICA, JSON.stringify({ _zasto: 'Popis generiranih zlonamjernih primjera (tests/fixtures/ugc-sadrzaj.js). '
+    + 'Kraći popis = shema oslabljena. Podiže se svjesno: UGC_OSNOVICA_UPDATE=1.', imena: genImena }, null, 2) + '\n');
+  console.log('  ↻ osnovica zapisana: ' + genImena.length + ' imena');
+}
+test('generirani zlonamjerni primjeri == zakucana osnovica (slabija shema ne briše vlastiti test)', function () {
+  const osn = JSON.parse(fs.readFileSync(OSNOVICA, 'utf8')).imena;
+  const nestalo = osn.filter((x) => !genImena.includes(x));
+  const novo = genImena.filter((x) => !osn.includes(x));
+  assert.deepStrictEqual({ nestalo, novo }, { nestalo: [], novo: [] });
 });
 
 // Katalog je NAMJERNO drukčiji profil: shema osobnog sadržaja ne smije postati katalogova.

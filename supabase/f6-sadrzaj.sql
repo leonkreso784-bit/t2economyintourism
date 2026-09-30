@@ -34,7 +34,6 @@ as $fn$ select $ugc${
   "minProperties": 1,
   "maxProperties": 100,
   "propertyNames": {
-    "type": "string",
     "pattern": "^[A-Za-z0-9_-]{1,64}$"
   },
   "properties": {
@@ -58,7 +57,6 @@ as $fn$ select $ugc${
     },
     "slika": {
       "type": "string",
-      "maxLength": 200,
       "pattern": "^node-img:[0-9a-f-]{36}/[0-9a-f-]{36}/[0-9A-Za-z-]{1,64}\\.(png|jpg|webp|gif)$"
     },
     "href": {
@@ -303,7 +301,7 @@ as $fn$ select $ugc${
       }
     },
     "block": {
-      "$comment": "required/type.enum ovdje (i required na blockVideo) su ZALIHOST uz oneOf krakove (svaki trazi type s const): daju jasniju poruku greske AI-ju. Izmjereno mutacijom 30.09.: nijedan payload ih ne razlikuje.",
+      "$comment": "ZALIHOST (izmjereno mutacijom 30.09., 165 brisanja kroz cijeli unit: preživi tocno ova 3): block.required (svaki oneOf krak trazi type s const) te type:string uz enum samih tekstova u run.color i blockCallout.variant. Stoje radi jasnije poruke greske AI-ju; nijedan payload ih ne razlikuje.",
       "type": "object",
       "required": [
         "type"
