@@ -5,6 +5,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-30 (OPUS) — 🧩 **F6 ②/3 oblik materijala** — grana `feat/f6-mcp`, STAGING (nije na produkciji)
+
+- Nacrt koji gradi AI je odmah valjano gradivo (ista shema kao katalog i Studio) — prihvat ga neće morati pretvarati.
+- Svako pitanje zna iz koje je kartice nastalo (novo opcionalno polje `card`).
+- Dopune s više praznina: AI piše prazninu kao `___` i daje po jedan odgovor za svaku; krivi broj se odbija.
+- Bez slika i videa u AI-jevom Learnu u prvom izdanju.
+
 ## 2026-09-30 (OPUS) — 🤖 **F6 ②/2 MCP alati** — grana `feat/f6-mcp`, STAGING (nije na produkciji)
 
 - Korisnikov AI gradi materijal u **nacrt**, lekciju po lekciju: započni (lekcije s bojom) → Learn → kartice →

@@ -5,6 +5,26 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-30 (OPUS, `sokratstudy.f6`) — F6 ②/3 oblik materijala (✅ kod + SQL na STAGINGU; funkciju deploya Leon)
+
+- **Nacrt JEST gradivo** (anketa: „nacrt u obliku gradiva"): izlaz alata prolazi i katalošku shemu (`subject-content`,
+  = `validate:schema`) i strogi profil. Kostur `schemaVersion: 2` + lekcija kao nova sekcija u Studiju (`fa-book`,
+  prazni nizovi — bez njih prazna lekcija pada na katalogu, izmjereno). Learn bez `image`/`video` u prvom izdanju.
+- **Veza kartica → pitanje:** `dodaj_kartice` vraća `card_id`-eve; kviz i dopuna nose obavezan `card` koji mora
+  postojati u TOJ lekciji (`alat_kartica_ne_postoji`). U obje sheme `card` je opcionalno aditivno polje (oblik id-a).
+  Id-evi stavki sad se izvode iz **lekcije + ključa** (revizor F1: isti ključ u dvije lekcije davao je iste id-eve,
+  a napredak se vodi po id-u stavke).
+- **Dopuna (D2):** AI piše `___` → alat sprema `_______`; `answers` = odgovor PO praznini, broj mora biti jednak
+  broju praznina, `answer` = prvi, `answers` tek od 2 praznine. Provjera je u alatu; izravni RPC je zaobilazi →
+  druga linija ostaje ③/5–③/6.
+- **Brane:** unit `mcp-alati` 37/0 (10 novih ②/3) · `ugc-shema` 417/0, osnovica +8 GEN imena (`card`) · SQL
+  `_ugc_shema()` na stagingu, `ugc:sadrzaj` **829/0** (bilo 813) · e2e `mcp:alati` 30 → **39 provjera** (+ doseg),
+  protiv lokalnog dvojnika s pravim SDK-om 40/0 · **20/20 mutacija** crveno (+ e2e mutacija kataloga crvena) ·
+  preflight 0. `brana-revizor`: vratio F1 (ista lekcija nemjerena) i F2 (UPUTE korak 4 nemjeren) + N1–N3 → zatvoreno
+  testovima i mutacijama; N4 (`card` u bazi se ne provjerava) = svjesno, pripada ②/4 / ③/6.
+- ⚠️ Pouka: `String.replace` sa zamjenskim tekstom koji sadrži dolar pa backtick (poseban uzorak „tekst prije pogotka") ubacio je cijeli početak datoteke u docs —
+  uhvaćeno na `git diff --stat`; zamjene u skriptama idu kroz funkciju (`() => b`).
+
 ## 2026-09-30 (OPUS, `sokratstudy.f6`) — F6 ②/2 alati cjevovoda (✅ STAGING)
 
 - **Alati** (`supabase/functions/mcp/alati.ts`): `zapocni_nacrt` · `napisi_learn` · `dodaj_kartice` (pada bez Learna) ·

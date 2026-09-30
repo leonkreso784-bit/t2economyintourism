@@ -247,8 +247,11 @@ function lazniKlijent(redovi, greska) {
   const LEKCIJE = [{ name: 'Uvod', color: '#6366f1' }, { name: 'BDP', color: '#10b981' }];
   const LEARN = { blocks: [{ type: 'heading', text: 'BDP' }, { type: 'paragraph', text: 'Bruto domaći proizvod je …' }] };
   const KARTICE = [{ question: 'Što je BDP?', answer: 'Vrijednost proizvodnje u zemlji.' }, { question: 'Tko ga mjeri?', answer: 'DZS.' }];
-  const PITANJA = { quiz: [{ question: 'BDP mjeri?', options: ['proizvodnju', 'uvoz'], correct: 0 }],
-    fill_blanks: [{ sentence: 'BDP mjeri _____.', answer: 'proizvodnju' }] };
+  // ②/3: svako pitanje nosi `card` = id kartice iz koje je nastalo. Id-evi kartica su deterministički
+  // (izvedeni iz lekcije i ključa ponavljanja), pa ih test zna unaprijed: lekcija l2, ključ 'kartice-1', prva kartica.
+  const K0 = typeof A.idIzKljuca === 'function' ? A.idIzKljuca('k', 'l2/kartice-1', 0) : 'nema';
+  const PITANJA = { quiz: [{ question: 'BDP mjeri?', options: ['proizvodnju', 'uvoz'], correct: 0, card: K0 }],
+    fill_blanks: [{ sentence: 'BDP mjeri ___.', answers: ['proizvodnju'], card: K0 }] };
 
   /** Cijeli cjevovod nad lažnom bazom; vraća id nacrta i id lekcije. */
   async function cjevovod(k) {
@@ -290,14 +293,14 @@ function lazniKlijent(redovi, greska) {
     const l = d.payload[lesson_id];
     assert.deepStrictEqual([l.name, l.color, l.learn.blocks.length, l.flashcards.length, l.quiz.length, l.fillBlanks.length],
       ['BDP', '#10b981', 2, 2, 1, 1]);
-    assert.strictEqual(Object.keys(d.payload).length, 2, 'obje lekcije');
+    assert.strictEqual(Object.keys(d.payload).filter((x) => x !== 'schemaVersion').length, 2, 'obje lekcije');
   });
 
   await test('②/2 redoslijed: kartice PADAJU bez Learna, pitanja PADAJU bez kartica, nepoznata lekcija pada', async () => {
     const k = lazniNacrt();
     const z = izlaz(await A.izvediAlat('zapocni_nacrt', k, { name: 'X', repeat_key: 's', lessons: LEKCIJE }));
-    const l = z.lessons[0].lesson_id;
-    const r1 = await A.izvediAlat('dodaj_kartice', k, { draft_id: z.draft_id, lesson_id: l, repeat_key: 'k', cards: KARTICE });
+    const l = z.lessons[1].lesson_id;
+    const r1 = await A.izvediAlat('dodaj_kartice', k, { draft_id: z.draft_id, lesson_id: l, repeat_key: 'kartice-1', cards: KARTICE });
     assert.strictEqual(r1.isError, true); assert.strictEqual(izlaz(r1).error, 'alat_nema_learna');
     await A.izvediAlat('napisi_learn', k, { draft_id: z.draft_id, lesson_id: l, repeat_key: 'l', blocks: LEARN.blocks });
     const r2 = await A.izvediAlat('dodaj_pitanja', k, Object.assign({ draft_id: z.draft_id, lesson_id: l, repeat_key: 'p' }, PITANJA));
@@ -305,7 +308,7 @@ function lazniKlijent(redovi, greska) {
     const r3 = await A.izvediAlat('napisi_learn', k, { draft_id: z.draft_id, lesson_id: 'nema', repeat_key: 'l2', blocks: LEARN.blocks });
     assert.strictEqual(r3.isError, true); assert.strictEqual(izlaz(r3).error, 'alat_nema_lekcije');
     // kontrola: s Learnom kartice prolaze, s karticom pitanja prolaze
-    assert.ok(!(await A.izvediAlat('dodaj_kartice', k, { draft_id: z.draft_id, lesson_id: l, repeat_key: 'k', cards: KARTICE })).isError);
+    assert.ok(!(await A.izvediAlat('dodaj_kartice', k, { draft_id: z.draft_id, lesson_id: l, repeat_key: 'kartice-1', cards: KARTICE })).isError);
     assert.ok(!(await A.izvediAlat('dodaj_pitanja', k, Object.assign({ draft_id: z.draft_id, lesson_id: l, repeat_key: 'p' }, PITANJA))).isError);
   });
 
@@ -331,7 +334,7 @@ function lazniKlijent(redovi, greska) {
     const k = lazniNacrt({ sukobi: 1 });
     const z = izlaz(await A.izvediAlat('zapocni_nacrt', k, { name: 'X', repeat_key: 's', lessons: LEKCIJE }));
     assert.ok(z.draft_id, JSON.stringify(z));
-    assert.strictEqual(Object.keys(k.nacrti.get(z.draft_id).payload).length, 2, 'upis nakon sukoba se izgubio');
+    assert.strictEqual(Object.keys(k.nacrti.get(z.draft_id).payload).filter((x) => x !== 'schemaVersion').length, 2, 'upis nakon sukoba se izgubio');
     const k2 = lazniNacrt({ sukobi: 99 });
     const r = await A.izvediAlat('zapocni_nacrt', k2, { name: 'X', repeat_key: 's', lessons: LEKCIJE });
     assert.strictEqual(r.isError, true); assert.strictEqual(izlaz(r).error, 'nacrt_sukob'); assert.strictEqual(izlaz(r).kind, 'ponovno');
@@ -348,7 +351,7 @@ function lazniKlijent(redovi, greska) {
       ['dodaj_kartice', { draft_id: z.draft_id, lesson_id: l, repeat_key: 'k', cards: [{ question: 'q', answer: 'x'.repeat(501) }] }],
       ['zapocni_nacrt', { name: 'Y', repeat_key: 's2', lessons: [{ name: 'L', color: 'red' }] }],
       ['zapocni_nacrt', { name: 'Y', repeat_key: 'ima razmak', lessons: LEKCIJE }],
-      ['dodaj_pitanja', { draft_id: z.draft_id, lesson_id: l, repeat_key: 'q', quiz: [{ question: 'q', options: ['a', 'b'], correct: 2 }] }]
+      ['dodaj_pitanja', { draft_id: z.draft_id, lesson_id: l, repeat_key: 'q', quiz: [{ question: 'q', options: ['a', 'b'], correct: 2, card: 'k1' }] }]
     ];
     for (const [alat, arg] of lose) {
       const r = await A.izvediAlat(alat, k, arg);
@@ -356,7 +359,7 @@ function lazniKlijent(redovi, greska) {
       assert.strictEqual(izlaz(r).error, 'alat_los_ulaz', alat + ': ' + JSON.stringify(izlaz(r)));
     }
     assert.strictEqual(k.nacrti.size, 1, 'loš ulaz ipak stvorio nacrt');
-    const kv = await A.izvediAlat('dodaj_kartice', k, { draft_id: z.draft_id, lesson_id: l, repeat_key: 'k', cards: KARTICE });
+    const kv = await A.izvediAlat('dodaj_kartice', k, { draft_id: z.draft_id, lesson_id: l, repeat_key: 'kartice-1', cards: KARTICE });
     assert.ok(!kv.isError, 'kontrola: valjan ulaz pada: ' + kv.content[0].text);
   });
 
@@ -496,6 +499,136 @@ function lazniKlijent(redovi, greska) {
     const redom = ['zapocni_nacrt', 'napisi_learn', 'dodaj_kartice', 'dodaj_pitanja', 'predaj_nacrt'].map((x) => A.UPUTE.indexOf(x));
     assert.ok(redom.every((x, j) => x >= 0 && (j === 0 || x > redom[j - 1])), 'redoslijed u uputama: ' + redom);
     assert.ok(/user.*(review|accept)/i.test(A.UPUTE), 'upute ne kažu da korisnik pregledava');
+  });
+
+  // ══ ②/3 OBLIK MATERIJALA: nacrt JEST gradivo (anketa 30.09.: „nacrt u obliku gradiva") ══════════
+  // Prihvati (②/4) nacrt prepisuje u materijal bez pretvorbe — zato izlaz alata mora već biti valjano
+  // GRADIVO: i strogi profil (baza), i kataloška shema (`validate:schema`, ono što renderer očekuje).
+  console.log('\n  — ②/3 oblik materijala —');
+  const AjvS = require('ajv');
+  const shemaKat = new AjvS({ allErrors: true, allowUnionTypes: true }).compile(require(path.join(KORIJEN, 'schema', 'subject-content.schema.json')));
+  const shemaUgc = new AjvS({ allErrors: true, allowUnionTypes: true }).compile(require(path.join(KORIJEN, 'schema', 'ugc-content.schema.json')));
+  const greskeSheme = (v) => (v.errors || []).map((e) => e.instancePath + ' ' + e.message).join('; ');
+
+  await test('②/3 izlaz cjevovoda prolazi KATALOŠKU shemu (subject-content) i strogi profil (ugc-content)', async () => {
+    const k = lazniNacrt();
+    const { draft_id } = await cjevovod(k);
+    const p = k.nacrti.get(draft_id).payload;
+    assert.ok(shemaKat(p), 'kataloška shema: ' + greskeSheme(shemaKat));
+    assert.ok(shemaUgc(p), 'strogi profil: ' + greskeSheme(shemaUgc));
+  });
+
+  await test('②/3 v2: `schemaVersion: 2`, svaka lekcija ima ikonu, svaka stavka i blok imaju id', async () => {
+    const k = lazniNacrt();
+    const { draft_id } = await cjevovod(k);
+    const p = k.nacrti.get(draft_id).payload;
+    assert.strictEqual(p.schemaVersion, 2, 'nema schemaVersion 2');
+    const lekcije = Object.keys(p).filter((x) => x !== 'schemaVersion');
+    assert.strictEqual(lekcije.length, 2);
+    for (const l of lekcije) {
+      assert.match(p[l].icon || '', /^fa-[a-z0-9-]+$/, l + ' bez ikone');
+      for (const niz of ['flashcards', 'quiz', 'fillBlanks']) assert.ok(Array.isArray(p[l][niz]), l + '.' + niz + ' nije niz (kostur mora biti kao nova sekcija u Studiju)');
+      for (const niz of ['flashcards', 'quiz', 'fillBlanks']) for (const x of p[l][niz] || []) assert.ok(x.id, l + '.' + niz + ' stavka bez id-a');
+      for (const b of (p[l].learn || {}).blocks || []) assert.ok(b.id, l + ' blok bez id-a');
+    }
+  });
+
+  await test('②/3 svako pitanje nosi `card` koja POSTOJI u istoj lekciji; nepostojeća kartica i bez `card` padaju', async () => {
+    const k = lazniNacrt();
+    const { draft_id, lesson_id } = await cjevovod(k);
+    const l = k.nacrti.get(draft_id).payload[lesson_id];
+    const ids = new Set(l.flashcards.map((c) => c.id));
+    for (const x of [...l.quiz, ...l.fillBlanks]) assert.ok(ids.has(x.card), 'pitanje bez valjane kartice: ' + JSON.stringify(x));
+    const bez = await A.izvediAlat('dodaj_pitanja', k, { draft_id, lesson_id, repeat_key: 'p2', quiz: [{ question: 'q', options: ['a', 'b'], correct: 0 }] });
+    assert.strictEqual(izlaz(bez).error, 'alat_los_ulaz', 'pitanje bez card prošlo');
+    const bezD = await A.izvediAlat('dodaj_pitanja', k, { draft_id, lesson_id, repeat_key: 'p4', fill_blanks: [{ sentence: 'a ___', answers: ['x'] }] });
+    assert.strictEqual(izlaz(bezD).error, 'alat_los_ulaz', 'dopuna bez card prošla');
+    const tudja = await A.izvediAlat('dodaj_pitanja', k, { draft_id, lesson_id, repeat_key: 'p3', quiz: [{ question: 'q', options: ['a', 'b'], correct: 0, card: 'nema-je' }] });
+    assert.deepStrictEqual([tudja.isError, izlaz(tudja).error], [true, 'alat_kartica_ne_postoji']);
+  });
+
+  await test('②/3 dodaj_kartice vraća id-eve kartica (AI ih treba za `card`) — isti kao u nacrtu', async () => {
+    const k = lazniNacrt();
+    const z = izlaz(await A.izvediAlat('zapocni_nacrt', k, { name: 'X', repeat_key: 's', lessons: LEKCIJE }));
+    await A.izvediAlat('napisi_learn', k, { draft_id: z.draft_id, lesson_id: 'l1', repeat_key: 'l', blocks: LEARN.blocks });
+    const r = izlaz(await A.izvediAlat('dodaj_kartice', k, { draft_id: z.draft_id, lesson_id: 'l1', repeat_key: 'kk', cards: KARTICE }));
+    assert.deepStrictEqual((r.cards || []).map((c) => c.card_id), k.nacrti.get(z.draft_id).payload.l1.flashcards.map((c) => c.id));
+    assert.strictEqual((r.cards || []).length, 2);
+  });
+
+  await test('②/3 dopuna: praznina = `_______` (alat normalizira `___`), `answers` = odgovor PO praznini, `answer` = prvi', async () => {
+    const k = lazniNacrt();
+    const { draft_id, lesson_id } = await cjevovod(k);
+    const d = (sentence, answers) => A.izvediAlat('dodaj_pitanja', k, { draft_id, lesson_id, repeat_key: 'f-' + sentence.length + '-' + answers.length,
+      fill_blanks: [{ sentence, answers, card: K0 }] });
+    const jedna = await d('BDP mjeri ____ zemlje.', ['proizvodnju']);
+    const dvije = await d('___ i ___ su dva pristupa.', ['proizvodni', 'rashodovni']);
+    assert.ok(!jedna.isError && !dvije.isError, jedna.content[0].text + ' / ' + dvije.content[0].text);
+    const f = k.nacrti.get(draft_id).payload[lesson_id].fillBlanks;
+    const j = f.find((x) => x.sentence.includes('zemlje')); const v = f.find((x) => x.sentence.includes(' i '));
+    assert.deepStrictEqual([j.sentence, j.answer, j.answers], ['BDP mjeri _______ zemlje.', 'proizvodnju', undefined]);
+    assert.deepStrictEqual([v.sentence, v.answer, v.answers], ['_______ i _______ su dva pristupa.', 'proizvodni', ['proizvodni', 'rashodovni']]);
+    for (const [s, a] of [['Bez praznine.', ['x']], ['___ i ___', ['samo jedan']], ['___', ['a', 'b']]]) {
+      const r = await d(s, a);
+      assert.strictEqual(izlaz(r).error, 'alat_los_ulaz', 'prošla dopuna ' + s + ' / ' + a.length + ' odgovora');
+    }
+    // Rečenica bez praznine dobiva VLASTITU poruku (AI mora znati da je zaboravio `___`, a ne da broji krivo).
+    assert.match(izlaz(await d('Bez praznine.', ['x'])).message, /no gap/, 'rečenica bez praznine bez jasne poruke');
+  });
+
+  await test('②/3 bez slika i videa u prvom izdanju: blok `image`/`video` pada, ostali tipovi prolaze', async () => {
+    const k = lazniNacrt();
+    const z = izlaz(await A.izvediAlat('zapocni_nacrt', k, { name: 'X', repeat_key: 's', lessons: LEKCIJE }));
+    for (const b of [{ type: 'video', url: 'https://youtu.be/x' }, { type: 'image', src: 'https://x/y.png' }, { type: 'legacy-html', html: '<b>x</b>' }]) {
+      const r = await A.izvediAlat('napisi_learn', k, { draft_id: z.draft_id, lesson_id: 'l1', repeat_key: 'b-' + b.type, blocks: [b] });
+      assert.strictEqual(izlaz(r).error, 'alat_los_ulaz', b.type + ' prošao');
+    }
+    const svi = [{ type: 'heading', text: 'H', level: 2 }, { type: 'paragraph', text: 'P' }, { type: 'list', items: ['a'] },
+      { type: 'callout', text: 'C', variant: 'tip' }, { type: 'table', rows: [['a']] }, { type: 'formula', tex: 'x^2' }];
+    const ok = await A.izvediAlat('napisi_learn', k, { draft_id: z.draft_id, lesson_id: 'l1', repeat_key: 'svi', blocks: svi });
+    assert.ok(!ok.isError, ok.content[0].text);
+  });
+
+  await test('②/3 sheme: `card` je OPCIONALNO polje kviza i dopune u OBJE sheme (aditivno), oblik id-a', () => {
+    const kviz = (dod) => ({ l1: { name: 'L', icon: 'fa-book', color: '#6366f1', quiz: [Object.assign({ question: 'q', options: ['a', 'b'], correct: 0 }, dod)] } });
+    const dop = (dod) => ({ l1: { name: 'L', icon: 'fa-book', color: '#6366f1', fillBlanks: [Object.assign({ sentence: 'a _______', answer: 'x' }, dod)] } });
+    for (const [ime, v] of [['katalog', shemaKat], ['ugc', shemaUgc]]) {
+      assert.ok(v(kviz({})) && v(dop({})), ime + ': bez card više ne prolazi (nije aditivno) ' + greskeSheme(v));
+      assert.ok(v(kviz({ card: 'k1abc-0' })) && v(dop({ card: 'k1abc-0' })), ime + ': card ne prolazi ' + greskeSheme(v));
+      assert.ok(!v(kviz({ card: 'loš id!' })) && !v(dop({ card: '' })), ime + ': card krivog oblika prolazi');
+    }
+  });
+
+  await test('②/3 kartica iz DRUGE lekcije ne vrijedi; isti ključ u dvije lekcije daje RAZLIČITE id-eve', async () => {
+    const k = lazniNacrt();
+    const { draft_id } = await cjevovod(k);                 // l2 ima kartice s ključem 'kartice-1'
+    await A.izvediAlat('napisi_learn', k, { draft_id, lesson_id: 'l1', repeat_key: 'learn-1', blocks: LEARN.blocks });
+    await A.izvediAlat('dodaj_kartice', k, { draft_id, lesson_id: 'l1', repeat_key: 'kartice-1', cards: KARTICE });
+    const p = k.nacrti.get(draft_id).payload;
+    const l1 = p.l1.flashcards.map((c) => c.id); const l2 = p.l2.flashcards.map((c) => c.id);
+    assert.strictEqual(l1.length, 2);
+    assert.ok(l1.every((id) => !l2.includes(id)), 'isti id kartice u dvije lekcije: ' + l1 + ' / ' + l2);
+    const verzija = k.nacrti.get(draft_id).verzija;
+    const r = await A.izvediAlat('dodaj_pitanja', k, { draft_id, lesson_id: 'l2', repeat_key: 'tudja', quiz: [{ question: 'q', options: ['a', 'b'], correct: 0, card: l1[0] }] });
+    assert.deepStrictEqual([r.isError, izlaz(r).error], [true, 'alat_kartica_ne_postoji'], 'kartica iz l1 prošla u l2');
+    assert.strictEqual(k.nacrti.get(draft_id).verzija, verzija, 'odbijeno pitanje ipak upisano');
+    const ok = await A.izvediAlat('dodaj_pitanja', k, { draft_id, lesson_id: 'l1', repeat_key: 'svoja', quiz: [{ question: 'q', options: ['a', 'b'], correct: 0, card: l1[0] }] });
+    assert.ok(!ok.isError, 'kontrola: vlastita kartica pada: ' + ok.content[0].text);
+  });
+
+  await test('②/3 UPUTE korak 4 kažu AI-ju za `card`/`card_id` i prazninu `___` s odgovorom po praznini', () => {
+    const korak4 = A.UPUTE.split('\n').find((r) => /^\s*4\. dodaj_pitanja/.test(r)) || '';
+    assert.ok(korak4, 'nema koraka 4');
+    for (const x of ['"card"', 'card_id', '___', 'one answer per gap']) assert.ok(korak4.includes(x), 'korak 4 ne spominje ' + x + ': ' + korak4);
+  });
+
+  await test('②/3 marker praznine u alatu == marker renderera (`js/fill-blanks.js`)', async () => {
+    const mark = (f) => (fs.readFileSync(path.join(KORIJEN, f), 'utf8').match(/const FILL_MARK = '([^']+)'/) || [])[1];
+    const renderer = mark('js/fill-blanks.js'); const alat = mark('supabase/functions/mcp/alati.ts');
+    assert.ok(renderer && renderer.length >= 3, 'renderer marker nije pročitan');
+    assert.strictEqual(alat, renderer, 'alat i renderer imaju različit marker');
+    const k = lazniNacrt(); const { draft_id, lesson_id } = await cjevovod(k);
+    assert.ok(k.nacrti.get(draft_id).payload[lesson_id].fillBlanks[0].sentence.includes(renderer), 'spremljena dopuna nema marker renderera');
   });
 
   console.log('\n  ' + proslo + ' prošlo, ' + pao + ' palo\n');

@@ -158,6 +158,9 @@
           "type": "string",
           "maxLength": 500
         },
+        "card": {
+          "$ref": "#/definitions/id"
+        },
         "color": {
           "$ref": "#/definitions/accent"
         }
@@ -193,6 +196,9 @@
         "hint": {
           "type": "string",
           "maxLength": 500
+        },
+        "card": {
+          "$ref": "#/definitions/id"
         },
         "color": {
           "$ref": "#/definitions/accent"

@@ -185,6 +185,9 @@ as $fn$ select $ugc${
           "type": "string",
           "maxLength": 500
         },
+        "card": {
+          "$ref": "#/definitions/id"
+        },
         "color": {
           "$ref": "#/definitions/accent"
         }
@@ -220,6 +223,9 @@ as $fn$ select $ugc${
         "hint": {
           "type": "string",
           "maxLength": 500
+        },
+        "card": {
+          "$ref": "#/definitions/id"
         },
         "color": {
           "$ref": "#/definitions/accent"

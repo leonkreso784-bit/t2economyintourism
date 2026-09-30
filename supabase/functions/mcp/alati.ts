@@ -22,7 +22,7 @@ export const UPUTE = [
   '  1. zapocni_nacrt — name the material and list its lessons, each with its own colour (#rrggbb).',
   '  2. napisi_learn — for each lesson write the full study text (Learn) first. Everything else is built from it.',
   '  3. dodaj_kartice — flashcards for that lesson: a term or question, and a short explanation (under 200 characters is best).',
-  '  4. dodaj_pitanja — quiz questions and fill-in-the-blank sentences built from those flashcards.',
+  '  4. dodaj_pitanja — quiz questions and fill-in-the-blank sentences built from those flashcards. Every question names its flashcard in "card" (a card_id returned by dodaj_kartice). In a fill-in sentence write each gap as ___ and give one answer per gap, in order.',
   '  5. predaj_nacrt — submit the finished draft. After that it is frozen until the user accepts or discards it.',
   'Cover the WHOLE source, not a sample. Send at most one lesson per call.',
   'Every writing call takes a repeat_key: if you are unsure whether a call went through, send the SAME call with the SAME repeat_key again — nothing is duplicated. Use a NEW repeat_key for new content.',
@@ -147,7 +147,7 @@ export function prevediOdbijanje(greska: { message?: string } | null | undefined
 //
 // ─── ISTI POZIV DVAPUT = JEDNOM (ključ ponavljanja, N8) ─────────────────────────────────────────
 // Svaki alat koji stvara prima `repeat_key`. Nacrt: baza vraća isti nacrt za isti ključ. Kartice i
-// pitanja: id svake stavke IZVODI se iz ključa (`idIzKljuca`), pa ponovljen poziv PREPIŠE iste
+// pitanja: id svake stavke IZVODI se iz lekcije i ključa (`idIzKljuca`), pa ponovljen poziv PREPIŠE iste
 // stavke umjesto da ih doda; ako je rezultat jednak onome što već stoji, upisa uopće nema.
 //
 // ─── USPOREDNI UPIS (N7) ────────────────────────────────────────────────────────────────────────
@@ -160,7 +160,8 @@ export const ODBIJANJA_ALATA: Record<string, { vrsta: VrstaOdbijanja; poruka: st
   alat_los_ulaz: { vrsta: 'ispravi', poruka: 'The input does not match this tool. Fix exactly this and call again:' },
   alat_nema_lekcije: { vrsta: 'ispravi', poruka: 'This draft has no lesson with that lesson_id. Use a lesson_id returned by zapocni_nacrt or procitaj_nacrt.' },
   alat_nema_learna: { vrsta: 'ispravi', poruka: 'Write the Learn text of this lesson first (napisi_learn). Flashcards are built from it.' },
-  alat_nema_kartica: { vrsta: 'ispravi', poruka: 'Add flashcards to this lesson first (dodaj_kartice). Questions are built from the flashcards.' }
+  alat_nema_kartica: { vrsta: 'ispravi', poruka: 'Add flashcards to this lesson first (dodaj_kartice). Questions are built from the flashcards.' },
+  alat_kartica_ne_postoji: { vrsta: 'ispravi', poruka: 'This lesson has no flashcard with that card id. Use a card_id returned by dodaj_kartice (or procitaj_nacrt) for THIS lesson.' }
 };
 
 /** Odbijanje koje alat vraća AI-ju kao rezultat s `isError` (nikad kao 500). */
@@ -274,7 +275,7 @@ function sazetakLekcija(p: Record<string, Lekcija>) {
 // alati koriste — ništa više (nepoznata ključna riječ u shemi = pad testa, ne tiho propuštanje).
 type Shema = Record<string, unknown>;
 const POZNATE = new Set(['type', 'description', 'properties', 'required', 'additionalProperties', 'items', 'minItems',
-  'maxItems', 'minLength', 'maxLength', 'pattern', 'minimum', 'maximum']);
+  'maxItems', 'minLength', 'maxLength', 'pattern', 'minimum', 'maximum', 'enum']);
 
 export function provjeriUlaz(s: Shema, v: unknown, put = 'input'): string | null {
   for (const k of Object.keys(s)) if (!POZNATE.has(k)) return 'schema uses unsupported keyword ' + k;
@@ -301,6 +302,7 @@ export function provjeriUlaz(s: Shema, v: unknown, put = 'input'): string | null
     if (typeof s.minLength === 'number' && v.length < s.minLength) return put + ' must not be empty';
     if (typeof s.maxLength === 'number' && v.length > s.maxLength) return put + ' is longer than ' + s.maxLength + ' characters';
     if (typeof s.pattern === 'string' && !new RegExp(s.pattern).test(v)) return put + ' has the wrong format (' + s.pattern + ')';
+    if (Array.isArray(s.enum) && !s.enum.includes(v)) return put + ' must be one of: ' + s.enum.join(', ');
     return null;
   }
   if (t === 'integer') {
@@ -324,13 +326,23 @@ const objekt = (props: Record<string, Shema>, required: string[], opis?: string)
 // Granice po pozivu: jedna lekcija, ne cijeli materijal (plan ②/2) — i znatno ispod granica baze.
 const KARTICA = objekt({ question: tekst(1, 500, 'Term or question'), answer: tekst(1, 500, 'Short explanation (under 200 characters is best)'),
   explanation: tekst(1, 2000, 'Optional longer detail') }, ['question', 'answer']);
+// ②/3: svako pitanje nosi `card` = id kartice iz koje je nastalo (ADR-031: pitanja iz kartica).
+const CARD: Shema = { type: 'string', pattern: '^[A-Za-z0-9_-]{1,64}$', description: 'card_id (from dodaj_kartice) of the flashcard this question is built from' };
 const KVIZ = objekt({ question: tekst(1, 1000), options: { type: 'array', minItems: 2, maxItems: 6, items: tekst(1, 500) },
-  correct: { type: 'integer', minimum: 0, maximum: 5, description: 'Index of the correct option (0-based)' } }, ['question', 'options', 'correct']);
-const DOPUNA = objekt({ sentence: tekst(1, 1000, 'Sentence with the gap written as _____'), answer: tekst(1, 200, 'The word or phrase for the gap'),
-  answers: { type: 'array', maxItems: 10, items: tekst(1, 200), description: 'Optional other accepted answers' }, hint: tekst(1, 500) }, ['sentence', 'answer']);
-const BLOK: Shema = { type: 'object', description: 'One Learn block. {type:"heading",text,level?:2-4} · {type:"paragraph",text} · ' +
+  correct: { type: 'integer', minimum: 0, maximum: 5, description: 'Index of the correct option (0-based)' }, card: CARD },
+['question', 'options', 'correct', 'card']);
+// Oblik dopune = oblik gradiva (D2, `js/fill-blanks.js`): marker `_______`, `answers` = odgovor ZA SVAKU
+// prazninu redom, `answer` = prvi. AI piše prazninu kao `___` (3+ podvlaka), alat je svodi na marker.
+const DOPUNA = objekt({ sentence: tekst(1, 1000, 'Sentence with each gap written as ___ (three or more underscores)'),
+  answers: { type: 'array', minItems: 1, maxItems: 10, items: tekst(1, 200), description: 'The answer for EACH gap, in order (one per gap)' },
+  hint: tekst(1, 500), card: CARD }, ['sentence', 'answers', 'card']);
+const FILL_MARK = '_______';   // isti marker kao renderer (`js/fill-blanks.js`) i kataloška shema
+// ②/3: bez slika i videa u prvom izdanju — samo tekstualni blokovi (plan ②/3).
+export const TIPOVI_BLOKA = ['heading', 'paragraph', 'list', 'callout', 'table', 'formula'];
+const BLOK: Shema = { type: 'object', required: ['type'], properties: { type: { type: 'string', enum: TIPOVI_BLOKA } },
+  description: 'One Learn block. {type:"heading",text,level?:2-4} · {type:"paragraph",text} · ' +
   '{type:"list",items:[text],ordered?} · {type:"callout",text,variant?:"info"|"warning"|"tip",title?} · {type:"table",header?:[text],rows:[[text]]} · ' +
-  '{type:"formula",tex,display?}. text = plain string, or an array of runs {text,b?,i?,math?,href?}. No HTML, no images.' };
+  '{type:"formula",tex,display?}. text = plain string, or an array of runs {text,b?,i?,math?,href?}. No HTML, no images, no video.' };
 
 export interface Alat {
   ime: string; naslov: string; opis: string; ulaz: Shema; samoCitanje: boolean;
@@ -354,8 +366,12 @@ export const ALATI: Alat[] = [
     ['name', 'repeat_key', 'lessons']),
     izvedi: async (k, a) => {
       const id = await pozovi<string>(k, 'mcp_zapocni_nacrt', { p_name: a.name, p_kljuc: a.repeat_key });
-      const kostur: Record<string, Lekcija> = {};
-      (a.lessons as { name: string; color: string }[]).forEach((l, i) => { kostur['l' + (i + 1)] = { name: l.name, color: l.color.toLowerCase() }; });
+      // ②/3: nacrt JEST gradivo — `schemaVersion: 2` (Learn u blokovima) i ikona kakvu Studio daje novoj lekciji.
+      const kostur: Record<string, any> = { schemaVersion: 2 };
+      (a.lessons as { name: string; color: string }[]).forEach((l, i) => {
+        // Prazni nizovi kao nova sekcija u Studiju (`js/studio.js`): lekcija bez sadržaja je i dalje valjano gradivo.
+        kostur['l' + (i + 1)] = { name: l.name, icon: 'fa-book', color: l.color.toLowerCase(), flashcards: [], quiz: [], fillBlanks: [] };
+      });
       // Nov nacrt je prazan → upiši kostur. Ponovljen početak (isti ključ) zatekne ga već upisanog → ne dira ga.
       const d = await izmijeni(k, id, (p) => Object.keys(p).length === 0 ? kostur : p);
       return { draft_id: d.id, status: d.status, lessons: sazetakLekcija(d.payload),
@@ -368,7 +384,7 @@ export const ALATI: Alat[] = [
     ulaz: objekt({ draft_id: DRAFT_ID, lesson_id: LESSON_ID, repeat_key: KLJUC, title: tekst(1, 200),
       blocks: { type: 'array', minItems: 1, maxItems: 200, items: BLOK } }, ['draft_id', 'lesson_id', 'repeat_key', 'blocks']),
     izvedi: async (k, a) => {
-      const blokovi = (a.blocks as Record<string, unknown>[]).map((b, i) => Object.assign({}, b, { id: idIzKljuca('b', a.repeat_key, i) }));
+      const blokovi = (a.blocks as Record<string, unknown>[]).map((b, i) => Object.assign({}, b, { id: idIzKljuca('b', a.lesson_id + '/' + a.repeat_key, i) }));
       const d = await izmijeni(k, a.draft_id, (p) => {
         const l = lekcijaIz(p, a.lesson_id);
         l.learn = Object.assign(a.title ? { title: a.title } : {}, { blocks: blokovi });
@@ -383,14 +399,15 @@ export const ALATI: Alat[] = [
     ulaz: objekt({ draft_id: DRAFT_ID, lesson_id: LESSON_ID, repeat_key: KLJUC,
       cards: { type: 'array', minItems: 1, maxItems: 50, items: KARTICA } }, ['draft_id', 'lesson_id', 'repeat_key', 'cards']),
     izvedi: async (k, a) => {
-      const nove = (a.cards as Record<string, unknown>[]).map((c, i) => Object.assign({ id: idIzKljuca('k', a.repeat_key, i) }, c));
+      const nove = (a.cards as Record<string, unknown>[]).map((c, i) => Object.assign({ id: idIzKljuca('k', a.lesson_id + '/' + a.repeat_key, i) }, c));
       const d = await izmijeni(k, a.draft_id, (p) => {
         const l = lekcijaIz(p, a.lesson_id);
         if (!l.learn || !(l.learn.blocks || []).length) odbij('alat_nema_learna');
         l.flashcards = upisiPoId(l.flashcards, nove);
         return p;
       });
-      return { draft_id: d.id, lesson: sazetakLekcija(d.payload).find((x) => x.lesson_id === a.lesson_id) };
+      return { draft_id: d.id, lesson: sazetakLekcija(d.payload).find((x) => x.lesson_id === a.lesson_id),
+        cards: nove.map((c) => ({ card_id: c.id, question: c.question })) };
     }
   },
   {
@@ -404,11 +421,22 @@ export const ALATI: Alat[] = [
       const dopune = (a.fill_blanks || []) as Record<string, unknown>[];
       if (kviz.length + dopune.length === 0) odbij('alat_los_ulaz', 'input needs at least one quiz or fill_blanks item');
       kviz.forEach((q, i) => { if (q.correct >= q.options.length) odbij('alat_los_ulaz', 'input.quiz[' + i + '].correct points past the last option'); });
-      const q = kviz.map((x, i) => Object.assign({ id: idIzKljuca('q', a.repeat_key, i) }, x));
-      const f = dopune.map((x, i) => Object.assign({ id: idIzKljuca('f', a.repeat_key, i) }, x));
+      const q = kviz.map((x, i) => Object.assign({ id: idIzKljuca('q', a.lesson_id + '/' + a.repeat_key, i) }, x));
+      // Dopuna u obliku gradiva (D2): `___` → marker, jedan odgovor po praznini; `answer` = prvi (keširana
+      // stara skripta čita samo njega), `answers` tek od dvije praznine — kao u katalogu.
+      const f = dopune.map((x, i) => {
+        const { sentence, answers, ...ostalo } = x as { sentence: string; answers: string[] } & Record<string, unknown>;
+        const s = sentence.replace(/_{3,}/g, FILL_MARK);
+        const praznina = s.split(FILL_MARK).length - 1;
+        if (praznina === 0) odbij('alat_los_ulaz', 'input.fill_blanks[' + i + '].sentence has no gap — write each gap as ___');
+        if (praznina !== answers.length) odbij('alat_los_ulaz', 'input.fill_blanks[' + i + '] has ' + praznina + ' gap(s) but ' + answers.length + ' answer(s) — give exactly one answer per gap, in order');
+        return Object.assign({ id: idIzKljuca('f', a.lesson_id + '/' + a.repeat_key, i), sentence: s, answer: answers[0] }, praznina > 1 ? { answers } : {}, ostalo);
+      });
       const d = await izmijeni(k, a.draft_id, (p) => {
         const l = lekcijaIz(p, a.lesson_id);
         if (!(l.flashcards || []).length) odbij('alat_nema_kartica');
+        const kartice = new Set((l.flashcards || []).map((c) => c.id));
+        for (const x of [...q, ...f]) if (!kartice.has(x.card)) odbij('alat_kartica_ne_postoji', 'Unknown: ' + x.card);
         if (q.length) l.quiz = upisiPoId(l.quiz, q);
         if (f.length) l.fillBlanks = upisiPoId(l.fillBlanks, f);
         return p;

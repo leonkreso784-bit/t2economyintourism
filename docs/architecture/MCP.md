@@ -80,10 +80,19 @@ Postgres: GRANT-ovi (zabrana po defaultu) + RLS (samo vlastito) + SECURITY DEFIN
   `predaj_nacrt`. Upute cjevovoda su u `instructions` (`UPUTE`). Svi se registriraju iz jezgre (`registrirajAlate`).
 - **Upis:** pročitaj → izmijeni → `mcp_upisi_nacrt` s verzijom; na `nacrt_sukob` ponovi (do 3×). Jednak rezultat = bez upisa.
 - **Isti poziv dvaput = jednom:** svaki alat koji stvara traži `repeat_key`; nacrt se veže na ključ u bazi, a id-evi
-  blokova, kartica i pitanja izvode se iz ključa (`idIzKljuca`), pa ponovljen poziv prepiše iste stavke.
+  blokova, kartica i pitanja izvode se iz lekcije i ključa (`idIzKljuca`), pa ponovljen poziv prepiše iste stavke,
+  a isti ključ u dvije lekcije ne daje isti id (napredak se vodi po id-u stavke, ②/3).
 - **Ulaz** provjerava jezgra (`provjeriUlaz`, podskup JSON Scheme); SDK shemu samo oglašava. Granice po pozivu: jedna
   lekcija, ≤ 50 kartica / kvizova / dopuna, ≤ 200 blokova. Sadržaj (strogi profil) i dalje provodi baza.
 - **Odbijanje:** svaki RPC kroz `pozovi()` → `prevediOdbijanje` (N9); AI dobiva `{error, kind, message}` s `isError`.
+- **Oblik (②/3): nacrt JEST gradivo** — Prihvati (②/4) ga prepisuje bez pretvorbe, pa izlaz alata prolazi i
+  katalošku shemu (`subject-content`) i strogi profil. Kostur: `schemaVersion: 2`, lekcija `{name, icon: 'fa-book',
+  color, flashcards: [], quiz: [], fillBlanks: []}` (kao nova sekcija u Studiju) · Learn samo tekstualni blokovi (bez
+  slika i videa u prvom izdanju) · `dodaj_kartice` vraća `card_id`-eve, a svako pitanje nosi obavezan `card` koji
+  mora postojati u toj lekciji (`alat_kartica_ne_postoji`) · dopuna: AI piše `___`, alat sprema marker `_______`;
+  `answers` = **odgovor po praznini** (D2, ne alternative), broj mora biti jednak broju praznina, `answer` = prvi,
+  `answers` se sprema tek od dvije praznine. ⚠️ Te provjere žive u ALATU; izravni RPC ih zaobilazi → druga linija je
+  ③/5–③/6 (Prihvati).
 - Adresa resursa: `MCP_RESOURCE_URL`, inače adresa funkcije; na produkciji postaje kanonska tek u fazi ⑥.
 
 ## 7 · Adresa (`vercel.json`)
