@@ -13,6 +13,19 @@
 > Njihovi zapisi ostaju **ovdje i nedirnuti** jer nose obrazloženje i mjerenja; spec nosi **redoslijed
 > i dokaz**. Kad cigla padne, ovdje se stavlja ✅ s brojkom — ne briše se.
 
+### 🔥 Produkcija javno poslužuje `.md` — `CLAUDE.md`, `docs/**` (2026-09-30, izmjereno)
+
+**Izmjereno 30.09. (samo GET):** `www.sokratstudy.com/CLAUDE.md`, `/docs/README.md`, `/docs/records/PROGRESS.md`,
+`/docs/records/BUGS.md` → **200** `text/markdown`. Projekt nema `.vercelignore`, pa Vercel poslužuje svaku datoteku iz
+repoa. Kad F6 uđe u `main`, javno bi se posluživao i `architecture/MCP_SECURITY.md` (karta otvorenih nalaza).
+**Odluka (Leon, 30.09.):** sakriti **samo sa stranice**; GitHub-repo ostaje javan („github ćemo drugom prilikom"), a
+repo NE postaje privatan (izmjereno: ~244 CI-runa/mj. → privatni repo bi potrošio besplatnu kvotu Actions minuta).
+**Cigla:** `.vercelignore` (ili pravilo u `vercel.json`) za `*.md` i `docs/**` · brana u preflightu koja nabraja `.md`
+iz repoa i tvrdi da nijedan nije u deployu · poslije deploya izmjeriti 404 na istim adresama. Grana od `main`-a, deploy uz
+Leonov izričit OK. **Prije F6 → main.**
+**Poslije (zasebno, nije odlučeno):** docs izvan javnog GitHuba (npr. privatni repo) — povijest ostaje javna bez
+prepisivanja, koje NE preporučujem.
+
 ### 🔥 AI-token smije promijeniti E-MAIL — je li „Secure email change" uopće uključen? (2026-09-22, F6 ①/2b)
 
 **Povod.** ①/2b je postavkom „Require current password" zatvorio **lozinku** AI-tokenu, ali `PUT /auth/v1/user`
