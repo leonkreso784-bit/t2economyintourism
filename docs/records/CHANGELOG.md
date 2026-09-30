@@ -5,6 +5,14 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-30 (OPUS) — 🤖 **F6 ②/2 MCP alati** — grana `feat/f6-mcp`, STAGING (nije na produkciji)
+
+- Korisnikov AI gradi materijal u **nacrt**, lekciju po lekciju: započni (lekcije s bojom) → Learn → kartice →
+  kviz i dopune → predaj. Redoslijed je tvrd (kartice traže Learn, pitanja traže kartice).
+- Ponovljen poziv s istim `repeat_key` ne stvara duplikat; usporedni upis se razrješava ponovnim čitanjem.
+- Svako odbijanje baze AI dobiva kao imenovanu grešku s uputom što učiniti (N9), nikad kao 500.
+- Brane: unit `mcp-alati`, e2e `npm run mcp:alati` (staging).
+
 ## 2026-09-30 (OPUS) — 🔒 **F6 ②/0 sigurnosni temelj + ②/1b** — grana `feat/f6-mcp`, STAGING (nije na produkciji)
 
 - **Baza provodi strogi profil osobnog sadržaja** (pg_jsonschema, `supabase/f6-sadrzaj.sql`) na upisu nacrta i na

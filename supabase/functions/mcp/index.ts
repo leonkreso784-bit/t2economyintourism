@@ -11,8 +11,14 @@
 // ─── ŠTO SE NE SMIJE (ADR-026/030/038) ──────────────────────────────────────────────────────────
 //   • nikad `supabaseAdmin`, `service_role` ni tajni ključ — alat radi KAO KORISNIK, pod RLS-om;
 //   • nikad javni katalog ni `is_admin()`;
-//   • u ovoj cigli NEMA upisa. Brava za token s `client_id` (①/2) dolazi prije ijednog upisa.
+//   • nikad upis mimo jezgre: ovdje nema ni `.rpc(` ni `registerTool(` — svaki alat i svaki poziv
+//     baze živi u `alati.ts` (②/2), gdje ide kroz `prevediOdbijanje` (N9).
 // `tests/unit/mcp-alati.test.js` čita ovu datoteku i pada ako se išta od toga pojavi.
+//
+// ─── ULAZ ALATA ─────────────────────────────────────────────────────────────────────────────────
+// SDK-u se shema daje samo za OGLAS (AI je vidi u `tools/list`); validator koji mu dajemo propušta
+// sve. Provjeru radi jezgra (`provjeriUlaz`), testirana u Nodeu, i vraća IMENOVANO odbijanje. Usput:
+// zadani SDK-ov validator (ajv) prevodi shemu u kod kroz `new Function` — ovdje ga nema.
 //
 // ─── ADRESA RESURSA ─────────────────────────────────────────────────────────────────────────────
 // Zadaje se izričito: `MCP_RESOURCE_URL` (produkcija: https://www.sokratstudy.com/mcp, ADR-038 ②),
@@ -21,13 +27,16 @@
 // Paketi su pinani TOČNO (pravilo #9) — `@supabase/server` OAuth sloj je alpha, a ugniježđeni oblik
 // koji ovdje stoji je jedini koji paket zove stabilnim.
 
-import { createMcpHandler, McpServer } from 'npm:@modelcontextprotocol/server@2.0.0';
+import { createMcpHandler, fromJsonSchema, McpServer } from 'npm:@modelcontextprotocol/server@2.0.0';
 import { fromSupabaseUrl, withOAuthProtectedResource, withSupabase } from 'npm:@supabase/server@1.7.0';
-import { POSLUZITELJ, UPUTE, procitajMaterijale } from './alati.ts';
-import type { CitacCvorova } from './alati.ts';
+import { POSLUZITELJ, UPUTE, registrirajAlate } from './alati.ts';
+import type { Klijent } from './alati.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL') ?? '';
 const RESURS = Deno.env.get('MCP_RESOURCE_URL') ?? `${SUPABASE_URL}/functions/v1/mcp`;
+
+/** Validator za oglas: propušta sve (v. zaglavlje „ULAZ ALATA"). */
+const SAMO_OGLAS = { getValidator: () => (x: unknown) => ({ valid: true as const, data: x, errorMessage: undefined }) };
 
 Deno.serve(
   withOAuthProtectedResource(
@@ -35,18 +44,7 @@ Deno.serve(
     withSupabase({ auth: 'user' }, async (req, { supabase }) => {
       const mcp = createMcpHandler(() => {
         const server = new McpServer(POSLUZITELJ, { instructions: UPUTE });
-        server.registerTool(
-          'procitaj_materijale',
-          {
-            title: 'List my study materials',
-            description: 'Lists the signed-in user\'s own shelves and study materials (names and ids). Read-only.',
-            annotations: { readOnlyHint: true }
-          },
-          async () => {
-            const r = await procitajMaterijale(supabase as unknown as CitacCvorova);
-            return { content: [{ type: 'text', text: r.tekst }] };
-          }
-        );
+        registrirajAlate(server as never, supabase as unknown as Klijent, (s) => fromJsonSchema(s as never, SAMO_OGLAS as never));
         return server;
       });
       return mcp.fetch(req);

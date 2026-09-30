@@ -39,6 +39,7 @@
 | **Sigurnosna analiza** | A ✅ (renderer · validacija · `mcp-admin`) · B ✅ (ovlasti · nacrt · injection) · C ✅ (limiti · backup · brisanje · logovi) — nalazi N1–N16 u [MCP_SECURITY §4](../architecture/MCP_SECURITY.md) |
 | **Ⓗ H1** ✅ | **N10** zatvoren 30.09.: SQL na PROD-u (provjeren), `main` = `42a13b3`, T5 objavljuje materijal (BUG-052) |
 | **②/0 sigurnosni temelj** | ✅ STAGING 30.09. — a · b · c · d · e, svaka s crvenim na starom kodu i `brana-revizor`om; N1, N2, N4, N5 zatvoreni na stagingu |
+| **②/2 alati** | 🟡 30.09. — kôd + unit (27/0, 12 crvenih na starom, 14/14 mutacija uklj. 3 revizorova zaobilaska N9) + e2e `mcp:alati` (crveno na staroj funkciji; 31/0 protiv lokalnog dvojnika s pravim SDK-om i staging bazom); **čeka Leonov deploy funkcije `mcp` na staging** i zeleni `mcp:alati` uživo |
 | **②/1b** | ✅ STAGING 30.09. — N7 i N8 zatvoreni; brana dopunjena po revizoru (8 usporednih upisa, HTTP 409 i < 5 s, `mcp:brava` po punom potpisu), svaka dopuna crvena pod mutacijom; ⚠️ drift staging-SQL ↔ `f6-nacrt.sql` nitko ne mjeri (brana prije ⑥); N9 prijevod napisan, **neožičen** (ožičava ②/2) |
 
 ## 2 · Redoslijed

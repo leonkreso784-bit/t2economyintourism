@@ -9,16 +9,29 @@
 //   • Čita se SAMO kroz klijent koji je `withSupabase({ auth: 'user' })` vezao na korisnikov token
 //     → RLS (`nodes_select_own`) vraća isključivo njegove čvorove. Ovaj modul NIKAD ne dobiva
 //     admin-klijent i ne zna za javni katalog (ni čitanje).
-//   • ①/1 je SAMO ČITANJE. Upis ide tek kroz nacrt (`node_drafts`, ②/1) — nikad u žive tablice.
+//   • ②/2: AI PIŠE, ali SAMO u vlastiti nacrt i SAMO kroz pet `mcp_*` RPC-ova (`f6-nacrt.sql`) —
+//     nikad u žive tablice. Svaki RPC ide kroz `pozovi()`, jedino mjesto koje zove `.rpc(` i koje
+//     grešku baze predaje `prevediOdbijanje` (N9; unit pada na `.rpc(` izvan njega i na nuli).
 
 /** Upute koje AI dobiva pri spajanju (MCP `instructions`). Kvalitetu držimo branama, ne promptom. */
 export const UPUTE = [
   'Sokrat Study is a study platform. This connector works ONLY with the signed-in user\'s own study materials.',
-  'Materials live on shelves (folders). Right now you can only read the list of shelves and materials.',
+  'You can read the user\'s shelves and materials (procitaj_materijale), and you can BUILD a new study material as a DRAFT.',
+  'A draft is never live: the user reviews it in Sokrat and decides whether to accept it. You cannot publish.',
+  'Build a material from the user\'s source (notes, a PDF they shared in the chat) in this order, one lesson at a time:',
+  '  1. zapocni_nacrt — name the material and list its lessons, each with its own colour (#rrggbb).',
+  '  2. napisi_learn — for each lesson write the full study text (Learn) first. Everything else is built from it.',
+  '  3. dodaj_kartice — flashcards for that lesson: a term or question, and a short explanation (under 200 characters is best).',
+  '  4. dodaj_pitanja — quiz questions and fill-in-the-blank sentences built from those flashcards.',
+  '  5. predaj_nacrt — submit the finished draft. After that it is frozen until the user accepts or discards it.',
+  'Cover the WHOLE source, not a sample. Send at most one lesson per call.',
+  'Every writing call takes a repeat_key: if you are unsure whether a call went through, send the SAME call with the SAME repeat_key again — nothing is duplicated. Use a NEW repeat_key for new content.',
+  'procitaj_nacrt shows your drafts and what each lesson already has, so you can continue where you stopped.',
+  'If a tool returns an error, its "kind" says what to do: ispravi = fix exactly what the message says and call again · ponovno = read the draft again and retry · korisnik = ask the user · stop = do not repeat this call · kvar = temporary failure, try once more.',
   'Reply to the user in the language they write in.'
 ].join('\n');
 
-export const POSLUZITELJ = { name: 'sokrat-study', version: '0.1.0' } as const;
+export const POSLUZITELJ = { name: 'sokrat-study', version: '0.2.0' } as const;
 
 /** Stupci koje alat čita — izričito, nikad `*` (novi stupac ne smije tiho procuriti AI-ju). */
 export const STUPCI_CVORA = 'id,parent_id,kind,name,position,updated_at';
@@ -124,4 +137,342 @@ export function prevediOdbijanje(greska: { message?: string } | null | undefined
   if (!znano) return { kod: '', vrsta: 'kvar', poruka: 'Sokrat could not complete this request. Try once more; if it fails again, tell the user.' };
   const razlog = kod === 'sadrzaj_neispravan' ? ' ' + tekst.slice(kod.length + 1).trim().slice(0, 300) : '';
   return { kod, vrsta: znano.vrsta, poruka: znano.poruka + razlog };
+}
+
+// ═══ ②/2 ALATI CJEVOVODA (ADR-031: Learn → kartice → pitanja → predaja) ═══════════════════════════
+//
+// Redoslijed i idempotencija žive OVDJE (ADR-038 ④); oblik, veličina, vlasništvo, kvota i strogi
+// profil sadržaja žive u BAZI (`f6-nacrt.sql`, `f6-sadrzaj.sql`) — jer isti token RPC zove i mimo
+// ovog poslužitelja (N5). Zato alat nikad ne „pomaže" bazi: što baza odbije, AI dobije prevedeno.
+//
+// ─── ISTI POZIV DVAPUT = JEDNOM (ključ ponavljanja, N8) ─────────────────────────────────────────
+// Svaki alat koji stvara prima `repeat_key`. Nacrt: baza vraća isti nacrt za isti ključ. Kartice i
+// pitanja: id svake stavke IZVODI se iz ključa (`idIzKljuca`), pa ponovljen poziv PREPIŠE iste
+// stavke umjesto da ih doda; ako je rezultat jednak onome što već stoji, upisa uopće nema.
+//
+// ─── USPOREDNI UPIS (N7) ────────────────────────────────────────────────────────────────────────
+// Upis je „pročitaj → izmijeni → upiši s verzijom". Na `nacrt_sukob` alat pročita ponovno i
+// ponovi izmjenu (najviše `POKUSAJA` puta) — izmjene su idempotentne, pa je ponavljanje sigurno.
+
+/** Tuđa odbijanja iz ALATA (ne iz baze) — isti oblik kao `ODBIJANJA`, zaseban popis jer ga unit ne
+ *  uspoređuje sa SQL-om. Redoslijed cjevovoda je pravilo poslužitelja, ne baze (ADR-038 ④). */
+export const ODBIJANJA_ALATA: Record<string, { vrsta: VrstaOdbijanja; poruka: string }> = {
+  alat_los_ulaz: { vrsta: 'ispravi', poruka: 'The input does not match this tool. Fix exactly this and call again:' },
+  alat_nema_lekcije: { vrsta: 'ispravi', poruka: 'This draft has no lesson with that lesson_id. Use a lesson_id returned by zapocni_nacrt or procitaj_nacrt.' },
+  alat_nema_learna: { vrsta: 'ispravi', poruka: 'Write the Learn text of this lesson first (napisi_learn). Flashcards are built from it.' },
+  alat_nema_kartica: { vrsta: 'ispravi', poruka: 'Add flashcards to this lesson first (dodaj_kartice). Questions are built from the flashcards.' }
+};
+
+/** Odbijanje koje alat vraća AI-ju kao rezultat s `isError` (nikad kao 500). */
+export class Odbijanje extends Error {
+  kod: string;
+  vrsta: VrstaOdbijanja;
+  constructor(o: { kod: string; vrsta: VrstaOdbijanja; poruka: string }) {
+    super(o.poruka);
+    this.kod = o.kod || 'kvar';
+    this.vrsta = o.vrsta;
+  }
+}
+function odbij(kod: string, dodatak?: string): never {
+  const o = ODBIJANJA_ALATA[kod];
+  throw new Odbijanje({ kod, vrsta: o.vrsta, poruka: o.poruka + (dodatak ? ' ' + dodatak : '') });
+}
+
+/** Pet RPC-ova nacrta — jedini upis koji AI ima (`f6-nacrt.sql` §4; unit ga uspoređuje s grantom). */
+export type RpcNacrta = 'mcp_zapocni_nacrt' | 'mcp_upisi_nacrt' | 'mcp_predaj_nacrt' | 'mcp_procitaj_nacrt' | 'mcp_moji_nacrti';
+
+/** Minimalni oblik supabase-js klijenta za alate cjevovoda — test ga podmeće. */
+export interface Klijent extends CitacCvorova {
+  rpc(ime: RpcNacrta, args?: Record<string, unknown>): PromiseLike<{ data: unknown; error: { message?: string } | null }>;
+}
+
+/** JEDINI poziv baze u alatima (N9). Greška baze → prevedeno odbijanje; nikad sirova poruka. */
+async function pozovi<T>(klijent: Klijent, ime: RpcNacrta, args: Record<string, unknown>): Promise<T> {
+  const { data, error } = await klijent.rpc(ime, args);
+  if (error) throw new Odbijanje(prevediOdbijanje(error));
+  return data as T;
+}
+
+interface Nacrt { id: string; name: string; status: 'u_izradi' | 'predan'; payload: Record<string, Lekcija>; verzija: number }
+interface Lekcija {
+  name: string; color?: string; icon?: string;
+  learn?: { title?: string; blocks?: Record<string, unknown>[] };
+  flashcards?: Record<string, unknown>[]; quiz?: Record<string, unknown>[]; fillBlanks?: Record<string, unknown>[];
+}
+
+/** Isti sadržaj bez obzira na redoslijed ključeva — `jsonb` ih sprema sortirane po svom. */
+function kanon(v: unknown): unknown {
+  if (Array.isArray(v)) return v.map(kanon);
+  if (v && typeof v === 'object') {
+    const o: Record<string, unknown> = {};
+    for (const k of Object.keys(v as Record<string, unknown>).sort()) o[k] = kanon((v as Record<string, unknown>)[k]);
+    return o;
+  }
+  return v;
+}
+const isto = (a: unknown, b: unknown) => JSON.stringify(kanon(a)) === JSON.stringify(kanon(b));
+
+/** 64-bitni FNV-1a (dva 32-bitna prolaza) → base36. Deterministički, bez uvoza (Deno i Node isto). */
+function sazetak(s: string): string {
+  let a = 0x811c9dc5; let b = 0x01000193 ^ 0x5bd1e995;
+  for (let i = 0; i < s.length; i++) {
+    const c = s.charCodeAt(i);
+    a = Math.imul(a ^ c, 0x01000193) >>> 0;
+    b = Math.imul(b ^ c, 0x01000193 + 2) >>> 0;
+  }
+  return a.toString(36) + b.toString(36);
+}
+/** Id stavke izveden iz ključa ponavljanja: isti ključ → isti id-evi → ponovljen poziv prepiše, ne doda. */
+export const idIzKljuca = (predmetak: string, kljuc: string, i: number) => predmetak + sazetak(kljuc) + '-' + i;
+
+/** Dodaj ili prepiši stavke po id-u, redom kojim su stigle. */
+function upisiPoId(postojece: Record<string, unknown>[] | undefined, nove: Record<string, unknown>[]) {
+  const van = (postojece || []).slice();
+  for (const n of nove) {
+    const i = van.findIndex((x) => x && x.id === n.id);
+    if (i >= 0) van[i] = n; else van.push(n);
+  }
+  return van;
+}
+
+const POKUSAJA = 3;
+/**
+ * Pročitaj → izmijeni → upiši s verzijom. `izmjena` dobiva KOPIJU payloada i vraća novi (ili baci
+ * `Odbijanje`). Jednak rezultat = bez upisa (ponovljen poziv ne troši verziju). Sukob = ponovi.
+ */
+async function izmijeni(klijent: Klijent, draftId: string, izmjena: (p: Record<string, Lekcija>) => Record<string, Lekcija>): Promise<Nacrt> {
+  for (let pokusaj = 1; ; pokusaj++) {
+    const d = await pozovi<Nacrt>(klijent, 'mcp_procitaj_nacrt', { p_id: draftId });
+    const novi = izmjena(JSON.parse(JSON.stringify(d.payload || {})));
+    if (isto(novi, d.payload || {})) return d;
+    try {
+      const verzija = await pozovi<number>(klijent, 'mcp_upisi_nacrt', { p_id: draftId, p_payload: novi, p_verzija: d.verzija });
+      return Object.assign({}, d, { payload: novi, verzija });
+    } catch (e) {
+      if (!(e instanceof Odbijanje && e.kod === 'nacrt_sukob') || pokusaj >= POKUSAJA) throw e;
+    }
+  }
+}
+
+function lekcijaIz(p: Record<string, Lekcija>, lessonId: string): Lekcija {
+  if (!Object.prototype.hasOwnProperty.call(p, lessonId) || lessonId === 'schemaVersion') odbij('alat_nema_lekcije', 'Unknown: ' + lessonId);
+  return p[lessonId];
+}
+
+/** Sažetak lekcije za AI: koliko čega ima — da nastavi gdje je stao, bez vraćanja cijelog payloada. */
+function sazetakLekcija(p: Record<string, Lekcija>) {
+  return Object.keys(p).filter((k) => k !== 'schemaVersion').map((k) => ({
+    lesson_id: k, name: p[k].name, color: p[k].color,
+    learn_blocks: (p[k].learn && p[k].learn!.blocks || []).length,
+    cards: (p[k].flashcards || []).length, quiz: (p[k].quiz || []).length, fill_blanks: (p[k].fillBlanks || []).length
+  }));
+}
+
+// ─── ulaz: JSON Schema koju AI VIDI je ista ona koju jezgra PROVJERAVA ─────────────────────────────
+// SDK dobiva shemu samo za oglas (`index.ts`: validator koji propušta); provjera je ovdje, u Nodeu
+// testirana, i vraća imenovano odbijanje umjesto generičke greške SDK-a. Podskup JSON Scheme koji
+// alati koriste — ništa više (nepoznata ključna riječ u shemi = pad testa, ne tiho propuštanje).
+type Shema = Record<string, unknown>;
+const POZNATE = new Set(['type', 'description', 'properties', 'required', 'additionalProperties', 'items', 'minItems',
+  'maxItems', 'minLength', 'maxLength', 'pattern', 'minimum', 'maximum']);
+
+export function provjeriUlaz(s: Shema, v: unknown, put = 'input'): string | null {
+  for (const k of Object.keys(s)) if (!POZNATE.has(k)) return 'schema uses unsupported keyword ' + k;
+  const t = s.type as string | undefined;
+  if (t === 'object') {
+    if (!v || typeof v !== 'object' || Array.isArray(v)) return put + ' must be an object';
+    const o = v as Record<string, unknown>; const props = (s.properties || {}) as Record<string, Shema>;
+    for (const r of (s.required || []) as string[]) if (o[r] === undefined) return put + '.' + r + ' is required';
+    for (const k of Object.keys(o)) {
+      if (!props[k]) { if (s.additionalProperties === false) return put + '.' + k + ' is not allowed'; continue; }
+      const g = provjeriUlaz(props[k], o[k], put + '.' + k); if (g) return g;
+    }
+    return null;
+  }
+  if (t === 'array') {
+    if (!Array.isArray(v)) return put + ' must be an array';
+    if (typeof s.minItems === 'number' && v.length < s.minItems) return put + ' needs at least ' + s.minItems + ' items';
+    if (typeof s.maxItems === 'number' && v.length > s.maxItems) return put + ' allows at most ' + s.maxItems + ' items';
+    if (s.items) for (let i = 0; i < v.length; i++) { const g = provjeriUlaz(s.items as Shema, v[i], put + '[' + i + ']'); if (g) return g; }
+    return null;
+  }
+  if (t === 'string') {
+    if (typeof v !== 'string') return put + ' must be a string';
+    if (typeof s.minLength === 'number' && v.length < s.minLength) return put + ' must not be empty';
+    if (typeof s.maxLength === 'number' && v.length > s.maxLength) return put + ' is longer than ' + s.maxLength + ' characters';
+    if (typeof s.pattern === 'string' && !new RegExp(s.pattern).test(v)) return put + ' has the wrong format (' + s.pattern + ')';
+    return null;
+  }
+  if (t === 'integer') {
+    if (typeof v !== 'number' || !Number.isInteger(v)) return put + ' must be an integer';
+    if (typeof s.minimum === 'number' && v < s.minimum) return put + ' must be at least ' + s.minimum;
+    if (typeof s.maximum === 'number' && v > s.maximum) return put + ' must be at most ' + s.maximum;
+    return null;
+  }
+  if (t === 'boolean') return typeof v === 'boolean' ? null : put + ' must be true or false';
+  return 'schema without a known type at ' + put;
+}
+
+const tekst = (min: number, max: number, opis?: string): Shema => Object.assign({ type: 'string', minLength: min, maxLength: max }, opis ? { description: opis } : {});
+const KLJUC: Shema = { type: 'string', pattern: '^[A-Za-z0-9_.:-]{1,100}$',
+  description: 'Repeat key: any new value for new content; the SAME value when repeating a call you are unsure about. 1-100 characters A-Z a-z 0-9 _ . : -' };
+const DRAFT_ID: Shema = { type: 'string', pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$', description: 'draft_id from zapocni_nacrt or procitaj_nacrt' };
+const LESSON_ID: Shema = { type: 'string', pattern: '^[A-Za-z0-9_-]{1,64}$', description: 'lesson_id from zapocni_nacrt or procitaj_nacrt' };
+const objekt = (props: Record<string, Shema>, required: string[], opis?: string): Shema =>
+  Object.assign({ type: 'object', properties: props, required, additionalProperties: false }, opis ? { description: opis } : {});
+
+// Granice po pozivu: jedna lekcija, ne cijeli materijal (plan ②/2) — i znatno ispod granica baze.
+const KARTICA = objekt({ question: tekst(1, 500, 'Term or question'), answer: tekst(1, 500, 'Short explanation (under 200 characters is best)'),
+  explanation: tekst(1, 2000, 'Optional longer detail') }, ['question', 'answer']);
+const KVIZ = objekt({ question: tekst(1, 1000), options: { type: 'array', minItems: 2, maxItems: 6, items: tekst(1, 500) },
+  correct: { type: 'integer', minimum: 0, maximum: 5, description: 'Index of the correct option (0-based)' } }, ['question', 'options', 'correct']);
+const DOPUNA = objekt({ sentence: tekst(1, 1000, 'Sentence with the gap written as _____'), answer: tekst(1, 200, 'The word or phrase for the gap'),
+  answers: { type: 'array', maxItems: 10, items: tekst(1, 200), description: 'Optional other accepted answers' }, hint: tekst(1, 500) }, ['sentence', 'answer']);
+const BLOK: Shema = { type: 'object', description: 'One Learn block. {type:"heading",text,level?:2-4} · {type:"paragraph",text} · ' +
+  '{type:"list",items:[text],ordered?} · {type:"callout",text,variant?:"info"|"warning"|"tip",title?} · {type:"table",header?:[text],rows:[[text]]} · ' +
+  '{type:"formula",tex,display?}. text = plain string, or an array of runs {text,b?,i?,math?,href?}. No HTML, no images.' };
+
+export interface Alat {
+  ime: string; naslov: string; opis: string; ulaz: Shema; samoCitanje: boolean;
+  izvedi(klijent: Klijent, a: Record<string, any>): Promise<unknown>;
+}
+
+export const ALATI: Alat[] = [
+  {
+    ime: 'procitaj_materijale', naslov: 'List my study materials', samoCitanje: true,
+    opis: 'Lists the signed-in user\'s own shelves and study materials (names and ids). Read-only.',
+    ulaz: objekt({}, []),
+    izvedi: async (k) => (await procitajMaterijale(k)).tekst
+  },
+  {
+    ime: 'zapocni_nacrt', naslov: 'Start a draft material', samoCitanje: false,
+    opis: 'Step 1. Starts a new DRAFT study material with its lessons (each lesson has a name and its own colour). ' +
+      'Returns draft_id and a lesson_id for every lesson. Repeating the call with the same repeat_key returns the same draft.',
+    ulaz: objekt({ name: tekst(1, 200, 'Name of the material'), repeat_key: KLJUC,
+      lessons: { type: 'array', minItems: 1, maxItems: 100, items: objekt({ name: tekst(1, 200),
+        color: { type: 'string', pattern: '^#[0-9a-fA-F]{6}$', description: 'Lesson colour as #rrggbb' } }, ['name', 'color']) } },
+    ['name', 'repeat_key', 'lessons']),
+    izvedi: async (k, a) => {
+      const id = await pozovi<string>(k, 'mcp_zapocni_nacrt', { p_name: a.name, p_kljuc: a.repeat_key });
+      const kostur: Record<string, Lekcija> = {};
+      (a.lessons as { name: string; color: string }[]).forEach((l, i) => { kostur['l' + (i + 1)] = { name: l.name, color: l.color.toLowerCase() }; });
+      // Nov nacrt je prazan → upiši kostur. Ponovljen početak (isti ključ) zatekne ga već upisanog → ne dira ga.
+      const d = await izmijeni(k, id, (p) => Object.keys(p).length === 0 ? kostur : p);
+      return { draft_id: d.id, status: d.status, lessons: sazetakLekcija(d.payload),
+        next: 'Call napisi_learn for each lesson, then dodaj_kartice, then dodaj_pitanja.' };
+    }
+  },
+  {
+    ime: 'napisi_learn', naslov: 'Write the Learn text of a lesson', samoCitanje: false,
+    opis: 'Step 2. Writes (or replaces) the full study text of ONE lesson as blocks. Write it before flashcards and questions — they are built from it.',
+    ulaz: objekt({ draft_id: DRAFT_ID, lesson_id: LESSON_ID, repeat_key: KLJUC, title: tekst(1, 200),
+      blocks: { type: 'array', minItems: 1, maxItems: 200, items: BLOK } }, ['draft_id', 'lesson_id', 'repeat_key', 'blocks']),
+    izvedi: async (k, a) => {
+      const blokovi = (a.blocks as Record<string, unknown>[]).map((b, i) => Object.assign({}, b, { id: idIzKljuca('b', a.repeat_key, i) }));
+      const d = await izmijeni(k, a.draft_id, (p) => {
+        const l = lekcijaIz(p, a.lesson_id);
+        l.learn = Object.assign(a.title ? { title: a.title } : {}, { blocks: blokovi });
+        return p;
+      });
+      return { draft_id: d.id, lesson: sazetakLekcija(d.payload).find((x) => x.lesson_id === a.lesson_id) };
+    }
+  },
+  {
+    ime: 'dodaj_kartice', naslov: 'Add flashcards to a lesson', samoCitanje: false,
+    opis: 'Step 3. Adds flashcards (term or question → short explanation) to ONE lesson that already has its Learn text. At most 50 per call.',
+    ulaz: objekt({ draft_id: DRAFT_ID, lesson_id: LESSON_ID, repeat_key: KLJUC,
+      cards: { type: 'array', minItems: 1, maxItems: 50, items: KARTICA } }, ['draft_id', 'lesson_id', 'repeat_key', 'cards']),
+    izvedi: async (k, a) => {
+      const nove = (a.cards as Record<string, unknown>[]).map((c, i) => Object.assign({ id: idIzKljuca('k', a.repeat_key, i) }, c));
+      const d = await izmijeni(k, a.draft_id, (p) => {
+        const l = lekcijaIz(p, a.lesson_id);
+        if (!l.learn || !(l.learn.blocks || []).length) odbij('alat_nema_learna');
+        l.flashcards = upisiPoId(l.flashcards, nove);
+        return p;
+      });
+      return { draft_id: d.id, lesson: sazetakLekcija(d.payload).find((x) => x.lesson_id === a.lesson_id) };
+    }
+  },
+  {
+    ime: 'dodaj_pitanja', naslov: 'Add quiz and fill-in questions to a lesson', samoCitanje: false,
+    opis: 'Step 4. Adds quiz questions and/or fill-in-the-blank sentences to ONE lesson that already has flashcards. Build them from the flashcards. At most 50 of each per call.',
+    ulaz: objekt({ draft_id: DRAFT_ID, lesson_id: LESSON_ID, repeat_key: KLJUC,
+      quiz: { type: 'array', maxItems: 50, items: KVIZ }, fill_blanks: { type: 'array', maxItems: 50, items: DOPUNA } },
+    ['draft_id', 'lesson_id', 'repeat_key']),
+    izvedi: async (k, a) => {
+      const kviz = (a.quiz || []) as { options: string[]; correct: number }[];
+      const dopune = (a.fill_blanks || []) as Record<string, unknown>[];
+      if (kviz.length + dopune.length === 0) odbij('alat_los_ulaz', 'input needs at least one quiz or fill_blanks item');
+      kviz.forEach((q, i) => { if (q.correct >= q.options.length) odbij('alat_los_ulaz', 'input.quiz[' + i + '].correct points past the last option'); });
+      const q = kviz.map((x, i) => Object.assign({ id: idIzKljuca('q', a.repeat_key, i) }, x));
+      const f = dopune.map((x, i) => Object.assign({ id: idIzKljuca('f', a.repeat_key, i) }, x));
+      const d = await izmijeni(k, a.draft_id, (p) => {
+        const l = lekcijaIz(p, a.lesson_id);
+        if (!(l.flashcards || []).length) odbij('alat_nema_kartica');
+        if (q.length) l.quiz = upisiPoId(l.quiz, q);
+        if (f.length) l.fillBlanks = upisiPoId(l.fillBlanks, f);
+        return p;
+      });
+      return { draft_id: d.id, lesson: sazetakLekcija(d.payload).find((x) => x.lesson_id === a.lesson_id) };
+    }
+  },
+  {
+    ime: 'procitaj_nacrt', naslov: 'Read my drafts', samoCitanje: true,
+    opis: 'Without draft_id: lists your drafts. With draft_id: what each lesson already has. With draft_id and lesson_id: the full content of that lesson.',
+    ulaz: objekt({ draft_id: DRAFT_ID, lesson_id: LESSON_ID }, []),
+    izvedi: async (k, a) => {
+      if (!a.draft_id) {
+        if (a.lesson_id) odbij('alat_los_ulaz', 'input.lesson_id needs input.draft_id');
+        const popis = await pozovi<{ id: string; name: string; status: string; updated_at?: string; velicina: number }[]>(k, 'mcp_moji_nacrti', {});
+        return { drafts: (popis || []).map((x) => ({ draft_id: x.id, name: x.name, status: x.status, updated_at: x.updated_at, bytes: x.velicina })) };
+      }
+      const d = await pozovi<Nacrt>(k, 'mcp_procitaj_nacrt', { p_id: a.draft_id });
+      const p = d.payload || {};
+      if (a.lesson_id) return { draft_id: d.id, status: d.status, lesson_id: a.lesson_id, lesson: lekcijaIz(p, a.lesson_id) };
+      return { draft_id: d.id, name: d.name, status: d.status, lessons: sazetakLekcija(p) };
+    }
+  },
+  {
+    ime: 'predaj_nacrt', naslov: 'Submit the draft for review', samoCitanje: false,
+    opis: 'Step 5. Submits the finished draft. It is then frozen: the user reviews it in Sokrat and accepts or discards it.',
+    ulaz: objekt({ draft_id: DRAFT_ID }, ['draft_id']),
+    izvedi: async (k, a) => {
+      const kad = await pozovi<string>(k, 'mcp_predaj_nacrt', { p_id: a.draft_id });
+      return { draft_id: a.draft_id, status: 'predan', submitted_at: kad,
+        next: 'Tell the user the draft is waiting for their review in Sokrat (My materials).' };
+    }
+  }
+];
+
+export interface Rezultat { content: { type: 'text'; text: string }[]; isError?: boolean }
+
+/** Izvedi alat po imenu: provjera ulaza → alat → tekst za AI. Svaka greška = rezultat s `isError`,
+ *  nikad iznimka prema SDK-u (koji bi je pretvorio u generičku poruku) i nikad unutarnji detalj. */
+export async function izvediAlat(ime: string, klijent: Klijent, args: unknown): Promise<Rezultat> {
+  const alat = ALATI.find((a) => a.ime === ime);
+  try {
+    if (!alat) throw new Odbijanje({ kod: 'alat_los_ulaz', vrsta: 'ispravi', poruka: 'Unknown tool ' + ime });
+    const g = provjeriUlaz(alat.ulaz, args === undefined ? {} : args);
+    if (g) odbij('alat_los_ulaz', g);
+    const r = await alat.izvedi(klijent, (args || {}) as Record<string, unknown>);
+    return { content: [{ type: 'text', text: typeof r === 'string' ? r : JSON.stringify(r, null, 2) }] };
+  } catch (e) {
+    const o = e instanceof Odbijanje ? e : new Odbijanje(prevediOdbijanje(null));
+    return { isError: true, content: [{ type: 'text', text: JSON.stringify({ error: o.kod, kind: o.vrsta, message: o.message }) }] };
+  }
+}
+
+/** Registriraj SVE alate na MCP poslužitelj. `uShemu` pretvara JSON Schemu u ono što SDK traži
+ *  (`index.ts`: `fromJsonSchema`); ovdje se ne uvozi SDK, pa jezgra ostaje testabilna u Nodeu. */
+export function registrirajAlate(
+  server: { registerTool(ime: string, cfg: Record<string, unknown>, cb: (args: unknown) => Promise<Rezultat>): unknown },
+  klijent: Klijent,
+  uShemu: (s: Shema) => unknown
+): void {
+  for (const a of ALATI) {
+    server.registerTool(a.ime, {
+      title: a.naslov, description: a.opis, inputSchema: uShemu(a.ulaz),
+      annotations: a.samoCitanje ? { readOnlyHint: true } : { readOnlyHint: false, destructiveHint: false, idempotentHint: true }
+    }, (args) => izvediAlat(a.ime, klijent, args));
+  }
 }

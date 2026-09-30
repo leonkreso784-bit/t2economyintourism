@@ -75,7 +75,15 @@ Postgres: GRANT-ovi (zabrana po defaultu) + RLS (samo vlastito) + SECURITY DEFIN
 - `index.ts` = omot (prijava + MCP prijenos, `@modelcontextprotocol/server@2.0.0`, `@supabase/server@1.7.0`, pinano točno).
 - `alati.ts` = čista jezgra bez Deno-uvoza, testira se u Nodeu (`tests/unit/mcp-alati.test.js`). Stupci se čitaju
   izričito, nikad `*`.
-- **Danas jedan alat:** `procitaj_materijale` (police i materijali, samo imena i id-evi).
+- **Sedam alata (②/2):** `procitaj_materijale` · `zapocni_nacrt` (lekcije s bojom) · `napisi_learn` · `dodaj_kartice`
+  (pada bez Learna) · `dodaj_pitanja` (kviz + dopune, pada bez kartica) · `procitaj_nacrt` (popis · sažetak · lekcija) ·
+  `predaj_nacrt`. Upute cjevovoda su u `instructions` (`UPUTE`). Svi se registriraju iz jezgre (`registrirajAlate`).
+- **Upis:** pročitaj → izmijeni → `mcp_upisi_nacrt` s verzijom; na `nacrt_sukob` ponovi (do 3×). Jednak rezultat = bez upisa.
+- **Isti poziv dvaput = jednom:** svaki alat koji stvara traži `repeat_key`; nacrt se veže na ključ u bazi, a id-evi
+  blokova, kartica i pitanja izvode se iz ključa (`idIzKljuca`), pa ponovljen poziv prepiše iste stavke.
+- **Ulaz** provjerava jezgra (`provjeriUlaz`, podskup JSON Scheme); SDK shemu samo oglašava. Granice po pozivu: jedna
+  lekcija, ≤ 50 kartica / kvizova / dopuna, ≤ 200 blokova. Sadržaj (strogi profil) i dalje provodi baza.
+- **Odbijanje:** svaki RPC kroz `pozovi()` → `prevediOdbijanje` (N9); AI dobiva `{error, kind, message}` s `isError`.
 - Adresa resursa: `MCP_RESOURCE_URL`, inače adresa funkcije; na produkciji postaje kanonska tek u fazi ⑥.
 
 ## 7 · Adresa (`vercel.json`)

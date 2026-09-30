@@ -151,13 +151,14 @@ s kontrolom · prioritet je za **puštanje korisnicima**, ne za današnji stagin
   odbijena. Kvota ograničava štetu na 3 u izradi.
 - **Popravak:** plan ②/1b — ključ ponavljanja (klijent ga šalje, baza ga pamti po vlasniku) na svakom pozivu koji stvara.
 
-### N9 · odbijanja kvote i stanja dolaze kao HTTP 500 — 🟡 prijevod napisan (②/1b), NEOŽIČEN do alata ②/2
+### N9 · odbijanja kvote i stanja dolaze kao HTTP 500 — 🟡 OŽIČEN u kodu (②/2, 30.09.); zatvoren na stagingu tek kad je funkcija deployana i `mcp:alati` zelen
 
 - `alati.ts` `prevediOdbijanje`: ime → vrsta (ispravi · ponovno · korisnik · stop · kvar) + poruka; unit izvodi popis
   imena iz SQL-a. HTTP broj ostaje 500 za kvotu (PostgREST), ali AI više ne sudi po broju.
-- ⚠️ **Nije zatvoren dok ga nitko ne zove:** danas nijedan alat ne poziva `mcp_*` RPC, pa prijevod ne stoji ni na
-  jednom putu. Zatvara ga ②/2, gdje unit traži da **svaki** `rpc(...)` u alatima ide kroz `prevediOdbijanje` (i pada
-  ako takvih poziva nema — nula nije dokaz).
+- **②/2:** jedini `.rpc(` u alatima je u `pozovi()`, koji grešku baze predaje `prevediOdbijanje`; alat je vraća AI-ju
+  kao rezultat s `isError` (HTTP 200), nikad sirovu poruku ni 500. Unit `mcp-alati` to tvrdi statički (svaki `.rpc(`
+  u tijelu `pozovi`, nula = pad) i dinamički (svaki RPC svakog alata oboren iz baze → prevedeno; pokriveni RPC-ovi ==
+  pet iz granta u `f6-nacrt.sql`). Uživo: `npm run mcp:alati` ⑤ (validator i predan nacrt stižu prevedeni).
 
 - Kvota (`53400`) i „već predan" (`55000`) izlaze iz PostgREST-a kao **500**. Nije propust, ali AI ne može razlikovati
   „pokušaj kasnije" od kvara → plan ②/2: alat prevodi kod u jasnu poruku.

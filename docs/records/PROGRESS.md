@@ -5,6 +5,23 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-30 (OPUS, `sokratstudy.f6`) — F6 ②/2 alati cjevovoda (kôd gotov; čeka deploy na staging)
+
+- **Alati** (`supabase/functions/mcp/alati.ts`): `zapocni_nacrt` · `napisi_learn` · `dodaj_kartice` (pada bez Learna) ·
+  `dodaj_pitanja` (pada bez kartica) · `procitaj_nacrt` · `predaj_nacrt` + postojeći `procitaj_materijale`; upute
+  cjevovoda u `instructions`. `index.ts` samo registrira alate iz jezgre (`registrirajAlate`).
+- **Isti poziv dvaput = jednom:** `repeat_key` obavezan na svakom alatu koji stvara; id-evi stavki izvedeni iz ključa.
+  **Sukob verzije** = ponovno čitanje i upis (do 3×). **N9 ožičen:** jedini `.rpc(` je u `pozovi()` → `prevediOdbijanje`.
+- **Ulaz** provjerava jezgra (`provjeriUlaz`), ne SDK: SDK-ov zadani validator (ajv) gradi kod kroz `new Function`.
+- **Brane:** unit `mcp-alati` 27/0 (na starom kodu **12 palih**; N9 statički pada na nuli). **`brana-revizor` vratio
+  ciglu (F1):** statika je tražila zapis `.rpc(` i brisala retke koji počinju komentarom → 3 izmjerena zaobilaska
+  (`klijent['rpc']`, `/* */ .rpc(`, `.rpc<T>(`), a dinamika nije išla granom ponovnog pokušaja. Popravak: riječ `rpc`
+  nad izvorom bez komentara (tokenizator + kontrolni test same brane) i obaranje N-tog poziva uz jedan sukob
+  (34 poziva, 8 u grani ponovnog pokušaja); RPC-ovi za `mcp_klijent` iz svih `supabase/*.sql`. **14/14 mutacija** obara unit.
+  E2E `npm run mcp:alati` (30 provjera + doseg): na staroj funkciji **crveno** (alata nema); protiv lokalnog dvojnika
+  `index.ts` s pravim SDK-om 2.0.0 i staging bazom **31/0**. Preflight exit 0 (`test:unit` 61/61).
+- **Otvoreno:** deploy funkcije `mcp` na staging (Leon) → `mcp:alati` + `mcp:probe` + `mcp:brava` uživo.
+
 ## 2026-09-30 (OPUS, `sokratstudy.f6`) — F6 ②/0 sigurnosni temelj + ②/1b (STAGING)
 
 **Odluke (anketa):** pg_jsonschema · JEDAN strogi profil za Studio i AI · DOMPurify s naše domene + tekst ·
