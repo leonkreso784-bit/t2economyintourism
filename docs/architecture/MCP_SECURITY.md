@@ -35,9 +35,9 @@
 | I2 | AI ne čita tuđe gradivo ni javni katalog | baza: GRANT + RLS | ✅ `mcp:brava` (iscrpna REST-proba svake tablice izvan popisa) |
 | I3 | AI-tokenom nema nepovratne radnje (brisanje računa, mail, lozinka, e-mail) | `_shared/token-guard.ts` · postavke Auth API-ja | ✅ `mcp:brava`; metapodaci korisnika imenovano otvoreni |
 | I4 | objava = **samo obična sesija**, poslije pregleda | baza: Prihvati nije dan `mcp_klijent` | ⏳ plan ②/4 |
-| I5 | sadržaj koji napiše AI **ne izvršava kod** u pregledniku, ni kad sanitizator nije učitan | renderer + CSP | ❌ otvoreno — N1, N2 → plan ②/0c–e |
-| I6 | pravila sadržaja provodi **baza** na svakom putu upisa, ne samo poslužitelj | validator u bazi | ❌ otvoreno — N4, N5 → plan ②/0a–b |
-| I7 | ponovljen zahtjev ne duplicira; paralelna izmjena se ne prepisuje | ključ ponavljanja · polazna verzija | ❌ izmjereno S-B — N7, N8 → plan ②/1b |
+| I5 | sadržaj koji napiše AI **ne izvršava kod** u pregledniku, ni kad sanitizator nije učitan | renderer + CSP | ✅ STAGING/grana 30.09. — N1, N2 zatvoreni (②/0c–e: unit + preglednik-pokusi s kontrolom); ⚠️ N17 |
+| I6 | pravila sadržaja provodi **baza** na svakom putu upisa, ne samo poslužitelj | validator u bazi | ✅ STAGING 30.09. — nacrt i `publish_node` (`ugc:sadrzaj` 813/0); Prihvati dolazi u ②/4 |
+| I7 | ponovljen zahtjev ne duplicira; paralelna izmjena se ne prepisuje | ključ ponavljanja · polazna verzija | 🟡 STAGING 30.09. — N8 ✅; N7 popravljen, brana vraćena (revizor F1/F2/F4); Prihvati dolazi u ②/4 |
 | I8 | opoziv veze zaustavlja AI | Auth (`revokeGrant`) | ⚠️ izmjereno S-B: obnova odbijena odmah (400), a postojeća propusnica **i dalje piše u nacrt** (200) do isteka, najviše 3600 s — korisniku rečeno; trenutni opoziv = odluka |
 | I9 | administratorov konektor nema ni jedno pravo više od običnog | hook: svaki token s `client_id` = `mcp_klijent`, neovisno o ulozi korisnika | ✅ izmjereno S-B (11 tvrdnji, s kontrolom) |
 | I10 | tok prijave: PKCE obavezan, redirect točan, kod jednokratan i vezan na klijent, potpis tokena provjeren | Supabase Auth + PostgREST | ✅ izmjereno S-B (9 tvrdnji) |
@@ -50,7 +50,12 @@
 Oznake: **potvrđeno** = izmjereno ili pročitano s retkom · **dokazano izvršavanje** = pokus u pravom pregledniku
 s kontrolom · prioritet je za **puštanje korisnicima**, ne za današnji staging.
 
-### N2 · sirovi HTML kad DOMPurify nije učitan — ⛔ VISOK (prije ②/4)
+### N2 · sirovi HTML kad DOMPurify nije učitan — ✅ ZATVOREN na grani 30.09. (②/0a, ②/0d, ②/0e)
+
+- **Zatvoreno trostruko:** baza ne prima `legacy-html`/`learn.content` u osobni sadržaj · bez DOMPurifyja HTML ide kao
+  tekst (i u `learn.js`), DOMPurify s naše domene · `script-src` dopušta samo točne CDN datoteke. Brane:
+  `tests/sanitizator-pad.spec.js`, `tests/csp-cdn.spec.js`, `escaping.spec` (fallback), `check:csp` — sve s kontrolom
+  i crvenim na starom kodu. Ostatak: N17.
 
 - **Gdje:** `js/blocks-renderer.js` `renderLegacyHtml` (redci 226–229) vraća HTML netaknut ako `window.DOMPurify`
   ne postoji; DOMPurify se u `js/loader.js` (redak 70) učitava kao **neobavezan** s cdnjs-a. Isto u krajnjem
@@ -67,7 +72,10 @@ s kontrolom · prioritet je za **puštanje korisnicima**, ne za današnji stagin
 - **Popravak:** plan ②/0a (MCP profil bez `legacy-html`/`learn.content`) + ②/0d (bez sanitizatora = tekst) +
   ②/0e (uži `script-src`). **Test:** isti pokus kao regresijska brana, s kontrolom.
 
-### N1 · `safeUrl` propušta kontrolne znakove — 🟠 SREDNJI (rupa u provjeri, izvršavanje nije dokazano)
+### N1 · `safeUrl` propušta kontrolne znakove — ✅ ZATVOREN na grani 30.09. (②/0c)
+
+- `safeUrl` čita shemu iz niza bez C0/razmaka/DEL; isto koriste Studio-uređivač i slika kviza. Baza uz to odbija
+  kontrolne i Unicode-razmake u poveznicama. Unit čita adrese iz istih primjera kao baza.
 
 - **Gdje:** `js/blocks-renderer.js` `safeUrl` (redci 29–39): shema se traži regexom nad nizom koji još nosi
   kontrolne znakove, a preglednik ih pri parsiranju adrese izbacuje.
@@ -77,14 +85,21 @@ s kontrolom · prioritet je za **puštanje korisnicima**, ne za današnji stagin
   (oba preglednika). Poveznica u istom prozoru bez CSP-a se izvrši, s produkcijskim CSP-om ne.
 - **Popravak:** plan ②/0c. **Test:** unit sa svih 7 oblika + kontrola da `https:` prolazi.
 
-### N3 · `style`, `class` i vanjske slike — 🟡 NIZAK/SREDNJI
+### N3 · `style`, `class` i vanjske slike — ✅ za osobni sadržaj ZATVOREN na STAGINGU 30.09. (②/0a)
+
+- Profil ne prima `legacy-html` ni slike osim `node-img:<uid>/<čvor>/<datoteka>`. Katalog (naš sadržaj) i dalje nosi
+  `legacy-html` sa `style` kroz DOMPurify — izvan dosega MCP-a.
 
 - Uz učitan DOMPurify `legacy-html` zadržava `style` i `class` (`DOMPURIFY_CFG`, redci 92–98) → sloj preko ekrana,
   lažni gumb, poveznica van (izvodljivo, **nije mjereno**). `img-src https:` dopušta bilo koju vanjsku sliku → otkriva
   IP i trenutak čitanja trećoj strani.
 - **Popravak:** MCP profil bez `legacy-html` i bez vanjskih slika (samo vlastiti upload) — plan ②/0a.
 
-### N4 · `publish_node` provjerava samo oblik — 🟠 SREDNJI (⛔ prije ②/4, jer Prihvati ide tim putem)
+### N4 · `publish_node` provjerava samo oblik — ✅ ZATVOREN na STAGINGU 30.09. (②/0b)
+
+- `publish_node` (`f6-sadrzaj.sql`): 1 MB (`publish_prevelik`) + isti validator. Prije: 158 zlonamjernih objava i 5 MB
+  prolazilo. **PROD (čitano 30.09.):** 3/4 materijala prolaze profil; četvrti (administratorov testni) pada samo na
+  kartici od 1 819 znakova — prije ⑥ ga treba skratiti ili prihvatiti da se ne da ponovno objaviti.
 
 - **Gdje:** `supabase/f1-nodes.sql` redci 340–346: payload mora biti ne-prazan objekt objekata. Nema granice
   veličine, tipova blokova, duljina, broja stavki ni shema adresa; svaka objava sprema i punu kopiju u
@@ -96,7 +111,10 @@ s kontrolom · prioritet je za **puštanje korisnicima**, ne za današnji stagin
 - **Popravak:** plan ②/0a–b. `pg_jsonschema` 0.3.3 je **dostupan** na stagingu (nije instaliran); produkcija nije
   provjeravana — provjerava se prije ②/0a.
 
-### N5 · nacrt: pravila samo u poslužitelju — 🟠 SREDNJI
+### N5 · nacrt: pravila samo u poslužitelju — ✅ ZATVOREN na STAGINGU 30.09. (②/0a)
+
+- `mcp_upisi_nacrt` zove `_provjeri_sadrzaj` (pg_jsonschema + dubina + jedinstveni id-evi). Prije: 34/35 zlonamjernih
+  oblika primljeno. Primjeri su zajednički s unit-testom sheme i dijelom generirani iz nje (osnovica od 328 imena).
 
 - `mcp_upisi_nacrt` (`supabase/f6-nacrt.sql` redci 157–162) provjerava samo objekt i 1 MB. Po ADR-038 brane kvalitete
   žive u poslužitelju, ali **isti token RPC zove i izravno** (P4) — tada brane ne vrijede. Vlasništvo i kvota i dalje drže.
@@ -108,7 +126,12 @@ s kontrolom · prioritet je za **puštanje korisnicima**, ne za današnji stagin
   Naziv nacrta s HTML-om sprema se doslovno (ispravno — escape je posao prikaza u ②/4, brana tamo).
 - **Popravak:** plan ②/0a.
 
-### N7 · usporedni upisi istog nacrta: tihi gubitak — 🟠 SREDNJI
+### N7 · usporedni upisi istog nacrta: tihi gubitak — 🟡 popravljeno na STAGINGU 30.09. (②/1b), brana još ne dokazuje usporednost
+
+- `mcp_upisi_nacrt(id, payload, verzija)`: promijenjen nacrt → `nacrt_sukob` (HTTP 409); isti upis ponovljen vraća
+  postojeću verziju. ⚠️ **Pouka iz gradnje:** sukob sa SQLSTATE `40001` PostgREST ponavlja SAM, u krug — upis je
+  visio do isteka klijenta (a `mcp_klijent` nema `statement_timeout`, N16). Kodovi odbijanja se ne biraju iz razreda
+  `40xxx`; sukob je `PT409`.
 
 - `mcp_upisi_nacrt` zamjenjuje cijeli payload bez polazne verzije. **Izmjereno (S-B):** dva usporedna upisa istog
   nacrta → oba HTTP 200, preživio samo drugi; nijedna strana ne dozna da je prva izgubljena.
@@ -116,16 +139,33 @@ s kontrolom · prioritet je za **puštanje korisnicima**, ne za današnji stagin
   starijeg stanja. **Posljedica:** gubitak dijela nacrta, ne tuđih podataka.
 - **Popravak:** plan ②/1b — `mcp_upisi_nacrt` prima polaznu vremensku oznaku / verziju i odbija ako se promijenila.
 
-### N8 · ponovljen početak stvara duplikat — 🟡 NIZAK/SREDNJI
+### N8 · ponovljen početak stvara duplikat — ✅ ZATVOREN na STAGINGU 30.09. (②/1b)
+
+- `mcp_zapocni_nacrt(name, kljuc)`: isti ključ vlasnika = isti nacrt (ne troši kvotu; istekao ne oživi; stranac s
+  istim ključem dobiva svoj). Stari potpisi obrisani.
 
 - **Izmjereno (S-B):** `mcp_zapocni_nacrt` dvaput s istim nazivom → dva nacrta (dva id-a). Ponovljena predaja je ispravno
   odbijena. Kvota ograničava štetu na 3 u izradi.
 - **Popravak:** plan ②/1b — ključ ponavljanja (klijent ga šalje, baza ga pamti po vlasniku) na svakom pozivu koji stvara.
 
-### N9 · odbijanja kvote i stanja dolaze kao HTTP 500 — 🟢 NIZAK
+### N9 · odbijanja kvote i stanja dolaze kao HTTP 500 — 🟡 prijevod napisan (②/1b), NEOŽIČEN do alata ②/2
+
+- `alati.ts` `prevediOdbijanje`: ime → vrsta (ispravi · ponovno · korisnik · stop · kvar) + poruka; unit izvodi popis
+  imena iz SQL-a. HTTP broj ostaje 500 za kvotu (PostgREST), ali AI više ne sudi po broju.
 
 - Kvota (`53400`) i „već predan" (`55000`) izlaze iz PostgREST-a kao **500**. Nije propust, ali AI ne može razlikovati
   „pokušaj kasnije" od kvara → plan ②/2: alat prevodi kod u jasnu poruku.
+
+### N17 · `script-src` i dalje dopušta dva hosta: Google Tag Manager i Sentry — 🟡 NIZAK/SREDNJI (novo 30.09.)
+
+- **Gdje:** `vercel.json` CSP; imenovani u `scripts/check-csp.js` (`OTVORENO`). Oba poslužuju sadržaj koji određuje bilo
+  tko: `googletagmanager.com/gtag/js?id=<tuđi ID>` i `js-de.sentry-cdn.com/<tuđi ključ>.min.js`. Iz ubačenog `srcdoc`-a
+  bi se tako učitao Googleov ili Sentryjev kôd s tuđom konfiguracijom. Proizvoljan JS **nije dokazan** (inline i eval
+  CSP blokira), rizik je niži od golog jsdelivra — ali **nije izmjeren**.
+- **Zašto nije suženo odmah:** nije izmjereno koje datoteke loaderi dalje vuku s istog hosta; putanja `/gtag/js` ne
+  suzuje `?id=`. Suziti naslijepo = tiho ugasiti analitiku ili praćenje grešaka.
+- **Popravak:** izmjeriti u pregledniku (s privolom) što se učita, pa suziti na točne putanje; ili nonce/hash. Uz to
+  vrijedi da do CSP-a dolazi tek sadržaj koji je prošao bazu (N5) i renderer (N2).
 
 ### N6 · `mcp-admin` (lokalni pokus) — 🟢 NIZAK
 

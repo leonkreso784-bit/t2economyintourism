@@ -29,6 +29,9 @@
 |---|---|---|
 | `npm run mcp:brava` | što token AI-ja **smije**: popis otvorenog nabraja baza sama (`mcp_brava_inventar`), sve ostalo mora biti odbijeno — PostgREST, Storage (svaki bucket), Edge Functions, Auth API | nakon svake SQL izmjene i svakog novog RPC-a |
 | `npm run mcp:nacrt` | što rade `mcp_*` funkcije nacrta: vlastito · tuđe · obična sesija · oblik i veličina · kvota · istjecanje · živo gradivo netaknuto | nakon izmjene `supabase/f6-nacrt.sql` |
+| `npm run ugc:sadrzaj` | baza provodi strogi profil osobnog sadržaja na **nacrtu i objavi** (isti primjeri kao unit, dijelom generirani iz sheme), granica 1 MB, shema u bazi == datoteka, **zatečeni** materijali prolaze (čegrtaljka `scripts/ugc-zateceno-baseline.json`) | nakon svake izmjene `schema/ugc-content.schema.json` (pa `build:ugc-sql` + SQL na staging) ili `f6-sadrzaj.sql` |
+| unit `ugc-shema` · `build:ugc-sql --check` | shema odbija poznate napade i propušta ono što Studio sprema; svaki objekt zatvoren, svaki niz/tekst ograničen; generirani primjeri == osnovica (`UGC_OSNOVICA_UPDATE=1` je podiže); SQL-kopija == shema | preflight |
+| `tests/sanitizator-pad.spec.js` · `csp-cdn.spec.js` · `escaping.spec` | pokus N2 u pregledniku s kontrolom (bez DOMPurifyja nema HTML-a; CSP iz `vercel.json` blokira skriptu s jsdelivr `/gh/`) · slika kviza kroz `safeUrl` · fallback u `learn.js` | `test:responsive` |
 | `npm run mcp:probe` | lanac otkrivanja izvana, bez ključa (401 + `WWW-Authenticate` → metapodaci → PKCE/DCR → krivotvoren token odbijen) | nakon deploya funkcije |
 | `npm run check:mcp-rewrite` | `vercel.json` pravila za `/mcp` (izvodi ih); `--zivo` mjeri preview | u preflightu; `--zivo` ručno |
 | `npm run check:functions` | svaka Edge Function pod stražom ili imenovana; `mcp` na produkciji **odsutan** | mrežno, ručno |

@@ -5,6 +5,30 @@ testirano, što slijedi.
 
 ---
 
+## 2026-09-30 (OPUS, `sokratstudy.f6`) — F6 ②/0 sigurnosni temelj + ②/1b (STAGING)
+
+**Odluke (anketa):** pg_jsonschema · JEDAN strogi profil za Studio i AI · DOMPurify s naše domene + tekst ·
+`script-src` na točne datoteke · nacrt u obliku gradiva · umjerene granice · brojač verzija · PROD samo čitanje.
+**Cigle** (svaka: crveno na starom → zeleno, `brana-revizor` na svakoj, sve vraćale nešto s pravom):
+- **②/0a** validator u bazi (`f6-sadrzaj.sql`, `schema/ugc-content.schema.json`): nacrt je primao 34/35 zlonamjernih → 0.
+  Revizor dvaput: ručni primjeri mjerili 22/91 ograničenja; pa generator nije mjerio `type` i brisanjem ograničenja
+  brisao vlastiti test → generirani primjeri + strukturna provjera + **zakucana osnovica** (328 imena). Pokus: 165
+  mutacija sheme kroz cijeli unit → preživi 3, dokazana zalihost. Dubina 3 000 rušila pg_jsonschema (500) → jsonpath 16.
+- **②/0b** `publish_node` kroz isti validator + 1 MB: 158 zlonamjernih objava i 5 MB prolazilo → `ugc:sadrzaj` 813/0.
+  Zatečeno: staging Studio-materijali 26/26 prolaze (10 testnih ostataka imenovano); **PROD 3/4** — četvrti pada samo
+  na kartici od 1 819 znakova (administratorov testni materijal). `pg_jsonschema` 0.3.3 na PROD-u dostupan.
+- **②/0c** `safeUrl` (N1) + Studio-uređivač i slika kviza kroz `safeUrl` · **②/0d** bez DOMPurifyja = tekst (i u
+  `learn.js`), DOMPurify vendoran (bajt-isti, `vendor/** -text`) · **②/0e** `script-src` = 4 točne datoteke;
+  `check:csp` = popis otvorenog nad svim headerima (8/8 mutacija obara), GTM/Sentry imenovani (N17).
+- **②/1b** verzija + ključ ponavljanja (N7/N8), prijevod odbijanja (N9). **Nalaz:** sukob sa SQLSTATE `40001`
+  PostgREST ponavlja SAM, u krug → upis visio; sad `PT409` (HTTP 409).
+**Otvoreno za sljedeću sesiju (revizor ②/1b):** F1 usporednost nije dokazana (8 usporednih upisa + jednom mutacija „bez `for update`") ·
+F2 brana ne traži HTTP 409 ni trajanje (povratak `40001`-petlje nije imenovan pad) · F3 N9 neožičen · F4 `mcp:brava` ne vidi
+preopterećene `mcp_*` (popis po imenu, ne po potpisu). **Cijeli Playwright NIJE dovršen:** zaustavljen na 151/954 (0 palih) zbog
+kraja sesije — pokrenuti ponovno prije ikakvog pusha na `main`.
+Pouka o meni: `test:unit` gledan kroz `tail` progutao je izlazni kod → commit s crvenim `ci-tajne`, popravljen odmah.
+Edge Function NIJE deployana (prijevod odbijanja koriste tek alati ②/2). Produkcija nije dirana (samo SELECT).
+
 ## 2026-09-29 (OPUS, `sokratstudy.h1`) — H1: brisanje računa uz objavljen materijal (BUG-052)
 
 Iz F6 sigurnosne analize (N10), Leon: *zasebno, odmah*. Novo stablo od `main`-a. T5 proširen objavom → na stagingu

@@ -38,6 +38,8 @@
 | **②/1a test-računi** | ✅ `npm run staging:racuni` |
 | **Sigurnosna analiza** | A ✅ (renderer · validacija · `mcp-admin`) · B ✅ (ovlasti · nacrt · injection) · C ✅ (limiti · backup · brisanje · logovi) — nalazi N1–N16 u [MCP_SECURITY §4](../architecture/MCP_SECURITY.md) |
 | **Ⓗ H1** ✅ | **N10** zatvoren 30.09.: SQL na PROD-u (provjeren), `main` = `42a13b3`, T5 objavljuje materijal (BUG-052) |
+| **②/0 sigurnosni temelj** | ✅ STAGING 30.09. — a · b · c · d · e, svaka s crvenim na starom kodu i `brana-revizor`om; N1, N2, N4, N5 zatvoreni na stagingu |
+| **②/1b** | 🟡 STAGING 30.09. — N8 zatvoren; N7 radi, ali **brana vraćena** (revizor F1 usporednost, F2 HTTP 409/trajanje, F4 `mcp:brava` po potpisu); N9 prijevod napisan, **neožičen** (ožičava ②/2) |
 
 ## 2 · Redoslijed
 
@@ -57,7 +59,12 @@ Vlastita grana od `main`-a, ne `feat/f6-mcp`; F6 ga samo citira. Produkcijski ko
 |---|---|---|
 | **H1** ✅ brisanje računa | `node_content_versions.edited_by` → `on delete set null` (kalup `content_versions`); SQL u `supabase/` + staging, pa PROD u SQL Editoru · `delete-account-check` T5 **objavi** materijal (i ima nacrt od AI-ja) prije brisanja · prije: upit na PROD koliko je korisnika pogođeno | T5 s objavom danas 409 i poluobrisan račun → poslije 200 i nula redaka u svim tablicama |
 
-### ②/0 Sigurnosni temelj (NOVO — prije ijednog alata koji piše)
+### ②/0 Sigurnosni temelj ✅ STAGING (30.09.) — ishodi i dokazi: PROGRESS 30.09., MCP_SECURITY §4
+
+Odluke (Leon, anketa 30.09.): **pg_jsonschema** (shema u `schema/ugc-content.schema.json`, SQL generiran) · **JEDAN
+strogi profil** za Studio i AI (umjesto „MCP profil stroži") · DOMPurify **s naše domene** + tekst · `script-src`
+**točne datoteke** · nacrt u **obliku gradiva** (②/3 time postaje gotovo identitet) · boja lekcije u bazi = oblik
+`#rrggbb` (Studio ima slobodan birač, ADR-025); kurirana paleta za AI ostaje ③/4.
 
 | cigla | posao | crveno na starom kodu |
 |---|---|---|
@@ -127,7 +134,10 @@ staging/prod · `MCP_RESOURCE_URL` na kanonsku adresu. **Uvjet ulaska u ⑥:** s
 - ~~`pg_cron`~~ → **da** (anketa 29.09.), ④/5. ~~Limiti~~ → umjeren paket, ④/1–④/3. ~~Backup~~ → gradivo +
   šifriranje + rok 8 tjedana, ④/6. Zadržavanje verzija: **bez roka** (nije odabrano).
 - Trenutan opoziv **čitanja** (provjera na svakom čitanju = vrući put) — upis se zaustavlja odmah kroz ④/4.
-- `pg_jsonschema` vs. ručni validator u plpgsql (ovisi o S-B).
+- ~~`pg_jsonschema` vs. ručni validator~~ → **pg_jsonschema** (anketa 30.09.; na PROD-u dostupan 0.3.3, nije instaliran).
+- **Prije ⑥:** administratorov testni materijal na PROD-u ima karticu od 1 819 znakova → nakon ②/0b se ne da ponovno
+  objaviti dok se kartica ne skrati (ostala 3 PROD materijala prolaze).
+- **N17** (GTM/Sentry u `script-src` kao hostovi): suziti tek nakon mjerenja što loaderi učitavaju.
 - `mcp-admin/` (lokalni pokus izvan repozitorija): obrisati ili arhivirati (nalaz N6).
 
 Rizici: beta OAuth poslužitelj, mlad `@supabase/server` · **greška u hooku = nitko se ne prijavi** (izlaz: isključiti

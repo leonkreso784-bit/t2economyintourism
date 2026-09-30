@@ -5,6 +5,17 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-09-30 (OPUS) — 🔒 **F6 ②/0 sigurnosni temelj + ②/1b** — grana `feat/f6-mcp`, STAGING (nije na produkciji)
+
+- **Baza provodi strogi profil osobnog sadržaja** (pg_jsonschema, `supabase/f6-sadrzaj.sql`) na upisu nacrta i na
+  `publish_node`: bez sirovog HTML-a, samo vlastite slike, poveznice bez opasnih shema, granice (100 lekcija, 500
+  stavki, kartica 500 znakova, 1 MB). Brana `npm run ugc:sadrzaj` (staging), unit `ugc-shema`, `build:ugc-sql --check`.
+- **Renderer:** `safeUrl` čita shemu bez kontrolnih znakova; bez DOMPurifyja HTML ide kao tekst; DOMPurify s naše
+  domene (`vendor/`); Studio-uređivač i slika kviza kroz `safeUrl`.
+- **CSP:** `script-src` dopušta točne CDN datoteke, ne hostove; `check:csp` = popis otvorenog.
+- **Nacrt:** polazna verzija (usporedni upis → 409) i ključ ponavljanja (isti početak = isti nacrt).
+- `npm run bump` (js). ⚠️ Na PROD tek u fazi ⑥: jedan administratorov materijal ima karticu od 1 819 znakova.
+
 ## 2026-09-29 (OPUS) — 🔧 **H1: brisanje računa uz objavljen materijal** (BUG-052) — grana `fix/h1-brisanje-racuna`, STAGING
 
 `node_content_versions.edited_by` dobiva `on delete set null` (`supabase/h1-edited-by-set-null.sql`, primijenjeno na
