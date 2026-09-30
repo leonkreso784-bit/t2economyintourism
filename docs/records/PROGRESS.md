@@ -5,7 +5,7 @@ testirano, što slijedi.
 
 ---
 
-## 2026-09-30 (OPUS, `sokratstudy.f6`) — F6 ②/2 alati cjevovoda (kôd gotov; čeka deploy na staging)
+## 2026-09-30 (OPUS, `sokratstudy.f6`) — F6 ②/2 alati cjevovoda (✅ STAGING)
 
 - **Alati** (`supabase/functions/mcp/alati.ts`): `zapocni_nacrt` · `napisi_learn` · `dodaj_kartice` (pada bez Learna) ·
   `dodaj_pitanja` (pada bez kartica) · `procitaj_nacrt` · `predaj_nacrt` + postojeći `procitaj_materijale`; upute
@@ -20,7 +20,8 @@ testirano, što slijedi.
   (34 poziva, 8 u grani ponovnog pokušaja); RPC-ovi za `mcp_klijent` iz svih `supabase/*.sql`. **14/14 mutacija** obara unit.
   E2E `npm run mcp:alati` (30 provjera + doseg): na staroj funkciji **crveno** (alata nema); protiv lokalnog dvojnika
   `index.ts` s pravim SDK-om 2.0.0 i staging bazom **31/0**. Preflight exit 0 (`test:unit` 61/61).
-- **Otvoreno:** deploy funkcije `mcp` na staging (Leon) → `mcp:alati` + `mcp:probe` + `mcp:brava` uživo.
+- **Deploy (Leon):** funkcija `mcp` v9 na stagingu, `verify_jwt` false. **Uživo:** `mcp:alati` 31/0 · `mcp:probe` 9/0 ·
+  `mcp:brava` 49/0 · `mcp:nacrt` 49/0. `brana-revizor`: vratio F1 (zatvoreno), napomene N1–N6 uvažene (N2, N5 izvedene).
 
 ## 2026-09-30 (OPUS, `sokratstudy.f6`) — F6 ②/0 sigurnosni temelj + ②/1b (STAGING)
 

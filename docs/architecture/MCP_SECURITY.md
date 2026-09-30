@@ -151,7 +151,7 @@ s kontrolom · prioritet je za **puštanje korisnicima**, ne za današnji stagin
   odbijena. Kvota ograničava štetu na 3 u izradi.
 - **Popravak:** plan ②/1b — ključ ponavljanja (klijent ga šalje, baza ga pamti po vlasniku) na svakom pozivu koji stvara.
 
-### N9 · odbijanja kvote i stanja dolaze kao HTTP 500 — 🟡 OŽIČEN u kodu (②/2, 30.09.); zatvoren na stagingu tek kad je funkcija deployana i `mcp:alati` zelen
+### N9 · odbijanja kvote i stanja dolaze kao HTTP 500 — ✅ ZATVOREN na STAGINGU (②/2, 30.09.: funkcija `mcp` v9, `mcp:alati` 31/0 uživo)
 
 - `alati.ts` `prevediOdbijanje`: ime → vrsta (ispravi · ponovno · korisnik · stop · kvar) + poruka; unit izvodi popis
   imena iz SQL-a. HTTP broj ostaje 500 za kvotu (PostgREST), ali AI više ne sudi po broju.
