@@ -5,7 +5,7 @@ testirano, što slijedi.
 
 ---
 
-## 2026-09-30 (OPUS, `sokratstudy.f6`) — F6 ②/3 oblik materijala (✅ kod + SQL na STAGINGU; funkciju deploya Leon)
+## 2026-09-30 (OPUS, `sokratstudy.f6`) — F6 ②/3 oblik materijala (✅ STAGING)
 
 - **Nacrt JEST gradivo** (anketa: „nacrt u obliku gradiva"): izlaz alata prolazi i katalošku shemu (`subject-content`,
   = `validate:schema`) i strogi profil. Kostur `schemaVersion: 2` + lekcija kao nova sekcija u Studiju (`fa-book`,
@@ -22,6 +22,8 @@ testirano, što slijedi.
   protiv lokalnog dvojnika s pravim SDK-om 40/0 · **20/20 mutacija** crveno (+ e2e mutacija kataloga crvena) ·
   preflight 0. `brana-revizor`: vratio F1 (ista lekcija nemjerena) i F2 (UPUTE korak 4 nemjeren) + N1–N3 → zatvoreno
   testovima i mutacijama; N4 (`card` u bazi se ne provjerava) = svjesno, pripada ②/4 / ③/6.
+- **Deploy (Leon):** funkcija `mcp` **v10** na stagingu, `verify_jwt` false. **Uživo:** `mcp:alati` 40/0 (39 + doseg,
+  uklj. „instructions = UPUTE iz jezgre") · `mcp:probe` 9/0 · `mcp:brava` 49/0 · `mcp:nacrt` 49/0.
 - ⚠️ Pouka: `String.replace` sa zamjenskim tekstom koji sadrži dolar pa backtick (poseban uzorak „tekst prije pogotka") ubacio je cijeli početak datoteke u docs —
   uhvaćeno na `git diff --stat`; zamjene u skriptama idu kroz funkciju (`() => b`).
 
