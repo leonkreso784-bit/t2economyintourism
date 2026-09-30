@@ -36,7 +36,10 @@
     var KATEX_SRI = 'sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8';
     var KATEX_AUTORENDER_SRC = 'https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js';
     var KATEX_AUTORENDER_SRI = 'sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05';
-    var DOMPURIFY_SRC = 'https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.6/purify.min.js';
+    // DOMPurify se od F6 ②/0d poslužuje s NAŠE domene (Leon, anketa 30.09.): bez njega sadržaj s HTML-om
+    // ide kao tekst, pa pad tuđeg CDN-a ne smije biti čest razlog ružne lekcije. Bajtovi su identični
+    // cdnjs 3.2.6 (isti SRI, provjereno pri preuzimanju) i SRI ostaje — preglednik ih i dalje mjeri.
+    var DOMPURIFY_SRC = 'vendor/dompurify/3.2.6/purify.min.js';
     var DOMPURIFY_SRI = 'sha384-JEyTNhjM6R1ElGoJns4U2Ln4ofPcqzSsynQkmEc/KGy6336qAZl70tDLufbkla+3';
 
     /* PAKETI — što ide zajedno i ZAŠTO baš tako.

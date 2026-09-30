@@ -149,9 +149,17 @@ test('legacy-html: koristi window.DOMPurify.sanitize ako postoji', function () {
   assert.ok(Array.isArray(gotCfg.ALLOWED_TAGS));       // proslijeđen config
   delete win.DOMPurify;
 });
-test('legacy-html: fallback (bez DOMPurify) = raw za NAŠ povjerljiv v1 sadržaj', function () {
-  const out = R([{ type: 'legacy-html', html: '<p>trusted</p>' }]);
-  assert.strictEqual(out, '<div class="lb-legacy"><p>trusted</p></div>');
+// F6 ②/0d (MCP_SECURITY N2): bez sanitizatora HTML izlazi kao TEKST, i za katalog. Do sad je fallback
+// bio „raw za naš povjerljiv v1" — a isti put crta i osobni sadržaj, pa je pad CDN-a otvarao
+// `iframe srcdoc` koji je uz produkcijski CSP pročitao sesiju (lokalni pokus, dionica A).
+test('legacy-html: bez DOMPurify NIJEDNA oznaka ne prolazi — sadržaj ostaje kao tekst (N2)', function () {
+  assert.strictEqual(win.DOMPurify, undefined, 'test mora vrtjeti BEZ sanitizatora');
+  const zlo = '<p>trusted</p><iframe srcdoc="<script src=https://cdn.jsdelivr.net/gh/x/y/a.js></script>"></iframe>'
+    + '<img src=x onerror=alert(1)><a href="javascript:alert(1)">k</a>';
+  const out = R([{ type: 'legacy-html', html: zlo }]);
+  const oznake = (out.match(/<[a-z]+/gi) || []).filter(function (t) { return t !== '<div'; });
+  assert.deepStrictEqual(oznake, [], out);
+  assert.ok(out.indexOf('trusted') !== -1, 'tekst je izgubljen: ' + out);
 });
 
 // ── safeUrl (izravno) ──
