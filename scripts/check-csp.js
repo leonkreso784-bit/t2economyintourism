@@ -98,7 +98,37 @@ if (!csp) {
     }
 }
 
-console.log(`check:csp — dotaknuto: ${htmlDatoteke.length} html datoteka, ${ukupnoTagova} tagova, vercel.json`);
+// ── 4: script-src dopušta TOČNE datoteke s CDN-a, ne cijele hostove (F6 ②/0e, MCP_SECURITY N2) ──
+// jsdelivr poslužuje BILO KOJU javnu datoteku s GitHuba i npm-a, a cdnjs tisuće biblioteka. Dok je
+// u `script-src` goli host, `iframe srcdoc` iz ubačenog HTML-a smije učitati napadačevu skriptu i
+// CSP ne pomaže (dionica A: pročitana sesija uz produkcijski CSP). Popis dopuštenog se IZVODI iz
+// koda (tagovi u *.html + adrese u js/**), pa ne može tiho zastarjeti ni u jednom smjeru:
+// skripta koju kod učitava a CSP ne dopušta = pokvarena stranica; dopuštena a neučitana = rupa.
+const CDN = /^https:\/\/(?:cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com)(?:\/|$)/;
+const koristeno = new Set();
+for (const f of htmlDatoteke) {
+    const html = makniKomentare(fs.readFileSync(path.join(KORIJEN, f), 'utf8'));
+    for (const m of html.matchAll(/<script\b[^>]*\bsrc\s*=\s*"(https:\/\/[^"]+)"/gi)) if (CDN.test(m[1])) koristeno.add(m[1]);
+}
+const jsDatoteke = fs.readdirSync(path.join(KORIJEN, 'js')).filter((f) => f.endsWith('.js'));
+for (const f of jsDatoteke) {
+    const src = fs.readFileSync(path.join(KORIJEN, 'js', f), 'utf8');
+    for (const m of src.matchAll(/['"](https:\/\/(?:cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com)\/[^'"\s]+\.js)['"]/g)) koristeno.add(m[1]);
+}
+if (csp) {
+    const izvori = ((csp.value.match(/script-src([^;]*)/) || ['', ''])[1]).trim().split(/\s+/);
+    const cdnIzvori = izvori.filter((x) => CDN.test(x));
+    const goli = cdnIzvori.filter((x) => !/\.js$/.test(x));
+    const nedopusteno = [...koristeno].filter((u) => !cdnIzvori.includes(u));
+    const mrtvo = cdnIzvori.filter((x) => /\.js$/.test(x) && !koristeno.has(x));
+    if (koristeno.size === 0) { padova++; nalazi.push('script-src: iz koda nije izvučena NIJEDNA CDN skripta — izvlačenje je pokvareno'); }
+    for (const x of goli) { padova++; nalazi.push('script-src: cijeli CDN host/mapa umjesto točne datoteke — ' + x); }
+    for (const x of nedopusteno) { padova++; nalazi.push('script-src: kod učitava, CSP ne dopušta (stranica bi pukla) — ' + x); }
+    for (const x of mrtvo) { padova++; nalazi.push('script-src: dopušteno, a kod ne učitava (mrtva rupa) — ' + x); }
+}
+
+console.log(`check:csp — dotaknuto: ${htmlDatoteke.length} html datoteka, ${ukupnoTagova} tagova, ${jsDatoteke.length} js datoteka, `
+    + `${koristeno.size} CDN skripti iz koda, vercel.json`);
 if (padova > 0) {
     console.error(`❌ check:csp — ${padova} nalaz(a):`);
     for (const n of nalazi) console.error('   ' + n);
