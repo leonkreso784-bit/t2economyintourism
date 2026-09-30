@@ -87,6 +87,23 @@ test.describe('BUG-025 — sadržaj u innerHTML se prikazuje doslovno i ne izvr�
     expect(await page.evaluate(() => window.__pwned)).toBeUndefined();
   });
 
+  test('kviz: slika pitanja ide kroz safeUrl — opasna shema ne postane <img>, valjana da (F6 ②/0c)', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'iPhone-SE-375', 'dovoljno je jednom');
+    await openStudyWithFixture(page);
+    const slikaZa = async (image) => {
+      await page.evaluate((image) => {
+        window.AppState.nav.data.tema.quiz = [{ question: 'Slika?', options: ['a', 'b'], correct: 0, image: image }];
+        window.switchSection('quiz'); window.startQuiz();
+      }, image);
+      await expect(page.locator('#questionText')).toHaveText('Slika?', { timeout: 10000 });
+      return page.locator('#questionImage').count();
+    };
+    // kontrola: valjana slika se crta — inače bi „nema <img>" značilo samo da se slika nikad ne crta
+    expect(await slikaZa('data:image/png;base64,iVBORw0KGgo='), 'KONTROLA: valjana slika se ne crta').toBe(1);
+    expect(await slikaZa('java\tscript:alert(1)'), 'kontrolni znak + javascript: postao je <img>').toBe(0);
+    expect(await slikaZa('data:image/svg+xml,<svg onload=alert(1)>'), 'SVG (može nositi skriptu) postao je <img>').toBe(0);
+  });
+
   test('learn: naziv sekcije je TEKST, a nevaljana ikona ne ulazi u class', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'iPhone-SE-375', 'dovoljno je jednom');
     await openStudyWithFixture(page);
