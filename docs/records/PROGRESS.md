@@ -29,6 +29,17 @@ kraja sesije — pokrenuti ponovno prije ikakvog pusha na `main`.
 Pouka o meni: `test:unit` gledan kroz `tail` progutao je izlazni kod → commit s crvenim `ci-tajne`, popravljen odmah.
 Edge Function NIJE deployana (prijevod odbijanja koriste tek alati ②/2). Produkcija nije dirana (samo SELECT).
 
+**Dopuna istog dana (nova sesija, revizorovi F1–F4) — brana ②/1b ✅ na STAGINGU:**
+- **F1+F2** `mcp:nacrt` ⑧: 8 usporednih upisa s iste verzije → 1×200 · 7× `nacrt_sukob`, svaki **HTTP 409**, najsporiji 501 ms.
+  Mutacija `_nacrt_moj` **bez `for update`**: pala **5/5** vrtnji, svaki put 2×200 (tihi gubitak natrag). Mutacija sukob
+  kao **`40001`**: 7 poziva prekinuto na 20 s, imenovano „`40001`-petlja". Obje vraćene (md5 funkcije = original), 49/0.
+- **F4** `mcp:brava` po PUNOM potpisu + „svako otvoreno ime ima točno jedan izvršiv potpis". Mutacija: preopterećen
+  `mcp_predaj_nacrt(uuid,text)` s grantom → **stara brana 48/0 (slijepa), nova EXIT 1** s dvije imenovane tvrdnje;
+  obrisano, 49/0.
+- **F3** N9 ostaje „napisan, neožičen"; uvjet ②/2 traži unit nad svakim `rpc(...)` u alatima, pad na nuli.
+- **Nalaz:** tijela `mcp_upisi_nacrt` i `mcp_zapocni_nacrt` na stagingu razlikovala su se od `f6-nacrt.sql` samo u
+  komentarima → brana za drift staging↔datoteka upisana kao uvjet prije ⑥. `brana-revizor`: PASS 6/6, napomene uvažene.
+
 ## 2026-09-29 (OPUS, `sokratstudy.h1`) — H1: brisanje računa uz objavljen materijal (BUG-052)
 
 Iz F6 sigurnosne analize (N10), Leon: *zasebno, odmah*. Novo stablo od `main`-a. T5 proširen objavom → na stagingu

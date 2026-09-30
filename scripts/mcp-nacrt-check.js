@@ -28,7 +28,7 @@ const {
 const { valjanTocno, lekcija } = require('../tests/fixtures/ugc-sadrzaj');
 
 /** Čegrtaljka dosega (kalup `check:final`): manje = blok tiho otpao, više = osnovica nije podignuta. */
-const OCEKIVANO_PROVJERA = 47;   // +14 (②/1b, blok ⑧)
+const OCEKIVANO_PROVJERA = 48;   // +14 (②/1b, blok ⑧) · +1 (②/1b F2: 409 i trajanje sukoba)
 
 let failed = 0;
 let touched = 0;
@@ -259,15 +259,39 @@ const rest = (token, put, opts = {}) => http('/rest/v1/' + put, Object.assign({}
   const tudjiKljuc = await zapocni(aB, 'Tuđi', 'razgovor-1');
   record('STRANAC s istim ključem dobiva SVOJ nacrt, ne D-ov', typeof tudjiKljuc.json === 'string' && tudjiKljuc.json !== k1.json, opis(tudjiKljuc));
 
-  // N7: dva usporedna upisa s ISTE polazne verzije → točno jedan prolazi, drugi dobiva sukob
+  // N7: USPOREDNI upisi s ISTE polazne verzije → točno jedan prolazi, svi ostali dobivaju sukob.
+  // ⚠️ Dva upisa (do 30.09.) nisu dokazivala usporednost: stignu li jedan za drugim, drugi vidi novu
+  //    verziju i bez ikakve brave (revizor ②/1b F1). Zato 8 upisa pokrenutih USPOREDNO s klijenta.
+  //    Ispis „pokrenuto usporedno (klijent)" hvata samo preradu u slijedni `for … await`; da se upisi
+  //    preklapaju U BAZI, dokazuje JEDINO mutacija „`_nacrt_moj` bez `for update`" (30.09.: pala 5/5,
+  //    svaki put 2×200) — i samo se njome ponovno dokazuje.
+  // ⚠️ Sukob se sudi po HTTP 409 i TRAJANJU, ne samo po imenu (F2): sa SQLSTATE `40001` PostgREST
+  //    transakciju ponavlja SAM, u krug — poziv visi pa pukne na 20 s isteku. To je imenovan pad.
   const v0 = await verzijaOd(aD, k1.json);
-  const [p1, p2] = [tijeloZa('prvi'), tijeloZa('drugi')];
-  const [r1, r2] = await Promise.all([upisi(aD, k1.json, p1, v0), upisi(aD, k1.json, p2, v0)]);
-  const prosli = [r1, r2].filter((r) => r.status === 200);
-  const sukobi = [r1, r2].filter((r) => greska(r) === 'nacrt_sukob');
-  record('usporedni upisi s iste verzije → TOČNO jedan 200, drugi `nacrt_sukob` (N7)', prosli.length === 1 && sukobi.length === 1,
-    opis(r1) + ' · ' + opis(r2));
-  const pobjednik = r1.status === 200 ? p1 : p2;
+  const USPOREDNO = 8;
+  const tijela = Array.from({ length: USPOREDNO }, (_, i) => tijeloZa('usporedni-' + i));
+  const mjeri = async (payload) => {
+    const t0 = Date.now();
+    try { const r = await upisi(aD, k1.json, payload, v0); return { r, t0, t1: Date.now() }; }
+    catch (e) { return { r: { status: 0, tekst: 'PREKINUT: ' + e.message, json: null }, t0, t1: Date.now(), prekinut: true }; }
+  };
+  const ishodi = await Promise.all(tijela.map(mjeri));
+  const prosli = ishodi.filter((x) => x.r.status === 200);
+  const sukobi = ishodi.filter((x) => greska(x.r) === 'nacrt_sukob');
+  const preklop = ishodi.filter((a, i) => ishodi.some((b, j) => j !== i && a.t0 < b.t1 && b.t0 < a.t1)).length;
+  const sazetak = prosli.length + '×200 · ' + sukobi.length + '×nacrt_sukob · ' + preklop + '/' + USPOREDNO + ' pokrenuto usporedno (klijent)'
+    + (ishodi.length - prosli.length - sukobi.length ? ' · ostalo: ' + ishodi.filter((x) => x.r.status !== 200 && greska(x.r) !== 'nacrt_sukob').map((x) => opis(x.r)).join(' | ') : '');
+  record(USPOREDNO + ' usporednih upisa s iste verzije → TOČNO jedan 200, svi ostali `nacrt_sukob` (N7)',
+    prosli.length === 1 && sukobi.length === USPOREDNO - 1 && preklop >= 2,
+    sazetak + (preklop < 2 ? ' ← upisi su išli SLIJEDNO, usporednost nije ni pokušana' : ''));
+  const sporo = ishodi.filter((x) => x.r.status !== 200).map((x) => ({ s: x.r.status, ms: x.t1 - x.t0, prekinut: !!x.prekinut }));
+  const loseSukobi = sporo.filter((x) => x.s !== 409 || x.ms >= 5000);
+  record('svaki sukob je HTTP 409 i stiže za < 5 s (nije `40001`-petlja PostgREST-a)',
+    sporo.length === USPOREDNO - 1 && loseSukobi.length === 0,
+    'odbijenih ' + sporo.length + ', najsporiji ' + Math.max(0, ...sporo.map((x) => x.ms)) + ' ms'
+      + (loseSukobi.length ? ' ← ' + loseSukobi.map((x) => (x.prekinut ? 'PREKINUT' : 'HTTP ' + x.s) + ' ' + x.ms + ' ms').join(', ')
+        + (loseSukobi.some((x) => x.prekinut || x.ms >= 5000) ? ' — `40001`-PETLJA: PostgREST ponavlja transakciju sam' : '') : ''));
+  const pobjednik = prosli.length ? tijela[ishodi.indexOf(prosli[0])] : null;
   const poN7 = (await rpc(aD, 'mcp_procitaj_nacrt', { p_id: k1.json })).json;
   record('… u nacrtu je pobjednikov sadržaj i verzija +1', !!poN7 && isto(poN7.payload, pobjednik) && poN7.verzija === v0 + 1,
     poN7 ? 'verzija ' + v0 + ' → ' + poN7.verzija : '—');

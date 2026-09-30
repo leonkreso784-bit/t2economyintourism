@@ -37,7 +37,7 @@
 | I4 | objava = **samo obična sesija**, poslije pregleda | baza: Prihvati nije dan `mcp_klijent` | ⏳ plan ②/4 |
 | I5 | sadržaj koji napiše AI **ne izvršava kod** u pregledniku, ni kad sanitizator nije učitan | renderer + CSP | ✅ STAGING/grana 30.09. — N1, N2 zatvoreni (②/0c–e: unit + preglednik-pokusi s kontrolom); ⚠️ N17 |
 | I6 | pravila sadržaja provodi **baza** na svakom putu upisa, ne samo poslužitelj | validator u bazi | ✅ STAGING 30.09. — nacrt i `publish_node` (`ugc:sadrzaj` 813/0); Prihvati dolazi u ②/4 |
-| I7 | ponovljen zahtjev ne duplicira; paralelna izmjena se ne prepisuje | ključ ponavljanja · polazna verzija | 🟡 STAGING 30.09. — N8 ✅; N7 popravljen, brana vraćena (revizor F1/F2/F4); Prihvati dolazi u ②/4 |
+| I7 | ponovljen zahtjev ne duplicira; paralelna izmjena se ne prepisuje | ključ ponavljanja · polazna verzija | 🟡 nacrt ✅ STAGING 30.09. (N7, N8; usporednost i 409 dokazani mutacijom) · Prihvati uz paralelnu izmjenu materijala = ②/4, otvoreno |
 | I8 | opoziv veze zaustavlja AI | Auth (`revokeGrant`) | ⚠️ izmjereno S-B: obnova odbijena odmah (400), a postojeća propusnica **i dalje piše u nacrt** (200) do isteka, najviše 3600 s — korisniku rečeno; trenutni opoziv = odluka |
 | I9 | administratorov konektor nema ni jedno pravo više od običnog | hook: svaki token s `client_id` = `mcp_klijent`, neovisno o ulozi korisnika | ✅ izmjereno S-B (11 tvrdnji, s kontrolom) |
 | I10 | tok prijave: PKCE obavezan, redirect točan, kod jednokratan i vezan na klijent, potpis tokena provjeren | Supabase Auth + PostgREST | ✅ izmjereno S-B (9 tvrdnji) |
@@ -126,14 +126,17 @@ s kontrolom · prioritet je za **puštanje korisnicima**, ne za današnji stagin
   Naziv nacrta s HTML-om sprema se doslovno (ispravno — escape je posao prikaza u ②/4, brana tamo).
 - **Popravak:** plan ②/0a.
 
-### N7 · usporedni upisi istog nacrta: tihi gubitak — 🟡 popravljeno na STAGINGU 30.09. (②/1b), brana još ne dokazuje usporednost
+### N7 · usporedni upisi istog nacrta: tihi gubitak — ✅ ZATVOREN na STAGINGU 30.09. (②/1b, brana dopunjena istog dana)
 
 - `mcp_upisi_nacrt(id, payload, verzija)`: promijenjen nacrt → `nacrt_sukob` (HTTP 409); isti upis ponovljen vraća
   postojeću verziju. ⚠️ **Pouka iz gradnje:** sukob sa SQLSTATE `40001` PostgREST ponavlja SAM, u krug — upis je
   visio do isteka klijenta (a `mcp_klijent` nema `statement_timeout`, N16). Kodovi odbijanja se ne biraju iz razreda
   `40xxx`; sukob je `PT409`.
+- **Brana (`mcp:nacrt` ⑧):** 8 usporednih upisa s iste verzije → točno 1×200 i 7× `nacrt_sukob`, svaki **HTTP 409** i
+  < 5 s. Mutacija „bez `for update`" u `_nacrt_moj` pala je **5/5** vrtnji (svaki put 2×200 = tihi gubitak natrag);
+  mutacija „sukob kao `40001`" pala je s imenom (7 poziva prekinuto na 20 s = PostgREST-ova petlja). Obje vraćene.
 
-- `mcp_upisi_nacrt` zamjenjuje cijeli payload bez polazne verzije. **Izmjereno (S-B):** dva usporedna upisa istog
+- *Stanje PRIJE popravka (S-B, 29.09.):* `mcp_upisi_nacrt` zamjenjuje cijeli payload bez polazne verzije. **Izmjereno:** dva usporedna upisa istog
   nacrta → oba HTTP 200, preživio samo drugi; nijedna strana ne dozna da je prva izgubljena.
 - **Uvjet:** AI (ili dva AI-ja istog korisnika, npr. Claude i ChatGPT) pišu isti nacrt usporedo, ili se ponovi upis iz
   starijeg stanja. **Posljedica:** gubitak dijela nacrta, ne tuđih podataka.
@@ -152,6 +155,9 @@ s kontrolom · prioritet je za **puštanje korisnicima**, ne za današnji stagin
 
 - `alati.ts` `prevediOdbijanje`: ime → vrsta (ispravi · ponovno · korisnik · stop · kvar) + poruka; unit izvodi popis
   imena iz SQL-a. HTTP broj ostaje 500 za kvotu (PostgREST), ali AI više ne sudi po broju.
+- ⚠️ **Nije zatvoren dok ga nitko ne zove:** danas nijedan alat ne poziva `mcp_*` RPC, pa prijevod ne stoji ni na
+  jednom putu. Zatvara ga ②/2, gdje unit traži da **svaki** `rpc(...)` u alatima ide kroz `prevediOdbijanje` (i pada
+  ako takvih poziva nema — nula nije dokaz).
 
 - Kvota (`53400`) i „već predan" (`55000`) izlaze iz PostgREST-a kao **500**. Nije propust, ali AI ne može razlikovati
   „pokušaj kasnije" od kvara → plan ②/2: alat prevodi kod u jasnu poruku.

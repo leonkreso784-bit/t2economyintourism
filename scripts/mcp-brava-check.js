@@ -67,7 +67,7 @@ const ULOGA = 'mcp_klijent';
  * Podiže se SVJESNO, uz novu provjeru; spuštanje bez razloga znači da je nešto tiho otpalo.
  */
 // 41 → 45 (②/1, 29.09.): mrtav redak otvorenih funkcija + tri pomoćnika nacrta u ZABRANJENI_RPC.
-const OCEKIVANO_PROVJERA = 47;   // +2 (②/0a): _ugc_shema, _provjeri_sadrzaj
+const OCEKIVANO_PROVJERA = 48;   // +2 (②/0a): _ugc_shema, _provjeri_sadrzaj · +1 (②/1b F4): jedan potpis po otvorenom imenu
 
 /**
  * `PUT /auth/v1/user` — ŠTO POSTAVKA „traži trenutnu lozinku" ZATVARA, A ŠTO NE (①/2b, 21.09.).
@@ -169,14 +169,22 @@ const OTVORENO = {
   // ②/1 (29.09.): jedini put upisa za AI — u NACRT, nikad u žive tablice (ADR-038 ①). Što te
   // funkcije smiju i ne smiju (tuđi nacrt, kvota, veličina, predan = zamrznut) mjeri `mcp:nacrt`;
   // ova brana tvrdi samo da je otvoreno TOČNO ovo.
+  //
+  // ⚠️ Ključ je PUNI POTPIS kakav ga ispisuje Postgres (`regprocedure`: `integer`, ne `int`; bez
+  //    razmaka), ne golo ime (②/1b, revizor F4). Po imenu bi preopterećen `mcp_predaj_nacrt(uuid, text)`
+  //    s grantom prošao kao „već otvoren" — a to je nova ruta s vlastitim tijelom, dakle i vlastitom
+  //    (možda nijednom) provjerom vlasnika. `②/1b` je upravo takve stare potpise brisao.
   funkcije: {
-    mcp_zapocni_nacrt: 'novi nacrt; vlasnik iz tokena, kvota 3 u izradi / 10 nepregledanih (②/1)',
-    mcp_upisi_nacrt: 'zamjena sadržaja vlastitog nacrta u izradi, najviše 1 MB (②/1)',
-    mcp_predaj_nacrt: 'zamrzne vlastiti nacrt za korisnikov pregled (②/1)',
-    mcp_procitaj_nacrt: 'čitanje vlastitog nacrta — AI nastavlja gdje je stao (②/1)',
-    mcp_moji_nacrti: 'popis vlastitih nacrta bez sadržaja (②/1)'
+    'mcp_zapocni_nacrt(text,text)': 'novi nacrt (ime, ključ ponavljanja); vlasnik iz tokena, kvota 3 u izradi / 10 nepregledanih (②/1, ②/1b)',
+    'mcp_upisi_nacrt(uuid,jsonb,integer)': 'zamjena sadržaja vlastitog nacrta u izradi od zadane verzije, najviše 1 MB (②/1, ②/1b)',
+    'mcp_predaj_nacrt(uuid)': 'zamrzne vlastiti nacrt za korisnikov pregled (②/1)',
+    'mcp_procitaj_nacrt(uuid)': 'čitanje vlastitog nacrta — AI nastavlja gdje je stao (②/1)',
+    'mcp_moji_nacrti()': 'popis vlastitih nacrta bez sadržaja (②/1)'
   }
 };
+
+/** `mcp_upisi_nacrt(uuid,jsonb,integer)` → `mcp_upisi_nacrt`. */
+const imeIzPotpisa = (p) => p.replace(/\(.*$/, '');
 
 /**
  * Edge Functions ne stoje iza Postgresa, pa ih brava iz baze NE DOSEŽE (`verify_jwt` na gatewayu
@@ -311,7 +319,7 @@ function provjeriInventar() {
     const tekst = fs.readFileSync(path.join(dir, f), 'utf8');
     for (const m of tekst.matchAll(/create\s+(?:or\s+replace\s+)?function\s+public\.([a-z0-9_]+)\s*\(/gi)) imena.add(m[1]);
   }
-  const poznato = new Set([...Object.keys(ZABRANJENI_RPC), ...Object.keys(OTVORENO.funkcije), ...OKIDACI, ...INTERNE]);
+  const poznato = new Set([...Object.keys(ZABRANJENI_RPC), ...Object.keys(OTVORENO.funkcije).map(imeIzPotpisa), ...OKIDACI, ...INTERNE]);
   // ⚠️ Ovdje je do 18.09. stajalo blanket izuzeće `/^mcp_/` (pisano za hook). Cigla ②/1 dodaje
   // upravo `mcp_*` RPC-ove, pa bi cijeli budući write-put prošao kroz ovu provjeru nezapaženo.
   // Izuzeće je zato suženo na TOČNO ime hooka — sve ostalo mora biti razvrstano.
@@ -390,21 +398,32 @@ function provjeriPrava(inv) {
   record('popis otvorenog odgovara bazi (nijedan mrtav redak)', manjak.length === 0,
     manjak.join(', ') || 'sve s popisa stvarno postoji');
 
-  // Inventar imenuje funkciju PUNIM potpisom (`public.mcp_upisi_nacrt(uuid,jsonb)`), popis golim imenom.
-  // Dok je popis bio prazan, razlika se nije mogla vidjeti — prvi otvoreni redak (②/1) ju je razotkrio.
-  const golo = (k) => k.replace(/^public\./, '').replace(/\(.*$/, '');
+  // Inventar i popis govore ISTIM jezikom: punim potpisom bez sheme (`mcp_upisi_nacrt(uuid,jsonb,integer)`).
+  // Do ②/1b je popis bio po golom imenu, pa je svaki potpis tog imena bio „otvoren" (revizor F4).
+  const potpis = (k) => k.replace(/^public\./, '');
   const funkcije = Object.entries(inv.funkcije || {});
   const viskoviF = funkcije
-    .filter(([ime, o]) => o.execute && !(golo(ime) in OTVORENO.funkcije))
+    .filter(([ime, o]) => o.execute && !(potpis(ime) in OTVORENO.funkcije))
     .map(([ime, o]) => ime + (o.okidac ? ' (okidač)' : ''));
-  record(`nijedna funkcija u public nije izvršiva ulozi osim popisa (${funkcije.length} pregledano)`,
+  record(`nijedna funkcija u public nije izvršiva ulozi osim popisa, po PUNOM potpisu (${funkcije.length} pregledano)`,
     viskoviF.length === 0, viskoviF.join(' | ') || 'izvršivo samo: ' + (Object.keys(OTVORENO.funkcije).join(', ') || 'nijedna'));
 
   // Drugi smjer, kao za tablice: popis koji tvrdi dozvolu koje u bazi NEMA je mrtav — i uz njega
   // bi brana ostala zelena zato što je popis zastario, a ne zato što je brava čvrsta (②/1).
-  const manjakF = Object.keys(OTVORENO.funkcije).filter((ime) => !funkcije.some(([k, o]) => golo(k) === ime && o.execute));
+  const manjakF = Object.keys(OTVORENO.funkcije).filter((p) => !funkcije.some(([k, o]) => potpis(k) === p && o.execute));
   record('popis otvorenih funkcija odgovara bazi (nijedan mrtav redak)', manjakF.length === 0,
     manjakF.join(', ') || 'sve s popisa stvarno izvršivo');
+
+  // Svako otvoreno IME ima TOČNO JEDAN izvršiv potpis. Prethodna tvrdnja preopterećenje već obara kao
+  // višak; ova ga imenuje po razredu greške (dvije rute pod istim imenom — PostgREST bira po argumentima,
+  // pa AI izbor potpisa ne vidi), da ispis kaže ZAŠTO, a ne samo „višak".
+  const poImenu = {};
+  for (const [k, o] of funkcije) if (o.execute) (poImenu[imeIzPotpisa(potpis(k))] ||= []).push(potpis(k));
+  const vise = Object.keys(OTVORENO.funkcije).map(imeIzPotpisa)
+    .filter((ime) => (poImenu[ime] || []).length !== 1)
+    .map((ime) => ime + ' → ' + ((poImenu[ime] || []).join(' + ') || 'nijedan'));
+  record('svako otvoreno ime ima TOČNO jedan izvršiv potpis (nema preopterećenja)', vise.length === 0,
+    vise.join(' | ') || Object.keys(OTVORENO.funkcije).length + ' imena, svako po jedan potpis');
 }
 
 /**

@@ -39,7 +39,7 @@
 | **Sigurnosna analiza** | A ✅ (renderer · validacija · `mcp-admin`) · B ✅ (ovlasti · nacrt · injection) · C ✅ (limiti · backup · brisanje · logovi) — nalazi N1–N16 u [MCP_SECURITY §4](../architecture/MCP_SECURITY.md) |
 | **Ⓗ H1** ✅ | **N10** zatvoren 30.09.: SQL na PROD-u (provjeren), `main` = `42a13b3`, T5 objavljuje materijal (BUG-052) |
 | **②/0 sigurnosni temelj** | ✅ STAGING 30.09. — a · b · c · d · e, svaka s crvenim na starom kodu i `brana-revizor`om; N1, N2, N4, N5 zatvoreni na stagingu |
-| **②/1b** | 🟡 STAGING 30.09. — N8 zatvoren; N7 radi, ali **brana vraćena** (revizor F1 usporednost, F2 HTTP 409/trajanje, F4 `mcp:brava` po potpisu); N9 prijevod napisan, **neožičen** (ožičava ②/2) |
+| **②/1b** | ✅ STAGING 30.09. — N7 i N8 zatvoreni; brana dopunjena po revizoru (8 usporednih upisa, HTTP 409 i < 5 s, `mcp:brava` po punom potpisu), svaka dopuna crvena pod mutacijom; ⚠️ drift staging-SQL ↔ `f6-nacrt.sql` nitko ne mjeri (brana prije ⑥); N9 prijevod napisan, **neožičen** (ožičava ②/2) |
 
 ## 2 · Redoslijed
 
@@ -79,7 +79,7 @@ strogi profil** za Studio i AI (umjesto „MCP profil stroži") · DOMPurify **s
 
 | cigla | posao | crveno na starom kodu |
 |---|---|---|
-| **②/2** alati | `procitaj_materijale` → `zapocni_nacrt` (lekcije s bojom) → `napisi_learn` → `dodaj_kartice` (pada bez Learna) → `dodaj_pitanja` (pada bez kartice) → `predaj_nacrt` · `procitaj_nacrt`; upute cjevovoda u `instructions` poslužitelja. **Alati po lekciji** (ne 200 kartica u jednom pozivu) · svaki poziv koji piše nosi **ključ ponavljanja** | unit nad modulom alata + e2e: Node MCP klijent s pravim tokenom prođe cjevovod na stagingu · isti poziv poslan dvaput ne duplicira lekciju |
+| **②/2** alati | `procitaj_materijale` → `zapocni_nacrt` (lekcije s bojom) → `napisi_learn` → `dodaj_kartice` (pada bez Learna) → `dodaj_pitanja` (pada bez kartice) → `predaj_nacrt` · `procitaj_nacrt`; upute cjevovoda u `instructions` poslužitelja. **Alati po lekciji** (ne 200 kartica u jednom pozivu) · svaki poziv koji piše nosi **ključ ponavljanja** | unit nad modulom alata + e2e: Node MCP klijent s pravim tokenom prođe cjevovod na stagingu · isti poziv poslan dvaput ne duplicira lekciju · **N9:** unit traži da svaki `rpc(...)` u alatima ide kroz `prevediOdbijanje` i pada kad takvih poziva nema |
 | **②/3** oblik materijala | nacrt → payload (kategorija po lekciji, v2 id-evi, bez slika i videa u prvom izdanju); veza kartica→pitanje = opcionalno polje `card` u shemi (aditivno) | `validate:schema` + validator ②/0a nad izlazom |
 | **②/4** pregled i prihvat | „Nacrti od AI-ja" u Mojim materijalima, **isti renderer** (s ②/0c–d) · **Prihvati** = jedna transakcija, **samo obična sesija**, validator ②/0a ponovno, polazna verzija gradiva (sukob = odbij, ne prepiši) · **Odbaci** · prihvat istog nacrta dvaput = jedan materijal | nacrt → prihvat → materijal se uči · OAuth token ne može prihvatiti · nacrt ubačen izravnim RPC-om mimo poslužitelja ne prolazi prihvat · paralelna izmjena materijala → prihvat odbija |
 | **②/5** ulaz | „Spoji svoj AI" (ADR-026: jedna radnja, dva ulaza) → upute + kopiraj URL; lažni tekst `studio.js:235` nestaje | spec |
@@ -128,6 +128,9 @@ SQL u SQL Editoru → OAuth poslužitelj + hook u dashboardu → funkcija → kl
 ([archive/MCP_KONEKTOR.md](../archive/MCP_KONEKTOR.md), kraj): `Require current password` na PROD-u · razlika postavki
 staging/prod · `MCP_RESOURCE_URL` na kanonsku adresu. **Uvjet ulaska u ⑥:** svi uvjeti iz
 [MCP_SECURITY §7](../architecture/MCP_SECURITY.md) zeleni.
+**Prije SQL-a na PROD (revizor ②/1b, N2):** brana koja uspoređuje tijela funkcija na stagingu (`pg_get_functiondef`
+bez komentara) sa `supabase/f6-*.sql` — danas se mjeri staging, a na PROD ide datoteka; 30.09. su se razlikovali u
+komentarima (`mcp_zapocni_nacrt` i dalje).
 
 ## 3 · Otvoreno za Leonovu riječ
 
