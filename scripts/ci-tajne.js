@@ -89,6 +89,7 @@ const NISU_TAJNE = {
   A11Y_WCAG_MJERENJE: 'uključuje puno WCAG mjerenje u a11y specovima',
   CI: 'postavlja ga GitHub Actions sam',
   SOKRAT_TEST_PORT: 'port test-poslužitelja (više radnih stabala na istom računalu)',
+  UGC_OSNOVICA_UPDATE: 'podiže osnovicu tests/fixtures/ugc-gen-osnovica.json (razvojni prekidač, F6 ②/0a)',
   PATH: 'brana `ci-tajne` podmeće PATH sa stubovima `npm`/`node` da IZVEDE pre-push hook',
 };
 
